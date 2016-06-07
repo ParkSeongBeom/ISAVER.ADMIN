@@ -1,0 +1,188 @@
+<!-- 조치 상세 -->
+<!-- @author dhj -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
+<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
+<c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
+<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
+
+<!-- section Start / 메인 "main_area", 서브 "sub_area"-->
+<section class="container sub_area">
+    <!-- 2depth 타이틀 영역 Start -->
+    <article class="sub_title_area">
+        <!-- 2depth 타이틀 Start-->
+        <h3 class="1depth_title"><spring:message code="common.title.action"/></h3>
+        <!-- 2depth 타이틀 End -->
+        <div class="navigation">
+            <span><jabber:menu menuId="${menuId}" /></span>
+        </div>
+    </article>
+    <!-- 2depth 타이틀 영역 End -->
+
+    <form id="actionForm" method="POST">
+        <article class="table_area">
+            <div class="table_contents">
+                <!-- 입력 테이블 Start -->
+                <table class="t_defalut t_type02 t_style03">
+                    <colgroup>
+                        <col style="width:16%">  <!-- 01 -->
+                        <col style="width:34%">  <!-- 02 -->
+                        <col style="width:16%">  <!-- 03 -->
+                        <col style="width:*">    <!-- 04 -->
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th class="point"><spring:message code="action.column.actionId"/></th>
+                        <td class="point">
+                            <input type="text" name="actionId" value="${action.actionId}" ${empty action ? '' : 'readonly="true"'} />
+                        </td>
+                        <th class="point"><spring:message code="action.column.actionCode"/></th>
+                        <td class="point">
+                            <select name="actionCode">
+                                <option value="ACT001" <c:if test="${action.actionCode == 'ACT001'}">selected</c:if>>쓰러짐</option>
+                                <option value="ACT002" <c:if test="${action.actionCode == 'ACT002'}">selected</c:if>>크레인사고</option>
+                                <option value="ACT003" <c:if test="${action.actionCode == 'ACT003'}">selected</c:if>>가스유출</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code="action.column.actionDesc"/></th>
+                        <td colspan="3">
+                            <textarea name="actionDesc" class="textboard">${action.actionDesc}</textarea>
+                        </td>
+                    </tr>
+                    <c:if test="${!empty action}">
+                        <tr>
+                            <th><spring:message code="common.column.insertUser"/></th>
+                            <td>${action.insertUserName}</td>
+                            <th><spring:message code="common.column.insertDatetime"/></th>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${action.insertDatetime}" /></td>
+                        </tr>
+                        <tr>
+                            <th><spring:message code="common.column.updateUser"/></th>
+                            <td>${action.updateUserName}</td>
+                            <th><spring:message code="common.column.updateDatetime"/></th>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${action.updateDatetime}" /></td>
+                        </tr>
+                    </c:if>
+                    </tbody>
+                </table>
+                <!-- 입력 테이블 End -->
+            </div>
+
+            <div class="table_title_area">
+                <div class="table_btn_set">
+                    <c:if test="${empty action}">
+                        <button class="btn btype01 bstyle03" onclick="javascript:addAction(); return false;"><spring:message code="common.button.add"/> </button>
+                    </c:if>
+                    <c:if test="${!empty action}">
+                        <button class="btn btype01 bstyle03" onclick="javascript:saveAction(); return false;"><spring:message code="common.button.save"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeAction(); return false;"><spring:message code="common.button.remove"/> </button>
+                    </c:if>
+                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
+                </div>
+            </div>
+        </article>
+        <!-- 테이블 입력 / 조회 영역 End -->
+    </form>
+</section>
+
+<script type="text/javascript">
+    var targetMenuId = String('${menuId}');
+    var subMenuId = String('${subMenuId}');
+    var form = $('#actionForm');
+
+    var urlConfig = {
+        'addUrl':'${rootPath}/action/add.json'
+        ,'saveUrl':'${rootPath}/action/save.json'
+        ,'removeUrl':'${rootPath}/action/remove.json'
+        ,'listUrl':'${rootPath}/action/list.html'
+    };
+
+    var messageConfig = {
+        'addConfirm':'<spring:message code="action.message.addConfirm"/>'
+        ,'saveConfirm':'<spring:message code="action.message.saveConfirm"/>'
+        ,'removeConfirm':'<spring:message code="action.message.removeConfirm"/>'
+        ,'addFailure':'<spring:message code="action.message.addFailure"/>'
+        ,'saveFailure':'<spring:message code="action.message.saveFailure"/>'
+        ,'removeFailure':'<spring:message code="action.message.removeFailure"/>'
+        ,'addComplete':'<spring:message code="action.message.addComplete"/>'
+        ,'saveComplete':'<spring:message code="action.message.saveComplete"/>'
+        ,'removeComplete':'<spring:message code="action.message.removeComplete"/>'
+        <%--,'requireActionId':'<spring:message code="action.message.requireActionId"/>'--%>
+    };
+
+    function validate(type){
+        if(form.find('input[name=actionId]').val().length == 0){
+            alertMessage('requireCodeId');
+            return false;
+        }
+
+        return true;
+    }
+
+    function addAction(){
+        if(!confirm(messageConfig['addConfirm'])){
+            return false;
+        }
+
+        if(validate(1)){
+            callAjax('add', form.serialize());
+        }
+    }
+
+    function saveAction(){
+        if(!confirm(messageConfig['saveConfirm'])){
+            return false;
+        }
+
+        if(validate(1)){
+            callAjax('save', form.serialize());
+        }
+    }
+
+    function removeAction(){
+        if(!confirm(messageConfig['removeConfirm'])){
+            return false;
+        }
+
+        if(validate(2)){
+            callAjax('remove', form.serialize());
+        }
+    }
+
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestAction_successHandler,requestAction_errorHandler,actionType);
+    }
+
+    function requestAction_successHandler(data, dataType, actionType){
+        alertMessage(actionType + 'Complete');
+        switch(actionType){
+            case 'save':
+                break;
+            case 'add':
+            case 'remove':
+                cancel();
+                break;
+        }
+    }
+
+    function requestAction_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
+    }
+
+    function alertMessage(type){
+        alert(messageConfig[type]);
+    }
+
+    function cancel(){
+        var listForm = $('<FORM>').attr('method','POST').attr('action',urlConfig['listUrl']);
+        listForm.appendTo(document.body);
+        listForm.submit();
+    }
+</script>

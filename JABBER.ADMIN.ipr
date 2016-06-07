@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactManager">
+    <artifact type="exploded-war" build-on-make="true" name="ISAVER.ADMIN:war exploded">
+      <output-path>$PROJECT_DIR$/out/artifacts/ISAVER_ADMIN_war_exploded</output-path>
+      <root id="root">
+        <element id="javaee-facet-resources" facet="ISAVER.ADMIN/web/Web" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="ISAVER.ADMIN" />
+            <element id="module-output" name="ISAVER.ADMIN.RESPOSIORY" />
+          </element>
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="Spring MVC-3.2.8.RELEASE" />
+            <element id="library" level="project" name="Spring-3.2.8.RELEASE" />
+            <element id="library" level="project" name="repository-lib" />
+            <element id="library" level="project" name="lib" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+    <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war">
+      <output-path>$PROJECT_DIR$/../../../../BIN/isaver_web/</output-path>
+      <root id="archive" name="ISAVER.ADMIN.war">
+        <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="ISAVER.ADMIN.RESPOSIORY" />
+          </element>
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="logback" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+  </component>
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="CopyrightManager" default="" />
+  <component name="DataSourceManagerImpl" format="xml" hash="2223130983">
+    <data-source source="LOCAL" name="[DEV] 172.16.110.199" read-only="true" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
+      <driver-ref>postgresql</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://172.16.110.199:5432/isaver</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="[OPT] 172.16.110.198" read-only="true" uuid="c3c27a8d-c7af-4cd2-9ea1-63054df39e69">
+      <driver-ref>postgresql</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://172.16.110.198:5432/isaver</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <type id="Spring" />
+    <type id="web" />
+  </component>
+  <component name="IdProvider" IDEtalkID="ED1C32727349ACBDEE13624834BC2F28" />
+  <component name="Palette2">
+    <group name="Swing">
+      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
+      </item>
+      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
+        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
+        <initial-values>
+          <property name="text" value="Button" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="RadioButton" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="CheckBox" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="Label" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
+          <preferred-size width="-1" height="20" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
+      </item>
+    </group>
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ISAVER.ADMIN.iml" filepath="$PROJECT_DIR$/ISAVER.ADMIN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/ISAVER.ADMIN.RESPOSIORY.iml" filepath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/ISAVER.ADMIN.RESPOSIORY.iml" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.1.0" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.2.0" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="svn" />
+  </component>
+  <component name="dataSourceStorageLocal">
+    <data-source name="[DEV] 172.16.110.199" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
+      <user-name>isaveruser</user-name>
+      <user-password>dfc3dfd9dfcbdfdcdfcfdfd8dfdfdfd9dfcfdfd8</user-password>
+    </data-source>
+    <data-source name="[OPT] 172.16.110.198" uuid="c3c27a8d-c7af-4cd2-9ea1-63054df39e69">
+      <user-name>isaveruser</user-name>
+      <user-password>dfc3dfd9dfcbdfdcdfcfdfd8dfdfdfd9dfcfdfd8</user-password>
+    </data-source>
+  </component>
+  <component name="libraryTable">
+    <library name="lib">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/tiles-api-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-autotag-core-runtime-1.1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-compat-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-core-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-el-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-extras-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-freemarker-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-jsp-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-mvel-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-ognl-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-api-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-freemarker-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-jsp-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-mustache-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-servlet-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-servlet-wildcard-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-request-velocity-1.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-servlet-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-template-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/tiles-velocity-3.0.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-beanutils-1.8.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-digester-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-fileupload-1.3.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-io-2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/gson-2.2.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jstl-1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/kst_digest_lib_v0.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/poi-3.8-20120326.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/poi-excelant-3.8-20120326.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-3.8-20120326.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-schemas-3.8-20120326.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/poi-scratchpad-3.8-20120326.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/xmlbeans.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/ganymed-ssh2-build210.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/ganymed-ssh2-build210.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/httpclient-4.3.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/httpcore-4.3.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.6.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/libphonenumber-7.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.88.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jackson-core-asl-1.9.13.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jackson-mapper-asl-1.9.13.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/commons-compiler-2.7.6.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/commons-logging-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/janino-2.7.8.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/jcl-over-slf4j-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/jul-to-slf4j-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/log4j-core-2.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-access-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-classic-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-core-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-ext-spring-0.1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-api-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-log4j12-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="logback">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/logback/commons-compiler-2.7.6.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/commons-logging-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/janino-2.7.8.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/jcl-over-slf4j-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/jul-to-slf4j-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/log4j-core-2.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-access-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-classic-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-core-1.1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/logback-ext-spring-0.1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-api-1.7.7.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-log4j12-1.7.7.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="repository-lib">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/antlr-3.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/aopalliance-1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/commons-dbcp2-2.1.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/commons-pool2-2.4.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/dom4j-1.6.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/jackson-core-asl-1.9.13.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/jackson-mapper-asl-1.9.13.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/javax.inject-1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/mybatis-3.2.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/mybatis-spring-1.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/postgresql-9.3-1104-jdbc41.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-aop-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-aspects-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-beans-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-context-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-context-support-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-core-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-expression-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-instrument-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-instrument-tomcat-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-jdbc-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-jms-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-orm-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-oxm-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-test-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/lib/spring-tx-3.2.8.RELEASE.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Spring MVC-3.2.8.RELEASE" type="spring-mvc">
+      <properties version="3.2.8.RELEASE" />
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/spring-web.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-web_2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Spring-3.2.8.RELEASE" type="spring">
+      <properties version="3.2.8.RELEASE" />
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/spring-aspects-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-aop-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-beans-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-context-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-context-support-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-core-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-expression-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-instrument-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-instrument-tomcat-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-jdbc-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-jms-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-orm-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-oxm-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-test-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-tx-3.2.8.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/aopalliance-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+  </component>
+</project>

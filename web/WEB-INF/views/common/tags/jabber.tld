@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    <description>JABBER COMMON TAG</description>
+    <display-name>ICENT JSTL CORE</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>icentTld</short-name>
+    <tag>
+        <description>
+            메뉴 전체 경로 반환
+        </description>
+        <name>menu</name>
+        <tag-class>com.icent.jabber.admin.tag.MenuTagSupport</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                메뉴ID
+            </description>
+            <name>menuId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            페이지별 권한 체크
+        </description>
+        <name>pageRoleCheck</name>
+        <tag-class>com.icent.jabber.admin.tag.RoleCheckTagSupport</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                메뉴ID
+            </description>
+            <name>menuId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            코드용 SELECT BOX HTML TAG
+        </description>
+        <name>codeSelectBox</name>
+        <tag-class>com.icent.jabber.admin.tag.CodeSelectBoxTagSupport</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                그룹 코드 ID
+            </description>
+            <name>groupCodeId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                코드 ID
+            </description>
+            <name>codeId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(ID)
+            </description>
+            <name>htmlTagId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(NAME)
+            </description>
+            <name>htmlTagName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(class)
+            </description>
+            <name>htmlTagClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                전체여부
+            </description>
+            <name>allModel</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                전체
+            </description>
+            <name>allText</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            코드용 HTML TEXT
+        </description>
+        <name>codeText</name>
+        <tag-class>com.icent.jabber.admin.tag.CodeTextTagSupport</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                그룹 코드 ID
+            </description>
+            <name>groupCodeId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                코드 ID
+            </description>
+            <name>codeId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            공통 리소스기반으로 selectbox 만들기
+        </description>
+        <name>resourceSelectBoxTag</name>
+        <tag-class>com.icent.jabber.admin.tag.ResourceElementTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                리소스명
+            </description>
+            <name>resourceName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                element type
+            </description>
+            <name>elementType</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                element name
+            </description>
+            <name>elementName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                initalize value
+            </description>
+            <name>initValue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            파일용량 표현 Tag
+        </description>
+        <name>fileSize</name>
+        <tag-class>com.icent.jabber.admin.tag.FileSizeTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                파일용량(byte)
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>long</type>
+        </attribute>
+        <attribute>
+            <description>
+                소수점 자릿수
+            </description>
+            <name>point</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
+        </attribute>
+    </tag>
+</taglib>

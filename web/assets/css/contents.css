@@ -1,0 +1,155 @@
+﻿
+.sub_title_area, .top_gnb_area, .search_area, .search_contents, .search_btn,
+.search_contents > p, .search_contents > p > span, .tree_box, .table_title_area,
+.maun_human, .code_list > div{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.login_area > article {
+    position: relative;
+    width:100%;
+    height:100%;
+}
+/*로그인 타이틀 영역 */
+.login_logo_area {
+    position: absolute;
+    width:490px;
+    height:160px;
+    top:70px;
+    left:0;
+    background-image: url(../images/logo/login_logo.png);
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+.login_logo_area p {
+    position: absolute;
+    width:100%;
+    text-align:center;
+    font-size:30px;
+    color:#2692ec;
+    bottom:0;
+    left:0;
+}
+
+.login_input_area {
+    position: absolute;
+    width:200px;
+    height:100px;
+    top:50%;
+    left:50%;
+    margin: 0 0 0 -100px;
+}
+
+/*헤더 로고 영역*/
+.ha_right_set, .ha_right_set > div, .ha_right_set > div > * {height:100%;}
+.ha_right_set {overflow: hidden; position: absolute; top:0; right:0; }
+.ha_right_set > div {float: left; display: table;}
+.ha_right_set > div > * {position: relative; display: table-cell;  vertical-align: middle; color:#e0e0de;}
+.ha_right_set > div > button {width:50px; border:none;}
+
+.hrs_date > span {padding:0 20px; font-size:12px; line-height: 12px;}
+.hrs_date > span:first-of-type {font-size:20px; line-height: 20px;}
+.hrs_date > span:first-of-type:after {
+    content:"";
+    position: absolute; right:0; top:50%; margin:-5px 0 0 0;
+    width:1px; height:10px; background-color: #fff;
+    opacity: 0.4;
+}
+
+/* 2depth 타이틀 영역 */
+.sub_title_area {
+    position: relative;
+    width:100%; height:40px;
+    border-style:solid;
+    border-width:0 0 2px 0;
+    border-color:#333240;
+}
+
+.tree_box {
+    widtH:100%;
+    padding:10px;
+    margin:0 0 20px 0;
+    border-width:1px;
+    border-style:solid;
+    border-color:#e4e4e4;
+    background-color: #fff;
+    box-shadow:         1px 2px 4px rgba(0,0,0,0.02);
+    -webkit-box-shadow: 1px 2px 4px rgba(0,0,0,0.02);
+    -moz-box-shadow:    1px 2px 4px rgba(0,0,0,0.02);
+}
+
+.m_human {
+    position: absolute;
+    width:80px;
+    height:80px;
+    top:50%;
+    left:30px;
+    margin:-40px 0 0 0;
+    border:1px solid #e4e4e4;
+    background-image: url(../images/ico/human.png);
+    background-position: center 16px;
+    background-repeat: no-repeat;
+    -moz-border-radius:    500px;
+    -webkit-border-radius: 500px;
+    -khtml-border-radius:  500px;
+    border-radius:         500px;
+    overflow: hidden;;
+}
+
+span.holiday_span {
+    position: absolute;
+    left: 10px;
+    right: 20px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    font-size: 11px;
+}
+
+span.holiday_span > span {display: inline;   cursor: pointer;}
+
+.page_loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/ico/loading.gif);
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #fff;
+    z-index: 1;
+    left: 0;
+    display: none;
+}
+
+.code_view_area {
+    position: relative;  width:100%; height:100%;
+}
+.code_list {position: relative; width:100%;  height:100%; float:left;}
+
+.code_list > button, .code_list > div {
+    -moz-border-radius:    20px;
+    -webkit-border-radius: 20px;
+    border-radius:         20px;
+    -khtml-border-radius:  20px;
+}
+.code_list > button {
+    float:left; height:32px; background-color: #3e3e3e; color:#fff; padding:0 20px;
+}
+.code_list > button:hover { background-color: #2692ec;}
+.code_list > button:before {content:"\e922"; font-weight:bold; font-size:16px; color:#fff; padding:0 5px 0 0;}
+.code_list > div {
+    float:left; height:32px; margin:0 5px 5px 0;
+    border-style:solid; border-width:1px; border-color:#b7b7b7;
+
+}
+.code_list > div > button, .code_list > div > button:nth-of-type(2):after {height:100%; font-weight: bold;}
+.code_list > div > button:nth-of-type(1) { padding:0 0 0 10px; line-height: 11px;}
+.code_list > div > button:nth-of-type(2):after {content:"\e925"; padding:0 10px; }
+
+
+.area_enrolment  {display:none;}

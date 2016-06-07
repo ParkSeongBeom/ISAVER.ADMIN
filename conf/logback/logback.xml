@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <property name="project_name" value="jabber_admin" />
+    <property name="logDirPath" value="/jabberplus/was/logs" />
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="projectAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDirPath}/${project_name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDirPath}/${project}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- keep 10 days' worth of history -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="java.sql" level="ERROR" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.apache.http" level="ERROR" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.mybatis" level="ERROR" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="projectAppender"/>
+    </root>
+
+</configuration>

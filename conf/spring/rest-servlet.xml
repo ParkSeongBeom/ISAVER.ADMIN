@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven/>
+
+    <context:component-scan base-package="com.icent.jabber.admin, com.icent.isaver.admin" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
+    <!--<mvc:interceptors>-->
+        <!--<bean class="com.icent.jabber.admin.util.AuthorizationInterceptor">-->
+            <!--<property name="noneAuthorTargets" value="#{configProperties['cnf.noneAuthTargets']}" />-->
+        <!--</bean>-->
+    <!--</mvc:interceptors>-->
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManager">
+                <constructor-arg>
+                    <bean class="org.springframework.web.accept.HeaderContentNegotiationStrategy">
+                    </bean>
+                </constructor-arg>
+            </bean>
+            <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+                <!--<property name="mediaTypes">-->
+                    <!--<value>-->
+                        <!--xml=application/rss+xml-->
+                        <!--htm=text/html;charset=UTF-8-->
+                        <!--html=text/html;charset=UTF-8-->
+                        <!--ajax=text/html;charset=UTF-8-->
+                        <!--scr=application/x-javascript;charset=UTF-8-->
+                        <!--json=application/json;charset=UTF-8-->
+                        <!--jsonp=application/javascript;charset=UTF-8-->
+                        <!--xml=application/xml;charset=UTF-8-->
+                        <!--do=text/html;charset=UTF-8-->
+                    <!--</value>-->
+                <!--</property>-->
+            <!--</bean>-->
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+                <!--<bean class="org.springframework.web.servlet.view.xml.MarshallingView">-->
+                <!--<property name="marshaller">-->
+                <!--<ref bean="marshaller" />-->
+                <!--</property>-->
+                <!--</bean>-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="order" value="2" />
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <property name="cache" value="true" />
+    </bean>
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" >
+        <property name="definitions">
+            <value>classpath:tiles/tiles.xml</value>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="basenames">
+            <list>
+                <value>properties/message/common</value>
+                <value>properties/message/code</value>
+                <value>properties/message/groupcode</value>
+                <value>properties/message/hubtab</value>
+                <value>properties/message/admin</value>
+                <value>properties/message/role</value>
+                <value>properties/message/menu</value>
+                <value>properties/message/user</value>
+                <value>properties/message/broadcast</value>
+                <value>properties/message/tpdevice</value>
+                <value>properties/message/organization</value>
+                <value>properties/message/logsetupclient</value>
+                <value>properties/message/logauthclientuser</value>
+                <value>properties/message/logauthadminuser</value>
+                <value>properties/message/maintenance</value>
+                <value>properties/message/logbatch</value>
+                <value>properties/message/notice</value>
+                <value>properties/message/clientproduct</value>
+                <value>properties/message/assets</value>
+                <value>properties/message/fnq</value>
+                <value>properties/message/account</value>
+                <value>properties/message/server</value>
+                <value>properties/message/targetSynchronize</value>
+                <value>properties/message/function</value>
+                <value>properties/message/target</value>
+                <value>properties/message/targetboard</value>
+                <value>properties/message/calendar</value>
+                <value>properties/message/file</value>
+                <value>properties/message/notification</value>
+                <value>properties/message/mail</value>
+                <value>properties/message/monitor</value>
+                <value>properties/message/monitorprocess</value>
+                <value>properties/message/main</value>
+                <value>properties/message/bussinessboard</value>
+                <value>properties/message/cucm</value>
+                <value>properties/message/synchronize</value>
+                <value>properties/message/mobileMenu</value>
+                <!-- [START] 안전 방재 -->
+                <value>properties/message/action</value>
+                <value>properties/message/event</value>
+                <value>properties/message/license</value>
+                <!-- [END] 안전 방재 -->
+            </list>
+        </property>
+        <!--<property name="fallbackToSystemLocale" value="false"/>-->
+    </bean>
+
+    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
+        <!--<property name="defaultLocale" value="ko" />-->
+    <!--</bean>-->
+<!---->
+    <!--<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+        <!--<property name="paramName" value="lang" />-->
+    <!--</bean>-->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>100000000</value> <!-- 100,000,000(byte) -->
+        </property>
+    </bean>
+</beans>
+

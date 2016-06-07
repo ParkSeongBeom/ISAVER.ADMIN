@@ -1,0 +1,64 @@
+﻿/*
+aside {
+    transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+*/
+aside, header, section, .wrap, header, .header_area, article  {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {}
+body {
+    width:100%; min-width:1280px;
+    background-color: #fafafa;
+}
+body.admin_mode section.container {
+     margin: auto; padding:30px;
+    background-color:#fcfcfc !important;
+}
+body.admin_mode .nav_area {display: none;}
+
+.wrap  {
+    overflow: hidden;
+    width:100%; height:100%;
+    min-width:1235px;
+    margin:auto;
+}
+
+header, nav ,section {display: inline-block; position: absolute;}
+
+header  {top:0; left:0; width:100%; height:65px; background-color: #333240;}
+header .header_area {position: relative; width:100%; height:100%;}
+
+nav.nav ,section.container {}
+
+nav.nav { top:65px;  left:0; bottom:0; width:130px; background-color: #25252f;}
+section.container {
+    overflow: overlay; top:65px; right:0;  left:130px; bottom:0;  background-color:#1e1d23;
+}
+
+/*로그인 영역 */
+.login_area {
+    position: absolute;
+    width:490px;
+    height:490px;
+    top:50%;
+    left:50%;
+    margin:-245px 0 0 -245px;
+    background: #fff;
+    -moz-border-radius:    500px;
+    -webkit-border-radius: 500px;
+    -khtml-border-radius:  500px;
+    border-radius:         500px;
+
+    box-shadow:         0px 0px 8px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+    -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.1);
+}
+
