@@ -50,6 +50,14 @@
             location.href = rootPath + '/main.html';
         }
 
+        function printTime() {
+            $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
+
+            setTimeout(function(){
+                printTime();
+            },1000);
+        }
+
         $(document).ready(function(){
             calendarHelper = new CalendarHelper(rootPath);
 
@@ -67,6 +75,8 @@
             $.each($("table.t_type01 > tbody > tr > td"),function(){
                 $(this).attr("title",$(this).text().trim());
             });
+
+            printTime();
         });
     </script>
 </head>
@@ -79,7 +89,7 @@
             <h1><button>i-Saver</button></h1>
             <div class="ha_right_set">
                 <div class="hrs_date">
-                    <span>05.20 FRI 10:31 AM</span>
+                    <span id="nowTime"></span>
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
