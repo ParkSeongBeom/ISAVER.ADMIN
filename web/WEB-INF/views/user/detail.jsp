@@ -58,10 +58,21 @@
                     <tr>
                         <th><spring:message code="user.column.role"/></th>
                         <td>
-                            <input type="text" name="roleId" value="${user.roleId}" />
+                            <select name="roleId">
+                                <option value=""><spring:message code="common.button.select"/> </option>
+                                <c:forEach items="${roles}" var="role">
+                                    <option value="${role.roleId}" ${admin.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                </c:forEach>
+                            </select>
                         </td>
-                        <th><spring:message code="user.column.email"/></th>
+                        <th><spring:message code="user.column.telephone"/></th>
                         <td>
+                            <input type="text" name="telephone" value="${user.telephone}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code="user.column.email"/></th>
+                        <td colspan="3">
                             <input type="text" name="email" value="${user.email}" />
                         </td>
                     </tr>
@@ -159,23 +170,11 @@
             return false;
         }
 
-        if(form.find('input[name=password]').val().trim().length > 0
+        if(form.find('input[name=userPassword]').val().trim().length > 0
                 && form.find('input[name=userPassword]').val() != form.find('input[name=password_confirm]').val() && type != 3){
             alertMessage('notEqualsPassword');
             return false;
         }
-
-        if(form.find('input[name=domain]').val().trim().length == 0 && type != 3){
-            alertMessage('requireDomain');
-            return false;
-        }
-
-        if(form.find('input[name=extension]').val().trim().length == 0 && type != 3){
-            alertMessage('requireExtensionNumber');
-            return false;
-        }
-
-        $('input:hidden[name=orgId]').val($("#userForm select[id=upOrgSeqSelect]").val());
         return true;
     }
 
@@ -189,7 +188,6 @@
         }
 
         if(validate(1)){
-            $('input:hidden[name=orgId]').val($("form select[id=selectOrgSeq]").val());
             checkUserId();
         }
     }
@@ -204,8 +202,7 @@
         }
 
         if(validate(2)){
-            $('input:hidden[name=orgId]').val($("form select[id=selectOrgSeq]").val());
-            callAjaxWithFile('save', form);
+            callAjax('save', form.serialize());
         }
     }
     /*
@@ -231,7 +228,7 @@
 
     function checkUserId_successHandler(data, dataType){
         if(data != null && data.hasOwnProperty('exist') && data['exist'] == 'N'){
-            callAjaxWithFile('add', form);
+            callAjax('add', form.serialize());
         }else{
             alertMessage('existUserId');
         }
@@ -248,14 +245,6 @@
      */
     function callAjax(actionType, data){
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestCode_successHandler,requestCode_errorHandler,actionType);
-    }
-
-    /*
-     ajax with file call
-     @author kst
-     */
-    function callAjaxWithFile(actionType, form){
-        sendAjaxFileRequest(urlConfig[actionType + 'Url'],form,requestCode_successHandler,requestCode_errorHandler,actionType);
     }
 
     /*

@@ -4,6 +4,7 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.UsersBean;
+import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
 import com.kst.common.bean.CommonResourceBean;
 import com.kst.common.springutil.TransactionUtil;
@@ -38,6 +39,9 @@ public class UsersSvcImpl implements UsersSvc {
     @Inject
     private UsersDao usersDao;
 
+    @Inject
+    private RoleDao roleDao;
+
     @Resource(name="mybatisIsaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
@@ -60,6 +64,7 @@ public class UsersSvcImpl implements UsersSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user",user);
+        modelAndView.addObject("roles",roleDao.findListRole(null));
         return modelAndView;
     }
 
