@@ -61,7 +61,7 @@
                             <select name="roleId">
                                 <option value=""><spring:message code="common.button.select"/> </option>
                                 <c:forEach items="${roles}" var="role">
-                                    <option value="${role.roleId}" ${admin.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                    <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
                                 </c:forEach>
                             </select>
                         </td>
