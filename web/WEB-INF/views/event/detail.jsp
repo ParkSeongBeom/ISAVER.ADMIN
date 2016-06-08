@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
 <c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
@@ -121,7 +121,7 @@
         <h3 class="1depth_title"><spring:message code="common.title.event"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><jabber:menu menuId="${menuId}" /></span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->

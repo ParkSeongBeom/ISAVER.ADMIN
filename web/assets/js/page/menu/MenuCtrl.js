@@ -95,8 +95,8 @@ function MenuCtrl(model) {
             return false;
         }
 
-        if ($("input[name='menuUrl']").val().trim().length == 0) {
-            $("input[name='menuUrl']").focus();
+        if ($("input[name='menuPath']").val().trim().length == 0) {
+            $("input[name='menuPath']").focus();
             alert(messageConfig.requiredMenuUrl);
             return false;
         }
@@ -338,20 +338,22 @@ function MenuEvent(model) {
      */
     MenuEvent.detailSuccessHandler = function (data, dataType, actionType) {
         if (typeof data == "object" && data.hasOwnProperty("menu")) {
-            try {
-                MenuEvent._model.setMenuId(data.menu.menuId);
-                MenuEvent._model.setMenuName(data.menu.menuName);
-                MenuEvent._model.setUseFlag(data.menu.useFlag);
-                MenuEvent._model.setMenuDepth(data.menu.menuDepth);
-                MenuEvent._model.setParentMenuId(data.menu.parentMenuId);
-            } catch(e) {
-                console.error("[Error][MenuEvent.detailSuccessHandler] " + e);
+            if(data.menu!=null){
+                try {
+                    MenuEvent._model.setMenuId(data.menu.menuId);
+                    MenuEvent._model.setMenuName(data.menu.menuName);
+                    MenuEvent._model.setUseYn(data.menu.useYn);
+                    MenuEvent._model.setMenuDepth(data.menu.menuDepth);
+                    MenuEvent._model.setParentMenuId(data.menu.parentMenuId);
+                } catch(e) {
+                    console.error("[Error][MenuEvent.detailSuccessHandler] " + e);
+                }
             }
             menuView.setDetail(data.menu);
         }
-        if (typeof data == "object" && data.hasOwnProperty("roles")) {
-            menuView.setRoleList(data.roles);
-        }
+//        if (typeof data == "object" && data.hasOwnProperty("roles")) {
+//            menuView.setRoleList(data.roles);
+//        }
 
         $('#selectAll').checked = false;
     };

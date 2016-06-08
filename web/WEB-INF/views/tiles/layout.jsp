@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${pageContext.servletContext.contextPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
     <!--[endif] -->
-    <title>Japple Admin</title>
+    <title>iSaver Admin</title>
     <%-- dynatree, dhj --%>
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/css/dynatree/skin-vista/ui.dynatree.css" >
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
@@ -21,6 +21,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.mCustomScrollbar.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/design.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/default.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
     <%-- dynatree, dhj --%>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
 
@@ -67,52 +68,61 @@
                 $(this).attr("title",$(this).text().trim());
             });
         });
-
-
     </script>
 </head>
-<body>
+<body class="admin_mode adaptive_min">
     <!-- wrap Start -->
     <div class="wrap">
-        <!-- 사이트 맵 Start -->
-        <aside class="site_map">
-            <div class="site_map_area"></div>
-        </aside>
-        <!-- 사이트 맵 End -->
-
         <!-- hearder Start 고통부분 -->
-        <header>
+        <header id="header">
             <div class="header_area">
-                <div class="top_logo_area">
-                    <h1><a href="#" onclick="javascript:goHome();">JAPPLE ADMIN</a>
-                    <span id="log"></span></h1>
-                </div>
-                <div class="top_gnb_area">
-                    <div class="gnb_box">
-                        <div id="fx01" class="gnb_area">
-                        </div>
-                        <div class="lr_btn_set00">
-                            <button class="pre_btn prebt01">〈 </button>
-                            <button class="nex_btn nexbt01"> 〉</button>
-                        </div>
+                <h1><button>i-Saver</button></h1>
+                <div class="ha_right_set">
+                    <div class="hrs_date">
+                        <span>05.20 FRI 10:31 AM</span>
+                        <span>${sessionScope.authAdminInfo.userName}</span>
                     </div>
-                    <div class="gnb_right_area">
-                        <!-- 사이트 맵 오픈 버튼 -->
-                        <button class="btn_sitemap"></button>
-                        <!-- 관리자 정보 / 로그 아웃 버튼 -->
-                        <a href="javascript:logout()" class="btn_logout fa">
-                            <span title="${sessionScope.authAdminInfo.name}(${sessionScope.authAdminInfo.adminId})">
-                                ${sessionScope.authAdminInfo.name}(${sessionScope.authAdminInfo.adminId})
-                            </span>
-                            <span>님</span>
-                        </a>
+                    <div class="hrs_btn_set">
+                        <button></button>
+                        <button href="#" onclick="javascript:logout();"></button>
                     </div>
                 </div>
             </div>
         </header>
         <!-- hearder End -->
 
-        <nav class="nav"></nav>
+        <nav id="nav" class="nav"><!-- 관리자용  -->
+
+        </nav>
+
+        <nav id="nav" class="nav"><!-- 관리자용  -->
+            <div class="gnb_area"></div>
+
+            <!-- 메인, 대시보드, 이력, 통계용 -->
+            <div class="nav_area">
+                <ul class="lnb">
+                    <li class="on" name="">
+                        <button>Dashboard</button>
+                        <ul>
+                            <li><button>All</button></li>
+                            <li><button>A-Area</button></li>
+                            <li><button>B-Area</button></li>
+                            <li><button>C-Area</button></li>
+                            <li><button>D-Area</button></li>
+                            <li><button>E-Area</button></li>
+                            <li><button>F-Area</button></li>
+                        </ul>
+                    </li>
+                    <li name="">
+                        <button>이력</button>
+                    </li>
+                    <li name="">
+                        <button>통계</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <tiles:insertAttribute name="body" />
     </div>
     <script type="application/javascript">

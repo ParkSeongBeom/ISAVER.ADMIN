@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.AreaSvc;
-import com.icent.jabber.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.AdminHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

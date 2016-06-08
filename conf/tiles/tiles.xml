@@ -2,12 +2,29 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <!--suppress ALL -->
 <tiles-definitions>
-    <definition name="base" template="/WEB-INF/views/tiles/layout.jsp">
-    </definition>
-
     <!-- ############# -->
     <!-- [START] 안전 방재 -->
     <!-- ############# -->
+
+    <definition name="base" template="/WEB-INF/views/tiles/layout.jsp">
+    </definition>
+
+    <!--
+        로그인페이지
+        @author kst
+    -->
+    <definition name="login" template="/WEB-INF/views/authorization/login.jsp" />
+
+    <!--
+        사용자 관리
+        @author kst
+    -->
+    <definition name="userList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/list.jsp" />
+    </definition>
+    <definition name="userDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/detail.jsp" />
+    </definition>
 
     <!--
         이벤트 관리
@@ -64,199 +81,20 @@
         <put-attribute name="body" value="/WEB-INF/views/license/detail.jsp" />
     </definition>
 
-    <!-- ############# -->
-    <!-- [END] 안전 방재 -->
-    <!-- ############# -->
-
-    <!--
-        웹소켓 테스트
-        @author dhj
-    -->
-    <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
-
-    <!--
-        로그인페이지
-        @author kst
-    -->
-    <definition name="login" template="/WEB-INF/views/authorization/login.jsp" />
-
-    <!--
-        메인페이지
-        @author kst
-    -->
-    <definition name="main" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/authorization/main.jsp" />
-    </definition>
-
-    <!--
-        메인 - 시스템
-        @author psb
-     -->
-    <definition name="mainMonitorServerList" template="/WEB-INF/views/authorization/main/monitorServer.jsp" />
-
-    <!--
-        메인 - 프로세스
-        @author psb
-     -->
-    <definition name="mainMonitorProcessList" template="/WEB-INF/views/authorization/main/monitorProcess.jsp" />
-
-    <!--
-        메인 - 배치이력
-        @author psb
-     -->
-    <definition name="mainLogBatchList" template="/WEB-INF/views/authorization/main/logBatch.jsp" />
-
-    <!--
-        메인 - 사용자
-        @author psb
-     -->
-    <definition name="mainUserList" template="/WEB-INF/views/authorization/main/user.jsp" />
-
-    <!--
-        메인 - 접속현황
-        @author psb
-     -->
-    <definition name="mainLogUserList" template="/WEB-INF/views/authorization/main/logUser.jsp" />
-
-    <!--
-        메인 - 의뢰하기
-        @author psb
-     -->
-    <definition name="mainMaintenanceList" template="/WEB-INF/views/authorization/main/maintenance.jsp" />
-
-    <!--
-        메인 - 관리자 접속이력
-        @author psb
-     -->
-    <definition name="mainLogAuthAdminUserList" template="/WEB-INF/views/authorization/main/logAuthAdminUser.jsp" />
-
-    <!--
-        코드관리
-        @author kst
-     -->
-    <definition name="groupCodeList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/groupcode/list.jsp" />
-    </definition>
-
-    <definition name="groupCodeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/groupcode/detail.jsp" />
-    </definition>
-
-    <definition name="codeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/code/detail.jsp" />
-    </definition>
-
-    <!--
-        허브탭관리
-        @author kst
-    -->
-    <definition name="hubTabList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/hubtab/list.jsp" />
-    </definition>
-
-    <definition name="hubTabDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/hubtab/detail.jsp" />
-    </definition>
-
-    <!--
-        모바일메뉴관리
-        @author psb
-    -->
-    <definition name="mobileMenuList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/mobileMenu/list.jsp" />
-    </definition>
-
-    <definition name="mobileMenuDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/mobileMenu/detail.jsp" />
-    </definition>
-
-    <!--
-        관리자 관리
-        @author kst
-    -->
-    <definition name="adminList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/admin/list.jsp" />
-    </definition>
-    <definition name="adminDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/admin/detail.jsp" />
-    </definition>
-
-    <!--
-        사용자 관리
-        @author kst
-    -->
-    <definition name="userList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/user/list.jsp" />
-    </definition>
-    <definition name="userDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/user/detail.jsp" />
-    </definition>
-
-    <!--
-        사용자 업로드
-        @author psb
-    -->
-    <definition name="userUpload" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/user/upload.jsp" />
-    </definition>
-
-    <!--
-        사용자 동기화 관리
-        @author psb
-    -->
-    <definition name="requestSynchronizeList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/synchronize/list.jsp" />
-    </definition>
-    <definition name="synchronizeUserList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/synchronize/detail.jsp" />
-    </definition>
-
-    <!--
-        동기화 설정
-        @author psb
-    -->
-    <definition name="settingServerSynchronize" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/synchronize/setting.jsp" />
-    </definition>
-
-    <!--
-        설치이력 관리
-        @author kst
-    -->
-    <definition name="logSetupClientList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/logsetupclient/list.jsp" />
-    </definition>
-
-    <!--
-        인가이력 관리
-        @author kst
-    -->
-    <definition name="logAuthClientUserList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/logauthclientuser/list.jsp" />
-    </definition>
-
-    <!--
-        관리자 인가이력 관리
-        @author kst
-    -->
-    <definition name="logAuthAdminUserList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/logauthadminuser/list.jsp" />
-    </definition>
-
-    <!--
-        배치로그 관리
-        @author kst
-    -->
-    <definition name="logBatchList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/logbatch/list.jsp" />
-    </definition>
-
     <!--
         메뉴관리
         @author dhj
      -->
     <definition name="menuList" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/menu/list.jsp" />
+    </definition>
+
+    <!--
+        메뉴권한관리
+        @author psb
+     -->
+    <definition name="roleMenuList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/rolemenu/list.jsp" />
     </definition>
 
     <!--
@@ -271,299 +109,14 @@
         <put-attribute name="body" value="/WEB-INF/views/role/detail.jsp" />
     </definition>
 
-    <!--
-        부서관리
-        @author dhj
-     -->
-    <definition name="organizationList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/organization/list.jsp" />
-    </definition>
+    <!-- ############# -->
+    <!-- [END] 안전 방재 -->
+    <!-- ############# -->
 
     <!--
-        동보방송관리
-        @author psb
-     -->
-    <definition name="broadcastList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/broadcast/list.jsp" />
-    </definition>
-
-    <definition name="broadcastDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/broadcast/detail.jsp" />
-    </definition>
-
-    <!--
-        TP 장비 관리
-        @author psb
-     -->
-    <definition name="tpDeviceList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/tpdevice/list.jsp" />
-    </definition>
-
-    <definition name="tpDeviceDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/tpdevice/detail.jsp" />
-    </definition>
-
-    <!--
-        공지 사항 관리
-        @author dhj
-     -->
-    <definition name="noticeList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/notice/list.jsp" />
-    </definition>
-
-    <definition name="noticeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/notice/detail.jsp" />
-    </definition>
-
-    <!--
-        의뢰 사항 관리
-        @author dhj
-     -->
-    <definition name="maintenanceList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/maintenance/list.jsp" />
-    </definition>
-
-    <definition name="maintenanceDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/maintenance/detail.jsp" />
-    </definition>
-
-    <!--
-        클라이언트 제품관리
-        @author kst
-     -->
-    <definition name="clientProductList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/clientproduct/list.jsp" />
-    </definition>
-
-    <definition name="clientProductDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/clientproduct/detail.jsp" />
-    </definition>
-
-
-    <!--
-        다음 에디터
+        웹소켓 테스트
         @author dhj
     -->
-    <definition name="editor" template="/WEB-INF/views/common/editor.jsp" />
+    <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
 
-    <definition name="popImage" template="/WEB-INF/views/common/pages/pop_image.jsp" />
-
-    <definition name="popFile" template="/WEB-INF/views/common/pages/pop_file.jsp" />
-
-    <!--
-        자원 관리
-        @author psb
-     -->
-    <definition name="assetsList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/assets/list.jsp" />
-    </definition>
-
-    <definition name="assetsDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/assets/detail.jsp" />
-    </definition>
-
-    <!--
-        도움말 관리
-        @author psb
-     -->
-    <definition name="fnqList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/fnq/list.jsp" />
-    </definition>
-
-    <definition name="fnqDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/fnq/detail.jsp" />
-    </definition>
-
-    <!--
-        로그인통계
-        @author psb
-     -->
-    <definition name="accountList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/account/list.jsp" />
-    </definition>
-
-    <!-- 로그인통계 현황-->
-    <definition name="reportAccountList" template="/WEB-INF/views/account/reportList.jsp" />
-    <!-- 로그인통계 부서별-->
-    <definition name="orgAccountList" template="/WEB-INF/views/account/orgList.jsp" />
-    <!-- 로그인통계 개인별-->
-    <definition name="userAccountList" template="/WEB-INF/views/account/userList.jsp" />
-
-    <!--
-        환경설정
-        @author psb
-     -->
-    <definition name="settingList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/list.jsp" />
-    </definition>
-
-    <!--
-        고객사관리
-        @author psb
-     -->
-    <definition name="targetList" template="/WEB-INF/views/setting/target/list.jsp" />
-
-    <definition name="targetDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/target/detail.jsp" />
-    </definition>
-
-    <!--
-        기능제한관리
-        @author psb
-     -->
-    <definition name="functionList" template="/WEB-INF/views/setting/function/list.jsp" />
-
-    <definition name="functionDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/function/detail.jsp" />
-    </definition>
-
-    <!--
-        서버관리
-        @author psb
-     -->
-    <definition name="serverList" template="/WEB-INF/views/setting/server/list.jsp" />
-
-    <definition name="serverDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/server/detail.jsp" />
-    </definition>
-
-    <!--
-        대상서버관리
-        @author psb
-     -->
-    <definition name="targetSynchronizeList" template="/WEB-INF/views/setting/targetSynchronize/list.jsp" />
-
-    <definition name="targetSynchronizeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/targetSynchronize/detail.jsp" />
-    </definition>
-
-    <!--
-        미리알림관리
-        @author psb
-     -->
-    <definition name="notificationList" template="/WEB-INF/views/setting/notification/list.jsp" />
-
-    <definition name="notificationDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/notification/detail.jsp" />
-    </definition>
-
-    <!--
-        메일발송관리
-        @author psb
-     -->
-    <definition name="mailList" template="/WEB-INF/views/setting/mail/list.jsp" />
-
-    <definition name="mailDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/mail/detail.jsp" />
-    </definition>
-
-    <!--
-        모니터링 서버 관리
-        @author psb
-     -->
-    <definition name="monitorList" template="/WEB-INF/views/setting/monitor/list.jsp" />
-
-    <definition name="monitorDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/monitor/detail.jsp" />
-    </definition>
-
-    <!--
-        모니터링 프로세스 관리
-        @author psb
-     -->
-    <definition name="monitorProcessList" template="/WEB-INF/views/setting/monitorprocess/list.jsp" />
-
-    <definition name="monitorProcessDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/setting/monitorprocess/detail.jsp" />
-    </definition>
-
-    <!--
-        고객사 게시판 관리
-        @author psb
-     -->
-    <definition name="targetBoardList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/targetboard/list.jsp" />
-    </definition>
-
-    <definition name="targetBoardDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/targetboard/detail.jsp" />
-    </definition>
-
-    <!--
-        일정 관리
-        @author psb
-     -->
-    <definition name="calendarList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/calendar/list.jsp" />
-    </definition>
-
-    <!--
-        일정 관리 달력으로보기
-        @author psb
-     -->
-    <definition name="calendarView" template="/WEB-INF/views/calendar/calendarView.jsp" />
-
-    <!--
-        일정 관리 목록으로보기
-        @author psb
-     -->
-    <definition name="listView" template="/WEB-INF/views/calendar/listView.jsp" />
-
-    <definition name="calendarDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/calendar/detail.jsp" />
-    </definition>
-
-
-    <!--
-        파일관리
-        @author kst
-    -->
-    <definition name="fileList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/list.jsp" />
-    </definition>
-
-    <definition name="fileSetting" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/setting/list.jsp" />
-    </definition>
-
-    <definition name="fileSettingDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/setting/detail.jsp" />
-    </definition>
-
-    <!--
-        사업게시판 관리
-        @author psb
-     -->
-    <definition name="bussinessBoardList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/bussinessboard/list.jsp" />
-    </definition>
-
-    <!--
-        사업게시판 관리 달력으로보기
-        @author psb
-     -->
-    <definition name="bussinessBoardCalendarView" template="/WEB-INF/views/bussinessboard/calendarView.jsp" />
-
-    <!--
-        사업게시판 관리 목록으로보기
-        @author psb
-     -->
-    <definition name="bussinessBoardListView" template="/WEB-INF/views/bussinessboard/listView.jsp" />
-
-    <!--
-        팝업 정리
-        @author psb
-    -->
-    <!-- 부서관리 부서원등록 팝업-->
-    <definition name="organizationDetailUserPopup" template="/WEB-INF/views/popup/orgUser.jsp" />
-    <!-- 자원관리 대상추가 팝업-->
-    <definition name="assetsDetailUserPopup" template="/WEB-INF/views/popup/assets.jsp" />
-    <!-- 동보방송관리 대상추가 팝업-->
-    <definition name="broadcastDetailUserPopup" template="/WEB-INF/views/popup/broadcast.jsp" />
-    <!-- 조직도 목록 팝업-->
-    <definition name="organizationPopup" template="/WEB-INF/views/popup/organization.jsp" />
-    <!-- AD/LDAP 목록 팝업-->
-    <definition name="directoryPopup" template="/WEB-INF/views/popup/directory.jsp" />
-    <!-- 전화장비 목록 팝업-->
-    <definition name="devicePopup" template="/WEB-INF/views/popup/cucmDevice.jsp" />
 </tiles-definitions>

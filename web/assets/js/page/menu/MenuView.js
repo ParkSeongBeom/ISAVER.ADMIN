@@ -20,17 +20,17 @@ function MenuView(model) {
         menuName: function (data) {
             $(formName + " [name='menuName']").val(data.menuName);
         },
-        menuUrl: function (data) {
-            $(formName + " [name='menuUrl']").val(data.menuUrl);
+        menuPath: function (data) {
+            $(formName + " [name='menuPath']").val(data.menuPath);
         },
-        useFlag: function (data) {
-            $("input:radio[name='useFlag']").removeAttr("checked");
-            $(formName + " input[name=useFlag]").checked =false;
-            $(formName + " input[name=useFlag]:input[value='"+data.useFlag+"']").prop("checked", true).button("refresh");
+        useYn: function (data) {
+            $("input:radio[name='useYn']").removeAttr("checked");
+            $(formName + " input[name=useYn]").checked =false;
+            $(formName + " input[name=useYn]:input[value='"+data.useYn+"']").prop("checked", true).button("refresh");
         },
-        menuType: function (data) {
-            $(formName + " input[name=menuType]").checked =false;
-            $(formName + " input[name=menuType]:input[value='"+data.menuType+"']").prop("checked", true).button("refresh");
+        menuFlag: function (data) {
+            $(formName + " input[name=menuFlag]").checked =false;
+            $(formName + " input[name=menuFlag]:input[value='"+data.menuFlag+"']").prop("checked", true).button("refresh");
         },
         sortOrder: function (data) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
@@ -39,13 +39,13 @@ function MenuView(model) {
             $(formName + " td[name='insertUserId']").text(data.insertUserId);
         },
         insertDatetime: function (data) {
-            $(formName + " td[name='insertDatetime']").text(data.insertDatetime);
+            $(formName + " td[name='insertDatetime']").text(new Date(data.insertDatetime).format('yyyy-MM-dd HH:mm'));
         },
         updateUserId: function (data) {
             $(formName + " td[name='updateUserId']").text(data.updateUserId);
         },
         updateDatetime: function (data) {
-            $(formName + " td[name='updateDatetime']").text(data.updateDatetime);
+            $(formName + " td[name='updateDatetime']").text(new Date(data.updateDatetime).format('yyyy-MM-dd HH:mm'));
         },
         _default: function () {
         }
@@ -100,7 +100,7 @@ function MenuView(model) {
             /**
              * 사용 여부
              */
-            if (this[ key ].useFlag == 'Y') {
+            if (this[ key ].useYn == 'Y') {
                 checkBox_input.setAttribute("checked", "checked");
             }
             checkBox_td.appendChild(checkBox_input);
@@ -141,7 +141,6 @@ function MenuView(model) {
      * @param obj
      */
     MenuView.setTopMenuBar = function (menuBarModel) {
-
         var textSpaceSize = 9;
         function leadingSpaces(n, digits) {
             var space = '';
@@ -161,96 +160,42 @@ function MenuView(model) {
 
         var _listLength = menuBarModel.length;
         var _loopLength = 0;
-
-        var sitemapUlTag = $("<ul/>").addClass("sitemap_area");
         var rootUlTag = $("<ul/>").addClass("gnb");
 
-        var subDivTag = $("<div/>").addClass("nav_area");
-        var parentLiTag = null;
-
-        var subMenuCount = 0;
-
-        var sitemapLiTag = $("<li/>").append(
-            $("<p/>")
-        );
-
         var menuLiTag = $("<li/>").append(
-            $("<a/>").attr("href","#").append(
-                $("<span/>")
-            )
+            $("<button/>").attr("href","#")
         );
 
-        while (_listLength != _loopLength++) {
-
+        while (_listLength != _loopLength) {
             function getDrawTagFunc(item, loopCount) {
-                if (item["menuDepth"] == 1) {
-                    var _sitemapLiTag = sitemapLiTag.clone();
-                    _sitemapLiTag.attr("name", item.menuId);
-                    _sitemapLiTag.find("p").text(item['menuName']);
-                    _sitemapLiTag.append($("<ul/>"));
-                    sitemapUlTag.append(_sitemapLiTag);
-
+                if (Number(item["menuDepth"]) == 1) {
                     var _menuLiTag = menuLiTag.clone();
                     _menuLiTag.attr("name", item.menuId).addClass("depth01");
-                    _menuLiTag.find("span").text(item['menuName']);
-                    _menuLiTag.append($("<ul/>"));
+                    _menuLiTag.find("button").text(item['menuName']);
+                    if(item.menuPath!="/"){
+                        _menuLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
+                    }
                     rootUlTag.append(_menuLiTag);
-
-                    subMenuCount++;
-                } else if (item["menuDepth"] > 1) {
-                    var _sitemapLiTag = menuLiTag.clone();
-                    _sitemapLiTag.find("a").attr("href", MenuView._model.getRootUrl() + item.menuUrl);
-                    _sitemapLiTag.find("span").text(item['menuName']);
-
+                } else if (Number(item["menuDepth"]) > 1) {
                     var _menuLiTag = menuLiTag.clone();
-                    _menuLiTag.attr("name", item.menuId)
-                    _menuLiTag.find("a").attr("href", MenuView._model.getRootUrl() + item.menuUrl);
-                    _menuLiTag.find("span").text(item['menuName']);
+                    _menuLiTag.attr("name", item.menuId);
+                    _menuLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';").text(item['menuName']);
 
-                    $(sitemapUlTag).find("li[name='"+item.parentMenuId+"'] ul").append(_sitemapLiTag);
-
-                    /**
+                     /**
                      * 현병춘K 요청으로 대메뉴 클릭시 첫번째 하위메뉴의 화면 호출
                      */
                     if($(rootUlTag).find(".depth01[name='"+item.parentMenuId+"'] ul > li").length == 0){
-                        $(rootUlTag).find(".depth01[name='"+item.parentMenuId+"'] > a").attr("href", MenuView._model.getRootUrl() + item.menuUrl);
-                    }
-                    $(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").append(_menuLiTag);
-                }
-
-            };
-
-            function getSubDrawTagFunc(_parentMenuId){
-                parentLiTag =  $(rootUlTag).find("li[name='"+_parentMenuId+"']");
-
-                $(subDivTag).append(
-                    $("<h2/>").addClass("1depth_title").text($(parentLiTag).find(">a").text())
-                ).append(
-                    $("<ul/>").addClass("lnb")
-                );
-
-                $.each($(parentLiTag).find(">ul>li"), function(e){
-                    var _class = "";
-
-                    if ($(this).hasClass("depth_on")) {
-                        _class = 'lnb_on';
+                        $(rootUlTag).find(".depth01[name='"+item.parentMenuId+"'] > button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
                     }
 
-                    $(subDivTag).find(".lnb").append(
-                        $("<li/>").addClass(_class).attr("name",$(this).attr("name")).append($(this).html())
-                    );
-                });
-            }
-
-            var item = menuBarModel[_loopLength];
-            try {
-                if (item != undefined) {
-                    if (item['menuType'] == 'M') {
-                        getDrawTagFunc(item, _loopLength);
+                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").length>0){
+                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").append(_menuLiTag);
+                    }else{
+                        $(rootUlTag).find("li[name='"+item.parentMenuId+"']").append(
+                            $("<ul/>").append(_menuLiTag)
+                        )
                     }
                 }
-            } catch (e) {
-                console.error(e);
             }
 
             function setSelectedMenu(_rootUlTag){
@@ -262,7 +207,7 @@ function MenuView(model) {
                     for(var i in menuBarModel){
                         var _item = menuBarModel[i];
                         if (_item.menuId == selGnb){
-                            if(_item.menuDepth>1){
+                            if(Number(_item.menuDepth)>1){
                                 selDepth = _item.menuId;
                                 selGnb = _item.parentMenuId;
                             }else{
@@ -277,36 +222,31 @@ function MenuView(model) {
                     }
                 }
 
-                $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('depth_on');
-                $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('gnb_on');
+                $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
+                $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
             }
 
-            if (_listLength == _loopLength) {
-                if(MenuView._model.getParentMenuId()!=""){
-                    setSelectedMenu(rootUlTag);
-                    getSubDrawTagFunc(MenuView._model.getParentMenuId());
+            var item = menuBarModel[_loopLength];
+            try {
+                if (item != undefined) {
+                    if (item['menuFlag'] == 'M') {
+                        getDrawTagFunc(item, _loopLength);
+                    }
                 }
-
-                $(".site_map_area").html(sitemapUlTag);
-                $(".gnb_area").html(rootUlTag);
-                $(".nav").html(subDivTag);
-
-                if(subMenuCount>6){
-                    $(".top_gnb_area").addClass("ga_btn_on");
-
-                    $("#fx01").touchSlider({
-                        // flexible : true,
-                        roll : false,
-                        view : 6,
-                        btn_prev : $("#fx01").next().find(".prebt01"),
-                        btn_next : $("#fx01").next().find(".nexbt01")
-                    });
-                }
-//                $(".gnb").html(rootUlTag);
-                break;
+            } catch (e) {
+                console.error(e);
             }
-        };
 
+            _loopLength++;
+        }
+
+        if (_listLength == _loopLength) {
+            if(MenuView._model.getParentMenuId()!=""){
+                setSelectedMenu(rootUlTag);
+            }
+
+            $(".gnb_area").html(rootUlTag);
+        }
     };
 
     /**
@@ -318,7 +258,7 @@ function MenuView(model) {
 
         $("input[name='menuId']").val("");
         $("input[name='menuName']").val("");
-        $("input[name='menuUrl']").val("");
+        $("input[name='menuPath']").val("");
         $("input[name='sortOrder']").val(0);
         $("button[name='addBtn']").show();
         $("button[name='saveBtn']").hide();

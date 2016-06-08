@@ -2,20 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
-<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-A000-0000-0000-000000000003" var="menuId"/>
-<jabber:pageRoleCheck menuId="${menuId}" />
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="B00006" var="menuId"/>
+<c:set value="B00000" var="subMenuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.role"/></h3>
+        <h3 class="1depth_title"><spring:message code="role.title.top"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><jabber:menu menuId="${menuId}" /></span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->

@@ -1,20 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
-<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-A000-0000-0000-000000000001" var="menuId"/>
-<jabber:pageRoleCheck menuId="${menuId}" />
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="B00001" var="menuId"/>
+<c:set value="B00000" var="subMenuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.menu"/></h3>
+        <h3 class="1depth_title"><spring:message code="menu.title.top"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><jabber:menu menuId="${menuId}" /></span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
@@ -65,38 +65,34 @@
                         </tr>
                         <tr>
                             <th><spring:message code="menu.column.parentMenuName"/></th>
-                            <td colspan="3">
+                            <td>
                                 <select id="selectParentMenuId">
                                     <c:forEach items="${menuTreeList }" var="menu">
                                         <option value="${menu.menuId }">${menu.description }</option>
                                     </c:forEach>
                                 </select>
                             </td>
-                        </tr>
-                        <tr>
-                            <th class="point"><spring:message code="menu.column.linkUrl"/></th>
-                            <td class="point" colspan="3">
-                                <input type="text" name="menuUrl" value="" placeholder="<spring:message code="menu.message.requiredMenuUrl"/>"/>
-                            </td>
-                        </tr>
-                        <tr>
                             <th class="point"><spring:message code="common.column.sortOrder"/></th>
-                            <td class="point" colspan="3">
+                            <td class="point">
                                 <input type="number" name="sortOrder" value="" placeholder="<spring:message code="menu.message.requiredSortOrder"/>"/>
                             </td>
                         </tr>
                         <tr>
-                            <th class="point"><spring:message code="menu.column.useFlag"/></th>
+                            <th class="point"><spring:message code="menu.column.linkUrl"/></th>
                             <td class="point" colspan="3">
-                                <span><input type="radio" name="useFlag" value="Y" /><spring:message code="common.column.useYes" /></span>
-                                <span><input type="radio" name="useFlag" value="N" /><spring:message code="common.column.useNo" /></span>
+                                <input type="text" name="menuPath" value="" placeholder="<spring:message code="menu.message.requiredMenuUrl"/>"/>
                             </td>
                         </tr>
                         <tr>
-                            <th class="point"><spring:message code="menu.column.menuType"/></th>
-                            <td class="point" colspan="3">
-                                <span><input type="radio" name="menuType" value="M" />M</span>
-                                <span><input type="radio" name="menuType" value="P" />P</span>
+                            <th class="point"><spring:message code="menu.column.useFlag"/></th>
+                            <td class="point">
+                                <span><input type="radio" name="useYn" value="Y" /><spring:message code="common.column.useYes" /></span>
+                                <span><input type="radio" name="useYn" value="N" /><spring:message code="common.column.useNo" /></span>
+                            </td>
+                            <th class="point"><spring:message code="menu.column.menuFlag"/></th>
+                            <td class="point">
+                                <span><input type="radio" name="menuFlag" value="M" />M</span>
+                                <span><input type="radio" name="menuFlag" value="P" />P</span>
                             </td>
                         </tr>
                         <tr>
@@ -117,36 +113,6 @@
             </div>
 
             <div class="table_title_area">
-                <h4><spring:message code="menu.page.roleModifyPermissions"/></h4>
-            </div>
-
-            <div class="table_contents">
-                <table name="roleListTable" class="t_defalut t_type01 t_style02">
-                    <colgroup>
-                        <col style="width: 10%;" />
-                        <col style="width: 20%;" />
-                        <col style="width: *;" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th><input id="selectAll" type="checkbox" class="checkbox" name="checkbox01" /></th>
-                            <th><spring:message code="role.column.roleId"/></th>
-                            <th><spring:message code="role.column.roleName"/></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${roles}" var="role">
-                            <tr onclick="this.td">
-                                <td><input type="checkbox" id="${role.roleId}" name="role_ids" class="checkbox" value="${role.roleId}"/></td>
-                                <td><c:out value="${role.roleId }" /></td>
-                                <td><c:out value="${role.roleName }" /></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="table_title_area">
                 <div class="table_btn_set">
                     <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:menuCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/> </button>
                     <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:menuCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/> </button>
@@ -161,9 +127,6 @@
 
 <script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
-<%--<script src="${rootPath}/assets/js/page/menu/MenuModel.js" type="text/javascript" charset="UTF-8"></script>--%>
-<%--<script src="${rootPath}/assets/js/page/menu/MenuCtrl.js" type="text/javascript" charset="UTF-8"></script>--%>
-<%--<script src="${rootPath}/assets/js/page/menu/MenuView.js" type="text/javascript" charset="UTF-8"></script>--%>
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -210,6 +173,5 @@
         });
 
         menuCtrl.findMenuTree();
-
     });
 </script>

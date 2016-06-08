@@ -14,11 +14,11 @@ function MenuModel() {
         menuId: '',
         parentMenuId: '',
         menuName: '',
-        useFlag: '',
+        useYn: '',
         formName: 'menuForm',
         treeArea: '#menuTreeArea',
         targetMenuId: '',
-        rootMenuId: 'MN000000-0000-0000-0000-000000000000',
+        rootMenuId: '000000',
         rootName: "HOME",
         METHOD: {
             ADD: 'add',
@@ -142,12 +142,12 @@ function MenuModel() {
         return this.model.menuId;
     };
 
-    MenuModel.setUseFlag = function (useFlag) {
-        this.model.useFlag = useFlag;
+    MenuModel.setUseYn = function (useYn) {
+        this.model.useYn = useYn;
     };
 
-    MenuModel.getUseFlag = function () {
-        return this.model.useFlag;
+    MenuModel.getUseYn = function () {
+        return this.model.useYn;
     };
 
     /**
@@ -246,7 +246,7 @@ function MenuModel() {
                     var view =
                     {
                         id        : String(item.menuId),
-                        title     : String(item.menuName) + " (" + String(item.menuType) + ")",
+                        title     : String(item.menuName) + " (" + String(item.menuFlag) + ")",
                         isFolder  : false,
                         sortOrder : Number(item.sortOrder),
                         children  : []
@@ -288,7 +288,7 @@ function MenuModel() {
                     var view =
                     {
                         id:         String(item.menuId),
-                        title:      String(item.menuName) + " (" + String(item.menuType) + ")",
+                        title:      String(item.menuName) + " (" + String(item.menuFlag) + ")",
                         isFolder:   true,
                         children:   []
                     };

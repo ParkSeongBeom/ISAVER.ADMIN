@@ -8,15 +8,15 @@
 
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="com.icent.jabber.admin, com.icent.isaver.admin" use-default-filters="false">
+    <context:component-scan base-package="com.icent.isaver.admin" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
-    <!--<mvc:interceptors>-->
-        <!--<bean class="com.icent.jabber.admin.util.AuthorizationInterceptor">-->
-            <!--<property name="noneAuthorTargets" value="#{configProperties['cnf.noneAuthTargets']}" />-->
-        <!--</bean>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <bean class="com.icent.isaver.admin.util.AuthorizationInterceptor">
+            <property name="noneAuthorTargets" value="#{configProperties['cnf.noneAuthTargets']}" />
+        </bean>
+    </mvc:interceptors>
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
@@ -72,46 +72,14 @@
         <property name="defaultEncoding" value="UTF-8" />
         <property name="basenames">
             <list>
-                <value>properties/message/common</value>
-                <value>properties/message/code</value>
-                <value>properties/message/groupcode</value>
-                <value>properties/message/hubtab</value>
-                <value>properties/message/admin</value>
-                <value>properties/message/role</value>
-                <value>properties/message/menu</value>
-                <value>properties/message/user</value>
-                <value>properties/message/broadcast</value>
-                <value>properties/message/tpdevice</value>
-                <value>properties/message/organization</value>
-                <value>properties/message/logsetupclient</value>
-                <value>properties/message/logauthclientuser</value>
-                <value>properties/message/logauthadminuser</value>
-                <value>properties/message/maintenance</value>
-                <value>properties/message/logbatch</value>
-                <value>properties/message/notice</value>
-                <value>properties/message/clientproduct</value>
-                <value>properties/message/assets</value>
-                <value>properties/message/fnq</value>
-                <value>properties/message/account</value>
-                <value>properties/message/server</value>
-                <value>properties/message/targetSynchronize</value>
-                <value>properties/message/function</value>
-                <value>properties/message/target</value>
-                <value>properties/message/targetboard</value>
-                <value>properties/message/calendar</value>
-                <value>properties/message/file</value>
-                <value>properties/message/notification</value>
-                <value>properties/message/mail</value>
-                <value>properties/message/monitor</value>
-                <value>properties/message/monitorprocess</value>
-                <value>properties/message/main</value>
-                <value>properties/message/bussinessboard</value>
-                <value>properties/message/cucm</value>
-                <value>properties/message/synchronize</value>
-                <value>properties/message/mobileMenu</value>
                 <!-- [START] 안전 방재 -->
+                <value>properties/message/common</value>
+                <value>properties/message/user</value>
+                <value>properties/message/menu</value>
+                <value>properties/message/role</value>
                 <value>properties/message/action</value>
                 <value>properties/message/event</value>
+                <value>properties/message/code</value>
                 <value>properties/message/license</value>
                 <!-- [END] 안전 방재 -->
             </list>

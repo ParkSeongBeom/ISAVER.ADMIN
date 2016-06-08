@@ -3,10 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
-<c:set value="MN000000-B000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-B000-0000-0000-000000000001" var="menuId"/>
-<jabber:pageRoleCheck menuId="${menuId}" />
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="A00000" var="subMenuId"/>
+<c:set value="A00001" var="menuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
 
@@ -15,10 +15,10 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.user"/></h3>
+        <h3 class="1depth_title"><spring:message code="user.title.top"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><jabber:menu menuId="${menuId}" /></span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
@@ -46,123 +46,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code="admin.column.password"/></th>
+                        <th class="point"><spring:message code="user.column.password"/></th>
                         <td class="point">
-                            <input type="password" name="password" value="" placeholder="<spring:message code="common.message.passwordEdit"/>" />
+                            <input type="password" name="userPassword" value="" placeholder="<spring:message code="common.message.passwordEdit"/>" />
                         </td>
-                        <th class="point"><spring:message code="admin.column.passwordConfirm"/></th>
+                        <th class="point"><spring:message code="user.column.passwordConfirm"/></th>
                         <td class="point">
                             <input type="password" name="password_confirm" value="" placeholder="<spring:message code="common.message.passwordEdit"/>" />
                         </td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code="user.column.domain"/></th>
-                        <td class="point">
-                            <input type="text" name="domain" value="${user.domain}" />
+                        <th><spring:message code="user.column.role"/></th>
+                        <td>
+                            <input type="text" name="roleId" value="${user.roleId}" />
                         </td>
                         <th><spring:message code="user.column.email"/></th>
                         <td>
                             <input type="text" name="email" value="${user.email}" />
                         </td>
                     </tr>
-                    <tr>
-                        <th><spring:message code="organization.column.orgInformation"/></th>
-                        <td colspan="3">
-                            <c:choose>
-                                <c:when test="${empty user}">
-                                    <input type="hidden"  name="orgId"/>
-                                    <select id="selectOrgSeq">
-                                        <option value="-1"><spring:message code="user.column.none"/></option>
-                                        <c:forEach items="${organizationList }" var="orgList">
-                                            <option value="${orgList.orgId}">${orgList.path}</option>
-                                        </c:forEach>
-                                    </select>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:if test="${fn:length(orgUsers)<=1 and fn:length(organizations) > 0}">
-                                        <input type="hidden"  name="orgId"/>
-                                        <select id="selectOrgSeq">
-                                            <option value="-1"><spring:message code="user.column.none"/></option>
-                                            <c:forEach items="${organizations }" var="orgList">
-                                                <option value="${orgList.orgId}" <c:if test="${orgList.orgId == orgUsers[0].orgId}">selected</c:if>>${orgList.path}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </c:if>
-                                    <c:if test="${fn:length(orgUsers)>1 and fn:length(organizations) > 0}">
-                                        <select>
-                                            <c:forEach items="${organizations }" var="orgList">
-                                                <c:forEach items="${orgUsers }" var="org">
-                                                    <c:if test="${orgList.orgId == org.orgId}">
-                                                        <option value="${orgList.orgId}">${orgList.path}</option>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:forEach>
-                                        </select>
-                                    </c:if>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code="user.column.classification"/></th>
-                        <td>
-                            <input type="text" name="classification" value="${user.classification}" />
-                        </td>
-                        <th><spring:message code="user.column.nickName"/></th>
-                        <td>
-                            <input type="text" name="nickName" value="${user.nickName}" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="point"><spring:message code="user.column.extension"/></th>
-                        <td class="point">
-                            <input type="text" name="extension" value="${user.extension}" onkeypress="isNumber(this);" />
-                        </td>
-                        <th><spring:message code="user.column.phone"/></th>
-                        <td>
-                            <input type="text" name="phone" value="${user.phone}" onkeypress="isNumber(this);" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code="user.column.mobile"/></th>
-                        <td>
-                            <input type="text" name="mobile" value="${user.mobile}" onkeypress="isNumber(this);" />
-                        </td>
-                        <th><spring:message code="user.column.photoFilePath"/></th>
-                        <td>
-                            <!-- 파일 첨부 시작 -->
-                            <div class="infile_set">
-                                <input type="text"  readonly="readonly" title="File Route" id="file_route">
-                                    <span class="btn_infile btype03 bstyle04">
-                                        <input type="file" name="profile_photo" onchange="javascript:document.getElementById('file_route').value=this.value">
-                                    </span>
-                                <c:if test="${!empty user.photoFilePath}">
-                                    <p class="before_file preview" style="width:100px;">
-                                        <a href="${rootPath}/user/download.html?userId=${user.userId}" title="${user.photoFilePath}">${user.photoFilePath}</a>
-                                    </p>
-                                </c:if>
-                            </div>
-                            <!-- 파일 첨부 끝  -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code="user.column.profileNm"/></th>
-                        <td>
-                            <textarea name="profile" class="textboard">${user.profile}</textarea>
-                        </td>
-                        <th><spring:message code="user.column.specialNm"/></th>
-                        <td>
-                            <textarea name="special" class="textboard">${user.special}</textarea>
-                        </td>
-                    </tr>
-                    <%--<tr><!--JAPPLE 사용유무 -->--%>
-                        <%--<th class="point"><spring:message code="user.column.jappleYn"/></th>--%>
-                        <%--<td class="point">--%>
-                            <%--<jabber:codeSelectBox groupCodeId="C008" codeId="${user.jappleYn != null ? user.jappleYn: 'Y' }" htmlTagName="jappleYn" allText=""/>--%>
-                        <%--</td>--%>
-                        <%--<th></th>--%>
-                        <%--<td></td>--%>
-                    <%--</tr>--%>
                     <c:if test="${!empty user}">
                         <tr>
                             <th><spring:message code="common.column.insertUser"/></th>
@@ -234,10 +136,6 @@
         ,'requireUserId':'<spring:message code="user.message.requireUserId"/>'
         ,'requireUserName':'<spring:message code="user.message.requireUserName"/>'
         ,'requirePassword':'<spring:message code="user.message.requirePassword"/>'
-        ,'requireJabberId':'<spring:message code="user.message.requireJabberId"/>'
-        ,'requireDomain':'<spring:message code="user.message.requireDomain"/>'
-        ,'requirePhoneNumber':'<spring:message code="user.message.requirePhoneNumber"/>'
-        ,'requireExtensionNumber':'<sp         ring:message code="user.message.requireExtensionNumber"/>'
         ,'existUserId':'<spring:message code="user.message.existUserId"/>'
     };
 
@@ -256,13 +154,13 @@
             return false;
         }
 
-        if(form.find('input[name=password]').val().trim().length == 0 && type == 1){
+        if(form.find('input[name=userPassword]').val().trim().length == 0 && type == 1){
             alertMessage('requirePassword');
             return false;
         }
 
         if(form.find('input[name=password]').val().trim().length > 0
-                && form.find('input[name=password]').val() != form.find('input[name=password_confirm]').val() && type != 3){
+                && form.find('input[name=userPassword]').val() != form.find('input[name=password_confirm]').val() && type != 3){
             alertMessage('notEqualsPassword');
             return false;
         }
@@ -401,38 +299,5 @@
         listForm.append($('<INPUT>').attr('name','reloadList').attr('value','true'));
         listForm.appendTo(document.body);
         listForm.submit();
-    }
-
-    function imagePreview(){
-        /* CONFIG */
-        var xOffset = 0;
-        var yOffset = 0;
-
-        /* END CONFIG */
-        $("p.preview").hover(function(e){
-                    var photoFilePath = $(this).text().trim();
-                    if(photoFilePath!=""){
-                        $("body").append("<p id='preview'><img src='${photoPath}"+ photoFilePath +"'/></p>");
-                        $("#preview").css("position","absolute").css("top",(e.pageY - xOffset) + "px").css("left",(e.pageX + yOffset) + "px").fadeIn("fast");
-                    }
-                },
-                function(){
-                    $("#preview").remove();
-                });
-
-//        $("p.preview").mousemove(function(e){
-//            $("#preview").css("top",(e.pageY - xOffset) + "px").css("left",(e.pageX + yOffset) + "px");
-//        });
-    };
-
-    window.onload = function() {
-        $( "#upOrgSeqSelect" ).change(function() {
-            var formName = "#userForm";
-            if ($("#userForm select[id=upOrgSeqSelect]").val() != $('input[name=orgSeq]').val()) {
-                $('input:hidden[name=orgSeq]').val($("#userForm select[id=upOrgSeqSelect]").val());
-            }
-        });
-
-//        imagePreview();
     }
 </script>

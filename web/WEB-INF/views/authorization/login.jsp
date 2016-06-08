@@ -29,8 +29,8 @@
 
                     <!-- 로그인 입력 폼 Start -->
                     <div class="login_input_area">
-                        <input type="text" name="adminId" placeholder="ID" class="log_id" name="" id="admin_id" />
-                        <input type="password" name="password" placeholder="Password" class="log_pw" name="" id="admin_pw" />
+                        <input type="text" name="userId" placeholder="ID" class="log_id"/>
+                        <input type="password" name="userPassword" placeholder="Password" class="log_pw"/>
                         <input type="checkbox" id="saveAdminIdCheck" name="id_save" />아이디 저장
                     </div>
                     <!-- 로그인 입력 폼 End -->
@@ -49,16 +49,16 @@
 
         var urlConfig = {
             'loginUrl':'${pageContext.servletContext.contextPath}/login.json'
-            ,'mainUrl':'${pageContext.servletContext.contextPath}/main.html'
+            ,'mainUrl':'${pageContext.servletContext.contextPath}/user/list.html'
         };
 
         $(document).ready(function(){
-            var adminId = $.cookie("adminId");
-            if(adminId != null && adminId.length > 0){
-                form.find('input[name=adminId]').val($.cookie("adminId"));
+            var userId = $.cookie("userId");
+            if(userId != null && userId.length > 0){
+                form.find('input[name=userId]').val($.cookie("userId"));
                 $("#saveAdminIdCheck").attr("checked", true);
             }
-            form.find('input[name=adminId], input[name=password]').bind("keyup", function(evt){
+            form.find('input[name=userId], input[name=userPassword]').bind("keyup", function(evt){
                 var code = evt.keyCode || evt.which;
                 if(code == 13){
                     login();
@@ -67,12 +67,12 @@
         });
 
         function validate(){
-            if(form.find('input[name=adminId]').val() == ''){
+            if(form.find('input[name=userId]').val() == ''){
                 alertMessage('requiredAdminId');
                 return false;
             }
 
-            if(form.find('input[name=password]').val() == ''){
+            if(form.find('input[name=userPassword]').val() == ''){
                 alertMessage('requiredPassword');
                 return false;
             }
@@ -82,9 +82,9 @@
 
         function setCookieAdminId(){
             if($('#saveAdminIdCheck').is(':checked')){
-                $.cookie('adminId',form.find('input[name=adminId]').val());
+                $.cookie('userId',form.find('input[name=userId]').val());
             }else{
-                $.cookie('adminId','');
+                $.cookie('userId','');
             }
         }
 

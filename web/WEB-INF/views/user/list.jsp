@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
-<c:set value="MN000000-B000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-B000-0000-0000-000000000001" var="menuId"/>
-<jabber:pageRoleCheck menuId="${menuId}" />
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="A00000" var="menuId"/>
+<c:set value="A00000" var="subMenuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
@@ -18,10 +18,10 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.user"/></h3>
+        <h3 class="1depth_title"><spring:message code="user.title.top"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><jabber:menu menuId="${menuId}" /></span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
@@ -44,12 +44,6 @@
                         <input type="text" name="userName" value="${paramBean.userName}"/>
                     </span>
                 </p>
-                <p class="itype_01">
-                    <span><spring:message code="user.column.extension" /></span>
-                    <span>
-                        <input type="text" name="extension" value="${paramBean.extension}"/>
-                    </span>
-                </p>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
@@ -69,21 +63,19 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
+                    <col style="width: *;" />
                     <col style="width: 20%;" />
                     <col style="width: 20%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 10%;" />
-                    <col style="width: 15%;" />
+                    <col style="width: 20%;" />
                     <col style="width: 20%;" />
                 </colgroup>
                 <thead>
                     <tr>
                         <th><spring:message code="user.column.userId"/></th>
                         <th><spring:message code="user.column.userName"/></th>
-                        <th><spring:message code="user.column.classification"/></th>
-                        <th><spring:message code="user.column.extension"/></th>
-                        <th><spring:message code="common.column.insertUser"/></th>
                         <th><spring:message code="common.column.insertDatetime"/></th>
+                        <th><spring:message code="user.column.telephone"/></th>
+                        <th><spring:message code="user.column.email"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,14 +85,11 @@
                                 <tr onclick="moveDetail(String('${user.userId}'));">
                                     <td>${user.userId}</td>
                                     <td>${user.userName}</td>
-                                    <td>${user.classification}</td>
-                                    <%--<td>${user.domain}</td>--%>
-                                    <td>${user.extension}</td>
-                                    <td>${user.insertUserName}</td>
                                     <td>
                                         <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.insertDatetime}" />
                                     </td>
-                                    <input type="hidden" value="${user.userId}" />
+                                    <td>${user.telephone}</td>
+                                    <td>${user.email}</td>
                                 </tr>
                             </c:forEach>
                         </c:when>
