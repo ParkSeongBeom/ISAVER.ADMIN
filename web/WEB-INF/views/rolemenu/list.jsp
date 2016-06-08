@@ -1,17 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00001" var="menuId"/>
+<c:set value="B00004" var="menuId"/>
 <c:set value="B00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
+<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="menu.title.top"/></h3>
+        <h3 class="1depth_title"><spring:message code="rolemenu.title.top"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -19,159 +21,151 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <!-- 트리 영역 Start -->
-    <article class="table_area tree_table">
-        <div class="table_title_area">
-            <h4></h4>
+    <article class="tableplus">
+        <article class="search_area" style="padding:10px 0">
+            <div class="search_contents">
+                <!-- 일반 input 폼 공통 -->
+                <p class="itype_01">
+                    <select id="roleId" class="w200" onchange="javascript:search(this);">
+                        <c:forEach items="${roles}" var="role">
+                            <option value="${role.roleId}" ${paramBean.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                        </c:forEach>
+                    </select>
+                </p>
+            </div>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.treeExpandAll(); return false;"><spring:message code='menu.button.viewTheFullMenu'/></button>
-                <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.setAddBefore(); return false;" ><spring:message code='menu.button.addMenu'/></button>
-            </div>
-        </div>
-        <div class="table_contents">
-            <div id="menuTreeArea" class="tree_box"></div>
-        </div>
-    </article>
-    <!-- 트리 영역 End -->
-
-    <form id="menuForm" method="POST">
-        <input type="hidden" name="parentMenuId" />
-        <input type="hidden" name="roleIds" />
-
-        <article class="table_area tr_table">
-            <div class="table_title_area">
-                <h4><spring:message code="menu.page.menuWritten"/></h4>
-            </div>
-
-            <div class="table_contents">
-                <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
-                    <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th><spring:message code="menu.column.menuId"/></th>
-                            <td>
-                                <input type="text" name="menuId" value="" placeholder="<spring:message code="menu.message.requireMenuId"/>" readonly="true" />
-                            </td>
-                            <th class="point"><spring:message code="menu.column.menuName"/></th>
-                            <td class="point">
-                                <input type="text" name="menuName" value="" placeholder="<spring:message code='menu.message.requiredMenuName'/>"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><spring:message code="menu.column.parentMenuName"/></th>
-                            <td>
-                                <select id="selectParentMenuId">
-                                    <c:forEach items="${menuTreeList }" var="menu">
-                                        <option value="${menu.menuId }">${menu.description }</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                            <th class="point"><spring:message code="common.column.sortOrder"/></th>
-                            <td class="point">
-                                <input type="number" name="sortOrder" value="" placeholder="<spring:message code="menu.message.requiredSortOrder"/>"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="point"><spring:message code="menu.column.linkUrl"/></th>
-                            <td class="point" colspan="3">
-                                <input type="text" name="menuUrl" value="" placeholder="<spring:message code="menu.message.requiredMenuUrl"/>"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="point"><spring:message code="menu.column.useFlag"/></th>
-                            <td class="point">
-                                <span><input type="radio" name="useFlag" value="Y" /><spring:message code="common.column.useYes" /></span>
-                                <span><input type="radio" name="useFlag" value="N" /><spring:message code="common.column.useNo" /></span>
-                            </td>
-                            <th class="point"><spring:message code="menu.column.menuFlag"/></th>
-                            <td class="point">
-                                <span><input type="radio" name="menuFlag" value="M" />M</span>
-                                <span><input type="radio" name="menuFlag" value="P" />P</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><spring:message code="common.column.insertUser"/></th>
-                            <td name="insertUserId"></td>
-                            <th><spring:message code="common.column.insertDatetime"/></th>
-                            <td name="insertDatetime"></td>
-                        </tr>
-                        <tr>
-                            <th><spring:message code="common.column.updateUser"/></th>
-                            <td name="updateUser"></td>
-                            <th><spring:message code="common.column.updateDatetime"/></th>
-                            <td name="updateDatetime"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- 입력 테이블 End -->
-            </div>
-
-            <div class="table_title_area">
-                <div class="table_btn_set">
-                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:menuCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/> </button>
-                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:menuCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/> </button>
-                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:menuCtrl.removeMenuVaild(); return false;"><spring:message code="common.button.remove"/> </button>
-                </div>
+                <button class="btn btype01 bstyle03" href="#" onclick="javascript:saveRoleMenu();">저장</button>
             </div>
         </article>
-        <!-- 테이블 입력 / 조회 영역 End -->
-        <!-- END : contents -->
-    </form>
+
+        <div>
+            <!-- 미등록 메뉴 영역 Start -->
+            <div>
+                <div class="table_title_area"><h4><spring:message code="rolemenu.title.unregi"/></h4></div>
+                <div id="unregiList" class="ul_t_defalut">
+                    <c:choose>
+                        <c:when test="${unregiMenuList != null and fn:length(unregiMenuList) > 0}">
+                            <c:forEach var="unregiMenu" items="${unregiMenuList}">
+                                <button menuId="${unregiMenu.menuId}" type="unregi" href="#" onclick="javascript:moveList(this);">${unregiMenu.menuName}</button>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <!-- 미등록 메뉴 영역 End -->
+
+            <!-- 권한등록 메뉴 영역 Start -->
+            <div class="">
+                <div class="table_title_area"><h4><spring:message code="rolemenu.title.regi"/></h4></div>
+                <div id="regiList" class="ul_t_defalut">
+                    <c:choose>
+                        <c:when test="${regiMenuList != null and fn:length(regiMenuList) > 0}">
+                            <c:forEach var="regiMenu" items="${regiMenuList}">
+                                <button menuId="${regiMenu.menuId}" type="regi" href="#" onclick="javascript:moveList(this);">${regiMenu.menuName}</button>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <!-- 권한등록 메뉴 영역 End -->
+        </div>
+    </article>
 </section>
 
-<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
-<script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
 
     var messageConfig = {
-            menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
-        ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
-        ,   addFailure                :'<spring:message code="menu.message.addFailure"/>'
-        ,   saveFailure               :'<spring:message code="menu.message.saveFailure"/>'
-        ,   removeFailure             :'<spring:message code="menu.message.removeFailure"/>'
-        ,   addComplete               :'<spring:message code="menu.message.addComplete"/>'
-        ,   saveComplete              :'<spring:message code="menu.message.saveComplete"/>'
-        ,   removeComplete            :'<spring:message code="menu.message.removeComplete"/>'
-        ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
-        ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
-        ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
-        ,   requiredMenuId            :"<spring:message code='menu.message.requiredMenuId'/>"
-        ,   requiredMenuName          :"<spring:message code='menu.message.requiredMenuName'/>"
-        ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
-        ,   requiredSortOrder         :"<spring:message code='menu.message.requiredSortOrder'/>"
-        ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
-        ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
-        ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
-        ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
+        saveConfirm  :'<spring:message code="common.message.saveConfirm"/>'
+        ,saveFailure :'<spring:message code="rolemenu.message.saveFailure"/>'
+        ,saveComplete:'<spring:message code="rolemenu.message.saveComplete"/>'
+    };
+
+    var urlConfig = {
+        'listUrl':'${rootPath}/roleMenu/list.html'
+        ,'saveUrl':"${rootPath}/roleMenu/save.json"
     };
 
     $(document).ready(function(){
-
-        $('#selectAll').click(function(event) {
-            if(this.checked) {
-                $('input[type=checkbox]').each(function() {
-                    this.checked = true;
-                });
-            }else{
-                $('input[type=checkbox]').each(function() {
-                    this.checked = false;
-                });
-            }
-        });
-
-        $( "#selectParentMenuId" ).change(function() {
-            var formName = menuModel.getFormName();
-            $('input:hidden[name=parentMenuId]').val($("select[id=selectParentMenuId]").val());
-        });
-
-        menuCtrl.findMenuTree();
     });
+
+    function search(_this){
+        var searchForm = $('<FORM>').attr('action',urlConfig['listUrl']).attr('method','POST');
+        searchForm.append($('<INPUT>').attr('type','hidden').attr('name','roleId').attr('value',$(_this).find("option:selected").val()));
+        document.body.appendChild(searchForm.get(0));
+        searchForm.submit();
+    }
+
+    function moveList(_this){
+        var _type = $(_this).attr("type");
+
+        if(_type=="unregi"){
+            $(_this).attr("type","regi");
+            $("#regiList").append(_this);
+        }else{
+            $(_this).attr("type","unregi");
+            $("#unregiList").append(_this);
+        }
+    }
+
+    function saveRoleMenu(){
+        if(!confirm(messageConfig['saveConfirm'])){
+            return false;
+        }
+
+        var menuIds = [];
+
+        $.each($("#regiList button"),function(){
+            menuIds.push($(this).attr("menuId"));
+        });
+
+        var _data = {
+            'roleId' : $("#roleId option:selected").val()
+            ,'menuIds' : menuIds.join(",")
+        };
+
+        callAjax('save', _data);
+    }
+
+
+    /*
+     ajax call
+     @author kst
+     */
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestCode_successHandler,requestCode_errorHandler,actionType);
+    }
+
+    /*
+     ajax success handler
+     @author kst
+     */
+    function requestCode_successHandler(data, dataType, actionType){
+        alertMessage(actionType + 'Complete');
+        switch(actionType){
+            case 'save':
+                break;
+        }
+    }
+
+    /*
+     ajax error handler
+     @author kst
+     */
+    function requestCode_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
+    }
+
+    /*
+     alert message method
+     @author kst
+     */
+    function alertMessage(type){
+        alert(messageConfig[type]);
+    }
 </script>
