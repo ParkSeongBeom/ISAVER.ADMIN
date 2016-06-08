@@ -1,9 +1,11 @@
 package com.icent.isaver.admin.svc;
 
+import com.icent.isaver.repository.bean.AreaBean;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,5 +75,13 @@ public interface AreaSvc {
      * @return
      */
     ModelAndView removeArea(Map<String, String> parameters);
+
+    /**
+     * 전체 구역 트리를 반환한다.
+     * @param parameters
+     * - 없음
+     * @return
+     */
+    List<AreaBean> areaTreeDataStructure(Map<String, String> parameters);
 
 }

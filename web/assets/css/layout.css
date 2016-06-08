@@ -9,19 +9,35 @@ aside {
 */
 aside, header, section, .wrap, header, .header_area, article  {
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
 }
 
 html, body {}
 body {
     width:100%; min-width:1280px;
-    background-color: #fafafa;
+    background-color: #333240;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
 }
-body.admin_mode section.container {
-     margin: auto; padding:30px;
-    background-color:#fcfcfc !important;
+
+body.login_mode {
+    background: #333240; /* Old browsers */
+    background: -moz-linear-gradient(160deg,  #333240 0%, #333240 50%, #2e2e3a 50%, #2e2e3a 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(160deg,  #333240 0%,#333240 50%,#2e2e3a 50%,#2e2e3a 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(160deg,  #333240 0%,#333240 50%,#2e2e3a 50%,#2e2e3a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333240', endColorstr='#2e2e3a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
+body section.container {margin: auto; padding:30px;}
+body.dashboard_mode section.container {margin: auto; padding:30px;}
+body.admin_mode     section.container {background-color:#fcfcfc !important;}
+body.adaptive_max.admin_mode section.container {padding: 30px 120px;}
+
+body.dashboard_mode .gnb_area {display: block;}
+body.dashboard_mode .gnb_area {display: none;}
+body.admin_mode .gnb_area {display: block;}
 body.admin_mode .nav_area {display: none;}
 
 .wrap  {
@@ -33,32 +49,31 @@ body.admin_mode .nav_area {display: none;}
 
 header, nav ,section {display: inline-block; position: absolute;}
 
-header  {top:0; left:0; width:100%; height:65px; background-color: #333240;}
+header  {top:0; left:0; width:100%; height:50px; background-color: #333240;}
 header .header_area {position: relative; width:100%; height:100%;}
 
 nav.nav ,section.container {}
 
-nav.nav { top:65px;  left:0; bottom:0; width:130px; background-color: #25252f;}
-section.container {
-    overflow: overlay; top:65px; right:0;  left:130px; bottom:0;  background-color:#1e1d23;
-}
+nav.nav { top:50px;  left:0; bottom:0; width:130px; background-color: #25252f;}
+section.container {overflow: overlay; top:50px; right:0;  left:130px; bottom:0;  background-color:#1e1d23;}
 
 /*로그인 영역 */
 .login_area {
+    overflow: hidden;
     position: absolute;
-    width:490px;
-    height:490px;
+    width:490px; height:330px;
     top:50%;
     left:50%;
-    margin:-245px 0 0 -245px;
-    background: #fff;
-    -moz-border-radius:    500px;
-    -webkit-border-radius: 500px;
-    -khtml-border-radius:  500px;
-    border-radius:         500px;
+    margin:-165px 0 0 -245px;
+    background-color: #EEF0F5;
 
     box-shadow:         0px 0px 8px rgba(0,0,0,0.1);
     -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
     -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.1);
+
+    -moz-border-radius:    16px;
+    -webkit-border-radius: 16px;
+    border-radius:         16px;
+    -khtml-border-radius:  16px;
 }
 

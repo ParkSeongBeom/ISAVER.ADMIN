@@ -55,12 +55,11 @@ img.enlargement {width:100%; height:auto;}
 
 /* a , button 테그 */
 a,button {
+    position: relative;
     margin:0;padding:0;vertical-align: middle;*vertical-align: middle;outline: none;cursor:pointer;
     -webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-appearance:none;border-radius:0;
     -webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;
-    background-color:transparent;line-height:normal;font:inherit;
-
-    border:none;text-decoration:none;
+    background-color:transparent;line-height:normal;font:inherit;border:none;text-decoration:none;
 }
 
 a:link,a:visited,a:hover,a:active,a:focus   {vertical-align:middle;text-decoration:none;cursor:pointer;outline:0;}
@@ -304,6 +303,44 @@ flex-shrink: 0;
 flex-basis:  100%;
 
 */
+@font-face {
+    font-family: 'sico';
+    src:    url('../fonts/sico.eot?yxy1ne');
+    src:    url('../fonts/sico.eot?yxy1ne#iefix') format('embedded-opentype'),
+    url('../fonts/sico.ttf?yxy1ne') format('truetype'),
+    url('../fonts/sico.woff?yxy1ne') format('woff'),
+    url('../fonts/sico.svg?yxy1ne#sico') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.svgbase01, .hrs_btn_set > button:before, .lnb > li> button:before {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'sico' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.svgbase01:before {font-size:60px;}
+.sico_01:before {content: "\e900";}
+.sico_02:before {content: "\e901";}
+.sico_03:before {content: "\e902";}
+.sico_04:before {content: "\e903";}
+.sico_05:before {content: "\e904";}
+.sico_06:before {content: "\e905";}
+.sico_07:before {content: "\e906";}
+.sico_08:before {content: "\e907";}
+.sico_09:before {content: "\e908";}
+.sico_10:before {content: "\e909";}
+.sico_11:before {content: "\e90a";}
+
 
 
 
@@ -319,7 +356,7 @@ flex-basis:  100%;
 }
 
 
-button:before, button:after, .svgbase:before {
+button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before {
     font-family: 'japple';
     speak: none;
     font-style:   normal;

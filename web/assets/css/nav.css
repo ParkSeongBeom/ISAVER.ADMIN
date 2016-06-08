@@ -95,10 +95,10 @@ h4 {
 
 .lnb > li {height:145px;}
 
-.gnb > li, .gnb > li > ul > li, .lnb > li > ul > li  {height:40px;}
+.gnb > li, .gnb > li > ul > li, .lnb > li > ul > li  {height:56px;}
 
 .lnb > li > button, .lnb > li > ul > li > button,
-.gnb > li > button, .gnb > li > ul > li > button {width:100%; height:100%; color:#fff;}
+.gnb > li > button, .gnb > li > ul > li > button {width:100%; height:100%; color:#fff; opacity: 0.7;}
 
 
 .gnb > li > button, .gnb > li > ul > li > button, .lnb > li > ul > li > button
@@ -106,7 +106,7 @@ h4 {
 
 .gnb > li:hover > button, .gnb > li.on > button,
 .lnb > li:hover > button, .lnb > li.on > button
-{background-color: #27577f}
+{background-color: #27577f; opacity: 1;}
 
 .gnb > li.on > button:after,
 .lnb > li.on > button:after,
@@ -116,26 +116,30 @@ h4 {
     top:0; left:0; width:4px; height:100%; background-color: #29a1f7;
 }
 
-
 .gnb > li > ul, .lnb > li > ul {
     display: none; position: absolute; left:130px; width:100%; z-index:11;
 }
-.gnb > li > ul {margin:-40px 0 0 0;}
-.lnb > li > ul {margin:-90px 0 0 0;}
+.gnb > li > ul {margin:-90px 0 0 0;}
+.lnb > li > ul {margin:-145px 0 0 0;}
 
-.gnb > li:hover > ul, .lnb > li:hover > ul {display: block;}
+.gnb > li:hover > ul, .lnb > li:hover > ul {display: block; opacity: 1;}
 
 .gnb > li > ul > li:hover > button, .gnb > li > ul > li.on > button,
 .lnb > li > ul > li:hover > button, .lnb > li > ul > li.on > button
-{background-color: #29a1f7;}
+{background-color: #29a1f7; opacity: 1;}
 
 
 .gnb > li > ul:after, .lnb > li > ul:after {
-    content:""; display: none;  position: fixed; z-index:-1; top:65px; left:130px; bottom:0; width:130px;
+    content:""; display: none;  position: fixed; z-index:-1; top:50px; left:130px; bottom:0; width:130px;
     background-color: rgba(0,0,0,0.8);
 }
 .gnb > li:hover > button + ul:after, .lnb > li:hover > button + ul:after {display: block;}
 
+.lnb > li> button {}
+.lnb > li> button:before {display: inline-block; width: 100%; padding: 0 0 5px 0; font-size: 40px;}
+.lnb > li.nl_dash > button:before   {content: "\e90a";}
+.lnb > li.nl_record > button:before {content: "\e908";}
+.lnb > li.nl_stat > button:before   {content: "\e906";}
 
 /*nav End */
 

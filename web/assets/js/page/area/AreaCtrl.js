@@ -1,0 +1,473 @@
+/**
+ * [Controller] 구역
+ *
+ * @author dhj
+ * @since 2016.06.07
+ */
+function AreaCtrl(model) {
+
+    var AreaCtrl = new Object();
+    AreaCtrl._model = model;
+    AreaCtrl._event = new AreaEvent(model);
+
+    /**
+     * 구역 선택
+     * @param node
+     * @date 2014.05.22
+     */
+    AreaCtrl.selectMenuTree = function (node) {
+        if (node != null || node != undefined) {
+            var id = node.data.id;
+            if (id != null || id != undefined) {
+                AreaCtrl._model.setOrgId(String(id));
+                AreaCtrl._model.setPageIndex(0);
+                AreaCtrl.findMenuDetail();
+            }
+        }
+    };
+
+    /**
+     * [cRud] 구역 트리 불러오기
+     */
+    AreaCtrl.findMenuTree = function () {
+        this._model.setViewStatus('menuTree');
+        var type = this._model.getViewStatus();
+        var requestUrl = this._model.getRequestUrl();
+
+        sendAjaxPostRequest(requestUrl, {}, this._event.menuTreeSuccessHandler, this._event.menuTreeErrorHandler, type);
+    };
+
+    /**
+     * [cRud] 선택한 부서 ID로 상세 정보 가져오기
+     */
+    AreaCtrl.findMenuDetail = function () {
+        if (this._model.getOrgId() != null || this._model.getOrgId() != undefined) {
+
+            this.param = {
+                id: this._model.getOrgId()
+                ,userId: this._model.getUserId()
+                ,name: this._model.getUserName()
+                ,pageIndex: (this._model.getPageIndex() > 0) ? this._model.getPageIndex() * this._model.getPageRowNumber()-this._model.getPageRowNumber() : 0
+                ,pageRowNumber: this._model.getPageRowNumber()
+            };
+
+            this._model.setViewStatus('detail');
+            var type = this._model.getViewStatus();
+            var requestUrl = this._model.getRequestUrl();
+            sendAjaxPostRequest(requestUrl, this.param, this._event.detailSuccessHandler, this._event.detailErrorHandler, type);
+        }
+    };
+
+    /**
+     * 조직도 사용자 상세 조회
+     */
+    AreaCtrl.searchOrgUser = function() {
+        if (this.commonVaild()) {
+            this._model.setUserId($("input[name='userId']").val());
+            this._model.setUserName($("input[name='userName']").val());
+
+            AreaCtrl.findMenuDetail();
+        }
+
+    };
+
+    /**
+     * 전송 전 유효성 체크
+     */
+    AreaCtrl.commonVaild = function(flag) {
+
+        if (this._model.getOrgId() != undefined && String(this._model.getOrgId()).trim().length == 0) {
+            alert("좌측 부서 목록에서 부서를 선택해 주세요.");
+            return;
+        }
+
+        var type = AreaCtrl._model.getViewStatus();
+
+        if (flag != undefined && flag) {
+
+            if ($("input[name='orgName']").val().trim().length == 0) {
+                $("input[name='orgName']").focus();
+                alert(messageConfig.requiredOrgName);
+                return;
+            }
+
+            if (type != OrganizationModel().model.ACTION.ADD) {
+
+                if($("table tbody tr").eq(2).css("display") != "none"){
+                    if ($("input[name='sortOrder']").val().trim().length == 0) {
+                        $("input[name='sortOrder']").focus();
+                        alert(messageConfig.requiredSortOrder);
+                        return;
+                    }
+                }
+            }
+
+        }
+
+        return true;
+    };
+
+    /**
+     * 조직 등록 전 유효성 검증
+     */
+    AreaCtrl.addOrganizationVaild = function () {
+
+        this._model.setViewStatus(MenuModel().model.ACTION.ADD);
+        if (this.commonVaild(true)) {
+
+            var orgName = $("input[name=orgName]").val();
+            if(confirm('[' + orgName + ']' + messageConfig['addConfirmMessage'] + '?')) {
+                this.addOrganization();
+            }
+
+        }
+    };
+
+    /**
+     * 조직 저장 전 유효성 검증
+     */
+    AreaCtrl.saveOrganizationVaild = function () {
+
+        this._model.setViewStatus(MenuModel().model.ACTION.SAVE);
+
+        if (this.commonVaild(true)) {
+
+            var orgName = $("input[name=orgName]").val();
+            if(confirm('[' + orgName + ']' + messageConfig['saveConfirmMessage'] + '?')) {
+                this.saveOrganization();
+            }
+
+        }
+
+    };
+
+    /**
+     * 조직도 삭제 전 유효성 검증
+     */
+    AreaCtrl.removeOrganizationVaild = function () {
+
+        if (this.commonVaild()) {
+            if (AreaCtrl._model.getOrgId() == AreaCtrl._model.getRootOrgId()) {
+                alert(String(messageConfig.organizationNotDeleted));
+                return;
+            }
+
+            var orgName = document.forms[AreaCtrl._model.getFormName()]['orgName'].value;
+
+            if (!confirm("[ " + orgName + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
+
+            AreaCtrl.removeOrganization();
+        }
+
+    };
+
+    /**
+     * [Crud] 조직 등록
+     */
+    AreaCtrl.addOrganization = function () {
+        var type = AreaCtrl._model.getViewStatus();
+        if (type != OrganizationModel().model.ACTION.ADD) {
+            return;
+        }
+
+        var requestUrl = this._model.getRequestUrl();
+        var formName = "#" + AreaCtrl._model.getFormName();
+
+        $('input:hidden[name=upOrgId]').val($("#selectUpOrgSeq").val());
+        AreaCtrl._model.setUpOrgId($("#selectUpOrgSeq").val());
+
+
+        if (AreaCtrl._model.getUpOrgId() == AreaCtrl._model.getRootOrgId()) {
+            $('input[name=depth]').val(0);
+        }
+
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+    };
+
+    /**
+     * [crUd] 조직 저장
+     */
+    AreaCtrl.saveOrganization = function () {
+
+
+        var type = AreaCtrl._model.getViewStatus();
+
+        if (type != MenuModel().model.ACTION.SAVE) {
+            return;
+        }
+
+        var requestUrl = this._model.getRequestUrl();
+        var formName = "#" + AreaCtrl._model.getFormName();
+        var roleIds = new Array();
+
+        var orgUserLists = [];
+        $(formName + " input[name='roleIds']").val("");
+
+        $("table[name='roleListTable'] tbody tr").each(function () {
+            var orgSort = $(this).find("input[name='orgSortName']").val();
+            this.orgUser = {
+                orgId          : $(this).find("input[name='orgIdName']").val()
+                ,userId        : $(this).find("input[name='userIdName']").val()
+                ,classification : $(this).find("input[name='classification']").val()
+                ,sortOrder      : orgSort != "" ? orgSort : "0"
+//                ,mainFlag       : $(this).find("input[id='mainFlag']").is(':checked') ? "Y":"N"
+            };
+            orgUserLists.push(this.orgUser);
+        });
+
+        $('input:hidden[name=upOrgId]').val($("select[id=selectUpOrgSeq]").val());
+
+        if (orgUserLists.length > 0 ){
+            $(formName + " input[name='roleIds']").val(JSON.stringify(orgUserLists));
+        }
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+    };
+
+    /**
+     * [cruD] 부서 삭제
+     */
+    AreaCtrl.removeOrganization = function () {
+
+        var type = AreaCtrl._model.model.ACTION.REMOVE;
+        this._model.setViewStatus(type);
+
+        var requestUrl = this._model.getRequestUrl();
+        var formName = "#" + AreaCtrl._model.getFormName();
+
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+
+    };
+
+    /**
+     * [cruD] 사용자 조직도 삭제, 단건
+     * @param userSeq
+     */
+    AreaCtrl.removeOrgUser = function(userSeq, userName) {
+
+        if(!confirm('[ ' + userName + ' ] ' + messageConfig.removeConfirmMessage + '?')) return;
+
+        var type = AreaCtrl._model.model.ACTION.ORG_USER_REMOVE;
+
+        this._model.setViewStatus(type);
+
+        var requestUrl = this._model.getRequestUrl();
+        sendAjaxPostRequest(requestUrl, {orgSeq: this._model.getOrgSeq(), userSeq: userSeq}, this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+    };
+
+    /**
+     * [cruD] 조직에 속한 사용자 삭제, 복수 건
+     * @param userSeq
+     * @param userName
+     */
+    AreaCtrl.removeOrgUsers = function() {
+
+
+        var orgUserLists = [];
+        var formName = "#" + AreaCtrl._model.getFormName();
+        $(formName + " input[name='roleIds']").val("");
+
+        $("table[name='roleListTable'] tbody tr").each(function () {
+            if ($(this).find("input[type='checkbox']").is(':checked')) {
+                var orgSort = $(this).find("input[name='orgSortName']").val();
+                this.orgUser = {
+                    orgId          : $(this).find("input[name='orgIdName']").val()
+                    ,userId        : $(this).find("input[name='userIdName']").val()
+                };
+                orgUserLists.push(this.orgUser);
+            }
+
+        });
+
+        if (orgUserLists.length == 0) {
+            alert(messageConfig.removeUserValidationErrorMessage);
+            return;
+        }
+
+        if (!confirm(orgUserLists.length + " " + messageConfig.removeUserConfirmMessage + "?")) return;
+
+
+        $('input:hidden[name=upOrgSeq]').val($("select[id=selectUpOrgSeq]").val());
+
+        var type = AreaCtrl._model.model.ACTION.ORG_USER_REMOVES;
+        this._model.setViewStatus(type);
+
+        var requestUrl = this._model.getRequestUrl();
+
+        if (orgUserLists.length > 0 ){
+            $(formName + " input[name='roleIds']").val(JSON.stringify(orgUserLists));
+        }
+
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+
+    }
+    /**
+     * 조직도 트리 새로 고침
+     */
+    AreaCtrl.setMenuTreeReset = function () {
+        $(this._model.getTreaArea()).dynatree('destroy');
+        $(this._model.getTreaArea()).empty();
+
+        this.findMenuTree();
+    }
+
+    /**
+     * 조직도 트리 전체 펼치기
+     */
+    AreaCtrl.treeExpandAll = function () {
+        $(this._model.getTreaArea()).dynatree("getRoot").visit(function (node) {
+            node.expand(true);
+        });
+    };
+
+    /**
+     * 조직도 등록 전 초기화 모드
+     */
+    AreaCtrl.setAddBefore = function() {
+        this._model.setViewStatus(MenuModel().model.ACTION.ADD);
+        var orgView = new AreaView(this._model);
+        orgView.setAddBefore();
+    };
+
+    /**
+     * 조직도 저장 전 초기화 모드
+     */
+    AreaCtrl.setSaveBefore = function() {
+        this._model.setViewStatus(MenuModel().model.ACTION.SAVE);
+        var orgView = new AreaView(this._model);
+        orgView.setSaveBefore();
+    };
+
+    /**
+     * 부서원 등록 팝업 창 띄우기
+     */
+    AreaCtrl.openPopupUserPage = function() {
+        if (this.commonVaild()) {
+            this._model.setViewStatus("addOrgUser");
+            var orgView = new AreaView(this._model);
+            orgView.openPopupUserPage();
+        }
+
+    };
+
+    return AreaCtrl;
+
+}
+
+/**
+ * [Event] 구역
+ *
+ * @author dhj
+ * @since 2016.06.07
+ */
+function AreaEvent(model) {
+    var AreaEvent = new Object();
+    var areaView = new AreaView(model);
+
+    AreaEvent._model = model;
+
+    /**
+     * [SUCCESS][RES] 구역 전체 목록 불러오기 성공 시 이벤트
+     */
+    AreaEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
+        var menuTreeModel = AreaEvent._model.processMenuTreeData(data['areaList'], AreaEvent._model.getRootOrgId());
+
+        areaView.setMenuTree(menuTreeModel);
+    };
+
+    /**
+     * [FAIL][RES] 구역 전체 목록 불러오기 실패 시
+     */
+    AreaEvent.menuTreeErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][AreaEvent.menuTreeErrorHandler] " + errorThrown);
+        alert(messageConfig[AreaEvent._model.getViewStatus() + 'Failure']);
+    };
+
+    /**
+     * [SUCCESS][RES] 부서별 상세 정보 - 불러오기 성공 시 이벤트
+     * @param data
+     * @param dataType
+     * @param actionType
+     */
+    AreaEvent.detailSuccessHandler = function (data, dataType, actionType) {
+
+        areaView.setFindDetailBefore(data);
+
+        if (typeof data == "object" && data.hasOwnProperty("organization") && data.organization!=null) {
+            try {
+                AreaEvent._model.setOrgId(data.organization.orgId);
+            } catch (e) {
+                console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
+            }
+            try {
+                AreaEvent._model.setOrgName(data.organization.orgName);
+            } catch (e) {
+                console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
+            }
+
+            try {
+                AreaEvent._model.setDepth(data.organization.depth);
+            } catch (e) {
+                areaView.resetOrgDepth();
+                console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
+            }
+
+            try {
+                AreaEvent._model.setUpOrgId(data.organization.upOrgId);
+            } catch (e) {
+                console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
+            }
+            areaView.setDetail(data.organization);
+        }
+
+        $("table[name='roleListTable'] tbody").empty();
+        $("#pageContainer").empty();
+        $('#selectAll').checked = false;
+
+        if (typeof data == "object" && data.hasOwnProperty("orgUsers") && data["orgUsers"].length > 0) {
+
+            areaView.setOrgUserDetail(data.orgUsers);
+            AreaEvent._model.setPageCount(data.totalCount);
+            areaView.setPagingView();
+        }
+    };
+
+    /**
+     * [FAIL][RES] 상세 메뉴 불러오기 실패 시 이벤트
+     * @param XMLHttpRequest
+     * @param textStatus
+     * @param errorThrown
+     * @param actionType
+     */
+    AreaEvent.detailErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][AreaEvent.detailErrorHandler] " + errorThrown);
+        console.error("[Error][AreaEvent.detailErrorHandler] " + errorThrown);
+        alert(messageConfig[AreaEvent._model.getViewStatus() + 'Failure']);
+        $('#selectAll').checked = false;
+    };
+
+    /**
+     * [SUCCESS][RES] 조직 CUD 성공 시 이벤트
+     */
+    AreaEvent.organizationCudSuccessHandler = function (data, dataType, actionType) {
+        /*
+         * 좌측 트리 및 상단 메뉴 바 초기화
+         */
+//        menuCtrl.findMenuTopBar();
+//        menuCtrl.setMenuTreeReset();
+
+        alert(messageConfig[AreaEvent._model.getViewStatus() + 'Complete']);
+        //window.location.reload();
+        location.href = "./list.html?ctrl=reload";
+    };
+
+    /**
+     * [FAIL][RES] 조직 CUD 실패 시 이벤트
+     */
+    AreaEvent.organizationCudErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][AreaEvent.organizationCudErrorHandler] " + errorThrown);
+        alert(messageConfig[AreaEvent._model.getViewStatus() + 'Failure']);
+
+    };
+
+    return AreaEvent;
+}

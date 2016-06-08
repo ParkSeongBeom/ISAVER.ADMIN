@@ -27,7 +27,7 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <form id="eventForm" method="POST">
+    <form id="actionForm" method="POST">
         <input type="hidden" name="pageNumber"/>
 
         <article class="search_area">
@@ -106,7 +106,7 @@
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
-    var form = $('#eventForm');
+    var form = $('#actionForm');
 
     var urlConfig = {
         'listUrl':'${rootPath}/action/list.html'

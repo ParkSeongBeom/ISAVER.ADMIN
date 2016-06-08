@@ -81,6 +81,8 @@
                 <value>properties/message/event</value>
                 <value>properties/message/code</value>
                 <value>properties/message/license</value>
+                <value>properties/message/area</value>
+                <value>properties/message/device</value>
                 <!-- [END] 안전 방재 -->
             </list>
         </property>

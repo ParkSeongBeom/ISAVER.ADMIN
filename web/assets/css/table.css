@@ -32,6 +32,9 @@ textarea.noboder_type01 {
 .ui-widget button {
     font-family:'맑은고딕', 'Malgun Gothic' !important;
 }
+
+
+
 .table_area {width:100%; padding: 20px 0;}
 .layer_contents .table_area {
     overflow: auto;
@@ -41,11 +44,15 @@ textarea.noboder_type01 {
 
 .left_table, .right_table { width:50% !important;}
 
-.left_table.width60p  { width:55% !important;}
-.right_table.width40p { width:45% !important;}
+.width60p  { width:55% !important;}
+.width40p  { width:45% !important;}
+.width45p  { width:45% !important;}
+.width10p  { width:10% !important;}
 
-.left_table  {float: left;  padding: 20px 10px 20px 0;}
-.right_table {float: right; padding: 20px 0 20px 10px;}
+
+.left_table   {float: left;  padding: 20px 10px 20px 0;}
+.center_table {float: left;  padding: 20px 0;}
+.right_table  {float: right; padding: 20px 0 20px 10px;}
 /*트리 테이블 삽입 */
 .tree_table  {width:280px !important; float: left; padding:20px 0 0 0;}
 .tr_table    { padding: 20px 0 0 320px;}
@@ -145,18 +152,78 @@ textarea.noboder_type01 {
 thead 기본 백그라운드 컬러 #787878
 
 */
-.t_defalut {
+.tableplus {
+    position: relative;
+    overflow: hidden;
+    width:90%; height:calc(100% - 120px);height:-webkit-calc(100% - 80px);
+    margin:40px auto 0;
+}
+.tableplus > div {height:calc(100% - 55px);height:-webkit-calc(100% - 55px);}
+.tableplus > div > div {width:calc(50% - 50px); height: 100%;}
+.tableplus > div > div:nth-of-type(1) {float:left;}
+.tableplus > div > div:nth-of-type(2) {float:right;}
+
+.ul_t_defalut, .t_defalut {
     position:relative;
     width:100%;
     font-size:13px;
     letter-spacing:-1px;
-    border-width:0 1px;
-    border-style:solid;
-    border-color:#e4e4e4;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
+}
+.t_defalut {
     box-shadow:         1px 2px 4px rgba(0,0,0,0.05);
     -webkit-box-shadow: 1px 2px 4px rgba(0,0,0,0.05);
     -moz-box-shadow:    1px 2px 4px rgba(0,0,0,0.05);
+}
+.ul_t_defalut {
+    overflow: auto;
+    height: calc(100% - 55px);height: -webkit-calc(100% - 55px);
+/*    border-width:1px;
+    border-style:solid;
+    border-color:#e4e4e4*/;
+}
+.ul_t_defalut > button, .ul_t_defalut > li {
+    width:100%;height:50px; margin:0 0 5px 0;
+    border-width:1px;
+    border-style:solid;
+    border-color:#e4e4e4;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
+}
+.ul_t_defalut > button {
+    position: relative;
+    text-align: left; padding:0 50px 0 10px;
+    font-size:16px;
+    overflow:     hidden;
+    text-overflow:ellipsis;
+    white-space:  nowrap;
+    word-wrap:    normal;
+}
+.ul_t_defalut > button:after {
+    position: absolute; right:0; top:50%; margin:-16px 0 0 0;
+    width:36px;
+    font-size:30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
+}
+.tableplus > div > div:nth-of-type(1) .ul_t_defalut > button {background-color: #f3f3f3;}
+.tableplus > div > div:nth-of-type(1) .ul_t_defalut > button:after {content: "\e915";}
+.tableplus > div > div:nth-of-type(2) .ul_t_defalut > button:after {content: "\e91a";}
 
+.ul_t_defalut > li {display: table;padding:6px;  }
+.ul_t_defalut > li > span {display: table-cell; vertical-align: middle; }
+.ul_t_defalut > li > span:first-of-type {width:24px;}
+
+
+.t_defalut {
+    height: 100%;
+    border-width:0 1px;
+    border-style:solid;
+    border-color:#e4e4e4;
 }
 .t_defalut thead th, .t_defalut tbody td {
     -webkit-box-sizing: border-box;
@@ -184,7 +251,7 @@ thead 기본 백그라운드 컬러 #787878
 .t_defalut td.point > span {color:#f37949;}
 
 /*테이블 타입01 .t_type01 */
-.t_type01 tbody tr:hover td
+.t_type01 tbody tr:hover td, .ul_t_defalut > li:hover, .ul_t_defalut > button:hover
     /*
     , .fchover
     td.fc-day:hover,
@@ -194,6 +261,7 @@ thead 기본 백그라운드 컬러 #787878
 {
     background-color: #cde6f7 !important;
     cursor: pointer;
+    color:#3e3e3e;
 }
 .cursor_no tbody tr:hover td {cursor:default !important;}
 .t_type01 thead th, .t_type01 tbody td {
