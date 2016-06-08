@@ -120,16 +120,13 @@ function MenuCtrl(model) {
      * 메뉴 등록 전 유효성 검증
      */
     MenuCtrl.addMenuVaild = function() {
-
         if (this.commonVaild()) {
             this._model.setViewStatus(MenuModel().model.ACTION.ADD);
             var menuName = $("input[name=menuName]").val();
             if(confirm('[' + menuName + ']' + messageConfig['addConfirmMessage'] + '?')) {
                 this.addMenu();
             }
-
         }
-
     };
 
     /**
@@ -162,7 +159,6 @@ function MenuCtrl(model) {
      * [Crud]메뉴 등록
      */
     MenuCtrl.addMenu = function() {
-
         var type = MenuCtrl._model.getViewStatus();
 
         if(type != MenuModel().model.ACTION.ADD) {
@@ -176,17 +172,6 @@ function MenuCtrl(model) {
             hidden 필드에 부모 아이디를 삽입
          */
         $('input:hidden[name=parentMenuId]').val($("#selectParentMenuId").val());
-
-        var roleIds = new Array();
-
-        $("table[name='roleListTable'] tbody tr").each(function() {
-
-            if ($(this).find('input:checkbox').is(':checked')) {
-                roleIds.push($(this).find("td").eq(1).text());
-            }
-        });
-
-        $(formName + " input[name='roleIds']").val(roleIds.join(","));
         sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.menuCudSuccessHandler, this._event.menuCudErrorHandler, type);
     };
 
@@ -195,7 +180,6 @@ function MenuCtrl(model) {
      * [crUd] 메뉴 수정
      */
     MenuCtrl.saveMenu = function() {
-
         var type = MenuCtrl._model.getViewStatus();
 
         if (MenuCtrl._model.getMenuDepth() == "0") {
@@ -208,16 +192,6 @@ function MenuCtrl(model) {
 
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + MenuCtrl._model.getFormName();
-        var roleIds = new Array();
-
-        $("table[name='roleListTable'] tbody tr").each(function() {
-
-            if ($(this).find('input:checkbox').is(':checked')) {
-                roleIds.push($(this).find("td").eq(1).text());
-            }
-        });
-
-        $(formName + " input[name='roleIds']").val(roleIds.join(","));
 
         if ($('input:hidden[name=menuid]').val() == this._model.getRootUrl()) {
             $('input:hidden[name=parentMenuId]').val('');
@@ -230,7 +204,6 @@ function MenuCtrl(model) {
      * [cruD] 메뉴 삭제
      */
     MenuCtrl.removeMenu = function() {
-
         var menuName = document.forms[menuModel.getFormName()]['menuName'].value;
 
         if(!confirm("[ " + menuName +" ] " +messageConfig.removeConfirmMessage+"?")) return;
@@ -240,17 +213,6 @@ function MenuCtrl(model) {
 
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + MenuCtrl._model.getFormName();
-
-        var roleIds = new Array();
-
-        $("table[name='roleListTable'] tbody tr").each(function() {
-
-            if ($(this).find('input:checkbox').is(':checked')) {
-                roleIds.push($(this).find("td").eq(1).text());
-            }
-        });
-
-        $(formName + " input[name='roleIds']").val(roleIds.join(","));
 
         if ($('input:hidden[name=menuid]').val() == this._model.getRootUrl()) {
             $('input:hidden[name=parentMenuId]').val('');

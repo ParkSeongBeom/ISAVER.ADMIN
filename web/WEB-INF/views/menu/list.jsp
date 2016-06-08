@@ -36,7 +36,6 @@
 
     <form id="menuForm" method="POST">
         <input type="hidden" name="parentMenuId" />
-        <input type="hidden" name="roleIds" />
 
         <article class="table_area tr_table">
             <div class="table_title_area">

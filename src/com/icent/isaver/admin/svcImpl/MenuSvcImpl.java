@@ -125,9 +125,6 @@ public class MenuSvcImpl implements MenuSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
             menuDao.addMenu(paramBean);
-            parameters.put("menuId", paramBean.get("menuId"));
-            List<RoleMenuBean> roleMenuBeans = convertToRoleMenuListBean(parameters);
-            roleMenuDao.addListRoleMenu(roleMenuBeans);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
@@ -140,14 +137,10 @@ public class MenuSvcImpl implements MenuSvc {
 
     @Override
     public ModelAndView saveMenu(Map<String, String> parameters) {
-        List<RoleMenuBean> roleMenuBeans = convertToRoleMenuListBean(parameters);
-        List<RoleMenuBean> deleteRoleBeans = roleMenuDao.findAllRoleMenu(parameters);
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         try{
             menuDao.saveMenu(parameters);
-            roleMenuDao.removeListRoleMenu(deleteRoleBeans);
-            roleMenuDao.addListRoleMenu(roleMenuBeans);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
@@ -173,31 +166,5 @@ public class MenuSvcImpl implements MenuSvc {
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
-    }
-
-    /**
-     *
-     * @param parameters
-     * @return
-     */
-    private List<RoleMenuBean> convertToRoleMenuListBean(Map<String, String> parameters) {
-        List<RoleMenuBean> lists = new ArrayList<RoleMenuBean>();
-        String menuId = parameters.get("menuId");
-
-        String adminId = parameters.get("updateUserId");
-        if (parameters.get("roleIds").trim().length() > 0) {
-
-            String[] arrSplit = parameters.get("roleIds").split(",");
-
-            for(String roleId: arrSplit) {
-                RoleMenuBean bean = new RoleMenuBean();
-                bean.setMenuId(menuId);
-                bean.setRoleId(roleId);
-                bean.setInsertUserId(adminId);
-                lists.add(bean);
-            }
-        }
-
-        return lists;
     }
 }
