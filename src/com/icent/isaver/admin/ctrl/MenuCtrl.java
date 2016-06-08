@@ -111,7 +111,6 @@ public class MenuCtrl {
 
     @RequestMapping(method={RequestMethod.POST},value="/add")
     public ModelAndView addMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
         if(MapUtils.nullCheckMap(parameters, addMenuParam)){
             throw new JabberException("");
         }

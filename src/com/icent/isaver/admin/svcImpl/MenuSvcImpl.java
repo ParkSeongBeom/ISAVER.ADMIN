@@ -52,9 +52,6 @@ public class MenuSvcImpl implements MenuSvc {
     @Inject
     private RoleMenuDao roleMenuDao;
 
-    @Inject
-    private RoleDao roleDao;
-
     @Override
     public ModelAndView findAllMenuTree(Map<String, String> parameters) {
         List<MenuBean> menuTreeList = menuDao.findAllMenuTree(parameters);
@@ -82,49 +79,22 @@ public class MenuSvcImpl implements MenuSvc {
 
     @Override
     public ModelAndView findByMenu(Map<String, String> parameters) {
-        MenuBean menu = null;
-        List<RoleBean> roles = null;
-        List<RoleMenuBean> roleMenus = null;
-        if(StringUtils.notNullCheck(parameters.get("menuId"))){
-            menu = menuDao.findByMenu(parameters);
-            roles = roleDao.findListRole(parameters);
-            roleMenus = roleMenuDao.findAllRoleMenu(parameters);
-        }
-
-        List<RoleBean> roleBeanList = new ArrayList<RoleBean>();
-        for(RoleBean roleBean: roles) {
-            if (roleMenus.size() == 0) {
-                roleBean.setDelYn("Y");
-            } else {
-                for(RoleMenuBean roleMenuBean: roleMenus) {
-                    if (roleBean.getRoleId().equals(roleMenuBean.getRoleId())) {
-                        roleBean.setDelYn("N");
-                        break;
-                    } else {
-                        roleBean.setDelYn("Y");
-                    }
-                }
-            }
-            roleBeanList.add(roleBean);
-        }
+        MenuBean menu = menuDao.findByMenu(parameters);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("menu",menu);
-        modelAndView.addObject("roles",roleBeanList);
-        //modelAndView.addObject("paramBean",paramBean);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView addMenu(Map<String, String> parameters) {
-        MenuBean searchParentMenuDepthBean = menuDao.findByMenu(parameters);
+    public ModelAndView addMenu(final Map<String, String> parameters) {
+        MenuBean searchParentMenuDepthBean = menuDao.findByMenu(new HashMap<String, String>(){{put("menuId",parameters.get("parentMenuId"));}});
 
-        Map<String, String> paramBean = new HashMap<>();
-        paramBean.put("menuId",StringUtils.getGUID36());
-        paramBean.put("menuDepth",searchParentMenuDepthBean.getMenuDepth()+1);
+        parameters.put("menuId",StringUtils.getGUID32().substring(0,6));
+        parameters.put("menuDepth", String.valueOf(Integer.parseInt(searchParentMenuDepthBean.getMenuDepth())+1));
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            menuDao.addMenu(paramBean);
+            menuDao.addMenu(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
