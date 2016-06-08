@@ -32,13 +32,13 @@
                 <p class="itype_01">
                     <span><spring:message code="role.column.roleId" /></span>
                     <span>
-                        <input type="text" name="id" value="${paramBean.id}"/>
+                        <input type="text" name="roleId" value="${paramBean.roleId}"/>
                     </span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="role.column.roleName" /></span>
                     <span>
-                        <input type="text" name="name" value="${paramBean.name}"/>
+                        <input type="text" name="roleName" value="${paramBean.roleName}"/>
                     </span>
                 </p>
             </div>
@@ -157,7 +157,6 @@
 
 
     function getRequestUrl(type, method) {
-
         var rootUrl = String();
         try {
             rootUrl = String('${rootPath}');
@@ -185,7 +184,7 @@
 
         var methodModule = {
             detail: function () {
-                form.append($('<INPUT>').attr('type','hidden').attr('name','id').attr('value',id));
+                form.append($('<INPUT>').attr('type','hidden').attr('name','roleId').attr('value',id));
             },
             add: function() {}
         }

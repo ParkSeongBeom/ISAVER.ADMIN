@@ -45,8 +45,8 @@
                         <tr>
                             <th class="point"><spring:message code="common.column.useYn"/></th>
                             <td class="point" colspan="3">
-                                <span><input type="radio" name="useFlag" value="Y" ${!empty role && role.useFlag == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
-                                <span><input type="radio" name="useFlag" value="N" ${empty role || role.useFlag == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
+                                <span><input type="radio" name="delYn" value="N" ${!empty role && role.delYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
+                                <span><input type="radio" name="delYn" value="Y" ${empty role || role.delYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
                             </td>
                         </tr>
                         <c:if test="${!empty role}">

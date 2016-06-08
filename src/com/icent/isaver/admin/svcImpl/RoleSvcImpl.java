@@ -54,12 +54,12 @@ public class RoleSvcImpl implements RoleSvc {
 
     @Override
     public ModelAndView findListRole(Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
         List<RoleBean> roles = roleDao.findListRole(parameters);
         Integer totalCount = roleDao.findCountRole(parameters);
 
         AdminHelper.setPageTotalCount(parameters,totalCount);
 
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("roles", roles);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
@@ -69,7 +69,7 @@ public class RoleSvcImpl implements RoleSvc {
     @Override
     public ModelAndView findByRole(Map<String, String> parameters) {
         RoleBean role = null;
-        if(StringUtils.notNullCheck(parameters.get("id")) ){
+        if(StringUtils.notNullCheck(parameters.get("roleId")) ){
             role = roleDao.findByRole(parameters);
         }
 
@@ -81,7 +81,7 @@ public class RoleSvcImpl implements RoleSvc {
 
     @Override
     public ModelAndView addRole(Map<String, String> parameters) {
-        parameters.put("roleId",StringUtils.getGUID36());
+        parameters.put("roleId",StringUtils.getGUID32().substring(0,6));
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
