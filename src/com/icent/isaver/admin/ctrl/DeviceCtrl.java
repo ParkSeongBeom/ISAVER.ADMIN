@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;

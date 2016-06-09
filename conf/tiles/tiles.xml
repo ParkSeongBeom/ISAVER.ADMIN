@@ -109,6 +109,22 @@
         <put-attribute name="body" value="/WEB-INF/views/role/detail.jsp" />
     </definition>
 
+    <!--
+        코드관리
+        @author kst
+     -->
+    <definition name="groupCodeList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/groupcode/list.jsp" />
+    </definition>
+
+    <definition name="groupCodeDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/groupcode/detail.jsp" />
+    </definition>
+
+    <definition name="codeDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/code/detail.jsp" />
+    </definition>
+
     <!-- ############# -->
     <!-- [END] 안전 방재 -->
     <!-- ############# -->

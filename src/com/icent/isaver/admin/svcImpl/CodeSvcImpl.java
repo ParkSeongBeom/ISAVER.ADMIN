@@ -1,12 +1,9 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
-import com.icent.isaver.admin.svc.RoleSvc;
-import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.repository.bean.RoleBean;
-import com.icent.isaver.repository.dao.base.RoleDao;
-import com.icent.isaver.repository.dao.base.RoleMenuDao;
-import com.icent.isaver.repository.dao.base.UsersDao;
+import com.icent.isaver.admin.svc.CodeSvc;
+import com.icent.isaver.repository.bean.CodeBean;
+import com.icent.isaver.repository.dao.base.CodeDao;
 import com.kst.common.springutil.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
@@ -20,72 +17,58 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * 권한 관리 Service Implements
+ * 코드관리 Service Implements
  *
- * @author : dhj
+ * @author : kst
  * @version : 1.0
- * @since : 2014. 5. 24.
+ * @since : 2014. 5. 20.
  * <pre>
  *
  * == 개정이력(Modification Information) ====================
  *
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
- *  2014. 5. 24.     dhj           최초 생성
- *  2014. 6. 02.     kst           권한삭제 로직 수정
+ *  2014. 5. 20.     kst           최초 생성
  * </pre>
  */
 @Service
-public class RoleSvcImpl implements RoleSvc {
+public class CodeSvcImpl implements CodeSvc {
 
     @Resource(name="mybatisIsaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
-    private RoleDao roleDao;
-
-    @Inject
-    private RoleMenuDao roleMenuDao;
-
-    @Inject
-    private UsersDao usersDao;
+    private CodeDao codeDao;
 
     @Override
-    public ModelAndView findListRole(Map<String, String> parameters) {
-        List<RoleBean> roles = roleDao.findListRole(parameters);
-        Integer totalCount = roleDao.findCountRole(parameters);
-
-        AdminHelper.setPageTotalCount(parameters,totalCount);
+    public ModelAndView findListCode(Map<String, String> parameters) {
+        List<CodeBean> codes = codeDao.findListCode(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("roles", roles);
+        modelAndView.addObject("codes",codes);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findByCode(Map<String, String> parameters) {
+        CodeBean code = null;
+        if(StringUtils.notNullCheck(parameters.get("groupCodeId")) && StringUtils.notNullCheck(parameters.get("codeId"))){
+            code = codeDao.findByCode(parameters);
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("code",code);
         modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-
-    }
-
-    @Override
-    public ModelAndView findByRole(Map<String, String> parameters) {
-        RoleBean role = null;
-        if(StringUtils.notNullCheck(parameters.get("roleId")) ){
-            role = roleDao.findByRole(parameters);
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("role",role);
 
         return modelAndView;
     }
 
     @Override
-    public ModelAndView addRole(Map<String, String> parameters) {
-        parameters.put("roleId",StringUtils.getGUID32().substring(0,6));
-
+    public ModelAndView addCode(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            roleDao.addRole(parameters);
+            codeDao.addCode(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
@@ -97,10 +80,10 @@ public class RoleSvcImpl implements RoleSvc {
     }
 
     @Override
-    public ModelAndView saveRole(Map<String, String> parameters) {
+    public ModelAndView saveCode(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            roleDao.saveRole(parameters);
+            codeDao.saveCode(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
@@ -112,12 +95,10 @@ public class RoleSvcImpl implements RoleSvc {
     }
 
     @Override
-    public ModelAndView removeRole(Map<String, String> parameters) {
+    public ModelAndView removeCode(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            roleMenuDao.removeRoleMenuForRole(parameters);
-            usersDao.saveUsersForRole(parameters);
-            roleDao.removeRole(parameters);
+            codeDao.removeCode(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

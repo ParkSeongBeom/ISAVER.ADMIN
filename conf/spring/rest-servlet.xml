@@ -81,6 +81,7 @@
                 <value>properties/message/action</value>
                 <value>properties/message/event</value>
                 <value>properties/message/code</value>
+                <value>properties/message/groupcode</value>
                 <value>properties/message/license</value>
                 <value>properties/message/area</value>
                 <value>properties/message/device</value>
