@@ -2,10 +2,18 @@
 <!-- @author dhj -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib prefix="jabber" uri="/WEB-INF/views/common/tags/jabber.tld"%>
-<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-A000-0000-0000-000000000001" var="menuId"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="MN000000-B000-0000-0000-000000000000" var="subMenuId"/>
+<c:set value="MN000000-B000-0000-0000-000000000001" var="menuId"/>
+<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
+<link rel="stylesheet" href="${rootPath}/assets/css/jqueryui/jquery-ui-1.10.4.min.css">
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
@@ -26,51 +34,13 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.treeExpandAll(); return false;"><spring:message code='area.button.viewTheFullArea'/></button>
-                <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.setAddBefore(); return false;" ><spring:message code='area.button.addArea'/></button>
+                <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.treeExpandAll(); return false;"><spring:message code='area.button.viewTheFullArea'/></button>
+                <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.setAddBefore(); return false;" ><spring:message code='area.button.addArea'/></button>
             </div>
         </div>
         <div class="table_contents">
             <div id="menuTreeArea" class="tree_box">
                 <ul class="dynatree-container dynatree-no-connector">
-                    <li class="dynatree-lastsib">
-                            <span class="dynatree-node dynatree-folder dynatree-expanded dynatree-has-children dynatree-lastsib dynatree-exp-el dynatree-ico-ef">
-                                <span class="dynatree-icon"></span>
-                                <a href="#" class="dynatree-title">Area01</a>
-                            </span>
-                        <ul>
-                            <li class="">
-                                    <span class="dynatree-node dynatree-has-children dynatree-exp-c dynatree-ico-c">
-                                        <span class="dynatree-expander"></span>
-                                        <span class="dynatree-icon"></span>
-                                        <a href="#" class="dynatree-title">Area01 001-23</a>
-                                    </span>
-                            </li>
-                            <li class="">
-                                    <span class="dynatree-node dynatree-has-children dynatree-exp-c dynatree-ico-c">
-                                        <span class="dynatree-expander"></span>
-                                        <span class="dynatree-icon"></span>
-                                        <a href="#" class="dynatree-title">Area02 002-56</a>
-                                    </span>
-                            </li>
-                            <li class="">
-                                    <span class="dynatree-node dynatree-has-children dynatree-exp-c dynatree-ico-c">
-                                        <span class="dynatree-expander"></span>
-                                        <span class="dynatree-icon"></span>
-                                        <a href="#" class="dynatree-title">Area03 003-52</a>
-                                    </span>
-                            </li>
-                            <li class="">
-                                    <span class="dynatree-node dynatree-has-children dynatree-exp-c dynatree-ico-c">
-                                        <span class="dynatree-expander"></span>
-                                        <span class="dynatree-icon"></span>
-                                        <a href="#" class="dynatree-title">Area04 004-85</a>
-                                    </span>
-                            </li>
-
-                        </ul>
-                    </li>
-
                 </ul>
             </div>
         </div>
@@ -89,7 +59,8 @@
     <%--</article>--%>
     <!-- 트리 영역 End -->
 
-    <form id="deviceForm" method="POST">
+    <form id="areaForm" method="POST" onsubmit="return false;" >
+        <input type="hidden" name="parentAreaId" />
         <article class="table_area tr_table">
             <div class="table_title_area">
                 <h4><spring:message code="area.column.areaInformation"/></h4>
@@ -127,13 +98,13 @@
                     </tbody>
                 </table>
                 <!-- 입력 테이블 End -->
-                <div class="table_title_area">
-                    <div class="table_btn_set">
-                        <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:menuCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/></button>
-                        <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:menuCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/></button>
-                        <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:menuCtrl.removeMenuVaild(); return false;"><spring:message code="common.button.remove"/></button>
-                    </div>
-                </div>
+                <%--<div class="table_title_area">--%>
+                    <%--<div class="table_btn_set">--%>
+                        <%--<button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:areaCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/></button>--%>
+                        <%--<button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:areaCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/></button>--%>
+                        <%--<button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:areaCtrl.removeMenuVaild(); return false;"><spring:message code="common.button.remove"/></button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
             </div>
 
             <div class="table_contents">
@@ -149,51 +120,43 @@
                     <tr>
                         <th><spring:message code="area.column.areaId"/></th>
                         <td>
-                            <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" readonly="true">
+                            <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" readonly="true" maxlength="6">
                         </td>
                         <th class="point"><spring:message code="area.column.areaName"/></th>
                         <td class="point">
-                            <input type="text" name="areaName" placeholder="<spring:message code="area.message.requiredAreaName"/>">
+                            <input type="text" name="areaName" placeholder="<spring:message code="area.message.requiredAreaName"/>" maxlength="50">
                         </td>
                     </tr>
                     <tr>
-                        <!--<th>부모구역 명</th>
-                        <td>
-                            <select id="selectParentMenuId">
-                                <option value="">Area01</option>
-                                <option value="">Area01 〉 Area01_01</option>
-                            </select>
-                        </td>-->
-                        <th><spring:message code="area.column.areaName"/></th>
-                        <td colspan="3">
-                            <input type="number" name="sortOrder" value="" placeholder="<spring:message code="area.message.requiredAreaName"/>">
+                        <th><spring:message code="area.column.sortOrder"/></th>
+                        <td class="point" colspan="3">
+                            <input type="number" name="sortOrder" placeholder="<spring:message code="area.message.requiredSortOrder"/>" >
                         </td>
                     </tr>
-
                     <tr>
                         <th><spring:message code="area.column.areaDesc"/></th>
                         <td class="point" colspan="3">
-                            <textarea name="" class="textboard"></textarea>
+                            <textarea name="areaDesc" class="textboard"></textarea>
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr name="showHideTag" >
                         <th><spring:message code="common.column.insertUser"/></th>
-                        <td name=""></td>
+                        <td name="insertUserName"></td>
                         <th><spring:message code="common.column.insertDatetime"/></th>
-                        <td name=""></td>
+                        <td name="insertDatetime"></td>
                     </tr>
-                    <tr>
+                    <tr name="showHideTag" >
                         <th><spring:message code="common.column.updateUser"/></th>
-                        <td name=""></td>
+                        <td name="updateUserName"></td>
                         <th><spring:message code="common.column.updateDatetime"/></th>
-                        <td name=""></td>
+                        <td name="updateDatetime"></td>
                     </tr>
                     </tbody>
                 </table>
                 <!-- 입력 테이블 End -->
             </div>
-            <div class="table_title_area">
+            <div class="table_title_area" name="showHideTag" >
                 <h4><spring:message code="device.column.deviceList"/></h4>
             </div>
             <article class="search_area" name="showHideTag" style="display: table;">
@@ -211,36 +174,35 @@
                             <input type="text" name="serialNo" value="">
                         </span>
                     </p>
-                    <p class="itype_01">
-                        <span><spring:message code="device.column.deviceCode"/></span>
-                        <span>
-                            <select>
-                                <option value="">장치 코드 01</option>
-                                <option value="">장치 코드 02</option>
-                                <option value="">장치 코드 03</option>
-                            </select>
-                        </span>
-                    </p>
-                    <p class="itype_01">
-                        <span><spring:message code="device.column.deviceType"/></span>
-                        <span>
-                            <select>
-                                <option value="">장치 유형 01</option>
-                                <option value="">장치 유형 02</option>
-                                <option value="">장치 유형 03</option>
-                            </select>
-                        </span>
-                    </p>
+                    <%--<p class="itype_01">--%>
+                        <%--<span><spring:message code="device.column.deviceCode"/></span>--%>
+                        <%--<span>--%>
+                            <%--<select>--%>
+                                <%--<option value="">장치 코드 01</option>--%>
+                                <%--<option value="">장치 코드 02</option>--%>
+                                <%--<option value="">장치 코드 03</option>--%>
+                            <%--</select>--%>
+                        <%--</span>--%>
+                    <%--</p>--%>
+                    <%--<p class="itype_01">--%>
+                        <%--<span><spring:message code="device.column.deviceType"/></span>--%>
+                        <%--<span>--%>
+                            <%--<select>--%>
+                                <%--<option value="">장치 유형 01</option>--%>
+                                <%--<option value="">장치 유형 02</option>--%>
+                                <%--<option value="">장치 유형 03</option>--%>
+                            <%--</select>--%>
+                        <%--</span>--%>
+                    <%--</p>--%>
                 </div>
                 <div class="search_btn">
-                    <button onclick="javascript:organizationCtrl.searchOrgUser(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.find"/></button>
+                    <button onclick="javascript:areaCtrl.searchDevice(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.find"/></button>
                 </div>
             </article>
 
-            <div class="table_contents">
+            <div class="table_contents" name="showHideTag" >
                 <table name="roleListTable" class="t_defalut t_type01 t_style02">
                     <colgroup>
-
                         <col style="width: 20%;">
                         <col style="width: 20%;">
                         <col style="width: 20%;">
@@ -255,12 +217,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>CN-JSVJRGB</td>
-                        <td>Area01 001-23</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+
                     </tbody>
                 </table>
                 <!-- 테이블 공통 페이징 Start -->
@@ -276,9 +233,9 @@
             </div>
             <div class="table_title_area">
                 <div class="table_btn_set">
-                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:menuCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/> </button>
-                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:menuCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/> </button>
-                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:menuCtrl.removeMenuVaild(); return false;"><spring:message code="common.button.remove"/> </button>
+                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:areaCtrl.addAreaVaild(); return false;"><spring:message code="common.button.add"/> </button>
+                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:areaCtrl.saveAreaVaild(); return false;"><spring:message code="common.button.save"/> </button>
+                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:areaCtrl.removeAreaVaild(); return false;"><spring:message code="common.button.remove"/> </button>
                 </div>
             </div>
         </article>
@@ -301,60 +258,61 @@
     var messageConfig = {
             menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
-        ,   addFailure                :'<spring:message code="menu.message.addFailure"/>'
-        ,   saveFailure               :'<spring:message code="menu.message.saveFailure"/>'
+        ,   addFailure                :'<spring:message code="area.message.addFailure"/>'
+        ,   saveFailure               :'<spring:message code="area.message.saveFailure"/>'
         ,   removeFailure             :'<spring:message code="menu.message.removeFailure"/>'
-        ,   addComplete               :'<spring:message code="menu.message.addComplete"/>'
-        ,   saveComplete              :'<spring:message code="menu.message.saveComplete"/>'
-        ,   removeComplete            :'<spring:message code="menu.message.removeComplete"/>'
+        ,   addComplete               :'<spring:message code="area.message.addComplete"/>'
+        ,   saveComplete              :'<spring:message code="area.message.saveComplete"/>'
+        ,   removeComplete            :'<spring:message code="area.message.removeComplete"/>'
         ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
         ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
         ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
-        ,   requiredMenuId            :"<spring:message code='menu.message.requiredMenuId'/>"
-        ,   requiredMenuName          :"<spring:message code='menu.message.requiredMenuName'/>"
+        ,   requiredAreaId            :"<spring:message code='area.message.requiredAreaId'/>"
+        ,   requiredAreaName          :"<spring:message code='area.message.requiredAreaName'/>"
+        ,   requiredSortOrder          :"<spring:message code='area.message.requiredSortOrder'/>"
         ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
-        ,   requiredSortOrder         :"<spring:message code='menu.message.requiredSortOrder'/>"
         ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
         ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
         ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
         ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
+        ,   existsAreaId            :"<spring:message code='area.message.existsAreaId'/>"
     };
-
-    $(document).ready(function(){
-
-        $('#selectAll').click(function(event) {
-            if(this.checked) {
-                $('input[type=checkbox]').each(function() {
-                    this.checked = true;
-                });
-            }else{
-                $('input[type=checkbox]').each(function() {
-                    this.checked = false;
-                });
-            }
-        });
-
-        $( "#selectParentMenuId" ).change(function() {
-            var formName = menuModel.getFormName();
-            $('input:hidden[name=parentMenuId]').val($("select[id=selectParentMenuId]").val());
-        });
-
-
-
-    });
 
     var areaModel = new AreaModel();
     areaModel.setRootUrl(String('${rootPath}'));
     areaModel.setPageRowNumber(10);
     areaModel.setPageIndex(0);
-    // 최상위 부서 제거로 주석 @author kst
-    //organizationModel.setRootOrgId("ORG00000-0000-0000-0000-000000000000");
-//    $("#selectUpOrgSeq option:eq(0)").attr("value", organizationModel.getRootOrgId());
+
     var areaCtrl = new AreaCtrl(areaModel);
 
-    /**
-     * 구역 트리 생성
+
+    /*
+     페이지 네이게이터를 그린다.
+     @author kst
      */
-    areaCtrl.findMenuTree();
-    <%--alert(String('${organizationTreeList}'));--%>
+    function drawPageNavigater(pageSize,pageNumber,totalCount){
+        var pageNavigater = new PageNavigator(pageSize,pageNumber,totalCount);
+        pageNavigater.setClass('paging','p_arrow pll','p_arrow pl','','page_select','');
+        pageNavigater.setGroupTag('《','〈','〉','》');
+        pageNavigater.showInfo(false);
+        $('#pageContainer').append(pageNavigater.getHtml());
+    }
+
+    /*
+     페이지 이동
+     @author kst
+     */
+    function goPage(pageNumber){
+        form.find('input[name=pageNumber]').val(pageNumber);
+        search();
+    }
+
+
+    $(document).ready(function(){
+        /**
+         * 구역 트리 생성
+         */
+        areaCtrl.findMenuTree();
+    });
+
 </script>

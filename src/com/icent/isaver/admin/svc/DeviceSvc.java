@@ -1,8 +1,11 @@
 package com.icent.isaver.admin.svc;
 
+import com.icent.isaver.repository.bean.AreaBean;
+import com.icent.isaver.repository.bean.DeviceBean;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +23,13 @@ import java.util.Map;
  * </pre>
  */
 public interface DeviceSvc {
+
+    /**
+     * 장치 트리를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findAllDeviceTree(Map<String, String> parameters);
 
     /**
      * 장치 목록을 가져온다.
@@ -66,4 +76,11 @@ public interface DeviceSvc {
      */
     ModelAndView removeDevice(Map<String, String> parameters);
 
+    /**
+     * 전체 장치 트리를 반환한다.
+     * @param parameters
+     * - 없음
+     * @return
+     */
+    List<DeviceBean> deviceTreeDataStructure(Map<String, String> parameters);
 }

@@ -17,9 +17,10 @@ function AreaCtrl(model) {
      */
     AreaCtrl.selectMenuTree = function (node) {
         if (node != null || node != undefined) {
+
             var id = node.data.id;
             if (id != null || id != undefined) {
-                AreaCtrl._model.setOrgId(String(id));
+                AreaCtrl._model.setAreaId(String(id));
                 AreaCtrl._model.setPageIndex(0);
                 AreaCtrl.findMenuDetail();
             }
@@ -38,15 +39,16 @@ function AreaCtrl(model) {
     };
 
     /**
-     * [cRud] 선택한 부서 ID로 상세 정보 가져오기
+     * [cRud] 선택한 구역 ID로 상세 정보 가져오기
      */
     AreaCtrl.findMenuDetail = function () {
-        if (this._model.getOrgId() != null || this._model.getOrgId() != undefined) {
+
+        if (this._model.getAreaId() != null || this._model.getAreaId() != undefined) {
 
             this.param = {
-                id: this._model.getOrgId()
-                ,userId: this._model.getUserId()
-                ,name: this._model.getUserName()
+                areaId : this._model.getAreaId()
+                ,deviceId: this._model.getDeviceId()
+                ,serialNo: this._model.getSerialNo()
                 ,pageIndex: (this._model.getPageIndex() > 0) ? this._model.getPageIndex() * this._model.getPageRowNumber()-this._model.getPageRowNumber() : 0
                 ,pageRowNumber: this._model.getPageRowNumber()
             };
@@ -54,20 +56,19 @@ function AreaCtrl(model) {
             this._model.setViewStatus('detail');
             var type = this._model.getViewStatus();
             var requestUrl = this._model.getRequestUrl();
+
             sendAjaxPostRequest(requestUrl, this.param, this._event.detailSuccessHandler, this._event.detailErrorHandler, type);
         }
     };
 
     /**
-     * 조직도 사용자 상세 조회
+     * 구역별 장치 상세 조회
      */
-    AreaCtrl.searchOrgUser = function() {
-        if (this.commonVaild()) {
-            this._model.setUserId($("input[name='userId']").val());
-            this._model.setUserName($("input[name='userName']").val());
+    AreaCtrl.searchDevice = function() {
+        this._model.setDeviceId($("input[name='deviceId']").val());
+        this._model.setSerialNo($("input[name='serialNo']").val());
 
-            AreaCtrl.findMenuDetail();
-        }
+        AreaCtrl.findMenuDetail();
 
     };
 
@@ -76,31 +77,33 @@ function AreaCtrl(model) {
      */
     AreaCtrl.commonVaild = function(flag) {
 
-        if (this._model.getOrgId() != undefined && String(this._model.getOrgId()).trim().length == 0) {
-            alert("좌측 부서 목록에서 부서를 선택해 주세요.");
-            return;
-        }
+        //if (this._model.getParentAreaId() != undefined && String(this._model.getParentAreaId()).trim().length == 0) {
+        //    alert("좌측 구역 목록에서 부서를 선택해 주세요.");
+        //    return;
+        //}
 
         var type = AreaCtrl._model.getViewStatus();
 
         if (flag != undefined && flag) {
 
-            if ($("input[name='orgName']").val().trim().length == 0) {
-                $("input[name='orgName']").focus();
-                alert(messageConfig.requiredOrgName);
+            if ($("input[name='areaId']").val().trim().length == 0) {
+                $("input[name='areaId']").focus();
+                alert(messageConfig['requiredAreaId']);
                 return;
             }
 
-            if (type != OrganizationModel().model.ACTION.ADD) {
-
-                if($("table tbody tr").eq(2).css("display") != "none"){
-                    if ($("input[name='sortOrder']").val().trim().length == 0) {
-                        $("input[name='sortOrder']").focus();
-                        alert(messageConfig.requiredSortOrder);
-                        return;
-                    }
-                }
+            if ($("input[name='areaName']").val().trim().length == 0) {
+                $("input[name='areaName']").focus();
+                alert(messageConfig['requiredAreaName']);
+                return;
             }
+
+            if ($("input[name='sortOrder']").val().trim().length == 0) {
+                $("input[name='sortOrder']").focus();
+                alert(messageConfig['requiredSortOrder']);
+                return;
+            }
+
 
         }
 
@@ -108,125 +111,96 @@ function AreaCtrl(model) {
     };
 
     /**
-     * 조직 등록 전 유효성 검증
+     *  구역 등록 전 유효성 검증
      */
-    AreaCtrl.addOrganizationVaild = function () {
+    AreaCtrl.addAreaVaild = function () {
 
-        this._model.setViewStatus(MenuModel().model.ACTION.ADD);
+        this._model.setViewStatus(AreaModel().model.ACTION.ADD);
         if (this.commonVaild(true)) {
 
-            var orgName = $("input[name=orgName]").val();
-            if(confirm('[' + orgName + ']' + messageConfig['addConfirmMessage'] + '?')) {
-                this.addOrganization();
-            }
-
-        }
-    };
-
-    /**
-     * 조직 저장 전 유효성 검증
-     */
-    AreaCtrl.saveOrganizationVaild = function () {
-
-        this._model.setViewStatus(MenuModel().model.ACTION.SAVE);
-
-        if (this.commonVaild(true)) {
-
-            var orgName = $("input[name=orgName]").val();
-            if(confirm('[' + orgName + ']' + messageConfig['saveConfirmMessage'] + '?')) {
-                this.saveOrganization();
-            }
-
-        }
-
-    };
-
-    /**
-     * 조직도 삭제 전 유효성 검증
-     */
-    AreaCtrl.removeOrganizationVaild = function () {
-
-        if (this.commonVaild()) {
-            if (AreaCtrl._model.getOrgId() == AreaCtrl._model.getRootOrgId()) {
-                alert(String(messageConfig.organizationNotDeleted));
+            var areaObj = AreaCtrl._model.getAreaDetail($("input[name='areaId']").val());
+            if (areaObj != null) {
+                alert( messageConfig['existsAreaId'] );
+                $("input[name=areaId]").focus();
                 return;
             }
 
-            var orgName = document.forms[AreaCtrl._model.getFormName()]['orgName'].value;
+            var areaName = $("input[name=areaName]").val();
+            if(confirm('[' + areaName + '] ' + messageConfig['addConfirmMessage'] + '?')) {
+                this.addArea();
+            }
 
-            if (!confirm("[ " + orgName + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
+        }
+    };
 
-            AreaCtrl.removeOrganization();
+    /**
+     * 구역 저장 전 유효성 검증
+     */
+    AreaCtrl.saveAreaVaild = function () {
+
+        this._model.setViewStatus(AreaModel().model.ACTION.SAVE);
+
+        if (this.commonVaild(true)) {
+
+            var areaName = $("input[name=areaName]").val();
+            if(confirm('[' + areaName + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
+                this.saveArea();
+            }
+
         }
 
     };
 
     /**
-     * [Crud] 조직 등록
+     * 구역 삭제 전 유효성 검증
      */
-    AreaCtrl.addOrganization = function () {
+    AreaCtrl.removeAreaVaild = function () {
+
+        if (this.commonVaild()) {
+
+            var areaName = document.forms[AreaCtrl._model.getFormName()]['areaName'].value;
+
+            if (!confirm("[ " + areaName + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
+
+            AreaCtrl.removeArea();
+        }
+
+    };
+
+    /**
+     * [Crud] 구역  등록
+     */
+    AreaCtrl.addArea = function () {
         var type = AreaCtrl._model.getViewStatus();
-        if (type != OrganizationModel().model.ACTION.ADD) {
+        if (type != AreaModel().model.ACTION.ADD) {
             return;
         }
 
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
 
-        $('input:hidden[name=upOrgId]').val($("#selectUpOrgSeq").val());
-        AreaCtrl._model.setUpOrgId($("#selectUpOrgSeq").val());
-
-
-        if (AreaCtrl._model.getUpOrgId() == AreaCtrl._model.getRootOrgId()) {
-            $('input[name=depth]').val(0);
-        }
-
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
     };
 
     /**
-     * [crUd] 조직 저장
+     * [crUd] 구역 저장
      */
-    AreaCtrl.saveOrganization = function () {
-
-
+    AreaCtrl.saveArea = function () {
         var type = AreaCtrl._model.getViewStatus();
-
-        if (type != MenuModel().model.ACTION.SAVE) {
+        if (type != AreaModel().model.ACTION.SAVE) {
             return;
         }
 
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
-        var roleIds = new Array();
 
-        var orgUserLists = [];
-        $(formName + " input[name='roleIds']").val("");
-
-        $("table[name='roleListTable'] tbody tr").each(function () {
-            var orgSort = $(this).find("input[name='orgSortName']").val();
-            this.orgUser = {
-                orgId          : $(this).find("input[name='orgIdName']").val()
-                ,userId        : $(this).find("input[name='userIdName']").val()
-                ,classification : $(this).find("input[name='classification']").val()
-                ,sortOrder      : orgSort != "" ? orgSort : "0"
-//                ,mainFlag       : $(this).find("input[id='mainFlag']").is(':checked') ? "Y":"N"
-            };
-            orgUserLists.push(this.orgUser);
-        });
-
-        $('input:hidden[name=upOrgId]').val($("select[id=selectUpOrgSeq]").val());
-
-        if (orgUserLists.length > 0 ){
-            $(formName + " input[name='roleIds']").val(JSON.stringify(orgUserLists));
-        }
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
     };
 
     /**
-     * [cruD] 부서 삭제
+     * [cruD] 구역 삭제
      */
-    AreaCtrl.removeOrganization = function () {
+    AreaCtrl.removeArea = function () {
 
         var type = AreaCtrl._model.model.ACTION.REMOVE;
         this._model.setViewStatus(type);
@@ -234,74 +208,12 @@ function AreaCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
 
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
+        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
 
     };
 
     /**
-     * [cruD] 사용자 조직도 삭제, 단건
-     * @param userSeq
-     */
-    AreaCtrl.removeOrgUser = function(userSeq, userName) {
-
-        if(!confirm('[ ' + userName + ' ] ' + messageConfig.removeConfirmMessage + '?')) return;
-
-        var type = AreaCtrl._model.model.ACTION.ORG_USER_REMOVE;
-
-        this._model.setViewStatus(type);
-
-        var requestUrl = this._model.getRequestUrl();
-        sendAjaxPostRequest(requestUrl, {orgSeq: this._model.getOrgSeq(), userSeq: userSeq}, this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
-    };
-
-    /**
-     * [cruD] 조직에 속한 사용자 삭제, 복수 건
-     * @param userSeq
-     * @param userName
-     */
-    AreaCtrl.removeOrgUsers = function() {
-
-
-        var orgUserLists = [];
-        var formName = "#" + AreaCtrl._model.getFormName();
-        $(formName + " input[name='roleIds']").val("");
-
-        $("table[name='roleListTable'] tbody tr").each(function () {
-            if ($(this).find("input[type='checkbox']").is(':checked')) {
-                var orgSort = $(this).find("input[name='orgSortName']").val();
-                this.orgUser = {
-                    orgId          : $(this).find("input[name='orgIdName']").val()
-                    ,userId        : $(this).find("input[name='userIdName']").val()
-                };
-                orgUserLists.push(this.orgUser);
-            }
-
-        });
-
-        if (orgUserLists.length == 0) {
-            alert(messageConfig.removeUserValidationErrorMessage);
-            return;
-        }
-
-        if (!confirm(orgUserLists.length + " " + messageConfig.removeUserConfirmMessage + "?")) return;
-
-
-        $('input:hidden[name=upOrgSeq]').val($("select[id=selectUpOrgSeq]").val());
-
-        var type = AreaCtrl._model.model.ACTION.ORG_USER_REMOVES;
-        this._model.setViewStatus(type);
-
-        var requestUrl = this._model.getRequestUrl();
-
-        if (orgUserLists.length > 0 ){
-            $(formName + " input[name='roleIds']").val(JSON.stringify(orgUserLists));
-        }
-
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.organizationCudSuccessHandler, this._event.organizationCudErrorHandler, type);
-
-    }
-    /**
-     * 조직도 트리 새로 고침
+     * 구역 트리 새로 고침
      */
     AreaCtrl.setMenuTreeReset = function () {
         $(this._model.getTreaArea()).dynatree('destroy');
@@ -311,7 +223,7 @@ function AreaCtrl(model) {
     }
 
     /**
-     * 조직도 트리 전체 펼치기
+     * 구역 트리 전체 펼치기
      */
     AreaCtrl.treeExpandAll = function () {
         $(this._model.getTreaArea()).dynatree("getRoot").visit(function (node) {
@@ -320,16 +232,16 @@ function AreaCtrl(model) {
     };
 
     /**
-     * 조직도 등록 전 초기화 모드
+     * 구역 등록 전 초기화 모드
      */
     AreaCtrl.setAddBefore = function() {
         this._model.setViewStatus(MenuModel().model.ACTION.ADD);
-        var orgView = new AreaView(this._model);
-        orgView.setAddBefore();
+        var areaView = new AreaView(this._model);
+        areaView.setAddBefore();
     };
 
     /**
-     * 조직도 저장 전 초기화 모드
+     * 구역 저장 전 초기화 모드
      */
     AreaCtrl.setSaveBefore = function() {
         this._model.setViewStatus(MenuModel().model.ACTION.SAVE);
@@ -369,6 +281,7 @@ function AreaEvent(model) {
      * [SUCCESS][RES] 구역 전체 목록 불러오기 성공 시 이벤트
      */
     AreaEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
+        AreaEvent._model.setAreaTreeList(JSON.parse(JSON.stringify(data['areaList'])));
         var menuTreeModel = AreaEvent._model.processMenuTreeData(data['areaList'], AreaEvent._model.getRootOrgId());
 
         areaView.setMenuTree(menuTreeModel);
@@ -383,7 +296,7 @@ function AreaEvent(model) {
     };
 
     /**
-     * [SUCCESS][RES] 부서별 상세 정보 - 불러오기 성공 시 이벤트
+     * [SUCCESS][RES] 구역별 상세 정보 - 불러오기 성공 시 이벤트
      * @param data
      * @param dataType
      * @param actionType
@@ -392,40 +305,42 @@ function AreaEvent(model) {
 
         areaView.setFindDetailBefore(data);
 
-        if (typeof data == "object" && data.hasOwnProperty("organization") && data.organization!=null) {
+        if (typeof data == "object" && data.hasOwnProperty("area") && data['area']!=null) {
+
             try {
-                AreaEvent._model.setOrgId(data.organization.orgId);
+                AreaEvent._model.setAreaId(data['area'].areaId);
             } catch (e) {
                 console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
             }
             try {
-                AreaEvent._model.setOrgName(data.organization.orgName);
+                AreaEvent._model.setAreaName(data['area'].areaName);
             } catch (e) {
                 console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
             }
 
             try {
-                AreaEvent._model.setDepth(data.organization.depth);
+                AreaEvent._model.setDepth(data['area'].depth);
             } catch (e) {
                 areaView.resetOrgDepth();
                 console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
             }
 
             try {
-                AreaEvent._model.setUpOrgId(data.organization.upOrgId);
+                AreaEvent._model.setParentAreaId(data['area'].parentAreaId);
             } catch (e) {
                 console.error("[Error][AreaEvent.detailSuccessHandler] " + e);
             }
-            areaView.setDetail(data.organization);
+
+            areaView.setDetail(data.area);
         }
 
         $("table[name='roleListTable'] tbody").empty();
         $("#pageContainer").empty();
         $('#selectAll').checked = false;
 
-        if (typeof data == "object" && data.hasOwnProperty("orgUsers") && data["orgUsers"].length > 0) {
+        if (typeof data == "object" && data.hasOwnProperty("devices") && data["devices"].length > 0) {
 
-            areaView.setOrgUserDetail(data.orgUsers);
+            areaView.setOrgUserDetail(data['devices']);
             AreaEvent._model.setPageCount(data.totalCount);
             areaView.setPagingView();
         }
@@ -446,9 +361,9 @@ function AreaEvent(model) {
     };
 
     /**
-     * [SUCCESS][RES] 조직 CUD 성공 시 이벤트
+     * [SUCCESS][RES] 구역 CUD 성공 시 이벤트
      */
-    AreaEvent.organizationCudSuccessHandler = function (data, dataType, actionType) {
+    AreaEvent.areaCudSuccessHandler = function (data, dataType, actionType) {
         /*
          * 좌측 트리 및 상단 메뉴 바 초기화
          */
@@ -461,9 +376,9 @@ function AreaEvent(model) {
     };
 
     /**
-     * [FAIL][RES] 조직 CUD 실패 시 이벤트
+     * [FAIL][RES] 구역 CUD 실패 시 이벤트
      */
-    AreaEvent.organizationCudErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+    AreaEvent.areaCudErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
         console.error("[Error][AreaEvent.organizationCudErrorHandler] " + errorThrown);
         alert(messageConfig[AreaEvent._model.getViewStatus() + 'Failure']);
 

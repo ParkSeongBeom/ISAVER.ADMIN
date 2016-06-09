@@ -820,7 +820,7 @@
     </table>
     <table name="area" schema="isaver" catalog="isaver" type="TABLE">
       <column name="area_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
-      <column name="parent_area_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
+      <column name="parent_area_id" sqlType="bpchar" precision="6" scale="0" nullable="true" jdbcType="1"/>
       <column name="area_name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="area_desc" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="del_yn" sqlType="bpchar" precision="1" scale="0" nullable="false" jdbcType="1"/>
@@ -828,6 +828,7 @@
       <column name="insert_datetime" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <column name="update_user_id" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="update_datetime" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="sort_order" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="area_pkey" columns="area_id"/>
       <exported-key name="event_log_area_id_fk" table="event_log" schema="isaver" catalog="isaver" columns="area_id"/>
       <index name="pki_area_area_id" unique="false" columns="area_id"/>
@@ -857,7 +858,7 @@
     </table>
     <table name="device" schema="isaver" catalog="isaver" type="TABLE">
       <column name="device_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
-      <column name="parent_device_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
+      <column name="parent_device_id" sqlType="bpchar" precision="6" scale="0" nullable="true" jdbcType="1"/>
       <column name="area_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
       <column name="device_type_code" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
       <column name="device_code" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
@@ -982,7 +983,7 @@
       <index name="pki_group_code_group_code_id" unique="false" columns="group_code_id"/>
     </table>
     <table name="license" schema="isaver" catalog="isaver" type="TABLE">
-      <column name="license_key" sqlType="varchar" precision="24" scale="0" nullable="false" jdbcType="12"/>
+      <column name="license_key" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
       <column name="device_code" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
       <column name="license_count" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="expire_date" sqlType="varchar" precision="8" scale="0" nullable="false" jdbcType="12"/>
@@ -999,16 +1000,16 @@
       <column name="login_flag" sqlType="bpchar" precision="1" scale="0" nullable="true" jdbcType="1"/>
       <column name="ip_address" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="log_datetime" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
-      <column name="insert_user_id" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="insert_datetime" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="insert_datetime" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="insert_user_id" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="update_datetime" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
       <column name="update_user_id" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="update_datetime" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <primary-key name="login_history_pkey" columns="log_id"/>
       <index name="pki_login_history_log_id" unique="false" columns="log_id"/>
     </table>
     <table name="menu" schema="isaver" catalog="isaver" type="TABLE">
       <column name="menu_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
-      <column name="parent_menu_id" sqlType="bpchar" precision="18" scale="0" nullable="false" jdbcType="1"/>
+      <column name="parent_menu_id" sqlType="bpchar" precision="6" scale="0" nullable="false" jdbcType="1"/>
       <column name="menu_name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="menu_path" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="menu_flag" sqlType="bpchar" precision="1" scale="0" nullable="false" jdbcType="1"/>
@@ -1059,6 +1060,7 @@
       <column name="insert_datetime" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <column name="update_user_id" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="update_datetime" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="telephone" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="users_user_id_pkey" columns="user_id"/>
       <foreign-key name="users_role_id_fk" columns="role_id" ref-table="role" ref-schema="isaver" ref-catalog="" ref-columns="role_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="pki_users_user_id" unique="false" columns="user_id"/>

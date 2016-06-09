@@ -18,134 +18,219 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.event"/></h3>
+        <h3 class="1depth_title">장치 관리</h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
+            <span>HOME 〉 장치 관리</span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <form id="eventForm" method="POST">
-        <input type="hidden" name="pageNumber"/>
-
-        <article class="search_area">
-            <div class="search_contents">
-                <!-- 일반 input 폼 공통 -->
-
-                <p class="itype_01">
-                    <span><spring:message code="event.column.eventId" /></span>
-                    <span>
-                        <input type="text" name="eventId" value="${paramBean.eventId}"/>
-                    </span>
-                </p>
-
-                <p class="itype_01">
-                    <span><spring:message code="event.column.eventName" /></span>
-                    <span>
-                        <input type="text" name="eventName" value="${paramBean.eventName}"/>
-                    </span>
-                </p>
-            </div>
-            <div class="search_btn">
-                <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
-            </div>
-        </article>
-    </form>
-
-    <article class="table_area">
+    <!-- 트리 영역 Start -->
+    <article class="table_area tree_table">
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
+                <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.treeExpandAll(); return false;"><spring:message code='device.button.viewTheFulldevice'/></button>
+                <button class="btn btype01 bstyle01 area_enrolment_btn" onclick="javascript:deviceCtrl.setAddBefore(); return false;" ><spring:message code='device.button.addDevice'/></button>
             </div>
         </div>
-
         <div class="table_contents">
-            <!-- 입력 테이블 Start -->
-            <table class="t_defalut t_type01 t_style02">
-                <colgroup>
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 10%;" />
-                    <col style="width: 15%;" />
-                </colgroup>
-                <thead>
-                <tr>
-                    <th><spring:message code="event.column.eventId"/></th>
-                    <th><spring:message code="event.column.eventFlag"/></th>
-                    <th><spring:message code="event.column.eventName"/></th>
-                    <th><spring:message code="event.column.eventDesc"/></th>
-                    <th><spring:message code="common.column.insertUser"/></th>
-                    <th><spring:message code="common.column.insertDatetime"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:choose>
-                    <c:when test="${events != null and fn:length(events) > 0}">
-                        <c:forEach var="event" items="${events}">
-                            <tr onclick="moveDetail(String('${event.eventId}'));">
-                                <td>${event.eventId}</td>
-                                <td>${event.eventFlag}</td>
-                                <td>${event.eventName}</td>
-                                <td>${event.eventDesc}</td>
-                                <td>${event.insertUserName}</td>
-                                <td>
-                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${event.insertDatetime}" />
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <tr>
-                            <td colspan="6"><spring:message code="common.message.emptyData"/></td>
-                        </tr>
-                    </c:otherwise>
-                </c:choose>
-                </tbody>
-            </table>
-
-            <!-- 테이블 공통 페이징 Start -->
-            <div id="pageContainer" class="page" />
+            <div id="menuTreeArea" class="tree_box">
+                <ul class="dynatree-container dynatree-no-connector">
+                </ul>
+            </div>
         </div>
     </article>
+    <!-- 트리 영역 End -->
+
+
+    <form id="deviceForm" method="POST" onsubmit="return false;">
+        <input type="hidden" name="parentDeviceId" />
+        <article class="table_area tr_table">
+            <%--<div class="table_title_area area_enrolment">--%>
+                <%--<h4>장치 조회</h4>--%>
+            <%--</div>--%>
+            <%--<article class="search_area" name="showHideTag" style="display: table;">--%>
+                <%--<div class="search_contents">--%>
+                    <%--<!-- 일반 input 폼 공통 -->--%>
+                    <%--<p class="itype_01">--%>
+                        <%--<span><spring:message code='device.column.deviceId'/></span>--%>
+                        <%--<span>--%>
+                            <%--<input type="text" name="search_deviceId" value="">--%>
+                        <%--</span>--%>
+                    <%--</p>--%>
+                <%--</div>--%>
+                <%--<div class="search_btn">--%>
+                    <%--<button onclick="javascript:organizationCtrl.searchOrgUser(); return false;" class="btn bstyle01 btype01">조회</button>--%>
+                <%--</div>--%>
+            <%--</article>--%>
+
+            <div class="table_title_area">
+                <h4><spring:message code='device.column.deviceList'/></h4>
+            </div>
+
+            <div class="table_contents">
+                <!-- 입력 테이블 Start -->
+                <table class="t_defalut t_type02 t_style03">
+                    <colgroup>
+                        <col style="width:16%">  <!-- 01 -->
+                        <col style="width:34%">  <!-- 02 -->
+                        <col style="width:16%">  <!-- 03 -->
+                        <col style="width:*">    <!-- 04 -->
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th><spring:message code='device.column.deviceId'/></th>
+                        <td>
+                            <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>" maxlength="6">
+                        </td>
+                        <th class="point"><spring:message code='device.column.serialNo'/></th>
+                        <td class="point">
+                            <input type="text" name="serialNo" placeholder="<spring:message code='device.message.requiredSerialNo'/>" maxlength="32">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.deviceType'/></th>
+                        <td>
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="" htmlTagId="selectDeviceType"/>
+                        </td>
+                        <th><spring:message code='device.column.deviceCode'/></th>
+                        <td>
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.parentdeviceName'/></th>
+                        <td colspan="3">
+                            <select id="selectParentDeviceId">
+                                <option value=""><spring:message code="device.message.emptyData"/></option>
+                                <c:forEach items="${devices}" var="devices"  varStatus="status">
+                                    <c:if test="${devices.delYn == 'N' }">
+                                        <option value="${devices.deviceId}">
+                                            ${devices.deviceCodeName}(${devices.deviceId})
+                                            <%--<c:forEach var="i" begin="1" end="${devices.depth}" step="1"><c:if test="${i != 1}"> &nbsp; &nbsp;</c:if></c:forEach>${devices.deviceCodeName}(${devices.deviceId})--%>
+                                        </option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='area.column.areaName'/></th>
+                        <td colspan="3">
+                            <input type="hidden"  name="areaId"/>
+                            <select id="selectAreaId">
+                                <option value=""><spring:message code="device.message.emptyData"/></option>
+                                <c:forEach items="${areas}" var="areas">
+                                    <c:if test="${areas.delYn == 'N'}">
+                                        <option value="${areas.areaId}">${areas.areaName}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.ipAddress'/></th>
+                        <td colspan="3">
+                            <input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr name="showHideTag">
+                        <th><spring:message code='device.column.provisionFlag'/></th>
+                        <td class="point">
+                            <span name="provisionFlag"></span>
+                        </td>
+                        <th><spring:message code='device.column.deviceStat'/></th>
+                        <td>
+                            <span name="deviceStat"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.deviceDesc'/></th>
+                        <td class="point" colspan="3">
+                            <textarea name="deviceDesc" class="textboard"></textarea>
+                        </td>
+                    </tr>
+                    <tr name="showHideTag" >
+                        <th><spring:message code="common.column.insertUser"/></th>
+                        <td name="insertUserName"></td>
+                        <th><spring:message code="common.column.insertDatetime"/></th>
+                        <td name="insertDatetime"></td>
+                    </tr>
+                    <tr name="showHideTag" >
+                        <th><spring:message code="common.column.updateUser"/></th>
+                        <td name="updateUserName"></td>
+                        <th><spring:message code="common.column.updateDatetime"/></th>
+                        <td name="updateDatetime"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- 입력 테이블 End -->
+            </div>
+
+            <div class="table_title_area">
+                <div class="table_btn_set">
+                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:deviceCtrl.addAreaVaild(); return false;"><spring:message code="common.button.add"/> </button>
+                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:deviceCtrl.saveAreaVaild(); return false;"><spring:message code="common.button.save"/> </button>
+                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:deviceCtrl.removeAreaVaild(); return false;"><spring:message code="common.button.remove"/> </button>
+                </div>
+            </div>
+        </article>
+        <!-- 테이블 입력 / 조회 영역 End -->
+        <!-- END : contents -->
+    </form>
 </section>
+
+<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
+<script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/device/DeviceModel.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/device/DeviceCtrl.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/device/DeviceView.js" type="text/javascript" charset="UTF-8"></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
-    var form = $('#eventForm');
 
-    var urlConfig = {
-        'listUrl':'${rootPath}/event/list.html'
-        ,'detailUrl':'${rootPath}/event/detail.html'
-    };
-
-    var pageConfig = {
-        pageSize     : Number(<c:out value="${paramBean.pageRowNumber}" />)
-        ,pageNumber  : Number(<c:out value="${paramBean.pageNumber}" />)
-        ,totalCount  : Number(<c:out value="${paramBean.totalCount}" />)
+    var messageConfig = {
+        menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
+        ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
+        ,   addFailure                :'<spring:message code="device.message.addFailure"/>'
+        ,   saveFailure               :'<spring:message code="device.message.saveFailure"/>'
+        ,   removeFailure             :'<spring:message code="device.message.removeFailure"/>'
+        ,   addComplete               :'<spring:message code="device.message.addComplete"/>'
+        ,   saveComplete              :'<spring:message code="device.message.saveComplete"/>'
+        ,   removeComplete            :'<spring:message code="device.message.removeComplete"/>'
+        ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
+        ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
+        ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
+        ,   requiredAreaId            :"<spring:message code='device.message.requiredDeviceId'/>"
+        ,   requiredAreaName          :"<spring:message code='device.message.requiredDeviceName'/>"
+        ,   requiredSortOrder          :"<spring:message code='device.message.requiredSortOrder'/>"
+        ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
+        ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
+        ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
+        ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
+        ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
+        ,   existsAreaId            :"<spring:message code='device.message.existsDeviceId'/>"
     };
 
     $(document).ready(function(){
-        drawPageNavigater(pageConfig['pageSize'],pageConfig['pageNumber'],pageConfig['totalCount']);
-
-        $("input:text").keypress(function(e) {
-            if(e.which == 13) {
-                search();
-            }
-        });
+        /**
+         * 장치 트리 생성
+         */
+        deviceCtrl.findMenuTree();
+        var view = new DeviceView(deviceModel);
+        view.setAddBefore();
     });
 
-    /*
-     조회
-     @author kst
-     */
-    function search(){
-        form.attr('action',urlConfig['listUrl']);
-        form.submit();
-    }
+    var deviceModel = new DeviceModel();
+    deviceModel.setRootUrl(String('${rootPath}'));
+    deviceModel.setPageRowNumber(10);
+    deviceModel.setPageIndex(0);
+
+    var deviceCtrl = new DeviceCtrl(deviceModel);
+
 
     /*
      페이지 네이게이터를 그린다.
@@ -168,14 +253,4 @@
         search();
     }
 
-    /*
-     상세화면 이동
-     @author kst
-     */
-    function moveDetail(id){
-        var detailForm = $('<FORM>').attr('action',urlConfig['detailUrl']).attr('method','POST');
-        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','eventId').attr('value',id));
-        document.body.appendChild(detailForm.get(0));
-        detailForm.submit();
-    }
 </script>

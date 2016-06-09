@@ -1,7 +1,9 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,6 +78,8 @@ public class AreaCtrl {
         return modelAndView;
     }
 
+    private final static String[] addAreaParam = new String[]{"areaId", "areaName", "sortOrder"};
+
     /**
      *  구역을 등록 한다.
      *
@@ -86,9 +90,17 @@ public class AreaCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+
+        if(MapUtils.nullCheckMap(parameters, addAreaParam)){
+            throw new JabberException("");
+        }
+
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = areaSvc.addArea(request, parameters);
         return modelAndView;
     }
+
+    private final static String[] saveAreaParam = new String[]{"areaId", "areaName", "sortOrder"};
 
     /**
      *  구역을 수정 한다.
@@ -100,9 +112,17 @@ public class AreaCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+
+        if(MapUtils.nullCheckMap(parameters, saveAreaParam)){
+            throw new JabberException("");
+        }
+
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView =areaSvc.saveArea(request, parameters);
         return modelAndView;
     }
+
+    private final static String[] removeAreaParam = new String[]{"areaId"};
 
     /**
      *  구역을 제거 한다.
@@ -114,6 +134,13 @@ public class AreaCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+
+        if(MapUtils.nullCheckMap(parameters, removeAreaParam)){
+            throw new JabberException("");
+        }
+
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+
         ModelAndView modelAndView = areaSvc.removeArea(parameters);
         return modelAndView;
     }

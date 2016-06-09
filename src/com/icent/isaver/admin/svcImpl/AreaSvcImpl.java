@@ -4,7 +4,9 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.AreaBean;
+import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
+import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.kst.common.springutil.TransactionUtil;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -41,6 +43,9 @@ public class AreaSvcImpl implements AreaSvc {
     @Inject
     private AreaDao areaDao;
 
+    @Inject
+    private DeviceDao deviceDao;
+
     @Override
     public ModelAndView findAllAreaTree(Map<String, String> parameters) {
 
@@ -69,7 +74,14 @@ public class AreaSvcImpl implements AreaSvc {
         ModelAndView modelAndView = new ModelAndView();
 
         AreaBean area = areaDao.findByArea(parameters);
+
+        List<DeviceBean> deviceBeanList = deviceDao.findListDevice(parameters);
+        Integer deviceTotalCount = deviceDao.findCountDevice(parameters);
+
         modelAndView.addObject("area", area);
+        modelAndView.addObject("devices", deviceBeanList);
+        modelAndView.addObject("totalCount", deviceTotalCount);
+
         return modelAndView;
     }
 

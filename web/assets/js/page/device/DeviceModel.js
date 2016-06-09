@@ -1,28 +1,29 @@
 /**
- * [Model] 구역
+ * [Model] 장치
  * @author dhj
  * @since 2014.06.08
  */
-function AreaModel() {
+function DeviceModel() {
 
-    var AreaModel = new Object();
+    var DeviceModel = new Object();
 
-    AreaModel.model = {
+    DeviceModel.model = {
         viewStatus: ''
         ,rootUrl: ''
         ,requestUrl: ''
         ,userId: ''
-        ,areaId: ''
-        ,parentAreaId: ''
+        ,deviceId: ''
+        ,parentDeviceId: ''
         ,sortOrder: 0
         ,depth: 0
-        ,areaName: ''
-        ,areaDesc: ''
-        ,formName: 'areaForm'
-        ,treeArea: '#menuTreeArea'
+        ,deviceName: ''
+        ,deviceDesc: ''
+        ,formName: 'deviceForm'
+        ,treeDevice: '#menuTreeArea'
         ,targetMenuId: ''
         ,rootOrgId: ''
         ,deviceId : ''
+        ,areaId : ''
         ,serialNo : ''
         ,METHOD: {
             ADD: 'add',
@@ -44,14 +45,14 @@ function AreaModel() {
         ,pageRowNumber: 0
         ,pageCount: 0
         ,rootName: "HOME"
-        ,areaTreeList: []
+        ,deviceTreeList: []
     };
 
     /**
      * 현재 조직 깊이 정의
      * @param orgdepth
      */
-    AreaModel.setDepth = function (depth) {
+    DeviceModel.setDepth = function (depth) {
         this.model.depth = depth;
     };
 
@@ -59,37 +60,37 @@ function AreaModel() {
      * 현재 조직 깊이 반환
      * @param orgdepth
      */
-    AreaModel.getDepth = function () {
+    DeviceModel.getDepth = function () {
         return this.model.depth;
     };
 
-    AreaModel.setTreaArea = function (area) {
-        this.model.treeArea = area;
+    DeviceModel.setTreaDevice = function (device) {
+        this.model.treeDevice = device;
     };
 
-    AreaModel.getTreaArea = function () {
-        return this.model.treeArea;
+    DeviceModel.getTreaDevice = function () {
+        return this.model.treeDevice;
     };
 
-    AreaModel.getMethodValue = function (method) {
+    DeviceModel.getMethodValue = function (method) {
         return this.model.METHOD[method];
     };
 
-    AreaModel.getActionValue = function () {
+    DeviceModel.getActionValue = function () {
         return this.model.ACTION[action];
     };
     /**
      * 루트 조직 ID를 정의
      * @param rootMenuId
      */
-    AreaModel.setRootOrgId = function (rootOrgId) {
+    DeviceModel.setRootOrgId = function (rootOrgId) {
         this.model.rootOrgId = rootOrgId;
     };
     /**
      * 루트 조직 ID를 반환
      * @returns {string}
      */
-    AreaModel.getRootOrgId = function () {
+    DeviceModel.getRootOrgId = function () {
         return this.model.rootOrgId;
     };
 
@@ -98,14 +99,14 @@ function AreaModel() {
      * @param status
      * @returns {*}
      */
-    AreaModel.setViewStatus = function (status) {
+    DeviceModel.setViewStatus = function (status) {
         this.model.viewStatus = status;
     };
     /**
      * 현재 View 상태의 상태를 반환
      * @returns {string}
      */
-    AreaModel.getViewStatus = function () {
+    DeviceModel.getViewStatus = function () {
         return this.model.viewStatus;
     };
     /**
@@ -113,7 +114,7 @@ function AreaModel() {
      * @param url
      * @returns {string|*}
      */
-    AreaModel.setRootUrl = function (url) {
+    DeviceModel.setRootUrl = function (url) {
         this.model.rootUrl = url;
 
     };
@@ -123,7 +124,7 @@ function AreaModel() {
      * @param url
      * @returns {string|*}
      */
-    AreaModel.getRootUrl = function () {
+    DeviceModel.getRootUrl = function () {
         return this.model.rootUrl;
 
     };
@@ -132,7 +133,7 @@ function AreaModel() {
      * 현재 API 주소를 정의
      * @param requestUrl
      */
-    AreaModel.setRequestUrl = function (requestUrl) {
+    DeviceModel.setRequestUrl = function (requestUrl) {
         this.model.requestUrl = requestUrl;
     };
 
@@ -140,59 +141,59 @@ function AreaModel() {
      * 현재 API 주소를 반환
      * @returns {string}
      */
-    AreaModel.getRequestUrl = function () {
+    DeviceModel.getRequestUrl = function () {
         return this.model.requestUrl;
     };
 
     /**
-     * 현재 setParentAreaId 정의
+     * 현재 setParentDeviceId 정의
      * @param upOrgId
      * @returns {string|*}
      */
-    AreaModel.setParentAreaId = function (parentAreaId) {
-        this.model.parentAreaId = parentAreaId;
+    DeviceModel.setParentDeviceId = function (parentDeviceId) {
+        this.model.parentDeviceId = parentDeviceId;
     };
 
     /**
-     * 현재 getParentAreaId 반환
+     * 현재 getParentDeviceId 반환
      * @returns {string}
      */
-    AreaModel.getParentAreaId = function () {
-        return this.model.parentAreaId;
+    DeviceModel.getParentDeviceId = function () {
+        return this.model.parentDeviceId;
     };
 
     /**
-     * 현재 AreaId 정의
+     * 현재 DeviceId 정의
      * @param orgSeq
      * @returns {string|*}
      */
-    AreaModel.setAreaId = function (areaId) {
-        this.model.areaId = areaId;
+    DeviceModel.setDeviceId = function (deviceId) {
+        this.model.deviceId = deviceId;
     };
 
     /**
-     * 현재 getAreaId 반환
+     * 현재 getDeviceId 반환
      * @returns {string}
      */
-    AreaModel.getAreaId = function () {
-        return this.model.areaId;
+    DeviceModel.getDeviceId = function () {
+        return this.model.deviceId;
     };
 
     /**
-     * 현재 AreaDesc 정의
+     * 현재 DeviceDesc 정의
      * @param orgSeq
      * @returns {string|*}
      */
-    AreaModel.setAreaDesc = function (areaDesc) {
-        this.model.areaDesc = areaDesc;
+    DeviceModel.setDeviceDesc = function (deviceDesc) {
+        this.model.deviceDesc = deviceDesc;
     };
 
     /**
-     * 현재 getAreaDesc 반환
+     * 현재 getDeviceDesc 반환
      * @returns {string}
      */
-    AreaModel.getAreaDesc = function () {
-        return this.model.areaDesc;
+    DeviceModel.getDeviceDesc = function () {
+        return this.model.deviceDesc;
     };
 
     /**
@@ -200,7 +201,7 @@ function AreaModel() {
      * @param orgSeq
      * @returns {string|*}
      */
-    AreaModel.setSortOrder = function (sortOrder) {
+    DeviceModel.setSortOrder = function (sortOrder) {
         this.model.sortOrder = sortOrder;
     };
 
@@ -208,7 +209,7 @@ function AreaModel() {
      * 현재 getSortOrder 반환
      * @returns {string}
      */
-    AreaModel.getSortOrder = function () {
+    DeviceModel.getSortOrder = function () {
         return this.model.sortOrder;
     };
 
@@ -217,7 +218,7 @@ function AreaModel() {
      * @param orgSeq
      * @returns {string|*}
      */
-    AreaModel.setDeviceId = function (deviceId) {
+    DeviceModel.setDeviceId = function (deviceId) {
         this.model.deviceId = deviceId;
     };
 
@@ -225,8 +226,25 @@ function AreaModel() {
      * 현재 deviceId 반환
      * @returns {string}
      */
-    AreaModel.getDeviceId = function () {
+    DeviceModel.getDeviceId = function () {
         return this.model.deviceId;
+    };
+
+    /**
+     * 현재 areaId 정의
+     * @param areaId
+     * @returns {string|*}
+     */
+    DeviceModel.setAreaId = function (areaId) {
+        this.model.areaId = areaId;
+    };
+
+    /**
+     * 현재 areaId 반환
+     * @returns {string}
+     */
+    DeviceModel.getAreaId = function () {
+        return this.model.areaId;
     };
 
     /**
@@ -234,7 +252,7 @@ function AreaModel() {
      * @param orgSeq
      * @returns {string|*}
      */
-    AreaModel.setSerialNo = function (serialNo) {
+    DeviceModel.setSerialNo = function (serialNo) {
         this.model.serialNo = serialNo;
     };
 
@@ -242,125 +260,125 @@ function AreaModel() {
      * 현재 serialNo 반환
      * @returns {string}
      */
-    AreaModel.getSerialNo = function () {
+    DeviceModel.getSerialNo = function () {
         return this.model.serialNo;
     };
     /**
      * 현재 HTML formTag명을 정의
      * @returns {string}
      */
-    AreaModel.setFormName = function (formName) {
+    DeviceModel.setFormName = function (formName) {
         this.model.formName = formName;
     };
     /**
      * 현재 HTML formTag명을 반환
      * @returns {string}
      */
-    AreaModel.getFormName = function () {
+    DeviceModel.getFormName = function () {
         return this.model.formName;
     };
 
     /**
-     * 현재 사용중인 구역 명을 정의
+     * 현재 사용중인 장치 명을 정의
      * @param menuName
      */
-    AreaModel.setAreaName = function (areaName) {
-        this.model.orgName = areaName;
+    DeviceModel.setDeviceName = function (deviceName) {
+        this.model.orgName = deviceName;
     };
 
     /**
-     * 현재 사용중인 구역 명을 반환
+     * 현재 사용중인 장치 명을 반환
      * @returns {string}
      */
-    AreaModel.getAreaName = function () {
+    DeviceModel.getDeviceName = function () {
         return this.model.orgName;
     };
 
     /**
-     * 전체 구역 목록을 정의
+     * 전체 장치 목록을 정의
      * @param menuName
      */
-    AreaModel.setAreaTreeList = function (areaTreeList) {
-        this.model.areaTreeList = areaTreeList;
+    DeviceModel.setDeviceTreeList = function (deviceTreeList) {
+        this.model.deviceTreeList = deviceTreeList;
     };
 
     /**
-     * 구역 목록을 반환
+     * 장치 목록을 반환
      * @returns {string}
      */
-    AreaModel.getAreaTreeList = function () {
-        return this.model.areaTreeList;
+    DeviceModel.getDeviceTreeList = function () {
+        return this.model.deviceTreeList;
     };
 
-    AreaModel.setTargetMenuId = function(targetMenuId) {
+    DeviceModel.setTargetMenuId = function(targetMenuId) {
         this.model.targetMenuId = targetMenuId;
     };
 
-    AreaModel.getTargetMenuId = function() {
+    DeviceModel.getTargetMenuId = function() {
         return this.model.targetMenuId;
     };
 
-    AreaModel.setUserName = function(userName) {
+    DeviceModel.setUserName = function(userName) {
         this.model.userName = userName;
     };
 
-    AreaModel.getUserName = function() {
+    DeviceModel.getUserName = function() {
         return this.model.userName;
     };
 
-    AreaModel.setPageIndex = function(pageIndex) {
+    DeviceModel.setPageIndex = function(pageIndex) {
         this.model.pageIndex = pageIndex;
     };
 
-    AreaModel.getPageIndex = function() {
+    DeviceModel.getPageIndex = function() {
         return this.model.pageIndex;
     };
 
-    AreaModel.setPageRowNumber = function(pageRowNumber) {
+    DeviceModel.setPageRowNumber = function(pageRowNumber) {
         this.model.pageRowNumber = pageRowNumber;
     };
 
-    AreaModel.getPageRowNumber = function() {
+    DeviceModel.getPageRowNumber = function() {
         return this.model.pageRowNumber;
     };
 
-    AreaModel.setPageCount = function(pageCount) {
+    DeviceModel.setPageCount = function(pageCount) {
         this.model.pageCount = pageCount;
     };
 
-    AreaModel.getPageCount = function() {
+    DeviceModel.getPageCount = function() {
         return this.model.pageCount;
     };
 
-    AreaModel.setRootName = function(rootName) {
+    DeviceModel.setRootName = function(rootName) {
         this.model.pageCount = pageCount;
     };
 
-    AreaModel.getRootName = function() {
+    DeviceModel.getRootName = function() {
         return this.model.rootName;
     };
 
-    AreaModel.setUserId = function(userId) {
+    DeviceModel.setUserId = function(userId) {
         this.model.userId = userId;
     };
 
-    AreaModel.getUserId = function() {
+    DeviceModel.getUserId = function() {
         return this.model.userId;
     };
 
     /**
-     * 전체 구역 목록을 정의
+     * 전체 장치 목록을 정의
      * @param menuName
      */
-    AreaModel.getAreaDetail = function (areaId) {
+    DeviceModel.getDeviceDetail = function (deviceId) {
 
         var resultData = null;
 
-        for (var i =0; i < this.model.areaTreeList.length; i++) {
-            var area = this.model.areaTreeList[i];
+        for (var i =0; i < this.model.deviceTreeList.length; i++) {
+            var device = this.model.deviceTreeList[i];
 
-            if (area['areaId'] == areaId) {
-                resultData = area;
+            if (device['deviceId'] == deviceId) {
+                resultData = device;
                 break;
             }
 
@@ -370,37 +388,37 @@ function AreaModel() {
     };
 
     /**
-     * 구역 페이지에서 사용 중인 Request URL 반환
+     * 장치 페이지에서 사용 중인 Request URL 반환
      * @param url
      * @returns {*}
      * @date 2016.06.07
      * @see dhj
      */
-    AreaModel.getRequestUrl = function () {
-        var rootUrl = AreaModel.getRootUrl();
-        var viewStatus = AreaModel.getViewStatus();
+    DeviceModel.getRequestUrl = function () {
+        var rootUrl = DeviceModel.getRootUrl();
+        var viewStatus = DeviceModel.getViewStatus();
         return {
-            'add'     : rootUrl + "/area/add.json",
-            'save'    : rootUrl + "/area/save.json",
-            'remove'  : rootUrl + "/area/remove.json",
-            'detail'  : rootUrl + "/area/detail.json",
-            'menuTree': rootUrl + "/area/treeList.json",
-            'addOrgUser': rootUrl + "/area/detailUserPopup.html",
-            'orgUserRemove': rootUrl + "/area/remove.json"
+            'add'     : rootUrl + "/device/add.json",
+            'save'    : rootUrl + "/device/save.json",
+            'remove'  : rootUrl + "/device/remove.json",
+            'detail'  : rootUrl + "/device/detail.json",
+            'menuTree': rootUrl + "/device/treeList.json",
+            'addOrgUser': rootUrl + "/device/detailUserPopup.html",
+            'orgUserRemove': rootUrl + "/device/remove.json"
         }[viewStatus];
     };
 
     /**
-     * 구역 트리 가공
+     * 장치 트리 가공
      * @author dhj
      */
-    AreaModel.processMenuTreeData = function (_list, _rootId) {
+    DeviceModel.processMenuTreeData = function (_list, _rootId) {
         var obj = {};
 
         obj.orgCode = null;
         obj.depth = 0;
-        obj.areaName = AreaModel.getRootName();
-        obj.areaId = AreaModel.getRootOrgId();
+        obj.deviceName = DeviceModel.getRootName();
+        obj.deviceId = DeviceModel.getRootOrgId();
         obj.sortOrder = null;
         obj.upOrgId = null;
 
@@ -423,12 +441,12 @@ function AreaModel() {
             //전체 리스트를 탐색
             for (var i = 0, child; child = _children[i]; i++) {
                 //부모를 찾았으면,
-                if (String(child.id) === String(item.parentAreaId) || item.parentAreaId == null) {
+                if (String(child.id) === String(item.parentDeviceId) || item.parentDeviceId == null) {
 
                     var view =
                     {
-                        id        : String(item.areaId),
-                        title     : String(item['areaName']),
+                        id        : String(item.deviceId),
+                        title     : String(item['deviceCodeName'] + " (" + item['deviceId'] +")"),
                         isFolder  : false,
                         orgSort   : Number(item.sortOrder),
                         children  : []
@@ -468,10 +486,11 @@ function AreaModel() {
             for (var i = 0, item; item = _list[i]; i++) {
                 //최상위 객체면,
                 if(item.depth == 0){
+                    //if (String(item.orgId) == String(OrganizationModel.getRootOrgId()) ) {
 
                     var view = {
-                        id: String(item.areaId),
-                        title: String(item['areaName']),
+                        id: String(item.deviceId),
+                        title: String(item.deviceName),
                         isFolder: true,
                         children: []
                     };
@@ -492,14 +511,59 @@ function AreaModel() {
 //                    _treeModel.sortByProp('orgSort');
                     break;
                 }else if(item.depth == 1){
-                    item.parentId = AreaModel.getRootOrgId();
+                    item.upOrgId = '0';
                     getParentNode(_treeModel, item);
-                } else {
-                    //하위 객체면,
+                }
+
+                //하위 객체면,
+                else {
+                    //
                     getParentNode(_treeModel, item);
                 }
             }
         }
+
+        //트리 변환 여부 + 무한 루프 방지
+//        while (_treeLength != _listLength && _listLength != _loopLength++) {
+//
+//            //전체 리스트를 탐색
+//            for (var i = 0, item; item = _list[i]; i++) {
+//                //최상위 객체면,
+//                if(item.depth == 0){
+//
+//                    var view = {
+//                        id: String(item.deviceId),
+//                        title     : String(item['deviceCodeName'] + " (" + item['deviceId'] +")"),
+//                        isFolder: true,
+//                        children: []
+//                    };
+//
+//                    if(String(item['delYn']) =='N') {
+//                        //현재 요소를 추가하고,
+//                        _treeModel.push(view);
+//                    }
+//
+//                    //트리 크기를 반영하고,
+//                    _treeLength++;
+//
+//                    //데이터상에서는 삭제
+//                    _list.splice(i, 1);
+//                    //현재 트리 계층을 정렬
+//
+//                    _treeModel.sort(function (a, b) {
+//                        return a.orgSort < b.orgSort ? -1 : a.orgSort > b.orgSort ? 1 : 0;
+//                    });
+////                    _treeModel.sortByProp('orgSort');
+//                    break;
+//                }else if(item.depth == 2){
+//                    item.parentId = DeviceModel.getRootOrgId();
+//                    getParentNode(_treeModel, item);
+//                } else {
+//                    //하위 객체면,
+//                    getParentNode(_treeModel, item);
+//                }
+//            }
+//        }
 
 //        console.debug("_listLength : " + _listLength);
 //        console.debug("_treeLength : " + _treeLength);
@@ -508,7 +572,7 @@ function AreaModel() {
         return _treeModel;
     }
 
-    return AreaModel;
+    return DeviceModel;
 }
 
 

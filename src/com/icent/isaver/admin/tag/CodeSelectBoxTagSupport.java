@@ -79,7 +79,7 @@ public class CodeSelectBoxTagSupport extends ParamTag {
 
         if(StringUtils.notNullCheck(groupCodeId)) {
             Map<String, String> paramBean = new HashMap<>();
-            paramBean.put("id",groupCodeId);
+            paramBean.put("groupCodeId",groupCodeId);
             paramBean.put("useYn","Y");
 
             List<CodeBean> codes = codeDao.findListCode(paramBean);
