@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00001" var="menuId"/>
+<c:set value="B00010" var="menuId"/>
 <c:set value="B00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 

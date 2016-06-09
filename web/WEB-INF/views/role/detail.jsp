@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00006" var="menuId"/>
+<c:set value="B00051" var="menuId"/>
 <c:set value="B00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 
