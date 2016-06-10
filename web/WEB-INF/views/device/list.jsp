@@ -5,8 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="MN000000-B000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-B000-0000-0000-000000000001" var="menuId"/>
+<c:set value="D00000" var="menuId"/>
+<c:set value="D00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
@@ -31,7 +31,7 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.treeExpandAll(); return false;"><spring:message code='device.button.viewTheFulldevice'/></button>
+                <button class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.treeExpandAll(); return false;"><spring:message code='device.button.viewTheFulldevice'/></button>
                 <button class="btn btype01 bstyle01 area_enrolment_btn" onclick="javascript:deviceCtrl.setAddBefore(); return false;" ><spring:message code='device.button.addDevice'/></button>
             </div>
         </div>
@@ -93,17 +93,19 @@
                     <tr>
                         <th><spring:message code='device.column.deviceType'/></th>
                         <td>
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="" htmlTagId="selectDeviceType"/>
+                            <input type="hidden"  name="deviceTypeCode" />
+                            <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagId="selectDeviceType"/>
                         </td>
                         <th><spring:message code='device.column.deviceCode'/></th>
                         <td>
+                            <input type="hidden"  name="deviceCode" />
                             <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.parentdeviceName'/></th>
                         <td colspan="3">
-                            <select id="selectParentDeviceId">
+                            <select id="selectParentDeviceId" onchange="deviceCtrl.selectParentDeviceIdChangeEvent(event);">
                                 <option value=""><spring:message code="device.message.emptyData"/></option>
                                 <c:forEach items="${devices}" var="devices"  varStatus="status">
                                     <c:if test="${devices.delYn == 'N' }">
@@ -171,9 +173,9 @@
 
             <div class="table_title_area">
                 <div class="table_btn_set">
-                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:deviceCtrl.addAreaVaild(); return false;"><spring:message code="common.button.add"/> </button>
-                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:deviceCtrl.saveAreaVaild(); return false;"><spring:message code="common.button.save"/> </button>
-                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:deviceCtrl.removeAreaVaild(); return false;"><spring:message code="common.button.remove"/> </button>
+                    <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:deviceCtrl.addDeviceVaild(); return false;"><spring:message code="common.button.add"/> </button>
+                    <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:deviceCtrl.saveDeviceVaild(); return false;"><spring:message code="common.button.save"/> </button>
+                    <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:deviceCtrl.removeDeviceVaild(); return false;"><spring:message code="common.button.remove"/> </button>
                 </div>
             </div>
         </article>
@@ -204,15 +206,18 @@
         ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
         ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
         ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
-        ,   requiredAreaId            :"<spring:message code='device.message.requiredDeviceId'/>"
-        ,   requiredAreaName          :"<spring:message code='device.message.requiredDeviceName'/>"
-        ,   requiredSortOrder          :"<spring:message code='device.message.requiredSortOrder'/>"
+        ,   requiredDeviceId            :"<spring:message code='device.message.requiredDeviceId'/>"
+        ,   requiredSerialNo          :"<spring:message code='device.message.requiredSerialNo'/>"
+        ,   requiredIpAddress          :"<spring:message code='device.message.requiredIpAddress'/>"
         ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
         ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
         ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
         ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
         ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
-        ,   existsAreaId            :"<spring:message code='device.message.existsDeviceId'/>"
+        ,   existsDeviceId            :"<spring:message code='device.message.existsDeviceId'/>"
+        ,   existsSerialNo            :"<spring:message code='device.message.existsSerialNo'/>"
+        ,   existsIpAddress            :"<spring:message code='device.message.existsIpAddress'/>"
+        ,   regexpIpAddress :"<spring:message code='device.message.regexpIpAddress'/>"
     };
 
     $(document).ready(function(){
@@ -222,6 +227,21 @@
         deviceCtrl.findMenuTree();
         var view = new DeviceView(deviceModel);
         view.setAddBefore();
+
+        $("select[id=selectDeviceType]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=deviceTypeCode]").val(id);
+        });
+
+        $("select[id=selectDeviceCode]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=deviceCode]").val(id);
+        });
+
+        $("select[id=selectAreaId]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=areaId]").val(id);
+        });
     });
 
     var deviceModel = new DeviceModel();

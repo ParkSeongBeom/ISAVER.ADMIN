@@ -370,21 +370,41 @@ function DeviceModel() {
      * 전체 장치 목록을 정의
      * @param menuName
      */
-    DeviceModel.getDeviceDetail = function (deviceId) {
+    DeviceModel.getDeviceDetail = function (deviceId, serialNo, ipAddress) {
 
-        var resultData = null;
+        var _deviceIdExistFlag = false;
+        var _serialNoExistFlag = false;
+        var _ipAddressExistFlag = false;
 
         for (var i =0; i < this.model.deviceTreeList.length; i++) {
             var device = this.model.deviceTreeList[i];
 
             if (device['deviceId'] == deviceId) {
-                resultData = device;
-                break;
+                _deviceIdExistFlag = true;
             }
+
+            if (device['serialNo'] == serialNo) {
+
+                if (device['deviceId'] != deviceId) {
+                    _serialNoExistFlag = true;
+                }
+
+            }
+
+            if (ipAddress != undefined) {
+                if (ipAddress.trim().length > 0 ) {
+                    if (device['ipAddress'] == ipAddress) {
+                        if (device['deviceId'] != deviceId) {
+                            _ipAddressExistFlag = true;
+                        }
+                    }
+                }
+            }
+
 
         }
 
-        return resultData;
+        return {'deviceIdExistFlag' : _deviceIdExistFlag, 'serialNoExistFlag': _serialNoExistFlag, 'ipAddressExistFlag': _ipAddressExistFlag};
     };
 
     /**

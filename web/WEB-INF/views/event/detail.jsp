@@ -32,12 +32,15 @@
                             <p class="itype_01">
                                 <span>구분</span>
                                     <span>
-                                        <select name="pop_action_code">
-                                            <option value="">전체</option>
-                                            <option value="ACT001">크레인 충돌</option>
-                                            <option value="ACT002">작업자 쓰러짐</option>
-                                            <option value="ACT003">위험지역</option>
-                                        </select>
+
+
+                                        <isaver:codeSelectBox groupCodeId="ACT" codeId="" htmlTagId="pop_action_code"/>
+                                        <%--<select name="pop_action_code">--%>
+                                            <%--<option value="">전체</option>--%>
+                                            <%--<option value="ACT001">크레인 충돌</option>--%>
+                                            <%--<option value="ACT002">작업자 쓰러짐</option>--%>
+                                            <%--<option value="ACT003">위험지역</option>--%>
+                                        <%--</select>--%>
                                     </span>
                             </p>
                         </div>
@@ -60,7 +63,7 @@
                             <tr>
                                 <th class="t_center"></th>
                                 <th><spring:message code="action.column.actionId"/></th>
-                                <th>조치 구분</th>
+                                <th><spring:message code="action.column.actionId"/></th>
                                 <th><spring:message code="action.column.actionDesc"/></th>
                             </tr>
                             </thead>
@@ -151,10 +154,8 @@
                     <tr>
                         <th class="point"><spring:message code="event.column.eventFlag"/></th>
                         <td class="point" colspan="3">
-                            <select name="eventFlag">
-                                <option value="D" <c:if test="${event.eventFlag == 'D'}">selected</c:if>>감지</option>
-                                <option value="A" <c:if test="${event.eventFlag == 'A'}">selected</c:if>>알림</option>
-                            </select>
+                            <input type="hidden"  name="eventFlag" value="${event.eventFlag}"/>
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="" htmlTagId="selectEventFlag"/>
                         </td>
                     </tr>
                     <tr>
@@ -171,7 +172,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code="common.column.description"/></th>
+                        <th><spring:message code="event.column.eventDesc"/></th>
                         <td colspan="3">
                             <textarea name="eventDesc" class="textboard">${event.eventDesc}</textarea>
                         </td>
@@ -436,6 +437,11 @@
         /* 조치 코드 삭제 */
         clistRemove.click(function () {
             removeActoinId(this);
+        });
+
+        $("select[id=selectEventFlag]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=eventFlag]").val(id);
         });
 
     })

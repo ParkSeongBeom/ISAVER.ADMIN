@@ -5,8 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
+<c:set value="E00000" var="subMenuId"/>
+<c:set value="E00001" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
@@ -49,10 +49,8 @@
                         </td>
                         <th class="point"><spring:message code="license.column.deviceType"/></th>
                         <td class="point">
-                            <select name="deviceType">
-                                <option value="1">1</option>
-                                <option value="1">1</option>
-                            </select>
+                            <input type="hidden"  name="deviceCode" value="${license.deviceCode}"/>
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/>
                         </td>
                     </tr>
                     <tr>
@@ -114,15 +112,15 @@
     };
 
     var messageConfig = {
-        'addConfirm':'<spring:message code="event.message.addConfirm"/>'
-        ,'saveConfirm':'<spring:message code="event.message.saveConfirm"/>'
-        ,'removeConfirm':'<spring:message code="event.message.removeConfirm"/>'
-        ,'addFailure':'<spring:message code="event.message.addFailure"/>'
-        ,'saveFailure':'<spring:message code="event.message.saveFailure"/>'
-        ,'removeFailure':'<spring:message code="event.message.removeFailure"/>'
-        ,'addComplete':'<spring:message code="event.message.addComplete"/>'
-        ,'saveComplete':'<spring:message code="event.message.saveComplete"/>'
-        ,'removeComplete':'<spring:message code="event.message.removeComplete"/>'
+        'addConfirm':'<spring:message code="license.message.addConfirm"/>'
+        ,'saveConfirm':'<spring:message code="license.message.saveConfirm"/>'
+        ,'removeConfirm':'<spring:message code="license.message.removeConfirm"/>'
+        ,'addFailure':'<spring:message code="license.message.addFailure"/>'
+        ,'saveFailure':'<spring:message code="license.message.saveFailure"/>'
+        ,'removeFailure':'<spring:message code="license.message.removeFailure"/>'
+        ,'addComplete':'<spring:message code="license.message.addComplete"/>'
+        ,'saveComplete':'<spring:message code="license.message.saveComplete"/>'
+        ,'removeComplete':'<spring:message code="license.message.removeComplete"/>'
         ,'requireLicenseKey':'<spring:message code="license.message.requireLicenseKey"/>'
         ,'requireLicenseCount':'<spring:message code="license.message.requireLicenseCount"/>'
     };
@@ -193,7 +191,7 @@
     }
 
     function requestCode_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        alert(actionType + 'Failure');
+        alertMessage(actionType + 'Failure');
     }
 
     function alertMessage(type){
@@ -270,6 +268,11 @@
 
         }
 
+
+        $("select[id=selectDeviceCode]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=deviceCode]").val(id);
+        });
     })
 
 

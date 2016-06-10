@@ -13,7 +13,18 @@ function AreaView(model) {
             $(formName + " [name='areaId']").val(data.areaId);
         },
         parentAreaId: function (data) {
+
             $(formName + " [name='parentAreaId']").val(data.parentAreaId);
+
+            $(formName + " [id='selectParentAreaId'] option").attr('disabled', false);
+            $(formName + " [id='selectParentAreaId']").find("option[value=" +AreaView._model.getAreaId()+"]").attr('disabled', true);
+
+            if (data['parentAreaId'] != null && String(data['parentAreaId']).trim().length > 0) {
+                $(formName + " [id='selectParentAreaId']").val(data.parentAreaId);
+            } else {
+                $(formName + " [id='selectParentAreaId']").val("");
+            }
+
         },
         areaName: function (data) {
             $(formName + " [name='areaName']").val(data.areaName);
@@ -180,6 +191,7 @@ function AreaView(model) {
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
 
+
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
@@ -217,6 +229,11 @@ function AreaView(model) {
      * 구역 등록 전 초기화 모드
      */
     AreaView.setAddBefore = function() {
+
+        var AreaView = new Object();
+        AreaView._model = model;
+        var formName = "#" + model.getFormName();
+
         $("[name='showHideTag']").hide();
 
         $("tr[name='orgSortTr']").hide()
@@ -235,6 +252,8 @@ function AreaView(model) {
 
 
         $("input:hidden[name='parentAreaId']").val(AreaView._model.getAreaId());
+
+        $( formName + " [id='selectParentAreaId'] option").attr('disabled', false);
 
         $("input[name='areaId']").focus();
 

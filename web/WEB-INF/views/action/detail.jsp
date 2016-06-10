@@ -43,11 +43,14 @@
                         </td>
                         <th class="point"><spring:message code="action.column.actionCode"/></th>
                         <td class="point">
-                            <select name="actionCode">
-                                <option value="ACT001" <c:if test="${action.actionCode == 'ACT001'}">selected</c:if>>쓰러짐</option>
-                                <option value="ACT002" <c:if test="${action.actionCode == 'ACT002'}">selected</c:if>>크레인사고</option>
-                                <option value="ACT003" <c:if test="${action.actionCode == 'ACT003'}">selected</c:if>>가스유출</option>
-                            </select>
+
+                            <isaver:codeSelectBox groupCodeId="ACT" codeId="${action.actionCode}" htmlTagId="actionCode"/>
+                            <%----%>
+                            <%--<select name="actionCode">--%>
+                                <%--<option value="ACT001" <c:if test="${action.actionCode == 'ACT001'}">selected</c:if>>쓰러짐</option>--%>
+                                <%--<option value="ACT002" <c:if test="${action.actionCode == 'ACT002'}">selected</c:if>>크레인사고</option>--%>
+                                <%--<option value="ACT003" <c:if test="${action.actionCode == 'ACT003'}">selected</c:if>>가스유출</option>--%>
+                            <%--</select>--%>
                         </td>
                     </tr>
                     <tr>

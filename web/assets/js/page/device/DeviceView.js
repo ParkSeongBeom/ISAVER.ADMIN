@@ -14,19 +14,34 @@ function DeviceView(model) {
         },
         parentDeviceId: function (data) {
 
-            $(formName + " [id='selectParentDeviceId']").val(data.parentDeviceId);
-            $("#deviceForm" + " [id='selectParentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', true);
+            $(formName + " [name='parentDeviceId']").val(data.parentDeviceId);
+            $(formName + " [id='selectParentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', true);
+
+            if (data.parentDeviceId != null && String(data['parentDeviceId']).trim().length > 0) {
+                $(formName + " [id='selectParentDeviceId']").val(data.parentDeviceId);
+            } else {
+                $(formName + " [id='selectParentDeviceId']").val("");
+            }
+
         },
         deviceTypeCode: function (data) {
             var deviceTypeCode = data['deviceTypeCode'];
+            $(formName + " [name='deviceTypeCode']").val(data.deviceTypeCode);
             $(formName + " [id='selectDeviceType']").val(deviceTypeCode);
         },
         areaId: function (data) {
-            $(formName + " [id='selectAreaId']").val(data.areaId);
+
+            if (data['areaId'] != null && String(data['areaId']).trim().length > 0) {
+                $(formName + " [id='selectAreaId']").val(data.areaId);
+            } else {
+                $(formName + " [id='selectAreaId']").val("");
+            }
+
             $(formName + " [name='areaId']").val(data.areaId);
         },
         deviceCode: function (data) {
             var deviceCode = data['deviceCode'];
+            $(formName + " [name='deviceCode']").val(data.deviceCode);
             $(formName + " [id='selectDeviceCode']").val(deviceCode);
         },
         serialNo: function (data) {
@@ -43,6 +58,12 @@ function DeviceView(model) {
         },
         sortOrder: function (data) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
+        },
+        provisionFlag: function (data) {
+            $(formName + " span[name='provisionFlag']").text(data['provisionFlag']);
+        },
+        deviceStat: function (data) {
+            $(formName + " span[name='deviceStat']").text(data['deviceStat']);
         },
         insertUserName: function (data) {
             $(formName + " td[name='insertUserName']").text(data.insertUserName);
@@ -196,30 +217,35 @@ function DeviceView(model) {
         $(formName + " td[name='insertDatetime']").text("");
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
+        $(formName + " textarea[name='deviceDesc']").val("");
 
+        //$("table tbody tr").eq(0).show();
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
         $("table tbody tr").eq(4).show();
         $("table tbody tr").eq(5).show();
-
+        $("table tbody tr").eq(6).show();
 
         if (DeviceView._model.getDeviceId() == DeviceView._model.getRootOrgId()) {
 
+            //$("table tbody tr").eq(0).hide();
             $("table tbody tr").eq(1).hide();
             $("table tbody tr").eq(2).hide();
             $("table tbody tr").eq(3).hide();
             $("table tbody tr").eq(4).hide();
             $("table tbody tr").eq(5).hide();
+            $("table tbody tr").eq(6).hide();
 
-            $(formName + " [name='areaName']").attr("readonly", "readonly");
-            $(formName + " [name='areaName']").val("HOME");
-            $(formName + " [name='areaId']").val(DeviceView._model.getDeviceId());
-            $(formName + " [name='parentDeviceId']").val("");
+            //$(formName + " [name='areaName']").attr("readonly", "readonly");
+            $(formName + " [name='deviceId']").attr("readonly", "readonly");
+            $(formName + " [name='deviceId']").val("HOME");
+            //$(formName + " [name='areaId']").val(DeviceView._model.getDeviceId());
+            //$(formName + " [name='parentDeviceId']").val("");
 
-            $("table[name='roleListTable'] tbody").empty();
-            $("#pageContainer").empty();
-            $('#selectAll').checked = false;
+            //$("table[name='roleListTable'] tbody").empty();
+            //$("#pageContainer").empty();
+            //$('#selectAll').checked = false;
 
             $("[name='showHideTag']").hide();
             $("button[name='addBtn']").hide();
@@ -234,13 +260,21 @@ function DeviceView(model) {
      * 장치 등록 전 초기화 모드
      */
     DeviceView.setAddBefore = function() {
+
+        $("table tbody tr").eq(1).show();
+        $("table tbody tr").eq(2).show();
+        $("table tbody tr").eq(3).show();
+        $("table tbody tr").eq(4).show();
+        $("table tbody tr").eq(5).show();
+        $("table tbody tr").eq(6).show();
+
         $("[name='showHideTag']").hide();
 
         $("input[name='deviceId']").val("").removeAttr("readonly");
         $("input[name='serialNo']").val("").removeAttr("readonly");
 
         $("textarea[name='deviceDesc']").val("");
-
+        $("input[name='ipAddress']").val("");
         $("button[name='addBtn']").show();
         $("button[name='saveBtn']").hide();
         $("button[name='removeBtn']").hide();
@@ -251,7 +285,11 @@ function DeviceView(model) {
 
         $("select[id=selectDeviceType]  option:eq(0)").attr("selected", "selected");
         $("select[id=selectDeviceCode]  option:eq(0)").attr("selected", "selected");
-        $("select[id=selectAreaId]  option:eq(0)").attr("selected", "selected");
+        $("select[id=selectAreaId]").val("");
+
+        $("input[name=deviceTypeCode]").val($("select[id=selectDeviceType]  option:eq(0)").val());
+        $("input[name=deviceCode]").val($("select[id=selectDeviceCode]  option:eq(0)").val());
+        $("input[name=areaId]").val("");
 
         var formName = "#" +DeviceView._model.getFormName();
         $( formName + " [id='selectParentDeviceId'] option").attr('disabled', false);
@@ -261,8 +299,6 @@ function DeviceView(model) {
         } else {
             $( formName + " [id='selectParentDeviceId']").val(DeviceView._model.getDeviceId());
         }
-
-        $( formName + " [id='selectAreaId']").val(DeviceView._model.getAreaId());
 
         $("input[name='deviceId']").focus();
 

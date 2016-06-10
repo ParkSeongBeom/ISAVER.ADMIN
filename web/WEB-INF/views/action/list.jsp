@@ -41,12 +41,12 @@
                     </span>
                 </p>
 
-                <p class="itype_01">
-                    <span><spring:message code="action.column.actionCode" /></span>
-                    <span>
-                        <input type="text" name="actionCode" value="${paramBean.actionCode}"/>
-                    </span>
-                </p>
+                <%--<p class="itype_01">--%>
+                    <%--<span><spring:message code="action.column.actionCode" /></span>--%>
+                    <%--<span>--%>
+                        <%--<isaver:codeSelectBox groupCodeId="ACT" codeId="${paramBean.actionCode}" htmlTagId="pop_action_code"/>--%>
+                    <%--</span>--%>
+                <%--</p>--%>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>

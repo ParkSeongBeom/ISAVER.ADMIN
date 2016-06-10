@@ -80,6 +80,7 @@ public class LicenseCtrl {
             throw new JabberException("");
         }
 
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = licenseSvc.addLicense(request, parameters);
         return modelAndView;
     }
@@ -101,6 +102,7 @@ public class LicenseCtrl {
             throw new JabberException("");
         }
 
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = licenseSvc.saveLicense(request, parameters);
         return modelAndView;
     }
@@ -122,7 +124,7 @@ public class LicenseCtrl {
             throw new JabberException("");
         }
 
-
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = licenseSvc.removeLicense(parameters);
         return modelAndView;
     }

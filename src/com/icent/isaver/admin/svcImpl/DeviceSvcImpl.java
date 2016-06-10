@@ -9,6 +9,7 @@ import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -105,9 +106,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         try {
-
             deviceDao.saveDevice(parameters);
-
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

@@ -6,8 +6,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="MN000000-B000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-B000-0000-0000-000000000001" var="menuId"/>
+<c:set value="C00000" var="menuId"/>
+<c:set value="C00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
@@ -125,6 +125,19 @@
                         <th class="point"><spring:message code="area.column.areaName"/></th>
                         <td class="point">
                             <input type="text" name="areaName" placeholder="<spring:message code="area.message.requiredAreaName"/>" maxlength="50">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='area.column.parentareaName'/></th>
+                        <td colspan="3">
+                            <select id="selectParentAreaId">
+                                <option value=""><spring:message code="device.message.emptyData"/></option>
+                                <c:forEach items="${areas}" var="areas">
+                                    <c:if test="${areas.delYn == 'N'}">
+                                        <option value="${areas.areaId}">${areas.areaName}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -309,6 +322,13 @@
 
 
     $(document).ready(function(){
+
+        $("select[id=selectParentAreaId]").change(function() {
+            var id  = $(event.currentTarget).val();
+            $("input[name=parentAreaId]").val(id);
+            areaModel.setParentAreaId(id);
+        });
+
         /**
          * 구역 트리 생성
          */

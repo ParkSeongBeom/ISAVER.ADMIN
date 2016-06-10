@@ -75,6 +75,22 @@ function DeviceCtrl(model) {
 
     };
 
+
+    /**
+     * IP 주소 유효성 검증
+     * @param ipaddress
+     * @returns {boolean}
+     * @constructor
+     */
+    DeviceCtrl.validateIPaddress = function(ipaddress) {
+        if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) {
+            return (true);
+        } else {
+            return (false)
+        }
+
+    }
+
     /**
      * 전송 전 유효성 체크
      */
@@ -89,22 +105,25 @@ function DeviceCtrl(model) {
 
         if (flag != undefined && flag) {
 
-            if ($("input[name='areaId']").val().trim().length == 0) {
-                $("input[name='areaId']").focus();
+            if ($("input[name='deviceId']").val().trim().length == 0) {
+                $("input[name='deviceId']").focus();
                 alert(messageConfig['requiredDeviceId']);
                 return;
             }
 
-            if ($("input[name='areaName']").val().trim().length == 0) {
-                $("input[name='areaName']").focus();
-                alert(messageConfig['requiredDeviceName']);
+            if ($("input[name='serialNo']").val().trim().length == 0) {
+                $("input[name='serialNo']").focus();
+                alert(messageConfig['requiredSerialNo']);
                 return;
             }
 
-            if ($("input[name='sortOrder']").val().trim().length == 0) {
-                $("input[name='sortOrder']").focus();
-                alert(messageConfig['requiredSortOrder']);
-                return;
+            if ($("input[name='ipAddress']").val().trim().length > 0) {
+
+                if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
+                    alert(messageConfig['regexpIpAddress']);
+                    $("input[name='ipAddress']").focus();
+                    return;
+                }
             }
 
 
@@ -121,15 +140,33 @@ function DeviceCtrl(model) {
         this._model.setViewStatus(DeviceModel().model.ACTION.ADD);
         if (this.commonVaild(true)) {
 
-            var areaObj = DeviceCtrl._model.getDeviceDetail($("input[name='areaId']").val());
-            if (areaObj != null) {
+            var deviceObj = DeviceCtrl._model.getDeviceDetail($("input[name='deviceId']").val(), $("input[name='serialNo']").val(), $("input[name='ipAddress']").val());
+
+            if (deviceObj['deviceIdExistFlag'] == true) {
                 alert( messageConfig['existsDeviceId'] );
-                $("input[name=areaId]").focus();
+                $("input[name=deviceId]").focus();
                 return;
             }
 
-            var areaName = $("input[name=areaName]").val();
-            if(confirm('[' + areaName + '] ' + messageConfig['addConfirmMessage'] + '?')) {
+            if (deviceObj['serialNoExistFlag'] == true) {
+                alert( messageConfig['existsSerialNo'] );
+                $("input[name=serialNo]").focus();
+                return;
+            }
+
+            if ($("input[name='ipAddress']").val().trim().length > 0) {
+
+                if (deviceObj['ipAddressExistFlag'] == true) {
+                    alert( messageConfig['existsIpAddress'] );
+                    $("input[name=ipAddress]").focus();
+                    return;
+                }
+
+            }
+
+            var deviceId = $("input[name=deviceId]").val();
+
+            if(confirm('[' + deviceId + '] ' + messageConfig['addConfirmMessage'] + '?')) {
                 this.addDevice();
             }
 
@@ -145,8 +182,25 @@ function DeviceCtrl(model) {
 
         if (this.commonVaild(true)) {
 
-            var areaName = $("input[name=areaName]").val();
-            if(confirm('[' + areaName + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
+
+            var deviceObj = DeviceCtrl._model.getDeviceDetail($("input[name='deviceId']").val(), $("input[name='serialNo']").val(), $("input[name='ipAddress']").val());
+
+            if (deviceObj['serialNoExistFlag'] == true) {
+                alert( messageConfig['existsSerialNo'] );
+                $("input[name=serialNo]").focus();
+                return;
+            }
+
+            if ($("input[name='ipAddress']").val().trim().length > 0) {
+
+                if (deviceObj['ipAddressExistFlag'] == true) {
+                    alert(messageConfig['existsIpAddress']);
+                    $("input[name=ipAddress]").focus();
+                    return;
+                }
+            }
+            var deviceId = $("input[name=deviceId]").val();
+            if(confirm('[' + deviceId + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
                 this.saveDevice();
             }
 
@@ -161,9 +215,9 @@ function DeviceCtrl(model) {
 
         if (this.commonVaild()) {
 
-            var areaName = document.forms[DeviceCtrl._model.getFormName()]['areaName'].value;
+            var deviceId = document.forms[DeviceCtrl._model.getFormName()]['deviceId'].value;
 
-            if (!confirm("[ " + areaName + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
+            if (!confirm("[ " + deviceId + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
 
             DeviceCtrl.removeDevice();
         }
@@ -264,6 +318,13 @@ function DeviceCtrl(model) {
 
     };
 
+    /**
+     *부모장치 콤보박스 - 변경 이벤트
+     */
+    DeviceCtrl.selectParentDeviceIdChangeEvent = function() {
+        var parentDeviceId  = $(event.currentTarget).val();
+        $("input[name=parentDeviceId]").val(parentDeviceId);
+    };
     return DeviceCtrl;
 
 }
@@ -286,6 +347,7 @@ function DeviceEvent(model) {
     DeviceEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
 
         DeviceEvent._model.setDeviceTreeList(JSON.parse(JSON.stringify(data['deviceList'])));
+
         var menuTreeModel = DeviceEvent._model.processMenuTreeData(data['deviceList'], DeviceEvent._model.getRootOrgId());
 
         deviceView.setMenuTree(menuTreeModel);

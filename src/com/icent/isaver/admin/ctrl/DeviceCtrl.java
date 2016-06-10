@@ -78,7 +78,7 @@ public class DeviceCtrl {
         return modelAndView;
     }
 
-    private final static String[] addDeviceParam = new String[]{"deviceName", "deviceTypeCode", "deviceType", "deviceCode"};
+    private final static String[] addDeviceParam = new String[]{"deviceId", "serialNo", "deviceTypeCode", "deviceCode"};
 
     /**
      * 장치를 등록 한다.
@@ -93,11 +93,12 @@ public class DeviceCtrl {
         if(MapUtils.nullCheckMap(parameters, addDeviceParam)){
             throw new JabberException("");
         }
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.addDevice(request, parameters);
         return modelAndView;
     }
 
-    private final static String[] saveDeviceParam = new String[]{"deviceId", "deviceName", "deviceTypeCode", "deviceType", "deviceCode"};
+    private final static String[] saveDeviceParam = new String[]{"deviceId", "serialNo", "deviceTypeCode", "deviceCode"};
 
     /**
      *  장치를 수정 한다.
@@ -112,6 +113,7 @@ public class DeviceCtrl {
         if(MapUtils.nullCheckMap(parameters, saveDeviceParam)){
             throw new JabberException("");
         }
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.saveDevice(request, parameters);
         return modelAndView;
     }
@@ -131,6 +133,7 @@ public class DeviceCtrl {
         if(MapUtils.nullCheckMap(parameters, removeDeviceParam)){
             throw new JabberException("");
         }
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.removeDevice(parameters);
         return modelAndView;
     }
