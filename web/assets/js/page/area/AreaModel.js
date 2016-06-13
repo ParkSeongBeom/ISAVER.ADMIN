@@ -428,7 +428,7 @@ function AreaModel() {
                     var view =
                     {
                         id        : String(item.areaId),
-                        title     : String(item['areaName']),
+                        title     : "<span style='font-weight: bold;'>"+String(item['areaName'] + "</span> (" + item['areaId'] +")"),
                         isFolder  : false,
                         orgSort   : Number(item.sortOrder),
                         children  : []

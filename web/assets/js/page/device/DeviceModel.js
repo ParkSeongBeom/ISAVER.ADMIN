@@ -466,7 +466,7 @@ function DeviceModel() {
                     var view =
                     {
                         id        : String(item.deviceId),
-                        title     : String(item['deviceCodeName'] + " (" + item['deviceId'] +")"),
+                        title     : "<span style='font-weight: bold;'>"+String(item['deviceCodeName'] + "</span> (" + item['deviceId'] +")"),
                         isFolder  : false,
                         orgSort   : Number(item.sortOrder),
                         children  : []

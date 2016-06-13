@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -21,6 +23,10 @@ public class EventLogCtrl {
 
     @Value("#{configProperties['cnf.defaultPageSize']}")
     private String defaultPageSize;
+
+    @Inject
+    private EventLogSvc eventLogSvc;
+
     /**
      * 이벤트 로그 목록을 가져온다.
      *
@@ -31,10 +37,10 @@ public class EventLogCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListEventLog(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
+        parameters = AdminHelper.checkReloadList(request, response, "eventLogList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = eventLogSvc.findListEventLog(parameters);
         modelAndView.setViewName("eventLogList");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

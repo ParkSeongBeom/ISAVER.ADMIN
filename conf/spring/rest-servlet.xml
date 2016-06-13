@@ -80,6 +80,7 @@
                 <value>properties/message/rolemenu</value>
                 <value>properties/message/action</value>
                 <value>properties/message/event</value>
+                <value>properties/message/eventlog</value>
                 <value>properties/message/code</value>
                 <value>properties/message/groupcode</value>
                 <value>properties/message/license</value>

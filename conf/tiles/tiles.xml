@@ -125,6 +125,14 @@
         <put-attribute name="body" value="/WEB-INF/views/code/detail.jsp" />
     </definition>
 
+    <!--
+        이벤트 이력 관리
+        @author dhj
+    -->
+    <definition name="eventLogList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventLog/list.jsp" />
+    </definition>
+
     <!-- ############# -->
     <!-- [END] 안전 방재 -->
     <!-- ############# -->
