@@ -33,7 +33,7 @@
                 <table class="t_defalut t_type02 t_style03">
                     <colgroup>
                         <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
+                        <col style="width:40%">  <!-- 02 -->
                         <col style="width:16%">  <!-- 03 -->
                         <col style="width:*">    <!-- 04 -->
                     </colgroup>
@@ -41,16 +41,17 @@
                     <tr>
                         <th class="point"><spring:message code="license.column.licenseKey"/></th>
                         <td class="point">
-                            <input type="text" style="width:50px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:50px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:50px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:50px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:50px" name="licenseText" maxlength="5" />
+                            <input type="hidden"  name="licenseKey" />
+                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />
                         </td>
                         <th class="point"><spring:message code="license.column.deviceType"/></th>
                         <td class="point">
                             <input type="hidden"  name="deviceCode" value="${license.deviceCode}"/>
-                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/>
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="${license.deviceCode}" htmlTagId="selectDeviceCode"/>
                         </td>
                     </tr>
                     <tr>
@@ -141,6 +142,11 @@
             return false;
         }
 
+        $("input[name=licenseKey]").val(getLicenseKey());
+        $("input[name=expireDate]").val(getLicenseExpireDay());
+
+        var deviceCode = $("select[id=selectDeviceCode]").val();
+        $("input[name=deviceCode]").val(deviceCode);
         return true;
     }
 
@@ -217,7 +223,7 @@
     }
 
     function getLicenseExpireDay() {
-        var expireDate = $("input[name='expireDate']").val();
+        var expireDate = $("input[type=date][name=expireDatetime]").val();
         return new Date(expireDate).format("yyyyMMdd");
     }
 
@@ -261,6 +267,7 @@
             <c:if test="${empty license}">
                 var licenseExpireDate = new Date().format("yyyy-MM-dd");
                 $("input[name='expireDatetime']").val(licenseExpireDate);
+                $("input[name='licenseCount']").val(0);
             </c:if>
         }  catch(e) {
             console.error("[document ready error] " + e)

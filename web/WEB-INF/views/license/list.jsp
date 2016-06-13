@@ -34,17 +34,15 @@
                 <!-- 일반 input 폼 공통 -->
 
                 <p class="itype_01">
-                    <span><spring:message code="event.column.eventId" /></span>
+                    <span><spring:message code="license.column.licenseKey" /></span>
                     <span>
-                        <input type="text" name="eventId" value="${paramBean.eventId}"/>
+                        <input type="text" name="licenseKey" value="${paramBean.licenseKey}"/>
                     </span>
                 </p>
 
                 <p class="itype_01">
-                    <span><spring:message code="event.column.eventName" /></span>
-                    <span>
-                        <input type="text" name="eventName" value="${paramBean.eventName}"/>
-                    </span>
+                    <span><spring:message code="license.column.deviceType" /></span>
+                    <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagId="selectDeviceCode" htmlTagName="deviceCode" allModel="true"/>
                 </p>
             </div>
             <div class="search_btn">
@@ -65,7 +63,7 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
-                    <col style="width: 20%;" />
+                    <col style="width: 10%;" />
                     <col style="width: 20%;" />
                     <col style="width: 15%;" />
                     <col style="width: 10%;" />
@@ -73,31 +71,40 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><spring:message code="common.column.insertDatetime"/></th>
-                    <th><spring:message code="license.column.licenseKey"/></th>
                     <th><spring:message code="license.column.deviceType"/></th>
+                    <th><spring:message code="license.column.licenseKey"/></th>
                     <th><spring:message code="license.column.licenseCount"/></th>
                     <th><spring:message code="license.column.expireDate"/></th>
+                    <th><spring:message code="common.column.insertDatetime"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${licenses != null and fn:length(licenses) > 0}">
                         <c:forEach var="license" items="${licenses}">
+                            <c:set var="licenseKey1" value="${fn:substring(license.licenseKey, 0, 5)}" />
+                            <c:set var="licenseKey2" value="${fn:substring(license.licenseKey, 5,10)}" />
+                            <c:set var="licenseKey3" value="${fn:substring(license.licenseKey, 10, 15)}" />
+                            <c:set var="licenseKey4" value="${fn:substring(license.licenseKey, 15, 20)}" />
+                            <c:set var="licenseKey5" value="${fn:substring(license.licenseKey, 20, 25)}" />
+                            <c:set var="licenseKey5" value="${fn:substring(license.licenseKey, 20, 25)}" />
+                            <c:set var="expireDate_yyyy" value="${fn:substring(license.expireDate, 0, 4)}" />
+                            <c:set var="expireDate_MM" value="${fn:substring(license.expireDate, 4, 6)}" />
+                            <c:set var="expireDate_dd" value="${fn:substring(license.expireDate, 6, 8)}" />
                             <tr onclick="moveDetail(String('${license.licenseKey}'));">
+                                <td>${license.deviceCode}</td>
+                                <td>${licenseKey1}-${licenseKey2}-${licenseKey3}-${licenseKey4}-${licenseKey5}</td>
+                                <td>${license.licenseCount}</td>
+                                <td>${expireDate_yyyy}-${expireDate_MM}-${expireDate_dd}</td>
                                 <td>
                                     <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${license.insertDatetime}" />
                                 </td>
-                                <td>${license.licenseKey}</td>
-                                <td>${license.deviceCode}</td>
-                                <td>${license.licenseCount}</td>
-                                <td>${license.expireDate}</td>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="5"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -127,6 +134,7 @@
     };
 
     $(document).ready(function(){
+
         drawPageNavigater(pageConfig['pageSize'],pageConfig['pageNumber'],pageConfig['totalCount']);
 
         $("input:text").keypress(function(e) {

@@ -40,7 +40,10 @@
                         <input type="text" name="actionId" value="${paramBean.actionId}"/>
                     </span>
                 </p>
-
+                <p class="itype_01">
+                    <span><spring:message code="action.column.actionCode" /></span>
+                    <isaver:codeSelectBox groupCodeId="ACT" codeId="${paramBean.actionCode}" htmlTagId="selectActionCode" htmlTagName="actionCode" allModel="true"/>
+                </p>
                 <%--<p class="itype_01">--%>
                     <%--<span><spring:message code="action.column.actionCode" /></span>--%>
                     <%--<span>--%>

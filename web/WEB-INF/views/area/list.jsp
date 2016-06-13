@@ -118,8 +118,8 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th><spring:message code="area.column.areaId"/></th>
-                        <td>
+                        <th class="point"><spring:message code="area.column.areaId"/></th>
+                        <td class="point">
                             <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" readonly="true" maxlength="6">
                         </td>
                         <th class="point"><spring:message code="area.column.areaName"/></th>
@@ -141,7 +141,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code="area.column.sortOrder"/></th>
+                        <th class="point"><spring:message code="area.column.sortOrder"/></th>
                         <td class="point" colspan="3">
                             <input type="number" name="sortOrder" placeholder="<spring:message code="area.message.requiredSortOrder"/>" >
                         </td>

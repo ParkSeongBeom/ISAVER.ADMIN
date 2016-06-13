@@ -81,8 +81,8 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th><spring:message code='device.column.deviceId'/></th>
-                        <td>
+                        <th class="point"><spring:message code='device.column.deviceId'/></th>
+                        <td class="point">
                             <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>" maxlength="6">
                         </td>
                         <th class="point"><spring:message code='device.column.serialNo'/></th>
