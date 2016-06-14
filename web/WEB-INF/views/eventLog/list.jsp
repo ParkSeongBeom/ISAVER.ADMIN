@@ -71,7 +71,7 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle03" onclick="return false;"><spring:message code="common.button.add"/> </button>
+                <button class="btn btype01 bstyle03" onclick="javascript:excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/> </button>
             </div>
         </div>
 
@@ -270,6 +270,11 @@
             document.body.appendChild(detailForm.get(0));
             detailForm.submit();
         });
+    }
+
+    /* Excel File Download*/
+    function excelFileDownloadFunc() {
+
     }
 
 </script>

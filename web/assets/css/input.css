@@ -13,6 +13,9 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
     box-sizing: border-box;
 }
 
+/* 데시보드 셀렉트  */
+.dashboard_mode.dh_mode select {color:#fff; font-size:16px; background-color: #1e1d23; border: none; }
+
 
 /*테이블 삽입 입력 폼 */
 .t_defalut tbody td input,
@@ -41,6 +44,87 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 .date_input > select {
     width:auto !important;
 }
+
+/* label base */
+
+.check_box_set {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+
+    -webkit-box-align:   center;
+    -moz-box-align:      center;
+    -webkit-align-items: center;
+    -ms-flex-align:      center;
+    align-items:         center;
+
+    -webkit-box-pack:        center;
+    -moz-box-pack:           center;
+    -webkit-justify-content: center;
+    -ms-flex-pack:           center;
+    justify-content:         center;
+
+    position: relative;
+    width:  30px;
+    height: 30px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
+}
+
+input[type="checkbox"].check_input,
+input[type="radio"].check_input {
+    position: absolute;
+    z-index: 1;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    opacity: 0;
+}
+input[type="checkbox"].check_input:checked,
+input[type="radio"]:checked {
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    background-color: transparent;
+}
+
+.check_input:checked + .lb_style01        {}
+.check_input:checked + .lb_style01:before {color:#fff}
+
+
+
+.lablebase {
+    display: inline-block;position: relative;border:none;
+    -webkit-box-sizing: border-box;
+    box-sizing:         border-box;
+
+}
+.lablebase:before {font-size:16px;}
+.lablebase.lb_style01:before {
+    content:"\e921";
+    color:#999; font-weight:bold;
+}
+
+.lablebase, .lablebase:after, .lablebase:before {
+    transition:        all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -moz-transition:   all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -webkit-transition:all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -o-transition:     all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -ms-transition:    all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+
+/*
+ <div class="check_box_set ">
+    <input type="checkbox"  name="" class="check_input" />
+    <label class="lablebase lb_style01"></label>
+    <span class="check_copy">자동로그인</span>
+</div>
+*/
 
 /*로그인 입력 폼 영역 */
 .login_input_area > input {
@@ -104,32 +188,6 @@ a.btn_logout:before {
     right: 12px;
 }
 
-/*사이트 맵 버튼 */
-button.btn_sitemap, button.btn_sitemap:after {
-    width:50px;
-    height:50px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-button.btn_sitemap {
-    position:relative;
-    background-color: #8e8e8e;
-    background-image: url(../images/ico/site_o.png);
-    border:none;
-    float: left;
-}
-button.btn_sitemap:hover {background-color: #000;}
-button.btn_sitemap:after {
-    content:"";
-    position: absolute;
-    top:0;
-    left:0;
-    background-image: url(../images/ico/site_x.png);
-
-}
-
-.site_o {background-color: rgba(30,140,160, 1) !important;}
-.site_o.btn_sitemap {background-image: none;}
 /*버튼 공통 정리
 검색 영역 삽입 버튼   = .btype01 + .bstyle01
 테이블 타이틀 버튼 튼 = .btype01 + .bstyle03
@@ -192,7 +250,8 @@ td button.refresh:before {font-size:16px; color:#2692ec;}
 
 
 
-.btn {position: relative; padding: 0 10px; }
+.btn {position: relative; padding: 0 10px; color:#fff; border:none;}
+.btn:hover {background-color: #b11831;}
 button.btn {text-align:center; margin:0 0 0 4px;}
 a.btn      {display: table;}
 a.btn span {width:100%; text-align:center; display: table-cell; vertical-align: middle; }
@@ -221,13 +280,14 @@ a.btn span {width:100%; text-align:center; display: table-cell; vertical-align: 
     font-size:14px;
 }
 
-.bstyle01, .bstyle02, .bstyle03, .bstyle04, .bstyle05, .bstyle06 {color:#fff; border:none;}
+.bstyle01, .bstyle02, .bstyle03, .bstyle04, .bstyle05, .bstyle06 {}
 .bstyle01  {background-color: #0c8dd0; } /*조회*/
 .bstyle02  {background-color: #2692ec; } /*테이블 삽입 버튼 */
 .bstyle03  {background-color: #0e2c45; } /*저장, 삭제, 등록*/
 .bstyle04  {background-color: #454545; } /*파일첨부 */
 .bstyle05  {background-color: #f55e13; } /*접수 */
-.bstyle06  {background-color: #363636; } /*반려  */
+.bstyle06  {background-color: #363636; } /*반려 */
+.bstyle07  {background-color: #27a1f4; } /*데시보드 알림센터 하늘색 */
 
 /*
 백그라운드 기본 컬러  #fafafa
@@ -237,8 +297,8 @@ GNB ,버튼 active   #0c8dd0
 테이블 포인트 #f55e13
 */
 
-.bstyle01:hover, .bstyle02:hover {background-color: #555; color:#fff;}
-.bstyle03:hover, .bstyle04:hover {background-color: #b11831;}
+/*.bstyle01:hover, .bstyle02:hover {background-color: #555; color:#fff;}
+.bstyle03:hover, .bstyle04:hover {background-color: #b11831;}*/
 
 
 .stion_btn {
@@ -307,7 +367,7 @@ GNB ,버튼 active   #0c8dd0
 }
 
 .infile_set > span,
-.infile_set > input { }
+.infile_set > input {}
 .infile_set > input {
     max-width:305px;
     width:         calc(100% - 100px) !important;
@@ -356,14 +416,6 @@ GNB ,버튼 active   #0c8dd0
 }
 
 .before_file {
-    /*
-
-    width:     -ms-calc(100% - 300px);
-    width:    -moz-calc(100% - 300px);
-    height: 100%;
-    padding: 5px 5px 0 10px;
-    */
-
     float: left;
     /*width:100px;*/
     width:calc(100% - 411px);
@@ -397,44 +449,6 @@ GNB ,버튼 active   #0c8dd0
 .before_file > a:hover { color:#f37949;}
 
 #preview img {width:120px;}
-/*
-.infile_set {
-    width:auto;
-    height:30px;
-    display: table;
-}
-
-.infile_set > span, .infile_set > input {display: table-cell;}
-.infile_set > input {width:auto;}
-
-
-.btn_infile {
-    position:relative;
-    width:100px !important;
-    height: auto !important;
-    cursor:pointer;
-}
-.btn_infile:hover {background-color: #555;}
-.btn_infile:before {
-    content:"파일찾기";
-    position:absolute;
-    width:100%;
-    height:30px;
-    padding:5px 0 0 0;
-    text-align: center;
-    top:0;
-    left:0;
-
-}
-.btn_infile > input[type="file"] {
-    position: absolute;
-    width:100%;
-    height:30px;
-    left:0;
-    top:0;
-    opacity: 0;
-}
-*/
 
 /*레이어 팝업 닫기 버튼 */
 .ipop_x {
@@ -555,15 +569,11 @@ GNB ,버튼 active   #0c8dd0
 .layer_sc > div > span.plable05.subDate {width: 118px;}
 
 
-
-
-
-
 /* 기본형 */
 /*.search_contents > p.itype_01   {width:25%;}
 .search_contents > div.itype_01 {width:35%;}*/
 .search_contents > p > span > input    {width:100%;  max-width:176px; min-width:102px;}
-.search_contents > p > span > select   {width:100%;  }
+.search_contents > p > span > select   {width:100%;  min-width:102px;}
 
 
 /* 기본조합 형 */
@@ -709,3 +719,5 @@ input.searchbase:focus { border: none;}
     width: calc(100% - 70px);
     width: -webkit-calc(100% - 70px);
 }
+
+

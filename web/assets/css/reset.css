@@ -18,6 +18,9 @@ html, body {
     -webkit-appearance:none;
     -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
 }
+
+
+
 html, body, div, span,  object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, em, font,
 img, strong, sub, sup,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,input, label,  legend, textarea, button, table,
 caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0; border: 0; font-style:normal;}
@@ -80,14 +83,13 @@ label,input,textarea,select,optgroup {
     border:1px solid #ccc;
 }
 
-input, select, textarea, a, button {
-    display: inline-block;
+input, select, textarea, a, button {display: inline-block;}
+input, select, textarea, a, button, button:after, button:before {
     transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
-
 }
 
 input, select {
@@ -303,6 +305,15 @@ flex-shrink: 0;
 flex-basis:  100%;
 
 */
+
+/* 컬러 정의 */
+.co_yell {background-color: #ffce53 !important;} /* rgba(255,206,83,1) */
+.co_purp {background-color: #cc3dd3 !important;} /* rgba(204,61,211,1) */
+.co_blue {background-color: #29a1f7 !important;} /* rgba(41,161,247,1) */
+.co_oran {background-color: #ff7a39 !important;} /* rgba(255,122,57,1) */
+.co_redd {background-color: #fe4d3b !important;} /* rgba(254,77,59,1) */
+
+
 @font-face {
     font-family: 'sico';
     src:    url('../fonts/sico.eot?yxy1ne');
@@ -314,7 +325,8 @@ flex-basis:  100%;
     font-style: normal;
 }
 
-.svgbase01, .hrs_btn_set > button:before, .lnb > li> button:before {
+.svgbase01, .hrs_btn_set > button:before, .lnb > li> button:before, .mp_header button.alra_btn:before,
+.mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sico' !important;
     speak: none;
@@ -329,19 +341,16 @@ flex-basis:  100%;
     -moz-osx-font-smoothing: grayscale;
 }
 .svgbase01:before {font-size:60px;}
-.sico_01:before {content: "\e900";}
-.sico_02:before {content: "\e901";}
-.sico_03:before {content: "\e902";}
-.sico_04:before {content: "\e903";}
+.sico_01:before {content: "\e900";}  .sico_11:before {content: "\e90a";}
+.sico_02:before {content: "\e901";}  .sico_12:before {content: "\e90b";}
+.sico_03:before {content: "\e902";}  .sico_13:before {content: "\e90c";}
+.sico_04:before {content: "\e903";}  .sico_14:before {content: "\e90d";}
 .sico_05:before {content: "\e904";}
 .sico_06:before {content: "\e905";}
 .sico_07:before {content: "\e906";}
 .sico_08:before {content: "\e907";}
 .sico_09:before {content: "\e908";}
 .sico_10:before {content: "\e909";}
-.sico_11:before {content: "\e90a";}
-
-
 
 
 @font-face {
@@ -356,7 +365,8 @@ flex-basis:  100%;
 }
 
 
-button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before {
+button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before, .toast_popup:before,
+.db_header h3:before, .lablebase:before {
     font-family: 'japple';
     speak: none;
     font-style:   normal;

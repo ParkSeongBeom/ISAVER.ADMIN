@@ -86,15 +86,15 @@
     <!-- hearder Start 고통부분 -->
     <header id="header">
         <div class="header_area">
-            <h1><button>i-Saver</button></h1>
+            <h1><button></button></h1>
             <div class="ha_right_set">
                 <div class="hrs_date">
                     <span id="nowTime"></span>
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button></button>
-                    <button href="#" onclick="javascript:logout();"></button>
+                    <button class="issue" onclick="javascript:logoClickFunc();"></button>
+                    <button class="loginout" href="#" onclick="javascript:logout();"></button>
                 </div>
             </div>
         </div>
@@ -137,6 +137,10 @@
 </div>
 <script type="application/javascript">
 
+    /* 로그 클릭 이벤트 */
+    function logoClickFunc() {
+
+    }
 </script>
 </body>
 </html>
