@@ -43,8 +43,7 @@
                         </td>
                         <th class="point"><spring:message code="action.column.actionCode"/></th>
                         <td class="point">
-
-                            <isaver:codeSelectBox groupCodeId="ACT" codeId="${action.actionCode}" htmlTagId="actionCode"/>
+                            <isaver:codeSelectBox groupCodeId="ACT" codeId="${action.actionCode}" htmlTagId="actionCode" htmlTagName="actionCode" />
                             <%----%>
                             <%--<select name="actionCode">--%>
                                 <%--<option value="ACT001" <c:if test="${action.actionCode == 'ACT001'}">selected</c:if>>쓰러짐</option>--%>
@@ -117,6 +116,8 @@
         ,'addComplete':'<spring:message code="action.message.addComplete"/>'
         ,'saveComplete':'<spring:message code="action.message.saveComplete"/>'
         ,'removeComplete':'<spring:message code="action.message.removeComplete"/>'
+        ,'onlyOneSelect' : '<spring:message code="action.message.onlyOneSelect"/>'
+        ,'actionAddExistFail' : '<spring:message code="action.message.actionAddExistFail"/>'
         <%--,'requireActionId':'<spring:message code="action.message.requireActionId"/>'--%>
     };
 
@@ -164,15 +165,25 @@
     }
 
     function requestAction_successHandler(data, dataType, actionType){
-        alertMessage(actionType + 'Complete');
+
         switch(actionType){
             case 'save':
+                alertMessage(actionType + 'Complete');
                 break;
             case 'add':
+                debugger;
+                if (data['existFlag'] == "true") {
+                    alertMessage('actionAddExistFail');
+                } else {
+                    alertMessage(actionType + 'Complete');
+                }
+                break;
             case 'remove':
+                alertMessage(actionType + 'Complete');
                 cancel();
                 break;
         }
+
     }
 
     function requestAction_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){

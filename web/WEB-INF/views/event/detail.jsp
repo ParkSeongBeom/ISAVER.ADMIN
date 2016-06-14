@@ -144,7 +144,7 @@
                     <tr>
                         <th class="point"><spring:message code="event.column.eventId"/></th>
                         <td class="point">
-                            <input type="text" name="eventId" value="${event.eventId}" placeholder="<spring:message code="event.message.requireEventId"/>" ${empty event ? '' : 'readonly="true"'} />
+                            <input type="text" name="eventId" value="${event.eventId}" placeholder="<spring:message code="event.message.requireEventId"/>" ${empty event ? '' : 'readonly="true"'}  maxlength="6"/>
                         </td>
                         <th class="point"><spring:message code="event.column.eventName"/></th>
                         <td class="point">
@@ -154,8 +154,7 @@
                     <tr>
                         <th class="point"><spring:message code="event.column.eventFlag"/></th>
                         <td class="point" colspan="3">
-                            <input type="hidden"  name="eventFlag" value="${event.eventFlag}"/>
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="" htmlTagId="selectEventFlag"/>
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagId="selectEventFlag" htmlTagName="eventFlag"/>
                         </td>
                     </tr>
                     <tr>
@@ -240,6 +239,7 @@
         ,'requireCodeName':'<spring:message code="code.message.requireCodeName"/>'
         ,'actionListFailure':'<spring:message code="action.message.actionListFailure"/>'
         ,'onlyOneSelect' : '<spring:message code="action.message.onlyOneSelect"/>'
+        ,'eventAddExistFail' : '<spring:message code="event.message.eventAddExistFail"/>'
     };
 
     function validate(type){
@@ -297,12 +297,21 @@
     }
 
     function requestEvent_successHandler(data, dataType, actionType){
-        alertMessage(actionType + 'Complete');
+
         switch(actionType){
             case 'save':
+                alertMessage(actionType + 'Complete');
                 break;
             case 'add':
+                    debugger;
+                if (data['existFlag'] == "true") {
+                    alertMessage('eventAddExistFail');
+                } else {
+                    alertMessage(actionType + 'Complete');
+                }
+                break;
             case 'remove':
+                alertMessage(actionType + 'Complete');
                 cancel();
                 break;
         }
@@ -439,10 +448,6 @@
             removeActoinId(this);
         });
 
-        $("select[id=selectEventFlag]").change(function() {
-            var id  = $(event.currentTarget).val();
-            $("input[name=eventFlag]").val(id);
-        });
 
     })
 </script>

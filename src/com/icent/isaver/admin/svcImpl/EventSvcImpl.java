@@ -7,6 +7,7 @@ import com.icent.isaver.repository.bean.EventBean;
 import com.icent.isaver.repository.dao.base.EventActionDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -74,20 +75,28 @@ public class EventSvcImpl implements EventSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try {
-            eventDao.addEvent(parameters);
-            if (parameters.get("actionId") != null) {
-                eventActionDao.removeEventAction(parameters);
-                eventActionDao.addEventAction(parameters);
-            }
-
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
-        }
+        Integer eventExistCount = eventDao.findByEventCheckExist(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
+
+        if (eventExistCount == 0) {
+            try {
+                eventDao.addEvent(parameters);
+
+                if (parameters.get("actionId") != null && StringUtils.notNullCheck(parameters.get("actionId"))) {
+                    eventActionDao.removeEventAction(parameters);
+                    eventActionDao.addEventAction(parameters);
+                }
+
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new JabberException("");
+            }
+        } else {
+            modelAndView.addObject("existFlag", "true");
+        }
+
         return modelAndView;
     }
 
@@ -99,9 +108,12 @@ public class EventSvcImpl implements EventSvc {
         try {
 
             eventDao.saveEvent(parameters);
-            if (parameters.get("actionId") != null) {
+
+            if (parameters.get("actionId") != null && StringUtils.notNullCheck(parameters.get("actionId"))) {
                 eventActionDao.removeEventAction(parameters);
                 eventActionDao.addEventAction(parameters);
+            } else {
+                eventActionDao.removeEventAction(parameters);
             }
 
             transactionManager.commit(transactionStatus);
@@ -120,9 +132,10 @@ public class EventSvcImpl implements EventSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
 
-            if (parameters.get("actionId") != null) {
+            if (parameters.get("actionId") != null && StringUtils.notNullCheck(parameters.get("actionId"))) {
                 eventActionDao.removeEventAction(parameters);
             }
+
             eventDao.removeEvent(parameters);
 
             transactionManager.commit(transactionStatus);

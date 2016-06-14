@@ -70,15 +70,23 @@ public class ActionSvcImpl implements ActionSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try {
-            actionDao.addAction(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
-        }
+        Integer eventExistCount = actionDao.findByActionCheckExist(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
+
+        if (eventExistCount == 0) {
+            try {
+                actionDao.addAction(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new JabberException("");
+            }
+        } else {
+            modelAndView.addObject("existFlag", "true");
+        }
+
+
         return modelAndView;
     }
 

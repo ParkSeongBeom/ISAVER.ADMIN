@@ -93,6 +93,7 @@
                     <th><spring:message code="eventlog.column.eventFlag"/></th>
                     <th><spring:message code="eventlog.column.deviceType"/></th>
                     <th><spring:message code="eventlog.column.eventDatetime"/></th>
+                    <th><spring:message code="eventlog.column.eventName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelUserName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelDatetime"/></th>
                 </tr>
@@ -106,6 +107,7 @@
                                 <td>${eventLog.eventFlag}</td>
                                 <td>${eventLog.deviceCode}</td>
                                 <td><fmt:formatDate value="${eventLog.eventDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                <td>${eventLog.eventName}</td>
                                 <td>${eventLog.eventCancelUserName}</td>
                                 <td><fmt:formatDate value="${eventLog.eventCancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                             </tr>
