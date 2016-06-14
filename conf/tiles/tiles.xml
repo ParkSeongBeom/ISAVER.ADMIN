@@ -133,6 +133,14 @@
         <put-attribute name="body" value="/WEB-INF/views/eventLog/list.jsp" />
     </definition>
 
+    <!--
+        사용자 로그인 이력 관리
+        @author psb
+    -->
+    <definition name="loginHistoryList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/history.jsp" />
+    </definition>
+
     <!-- ############# -->
     <!-- [END] 안전 방재 -->
     <!-- ############# -->

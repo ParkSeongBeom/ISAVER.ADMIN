@@ -4,8 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="A00000" var="menuId"/>
-<c:set value="A00000" var="subMenuId"/>
+<c:set value="G00000" var="subMenuId"/>
+<c:set value="G00020" var="menuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
@@ -18,7 +18,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.user"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.loginHistory"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -33,15 +33,19 @@
             <div class="search_contents">
                 <!-- 일반 input 폼 공통 -->
                 <p class="itype_01">
-                    <span><spring:message code="user.column.userId" /></span>
+                    <span><spring:message code="loginHistory.column.userName" /></span>
                     <span>
-                        <input type="text" name="userId" value="${paramBean.userId}"/>
+                        <input type="text" name="userName" value="${paramBean.userName}"/>
                     </span>
                 </p>
                 <p class="itype_01">
-                    <span><spring:message code="user.column.userName" /></span>
+                    <span><spring:message code="loginHistory.column.loginFlag" /></span>
                     <span>
-                        <input type="text" name="userName" value="${paramBean.userName}"/>
+                        <select name="loginFlag">
+                            <option value="" <c:if test="${empty paramBean.loginFlag}">selected</c:if>><spring:message code="common.button.select"/></option>
+                            <option value="1" <c:if test="${paramBean.loginFlag == '1'}">selected</c:if>><spring:message code="loginHistory.column.login"/></option>
+                            <option value="0" <c:if test="${paramBean.loginFlag == '0'}">selected</c:if>><spring:message code="loginHistory.column.logout"/></option>
+                        </select>
                     </span>
                 </p>
             </div>
@@ -54,9 +58,9 @@
     <article class="table_area">
         <div class="table_title_area">
             <h4></h4>
-            <div class="table_btn_set">
-                <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
-            </div>
+            <%--<div class="table_btn_set">--%>
+                <%--<button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>--%>
+            <%--</div>--%>
         </div>
 
         <div class="table_contents">
@@ -71,25 +75,36 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th><spring:message code="user.column.userId"/></th>
-                        <th><spring:message code="user.column.userName"/></th>
-                        <th><spring:message code="common.column.insertDatetime"/></th>
-                        <th><spring:message code="user.column.telephone"/></th>
-                        <th><spring:message code="user.column.email"/></th>
+                        <th><spring:message code="loginHistory.column.userId"/></th>
+                        <th><spring:message code="loginHistory.column.userName"/></th>
+                        <th><spring:message code="loginHistory.column.loginFlag"/></th>
+                        <th><spring:message code="loginHistory.column.ipAddress"/></th>
+                        <th><spring:message code="loginHistory.column.logDatetime"/></th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:choose>
-                        <c:when test="${users != null and fn:length(users) > 0}">
-                            <c:forEach var="user" items="${users}">
-                                <tr onclick="moveDetail(String('${user.userId}'));">
-                                    <td>${user.userId}</td>
-                                    <td>${user.userName}</td>
+                        <c:when test="${loginHistoryList != null and fn:length(loginHistoryList) > 0}">
+                            <c:forEach var="loginHistory" items="${loginHistoryList}">
+                                <tr>
+                                    <td>${loginHistory.userId}</td>
+                                    <td>${loginHistory.userName}</td>
                                     <td>
-                                        <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.insertDatetime}" />
+                                        <c:choose>
+                                            <c:when test="${loginHistory.loginFlag == '1'}">
+                                                <spring:message code="loginHistory.column.login"/>
+                                            </c:when>
+                                            <c:when test="${loginHistory.loginFlag == '0'}">
+                                                <spring:message code="loginHistory.column.logout"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
-                                    <td>${user.telephone}</td>
-                                    <td>${user.email}</td>
+                                    <td>${loginHistory.ipAddress}</td>
+                                    <td>
+                                        <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${loginHistory.logDatetime}" />
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </c:when>
@@ -115,8 +130,7 @@
     var form = $('#userForm');
 
     var urlConfig = {
-        'listUrl':'${rootPath}/user/list.html'
-        ,'detailUrl':'${rootPath}/user/detail.html'
+        'listUrl':'${rootPath}/loginHistory/list.html'
     };
 
     var pageConfig = {
@@ -163,16 +177,5 @@
     function goPage(pageNumber){
         form.find('input[name=pageNumber]').val(pageNumber);
         search();
-    }
-
-    /*
-     상세화면 이동
-     @author kst
-     */
-    function moveDetail(id){
-        var detailForm = $('<FORM>').attr('action',urlConfig['detailUrl']).attr('method','POST');
-        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','userId').attr('value',id));
-        document.body.appendChild(detailForm.get(0));
-        detailForm.submit();
     }
 </script>

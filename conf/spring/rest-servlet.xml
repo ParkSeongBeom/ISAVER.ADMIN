@@ -86,6 +86,7 @@
                 <value>properties/message/license</value>
                 <value>properties/message/area</value>
                 <value>properties/message/device</value>
+                <value>properties/message/loginHistory</value>
                 <!-- [END] 안전 방재 -->
             </list>
         </property>
