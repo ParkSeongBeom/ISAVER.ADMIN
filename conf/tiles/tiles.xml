@@ -5,9 +5,7 @@
     <!-- ############# -->
     <!-- [START] 안전 방재 -->
     <!-- ############# -->
-
-    <definition name="base" template="/WEB-INF/views/tiles/layout.jsp">
-    </definition>
+    <definition name="base" template="/WEB-INF/views/tiles/layout.jsp"></definition>
 
     <!--
         로그인페이지
@@ -139,6 +137,22 @@
     -->
     <definition name="loginHistoryList" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/user/history.jsp" />
+    </definition>
+
+    <!--
+        대쉬 화면  - 전체
+        @author dhj
+    -->
+    <definition name="allDashboard" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/all.jsp" />
+    </definition>
+
+    <!--
+        대쉬 화면  - 상세
+        @author dhj
+    -->
+    <definition name="detailDashboard" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/detail.jsp" />
     </definition>
 
     <!-- ############# -->

@@ -54,7 +54,7 @@ public class AreaCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
+        parameters = AdminHelper.checkReloadList(request, response, "areaList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
         ModelAndView modelAndView = areaSvc.findListArea(parameters);
