@@ -61,6 +61,7 @@ public class DashBoardCtrl {
     public ModelAndView findByDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("paramBean",parameters);
         modelAndView.setViewName("detailDashboard");
         return modelAndView;
     }

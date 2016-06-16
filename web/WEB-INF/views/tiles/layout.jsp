@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set var="rootPath" value="${pageContext.servletContext.contextPath}" scope="application"/>
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,6 +34,7 @@
 
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
@@ -58,6 +61,21 @@
             },1000);
         }
 
+        function bodyAddClass(){
+            switch (subMenuId){
+                case "H00000": // 대쉬보드
+                    $("body").addClass("dashboard_mode dh_mode");
+                    break;
+                case "J00000": // 통계
+                case "G00000": // 이력
+                    $("body").addClass("dashboard_mode db_mode");
+                    break;
+                default :
+                    $("body").addClass("admin_mode");
+                    break;
+            }
+        }
+
         $(document).ready(function(){
             calendarHelper = new CalendarHelper(rootPath);
 
@@ -76,11 +94,12 @@
                 $(this).attr("title",$(this).text().trim());
             });
 
+            bodyAddClass();
             printTime();
         });
     </script>
 </head>
-<body class="admin_mode adaptive_min">
+<body class="adaptive_min">
 <!-- wrap Start -->
 <div class="wrap">
     <!-- hearder Start 고통부분 -->
@@ -93,7 +112,7 @@
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button class="issue" onclick="javascript:logoClickFunc();"></button>
+                    <button class="issue" onclick="javascript:alramShowHide(this);"></button>
                     <button class="loginout" href="#" onclick="javascript:logout();"></button>
                 </div>
             </div>
@@ -101,45 +120,112 @@
     </header>
     <!-- hearder End -->
 
-    <nav id="nav" class="nav"><!-- 관리자용  -->
-
-    </nav>
-
-    <nav id="nav" class="nav"><!-- 관리자용  -->
-        <div class="gnb_area"></div>
-
-        <!-- 메인, 대시보드, 이력, 통계용 -->
-        <div class="nav_area">
-            <ul class="lnb">
-                <li class="on" name="">
-                    <button>Dashboard</button>
-                    <ul>
-                        <li><button>All</button></li>
-                        <li><button>A-Area</button></li>
-                        <li><button>B-Area</button></li>
-                        <li><button>C-Area</button></li>
-                        <li><button>D-Area</button></li>
-                        <li><button>E-Area</button></li>
-                        <li><button>F-Area</button></li>
-                    </ul>
-                </li>
-                <li class="nl_record" name="">
-                    <button>이력</button>
-                </li>
-                <li class="nl_stat" name="">
-                    <button>통계</button>
-                </li>
-            </ul>
+    <!-- 알림목록 영역 Start -->
+    <aside class="db_area">
+        <div class="db_header">
+            <div>
+                <h3><spring:message code="dashboard.title.alramCenter"/></h3>
+                <button class="btn btype03 bstyle07" href="#" onclick=""><spring:message code="dashboard.title.alramCancel"/></button>
+            </div>
+            <div>
+                <div class="check_box_set ">
+                    <input type="checkbox"  name="" class="check_input" />
+                    <label class="lablebase lb_style01"></label>
+                </div>
+                <select id="eventType">
+                    <option value="">전체</option>
+                    <option value="crane"><spring:message code="dashboard.selectbox.crane"/></option>
+                    <option value="worker"><spring:message code="dashboard.selectbox.worker"/></option>
+                    <option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>
+                </select>
+                <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
+            </div>
         </div>
+        <div class="db_contents nano">
+            <ul class="nano-content" id="alramList"></ul>
+        </div>
+        <div class="db_bottom">
+            <button href="#" onclick="alramShowHide();"><spring:message code="common.button.close"/></button>
+        </div>
+    </aside>
+    <!-- 알림목록 영역 End -->
+
+    <!-- 알림상세 영역 Start -->
+    <aside class="dbs_area">
+        <div class="db_header">
+            <div><h3><spring:message code="dashboard.title.action"/></h3></div>
+            <div><p id="alramEvent"></p></div>
+        </div>
+        <div class="db_contents nano">
+            <div class="nano-content text_area" id="alramActionDesc"></div>
+        </div>
+        <div class="db_bottom">
+            <button href="#" onclick="alramDetailHide();"><spring:message code="common.button.close"/></button>
+        </div>
+    </aside>
+    <!-- 알림상세 영역 End -->
+
+    <!-- 토스트 영역 Start -->
+    <aside class="toast_popup">
+        <button class="btn_x" href="#" onclick="javascript:$('.toast_popup').removeClass('on');"></button>
+        <button class="tp_contents">
+            <span id="toastEventName"></span>
+            <span id="toastEventDesc"></span>
+        </button>
+    </aside>
+    <!-- 토스트 영역 End -->
+
+    <!-- navigation 영역 Start -->
+    <nav id="nav" class="nav">
+        <div class="nav_area nano"></div>
     </nav>
+    <!-- navigation 영역 End -->
 
     <tiles:insertAttribute name="body" />
 </div>
 <script type="application/javascript">
+    /**
+     * 알람 show / hide
+     */
+    function alramShowHide(_this){
+        if(_this!=null){
+            if($(_this).hasClass("on")){
+                $(_this).removeClass("on");
+                $(".db_area").removeClass("on");
+            }else{
+                $(_this).addClass("on");
+                $(".db_area").addClass("on");
+            }
+        }else{
+            $(".issue").addClass("on");
+            $(".db_area").removeClass("on");
+        }
+    }
 
-    /* 로그 클릭 이벤트 */
-    function logoClickFunc() {
+    /**
+     * 알람상세 show / hide
+     */
+    function alramDetailHide(_this){
+        if(_this!=null){
+            if($(_this).hasClass("on")){
+                $(_this).removeClass("on");
+                $(".dbs_area").removeClass("on");
+            }else{
+                $(_this).addClass("on");
+                $(".dbs_area").addClass("on");
+            }
+        }else{
+            $(".infor_open").addClass("on");
+            $(".dbs_area").removeClass("on");
+        }
+    }
 
+    function moveDashBoardDetail(id,name){
+        var detailForm = $('<FORM>').attr('action','${rootPath}/dashboard/detail.html').attr('method','POST');
+        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
+        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaName').attr('value',name));
+        document.body.appendChild(detailForm.get(0));
+        detailForm.submit();
     }
 </script>
 </body>

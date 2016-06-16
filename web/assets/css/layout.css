@@ -15,7 +15,7 @@ aside, header, section, .wrap, header, .header_area, article  {
 
 html, body {}
 body {
-    width:100%; min-width:1280px;
+    width:100%; min-width:1680px;
     background-color: #333240;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
@@ -49,8 +49,8 @@ body.login_mode {
 
 }
 body.dashboard_mode {
-    overflow: hidden;
-
+    /*overflow: hidden;*/
+    position: absolute; overflow: auto;
 }
 body section.container {}
 body.dashboard_mode section.container {overflow: hidden; padding:0;}
@@ -62,15 +62,9 @@ body.dashboard_mode.db_mode section.container
 body.adaptive_max.admin_mode section.container,
 body.dashboard_mode.db_mode section.container {padding: 30px 120px;}
 
-body.dashboard_mode .gnb_area {display: block;}
-body.dashboard_mode .gnb_area {display: none;}
-body.admin_mode .gnb_area {display: block;}
-body.admin_mode .nav_area {display: none;}
-
 .wrap  {
     overflow: hidden;
     width:100%; height:100%;
-    min-width:1235px;
     margin:auto;
 }
 
@@ -82,7 +76,9 @@ header .header_area {position: relative; width:100%; height:100%;}
 
 nav.nav ,section.container {}
 
-nav.nav { top:50px;  left:0; bottom:0; width:120px; background-color: #25252f;}
+nav.nav {
+    top:50px;  left:0; bottom:0; width:120px; background-color: #25252f;
+}
 section.container {overflow: overlay; top:50px; right:0;  left:120px; bottom:0;  background-color:#1e1d23;}
 
 section.container > aside {

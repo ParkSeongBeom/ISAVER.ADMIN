@@ -140,7 +140,7 @@ function MenuView(model) {
      * [Draw] 상위 메뉴바 그리기
      * @param obj
      */
-    MenuView.setTopMenuBar = function (menuBarModel) {
+    MenuView.setTopMenuBar = function (menuBarModel, areaList) {
         var textSpaceSize = 9;
         function leadingSpaces(n, digits) {
             var space = '';
@@ -154,13 +154,41 @@ function MenuView(model) {
 
         }
 
+        function setSelectedMenu(_rootUlTag){
+            var selGnb = MenuView._model.getTargetMenuId();
+            var selDepth;
+            var endFlag = true;
+
+            while(endFlag){
+                for(var i in menuBarModel){
+                    var _item = menuBarModel[i];
+                    if (_item.menuId == selGnb){
+                        if(Number(_item.menuDepth)>1){
+                            selDepth = _item.menuId;
+                            selGnb = _item.parentMenuId;
+                        }else{
+                            endFlag = false;
+                        }
+                        break;
+                    }
+                }
+
+                if(selDepth==null){
+                    endFlag = false;
+                }
+            }
+
+            $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
+            $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
+        }
+
         function n(n){
             return n > 9 ? "" + n: "0" + n;
         }
 
         var _listLength = menuBarModel.length;
         var _loopLength = 0;
-        var rootUlTag = $("<ul/>").addClass("gnb");
+        var rootUlTag = $("<ul/>").addClass("lnb nano-content");
 
         var menuLiTag = $("<li/>").append(
             $("<button/>").attr("href","#")
@@ -170,7 +198,38 @@ function MenuView(model) {
             function getDrawTagFunc(item, loopCount) {
                 if (Number(item["menuDepth"]) == 1) {
                     var _menuLiTag = menuLiTag.clone();
-                    _menuLiTag.attr("name", item.menuId).addClass("depth01");
+
+                    switch (item.menuId){
+                        case "H00000": // 대쉬보드
+                            _menuLiTag.addClass("nl_dash");
+                            break;
+                        case "G00000": // 이력
+                            _menuLiTag.addClass("nl_reco");
+                            break;
+                        case "J00000": // 통계
+                            _menuLiTag.addClass("nl_stat");
+                            break;
+                        case "B00000": // 시스템관리
+                            _menuLiTag.addClass("nl_syst");
+                            break;
+                        case "A00000": // 사용자관리
+                            _menuLiTag.addClass("nl_user");
+                            break;
+                        case "F00000": // 조치관리
+                            _menuLiTag.addClass("nl_even");
+                            break;
+                        case "C00000": // 구역관리
+                            _menuLiTag.addClass("nl_watc");
+                            break;
+                        case "D00000": // 장치관리
+                            _menuLiTag.addClass("nl_devi");
+                            break;
+                        case "E00000": // 라이센스관리
+                            _menuLiTag.addClass("nl_lice");
+                            break;
+                    }
+
+                    _menuLiTag.attr("name", item.menuId);
                     _menuLiTag.find("button").text(item['menuName']);
                     if(item.menuPath!="/"){
                         _menuLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
@@ -184,8 +243,8 @@ function MenuView(model) {
                      /**
                      * 현병춘K 요청으로 대메뉴 클릭시 첫번째 하위메뉴의 화면 호출
                      */
-                    if($(rootUlTag).find(".depth01[name='"+item.parentMenuId+"'] ul > li").length == 0){
-                        $(rootUlTag).find(".depth01[name='"+item.parentMenuId+"'] > button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
+                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul > li").length == 0){
+                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] > button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
                     }
 
                     if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").length>0){
@@ -196,34 +255,6 @@ function MenuView(model) {
                         )
                     }
                 }
-            }
-
-            function setSelectedMenu(_rootUlTag){
-                var selGnb = MenuView._model.getTargetMenuId();
-                var selDepth;
-                var endFlag = true;
-
-                while(endFlag){
-                    for(var i in menuBarModel){
-                        var _item = menuBarModel[i];
-                        if (_item.menuId == selGnb){
-                            if(Number(_item.menuDepth)>1){
-                                selDepth = _item.menuId;
-                                selGnb = _item.parentMenuId;
-                            }else{
-                                endFlag = false;
-                            }
-                            break;
-                        }
-                    }
-
-                    if(selDepth==null){
-                        endFlag = false;
-                    }
-                }
-
-                $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
-                $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
             }
 
             var item = menuBarModel[_loopLength];
@@ -245,7 +276,24 @@ function MenuView(model) {
                 setSelectedMenu(rootUlTag);
             }
 
-            $(".gnb_area").html(rootUlTag);
+            if(areaList!=null){
+                if($(rootUlTag).find("li[name='H00000'] ul").length==0){
+                    $(rootUlTag).find("li[name='H00000'] ").append( $("<ul/>") );
+                }
+
+                for(var index in areaList){
+                    var area = areaList[index];
+                    var _menuLiTag = menuLiTag.clone();
+                    _menuLiTag.attr("name", area['areaId']);
+                    _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
+                    $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
+                }
+            }
+
+            $(".nav_area").html(rootUlTag);
+
+            //스크롤바 플러그인 호출
+            $(".nano").nanoScroller();
         }
     };
 

@@ -48,7 +48,7 @@
 
     var urlConfig = {
         'loginUrl':'${pageContext.servletContext.contextPath}/login.json'
-        ,'mainUrl':'${pageContext.servletContext.contextPath}/user/list.html'
+        ,'mainUrl':'${pageContext.servletContext.contextPath}/dashboard/all.html'
     };
 
     $(document).ready(function(){

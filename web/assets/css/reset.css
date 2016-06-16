@@ -8,8 +8,8 @@
 font-style:normal;font-weight:normal;font-size:14px;*zoom: 1;}
 
 html, body {
-    width:100%; height:100%; padding:0; margin:0;
-    letter-spacing:-1px; line-height:normal;color:#3e3e3e;
+    width:100%; min-width:1280px; height:100%; padding:0; margin:0;
+    letter-spacing:-0.02em; line-height:normal;color:#3e3e3e;
     font-size:14px;font-family:'맑은고딕', 'Malgun Gothic','돋움', 'Dotum', sans-serif;
     -webkit-overflow-scrolling : touch;
     background-color: #fdfdfd;
@@ -307,11 +307,35 @@ flex-basis:  100%;
 */
 
 /* 컬러 정의 */
-.co_yell {background-color: #ffce53 !important;} /* rgba(255,206,83,1) */
-.co_purp {background-color: #cc3dd3 !important;} /* rgba(204,61,211,1) */
-.co_blue {background-color: #29a1f7 !important;} /* rgba(41,161,247,1) */
-.co_oran {background-color: #ff7a39 !important;} /* rgba(255,122,57,1) */
-.co_redd {background-color: #fe4d3b !important;} /* rgba(254,77,59,1) */
+.co_yell {background-color: #ffce53;} /* rgba(255,206,83,1) */
+.co_purp {background-color: #cc3dd3;} /* rgba(204,61,211,1) */
+.co_blue {background-color: #29a1f7;} /* rgba(41,161,247,1) */
+.co_oran {background-color: #ff7a39;} /* rgba(255,122,57,1) */
+.co_redd {background-color: #fe4d3b;} /* rgba(254,77,59,1)  */
+.co_gren {background-color: #01d65a;} /* rgba(0,212,88,1)  */
+
+
+
+/*
+
+z-index
+메인 검색    z-index: 50;
+스크롤버튼   z-index: 100;
+aside       z-index: 200;
+레이어 팝업  z-index: 300;
+
+background-color : red              #ed5565 rgba(237,85,101,0.9);
+background-color : red = on/active  #de4353 rgba(200,56,71,0.9);
+
+배경컬러
+background-color: #1e1d23;
+
+input  line    #e1e1e1
+border popup   #e1e1e1
+border normal  #eee
+bottom button border gray #999
+bottom button border gray active #4f4f4f
+*/
 
 
 @font-face {
@@ -325,8 +349,10 @@ flex-basis:  100%;
     font-style: normal;
 }
 
-.svgbase01, .hrs_btn_set > button:before, .lnb > li> button:before, .mp_header button.alra_btn:before,
-.mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before {
+.svgbase02, .hrs_btn_set > button:before, .mp_header button.alra_btn:before, .sett_btn:before,
+.mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before,
+.nl_dash > button:before, .nl_reco > button:before, .nl_stat > button:before, .toast_popup:before, .tp_contents:before
+{
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sico' !important;
     speak: none;
@@ -340,17 +366,18 @@ flex-basis:  100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.svgbase01:before {font-size:60px;}
+.svgbase02:before {font-size:60px;}
 .sico_01:before {content: "\e900";}  .sico_11:before {content: "\e90a";}
 .sico_02:before {content: "\e901";}  .sico_12:before {content: "\e90b";}
 .sico_03:before {content: "\e902";}  .sico_13:before {content: "\e90c";}
 .sico_04:before {content: "\e903";}  .sico_14:before {content: "\e90d";}
-.sico_05:before {content: "\e904";}
-.sico_06:before {content: "\e905";}
-.sico_07:before {content: "\e906";}
+.sico_05:before {content: "\e904";}  .sico_15:before {content: "\e90e";}
+.sico_06:before {content: "\e905";}  .sico_16:before {content: "\e90f";}
+.sico_07:before {content: "\e906";}  .sico_17:before {content: "\e910";}
 .sico_08:before {content: "\e907";}
 .sico_09:before {content: "\e908";}
 .sico_10:before {content: "\e909";}
+
 
 
 @font-face {
@@ -366,7 +393,7 @@ flex-basis:  100%;
 
 
 button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before, .toast_popup:before,
-.db_header h3:before, .lablebase:before {
+.db_header h3:before, .lablebase:before, .lnb > li > button:before {
     font-family: 'japple';
     speak: none;
     font-style:   normal;
@@ -403,26 +430,6 @@ button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:befo
 .ico_61:before {content: "\e93c";}  .ico_62:before {content: "\e93d";}  .ico_63:before {content: "\e93e";}
 .ico_64:before {content: "\e93f";}  .ico_65:before {content: "\e940";}  .ico_66:before {content: "\e941";}
 .ico_67:before {content: "\e942";}  .ico_68:before {content: "\e93d";}
-
-
-/*
-z-index
-메인 검색    z-index: 50;
-스크롤버튼   z-index: 100;
-aside      z-index: 200;
-레이어 팝업  z-index: 300;
-*/
-
-/*
-background-color : red              #ed5565 rgba(237,85,101,0.9);
-background-color : red = on/active  #de4353 rgba(200,56,71,0.9);
-
-input  line    #e1e1e1
-border popup   #e1e1e1
-border normal  #eee
-bottom button border gray #999
-bottom button border gray active #4f4f4f
-*/
 
 
 /*
