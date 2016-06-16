@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="H00010" var="menuId"/>
@@ -74,16 +75,15 @@
                             <div class="mc_bico type01 worker"></div>
                             <div class="mc_element nano">
                                 <div class="mce_btn_area nano-content">
-                                    <button><span>A-area</span></button>
-                                    <button><span>B-area</span></button>
-                                    <button><span>C-area</span></button>
-                                    <button><span>D-area</span></button>
-                                    <button><span>E-area</span></button>
-                                    <button><span>F-area</span></button>
-                                    <button><span>G-area</span></button>
-                                    <button><span>H-area</span></button>
-                                    <button><span>I-area</span></button>
-                                    <button><span>J-area</span></button>
+                                    <c:choose>
+                                        <c:when test="${areas != null and fn:length(areas) > 0}">
+                                            <c:forEach var="area" items="${areas}">
+                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -96,21 +96,16 @@
                             <div class="mc_bico type01 going"></div>
                             <div class="mc_element nano">
                                 <div class="mce_btn_area nano-content">
-                                    <button class="level02">
-                                        <span>A-area</span><span>86<em>-02</em></span>
-                                    </button>
-                                    <button>
-                                        <span>B-area</span>
-                                    </button>
-                                    <button class="level02">
-                                        <span>C-area</span><span>54<em>-02</em></span>
-                                    </button>
-                                    <button>
-                                        <span>D-area</span>
-                                    </button>
-                                    <button>
-                                        <span>E-area</span>
-                                    </button>
+                                    <c:choose>
+                                        <c:when test="${areas != null and fn:length(areas) > 0}">
+                                            <c:forEach var="area" items="${areas}">
+                                                <!-- level02 클래스, <span>54<em>-02</em> 삽입 -->
+                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -128,18 +123,16 @@
                             <div class="mc_bico type01 crane"></div>
                             <div class="mc_element nano">
                                 <div class="mce_btn_area nano-content">
-                                    <button><span>A-area</span></button>
-                                    <button class="level03"><span>B-area</span><span>001</span></button>
-                                    <button><span>A-area</span><span>001</span></button>
-                                    <button><span>B-area</span><span>001</span></button>
-                                    <button><span>A-area</span><span>001</span></button>
-                                    <button><span>B-area</span><span>001</span></button>
-                                    <button class="level03"><span>A-area</span><span>001</span></button>
-                                    <button><span>B-area</span><span>001</span></button>
-                                    <button><span>A-area</span><span>001</span></button>
-                                    <button><span>B-area</span><span>001</span></button>
-                                    <button><span>A-area</span><span>001</span></button>
-                                    <button><span>B-area</span><span>001</span></button>
+                                    <c:choose>
+                                        <c:when test="${areas != null and fn:length(areas) > 0}">
+                                            <c:forEach var="area" items="${areas}">
+                                                <!-- level03 클래스, <span>001</em> 삽입 -->
+                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -155,16 +148,16 @@
                             <div class="mc_bico type01 gas"></div>
                             <div class="mc_element nano">
                                 <div class="mce_btn_area nano-content">
-                                    <button><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button class="level03"><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button class="level02"><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
-                                    <button><span>A-area</span></button>
+                                    <c:choose>
+                                        <c:when test="${areas != null and fn:length(areas) > 0}">
+                                            <c:forEach var="area" items="${areas}">
+                                                <!-- level02, level03 클래스, <span>001</em> 삽입 -->
+                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -177,14 +170,14 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.issue"/></h2>
                             <div>
-                                <span class="ch_name co_gren">작업자 상태</span>
-                                <span class="ch_name co_purp">크래인 상태</span>
-                                <span class="ch_name co_yell">진출입 상태</span>
-                                <select name="type">
-                                    <option value="">30 min</option>
-                                    <option value="">60 min</option>
-                                    <option value="">90 min</option>
-                                    <option value="">120 min</option>
+                                <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
+                                <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
+                                <span class="ch_name co_yell"><spring:message code="dashboard.column.inout"/></span>
+                                <select id="chartRefreshTime">
+                                    <option value="30">30 min</option>
+                                    <option value="60">60 min</option>
+                                    <option value="90">90 min</option>
+                                    <option value="120">120 min</option>
                                 </select>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.svc.DashBoardSvc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -33,6 +35,9 @@ public class DashBoardCtrl {
     @Value("#{configProperties['cnf.defaultPageSize']}")
     private String defaultPageSize;
 
+    @Inject
+    private DashBoardSvc dashBoardSvc;
+
     /**
      * 대쉬보드 전체 화면를 가져온다.
      *
@@ -43,8 +48,7 @@ public class DashBoardCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/all")
     public ModelAndView findAllDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = dashBoardSvc.findAllDashBoard(parameters);
         modelAndView.setViewName("allDashboard");
         return modelAndView;
     }
