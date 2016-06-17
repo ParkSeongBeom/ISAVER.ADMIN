@@ -7,39 +7,7 @@
 <c:set value="H00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 
-<style>
-    #chart {
-        height: 300px;
-        width: 100%;
-    }
-    .ct-series-a .ct-line,
-    .ct-series-a .ct-point {
-        stroke: blue;
-        stroke-width: 3px;
-        /* Make your points appear as squares */
-        stroke-linecap: square;
-    }
-
-
-    .ct-series-b .ct-line,
-    .ct-series-b .ct-point {
-        stroke: green;
-        stroke-width: 3px;
-        /* Make your points appear as squares */
-        stroke-linecap: square;
-    }
-
-    .ct-series-c .ct-line,
-    .ct-series-c .ct-point {
-        stroke: red;
-        stroke-width: 3px;
-        /* Make your points appear as squares */
-        stroke-linecap: square;
-    }
-</style>
-
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
-<script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
 
@@ -172,7 +140,7 @@
                             <div>
                                 <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
                                 <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
-                                <span class="ch_name co_yell"><spring:message code="dashboard.column.inout"/></span>
+                                <span class="ch_name co_yell"><spring:message code="dashboard.column.gas"/></span>
                                 <select id="chartRefreshTime">
                                     <option value="30">30 min</option>
                                     <option value="60">60 min</option>
@@ -181,7 +149,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="ct-chart" id="chart"></div>
+                        <div class="mp_contents" id="chart"></div>
                     </div>
                 </div>
             </div>
@@ -228,23 +196,21 @@
     });
 
     var mychart = new Chartist.Line('#chart', {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8],
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         series: [
-            [1, 2, 3, 1, -2, 0, 1, 0],
-            [1, 2, 3, 1, -2, 0, 1, 0],
-            [1, 2, 3, 1, -2, 0, 1, 0]
+            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
+            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
+            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0]
         ]
     }, {
         low: 0,
         showArea: true,
         lineSmooth: Chartist.Interpolation.simple({
-            divisor: 10
+            divisor: 100
         })
     });
-
     mychart.on('draw', function(data) {
         if(data.type === 'slice') {
-
             if (data.index == 0) {
                 data.element.attr({
                     'style': 'stroke: rgba(193, 0, 104, 1)'
@@ -279,17 +245,14 @@
             }
         }
     });
-
     var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
         //return 0;
     };
-
     setInterval(function() {
         var value1 = randomScalingFactor();
         var value2 = randomScalingFactor();
         var value3 = randomScalingFactor();
-
         mychart.data.series[0].push(value1);
         mychart.data.series[0].shift();
         mychart.data.series[1].push(value2);
@@ -299,5 +262,5 @@
         mychart.data.labels.push(value1);
         mychart.data.labels.shift();
         mychart.update()
-    }, 3000);
+    }, 500);
 </script>

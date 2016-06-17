@@ -7,7 +7,6 @@
 <c:set value="A00000" var="subMenuId"/>
 <c:set value="A00001" var="menuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
-<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->

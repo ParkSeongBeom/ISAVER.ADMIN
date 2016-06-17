@@ -125,7 +125,6 @@
 </section>
 
 <script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
-<script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -171,6 +170,7 @@
             $('input:hidden[name=parentMenuId]').val($("select[id=selectParentMenuId]").val());
         });
 
+        console.log("3");
         menuCtrl.findMenuTree();
     });
 </script>

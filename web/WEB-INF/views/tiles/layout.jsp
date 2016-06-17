@@ -35,50 +35,22 @@
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/dashboard/dashBoard-helper.js"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
-
-        var calendarHelper;
+        var calendarHelper = new CalendarHelper(rootPath);
         var menuModel = new MenuModel();
         var menuCtrl = null;
-        var targetMenuId = '';
-        var subMenuId = '';
+        var dashBoardHelper = new DashBoardHelper();
 
-        function logout(){
-            location.href = rootPath + '/logout.html';
-        }
-
-        function goHome(){
-            location.href = rootPath + '/main.html';
-        }
-
-        function printTime() {
-            $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
-
-            setTimeout(function(){
-                printTime();
-            },1000);
-        }
-
-        function bodyAddClass(){
-            switch (subMenuId){
-                case "H00000": // 대쉬보드
-                    $("body").addClass("dashboard_mode dh_mode");
-                    break;
-                case "J00000": // 통계
-                case "G00000": // 이력
-                    $("body").addClass("dashboard_mode db_mode");
-                    break;
-                default :
-                    $("body").addClass("admin_mode");
-                    break;
-            }
-        }
+        var dashBoardUrlConfig = {
+            'listUrl':'${rootPath}/dashboard/alram.html'
+            ,'detailUrl':'${rootPath}/dashboard/detail.html'
+        };
 
         $(document).ready(function(){
-            calendarHelper = new CalendarHelper(rootPath);
-
             menuModel.setRootUrl(rootPath);
             menuModel.setViewStatus('detail');
             menuModel.setParentMenuId(subMenuId);
@@ -96,10 +68,13 @@
 
             bodyAddClass();
             printTime();
+
+            dashBoardHelper.addRequestData('alram', dashBoardUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
+//        dashBoardHelper.startInterval();
         });
     </script>
 </head>
-<body class="adaptive_min">
+<body>
 <!-- wrap Start -->
 <div class="wrap">
     <!-- hearder Start 고통부분 -->
@@ -112,13 +87,19 @@
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button class="issue" onclick="javascript:alramShowHide(this);"></button>
-                    <button class="loginout" href="#" onclick="javascript:logout();"></button>
+                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list', 'show');"></button>
+                    <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();"></button>
                 </div>
             </div>
         </div>
     </header>
     <!-- hearder End -->
+
+    <!-- navigation 영역 Start -->
+    <nav id="nav" class="nav">
+        <div class="nav_area nano"></div>
+    </nav>
+    <!-- navigation 영역 End -->
 
     <!-- 알림목록 영역 Start -->
     <aside class="db_area">
@@ -128,7 +109,7 @@
                 <button class="btn btype03 bstyle07" href="#" onclick=""><spring:message code="dashboard.title.alramCancel"/></button>
             </div>
             <div>
-                <div class="check_box_set ">
+                <div class="check_box_set">
                     <input type="checkbox"  name="" class="check_input" />
                     <label class="lablebase lb_style01"></label>
                 </div>
@@ -142,10 +123,47 @@
             </div>
         </div>
         <div class="db_contents nano">
-            <ul class="nano-content" id="alramList"></ul>
+            <ul class="nano-content" id="alramList">
+                <li>
+                    <div class="check_box_set">
+                        <input type="checkbox"  name="" class="check_input" />
+                        <label class="lablebase lb_style01"></label>
+                    </div>
+                    <div class="dbc_contents issue01">
+                        <div>
+                            <p>크래인 상태크래인 상태크래인 상태크래인 상태</p>
+                            <p>진출방향 작업자 감지진출방향 작업자 감지진출방향 작업자 감지진출방향 작업자 감지</p>
+                        </div>
+                        <div>
+                            <p>A-rea</p>
+                            <span>06/00</span>
+                            <span>10:41:23</span>
+                        </div>
+                    </div>
+                    <button class="infor_open" onclick="$(this).parent().addClass('infor'); alramShowHide('detail', 'show');"></button>
+                </li>
+                <li>
+                    <div class="check_box_set">
+                        <input type="checkbox"  name="" class="check_input" />
+                        <label class="lablebase lb_style01"></label>
+                    </div>
+                    <div class="dbc_contents issue02">
+                        <div>
+                            <p>크래인 상태</p>
+                            <p>진출방향 작업자 감지</p>
+                        </div>
+                        <div>
+                            <p>A-rea</p>
+                            <span>06/00</span>
+                            <span>10:41:23</span>
+                        </div>
+                    </div>
+                    <button class="infor_open" onclick="$(this).parent().addClass('infor'); alramShowHide('detail', 'show');"></button>
+                </li>
+            </ul>
         </div>
         <div class="db_bottom">
-            <button href="#" onclick="alramShowHide();"><spring:message code="common.button.close"/></button>
+            <button href="#" onclick="alramShowHide('list', 'hide');"><spring:message code="common.button.close"/></button>
         </div>
     </aside>
     <!-- 알림목록 영역 End -->
@@ -157,10 +175,23 @@
             <div><p id="alramEvent"></p></div>
         </div>
         <div class="db_contents nano">
-            <div class="nano-content text_area" id="alramActionDesc"></div>
+            <div class="nano-content text_area" id="alramActionDesc">
+                <b>동보방송 대피안내</b>
+                <p>“크레인 진출 방향에 계신분은 대피하십시오”</p>
+                <p>“대피하십시오”</p>
+                <br/><br/>
+                <p>1. 모니터 영상 확인</p>
+                <p>2. 동보방송 안내</p>
+                <p>3. 관장에게 즉시 보고</p>
+                <br/><br/>
+                <b>비상 연락망:</b>
+                <p>홍길동 관장 010-3355-4400</p>
+                <p>이순신 수석 010-2255-1155</p>
+                <p>유관순 수석 010-3300-3520</p>
+            </div>
         </div>
         <div class="db_bottom">
-            <button href="#" onclick="alramDetailHide();"><spring:message code="common.button.close"/></button>
+            <button href="#" onclick="alramShowHide('detail', 'hide');"><spring:message code="common.button.close"/></button>
         </div>
     </aside>
     <!-- 알림상세 영역 End -->
@@ -175,30 +206,72 @@
     </aside>
     <!-- 토스트 영역 End -->
 
-    <!-- navigation 영역 Start -->
-    <nav id="nav" class="nav">
-        <div class="nav_area nano"></div>
-    </nav>
-    <!-- navigation 영역 End -->
-
     <tiles:insertAttribute name="body" />
 </div>
 <script type="application/javascript">
     /**
+     * alram success handler
+     * @author psb
+     * @private
+     */
+    function alramSuccessHandler(data, dataType, actionType){
+        console.log(data);
+    }
+
+    /**
+     * alram failure handler
+     * @author psb
+     * @private
+     */
+    function alramFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
+    }
+
+    function printTime() {
+        $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
+
+        setTimeout(function(){
+            printTime();
+        },1000);
+    }
+
+    function bodyAddClass(){
+        switch (subMenuId){
+            case "H00000": // 대쉬보드
+                $("body").addClass("dashboard_mode dh_mode");
+                break;
+            case "J00000": // 통계
+            case "G00000": // 이력
+                $("body").addClass("dashboard_mode db_mode");
+                break;
+            default :
+                $("body").addClass("admin_mode");
+                break;
+        }
+    }
+
+    /**
      * 알람 show / hide
      */
-    function alramShowHide(_this){
-        if(_this!=null){
-            if($(_this).hasClass("on")){
-                $(_this).removeClass("on");
-                $(".db_area").removeClass("on");
-            }else{
-                $(_this).addClass("on");
-                $(".db_area").addClass("on");
-            }
-        }else{
-            $(".issue").addClass("on");
-            $(".db_area").removeClass("on");
+    function alramShowHide(_type, _action){
+        switch (_type){
+            case "list":
+                if(_action == 'show'){
+                    $(".db_area").addClass("on");
+                }else if(_action == 'hide'){
+                    $(".dbs_area").removeClass("on");
+                    $(".db_area").removeClass("on");
+                    $(".nano-content > li").removeClass("infor");
+                }
+                break;
+            case "detail":
+                if(_action == 'show'){
+                    $(".dbs_area").addClass("on");
+                }else if(_action == 'hide'){
+                    $(".dbs_area").removeClass("on");
+                    $(".nano-content > li").removeClass("infor");
+                }
+                break;
         }
     }
 
@@ -220,8 +293,16 @@
         }
     }
 
+    function logout(){
+        location.href = rootPath + '/logout.html';
+    }
+
+    function goHome(){
+        location.href = rootPath + '/main.html';
+    }
+
     function moveDashBoardDetail(id,name){
-        var detailForm = $('<FORM>').attr('action','${rootPath}/dashboard/detail.html').attr('method','POST');
+        var detailForm = $('<FORM>').attr('action',dashBoardUrlConfig['detailUrl']).attr('method','POST');
         detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
         detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaName').attr('value',name));
         document.body.appendChild(detailForm.get(0));

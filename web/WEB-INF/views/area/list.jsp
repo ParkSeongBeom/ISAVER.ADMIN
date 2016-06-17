@@ -9,7 +9,6 @@
 <c:set value="C00000" var="menuId"/>
 <c:set value="C00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
-<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
@@ -259,7 +258,6 @@
 </section>
 
 <script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
-<script src="${rootPath}/assets/js/util/ajax-util.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/area/AreaModel.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/area/AreaCtrl.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/area/AreaView.js" type="text/javascript" charset="UTF-8"></script>

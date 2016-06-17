@@ -38,7 +38,7 @@ dl,ul,ol,menu,li {list-style-type:none; }
 small    {display: block; font-size:10px; opacity: 0.6; padding:10px 10px 0 0;}
 caption  {position:static;}
 optgroup {font-weight: bold;}
-form     {display: block; width:100%;}
+form     {display: block; width:100%; height:100%;}
 
 table    {table-layout:fixed;border-spacing:0;border-collapse:collapse}
 table.tl {table-layout: auto;}
@@ -306,6 +306,60 @@ flex-basis:  100%;
 
 */
 
+
+
+/* 스클롤바 스타일 */
+.nano > .nano-content {
+    position: absolute;
+    overflow: scroll;
+    overflow-x: hidden;
+    top           : 0;
+    right         : 0;
+    bottom        : 0;
+    left          : 0;
+    outline: none;
+}
+
+.nano > .nano-pane {
+    background : rgba(0,0,0,.25);
+    position   : absolute;
+    width      : 6px;
+    right      : 0;
+    top        : 0;
+    bottom     : 0;
+    visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
+    opacity    :1;
+    -webkit-transition    : .2s;
+    -moz-transition       : .2s;
+    -o-transition         : .2s;
+    transition            : .2s;
+    -moz-border-radius    : 5px;
+    -webkit-border-radius : 5px;
+    border-radius         : 5px;
+}
+.nano > .nano-pane > .nano-slider {
+    background: #444;
+    background: rgba(0,0,0,.5);
+    position              : relative;
+    margin                : 0 1px;
+    -moz-border-radius    : 3px;
+    -webkit-border-radius : 3px;
+    border-radius         : 3px;
+}
+.nano > .nano-pane > .nano-slider {
+    background: #444;
+    background: rgba(0,0,0,.5);
+    position              : relative;
+    margin                : 0 1px;
+    -moz-border-radius    : 3px;
+    -webkit-border-radius : 3px;
+    border-radius         : 3px;
+}
+.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {
+    visibility : visible\9; /* Target only IE7 and IE8 with this hack */
+    opacity    : 0.99;
+}
+
 /* 컬러 정의 */
 .co_yell {background-color: #ffce53;} /* rgba(255,206,83,1) */
 .co_purp {background-color: #cc3dd3;} /* rgba(204,61,211,1) */
@@ -349,9 +403,10 @@ bottom button border gray active #4f4f4f
     font-style: normal;
 }
 
-.svgbase02, .hrs_btn_set > button:before, .mp_header button.alra_btn:before, .sett_btn:before,
+.svgbase02, .hrs_btn_set > button:before, .mp_header button.alra_btn:before, .sett_btn:before, .refl_btn:before,
 .mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before,
-.nl_dash > button:before, .nl_reco > button:before, .nl_stat > button:before, .toast_popup:before, .tp_contents:before
+.nl_dash > button:before, .nl_reco > button:before, .nl_stat > button:before, .toast_popup:before, .tp_contents:before,
+.mp_header > div > .zoomclose_btn:before, .change_btn:before
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sico' !important;

@@ -8,7 +8,6 @@
 <c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
 <c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
-<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
 
 <aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">

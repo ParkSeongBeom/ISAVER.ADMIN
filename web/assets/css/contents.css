@@ -5,7 +5,8 @@
 {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 
 .metro_root, .metro_parent, .mc_bico:before, .mc_bico, .mc_list > li, .personnel, .personnel > div, .personnel > div > span,
-.mc_element, .metro_child, .vh_mode, .mp_contents, .mp_header > h2, .mp_header > div
+.mc_element, .metro_child, .vh_mode, .mp_contents, .mp_header > h2, .mp_header > div, .ha_right_set > div, .ha_right_set,
+.personnel + .ct-chart
 {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;display:flexbox;display:box;}
 
 
@@ -32,14 +33,20 @@
 }
 
 /*헤더 로고 영역*/
-.ha_right_set, .ha_right_set > div, .ha_right_set > div > * {height:100%;}
-.ha_right_set {overflow: hidden; position: absolute; top:0; right:0; }
-.ha_right_set > div {float: left; display: table;}
-.ha_right_set > div > * {position: relative; display: table-cell;  vertical-align: middle; color:#e0e0de;}
+.ha_right_set, .ha_right_set > div, .ha_right_set > div > * {height: 100%;}
+.ha_right_set {overflow: hidden; position: absolute; top:0; right:50px;}
+.ha_right_set > div {
+    -webkit-box-align:   center;
+    -moz-box-align:      center;
+    -webkit-align-items: center;
+    -ms-flex-align:      center;
+    align-items:         center;
+}
+.ha_right_set > div > * {position: relative; color:#e0e0de;}
 
 .ha_right_set > div.hrs_btn_set, .ha_right_set > div.hrs_btn_set > button {display: inline-block}
 .ha_right_set > .hrs_btn_set > button {z-index: 1; width:40px; border:none; font-size:20px;}
-.ha_right_set > .hrs_btn_set > button:hover:after,
+.ha_right_set > .hrs_btn_set > button:hover:before {}
 .ha_right_set > .hrs_btn_set > button.on:after {opacity: 1;}
 .ha_right_set > .hrs_btn_set > button:after {
     content: ""; opacity: 0;
@@ -56,20 +63,15 @@
 
 }
 
-.ha_right_set > .hrs_btn_set > button:before {}
-.ha_right_set > .hrs_btn_set > button.issue:before {content:"\e907";}
-.ha_right_set > .hrs_btn_set > button.loginout:before  {content:"\e900";}
-
-.hrs_date > span {padding:0 20px; font-size:12px; line-height: 12px;}
-.hrs_date > span:first-of-type {font-size:20px; line-height: 20px;}
+.hrs_date > span {height:auto; padding:0 20px; font-size:12px; }
+.hrs_date > span:first-of-type {font-size:20px; }
 .hrs_date > span:first-of-type:after {
     content:"";
-    position: absolute; right:0; top:20px;/* margin:-5px 0 0 0;*/
+    position: absolute; right:0; top:50%; margin:-5px 0 0 0;
     width:1px; height:10px; background-color: #fff;
     opacity: 0.4;
 }
 .hrs_date > span:last-of-type:before {content: "\e92f"; font-size:16px; padding:0 8px 0 0; }
-
 
 /* 2depth 타이틀 영역 */
 .main_title_area, .sub_title_area {position: relative;width:100%;}
@@ -162,45 +164,6 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 .dash_contents_area {position: relative; width:100%; height:calc(100% - 48px); outline: none;}
 
-/* 스클롤바 스타일 */
-.nano > .nano-content {
-    position: absolute;
-    overflow: scroll;
-    overflow-x: hidden;
-    top           : 0;
-    right         : 0;
-    bottom        : 0;
-    left          : 0;
-    outline: none;
-}
-
-.nano > .nano-pane {
-    background : rgba(0,0,0,.25);
-    position   : absolute;
-    width      : 6px;
-    right      : 0;
-    top        : 0;
-    bottom     : 0;
-    visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
-    opacity    :1;
-    -webkit-transition    : .2s;
-    -moz-transition       : .2s;
-    -o-transition         : .2s;
-    transition            : .2s;
-    -moz-border-radius    : 5px;
-    -webkit-border-radius : 5px;
-    border-radius         : 5px;
-}
-.nano > .nano-pane > .nano-slider {
-    background: #444;
-    background: rgba(0,0,0,.5);
-    position              : relative;
-    margin                : 0 1px;
-    -moz-border-radius    : 3px;
-    -webkit-border-radius : 3px;
-    border-radius         : 3px;
-}
-
 
 .metro_root, .metro_parent {width:100%;}
 
@@ -258,24 +221,26 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     border-color:#1e1d22;
     border-width:0 0 1px 0;
 }
-.mp_contents {top:80px; bottom:20px;}
-
-
-.mp_contents.vh_mode .mc_element {
+.mp_contents {top:70px; bottom:20px;}
+.mc_element_set, .mc_element { }
+.mc_element_set {width:100%; height:100%; max-height:300px; margin: 0 0 20px 0;}
+.mc_element     {width:calc(100% - 200px); width:-webkit-calc(100% - 200px); height:100%; margin:0 0 0 20px; }
+.mc_element_set .mc_element {
     box-align: center;
     -webkit-box-align:   center;
     -moz-box-align:      center;
     -webkit-align-items: center;
     -ms-flex-align:      center;
     align-items:         center;
-    width:100%; height:100%; margin:0;
+    width:100%; height:80px; min-height:80px; margin: 0 0 25px 0 !important;
 }
-.mp_contents.vh_mode .mc_element {height:80px; min-height:80px; margin: 0 0 20px 0;}
-.mp_contents.vh_mode .mc_element.nano {height:100%; margin: 20px 0 0 0; padding:20px 0 0 0;}
-.mp_contents.vh_mode .mc_element.nano:after,
-.mp_contents.vh_mode .mc_element.nano:before {content:""; position: absolute; width:100%;}
-.mp_contents.vh_mode .mc_element.nano:before {height:1px; top:-15px; background-color: #100f12; }
-.mp_contents.vh_mode .mc_element.nano:after  {height:1px; top:-14px; background-color: #363644;}
+.mc_element.mc_tline  {width:100%; height:100%; margin: 20px 0 0 0; padding:20px 0 0 0;}
+.mc_tline:after, .mc_tline:before {content:""; position: absolute; z-index:1; width:100%; left:0;}
+.mc_tline:before {height:1px; top:-20px; background-color: #100f12; }
+.mc_tline:after  {height:1px; top:-19px; background-color: #363644;}
+
+.mc_element_set {flex:2 0; -webkit-flex:2 0; flexbox:2 0;}
+.mc_element_set + .mc_element {flex:1 0; -webkit-flex:1 0; flexbox:1 0;}
 
 
 .mp_header > h2, .mp_header > div {
@@ -390,12 +355,14 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .etc:before    {content: "\e907";} /*기타 상태   */
 /* 이슈 아이콘 설정 끝  */
 
-
-.mc_element {width:calc(100% - 200px);width:-webkit-calc(100% - 200px); height:100%; margin:0 0 0 20px; }
-
-.mc_element > div {float:left;}
-.mc_box {margin:0 0 0 20px;}
-.mc_box > p { color:#fff;}
+.mc_box {flex:1; -webkit-flex:1; flexbox:1; overflow: hidden; margin: 0 20px;}
+.mc_box > p {
+    overflow:     hidden;
+    text-overflow:ellipsis;
+    white-space:  nowrap;
+    word-wrap:    normal;
+    color:#fff;
+}
 .mc_box > p:nth-of-type(1) {font-size:20px; margin:0 0 4px 0;}
 .mc_box > p:nth-of-type(2) {
     display: inline-block;
@@ -529,3 +496,50 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     content:"●"; position: absolute; left: 6px; top: 50%; margin: -8px 0 0 0; font-size:10px;
 }
 /* 마키 끝 */
+
+/* 차트 시작  */
+.ct-chart {position: relative;}
+.personnel + .ct-chart {
+    flex:1; -webkit-flex:1; flexbox:1;
+
+    box-align: end;
+    -webkit-box-align:   end;
+    -moz-box-align:      flex-end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align:      flex-end;
+    align-items:         flex-end;
+}
+.ct-name  {position: absolute; z-index:10; top:100px; right:0;}
+
+
+.ct-chart-line {overflow: hidden; position: relative;}
+
+.personnel + .ct-chart .ct-chart-line {
+
+}
+.ct-chart-line > g:nth-of-type(2) {position: absolute; left:0; top:0; bottom:0;  right:0;}
+
+
+.ct-labels span {color:#8d8e90;}
+.ct-grids {color:#fff;}
+
+.ct-grid {
+    stroke: rgba(152,152,152,.16) !important;
+    stroke-width: 1px;
+    stroke-dasharray: 0 !important;
+}
+.ct-grid.ct-horizontal {opacity: 0.1 !important;}
+
+.ct-series .ct-line, .ct-series .ct-point { stroke-width: 1px; stroke-linecap: square;}
+.ct-series-a .ct-line, .ct-series-a .ct-point {stroke: #01d65a !important; }
+.ct-series-b .ct-line, .ct-series-b .ct-point {stroke: #cc3dd3 !important; }
+.ct-series-c .ct-line, .ct-series-c .ct-point {stroke: #ffce53 !important; }
+
+/*
+.co_yell {background-color: #ffce53;} !* rgba(255,206,83,1) *!
+.co_purp {background-color: #cc3dd3;} !* rgba(204,61,211,1) *!
+.co_blue {background-color: #29a1f7;} !* rgba(41,161,247,1) *!
+.co_oran {background-color: #ff7a39;} !* rgba(255,122,57,1) *!
+.co_redd {background-color: #fe4d3b;} !* rgba(254,77,59,1)  *!
+.co_gren {background-color: #01d65a;} !* rgba(0,212,88,1)  *!
+*/

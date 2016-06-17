@@ -87,7 +87,6 @@
     </form>
 </section>
 
-<script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
 <script type="application/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');

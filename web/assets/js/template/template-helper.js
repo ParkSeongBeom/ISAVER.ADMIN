@@ -16,7 +16,7 @@ var TemplateHelper = (
                 $("<label/>").addClass("lablebase lb_style01")
             )
         ).append(
-            $("<div/>").addClass("dbc_contents issue01").append(
+            $("<div/>").addClass("dbc_contents").append(
                 $("<div/>").append(
                     $("<p/>").attr("id","eventName")
                 ).append(
