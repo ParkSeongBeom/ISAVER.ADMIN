@@ -107,5 +107,10 @@
             <value>100000000</value> <!-- 100,000,000(byte) -->
         </property>
     </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="ko" />
+    </bean>
+
 </beans>
 
