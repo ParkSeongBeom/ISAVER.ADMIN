@@ -65,6 +65,11 @@ var DashBoardHelper = (
                 return false;
             }
 
+            if(_requestData[_actionType]!=null){
+                console.error('[DashBoardHelper][addRequestData] _actionType is duplicate');
+                return false;
+            }
+
             _requestData[_actionType] = {
                 'url' : _url
                 ,'data' : _data

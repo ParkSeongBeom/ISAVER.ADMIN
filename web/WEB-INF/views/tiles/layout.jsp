@@ -70,7 +70,7 @@
             printTime();
 
             dashBoardHelper.addRequestData('alram', dashBoardUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
-//        dashBoardHelper.startInterval();
+            dashBoardHelper.startInterval();
         });
     </script>
 </head>
