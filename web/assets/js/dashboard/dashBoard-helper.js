@@ -79,6 +79,16 @@ var DashBoardHelper = (
         };
 
         /**
+         * request data save
+         * @author psb
+         */
+        this.saveRequestData = function(_actionType, _data){
+            if(_requestData[_actionType]!=null){
+                _requestData[_actionType]['data'] = _data;
+            }
+        };
+
+        /**
          * request data remove
          * @author psb
          */

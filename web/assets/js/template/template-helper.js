@@ -10,30 +10,33 @@ var TemplateHelper = (
          * 알림 리스트 template
          *********************************************************************************/
         var ALRAM_CONTENT_TEMPLATE = $("<li/>").append(
-            $("<div/>").addClass("check_box_set").append(
-                $("<input/>").addClass("check_input").attr("type","checkbox")
+            $("<div/>", {class:"check_box_set"}).append(
+                $("<input/>", {type:"checkbox" ,class:"check_input"})
             ).append(
-                $("<label/>").addClass("lablebase lb_style01")
+                $("<label/>", {class:"lablebase lb_style01"})
             )
         ).append(
-            $("<div/>").addClass("dbc_contents").append(
+            $("<div/>", {class:"dbc_contents"}).append(
                 $("<div/>").append(
-                    $("<p/>").attr("id","eventName")
+                    $("<p/>", {id:"eventType"})
                 ).append(
-                    $("<p/>").attr("id","eventDesc")
+                    $("<p/>", {id:"eventName"})
                 )
             ).append(
                 $("<div/>").append(
-                    $("<p/>").attr("id","areaName")
+                    $("<p/>", {id:"areaName"})
                 ).append(
-                    $("<span/>").attr("id","eventDesc")
-                ).append(
-                    $("<span/>").attr("id","eventDatetime")
+                    $("<span/>", {id:"eventDatetime"})
                 )
             )
         ).append(
-            $("<button/>").addClass("infor_open").attr("href","#")
+            $("<button/>", {href:"#", class:"infor_open"})
         );
+
+        /********************************************************************************
+         * marquee 리스트 template
+         *********************************************************************************/
+        var MARQUEE_CONTENT_TEMPLATE = $("<button/>");
 
         /**
          * get template (동적생성 Tag)
@@ -45,6 +48,9 @@ var TemplateHelper = (
             switch (target) {
                 case "alram01":
                     _returnTag = ALRAM_CONTENT_TEMPLATE.clone();
+                    break;
+                case "marquee01":
+                    _returnTag = MARQUEE_CONTENT_TEMPLATE.clone();
                     break;
             }
 

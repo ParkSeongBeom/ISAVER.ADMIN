@@ -54,19 +54,6 @@ public class DashBoardCtrl {
     }
 
     /**
-     * 알림센터 데이터를 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alram")
-    public ModelAndView findListDashBoard(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = new ModelAndView();
-        return modelAndView;
-    }
-
-    /**
      * 대쉬보드 상세 화면를 가져온다.
      *
      * @author dhj

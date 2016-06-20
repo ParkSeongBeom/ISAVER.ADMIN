@@ -453,12 +453,7 @@
         <!-- 2depth 타이틀 Start-->
         <h3 class="1depth_title">C-Area</h3>
         <!-- 마키 영역 Start -->
-        <div class="marquee">
-            <button>작업자 복장 상태 수시 확인은 필수 입니다.</button>
-            <button>B-Area 크래인 직중 작업 실시에 따른 안전 요소 체크 리포트 필독</button>
-            <button>각 작업 구역 3교대 시 인원 진출입 체크</button>
-            <button>2016.00.00  12:00:00을 기해 안전방재 시스템 업데이트로 1시간 동안 전 구역 작업 대기</button>
-        </div>
+        <div id="marqueeList" class="marquee" onclick="javascript:alramShowHide('list', 'show');"></div>
         <!-- 마키 영역 End -->
     </article>
     <!-- 2depth 타이틀 영역 End -->

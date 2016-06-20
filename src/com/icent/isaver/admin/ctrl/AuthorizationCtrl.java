@@ -52,4 +52,14 @@ public class AuthorizationCtrl {
 
         return modelAndView;
     }
+
+    /**
+     * 기동여부를 확인한다.
+     * @author psb
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.GET}, value="/alive")
+    public ModelAndView alive(){
+        return new ModelAndView();
+    }
 }

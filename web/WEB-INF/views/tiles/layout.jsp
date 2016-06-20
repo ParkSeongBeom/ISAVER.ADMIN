@@ -37,6 +37,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/dashboard/dashBoard-helper.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
@@ -44,9 +45,10 @@
         var menuModel = new MenuModel();
         var menuCtrl = null;
         var dashBoardHelper = new DashBoardHelper();
+        var templateHelper = new TemplateHelper();
 
         var dashBoardUrlConfig = {
-            'listUrl':'${rootPath}/dashboard/alram.html'
+            'listUrl':'${rootPath}/eventLog/alram.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
         };
 
@@ -71,7 +73,23 @@
 
             dashBoardHelper.addRequestData('alram', dashBoardUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
             dashBoardHelper.startInterval();
+            aliveSend(1800000);
         });
+
+        /**
+         * [인터벌] alive send
+         * @author psb
+         */
+        function aliveSend(_time) {
+            setInterval(function() {
+                $.get('${rootPath}/alive.json', function() {
+                }).done(function() {
+                }).fail(function() {
+                    console.log("[aliveSend][error]");
+                }).always(function() {
+                });
+            }, _time);
+        }
     </script>
 </head>
 <body>
@@ -92,6 +110,7 @@
                 </div>
             </div>
         </div>
+        <button class="db_btn zoom_btn change_btn" href="#" onclick="javascript:allView(this);"></button>
     </header>
     <!-- hearder End -->
 
@@ -123,44 +142,7 @@
             </div>
         </div>
         <div class="db_contents nano">
-            <ul class="nano-content" id="alramList">
-                <li>
-                    <div class="check_box_set">
-                        <input type="checkbox"  name="" class="check_input" />
-                        <label class="lablebase lb_style01"></label>
-                    </div>
-                    <div class="dbc_contents issue01">
-                        <div>
-                            <p>크래인 상태크래인 상태크래인 상태크래인 상태</p>
-                            <p>진출방향 작업자 감지진출방향 작업자 감지진출방향 작업자 감지진출방향 작업자 감지</p>
-                        </div>
-                        <div>
-                            <p>A-rea</p>
-                            <span>06/00</span>
-                            <span>10:41:23</span>
-                        </div>
-                    </div>
-                    <button class="infor_open" onclick="$(this).parent().addClass('infor'); alramShowHide('detail', 'show');"></button>
-                </li>
-                <li>
-                    <div class="check_box_set">
-                        <input type="checkbox"  name="" class="check_input" />
-                        <label class="lablebase lb_style01"></label>
-                    </div>
-                    <div class="dbc_contents issue02">
-                        <div>
-                            <p>크래인 상태</p>
-                            <p>진출방향 작업자 감지</p>
-                        </div>
-                        <div>
-                            <p>A-rea</p>
-                            <span>06/00</span>
-                            <span>10:41:23</span>
-                        </div>
-                    </div>
-                    <button class="infor_open" onclick="$(this).parent().addClass('infor'); alramShowHide('detail', 'show');"></button>
-                </li>
-            </ul>
+            <ul class="nano-content" id="alramList"></ul>
         </div>
         <div class="db_bottom">
             <button href="#" onclick="alramShowHide('list', 'hide');"><spring:message code="common.button.close"/></button>
@@ -175,20 +157,7 @@
             <div><p id="alramEvent"></p></div>
         </div>
         <div class="db_contents nano">
-            <div class="nano-content text_area" id="alramActionDesc">
-                <b>동보방송 대피안내</b>
-                <p>“크레인 진출 방향에 계신분은 대피하십시오”</p>
-                <p>“대피하십시오”</p>
-                <br/><br/>
-                <p>1. 모니터 영상 확인</p>
-                <p>2. 동보방송 안내</p>
-                <p>3. 관장에게 즉시 보고</p>
-                <br/><br/>
-                <b>비상 연락망:</b>
-                <p>홍길동 관장 010-3355-4400</p>
-                <p>이순신 수석 010-2255-1155</p>
-                <p>유관순 수석 010-3300-3520</p>
-            </div>
+            <div class="nano-content text_area" id="alramActionDesc"></div>
         </div>
         <div class="db_bottom">
             <button href="#" onclick="alramShowHide('detail', 'hide');"><spring:message code="common.button.close"/></button>
@@ -215,7 +184,43 @@
      * @private
      */
     function alramSuccessHandler(data, dataType, actionType){
-        console.log(data);
+        if(data!=null && data['eventLogs']!=null){
+            for(var index in data['eventLogs']){
+                var eventLog = data['eventLogs'][index];
+
+                if(eventLog['eventType']!=null && eventLog['eventType']!=""){
+                    var eventTypeName = null;
+
+                    switch (eventLog['eventType']){
+                        case "crane" :
+                            eventTypeName = "크래인";
+                            break;
+                        case "worker" :
+                            eventTypeName = "쓰러짐";
+                            break;
+                    }
+
+                    if(eventLog['eventCancelUserId']!=null){
+                        $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
+                        $("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").remove();
+                    }else{
+                        var alramTag = templateHelper.getTemplate("alram01");
+                        alramTag.attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
+                        alramTag.find(".eventType").text(eventTypeName);
+                        alramTag.find(".eventName").text(eventLog['eventName']);
+                        alramTag.find(".areaName").text(eventLog['areaName']);
+                        alramTag.find(".eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                        $("#alramList").prepend(alramTag);
+
+                        var marqueeTag = templateHelper.getTemplate("marquee01");
+                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(eventLog['eventName']);
+                        $("#marqueeList").prepend(alramTag);
+                    }
+                }
+            }
+        }
+
+        dashBoardHelper.saveRequestData('alram', {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
     }
 
     /**
@@ -238,11 +243,7 @@
     function bodyAddClass(){
         switch (subMenuId){
             case "H00000": // 대쉬보드
-                $("body").addClass("dashboard_mode dh_mode");
-                break;
-            case "J00000": // 통계
-            case "G00000": // 이력
-                $("body").addClass("dashboard_mode db_mode");
+                $("body").addClass("dashboard_mode");
                 break;
             default :
                 $("body").addClass("admin_mode");
@@ -276,20 +277,15 @@
     }
 
     /**
-     * 알람상세 show / hide
+     * 전체화면
      */
-    function alramDetailHide(_this){
-        if(_this!=null){
-            if($(_this).hasClass("on")){
-                $(_this).removeClass("on");
-                $(".dbs_area").removeClass("on");
-            }else{
-                $(_this).addClass("on");
-                $(".dbs_area").addClass("on");
-            }
+    function allView(_this){
+        if($(_this).hasClass("on")){
+            $("body").removeClass("on");
+            $(_this).removeClass("on");
         }else{
-            $(".infor_open").addClass("on");
-            $(".dbs_area").removeClass("on");
+            $("body").addClass("on");
+            $(_this).addClass("on");
         }
     }
 

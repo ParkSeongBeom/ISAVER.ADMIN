@@ -62,5 +62,16 @@ public class EventLogCtrl {
         return modelAndView;
     }
 
-
+    /**
+     * 알림센터 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alram")
+    public ModelAndView findListEventLogForAlram(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+        return modelAndView;
+    }
 }

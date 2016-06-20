@@ -110,9 +110,9 @@ public class AreaSelectBoxTagSupport extends ParamTag {
                 }
                 for(AreaBean area:areas) {
                     if (areaId.equals(area.getAreaId())) {
-                        sb.append(String.format("<option value=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getAreaDesc()));
+                        sb.append(String.format("<option value=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getAreaName()));
                     } else {
-                        sb.append(String.format("<option value=\"%s\">%s</option>", area.getAreaId(), area.getAreaDesc()));
+                        sb.append(String.format("<option value=\"%s\">%s</option>", area.getAreaId(), area.getAreaName()));
                     }
 
                 }

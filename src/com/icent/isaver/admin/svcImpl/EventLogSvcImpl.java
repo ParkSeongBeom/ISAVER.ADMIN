@@ -43,4 +43,13 @@ public class EventLogSvcImpl implements EventLogSvc {
         return modelAndView;
     }
 
+    @Override
+    public ModelAndView findListEventLogForAlram(Map<String, String> parameters) {
+        List<EventLogBean> events = eventLogDao.findListEventLogForAlram(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogs", events);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
 }
