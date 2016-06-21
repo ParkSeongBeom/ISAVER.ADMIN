@@ -64,6 +64,20 @@ public class ActionCtrl {
         return modelAndView;
     }
 
+    /**
+     * 이벤트 조치 정보를 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/eventDetail")
+    public ModelAndView findByActionFromEventId(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        ModelAndView modelAndView = actionSvc.findByActionFromEventId(parameters);
+        return modelAndView;
+    }
+
     private final static String[] addActionParam = new String[]{"actionId", "actionCode"};
 
     /**

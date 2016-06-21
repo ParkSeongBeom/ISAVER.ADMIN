@@ -40,6 +40,15 @@ public interface ActionSvc {
     ModelAndView findByAction(Map<String, String> parameters);
 
     /**
+     * 이벤트 조치 정보를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findByActionFromEventId(Map<String, String> parameters);
+
+    /**
      * 조치를 등록한다.
      *
      * @author dhj

@@ -7,7 +7,7 @@
 
 /*레이어 팝업 */
 .layer_popup, .admin_popup
-{display: none; position: absolute;z-index:100; top:50px; left:120px; bottom:0px; right: 0px;}
+{display: none; position: fixed;z-index:100; top:50px; left:120px; bottom:0px; right: 0px;}
 .layer_popupbg {width:100%;height:100%;top:0;left:0;background-color: rgba(0,0,0,0.7);}
 
 /*.layer_popup .nano-pane {display: block !important;}*/
@@ -115,17 +115,22 @@
 /* 토스트 팝업 */
 .toast_popup {
     position: fixed; z-index:50; top:60px; right:-300px; width:260px; min-height:100px;
-    background-color: #fe4d3b;
-    box-shadow:         0px 0px 8px rgba(0,0,0,0.8);
-    -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.8);
-    -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.8);
-
     transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
+.toast_popup > div {
+    position: relative;
+    width:100%; height:100px; margin:10px 0 0 0; background-color: #fe4d3b;
+    box-shadow:         0px 0px 8px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.8);
+    -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.8);
+}
+
+
+.toast_popup > div:first-of-type {margin:0;}
 .toast_popup.on {right:10px;}
 .btn_x {position: absolute; top:10px; right:10px;}
 .btn_x:hover {color:#fff;}
@@ -218,7 +223,7 @@
 .db_contents > ul > li.infor:after {opacity: 1; border:3px solid #29a1f8;}
 
 
-.db_contents > div.text_area {padding:26px;}
+.db_contents > div.text_area {padding:26px; color:#fff;}
 .db_contents > div.text_area > * {display: block; color:#fff;}
 .db_contents > div.text_area > b {font-weight:bold; font-size:18px; padding:0 0 5px 0;}
 

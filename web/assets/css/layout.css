@@ -13,7 +13,7 @@ aside, header, section, .wrap, header, .header_area, article
 html, body {}
 body {
     overflow: auto;
-    width:100%;  min-width:1680px; min-height:768px;
+    width:100%;  /*min-width:1680px; min-height:768px;*/
     background-color: #333240;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
@@ -83,6 +83,7 @@ body.on header  {top:-50px;}
 body.on nav.nav {left:-120px;}
 body.on section.container {top:0px; left:0px; margin:0; height:100%;}
 body.on aside.db_area, body.on aside.dbs_area  {top:0;}
+
 
 body.on .layer_popup, .admin_popup {top:0; left:0;}
 /*로그인 영역 */

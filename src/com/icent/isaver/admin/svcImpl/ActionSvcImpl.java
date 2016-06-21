@@ -66,6 +66,16 @@ public class ActionSvcImpl implements ActionSvc {
     }
 
     @Override
+    public ModelAndView findByActionFromEventId(Map<String, String> parameters) {
+        ActionBean action = actionDao.findByActionFromEventId(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("action", action);
+        modelAndView.addObject("paramBean", parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView addAction(HttpServletRequest request, Map<String, String> parameters) {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);

@@ -47,13 +47,18 @@
         var menuCtrl = null;
         var dashBoardHelper = new DashBoardHelper();
         var templateHelper = new TemplateHelper();
+        var marqueeList = {};
 
-        var dashBoardUrlConfig = {
-            'listUrl':'${rootPath}/eventLog/alram.html'
+        var layoutUrlConfig = {
+            'logoutUrl':'${rootPath}/logout.html'
+            ,'mainUrl':'${rootPath}/main.html'
+            ,'listUrl':'${rootPath}/eventLog/alram.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
+            ,'alramDetailUrl':'${rootPath}/action/eventDetail.html'
         };
 
         $(document).ready(function(){
+            // 메뉴그리기
             menuModel.setRootUrl(rootPath);
             menuModel.setViewStatus('detail');
             menuModel.setParentMenuId(subMenuId);
@@ -65,17 +70,58 @@
                 console.error(e);
             }
 
+            // 타이틀에 텍스트 맵핑
             $.each($("table.t_type01 > tbody > tr > td"),function(){
                 $(this).attr("title",$(this).text().trim());
+            });
+
+            // 알림센터 외부 클릭시 팝업 닫기
+            $(".wrap").on("click",function(event){
+                if (!$(event.target).closest(".db_area, .dbs_area, .issue_btn").length) {
+                    alramShowHide('list','hide');
+                }
+            });
+
+            // 알림센터 내부 셀렉트 박스 클릭시 이벤트
+            $("#eventType").on("change",function(){
+                alramTypeChangeHandler();
+            });
+            $("#areaType").on("change",function(){
+                alramTypeChangeHandler();
             });
 
             bodyAddClass();
             printTime();
 
-            dashBoardHelper.addRequestData('alram', dashBoardUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
+            dashBoardHelper.addRequestData('alram', layoutUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
             dashBoardHelper.startInterval();
             aliveSend(900000);
         });
+
+        function alramTypeChangeHandler() {
+            $("#alramList li").hide();
+            var eventType = $("#eventType option:selected").val() != "" ? "[eventType='"+$("#eventType option:selected").val()+"']" : "";
+            var areaType = $("#areaType option:selected").val() != "" ? "[areaId='"+$("#areaType option:selected").val()+"']" : "";
+            $("#alramList li"+eventType+areaType).show();
+        }
+
+        function alramAllCheck(_this){
+            if($(_this).is(":checked")){
+                $("#alramList li").addClass("check");
+                $("#alramList .check_input").prop("checked",true);
+            }else{
+                $("#alramList li").removeClass("check");
+                $("#alramList .check_input").prop("checked",false);
+            }
+        }
+
+        function printTime() {
+            $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
+
+            setTimeout(function(){
+                printTime();
+            },1000);
+        }
 
         /**
          * [인터벌] alive send
@@ -90,6 +136,224 @@
                 }).always(function() {
                 });
             }, _time);
+        }
+
+        /**
+         * alram success handler
+         * @author psb
+         * @private
+         */
+        function alramSuccessHandler(data, dataType, actionType){
+            if(data!=null && data['eventLogs']!=null){
+                var marqueeFlag = false;
+
+                for(var index in data['eventLogs']){
+                    var eventLog = data['eventLogs'][index];
+
+                    if(eventLog['eventType']!=null && eventLog['eventType']!=""){
+                        var eventTypeName = null;
+                        marqueeFlag = true;
+
+                        switch (eventLog['eventType']){
+                            case "crane" :
+                                eventTypeName = "크래인";
+                                break;
+                            case "worker" :
+                                eventTypeName = "쓰러짐";
+                                break;
+                        }
+
+                        if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
+                            $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
+                            delete marqueeList[eventLog['eventLogId']];
+                        }else{
+                            // 알림센터
+                            var alramTag = templateHelper.getTemplate("alram01");
+                            alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
+                            alramTag.find("#eventType").text(eventTypeName);
+                            alramTag.find("#eventName").text(eventLog['eventName']);
+                            alramTag.find("#areaName").text(eventLog['areaName']);
+                            alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                            alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"');");
+                            $("#alramList").prepend(alramTag);
+
+                            marqueeList[eventLog['eventLogId']] = eventLog['eventName'];
+
+                            // 토스트팝업
+                            var toastTag = templateHelper.getTemplate("toast");
+                            toastTag.attr("eventLogId",eventLog['eventLogId']);
+                            toastTag.find("#toastEventName").text(eventTypeName);
+                            toastTag.find("#toastEventDesc").text(eventLog['eventName']);
+                            $(".toast_popup").append(toastTag);
+
+                            removeToastTag(toastTag);
+                            function removeToastTag(_tag){
+                                setTimeout(function(){
+                                    _tag.remove();
+                                },2000);
+                            }
+                        }
+                    }
+                }
+
+                if(marqueeFlag && Object.keys(marqueeList).length>0 && $("#marqueeList").length>0){
+                    $('.marquee').marquee('destroy');
+
+                    for(var index in marqueeList){
+                        // marquee
+                        var marqueeTag = templateHelper.getTemplate("marquee01");
+                        marqueeTag.attr("eventLogId",index).text(marqueeList[index]);
+                        $("#marqueeList").prepend(marqueeTag);
+                    }
+
+                    //마키 플러그인 호출
+                    $('.marquee').marquee({
+                        duration: 20000,
+                        direction: 'left',
+                        gap: 20,
+                        duplicated: true,
+                        pauseOnHover: true,
+                        startVisible: true
+                    });
+                }
+            }
+
+            if($("#alramList li").length>0){
+                modifyElementClass($(".issue_btn"),'issue','add');
+            }else{
+                modifyElementClass($(".issue_btn"),'issue','remove');
+            }
+
+            alramTypeChangeHandler();
+            dashBoardHelper.saveRequestData('alram', {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
+        }
+
+        /**
+         * alram failure handler
+         * @author psb
+         * @private
+         */
+        function alramFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+            console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
+        }
+
+        /**
+         * search alram detail (action)
+         * @author psb
+         */
+        function searchAlramDetail(eventLogId, eventId,actionType){
+            alramShowHide('detail','hide');
+            sendAjaxPostRequest(layoutUrlConfig['alramDetailUrl'],{eventLogId:eventLogId, eventId:eventId},alramDetailSuccessHandler,alramDetailFailureHandler,actionType);
+        }
+
+        /**
+         * alram detail success handler
+         * @author psb
+         * @private
+         */
+        function alramDetailSuccessHandler(data, dataType, actionType){
+            if(data!=null && data['action']!=null){
+                var action = data['action'];
+                var eventTypeName;
+
+                switch (actionType){
+                    case "crane" :
+                        eventTypeName = "크래인";
+                        break;
+                    case "worker" :
+                        eventTypeName = "쓰러짐";
+                        break;
+                }
+
+                $("#alramEvent").text(eventTypeName + " / " + action['eventName']);
+                $("#alramActionDesc").html(action['actionDesc']);
+
+                modifyElementClass($("#alramList li[eventLogId='"+data['paramBean']['eventLogId']+"']"),'infor','add');
+                alramShowHide('detail','show');
+            }else{
+                alert("조치 정보가 없습니다.");
+            }
+        }
+
+        /**
+         * alram detail failure handler
+         * @author psb
+         * @private
+         */
+        function alramDetailFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+            alert("조치 정보를 불러오는데 실패하였습니다.");
+            console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
+        }
+
+        function bodyAddClass(){
+            switch (subMenuId){
+                case "H00000": // 대쉬보드
+                    modifyElementClass($("body"),'dashboard_mode','add');
+                    break;
+                default :
+                    modifyElementClass($("body"),'admin_mode','add');
+                    break;
+            }
+        }
+
+        /**
+         * 알람 show / hide
+         */
+        function alramShowHide(_type, _action){
+            switch (_type){
+                case "list":
+                    if(_action == 'show'){
+                        modifyElementClass($(".db_area"),'on','add');
+                    }else if(_action == 'hide'){
+                        modifyElementClass($(".dbs_area"),'on','remove');
+                        modifyElementClass($(".db_area"),'on','remove');
+                        modifyElementClass($("#alramList > li"),'infor','remove');
+                    }else{
+                        if($(".db_area").hasClass("on")){
+                            alramShowHide('list','hide');
+                        }else{
+                            alramShowHide('list','show');
+                        }
+                    }
+                    break;
+                case "detail":
+                    if(_action == 'show'){
+                        modifyElementClass($(".dbs_area"),'on','add');
+                    }else if(_action == 'hide'){
+                        modifyElementClass($(".dbs_area"),'on','remove');
+                        modifyElementClass($("#alramList > li"),'infor','remove');
+                    }
+                    break;
+            }
+        }
+
+        /**
+         * 전체화면
+         */
+        function allView(_this){
+            if($(_this).hasClass("on")){
+                modifyElementClass($("body"),'on','remove');
+                modifyElementClass($(_this),'on','remove');
+            }else{
+                modifyElementClass($("body"),'on','add');
+                modifyElementClass($(_this),'on','add');
+            }
+        }
+
+        function logout(){
+            location.href = layoutUrlConfig['logout'];
+        }
+
+        function goHome(){
+            location.href = layoutUrlConfig['main'];
+        }
+
+        function moveDashBoardDetail(id,name){
+            var detailForm = $('<FORM>').attr('action',layoutUrlConfig['detailUrl']).attr('method','POST');
+            detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
+            detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaName').attr('value',name));
+            document.body.appendChild(detailForm.get(0));
+            detailForm.submit();
         }
     </script>
 </head>
@@ -106,7 +370,7 @@
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list', 'show');"></button>
+                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list');"></button>
                     <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();"></button>
                 </div>
             </div>
@@ -130,7 +394,7 @@
             </div>
             <div>
                 <div class="check_box_set">
-                    <input type="checkbox"  name="" class="check_input" />
+                    <input type="checkbox" class="check_input" onclick="javascript:alramAllCheck(this);"/>
                     <label class="lablebase lb_style01"></label>
                 </div>
                 <select id="eventType">
@@ -166,180 +430,11 @@
     </aside>
     <!-- 알림상세 영역 End -->
 
+    <!-- 토스트 영역 Start -->
+    <aside class="toast_popup on"></aside>
+    <!-- 토스트 영역 End -->
+
     <tiles:insertAttribute name="body" />
 </div>
-<script type="application/javascript">
-    var marqueeList = {};
-
-    /**
-     * alram success handler
-     * @author psb
-     * @private
-     */
-    function alramSuccessHandler(data, dataType, actionType){
-        if(data!=null && data['eventLogs']!=null){
-            var marqueeFlag = false;
-
-            for(var index in data['eventLogs']){
-                var eventLog = data['eventLogs'][index];
-
-                if(eventLog['eventType']!=null && eventLog['eventType']!=""){
-                    var eventTypeName = null;
-                    marqueeFlag = true;
-
-                    switch (eventLog['eventType']){
-                        case "crane" :
-                            eventTypeName = "크래인";
-                            break;
-                        case "worker" :
-                            eventTypeName = "쓰러짐";
-                            break;
-                    }
-
-                    if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
-                        $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                        delete marqueeList[eventLog['eventLogId']];
-                    }else{
-                        // 알림센터
-                        var alramTag = templateHelper.getTemplate("alram01");
-                        alramTag.attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
-                        alramTag.find("#eventType").text(eventTypeName);
-                        alramTag.find("#eventName").text(eventLog['eventName']);
-                        alramTag.find("#areaName").text(eventLog['areaName']);
-                        alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                        $("#alramList").prepend(alramTag);
-
-                        marqueeList[eventLog['eventLogId']] = eventLog['eventName'];
-
-                        // 토스트팝업
-                        var toastTag = templateHelper.getTemplate("toast");
-                        toastTag.attr("eventLogId",eventLog['eventLogId']);
-                        toastTag.find("#toastEventName").text(eventTypeName);
-                        toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                        $(".wrap").append(toastTag);
-
-                        removeToastTag(toastTag);
-                        function removeToastTag(_tag){
-                            setTimeout(function(){
-                                _tag.remove();
-                            },2000);
-                        }
-                    }
-                }
-            }
-
-            if(marqueeFlag && Object.keys(marqueeList).length>0 && $("#marqueeList").length>0){
-                $('.marquee').marquee('destroy');
-
-                for(var index in marqueeList){
-                    // marquee
-                    var marqueeTag = templateHelper.getTemplate("marquee01");
-                    marqueeTag.attr("eventLogId",index).text(marqueeList[index]);
-                    $("#marqueeList").prepend(marqueeTag);
-                }
-
-                //마키 플러그인 호출
-                $('.marquee').marquee({
-                    duration: 20000,
-                    direction: 'left',
-                    gap: 20,
-                    duplicated: true,
-                    pauseOnHover: true,
-                    startVisible: true
-                });
-            }
-        }
-
-        if($("#alramList li").length>0){
-            modifyElementClass($(".issue_btn"),'issue','add');
-        }else{
-            modifyElementClass($(".issue_btn"),'issue','remove');
-        }
-
-        dashBoardHelper.saveRequestData('alram', {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
-    }
-
-    /**
-     * alram failure handler
-     * @author psb
-     * @private
-     */
-    function alramFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
-    }
-
-    function printTime() {
-        $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
-
-        setTimeout(function(){
-            printTime();
-        },1000);
-    }
-
-    function bodyAddClass(){
-        switch (subMenuId){
-            case "H00000": // 대쉬보드
-                $("body").addClass("dashboard_mode");
-                break;
-            default :
-                $("body").addClass("admin_mode");
-                break;
-        }
-    }
-
-    /**
-     * 알람 show / hide
-     */
-    function alramShowHide(_type, _action){
-        switch (_type){
-            case "list":
-                if(_action == 'show'){
-                    $(".db_area").addClass("on");
-                }else if(_action == 'hide'){
-                    $(".dbs_area").removeClass("on");
-                    $(".db_area").removeClass("on");
-                    $(".nano-content > li").removeClass("infor");
-                }
-                break;
-            case "detail":
-                if(_action == 'show'){
-                    $(".dbs_area").addClass("on");
-                }else if(_action == 'hide'){
-                    $(".dbs_area").removeClass("on");
-                    $(".nano-content > li").removeClass("infor");
-                }
-                break;
-        }
-    }
-
-    /**
-     * 전체화면
-     */
-    function allView(_this){
-        if($(_this).hasClass("on")){
-            $("body").removeClass("on");
-            $(_this).removeClass("on");
-        }else{
-            $("body").addClass("on");
-            $(_this).addClass("on");
-        }
-    }
-
-    function logout(){
-        location.href = rootPath + '/logout.html';
-    }
-
-    function goHome(){
-        location.href = rootPath + '/main.html';
-    }
-
-    function moveDashBoardDetail(id,name){
-        var detailForm = $('<FORM>').attr('action',dashBoardUrlConfig['detailUrl']).attr('method','POST');
-        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
-        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaName').attr('value',name));
-        document.body.appendChild(detailForm.get(0));
-        detailForm.submit();
-    }
-</script>
 </body>
 </html>

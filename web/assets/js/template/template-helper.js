@@ -11,13 +11,7 @@ var TemplateHelper = (
          *********************************************************************************/
         var ALRAM_CONTENT_TEMPLATE = $("<li/>").append(
             $("<div/>", {class:"check_box_set"}).append(
-                $("<input/>", {type:"checkbox" ,class:"check_input"}).on("click",function(){
-                    if($(this).is("checked")){
-                        $(this).parent().parent().addClass("check");
-                    }else{
-                        $(this).parent().parent().removeClass("check");
-                    }
-                })
+                $("<input/>", {type:"checkbox" ,class:"check_input", onclick:"javascript:$(this).parent().parent().toggleClass('check')"})
             ).append(
                 $("<label/>", {class:"lablebase lb_style01"})
             )
@@ -47,7 +41,7 @@ var TemplateHelper = (
         /********************************************************************************
          * 토스트 팝업 template
          *********************************************************************************/
-        var TOAST_POPUP_TEMPLATE = $("<aside/>", {class:"toast_popup on"}).append(
+        var TOAST_POPUP_TEMPLATE = $("<div/>").append(
             $("<button/>", {href:"#", class:"btn_x", onclick:"javascript:$(this).parent().remove();"})
         ).append(
             $("<button/>", {href:"#", class:"tp_contents"}).append(
