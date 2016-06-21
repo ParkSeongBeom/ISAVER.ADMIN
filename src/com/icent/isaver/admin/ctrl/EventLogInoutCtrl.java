@@ -32,4 +32,17 @@ public class EventLogInoutCtrl {
         ModelAndView modelAndView = eventLogInoutSvc.findListEventLogInout(parameters);
         return modelAndView;
     }
+
+    /**
+     * [CHART] 작업자 진출입 데이터 로그를 가져온다.
+     *
+     * @author dhj
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chartList")
+    public ModelAndView findChartEventLogCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogInoutSvc.findChartEventLogInout(parameters);
+        return modelAndView;
+    }
 }

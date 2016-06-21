@@ -39,4 +39,13 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
+
+    @Override
+    public ModelAndView findChartEventLogCrane(Map<String, String> parameters) {
+
+        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
+        return modelAndView;
+    }
 }

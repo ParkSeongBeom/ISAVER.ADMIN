@@ -28,4 +28,11 @@ public interface EventLogInoutSvc {
      * @return
      */
     ModelAndView findListEventLogInout(Map<String, String> parameters);
+
+    /**
+     * 작업자 진출입 차트용 로그를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findChartEventLogInout(Map<String, String> parameters);
 }

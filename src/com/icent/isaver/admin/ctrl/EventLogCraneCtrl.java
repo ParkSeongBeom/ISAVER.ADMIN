@@ -32,4 +32,18 @@ public class EventLogCraneCtrl {
         ModelAndView modelAndView = eventLogCraneSvc.findListEventLogCrane(parameters);
         return modelAndView;
     }
+
+    /**
+     * [CHART] 크래인 상태 데이터 로그를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chartList")
+    public ModelAndView findChartEventLogCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogCraneSvc.findChartEventLogCrane(parameters);
+        return modelAndView;
+    }
+
 }

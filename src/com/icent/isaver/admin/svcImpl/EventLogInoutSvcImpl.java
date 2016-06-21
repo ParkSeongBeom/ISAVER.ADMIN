@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.svc.EventLogInoutSvc;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
+import com.icent.isaver.repository.bean.EventLogWorkerBean;
 import com.icent.isaver.repository.dao.base.EventLogInoutDao;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,6 +38,15 @@ public class EventLogInoutSvcImpl implements EventLogInoutSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogInoutList", eventLogInoutList);
         modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findChartEventLogInout(Map<String, String> parameters) {
+
+        List<EventLogInoutBean> eventLogWorkerInout = eventLogInoutDao.findChartEventLogInout(parameters);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogInoutChart", eventLogWorkerInout);
         return modelAndView;
     }
 }

@@ -28,4 +28,11 @@ public interface EventLogCraneSvc {
      * @return
      */
     ModelAndView findListEventLogCrane(Map<String, String> parameters);
+
+    /**
+     * 크레인 차트용 로그를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findChartEventLogCrane(Map<String, String> parameters);
 }

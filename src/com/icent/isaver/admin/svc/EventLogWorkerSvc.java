@@ -28,4 +28,11 @@ public interface EventLogWorkerSvc {
      * @return
      */
     ModelAndView findListEventLogWorker(Map<String, String> parameters);
+
+    /**
+     * 작업자 상태 차트용 로그를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findChartEventLogWorker(Map<String, String> parameters);
 }
