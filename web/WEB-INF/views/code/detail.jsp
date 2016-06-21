@@ -6,7 +6,6 @@
 <c:set value="B00021" var="menuId"/>
 <c:set value="B00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
-<script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">

@@ -211,14 +211,10 @@
                                 )
                             }
 
-                            if(!buttonTag.hasClass("level03")){
-                                buttonTag.addClass("level03");
-                            }
+                            modifyElementClass(buttonTag,'level03','add');
                             workerEventCnt++;
                         }else{
-                            if(buttonTag.hasClass("level03")){
-                                buttonTag.removeClass("level03");
-                            }
+                            modifyElementClass(buttonTag,'level03','remove');
 
                             if(buttonTag.find("#eventCnt").length>0){
                                 buttonTag.find("#eventCnt").remove();
@@ -230,8 +226,8 @@
                         $("#workerDiv").find(".alra_btn").text(workerEventCnt);
                     }
 
-                    if(workerEventCnt>0 && !$("#workerDiv").hasClass("level03")){
-                        $("#workerDiv").addClass("level03");
+                    if(workerEventCnt>0){
+                        modifyElementClass($("#workerDiv"),'level03','add');
                     }
                 }
                 break;
@@ -254,14 +250,10 @@
                                 )
                             }
 
-                            if(!buttonTag.hasClass("level03")){
-                                buttonTag.addClass("level03");
-                            }
+                            modifyElementClass(buttonTag,'level03','add');
                             craneEventCnt++;
                         }else{
-                            if(buttonTag.hasClass("level03")){
-                                buttonTag.removeClass("level03");
-                            }
+                            modifyElementClass(buttonTag,'level03','remove');
 
                             if(buttonTag.find("#eventCnt").length>0){
                                 buttonTag.find("#eventCnt").remove();
@@ -273,8 +265,8 @@
                         $("#craneDiv").find(".alra_btn").text(craneEventCnt);
                     }
 
-                    if(craneEventCnt>0 && !$("#craneDiv").hasClass("level03")){
-                        $("#craneDiv").addClass("level03");
+                    if(craneEventCnt>0){
+                        modifyElementClass($("#craneDiv"),'level03','add');
                     }
                 }
                 break;

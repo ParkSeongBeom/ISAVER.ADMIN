@@ -68,3 +68,19 @@ function onlyNumberDown(_this){
         }
     }
 }
+
+// 클래스 추가/삭제
+function modifyElementClass(_element, _className, _type){
+    switch (_type){
+        case "add" :
+            if(!_element.hasClass(_className)){
+                _element.addClass(_className);
+            }
+            break;
+        case "remove" :
+            if(_element.hasClass(_className)){
+                _element.removeClass(_className);
+            }
+            break;
+    }
+}

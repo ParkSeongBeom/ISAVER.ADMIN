@@ -8,7 +8,6 @@
 <c:set value="E00000" var="subMenuId"/>
 <c:set value="E00001" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
-<script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">

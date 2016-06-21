@@ -36,6 +36,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/dashboard/dashBoard-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
 
@@ -247,6 +248,12 @@
                     startVisible: true
                 });
             }
+        }
+
+        if($("#alramList li").length>0){
+            modifyElementClass($(".issue_btn"),'issue','add');
+        }else{
+            modifyElementClass($(".issue_btn"),'issue','remove');
         }
 
         dashBoardHelper.saveRequestData('alram', {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
