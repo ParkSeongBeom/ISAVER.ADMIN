@@ -167,25 +167,9 @@
     };
 
     var messageConfig = {
-        menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
-        ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
-        ,   addFailure                :'<spring:message code="menu.message.addFailure"/>'
-        ,   saveFailure               :'<spring:message code="menu.message.saveFailure"/>'
-        ,   removeFailure             :'<spring:message code="menu.message.removeFailure"/>'
-        ,   addComplete               :'<spring:message code="menu.message.addComplete"/>'
-        ,   saveComplete              :'<spring:message code="menu.message.saveComplete"/>'
-        ,   removeComplete            :'<spring:message code="menu.message.removeComplete"/>'
-        ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
-        ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
-        ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
-        ,   requiredMenuId            :"<spring:message code='menu.message.requiredMenuId'/>"
-        ,   requiredMenuName          :"<spring:message code='menu.message.requiredMenuName'/>"
-        ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
-        ,   requiredSortOrder         :"<spring:message code='menu.message.requiredSortOrder'/>"
-        ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
-        ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
-        ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
-        ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
+        workerFailure    :'<spring:message code="dashboard.message.workerFailure"/>'
+        ,   craneFailure :'<spring:message code="dashboard.message.craneFailure"/>'
+        ,   inoutFailure :'<spring:message code="dashboard.message.inoutFailure"/>'
     };
 
     $(document).ready(function(){
