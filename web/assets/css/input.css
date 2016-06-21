@@ -12,11 +12,11 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 
 /* 데시보드 셀렉트  */
-.dashboard_mode select,
-.dashboard_mode input
+.dashboard_mode select, .dashboard_mode input
 {color:#fff; font-size:16px; background-color: #1e1d23; border: none; }
 
-
+.dashboard_mode.db_mode select, .dashboard_mode.db_mode input
+{  }
 /*테이블 삽입 입력 폼 */
 .t_defalut tbody td input,.t_defalut tbody td select {width:100%;height:30px;}
 .t_defalut tbody td.inwidth150 input {width:150px;}
@@ -383,7 +383,6 @@ GNB ,버튼 active   #0c8dd0
 .search_area.search_tline {border-top: 1px solid #ccc; /*padding:14px 0 8px 0;*/}
 .search_contents, .search_btn {display:table-cell; vertical-align: middle; height:100%;}
 .search_contents {width: auto;}
-
 .search_btn      {width:120px; text-align: right; border-left: 1px solid #e4e4e4;}
 
 .search_contents > p, .layer_sc > p, .layer_sc > div, .search_contents > div{
@@ -410,7 +409,7 @@ GNB ,버튼 active   #0c8dd0
 .search_contents > div > span:first-child,
 .search_contents > p > span:first-child,
 .layer_sc > p > span:first-child,
-.layer_sc > div > span:first-child{min-width: 65px; width: 65px;}
+.layer_sc > div > span:first-child{ min-width: 65px; /*width: 65px;*/ padding:0 10px 0 0;}
 
 
 .layer_popup .search_contents > p > span {color:#fff;}

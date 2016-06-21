@@ -38,7 +38,7 @@ dl,ul,ol,menu,li {list-style-type:none; }
 small    {display: block; font-size:10px; opacity: 0.6; padding:10px 10px 0 0;}
 caption  {position:static;}
 optgroup {font-weight: bold;}
-form     {display: block; width:100%; height:100%;}
+form     {display: block;}
 
 table    {table-layout:fixed;border-spacing:0;border-collapse:collapse}
 table.tl {table-layout: auto;}
@@ -109,43 +109,23 @@ input.checkbox, input[type="checkbox"] {
     padding: 0;
     border: 0;
 }
-
-input.radio, input[type="radio"] {
-    width:13px; height:13px;
-    margin:-4px 5px 0 0;
-}
-
-input.checkbox, input[type="checkbox"] {
-    width:16px; height:16px;
-    vertical-align:middle;
-}
-
-
+input.radio, input[type="radio"] {width:13px; height:13px; margin:-4px 5px 0 0;}
+input.checkbox, input[type="checkbox"] {width:16px; height:16px; vertical-align:middle;}
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {height: auto;}
 input[type="search"] {-webkit-appearance: textfield;  }
 
 /*웹킷브라우저 인풋 테그 CSS 초기화 설정 단! 라디오+셀렉트에는 사용 금지*/
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-   /* -webkit-appearance: none;*/
-}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration
+{/* -webkit-appearance: none;*/}
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="search"],
-input[type="image"],
-input[type="tel"] {
-    font-style:normal;
-}
+input[type="text"],input[type="password"],input[type="email"],input[type="search"],input[type="image"],input[type="tel"]
+{font-style:normal;}
 
 ::-webkit-input-placeholder {letter-spacing:-1px; color:rgba(0, 0, 0, 0.4);}
 ::-moz-placeholder          {letter-spacing:-1px; color:rgba(0, 0, 0, 0.4);}
 :-ms-input-placeholder      {letter-spacing:-1px; color:rgba(0, 0, 0, 0.4);}
 input:-moz-placeholder      {letter-spacing:-1px; color:rgba(0, 0, 0, 0.4);}
-
-
 
 /*버튼*/
 button {overflow: visible;}
@@ -154,14 +134,7 @@ button::-moz-focus-inner,input::-moz-focus-inner {border: 0;padding: 0;}
 button, html input[type="button"], input[type="reset"], input[type="submit"] {-webkit-appearance: button;cursor: pointer; }
 button[disabled], html input[disabled] {cursor: default;}
 
-
-address {
-    font-size:12px;
-    color:#b8b8b8;
-    display:inline-block;
-    float:left;
-    margin:6px 0 0 20px;
-}
+address {float:left;font-size:12px;color:#b8b8b8;display:inline-block;margin:6px 0 0 20px;}
 
 
 
@@ -210,7 +183,6 @@ address {
     -ms-flex-align:      flex-stretch;
     align-items:         flex-stretch;
 }
-
 
 
 .a-center {
@@ -368,10 +340,15 @@ flex-basis:  100%;
 .co_redd {background-color: #fe4d3b;} /* rgba(254,77,59,1)  */
 .co_gren {background-color: #01d65a;} /* rgba(0,212,88,1)  */
 
+/* 아이콘 정의  */
+.worker:before {content: "\e90b";} /*작업자 상태 */
+.crane:before  {content: "\e90c";} /*크래인 상태 */
+.going:before  {content: "\e90d";} /*진출입 상태 */
+.gas:before    {content: "\e910";} /*유해가스 상태 */
+.etc:before    {content: "\e907";} /*기타 상태     */
 
 
 /*
-
 z-index
 메인 검색    z-index: 50;
 스크롤버튼   z-index: 100;

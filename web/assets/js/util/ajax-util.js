@@ -12,7 +12,7 @@ try {
     elmScript.type = 'text/javascript';
     document.getElementsByTagName('head')[0].appendChild( elmScript );
 } catch(e) {
-    console.error("[ajax-util.js]" + e);
+//    console.error("[ajax-util.js]" + e);
 }
 
 

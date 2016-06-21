@@ -346,13 +346,6 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .crane, .crane:before   {}
 .going, .going:before   {}
 .etc, .etc:before       {}
-
-.worker:before {content: "\e90b";} /*작업자 상태 */
-.crane:before  {content: "\e90c";} /*크래인 상태 */
-.going:before  {content: "\e90d";} /*진출입 상태 */
-.gas:before    {content: "\e910";} /*유해가스 상태 */
-
-.etc:before    {content: "\e907";} /*기타 상태   */
 /* 이슈 아이콘 설정 끝  */
 
 .mc_box {flex:1; -webkit-flex:1; flexbox:1; overflow: hidden; margin: 0 20px;}
@@ -392,7 +385,6 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     -webkit-align-items: center;
     -ms-flex-align:      center;
     align-items:         center;
-
     height:26px; padding:0 10px; margin:0 0 4px 0;
 }
 
@@ -400,22 +392,18 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .mc_list > li.level03 {background-color: #fe4d3b;}
 .mc_list > li.level03 > span {color:#fff;}
 
-
 .mc_list > li > span {color:#999;}
 .mc_list > li > span:nth-of-type(1) {width:60px; }
 .mc_list > li > span:nth-of-type(2) {flex:1 }
 .mc_list > li > span:nth-of-type(3) {width:120px; text-align: right; }
 
-
 .personnel {position: relative; width:100%; height:220px;}
 .personnel > div {
     flex:1; -webkit-flex:1; flexbox:1;
-
     -webkit-flex-flow: row wrap;
     -moz-flex-flow:    row wrap;
     -ms-flex-flow:     row wrap;
     flex-flow:         row wrap;
-
     height:100%;
 }
 .personnel > div > p   {color:#999;}
@@ -475,13 +463,13 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 }
 
 
-.dashboard_mode.db_mode .marquee:after  {
+.admin_mode .marquee:after  {
     background: -moz-linear-gradient(left,   rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
     background: -webkit-linear-gradient(left,rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
     background: linear-gradient(to right,    rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1d23', endColorstr='#001e1d23',GradientType=1 );
 }
-.dashboard_mode.db_mode .marquee:before {
+.admin_mode .marquee:before {
     background: -moz-linear-gradient(left,   rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     background: -webkit-linear-gradient(left,rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     background: linear-gradient(to right,    rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
@@ -497,11 +485,12 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 }
 /* 마키 끝 */
 
+
+
 /* 차트 시작  */
 .ct-chart {position: relative;}
 .personnel + .ct-chart {
     flex:1; -webkit-flex:1; flexbox:1;
-
     box-align: end;
     -webkit-box-align:   end;
     -moz-box-align:      flex-end;
@@ -510,26 +499,17 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     align-items:         flex-end;
 }
 .ct-name  {position: absolute; z-index:10; top:100px; right:0;}
-
-
 .ct-chart-line {overflow: hidden; position: relative;}
-
-.personnel + .ct-chart .ct-chart-line {
-
-}
+.personnel + .ct-chart .ct-chart-line {}
 .ct-chart-line > g:nth-of-type(2) {position: absolute; left:0; top:0; bottom:0;  right:0;}
-
-
 .ct-labels span {color:#8d8e90;}
 .ct-grids {color:#fff;}
-
 .ct-grid {
     stroke: rgba(152,152,152,.16) !important;
     stroke-width: 1px;
     stroke-dasharray: 0 !important;
 }
 .ct-grid.ct-horizontal {opacity: 0.1 !important;}
-
 .ct-series .ct-line, .ct-series .ct-point { stroke-width: 1px; stroke-linecap: square;}
 .ct-series-a .ct-line, .ct-series-a .ct-point {stroke: #01d65a !important; }
 .ct-series-b .ct-line, .ct-series-b .ct-point {stroke: #cc3dd3 !important; }

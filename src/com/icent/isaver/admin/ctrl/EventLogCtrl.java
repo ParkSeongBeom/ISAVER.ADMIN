@@ -74,4 +74,46 @@ public class EventLogCtrl {
         ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
         return modelAndView;
     }
+
+    /**
+     * 작업자 상태 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/worker")
+    public ModelAndView findListEventLogForWorker(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = new ModelAndView();
+//        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 크래인 상태 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/crane")
+    public ModelAndView findListEventLogForCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = new ModelAndView();
+//        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 작업자 진출입 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/inout")
+    public ModelAndView findListEventLogForInout(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = new ModelAndView();
+//        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+        return modelAndView;
+    }
 }

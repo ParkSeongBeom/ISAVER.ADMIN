@@ -31,7 +31,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="alra_btn">003</button>
+                                <button class="alra_btn"></button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -79,7 +79,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="alra_btn">003</button>
+                                <button class="alra_btn"></button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -104,7 +104,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="alra_btn">003</button>
+                                <button class="alra_btn"></button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -156,6 +156,16 @@
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
 
+    /*
+     url defind
+     @author kst
+     */
+    var urlConfig = {
+        workerUrl  :   "${rootPath}/eventLog/worker.json"
+        ,craneUrl  :   "${rootPath}/eventLog/crane.json"
+        ,inoutUrl  :   "${rootPath}/eventLog/inout.json"
+    };
+
     var messageConfig = {
         menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
@@ -179,83 +189,123 @@
     };
 
     $(document).ready(function(){
-        //마키 플러그인 호출
-        $('.marquee').marquee({
-            duration: 20000,
-            direction: 'left',
-            gap: 20,
-            duplicated: true,
-            pauseOnHover: true,
-            startVisible: true
-        });
+//        //마키 플러그인 호출
+//        $('.marquee').marquee({
+//            duration: 20000,
+//            direction: 'left',
+//            gap: 20,
+//            duplicated: true,
+//            pauseOnHover: true,
+//            startVisible: true
+//        });
+
+        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
     });
 
-    var mychart = new Chartist.Line('#chart', {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-        series: [
-            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
-            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
-            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0]
-        ]
-    }, {
-        low: 0,
-        showArea: true,
-        lineSmooth: Chartist.Interpolation.simple({
-            divisor: 100
-        })
-    });
-    mychart.on('draw', function(data) {
-        if(data.type === 'slice') {
-            if (data.index == 0) {
-                data.element.attr({
-                    'style': 'stroke: rgba(193, 0, 104, 1)'
-                });
-                data.element.animate ({
-                    'stroke-dashoffset': {
-                        begin: '1s',
-                        dur: '21s',
-                        from: '0',
-                        to: '600',
-                        easing: 'easeOutQuart',
-                        d:"part1"
-                    },
-                    'stroke-dasharray': {
-                        from: '0',
-                        to: '1000'
-                    }
-                }, false);
-            } else {
-                data.element.attr({
-                    'style': 'stroke: rgba(102, 102, 102, 1)'
-                });
-                data.element.animate ({
-                    'stroke-dashoffset': {
-                        begin: "part1.end",
-                        dur: 1000,
-                        from: '0 250 150',
-                        to: '360 250 150',
-                        easing: 'easeOutQuart'
-                    }
-                });
-            }
+    /**
+     * alram success handler
+     * @author psb
+     * @private
+     */
+    function dashBoardAllSuccessHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'worker':
+                console.log(data);
+                break;
+            case 'crane':
+                console.log(data);
+                break;
+            case 'inout':
+                console.log(data);
+                break;
         }
-    });
-    var randomScalingFactor = function() {
-        return Math.round(Math.random() * 100);
-        //return 0;
-    };
-    setInterval(function() {
-        var value1 = randomScalingFactor();
-        var value2 = randomScalingFactor();
-        var value3 = randomScalingFactor();
-        mychart.data.series[0].push(value1);
-        mychart.data.series[0].shift();
-        mychart.data.series[1].push(value2);
-        mychart.data.series[1].shift();
-        mychart.data.series[2].push(value3);
-        mychart.data.series[2].shift();
-        mychart.data.labels.push(value1);
-        mychart.data.labels.shift();
-        mychart.update()
-    }, 500);
+    }
+
+    /*
+     ajax error handler
+     @author psb
+     */
+    function dashBoardAllFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
+    }
+
+    /*
+     alert message method
+     @author psb
+     */
+    function alertMessage(type){
+        alert(messageConfig[type]);
+    }
+
+//
+//    var mychart = new Chartist.Line('#chart', {
+//        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+//        series: [
+//            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
+//            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0],
+//            [1, 2, 3, 1, 4, 0, 1, 0, 2,  0,  1,  2,  1,  1,  2,  0,  1,  0,  2,  0]
+//        ]
+//    }, {
+//        low: 0,
+//        showArea: true,
+//        lineSmooth: Chartist.Interpolation.simple({
+//            divisor: 100
+//        })
+//    });
+//    mychart.on('draw', function(data) {
+//        if(data.type === 'slice') {
+//            if (data.index == 0) {
+//                data.element.attr({
+//                    'style': 'stroke: rgba(193, 0, 104, 1)'
+//                });
+//                data.element.animate ({
+//                    'stroke-dashoffset': {
+//                        begin: '1s',
+//                        dur: '21s',
+//                        from: '0',
+//                        to: '600',
+//                        easing: 'easeOutQuart',
+//                        d:"part1"
+//                    },
+//                    'stroke-dasharray': {
+//                        from: '0',
+//                        to: '1000'
+//                    }
+//                }, false);
+//            } else {
+//                data.element.attr({
+//                    'style': 'stroke: rgba(102, 102, 102, 1)'
+//                });
+//                data.element.animate ({
+//                    'stroke-dashoffset': {
+//                        begin: "part1.end",
+//                        dur: 1000,
+//                        from: '0 250 150',
+//                        to: '360 250 150',
+//                        easing: 'easeOutQuart'
+//                    }
+//                });
+//            }
+//        }
+//    });
+//    var randomScalingFactor = function() {
+//        return Math.round(Math.random() * 100);
+//        //return 0;
+//    };
+//    setInterval(function() {
+//        var value1 = randomScalingFactor();
+//        var value2 = randomScalingFactor();
+//        var value3 = randomScalingFactor();
+//        mychart.data.series[0].push(value1);
+//        mychart.data.series[0].shift();
+//        mychart.data.series[1].push(value2);
+//        mychart.data.series[1].shift();
+//        mychart.data.series[2].push(value3);
+//        mychart.data.series[2].shift();
+//        mychart.data.labels.push(value1);
+//        mychart.data.labels.shift();
+//        mychart.update()
+//    }, 500);
 </script>
