@@ -263,7 +263,7 @@ thead 기본 백그라운드 컬러 #787878
     cursor:pointer;
 }
 .paging button.page_select,
-.paging button:hover {border:1px solid #0e2c45;}
+.paging button:hover {border:1px solid #b11831; color:#b11831;}
 
 .paging button.pll {background-color:#f2f2f2 ; padding:3px 8px;}
 .paging button.pl  {background-color:#f9f9f9 ; }

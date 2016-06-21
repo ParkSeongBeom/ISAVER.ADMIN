@@ -39,7 +39,7 @@ public interface EventLogSvc {
     ModelAndView findByEventLog(Map<String, String> parameters);
 
     /**
-     * 이벤트 로그 알람 목록을 가져온다.
+     * 알림센터 데이터를 가져온다.
      *
      * @author dhj
      * @param parameters

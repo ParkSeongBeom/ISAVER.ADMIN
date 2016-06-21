@@ -178,7 +178,7 @@
             tdCodeName.textContent = code['codeName'];
             var useYn = textConfig[code['useYn']] == null ? textConfig['N'] : textConfig[code['useYn']];
             tdCodeUseYn.textContent = useYn;
-            tdCodeSort.textContent = code['codeSort'];
+            tdCodeSort.textContent = code['sortOrder'];
 
             tr.appendChild(tdCodeId);
             tr.appendChild(tdCodeName);

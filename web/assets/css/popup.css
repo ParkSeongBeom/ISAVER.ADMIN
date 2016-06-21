@@ -7,7 +7,7 @@
 
 /*레이어 팝업 */
 .layer_popup, .admin_popup
-{display: none; position: absolute;z-index:100; top:0; left:0; bottom:0px; right: 0px;}
+{display: none; position: absolute;z-index:100; top:50px; left:120px; bottom:0px; right: 0px;}
 .layer_popupbg {width:100%;height:100%;top:0;left:0;background-color: rgba(0,0,0,0.7);}
 
 /*.layer_popup .nano-pane {display: block !important;}*/
@@ -114,7 +114,7 @@
 
 /* 토스트 팝업 */
 .toast_popup {
-    position: absolute; z-index:50; top:60px; right:-300px; width:260px; min-height:100px;
+    position: fixed; z-index:50; top:60px; right:-300px; width:260px; min-height:100px;
     background-color: #fe4d3b;
     box-shadow:         0px 0px 8px rgba(0,0,0,0.8);
     -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.8);

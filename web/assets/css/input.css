@@ -163,7 +163,7 @@ td button.refresh:before {font-size:16px; color:#2692ec;}
 
 
 .btn {position: relative; padding: 0 10px; color:#fff; border:none;}
-.btn:hover {background-color: #b11831;}
+.btn:hover, table button:hover,  {background-color: #b11831 !important;}
 button.btn {text-align:center; margin:0 0 0 4px;}
 a.btn      {display: table;}
 a.btn span {width:100%; text-align:center; display: table-cell; vertical-align: middle; }

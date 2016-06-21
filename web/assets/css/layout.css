@@ -7,9 +7,8 @@ aside.db_area, aside.dbs_area, header, nav {
     -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
 
-aside, header, section, .wrap, header, .header_area, article  {
-    -webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;
-}
+aside, header, section, .wrap, header, .header_area, article
+{-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 
 html, body {}
 body {
@@ -47,31 +46,45 @@ body.login_mode {
 
 }
 body.dashboard_mode {position: absolute;}
-body section.container {}
-body.dashboard_mode section.container {overflow: hidden; padding:0;}
 
-body.admin_mode section.container,
-body.dashboard_mode.db_mode section.container
-{margin: auto; padding:30px; background-color:#fcfcfc !important;}
+body:after {content: ""; position: fixed; top:50px; left:0; bottom:0; width:120px; z-index: -1; background-color: #25252f;}
 
-body.adaptive_max.admin_mode section.container,
-body.dashboard_mode.db_mode section.container { }
+
 
 .wrap {overflow: hidden; width:100%; height:100%; margin:auto;}
 body.dashboard_mode .wrap {position: absolute;}
 
-nav ,section {display: inline-block; position: absolute;}
+nav,section {display: inline-block; }
 
 header  {position: fixed; z-index:40; top:0; left:0; width:100%; height:50px; background-color: #333240;}
 header .header_area {position: relative; width:100%; height:100%;}
-nav.nav {top:50px;  left:0; bottom:0; width:120px; background-color: #25252f;}
-section.container {overflow: scroll; top:50px; right:0;  left:120px; bottom:0;  background-color:#1e1d23;}
+
+nav.nav {overflow: hidden; position: absolute; top:50px;  left:0; bottom:0; width:120px; background-color: #25252f;}
+
+
+section.container {overflow: scroll; }
+body.dashboard_mode section.container {
+    overflow: hidden; position: absolute; top:50px; right:0;  left:120px; bottom:0; padding:0;
+    background-color:#1e1d23;
+}
+
+
+
+body.admin_mode section.container {
+    height:calc(100% - 50px);height:-webkit-calc(100% - 50px);
+    margin: 50px 0 0 120px; padding:30px; background-color:#fcfcfc;}
+
+
+
+body.adaptive_max.admin_mode section.container {padding: 30px 120px;}
+
 
 body.on header  {top:-50px;}
 body.on nav.nav {left:-120px;}
-body.on section.container {top:0px; left:0px;}
+body.on section.container {top:0px; left:0px; margin:0; height:100%;}
 body.on aside.db_area, body.on aside.dbs_area  {top:0;}
 
+body.on .layer_popup, .admin_popup {top:0; left:0;}
 /*로그인 영역 */
 .login_area {
     overflow: hidden;
@@ -94,3 +107,6 @@ body.on aside.db_area, body.on aside.dbs_area  {top:0;}
 
 .change_btn {position: fixed; z-index:10; top:0; right:0; width:50px; height:50px;}
 .change_btn:before {font-size:26px; color:#fff;}
+
+body.admin_mode.on .zoom_btn.on:before {color:#3e3e3e;}
+

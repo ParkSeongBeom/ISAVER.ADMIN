@@ -11,7 +11,13 @@ var TemplateHelper = (
          *********************************************************************************/
         var ALRAM_CONTENT_TEMPLATE = $("<li/>").append(
             $("<div/>", {class:"check_box_set"}).append(
-                $("<input/>", {type:"checkbox" ,class:"check_input"})
+                $("<input/>", {type:"checkbox" ,class:"check_input"}).on("click",function(){
+                    if($(this).is("checked")){
+                        $(this).parent().parent().addClass("check");
+                    }else{
+                        $(this).parent().parent().removeClass("check");
+                    }
+                })
             ).append(
                 $("<label/>", {class:"lablebase lb_style01"})
             )
@@ -38,6 +44,19 @@ var TemplateHelper = (
          *********************************************************************************/
         var MARQUEE_CONTENT_TEMPLATE = $("<button/>");
 
+        /********************************************************************************
+         * 토스트 팝업 template
+         *********************************************************************************/
+        var TOAST_POPUP_TEMPLATE = $("<aside/>", {class:"toast_popup on"}).append(
+            $("<button/>", {href:"#", class:"btn_x", onclick:"javascript:$(this).parent().remove();"})
+        ).append(
+            $("<button/>", {href:"#", class:"tp_contents"}).append(
+                $("<span/>", {id:"toastEventName"})
+            ).append(
+                $("<span/>", {id:"toastEventDesc"})
+            )
+        );
+
         /**
          * get template (동적생성 Tag)
          * @author psb
@@ -51,6 +70,9 @@ var TemplateHelper = (
                     break;
                 case "marquee01":
                     _returnTag = MARQUEE_CONTENT_TEMPLATE.clone();
+                    break;
+                case "toast":
+                    _returnTag = TOAST_POPUP_TEMPLATE.clone();
                     break;
             }
 

@@ -682,8 +682,6 @@
                         <div class="mp_header">
                             <h2>진출입</h2>
                             <div>
-                                <span class="mh_name co_yell">작업자 상태</span>
-                                <span class="mh_name co_purp">크래인 상태</span>
                                 <button class="db_btn sett_btn"></button>
                             </div>
                         </div>
@@ -704,9 +702,17 @@
                             </div>
 
                             <div id="chart02" class="ct-chart">
-                                <div class="ct-name">
-                                    <span class="mh_name co_gren">진입(IN)</span>
-                                    <span class="mh_name co_purp">진출(OUT)</span>
+                                <div class="mp_header ct-name">
+                                    <div>
+                                        <span class="ch_name co_gren">진입(IN)</span>
+                                        <span class="ch_name co_purp">진출(OUT)</span>
+                                        <select name="type">
+                                            <option value="">30 min</option>
+                                            <option value="">60 min</option>
+                                            <option value="">90 min</option>
+                                            <option value="">120 min</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

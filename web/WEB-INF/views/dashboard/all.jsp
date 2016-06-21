@@ -31,17 +31,19 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="alra_btn"></button>
+                                <button class="alra_btn">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
                             <div class="mc_bico type01 worker"></div>
                             <div class="mc_element nano">
-                                <div class="mce_btn_area nano-content">
+                                <div id="eventLogWorkerList" class="mce_btn_area nano-content">
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                    <span>${area.areaName}</span>
+                                                </button>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
@@ -58,12 +60,15 @@
                         <div class="mp_contents">
                             <div class="mc_bico type01 going"></div>
                             <div class="mc_element nano">
-                                <div class="mce_btn_area nano-content">
+                                <div id="eventLogInoutList" class="mce_btn_area nano-content">
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
                                                 <!-- level02 클래스, <span>54<em>-02</em> 삽입 -->
-                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                    <span>${area.areaName}</span>
+                                                    <span id="gap">0</span>
+                                                </button>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
@@ -79,18 +84,19 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="alra_btn"></button>
+                                <button class="alra_btn">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
                             <div class="mc_bico type01 crane"></div>
                             <div class="mc_element nano">
-                                <div class="mce_btn_area nano-content">
+                                <div id="eventLogCraneList" class="mce_btn_area nano-content">
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <!-- level03 클래스, <span>001</em> 삽입 -->
-                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                    <span>${area.areaName}</span>
+                                                </button>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
@@ -104,7 +110,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="alra_btn"></button>
+                                <button class="alra_btn">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -114,8 +120,9 @@
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <!-- level02, level03 클래스, <span>001</em> 삽입 -->
-                                                <button href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"><span>${area.areaName}</span></button>
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                    <span>${area.areaName}</span>
+                                                </button>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
@@ -161,31 +168,21 @@
      @author kst
      */
     var urlConfig = {
-        workerUrl  :   "${rootPath}/eventLog/worker.json"
-        ,craneUrl  :   "${rootPath}/eventLog/crane.json"
-        ,inoutUrl  :   "${rootPath}/eventLog/inout.json"
+        workerUrl  :   "${rootPath}/eventLogWorker/list.json"
+        ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
+        ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
     };
 
     var messageConfig = {
-        workerFailure    :'<spring:message code="dashboard.message.workerFailure"/>'
-        ,   craneFailure :'<spring:message code="dashboard.message.craneFailure"/>'
-        ,   inoutFailure :'<spring:message code="dashboard.message.inoutFailure"/>'
+        workerFailure   :'<spring:message code="dashboard.message.workerFailure"/>'
+        , craneFailure  :'<spring:message code="dashboard.message.craneFailure"/>'
+        , inoutFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
     };
 
     $(document).ready(function(){
-//        //마키 플러그인 호출
-//        $('.marquee').marquee({
-//            duration: 20000,
-//            direction: 'left',
-//            gap: 20,
-//            duplicated: true,
-//            pauseOnHover: true,
-//            startVisible: true
-//        });
-
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
     });
 
     /**
@@ -196,13 +193,93 @@
     function dashBoardAllSuccessHandler(data, dataType, actionType){
         switch(actionType){
             case 'worker':
-                console.log(data);
+                var workerList = data['eventLogWorkerList'];
+                if(workerList!=null){
+                    var workerEventCnt = 0;
+                    for(var index in workerList){
+                        var worker = workerList[index];
+                        var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
+
+                        if(Number(worker['eventCnt'])>0){
+                            if(buttonTag.find("#eventCnt").length>0){
+                                if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
+                                    buttonTag.find("#eventCnt").text(worker['eventCnt']);
+                                }
+                            }else{
+                                buttonTag.append(
+                                    $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
+                                )
+                            }
+
+                            if(!buttonTag.hasClass("level03")){
+                                buttonTag.addClass("level03");
+                            }
+                            workerEventCnt++;
+                        }else{
+                            if(buttonTag.hasClass("level03")){
+                                buttonTag.removeClass("level03");
+                            }
+
+                            if(buttonTag.find("#eventCnt").length>0){
+                                buttonTag.find("#eventCnt").remove();
+                            }
+                        }
+                    }
+
+                    if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
+                        $("#workerDiv").find(".alra_btn").text(workerEventCnt);
+                    }
+
+                    if(workerEventCnt>0 && !$("#workerDiv").hasClass("level03")){
+                        $("#workerDiv").addClass("level03");
+                    }
+                }
                 break;
             case 'crane':
-                console.log(data);
+                var craneList = data['eventLogCraneList'];
+                if(craneList!=null){
+                    var craneEventCnt = 0;
+                    for(var index in craneList){
+                        var crane = craneList[index];
+                        var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+
+                        if(Number(crane['eventCnt'])>0){
+                            if(buttonTag.find("#eventCnt").length>0){
+                                if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
+                                    buttonTag.find("#eventCnt").text(crane['eventCnt']);
+                                }
+                            }else{
+                                buttonTag.append(
+                                    $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
+                                )
+                            }
+
+                            if(!buttonTag.hasClass("level03")){
+                                buttonTag.addClass("level03");
+                            }
+                            craneEventCnt++;
+                        }else{
+                            if(buttonTag.hasClass("level03")){
+                                buttonTag.removeClass("level03");
+                            }
+
+                            if(buttonTag.find("#eventCnt").length>0){
+                                buttonTag.find("#eventCnt").remove();
+                            }
+                        }
+                    }
+
+                    if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
+                        $("#craneDiv").find(".alra_btn").text(craneEventCnt);
+                    }
+
+                    if(craneEventCnt>0 && !$("#craneDiv").hasClass("level03")){
+                        $("#craneDiv").addClass("level03");
+                    }
+                }
                 break;
             case 'inout':
-                console.log(data);
+//                console.log(data);
                 break;
         }
     }
@@ -223,7 +300,6 @@
         alert(messageConfig[type]);
     }
 
-//
 //    var mychart = new Chartist.Line('#chart', {
 //        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
 //        series: [
