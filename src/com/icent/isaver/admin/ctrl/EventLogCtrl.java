@@ -1,7 +1,9 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +74,26 @@ public class EventLogCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alram")
     public ModelAndView findListEventLogForAlram(@RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+        return modelAndView;
+    }
+
+    private final static String[] cancelEventLogParam = new String[]{"eventLogIds"};
+
+    /**
+     * 알림 해제한다
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/cancel")
+    public ModelAndView cancelEventLog(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        if(MapUtils.nullCheckMap(parameters, cancelEventLogParam)){
+            throw new JabberException("");
+        }
+
+        parameters.put("eventCancelUserId",AdminHelper.getAdminIdFromSession(request));
+        ModelAndView modelAndView = eventLogSvc.cancelEventLog(parameters);
         return modelAndView;
     }
 }

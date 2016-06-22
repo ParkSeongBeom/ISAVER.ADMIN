@@ -46,4 +46,13 @@ public interface EventLogSvc {
      * @return
      */
     ModelAndView findListEventLogForAlram(Map<String, String> parameters);
+
+    /**
+     * 알림 해제한다
+     *
+     * @author dhj
+     * @param parameters
+     * @return
+     */
+    ModelAndView cancelEventLog(Map<String, String> parameters);
 }

@@ -184,14 +184,8 @@
     $(document).ready(function(){
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        //        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        var data = {
-            pageIndex : 20
-            , minutesCount : 30
-        };
-
-        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], data, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-
+//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : 30}, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
     });
 
     /**
@@ -202,102 +196,111 @@
     function dashBoardAllSuccessHandler(data, dataType, actionType){
         switch(actionType){
             case 'worker':
-                var workerList = data['eventLogWorkerList'];
-                if(workerList!=null){
-                    var workerEventCnt = 0;
-                    for(var index in workerList){
-                        var worker = workerList[index];
-                        var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
-
-                        if(Number(worker['eventCnt'])>0){
-                            if(buttonTag.find("#eventCnt").length>0){
-                                if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
-                                    buttonTag.find("#eventCnt").text(worker['eventCnt']);
-                                }
-                            }else{
-                                buttonTag.append(
-                                    $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
-                                )
-                            }
-
-                            modifyElementClass(buttonTag,'level03','add');
-                            workerEventCnt++;
-                        }else{
-                            modifyElementClass(buttonTag,'level03','remove');
-
-                            if(buttonTag.find("#eventCnt").length>0){
-                                buttonTag.find("#eventCnt").remove();
-                            }
-                        }
-                    }
-
-                    if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
-                        $("#workerDiv").find(".alra_btn").text(workerEventCnt);
-                    }
-
-                    if(workerEventCnt>0){
-                        modifyElementClass($("#workerDiv"),'level03','add');
-                    }
-                }
+                workerRender(data);
                 break;
             case 'crane':
-                var craneList = data['eventLogCraneList'];
-                if(craneList!=null){
-                    var craneEventCnt = 0;
-                    for(var index in craneList){
-                        var crane = craneList[index];
-                        var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
-
-                        if(Number(crane['eventCnt'])>0){
-                            if(buttonTag.find("#eventCnt").length>0){
-                                if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
-                                    buttonTag.find("#eventCnt").text(crane['eventCnt']);
-                                }
-                            }else{
-                                buttonTag.append(
-                                    $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
-                                )
-                            }
-
-                            modifyElementClass(buttonTag,'level03','add');
-                            craneEventCnt++;
-                        }else{
-                            modifyElementClass(buttonTag,'level03','remove');
-
-                            if(buttonTag.find("#eventCnt").length>0){
-                                buttonTag.find("#eventCnt").remove();
-                            }
-                        }
-                    }
-
-                    if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
-                        $("#craneDiv").find(".alra_btn").text(craneEventCnt);
-                    }
-
-                    if(craneEventCnt>0){
-                        modifyElementClass($("#craneDiv"),'level03','add');
-                    }
-                }
+                craneRender(data);
                 break;
             case 'inout':
-//                console.log(data);
+                inoutRender(data);
                 break;
             case 'chart':
-                chartProcessFunc(data);
+                chartRender(data);
                 break;
         }
     }
 
-    function chartProcessFunc(data) {
+    function workerRender(data){
+        var workerList = data['eventLogWorkerList'];
+        if(workerList!=null){
+            var workerEventCnt = 0;
+            for(var index in workerList){
+                var worker = workerList[index];
+                var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
 
+                if(Number(worker['eventCnt'])>0){
+                    if(buttonTag.find("#eventCnt").length>0){
+                        if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
+                            buttonTag.find("#eventCnt").text(worker['eventCnt']);
+                        }
+                    }else{
+                        buttonTag.append(
+                                $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level03','add');
+                    workerEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#eventCnt").length>0){
+                        buttonTag.find("#eventCnt").remove();
+                    }
+                }
+            }
+
+            if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
+                $("#workerDiv").find(".alra_btn").text(workerEventCnt);
+            }
+
+            if(workerEventCnt>0){
+                modifyElementClass($("#workerDiv"),'level03','add');
+            }
+        }
+    }
+
+    function craneRender(data){
+        var craneList = data['eventLogCraneList'];
+        if(craneList!=null){
+            var craneEventCnt = 0;
+            for(var index in craneList){
+                var crane = craneList[index];
+                var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+
+                if(Number(crane['eventCnt'])>0){
+                    if(buttonTag.find("#eventCnt").length>0){
+                        if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
+                            buttonTag.find("#eventCnt").text(crane['eventCnt']);
+                        }
+                    }else{
+                        buttonTag.append(
+                                $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level03','add');
+                    craneEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#eventCnt").length>0){
+                        buttonTag.find("#eventCnt").remove();
+                    }
+                }
+            }
+
+            if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
+                $("#craneDiv").find(".alra_btn").text(craneEventCnt);
+            }
+
+            if(craneEventCnt>0){
+                modifyElementClass($("#craneDiv"),'level03','add');
+            }
+        }
+    }
+
+    function inoutRender(data){
+//        console.log(data);
+    }
+
+    function chartRender(data) {
         if (data['eventLogWorkerChart'] != null) {
-
             var eventLogWorkerChart = data['eventLogWorkerChart'];
             var chartList = [];
             var eventDateList = [];
 
             for (var i =0;i<eventLogWorkerChart.length;i++) {
-
                 var item = eventLogWorkerChart[i];
                 var eventDate  = new Date();
                 eventDate.setTime(item['eventDatetime']);
@@ -316,17 +319,12 @@
             var chartList = [];
 
             for (var i =0;i<eventLogCraneChart.length;i++) {
-
                 var item = eventLogCraneChart[i];
-
                 chartList.push(item['eventCnt']);
             }
             chartList.reverse();
             mychart.data.series[1] = chartList;
-
         }
-
-//        mychart.data.labels.push(value1);
 
         mychart.update();
     }
@@ -396,23 +394,4 @@
             }
         }
     });
-    var randomScalingFactor = function() {
-        return Math.round(Math.random() * 100);
-        //return 0;
-    };
-
-//    setInterval(function() {
-//        var value1 = randomScalingFactor();
-//        var value2 = randomScalingFactor();
-//        var value3 = randomScalingFactor();
-//        mychart.data.series[0].push(value1);
-//        mychart.data.series[0].shift();
-//        mychart.data.series[1].push(value2);
-//        mychart.data.series[1].shift();
-//        mychart.data.series[2].push(value3);
-//        mychart.data.series[2].shift();
-//        mychart.data.labels.push(value1);
-//        mychart.data.labels.shift();
-//        mychart.update()
-//    }, 500);
 </script>

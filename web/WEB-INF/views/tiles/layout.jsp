@@ -54,8 +54,17 @@
             ,'mainUrl':'${rootPath}/main.html'
             ,'listUrl':'${rootPath}/eventLog/alram.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
-            ,'alramDetailUrl':'${rootPath}/action/eventDetail.html'
+            ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
+            ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
         };
+
+        var layoutMessageConfig = {
+            alramCancelSuccess    :'<spring:message code="dashboard.message.alramCancelSuccess"/>'
+            , alramDetailFailure  :'<spring:message code="dashboard.message.alramDetailFailure"/>'
+            , alramCancelFailure  :'<spring:message code="dashboard.message.alramCancelFailure"/>'
+            , emptyAlramCancel    :'<spring:message code="dashboard.message.emptyAlramCancel"/>'
+        };
+
 
         $(document).ready(function(){
             // 메뉴그리기
@@ -238,25 +247,82 @@
         }
 
         /**
-         * search alram detail (action)
+         * alram cencel
          * @author psb
          */
-        function searchAlramDetail(eventLogId, eventId,actionType){
-            alramShowHide('detail','hide');
-            sendAjaxPostRequest(layoutUrlConfig['alramDetailUrl'],{eventLogId:eventLogId, eventId:eventId},alramDetailSuccessHandler,alramDetailFailureHandler,actionType);
+        function alramCancel(){
+            var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+
+            if(eventLogIdList==null || eventLogIdList.length == 0){
+                layoutAlertMessage('emptyAlramCancel');
+                return false;
+            }
+
+            layoutAjaxCall('alramCancel',{eventLogIds : eventLogIdList.join(",")});
         }
 
         /**
-         * alram detail success handler
+         * search alram detail (action)
+         * @author psb
+         */
+        function searchAlramDetail(eventLogId, eventId, eventType){
+            var paramData = {
+                eventLogId  : eventLogId
+                , eventId   : eventId
+                , eventType : eventType
+            }
+
+            alramShowHide('detail','hide');
+            layoutAjaxCall('alramDetail',paramData);
+        }
+
+        /**
+         * ajax call
+         * @author psb
+         */
+        function layoutAjaxCall(actionType, data){
+            sendAjaxPostRequest(layoutUrlConfig[actionType+'Url'],data,layoutSuccessHandler,layoutFailureHandler,actionType);
+        }
+
+        /**
+         * layout success handler
          * @author psb
          * @private
          */
-        function alramDetailSuccessHandler(data, dataType, actionType){
+        function layoutSuccessHandler(data, dataType, actionType){
+            switch(actionType){
+                case 'alramDetail':
+                    alramDetailRender(data);
+                    break;
+                case 'alramCancel':
+                    layoutAlertMessage('alramCancelSuccess');
+                    break;
+            }
+        }
+
+        /**
+         * layout failure handler
+         * @author psb
+         * @private
+         */
+        function layoutFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+            layoutAlertMessage(actionType + 'Failure');
+        }
+
+        /*
+         alert message method
+         @author psb
+         */
+        function layoutAlertMessage(type){
+            alert(layoutMessageConfig[type]);
+        }
+
+        function alramDetailRender(data){
             if(data!=null && data['action']!=null){
                 var action = data['action'];
                 var eventTypeName;
 
-                switch (actionType){
+                switch (data['paramBean']['eventType']){
                     case "crane" :
                         eventTypeName = "크래인";
                         break;
@@ -273,16 +339,6 @@
             }else{
                 alert("조치 정보가 없습니다.");
             }
-        }
-
-        /**
-         * alram detail failure handler
-         * @author psb
-         * @private
-         */
-        function alramDetailFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-            alert("조치 정보를 불러오는데 실패하였습니다.");
-            console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
         }
 
         function bodyAddClass(){
@@ -390,7 +446,7 @@
         <div class="db_header">
             <div>
                 <h3><spring:message code="dashboard.title.alramCenter"/></h3>
-                <button class="btn btype03 bstyle07" href="#" onclick=""><spring:message code="dashboard.title.alramCancel"/></button>
+                <button class="btn btype03 bstyle07" href="#" onclick="javascript:alramCancel();"><spring:message code="dashboard.title.alramCancel"/></button>
             </div>
             <div>
                 <div class="check_box_set">
