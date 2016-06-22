@@ -2,7 +2,6 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.svc.EventLogInoutSvc;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
-import com.icent.isaver.repository.bean.EventLogWorkerBean;
 import com.icent.isaver.repository.dao.base.EventLogInoutDao;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

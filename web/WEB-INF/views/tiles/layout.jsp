@@ -47,7 +47,6 @@
         var menuCtrl = null;
         var dashBoardHelper = new DashBoardHelper();
         var templateHelper = new TemplateHelper();
-        var marqueeList = {};
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -162,6 +161,7 @@
                     if(eventLog['eventType']!=null && eventLog['eventType']!=""){
                         var eventTypeName = null;
                         marqueeFlag = true;
+                        $('.marquee').marquee('destroy');
 
                         switch (eventLog['eventType']){
                             case "crane" :
@@ -174,7 +174,7 @@
 
                         if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
                             $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                            delete marqueeList[eventLog['eventLogId']];
+                            $("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").remove();
                         }else{
                             // 알림센터
                             var alramTag = templateHelper.getTemplate("alram01");
@@ -186,7 +186,10 @@
                             alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"');");
                             $("#alramList").prepend(alramTag);
 
-                            marqueeList[eventLog['eventLogId']] = eventLog['eventName'];
+                            // marquee
+                            var marqueeTag = templateHelper.getTemplate("marquee01");
+                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(eventLog['eventName']);
+                            $("#marqueeList").prepend(marqueeTag);
 
                             // 토스트팝업
                             var toastTag = templateHelper.getTemplate("toast");
@@ -205,16 +208,7 @@
                     }
                 }
 
-                if(marqueeFlag && Object.keys(marqueeList).length>0 && $("#marqueeList").length>0){
-                    $('.marquee').marquee('destroy');
-
-                    for(var index in marqueeList){
-                        // marquee
-                        var marqueeTag = templateHelper.getTemplate("marquee01");
-                        marqueeTag.attr("eventLogId",index).text(marqueeList[index]);
-                        $("#marqueeList").prepend(marqueeTag);
-                    }
-
+                if(marqueeFlag && $("#marqueeList").length>0){
                     //마키 플러그인 호출
                     $('.marquee').marquee({
                         duration: 20000,

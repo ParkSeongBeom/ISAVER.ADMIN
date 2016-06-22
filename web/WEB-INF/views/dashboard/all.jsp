@@ -64,10 +64,9 @@
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <!-- level02 클래스, <span>54<em>-02</em> 삽입 -->
                                                 <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
                                                     <span>${area.areaName}</span>
-                                                    <span id="gap">0</span>
+                                                    <span id="nowGap">0</span>
                                                 </button>
                                             </c:forEach>
                                         </c:when>
@@ -184,7 +183,7 @@
     $(document).ready(function(){
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : 30}, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
     });
 
@@ -246,6 +245,8 @@
 
             if(workerEventCnt>0){
                 modifyElementClass($("#workerDiv"),'level03','add');
+            }else{
+                modifyElementClass($("#workerDiv"),'level03','remove');
             }
         }
     }
@@ -286,12 +287,55 @@
 
             if(craneEventCnt>0){
                 modifyElementClass($("#craneDiv"),'level03','add');
+            }else{
+                modifyElementClass($("#craneDiv"),'level03','remove');
             }
         }
     }
 
     function inoutRender(data){
-//        console.log(data);
+        var inoutList = data['eventLogInoutList'];
+        if(inoutList!=null){
+            var inoutEventCnt = 0;
+            for(var index in inoutList){
+                var inout = inoutList[index];
+
+                var buttonTag = $("#eventLogInoutList button[areaId='"+inout['areaId']+"']");
+                var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
+                var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
+
+                if(buttonTag.find("#nowGap").text() != String(nowGap)){
+                    buttonTag.find("#nowGap").text(String(nowGap));
+                }
+
+                if(beforeGap>0){
+                    if(buttonTag.find("#beforeGap").length>0){
+                        if(buttonTag.find("#beforeGap").text() != "/"+String(beforeGap)){
+                            buttonTag.find("#beforeGap").text(beforeGap);
+                        }
+                    }else{
+                        buttonTag.find("#nowGap").append(
+                            $("<em/>", {id:"beforeGap"}).text("/"+String(beforeGap))
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level02','add');
+                    inoutEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#beforeGap").length>0){
+                        buttonTag.find("#beforeGap").remove();
+                    }
+                }
+            }
+
+            if(inoutEventCnt>0){
+                modifyElementClass($("#inoutDiv"),'level02','add');
+            }else{
+                modifyElementClass($("#inoutDiv"),'level03','remove');
+            }
+        }
     }
 
     function chartRender(data) {
