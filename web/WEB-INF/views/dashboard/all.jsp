@@ -142,7 +142,7 @@
                                 <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
                                 <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
                                 <span class="ch_name co_yell"><spring:message code="dashboard.column.gas"/></span>
-                                <select id="chartRefreshTime" onchange="javascript:chartMinutesSelectFunc();return false;">
+                                <select id="chartRefreshTime">
                                     <option value="30">30 min</option>
                                     <option value="60">60 min</option>
                                     <option value="90">90 min</option>
@@ -164,7 +164,7 @@
 
     /*
      url defind
-     @author kst
+     @author psb
      */
     var urlConfig = {
         workerUrl  :   "${rootPath}/eventLogWorker/list.json"
@@ -181,30 +181,18 @@
     };
 
     $(document).ready(function(){
-        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-
-        chartExecFunc();
-
+        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
 
-    /**
-     * 차트 실행
-     */
-    function chartExecFunc() {
-        dashBoardHelper.removeRequestData('chart');
-        setTimeout(function() {
-            dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        }, 100);
-
-    }
     /**
      * alram success handler
      * @author psb
      * @private
      */
-    function dashBoardAllSuccessHandler(data, dataType, actionType){
+    function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
             case 'worker':
                 workerRender(data);
@@ -217,6 +205,7 @@
                 break;
             case 'chart':
                 chartRender(data);
+                dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
                 break;
         }
     }
@@ -351,16 +340,6 @@
     }
 
     /**
-     * 차트 표기 시간 선택 셀렉터
-     * @author dhj
-     */
-    function chartMinutesSelectFunc() {
-
-//        var minutes = $(event.target).prop("value");
-//        console.log(minutes);
-        chartExecFunc();
-    }
-    /**
      * 차트 가공
      * @author dhj
      */
@@ -403,7 +382,7 @@
      ajax error handler
      @author psb
      */
-    function dashBoardAllFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+    function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
         alertMessage(actionType + 'Failure');
     }
 

@@ -367,83 +367,81 @@
     <!-- 진출입 셋팅 레이어 팝업 -->
     <aside class="layer_popup sett_popup">
         <section class="layer_wrap i_type05">
-            <form>
-                <article class="layer_area">
-                    <div class="mp_header">
-                        <h2>진출입자 조회 주기 설정</h2>
-                        <div>
-                            <button class="db_btn zoomclose_btn ipop_close"></button>
-                        </div>
+            <article class="layer_area">
+                <div class="mp_header">
+                    <h2>진출입자 조회 주기 설정</h2>
+                    <div>
+                        <button class="db_btn zoomclose_btn ipop_close"></button>
                     </div>
+                </div>
 
-                    <div class="mp_contents vh_mode">
-                        <div class="search_contents">
-                            <p class="itype_01">
-                                <span>구역</span>
-                                <span>
-                                    <select>
-                                        <option value="">A-Area</option>
-                                        <option value="">B-Area</option>
-                                        <option value="">C-Area</option>
-                                    </select>
-                                </span>
-                            </p>
-                        </div>
-                        <div class="mc_element nano ">
-                            <div class="time_select_contents nano-content">
-                                <div>
-                                    <div class="check_box_set">
-                                        <input type="checkbox" name="" class="check_input">
-                                        <label class="lablebase lb_style01"></label>
-                                    </div>
-                                    <span>Cycle 01Cycle 01Cycle 01Cycle 01Cycle 01</span>
-                                    <select>
-                                        <option value="">AM</option>
-                                        <option value="">PM</option>
-                                    </select>
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <p>AM 07:59:59</p>
+                <div class="mp_contents vh_mode">
+                    <div class="search_contents">
+                        <p class="itype_01">
+                            <span>구역</span>
+                            <span>
+                                <select>
+                                    <option value="">A-Area</option>
+                                    <option value="">B-Area</option>
+                                    <option value="">C-Area</option>
+                                </select>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="mc_element nano ">
+                        <div class="time_select_contents nano-content">
+                            <div>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div>
-                                    <div class="check_box_set">
-                                        <input type="checkbox" name="" class="check_input">
-                                        <label class="lablebase lb_style01"></label>
-                                    </div>
-                                    <span>Cycle 02</span>
-                                    <select>
-                                        <option value="">AM</option>
-                                        <option value="">PM</option>
-                                    </select>
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <p>AM 07:59:59</p>
+                                <span>Cycle 01Cycle 01Cycle 01Cycle 01Cycle 01</span>
+                                <select>
+                                    <option value="">AM</option>
+                                    <option value="">PM</option>
+                                </select>
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <p>AM 07:59:59</p>
+                            </div>
+                            <div>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div>
-                                    <div class="check_box_set">
-                                        <input type="checkbox" name="" class="check_input">
-                                        <label class="lablebase lb_style01"></label>
-                                    </div>
-                                    <span>Cycle 02</span>
-                                    <select>
-                                        <option value="">AM</option>
-                                        <option value="">PM</option>
-                                    </select>
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <input type="number" name="" class="">
-                                    <p>AM 07:59:59</p>
+                                <span>Cycle 02</span>
+                                <select>
+                                    <option value="">AM</option>
+                                    <option value="">PM</option>
+                                </select>
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <p>AM 07:59:59</p>
+                            </div>
+                            <div>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
                                 </div>
+                                <span>Cycle 02</span>
+                                <select>
+                                    <option value="">AM</option>
+                                    <option value="">PM</option>
+                                </select>
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <input type="number" name="" class="">
+                                <p>AM 07:59:59</p>
                             </div>
                         </div>
-                        <div class="lmc_btn_area mc_tline">
-                            <button class="btn btype01 bstyle07" name="">저장</button>
-                        </div>
                     </div>
-                </article>
-            </form>
+                    <div class="lmc_btn_area mc_tline">
+                        <button class="btn btype01 bstyle07" name="">저장</button>
+                    </div>
+                </div>
+            </article>
         </section>
         <div class="layer_popupbg ipop_close"></div>
     </aside>
@@ -832,37 +830,193 @@
     var targetMenuId = String('${paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
 
+    /*
+     url defind
+     @author psb
+     */
+    var urlConfig = {
+        workerUrl  :   "${rootPath}/eventLogWorker/list.json"
+        ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
+        ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
+        ,chartUrl  :   "${rootPath}/eventLogChart/list.json"
+    };
+
     var messageConfig = {
-        menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
-        ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
-        ,   addFailure                :'<spring:message code="menu.message.addFailure"/>'
-        ,   saveFailure               :'<spring:message code="menu.message.saveFailure"/>'
-        ,   removeFailure             :'<spring:message code="menu.message.removeFailure"/>'
-        ,   addComplete               :'<spring:message code="menu.message.addComplete"/>'
-        ,   saveComplete              :'<spring:message code="menu.message.saveComplete"/>'
-        ,   removeComplete            :'<spring:message code="menu.message.removeComplete"/>'
-        ,   addConfirmMessage         :'<spring:message code="common.message.addConfirm"/>'
-        ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
-        ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
-        ,   requiredMenuId            :"<spring:message code='menu.message.requiredMenuId'/>"
-        ,   requiredMenuName          :"<spring:message code='menu.message.requiredMenuName'/>"
-        ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
-        ,   requiredSortOrder         :"<spring:message code='menu.message.requiredSortOrder'/>"
-        ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
-        ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
-        ,   pleaseChooseMenu          :"<spring:message code='menu.message.pleaseChooseMenu'/>"
-        ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
+        workerFailure   :'<spring:message code="dashboard.message.workerFailure"/>'
+        , craneFailure  :'<spring:message code="dashboard.message.craneFailure"/>'
+        , inoutFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
+        , chartFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
     };
 
     $(document).ready(function(){
-        //마키 플러그인 호출
-        $('.marquee').marquee({
-            duration: 20000,
-            direction: 'left',
-            gap: 20,
-            duplicated: true,
-            pauseOnHover: true,
-            startVisible: true
-        });
+//        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+//        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
+
+    /**
+     * alram success handler
+     * @author psb
+     * @private
+     */
+    function dashBoardSuccessHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'worker':
+                workerRender(data);
+                break;
+            case 'crane':
+                craneRender(data);
+                break;
+            case 'inout':
+                inoutRender(data);
+                break;
+            case 'chart':
+                break;
+        }
+    }
+
+    function workerRender(data){
+        var workerList = data['eventLogWorkerList'];
+        if(workerList!=null){
+            var workerEventCnt = 0;
+            for(var index in workerList){
+                var worker = workerList[index];
+                var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
+
+                if(Number(worker['eventCnt'])>0){
+                    if(buttonTag.find("#eventCnt").length>0){
+                        if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
+                            buttonTag.find("#eventCnt").text(worker['eventCnt']);
+                        }
+                    }else{
+                        buttonTag.append(
+                                $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level03','add');
+                    workerEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#eventCnt").length>0){
+                        buttonTag.find("#eventCnt").remove();
+                    }
+                }
+            }
+
+            if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
+                $("#workerDiv").find(".alra_btn").text(workerEventCnt);
+            }
+
+            if(workerEventCnt>0){
+                modifyElementClass($("#workerDiv"),'level03','add');
+            }else{
+                modifyElementClass($("#workerDiv"),'level03','remove');
+            }
+        }
+    }
+
+    function craneRender(data){
+        var craneList = data['eventLogCraneList'];
+        if(craneList!=null){
+            var craneEventCnt = 0;
+            for(var index in craneList){
+                var crane = craneList[index];
+                var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+
+                if(Number(crane['eventCnt'])>0){
+                    if(buttonTag.find("#eventCnt").length>0){
+                        if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
+                            buttonTag.find("#eventCnt").text(crane['eventCnt']);
+                        }
+                    }else{
+                        buttonTag.append(
+                                $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level03','add');
+                    craneEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#eventCnt").length>0){
+                        buttonTag.find("#eventCnt").remove();
+                    }
+                }
+            }
+
+            if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
+                $("#craneDiv").find(".alra_btn").text(craneEventCnt);
+            }
+
+            if(craneEventCnt>0){
+                modifyElementClass($("#craneDiv"),'level03','add');
+            }else{
+                modifyElementClass($("#craneDiv"),'level03','remove');
+            }
+        }
+    }
+
+    function inoutRender(data){
+        var inoutList = data['eventLogInoutList'];
+        if(inoutList!=null){
+            var inoutEventCnt = 0;
+            for(var index in inoutList){
+                var inout = inoutList[index];
+
+                var buttonTag = $("#eventLogInoutList button[areaId='"+inout['areaId']+"']");
+                var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
+                var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
+
+                if(buttonTag.find("#nowGap").text() != String(nowGap)){
+                    buttonTag.find("#nowGap").text(String(nowGap));
+                }
+
+                if(beforeGap>0){
+                    if(buttonTag.find("#beforeGap").length>0){
+                        if(buttonTag.find("#beforeGap").text() != "/"+String(beforeGap)){
+                            buttonTag.find("#beforeGap").text(beforeGap);
+                        }
+                    }else{
+                        buttonTag.find("#nowGap").append(
+                                $("<em/>", {id:"beforeGap"}).text("/"+String(beforeGap))
+                        )
+                    }
+
+                    modifyElementClass(buttonTag,'level02','add');
+                    inoutEventCnt++;
+                }else{
+                    modifyElementClass(buttonTag,'level03','remove');
+
+                    if(buttonTag.find("#beforeGap").length>0){
+                        buttonTag.find("#beforeGap").remove();
+                    }
+                }
+            }
+
+            if(inoutEventCnt>0){
+                modifyElementClass($("#inoutDiv"),'level02','add');
+            }else{
+                modifyElementClass($("#inoutDiv"),'level03','remove');
+            }
+        }
+    }
+
+    /*
+     ajax error handler
+     @author psb
+     */
+    function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
+    }
+
+    /*
+     alert message method
+     @author psb
+     */
+    function alertMessage(type){
+        alert(messageConfig[type]);
+    }
 </script>
