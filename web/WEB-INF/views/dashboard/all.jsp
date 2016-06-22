@@ -142,7 +142,7 @@
                                 <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
                                 <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
                                 <span class="ch_name co_yell"><spring:message code="dashboard.column.gas"/></span>
-                                <select id="chartRefreshTime">
+                                <select id="chartRefreshTime" onchange="javascript:chartMinutesSelectFunc();return false;">
                                     <option value="30">30 min</option>
                                     <option value="60">60 min</option>
                                     <option value="90">90 min</option>
@@ -184,9 +184,21 @@
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
         dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
-        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : 30}, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+
+        chartExecFunc();
+
     });
 
+    /**
+     * 차트 실행
+     */
+    function chartExecFunc() {
+        dashBoardHelper.removeRequestData('chart');
+        setTimeout(function() {
+            dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardAllSuccessHandler, dashBoardAllFailureHandler);
+        }, 100);
+
+    }
     /**
      * alram success handler
      * @author psb
@@ -338,6 +350,20 @@
         }
     }
 
+    /**
+     * 차트 표기 시간 선택 셀렉터
+     * @author dhj
+     */
+    function chartMinutesSelectFunc() {
+
+//        var minutes = $(event.target).prop("value");
+//        console.log(minutes);
+        chartExecFunc();
+    }
+    /**
+     * 차트 가공
+     * @author dhj
+     */
     function chartRender(data) {
         if (data['eventLogWorkerChart'] != null) {
             var eventLogWorkerChart = data['eventLogWorkerChart'];
@@ -372,6 +398,7 @@
 
         mychart.update();
     }
+
     /*
      ajax error handler
      @author psb
