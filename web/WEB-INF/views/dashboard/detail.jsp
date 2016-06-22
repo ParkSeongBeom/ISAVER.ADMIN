@@ -1019,4 +1019,55 @@
     function alertMessage(type){
         alert(messageConfig[type]);
     }
+
+    var mychart = new Chartist.Line('#chart', {
+        labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+        series: [
+            [],
+            []
+        ]
+    }, {
+        low: 0,
+        showArea: true,
+        lineSmooth: Chartist.Interpolation.simple({
+            divisor: 100
+        })
+    });
+
+    mychart.on('draw', function(data) {
+        if(data.type === 'slice') {
+            if (data.index == 0) {
+                data.element.attr({
+                    'style': 'stroke: rgba(193, 0, 104, 1)'
+                });
+                data.element.animate ({
+                    'stroke-dashoffset': {
+                        begin: '1s',
+                        dur: '21s',
+                        from: '0',
+                        to: '600',
+                        easing: 'easeOutQuart',
+                        d:"part1"
+                    },
+                    'stroke-dasharray': {
+                        from: '0',
+                        to: '1000'
+                    }
+                }, false);
+            } else {
+                data.element.attr({
+                    'style': 'stroke: rgba(102, 102, 102, 1)'
+                });
+                data.element.animate ({
+                    'stroke-dashoffset': {
+                        begin: "part1.end",
+                        dur: 1000,
+                        from: '0 250 150',
+                        to: '360 250 150',
+                        easing: 'easeOutQuart'
+                    }
+                });
+            }
+        }
+    });
 </script>
