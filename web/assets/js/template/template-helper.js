@@ -51,6 +51,17 @@ var TemplateHelper = (
             )
         );
 
+        /********************************************************************************
+         * 작업자 상태, 크래인 상태 리스트 template
+         *********************************************************************************/
+        var EVENT_LIST_TEMPLATE = $("<li/>").append(
+            $("<span/>", {id:"status"})
+        ).append(
+            $("<span/>", {id:"eventName"})
+        ).append(
+            $("<span/>", {id:"eventDatetime"})
+        );
+
         /**
          * get template (동적생성 Tag)
          * @author psb
@@ -67,6 +78,9 @@ var TemplateHelper = (
                     break;
                 case "toast":
                     _returnTag = TOAST_POPUP_TEMPLATE.clone();
+                    break;
+                case "eventList":
+                    _returnTag = EVENT_LIST_TEMPLATE.clone();
                     break;
             }
 

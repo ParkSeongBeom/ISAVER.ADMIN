@@ -188,7 +188,7 @@
 
                             // marquee
                             var marqueeTag = templateHelper.getTemplate("marquee01");
-                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(eventLog['eventName']);
+                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(eventLog['eventName']).attr("onclick","javascript:alramShowHide('list', 'show');");
                             $("#marqueeList").prepend(marqueeTag);
 
                             // 토스트팝업

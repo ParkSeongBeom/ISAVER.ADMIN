@@ -63,9 +63,7 @@ public class DashBoardCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("paramBean",parameters);
+        ModelAndView modelAndView = dashBoardSvc.findByDashBoard(parameters);
         modelAndView.setViewName("detailDashboard");
         return modelAndView;
     }

@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="H00000" var="subMenuId"/>
 
+<link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
+<script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
 
 <!-- section Start -->
@@ -11,356 +14,8 @@
     <!-- 확대보기 레이어 팝업 -->
     <aside class="layer_popup detail_popup">
         <section class="layer_wrap i_type05">
-            <article class="layer_area">
-                <div class="mp_header">
-                    <h2>작업자 선택</h2>
-                    <div>
-                        <button class="db_btn zoomclose_btn ipop_close"></button>
-                    </div>
-                </div>
-
-                <div class="mp_contents">
-                    <div class="mc_element_set nano">
-                        <div class="nano-content">
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지충돌 감지충돌 감지충돌 감지충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane level03"></div>
-                                <div class="mc_box">
-                                    <p>충돌 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                            <div class="mc_element">
-                                <div class="mc_bico type02 crane"></div>
-                                <div class="mc_box">
-                                    <p>이동방향 작업자 감지</p>
-                                    <p>1212</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mc_element nano">
-                        <ul class="mc_list nano-content">
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li class="level03">
-                                <span>위험</span>
-                                <span>쓰러짐 감지</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li class="level03">
-                                <span>위험</span>
-                                <span>헬멧 미착용 감시</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li class="level03">
-                                <span>위험</span>
-                                <span>헬멧 미착용 감시</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li class="level03">
-                                <span>위험</span>
-                                <span>헬멧 미착용 감시</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                            <li>
-                                <span>안전</span>
-                                <span>감지없음</span>
-                                <span>AM 10:00:20</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
+            <article class="layer_area"></article>
         </section>
-
         <div class="layer_popupbg ipop_close"></div>
     </aside>
 
@@ -449,9 +104,9 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="main_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title">C-Area</h3>
+        <h3 class="1depth_title">${area.areaName}</h3>
         <!-- 마키 영역 Start -->
-        <div id="marqueeList" class="marquee" onclick="javascript:alramShowHide('list', 'show');"></div>
+        <div id="marqueeList" class="marquee"></div>
         <!-- 마키 영역 End -->
     </article>
     <!-- 2depth 타이틀 영역 End -->
@@ -460,250 +115,102 @@
         <div class="nano-content">
             <div class="metro_root mr_h70">
                 <div class="metro_parent v_mode">
-                    <div title="작업자 상태">
+                    <div id="workerDiv" title="<spring:message code="dashboard.title.worker"/>">
                         <div class="mp_header">
-                            <h2>작업자 상태</h2>
+                            <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">003</button>
-                                <button class="db_btn zoom_btn"></button>
+                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
                         <div class="mp_contents vh_mode">
                             <div class="mc_element_set nano">
-                                <div class="nano-content">
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>쓰러짐 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>헬멧 미착용 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>안전복 미착용 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>쓰러짐 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>헬멧 미착용 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 worker"></div>
-                                        <div class="mc_box">
-                                            <p>안전복 미착용 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
+                                <div class="workerContens nano-content">
+                                    <c:choose>
+                                        <c:when test="${workerEvents != null and fn:length(workerEvents) > 0}">
+                                            <c:forEach var="workerEvent" items="${workerEvents}">
+                                                <div id="${workerEvent.eventId}" class="mc_element">
+                                                    <div class="mc_bico type02 worker"></div>
+                                                    <div class="mc_box">
+                                                        <p>${workerEvent.eventName}</p>
+                                                        <p class="eventCnt">0</p>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                             <div class="mc_element mc_tline nano">
-                                <ul class="mc_list nano-content">
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                </ul>
+                                <ul class="workerList mc_list nano-content"></ul>
                             </div>
                         </div>
                     </div>
-                    <div title="크레인 상태" class="level03">
+                    <div id="craneDiv" title="<spring:message code="dashboard.title.crane"/>">
                         <div class="mp_header">
-                            <h2>크레인 상태</h2>
+                            <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">003</button>
-                                <button class="db_btn zoom_btn"></button>
+                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
                         <div class="mp_contents vh_mode">
                             <div class="mc_element_set nano">
-                                <div class="nano-content">
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 crane level03"></div>
-                                        <div class="mc_box">
-                                            <p>충돌 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
-                                    <div class="mc_element">
-                                        <div class="mc_bico type02 crane"></div>
-                                        <div class="mc_box">
-                                            <p>이동방향 작업자 감지</p>
-                                            <p>1212</p>
-                                        </div>
-                                    </div>
+                                <div class="craneContens nano-content">
+                                    <c:choose>
+                                        <c:when test="${craneEvents != null and fn:length(craneEvents) > 0}">
+                                            <c:forEach var="craneEvent" items="${craneEvents}">
+                                                <div id="${craneEvent.eventId}" class="mc_element">
+                                                    <div class="mc_bico type02 crane"></div>
+                                                    <div class="mc_box">
+                                                        <p>${craneEvent.eventName}</p>
+                                                        <p class="eventCnt">0</p>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                             <div class="mc_element mc_tline nano">
-                                <ul class="mc_list nano-content">
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level03">
-                                        <span>위험</span>
-                                        <span>쓰러짐 감지</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level03">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level03">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level03">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                </ul>
+                                <ul class="craneList mc_list nano-content"></ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="metro_parent">
-                    <div title="진출입">
+                    <div id="inoutDiv" title="<spring:message code="dashboard.title.inout"/>">
                         <div class="mp_header">
-                            <h2>진출입</h2>
+                            <h2><spring:message code="dashboard.title.inout"/></h2>
                             <div>
                                 <button class="db_btn sett_btn"></button>
                             </div>
                         </div>
                         <div class="mp_contents vh_mode">
                             <div class="personnel">
-                                <div class="now">
-                                    <p>AM 08:00:00 ~</p>
-                                    <span>76</span>
-                                    <div>98</div>
-                                    <div>22</div>
+                                <div id="nowInout" class="now">
+                                    <p id="nowInoutDatetime">AM 08:00:00 ~</p>
+                                    <span id="nowInoutGap">76</span>
+                                    <div id="nowInCnt">98</div>
+                                    <div id="nowOutCnt">22</div>
                                 </div>
-                                <div class="past">
-                                    <p>AM 08:00:00 ~</p>
-                                    <span>3</span>
-                                    <div>259</div>
-                                    <div>256</div>
+                                <div id="beforeInout" class="past">
+                                    <p id="beforeInoutDatetime">AM 08:00:00 ~</p>
+                                    <span id="beforeInoutGap">76</span>
+                                    <div id="beforeInCnt">98</div>
+                                    <div id="beforeOutCnt">22</div>
                                 </div>
                             </div>
 
                             <div id="chart02" class="ct-chart">
                                 <div class="mp_header ct-name">
                                     <div>
-                                        <span class="ch_name co_gren">진입(IN)</span>
-                                        <span class="ch_name co_purp">진출(OUT)</span>
+                                        <span class="ch_name co_gren"><spring:message code="dashboard.column.workerIn"/></span>
+                                        <span class="ch_name co_purp"><spring:message code="dashboard.column.workerOut"/></span>
                                         <select name="type">
                                             <option value="">30 min</option>
                                             <option value="">60 min</option>
@@ -714,18 +221,17 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="metro_root mr_h30">
                 <div class="metro_parent v_mode">
-                    <div title="유해가스">
+                    <div id="gasDiv" title="<spring:message code="dashboard.title.gas"/>">
                         <div class="mp_header">
-                            <h2>유해가스</h2>
+                            <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">003</button>
-                                <button class="db_btn zoom_btn"></button>
+                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -733,83 +239,17 @@
                                 <p>CO2 62% / C 0.5% / H2S 0%</p>
                             </div>
                             <div class="mc_element nano">
-                                <ul class="mc_list nano-content">
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level02">
-                                        <span>위험</span>
-                                        <span>쓰러짐 감지</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level02">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level02">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li class="level02">
-                                        <span>위험</span>
-                                        <span>헬멧 미착용 감시</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                    <li>
-                                        <span>안전</span>
-                                        <span>감지없음</span>
-                                        <span>AM 10:00:20</span>
-                                    </li>
-                                </ul>
+                                <ul class="gasList mc_list nano-content"></ul>
                             </div>
                         </div>
                     </div>
-                    <div title="알림발생 추이">
+                    <div title="<spring:message code="dashboard.title.issue"/>">
                         <div class="mp_header">
-                            <h2>알림발생 추이</h2>
+                            <h2><spring:message code="dashboard.title.issue"/></h2>
                             <div>
-                                <span class="ch_name co_gren">작업자 상태</span>
-                                <span class="ch_name co_purp">크래인 상태</span>
-                                <span class="ch_name co_yell">진출입 상태</span>
+                                <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
+                                <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
+                                <span class="ch_name co_yell"><spring:message code="dashboard.column.gas"/></span>
                                 <select name="type">
                                     <option value="">30 min</option>
                                     <option value="">60 min</option>
@@ -829,6 +269,7 @@
 <script type="text/javascript">
     var targetMenuId = String('${paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
+    var areaId = String('${area.areaId}');
 
     /*
      url defind
@@ -849,10 +290,48 @@
     };
 
     $(document).ready(function(){
+        $(".ipop_close").on("click",function(){
+           $(".layer_popup").hide();
+        });
+
 //        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
+
+    /*
+     open detail popup
+     @author psb
+     */
+    function openDetailPopup(type){
+        var targetTag = null;
+
+        switch(type){
+            case 'worker':
+                targetTag = $("#workerDiv");
+                break;
+            case 'crane':
+                targetTag = $("#craneDiv");
+                break;
+            case 'gas':
+                targetTag = $("#gasDiv");
+                break;
+        }
+
+        if(targetTag==null){
+            console.error("[openDetailPopup] error - type fail");
+            return false;
+        }
+
+        var headerTag = targetTag.find(".mp_header").clone();
+        var contentsTag = targetTag.find(".mp_contents").clone();
+
+        modifyElementClass(contentsTag,'vh_mode','remove');
+        modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
+
+        $(".detail_popup .layer_area").empty().append(headerTag).append(contentsTag);
+        $(".detail_popup").show();
+    }
 
     /**
      * alram success handler

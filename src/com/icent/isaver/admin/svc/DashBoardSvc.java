@@ -26,4 +26,11 @@ public interface DashBoardSvc {
      * @return
      */
     ModelAndView findAllDashBoard(Map<String, String> parameters);
+
+    /**
+     * 대쉬보드 상세를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findByDashBoard(Map<String, String> parameters);
 }

@@ -18,7 +18,7 @@
         <!-- 2depth 타이틀 Start-->
         <h3 class="1depth_title">All</h3>
         <!-- 마키 영역 Start -->
-        <div id="marqueeList" class="marquee" onclick="javascript:alramShowHide('list', 'show');"></div>
+        <div id="marqueeList" class="marquee"></div>
         <!-- 마키 영역 End -->
     </article>
 
@@ -53,9 +53,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="inoutDiv" title="<spring:message code="dashboard.title.inout"/>">
+                    <div id="inoutDiv" title="<spring:message code="dashboard.title.workerInout"/>">
                         <div class="mp_header">
-                            <h2><spring:message code="dashboard.title.inout"/></h2>
+                            <h2><spring:message code="dashboard.title.workerInout"/></h2>
                         </div>
                         <div class="mp_contents">
                             <div class="mc_bico type01 going"></div>
@@ -105,9 +105,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="gasDiv" title="<spring:message code="dashboard.title.gas"/>">
+                    <div id="gasDiv" title="<spring:message code="dashboard.title.gasState"/>">
                         <div class="mp_header">
-                            <h2><spring:message code="dashboard.title.gas"/></h2>
+                            <h2><spring:message code="dashboard.title.gasState"/></h2>
                             <div>
                                 <button class="alra_btn">0</button>
                             </div>
