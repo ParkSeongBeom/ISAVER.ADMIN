@@ -14,7 +14,14 @@
     <!-- 확대보기 레이어 팝업 -->
     <aside class="layer_popup detail_popup">
         <section class="layer_wrap i_type05">
-            <article class="layer_area"></article>
+            <article class="layer_area">
+                <div class="mp_header">
+                    <h2 id="popupTitle"></h2>
+                    <div>
+                        <button class="db_btn zoomclose_btn ipop_close"></button>
+                    </div>
+                </div>
+            </article>
         </section>
         <div class="layer_popupbg ipop_close"></div>
     </aside>
@@ -119,7 +126,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn workerAlramCnt">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -152,7 +159,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn craneAlramCnt">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -230,7 +237,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn gasAlramCnt">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
@@ -323,14 +330,16 @@
             return false;
         }
 
-        var headerTag = targetTag.find(".mp_header").clone();
         var contentsTag = targetTag.find(".mp_contents").clone();
 
         modifyElementClass(contentsTag,'vh_mode','remove');
         modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
 
-        $(".detail_popup .layer_area").empty().append(headerTag).append(contentsTag);
+        $("#popupTitle").text(targetTag.attr("title"));
+        $(".detail_popup").find(".mp_contents").remove();
+        $(".detail_popup .layer_area").append(contentsTag);
         $(".detail_popup").show();
+        $(".detail_popup .layer_wrap").show();
     }
 
     /**
