@@ -75,26 +75,16 @@ public class EventSvcImpl implements EventSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        Integer eventExistCount = eventDao.findByEventCheckExist(parameters);
+//        Integer eventExistCount = eventDao.findByEventCheckExist(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (eventExistCount == 0) {
-            try {
-                eventDao.addEvent(parameters);
-
-                if (parameters.get("actionId") != null && StringUtils.notNullCheck(parameters.get("actionId"))) {
-                    eventActionDao.removeEventAction(parameters);
-                    eventActionDao.addEventAction(parameters);
-                }
-
-                transactionManager.commit(transactionStatus);
-            }catch(DataAccessException e){
-                transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
-            }
-        } else {
-            modelAndView.addObject("existFlag", "true");
+        try {
+            eventDao.addEvent(parameters);
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new JabberException("");
         }
 
         return modelAndView;
@@ -108,6 +98,23 @@ public class EventSvcImpl implements EventSvc {
         try {
 
             eventDao.saveEvent(parameters);
+
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new JabberException("");
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView saveEventAction(HttpServletRequest request, Map<String, String> parameters) {
+
+        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+        try {
 
             if (parameters.get("actionId") != null && StringUtils.notNullCheck(parameters.get("actionId"))) {
                 eventActionDao.removeEventAction(parameters);

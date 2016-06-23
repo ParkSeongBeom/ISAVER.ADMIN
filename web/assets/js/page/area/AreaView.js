@@ -230,6 +230,15 @@ function AreaView(model) {
      */
     AreaView.setAddBefore = function() {
 
+        $("table tbody tr").eq(1).show();
+        $("table tbody tr").eq(2).show();
+        $("table tbody tr").eq(3).show();
+        $("table tbody tr").eq(4).show();
+        $("table tbody tr").eq(5).show();
+        $("table tbody tr").eq(6).show();
+
+        $("[name='showHideTag']").hide();
+
         var AreaView = new Object();
         AreaView._model = model;
         var formName = "#" + model.getFormName();
@@ -254,6 +263,7 @@ function AreaView(model) {
         $("input:hidden[name='parentAreaId']").val(AreaView._model.getAreaId());
 
         $( formName + " [id='selectParentAreaId'] option").attr('disabled', false);
+        $( formName + " [id='selectParentAreaId']").val(AreaView._model.getAreaId());
 
         $("input[name='areaId']").focus();
 

@@ -1,12 +1,12 @@
-<!-- 이벤트 관리, @author dhj -->
+<!-- 이벤트 조치 관리, @author dhj -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00030" var="menuId"/>
-<c:set value="B00000" var="subMenuId"/>
+<c:set value="F00012" var="menuId"/>
+<c:set value="F00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
@@ -63,7 +63,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.event"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.eventAction"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -99,12 +99,12 @@
     </form>
 
     <article class="table_area">
-        <div class="table_title_area">
-            <h4></h4>
-            <div class="table_btn_set">
-                <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
-            </div>
-        </div>
+        <%--<div class="table_title_area">--%>
+            <%--<h4></h4>--%>
+            <%--<div class="table_btn_set">--%>
+                <%--<button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
         <div class="table_contents">
             <!-- 입력 테이블 Start -->
@@ -113,6 +113,7 @@
                     <col style="width: 10%;" />
                     <col style="width: 10%;" />
                     <col style="width: 30%;" />
+                    <col style="width: 10%;" />
                     <col style="width: *%;" />
                 </colgroup>
                 <thead>
@@ -120,25 +121,32 @@
                     <th><spring:message code="event.column.eventId"/></th>
                     <th><spring:message code="event.column.eventFlag"/></th>
                     <th><spring:message code="event.column.eventName"/></th>
-                    <th><spring:message code="event.column.eventDesc"/></th>
+                    <th><spring:message code="action.column.actionCode"/></th>
+                    <th><spring:message code="action.column.actionDesc"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${events != null and fn:length(events) > 0}">
                         <c:forEach var="event" items="${events}">
-                            <tr event_id="${event.eventId}">
-                            <%--<tr onclick="moveDetail(String('${event.eventId}'));">--%>
+                            <tr onclick="moveDetail(String('${event.eventId}'));">
                                 <td>${event.eventId}</td>
                                 <td>${event.eventFlag}</td>
                                 <td>${event.eventName}</td>
-                                <td>${event.eventDesc}</td>
+                                <c:if test="${!empty event.actionId}">
+                                    <td>${event.actionCode}</td>
+                                    <td>${event.actionDesc}</td>
+                                </c:if>
+                                <c:if test="${empty event.actionId}">
+                                    <td></td>
+                                    <td></td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="4"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="5"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -161,9 +169,8 @@
     };
 
     var urlConfig = {
-        'listUrl':'${rootPath}/event/list.html'
-        ,'detailUrl':'${rootPath}/event/detail.html'
-        ,'actionDetailUrl':'${rootPath}/action/detail.html'
+        'listUrl':'${rootPath}/eventAction/list.html'
+        ,'detailUrl':'${rootPath}/eventAction/detail.html'
     };
 
     var pageConfig = {

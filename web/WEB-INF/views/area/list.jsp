@@ -171,46 +171,6 @@
             <div class="table_title_area" name="showHideTag" >
                 <h4><spring:message code="device.column.deviceList"/></h4>
             </div>
-            <article class="search_area" name="showHideTag" style="display: table;">
-                <div class="search_contents">
-                    <!-- 일반 input 폼 공통 -->
-                    <p class="itype_01">
-                        <span><spring:message code="device.column.deviceId"/></span>
-                        <span>
-                            <input type="text" name="deviceId" value="">
-                        </span>
-                    </p>
-                    <p class="itype_01">
-                        <span><spring:message code="device.column.serialNo"/></span>
-                        <span>
-                            <input type="text" name="serialNo" value="">
-                        </span>
-                    </p>
-                    <%--<p class="itype_01">--%>
-                        <%--<span><spring:message code="device.column.deviceCode"/></span>--%>
-                        <%--<span>--%>
-                            <%--<select>--%>
-                                <%--<option value="">장치 코드 01</option>--%>
-                                <%--<option value="">장치 코드 02</option>--%>
-                                <%--<option value="">장치 코드 03</option>--%>
-                            <%--</select>--%>
-                        <%--</span>--%>
-                    <%--</p>--%>
-                    <%--<p class="itype_01">--%>
-                        <%--<span><spring:message code="device.column.deviceType"/></span>--%>
-                        <%--<span>--%>
-                            <%--<select>--%>
-                                <%--<option value="">장치 유형 01</option>--%>
-                                <%--<option value="">장치 유형 02</option>--%>
-                                <%--<option value="">장치 유형 03</option>--%>
-                            <%--</select>--%>
-                        <%--</span>--%>
-                    <%--</p>--%>
-                </div>
-                <div class="search_btn">
-                    <button onclick="javascript:areaCtrl.searchDevice(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.find"/></button>
-                </div>
-            </article>
 
             <div class="table_contents" name="showHideTag" >
                 <table name="roleListTable" class="t_defalut t_type01 t_style02">

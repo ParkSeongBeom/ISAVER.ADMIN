@@ -119,14 +119,15 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.event"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.eventAction"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
-    <form id="eventForm" method="POST">
+    <form id="eventForm" method="POST" onsubmit="return false;">
+        <input type="hidden" name="eventId" value="${event.eventId}" />
         <input type="hidden" name="actionId" value="${event.actionId}" />
         <article class="table_area">
             <div class="table_contents">
@@ -140,41 +141,38 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th class="point"><spring:message code="event.column.eventId"/></th>
-                        <td class="point">
-                            <input type="text" name="eventId" value="${event.eventId}" placeholder="<spring:message code="event.message.requireEventId"/>" ${empty event ? '' : 'readonly="true"'}  maxlength="6"/>
-                        </td>
-                        <th class="point"><spring:message code="event.column.eventName"/></th>
-                        <td class="point">
-                            <input type="text" name="eventName" value="${event.eventName}" placeholder="<spring:message code="event.message.requireEventName"/>" />
-                        </td>
+                        <th><spring:message code="event.column.eventId"/></th>
+                        <td>${event.eventId}</td>
+                        <th><spring:message code="event.column.eventFlag"/></th>
+                        <td>${event.eventFlagName}</td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code="event.column.eventFlag"/></th>
-                        <td class="point" colspan="3">
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagId="selectEventFlag" htmlTagName="eventFlag"/>
-                        </td>
+                        <th><spring:message code="event.column.eventName"/></th>
+                        <td colspan="3">${event.eventName}</td>
                     </tr>
                     <tr>
                         <th><spring:message code="event.column.eventDesc"/></th>
-                        <td colspan="3">
-                            <textarea name="eventDesc" class="textboard">${event.eventDesc}</textarea>
-                        </td>
+                        <td colspan="3">${event.eventDesc}</td>
                     </tr>
-                    <c:if test="${!empty event}">
-                        <tr>
-                            <th><spring:message code="common.column.insertUser"/></th>
-                            <td>${event.insertUserName}</td>
-                            <th><spring:message code="common.column.insertDatetime"/></th>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${event.insertDatetime}" /></td>
-                        </tr>
-                        <tr>
-                            <th><spring:message code="common.column.updateUser"/></th>
-                            <td>${event.updateUserName}</td>
-                            <th><spring:message code="common.column.updateDatetime"/></th>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${event.updateDatetime}" /></td>
-                        </tr>
-                    </c:if>
+                    <tr>
+                        <th><spring:message code="action.column.actionId"/></th>
+                        <td>
+                            <div class="code_list">
+                                <c:if test="${!empty event.actionId}">
+                                    <div action_id="${event.actionId}">
+                                        <button title="자세히 보기">${event.actionId}</button><button></button>
+                                    </div>
+                                </c:if>
+                                <button onclick="javascript:popup_openButton(); return false;"></button>
+                            </div>
+                        </td>
+                        <th><spring:message code="action.column.actionCode"/></th>
+                        <td>${event.actionCodeName}</td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code="action.column.actionDesc"/></th>
+                        <td colspan="3">${event.actionDesc}</td>
+                    </tr>
                     </tbody>
                 </table>
                 <!-- 입력 테이블 End -->
@@ -187,7 +185,6 @@
                     </c:if>
                     <c:if test="${!empty event}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeEvent(); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
                 </div>
@@ -203,11 +200,9 @@
     var form = $('#eventForm');
 
     var urlConfig = {
-        'addUrl':'${rootPath}/event/add.json'
-        ,'saveUrl':'${rootPath}/event/save.json'
-        ,'removeUrl':'${rootPath}/event/remove.json'
-        ,'listUrl':'${rootPath}/event/list.html'
+        'listUrl':'${rootPath}/eventAction/list.html'
         ,'actionListUrl':'${rootPath}/action/list.html'
+        ,'saveUrl':'${rootPath}/eventAction/save.json'
     };
 
     var messageConfig = {
@@ -262,9 +257,7 @@
             return false;
         }
 
-        if(validate(1)){
-            callAjax('save', form.serialize());
-        }
+        callAjax('save', form.serialize());
     }
 
     function removeEvent(){

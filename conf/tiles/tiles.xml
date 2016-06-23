@@ -47,6 +47,17 @@
     </definition>
 
     <!--
+        이벤트 조치 관리
+        @author dhj
+    -->
+    <definition name="eventActionList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventAction/list.jsp" />
+    </definition>
+    <definition name="eventActionDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventAction/detail.jsp" />
+    </definition>
+
+    <!--
         장치  관리
         @author dhj
     -->
