@@ -125,7 +125,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn workerAlramCnt">0</button>
+                                <button class="db_btn alra_btn">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                                     <c:choose>
                                         <c:when test="${workerEvents != null and fn:length(workerEvents) > 0}">
                                             <c:forEach var="workerEvent" items="${workerEvents}">
-                                                <div id="${workerEvent.eventId}" class="mc_element">
+                                                <div eventId="${workerEvent.eventId}" class="mc_element">
                                                     <div class="mc_bico type02 worker"></div>
                                                     <div class="mc_box">
                                                         <p>${workerEvent.eventName}</p>
@@ -158,7 +158,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn craneAlramCnt">0</button>
+                                <button class="db_btn alra_btn">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                                     <c:choose>
                                         <c:when test="${craneEvents != null and fn:length(craneEvents) > 0}">
                                             <c:forEach var="craneEvent" items="${craneEvents}">
-                                                <div id="${craneEvent.eventId}" class="mc_element">
+                                                <div eventId="${craneEvent.eventId}" class="mc_element">
                                                     <div class="mc_bico type02 crane"></div>
                                                     <div class="mc_box">
                                                         <p>${craneEvent.eventName}</p>
@@ -237,7 +237,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn gasAlramCnt">0</button>
+                                <button class="db_btn alra_btn">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
@@ -283,7 +283,7 @@
      @author psb
      */
     var urlConfig = {
-        workerUrl  :   "${rootPath}/eventLogWorker/list.json"
+        workerUrl  :   "${rootPath}/eventLogWorker/detail.json"
         ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
         ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
         ,chartInoutUrl  :   "${rootPath}/eventLogChart/detail.json"
@@ -305,7 +305,7 @@
            $(".layer_popup").hide();
         });
 
-//        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 
@@ -376,112 +376,35 @@
         }
     }
 
-    /**
-     * 차트 가공 [진출입 / 상태 ]
-     * @author dhj
-     */
-    function chartRender(data) {
-
-        /* 작업자 상태 */
-        if (data['eventLogWorkerChart'] != null) {
-            var eventLogWorkerChart = data['eventLogWorkerChart'];
-            var chartList = [];
-            var eventDateList = [];
-
-            for (var i =0;i<eventLogWorkerChart.length;i++) {
-                var item = eventLogWorkerChart[i];
-                var eventDate  = new Date();
-                eventDate.setTime(item['eventDatetime']);
-
-                chartList.push(item['eventCnt']);
-                eventDateList.push(eventDate.format("HH:mm"));
-            }
-            chartList.reverse();
-            eventDateList.reverse();
-            mychart2.data.series[0] = chartList;
-            mychart2.data.labels = eventDateList;
-        }
-
-        /* 크레인 용 */
-        if (data['eventLogCraneChart'] != null) {
-            var eventLogCraneChart = data['eventLogCraneChart'];
-            var chartList = [];
-
-            for (var i =0;i<eventLogCraneChart.length;i++) {
-                var item = eventLogCraneChart[i];
-                chartList.push(item['eventCnt']);
-            }
-            chartList.reverse();
-            mychart2.data.series[1] = chartList;
-        }
-
-        /* 진출입용 */
-        if (data['eventLogInoutChart'] != null) {
-            var eventLogInoutChart = data['eventLogInoutChart'];
-            var chartList1 = [];
-            var chartList2 = [];
-
-            var eventDateList = [];
-
-            for (var i =0;i<eventLogInoutChart.length;i++) {
-                var item = eventLogInoutChart[i];
-                var eventDate  = new Date();
-                eventDate.setTime(item['eventDatetime']);
-
-                chartList1.push(item['inCount']);
-                chartList2.push(item['outCount']);
-
-                eventDateList.push(eventDate.format("HH:mm"));
-            }
-
-            chartList1.reverse();
-            chartList2.reverse();
-
-            eventDateList.reverse();
-
-            mychart1.data.series[0] = chartList1;
-            mychart1.data.series[1] = chartList2;
-
-            mychart1.data.labels = eventDateList;
-        }
-
-        if (mychart1 != undefined) {
-            mychart1.update();
-        }
-
-        if (mychart2 != undefined) {
-            mychart2.update();
-        }
-
-
-    }
-
     function workerRender(data){
-        var workerList = data['eventLogWorkerList'];
-        if(workerList!=null){
+        var countList = data['eventLogWorkerCountList'];
+
+        if(countList!=null){
             var workerEventCnt = 0;
-            for(var index in workerList){
-                var worker = workerList[index];
-                var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
+            for(var index in countList){
+                var worker = countList[index];
+                var divTag = $(".workerContens").find("div[eventId='"+worker['eventId']+"']");
 
-                if(Number(worker['eventCnt'])>0){
-                    if(buttonTag.find("#eventCnt").length>0){
-                        if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
-                            buttonTag.find("#eventCnt").text(worker['eventCnt']);
-                        }
-                    }else{
-                        buttonTag.append(
+                if(divTag!=null){
+                    if(Number(worker['eventCnt'])>0){
+                        if(divTag.find("#eventCnt").length>0){
+                            if(divTag.find("#eventCnt").text() != String(worker['eventCnt'])){
+                                divTag.find("#eventCnt").text(worker['eventCnt']);
+                            }
+                        }else{
+                            divTag.append(
                                 $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
-                        )
-                    }
+                            )
+                        }
 
-                    modifyElementClass(buttonTag,'level03','add');
-                    workerEventCnt++;
-                }else{
-                    modifyElementClass(buttonTag,'level03','remove');
+                        modifyElementClass(divTag.find(".worker"),'level03','add');
+                        workerEventCnt++;
+                    }else{
+                        modifyElementClass(divTag.find(".worker"),'level03','remove');
 
-                    if(buttonTag.find("#eventCnt").length>0){
-                        buttonTag.find("#eventCnt").remove();
+                        if(divTag.find("#eventCnt").length>0){
+                            divTag.find("#eventCnt").remove();
+                        }
                     }
                 }
             }
@@ -496,6 +419,27 @@
                 modifyElementClass($("#workerDiv"),'level03','remove');
             }
         }
+
+        var workerList = data['eventLogWorkerList'];
+        if(workerList!=null){
+            for(var i=workerList.length-1; i >= 0; i--){
+                var worker = workerList[i];
+                var eventListTag = templateHelper.getTemplate("eventList");
+                if(worker['eventFlag'].toUpperCase()=='A'){
+                    modifyElementClass(eventListTag,'level03','add');
+                }
+                eventListTag.find("#status").text(worker['eventFlagName']);
+                eventListTag.find("#eventName").text(worker['eventName']);
+                eventListTag.find("#eventDatetime").text(new Date(worker['eventDatetime']).format("A/P HH:mm:ss"));
+                $(".workerList").prepend(eventListTag);
+            }
+
+            $.each($(".workerList"),function(){
+                $(this).children(":gt(49)").remove();
+            })
+        }
+
+        dashBoardHelper.saveRequestData('worker', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
     }
 
     function craneRender(data){
@@ -562,7 +506,7 @@
                         }
                     }else{
                         buttonTag.find("#nowGap").append(
-                                $("<em/>", {id:"beforeGap"}).text("/"+String(beforeGap))
+                            $("<em/>", {id:"beforeGap"}).text("/"+String(beforeGap))
                         )
                     }
 
@@ -585,12 +529,89 @@
         }
     }
 
+    /**
+     * 차트 가공 [진출입 / 상태 ]
+     * @author dhj
+     */
+    function chartRender(data) {
+        /* 작업자 상태 */
+        if (data['eventLogWorkerChart'] != null) {
+            var eventLogWorkerChart = data['eventLogWorkerChart'];
+            var chartList = [];
+            var eventDateList = [];
+
+            for (var i =0;i<eventLogWorkerChart.length;i++) {
+                var item = eventLogWorkerChart[i];
+                var eventDate  = new Date();
+                eventDate.setTime(item['eventDatetime']);
+
+                chartList.push(item['eventCnt']);
+                eventDateList.push(eventDate.format("HH:mm"));
+            }
+            chartList.reverse();
+            eventDateList.reverse();
+            mychart2.data.series[0] = chartList;
+            mychart2.data.labels = eventDateList;
+        }
+
+        /* 크레인 용 */
+        if (data['eventLogCraneChart'] != null) {
+            var eventLogCraneChart = data['eventLogCraneChart'];
+            var chartList = [];
+
+            for (var i =0;i<eventLogCraneChart.length;i++) {
+                var item = eventLogCraneChart[i];
+                chartList.push(item['eventCnt']);
+            }
+            chartList.reverse();
+            mychart2.data.series[1] = chartList;
+        }
+
+        /* 진출입용 */
+        if (data['eventLogInoutChart'] != null) {
+            var eventLogInoutChart = data['eventLogInoutChart'];
+            var chartList1 = [];
+            var chartList2 = [];
+
+            var eventDateList = [];
+
+            for (var i =0;i<eventLogInoutChart.length;i++) {
+                var item = eventLogInoutChart[i];
+                var eventDate  = new Date();
+                eventDate.setTime(item['eventDatetime']);
+
+                chartList1.push(item['inCount']);
+                chartList2.push(item['outCount']);
+
+                eventDateList.push(eventDate.format("HH:mm"));
+            }
+
+            chartList1.reverse();
+            chartList2.reverse();
+
+            eventDateList.reverse();
+
+            mychart1.data.series[0] = chartList1;
+            mychart1.data.series[1] = chartList2;
+            mychart1.data.labels = eventDateList;
+        }
+
+        if (mychart1 != undefined) {
+            mychart1.update();
+        }
+
+        if (mychart2 != undefined) {
+            mychart2.update();
+        }
+    }
+
     /*
      ajax error handler
      @author psb
      */
     function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        alertMessage(actionType + 'Failure');
+        console.error(messageConfig[actionType + 'Failure']);
+//        alertMessage(actionType + 'Failure');
     }
 
     /*

@@ -21,13 +21,26 @@ public class EventLogWorkerCtrl {
     private EventLogWorkerSvc eventLogWorkerSvc;
 
     /**
-     * 작업자 상태 데이터를 가져온다.
+     * 작업자 상태 전체 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
+    public ModelAndView findAllEventLogWorker(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogWorkerSvc.findAllEventLogWorker(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 작업자 상태 상세 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findListEventLogWorker(@RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogWorkerSvc.findListEventLogWorker(parameters);
         return modelAndView;

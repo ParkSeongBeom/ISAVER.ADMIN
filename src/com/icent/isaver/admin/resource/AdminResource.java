@@ -107,4 +107,16 @@ public class AdminResource {
             put("ldap","7000");
         }
     };
+
+    /**
+     * worker eventIds
+     * @author psb
+     */
+    public final static String[] WORKER_EVENT_ID = new String[]{"EVT009", "EVT015","EVT016"};
+
+    /**
+     * crane eventIds
+     * @author psb
+     */
+    public final static String[] CRANE_EVENT_ID = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
 }

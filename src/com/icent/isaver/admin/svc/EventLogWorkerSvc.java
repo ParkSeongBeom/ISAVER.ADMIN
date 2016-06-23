@@ -21,9 +21,18 @@ import java.util.Map;
 public interface EventLogWorkerSvc {
 
     /**
-     * 작업자 상태 데이터를 가져온다.
+     * 작업자 상태 전체 데이터를 가져온다.
      *
-     * @author dhj
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findAllEventLogWorker(Map<String, String> parameters);
+
+    /**
+     * 작업자 상태 상세 데이터를 가져온다.
+     *
+     * @author psb
      * @param parameters
      * @return
      */

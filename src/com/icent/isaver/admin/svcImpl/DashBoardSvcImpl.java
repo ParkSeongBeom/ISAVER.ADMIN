@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.EventBean;
@@ -34,11 +35,6 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Inject
     private EventDao eventDao;
 
-    // 작업자 이벤트 코드
-    String[] workerEventIds = {"EVT009", "EVT015","EVT016"};
-    // 크래인 이벤트 코드
-    String[] craneEventIds = {"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
-
     @Override
     public ModelAndView findAllDashBoard(Map<String, String> parameters) {
         parameters.put("delYn","N");
@@ -52,8 +48,8 @@ public class DashBoardSvcImpl implements DashBoardSvc {
 
     @Override
     public ModelAndView findByDashBoard(Map<String, String> parameters) {
-        List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",workerEventIds);}});
-        List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",craneEventIds);}});
+        List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID);}});
+        List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID);}});
         AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();

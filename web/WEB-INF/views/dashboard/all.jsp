@@ -193,7 +193,6 @@
      * @private
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
-
         switch(actionType){
             case 'worker':
                 workerRender(data);
@@ -209,7 +208,6 @@
                 dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
                 break;
         }
-
     }
 
     function workerRender(data){
@@ -385,7 +383,8 @@
      @author psb
      */
     function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        alertMessage(actionType + 'Failure');
+        console.error(messageConfig[actionType + 'Failure']);
+//        alertMessage(actionType + 'Failure');
     }
 
     /*
