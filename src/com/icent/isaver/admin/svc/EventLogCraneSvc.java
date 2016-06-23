@@ -21,9 +21,18 @@ import java.util.Map;
 public interface EventLogCraneSvc {
 
     /**
-     * 크래인 상태 데이터를 가져온다.
+     * 크래인 상태 전체 데이터를 가져온다.
      *
-     * @author dhj
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findAllEventLogCrane(Map<String, String> parameters);
+
+    /**
+     * 크래인 상태 상세 데이터를 가져온다.
+     *
+     * @author psb
      * @param parameters
      * @return
      */

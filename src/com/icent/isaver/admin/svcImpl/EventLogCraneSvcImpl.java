@@ -1,12 +1,15 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogCraneSvc;
 import com.icent.isaver.repository.bean.EventLogCraneBean;
 import com.icent.isaver.repository.dao.base.EventLogCraneDao;
+import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +34,29 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
     private EventLogCraneDao eventLogCraneDao;
 
     @Override
-    public ModelAndView findListEventLogCrane(Map<String, String> parameters) {
-        List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findListEventLogCrane(parameters);
+    public ModelAndView findAllEventLogCrane(Map<String, String> parameters) {
+        List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findAllEventLogCrane(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogCraneList", eventLogCraneList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findListEventLogCrane(Map<String, String> parameters) {
+        Map param = new HashMap();
+        param.put("areaId", parameters.get("areaId"));
+        if(StringUtils.notNullCheck(parameters.get("datetime"))){
+            param.put("datetime", parameters.get("datetime"));
+        }
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID);
+
+        List<EventLogCraneBean> eventLogCraneCountList = eventLogCraneDao.findCountListEventLogCrane(param);
+        List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findListEventLogCrane(param);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogCraneCountList", eventLogCraneCountList);
         modelAndView.addObject("eventLogCraneList", eventLogCraneList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

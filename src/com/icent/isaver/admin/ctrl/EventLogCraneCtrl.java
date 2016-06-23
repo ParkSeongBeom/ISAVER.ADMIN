@@ -21,13 +21,26 @@ public class EventLogCraneCtrl {
     private EventLogCraneSvc eventLogCraneSvc;
 
     /**
-     * 크래인 상태 데이터를 가져온다.
+     * 크래인 상태 전체 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
+    public ModelAndView findAllEventLogCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogCraneSvc.findAllEventLogCrane(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 크래인 상태 상세 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findListEventLogCrane(@RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogCraneSvc.findListEventLogCrane(parameters);
         return modelAndView;

@@ -181,9 +181,13 @@
     };
 
     $(document).ready(function(){
+        /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        /* 크래인 */
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        /* 진출입 */
         dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        /* 차트 */
         dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
 
@@ -218,6 +222,7 @@
                 var worker = workerList[index];
                 var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
 
+                workerEventCnt += Number(worker['eventCnt']);
                 if(Number(worker['eventCnt'])>0){
                     if(buttonTag.find("#eventCnt").length>0){
                         if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
@@ -225,12 +230,11 @@
                         }
                     }else{
                         buttonTag.append(
-                                $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
+                            $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
                         )
                     }
 
                     modifyElementClass(buttonTag,'level03','add');
-                    workerEventCnt++;
                 }else{
                     modifyElementClass(buttonTag,'level03','remove');
 
@@ -260,6 +264,7 @@
                 var crane = craneList[index];
                 var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
 
+                craneEventCnt += Number(crane['eventCnt']);
                 if(Number(crane['eventCnt'])>0){
                     if(buttonTag.find("#eventCnt").length>0){
                         if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
@@ -267,12 +272,11 @@
                         }
                     }else{
                         buttonTag.append(
-                                $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
+                            $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
                         )
                     }
 
                     modifyElementClass(buttonTag,'level03','add');
-                    craneEventCnt++;
                 }else{
                     modifyElementClass(buttonTag,'level03','remove');
 

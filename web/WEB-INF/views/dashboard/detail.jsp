@@ -16,9 +16,7 @@
             <article class="layer_area">
                 <div class="mp_header">
                     <h2 id="popupTitle"></h2>
-                    <div>
-                        <button class="db_btn zoomclose_btn ipop_close"></button>
-                    </div>
+                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
                 </div>
             </article>
         </section>
@@ -30,12 +28,9 @@
         <section class="layer_wrap i_type05">
             <article class="layer_area">
                 <div class="mp_header">
-                    <h2>진출입자 조회 주기 설정</h2>
-                    <div>
-                        <button class="db_btn zoomclose_btn ipop_close"></button>
-                    </div>
+                    <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
+                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
                 </div>
-
                 <div class="mp_contents vh_mode">
                     <div class="search_contents">
                         <p class="itype_01">
@@ -139,7 +134,7 @@
                                                     <div class="mc_bico type02 worker"></div>
                                                     <div class="mc_box">
                                                         <p>${workerEvent.eventName}</p>
-                                                        <p class="eventCnt">0</p>
+                                                        <p id="eventCnt">0</p>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -172,7 +167,7 @@
                                                     <div class="mc_bico type02 crane"></div>
                                                     <div class="mc_box">
                                                         <p>${craneEvent.eventName}</p>
-                                                        <p class="eventCnt">0</p>
+                                                        <p id="eventCnt">0</p>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -283,19 +278,21 @@
      @author psb
      */
     var urlConfig = {
-        workerUrl  :   "${rootPath}/eventLogWorker/detail.json"
-        ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
-        ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
-        ,chartInoutUrl  :   "${rootPath}/eventLogChart/detail.json"
-        ,chartStatusUrl  :   "${rootPath}/eventLogChart/detail.json"
+        workerUrl : "${rootPath}/eventLogWorker/detail.json"
+        ,craneUrl : "${rootPath}/eventLogCrane/detail.json"
+        ,inoutUrl : "${rootPath}/eventLogInout/detail.json"
+        ,chartInoutUrl : "${rootPath}/eventLogChart/detail.json"
+        ,chartStatusUrl : "${rootPath}/eventLogChart/detail.json"
     };
 
     var messageConfig = {
-        workerFailure   :'<spring:message code="dashboard.message.workerFailure"/>'
-        , craneFailure  :'<spring:message code="dashboard.message.craneFailure"/>'
-        , inoutFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
-        , chartInoutFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
-        , chartStatusFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
+        detection   : '<spring:message code="dashboard.column.detection"/>'
+        , cancellation : '<spring:message code="dashboard.column.cancellation"/>'
+        , workerFailure : '<spring:message code="dashboard.message.workerFailure"/>'
+        , craneFailure : '<spring:message code="dashboard.message.craneFailure"/>'
+        , inoutFailure : '<spring:message code="dashboard.message.inoutFailure"/>'
+        , chartInoutFailure : '<spring:message code="dashboard.message.chartFailure"/>'
+        , chartStatusFailure : '<spring:message code="dashboard.message.chartFailure"/>'
     };
 
     var areaId = "${area.areaId}";
@@ -305,13 +302,15 @@
            $(".layer_popup").hide();
         });
 
+        /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
-//        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
-//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
-
+        /* 크래인 */
+        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 진출입 */
+//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        /* 진출입 차트 */
         dashBoardHelper.addRequestData('chartInout', urlConfig['chartInoutUrl'], {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
-        /* 상태  */
+        /* 상태 차트 */
         dashBoardHelper.addRequestData('chartStatus', urlConfig['chartStatusUrl'], {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
 
@@ -377,6 +376,8 @@
     }
 
     function workerRender(data){
+        dashBoardHelper.saveRequestData('worker', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
+
         var countList = data['eventLogWorkerCountList'];
 
         if(countList!=null){
@@ -385,27 +386,15 @@
                 var worker = countList[index];
                 var divTag = $(".workerContens").find("div[eventId='"+worker['eventId']+"']");
 
-                if(divTag!=null){
-                    if(Number(worker['eventCnt'])>0){
-                        if(divTag.find("#eventCnt").length>0){
-                            if(divTag.find("#eventCnt").text() != String(worker['eventCnt'])){
-                                divTag.find("#eventCnt").text(worker['eventCnt']);
-                            }
-                        }else{
-                            divTag.append(
-                                $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
-                            )
-                        }
+                workerEventCnt += Number(worker['eventCnt']);
+                if(Number(worker['eventCnt'])>0){
+                    modifyElementClass(divTag.find(".worker"),'level03','add');
+                }else{
+                    modifyElementClass(divTag.find(".worker"),'level03','remove');
+                }
 
-                        modifyElementClass(divTag.find(".worker"),'level03','add');
-                        workerEventCnt++;
-                    }else{
-                        modifyElementClass(divTag.find(".worker"),'level03','remove');
-
-                        if(divTag.find("#eventCnt").length>0){
-                            divTag.find("#eventCnt").remove();
-                        }
-                    }
+                if(divTag!=null && divTag.find("#eventCnt").text() != String(worker['eventCnt'])){
+                    divTag.find("#eventCnt").text(Number(worker['eventCnt']));
                 }
             }
 
@@ -424,51 +413,49 @@
         if(workerList!=null){
             for(var i=workerList.length-1; i >= 0; i--){
                 var worker = workerList[i];
-                var eventListTag = templateHelper.getTemplate("eventList");
-                if(worker['eventFlag'].toUpperCase()=='A'){
-                    modifyElementClass(eventListTag,'level03','add');
+                var cancelType = worker['eventCancelUserId']==null?"N":"Y";
+
+                if($(".workerList li[eventLogId='"+worker['eventLogId']+"'][cancelType='"+cancelType+"']").length==0){
+                    var eventListTag = templateHelper.getTemplate("eventList");
+                    eventListTag.attr("eventLogId",worker['eventLogId']).attr("cancelType",cancelType).find("#eventName").text(worker['eventName']);
+                    if(cancelType=="N"){ // 감지
+                        modifyElementClass(eventListTag,'level03','add');
+                        eventListTag.find("#status").text(messageConfig['detection']);
+                        eventListTag.find("#eventDatetime").text(new Date(worker['eventDatetime']).format("A/P HH:mm:ss"));
+                    }else{ // 해제
+                        eventListTag.find("#status").text(messageConfig['cancellation']);
+                        eventListTag.find("#eventDatetime").text(new Date(worker['eventCancelDatetime']).format("A/P HH:mm:ss"));
+                    }
+                    $(".workerList").prepend(eventListTag);
                 }
-                eventListTag.find("#status").text(worker['eventFlagName']);
-                eventListTag.find("#eventName").text(worker['eventName']);
-                eventListTag.find("#eventDatetime").text(new Date(worker['eventDatetime']).format("A/P HH:mm:ss"));
-                $(".workerList").prepend(eventListTag);
             }
 
             $.each($(".workerList"),function(){
                 $(this).children(":gt(49)").remove();
             })
         }
-
-        dashBoardHelper.saveRequestData('worker', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
     }
 
     function craneRender(data){
-        var craneList = data['eventLogCraneList'];
-        if(craneList!=null){
+        dashBoardHelper.saveRequestData('crane', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
+
+        var countList = data['eventLogCraneCountList'];
+
+        if(countList!=null){
             var craneEventCnt = 0;
-            for(var index in craneList){
-                var crane = craneList[index];
-                var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+            for(var index in countList){
+                var crane = countList[index];
+                var divTag = $(".craneContens").find("div[eventId='"+crane['eventId']+"']");
 
+                craneEventCnt += Number(crane['eventCnt']);
                 if(Number(crane['eventCnt'])>0){
-                    if(buttonTag.find("#eventCnt").length>0){
-                        if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
-                            buttonTag.find("#eventCnt").text(crane['eventCnt']);
-                        }
-                    }else{
-                        buttonTag.append(
-                                $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
-                        )
-                    }
-
-                    modifyElementClass(buttonTag,'level03','add');
-                    craneEventCnt++;
+                    modifyElementClass(divTag.find(".crane"),'level03','add');
                 }else{
-                    modifyElementClass(buttonTag,'level03','remove');
+                    modifyElementClass(divTag.find(".crane"),'level03','remove');
+                }
 
-                    if(buttonTag.find("#eventCnt").length>0){
-                        buttonTag.find("#eventCnt").remove();
-                    }
+                if(divTag!=null && divTag.find("#eventCnt").text() != String(crane['eventCnt'])){
+                    divTag.find("#eventCnt").text(Number(crane['eventCnt']));
                 }
             }
 
@@ -481,6 +468,32 @@
             }else{
                 modifyElementClass($("#craneDiv"),'level03','remove');
             }
+        }
+
+        var craneList = data['eventLogCraneList'];
+        if(craneList!=null){
+            for(var i=craneList.length-1; i >= 0; i--){
+                var crane = craneList[i];
+                var cancelType = crane['eventCancelUserId']==null?"N":"Y";
+
+                if($(".craneList li[eventLogId='"+crane['eventLogId']+"'][cancelType='"+cancelType+"']").length==0){
+                    var eventListTag = templateHelper.getTemplate("eventList");
+                    eventListTag.attr("eventLogId",crane['eventLogId']).attr("cancelType",cancelType).find("#eventName").text(crane['eventName']);
+                    if(cancelType=="N"){ // 감지
+                        modifyElementClass(eventListTag,'level03','add');
+                        eventListTag.find("#status").text(messageConfig['detection']);
+                        eventListTag.find("#eventDatetime").text(new Date(crane['eventDatetime']).format("A/P HH:mm:ss"));
+                    }else{ // 해제
+                        eventListTag.find("#status").text(messageConfig['cancellation']);
+                        eventListTag.find("#eventDatetime").text(new Date(crane['eventCancelDatetime']).format("A/P HH:mm:ss"));
+                    }
+                    $(".craneList").prepend(eventListTag);
+                }
+            }
+
+            $.each($(".craneList"),function(){
+                $(this).children(":gt(49)").remove();
+            })
         }
     }
 
