@@ -20,12 +20,17 @@ import java.util.Map;
  */
 public interface EventLogChartSvc {
 
-
-
     /**
-     * 분류별  차트용 로그를 가져온다.
+     * [전체] 분류별  차트용 로그를 가져온다.
      * @param parameters
      * @return
      */
-    ModelAndView findChartEventLog(Map<String, String> parameters);
+    ModelAndView findAllChartEventLog(Map<String, String> parameters);
+
+    /**
+     * [상세] 분류별  차트용 로그를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findDetailChartEventLog(Map<String, String> parameters);
 }

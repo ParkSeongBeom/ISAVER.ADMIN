@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
-
 <!-- section Start -->
 <section  class="container">
     <!-- 확대보기 레이어 팝업 -->
@@ -213,19 +212,20 @@
                                 </div>
                             </div>
 
-                            <div id="chart02" class="ct-chart">
+                            <div id="chart1" class="ct-chart">
                                 <div class="mp_header ct-name">
                                     <div>
                                         <span class="ch_name co_gren"><spring:message code="dashboard.column.workerIn"/></span>
                                         <span class="ch_name co_purp"><spring:message code="dashboard.column.workerOut"/></span>
-                                        <select name="type">
-                                            <option value="">30 min</option>
-                                            <option value="">60 min</option>
-                                            <option value="">90 min</option>
-                                            <option value="">120 min</option>
+                                        <select name="type" id="chartRefreshTime1">
+                                            <option value="30">30 min</option>
+                                            <option value="60">60 min</option>
+                                            <option value="90">90 min</option>
+                                            <option value="120">120 min</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mp_contents" id="chart1"></div>
                             </div>
                         </div>
                     </div>
@@ -257,15 +257,15 @@
                                 <span class="ch_name co_gren"><spring:message code="dashboard.column.worker"/></span>
                                 <span class="ch_name co_purp"><spring:message code="dashboard.column.crane"/></span>
                                 <span class="ch_name co_yell"><spring:message code="dashboard.column.gas"/></span>
-                                <select name="type">
-                                    <option value="">30 min</option>
-                                    <option value="">60 min</option>
-                                    <option value="">90 min</option>
-                                    <option value="">120 min</option>
+                                <select name="type" id="chartRefreshTime2">
+                                    <option value="30">30 min</option>
+                                    <option value="60">60 min</option>
+                                    <option value="90">90 min</option>
+                                    <option value="120">120 min</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="mp_contents" id="chart"></div>
+                        <div class="mp_contents" id="chart2"></div>
                     </div>
                 </div>
             </div>
@@ -286,15 +286,19 @@
         workerUrl  :   "${rootPath}/eventLogWorker/list.json"
         ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
         ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
-        ,chartUrl  :   "${rootPath}/eventLogChart/list.json"
+        ,chartInoutUrl  :   "${rootPath}/eventLogChart/detail.json"
+        ,chartStatusUrl  :   "${rootPath}/eventLogChart/detail.json"
     };
 
     var messageConfig = {
         workerFailure   :'<spring:message code="dashboard.message.workerFailure"/>'
         , craneFailure  :'<spring:message code="dashboard.message.craneFailure"/>'
         , inoutFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
-        , chartFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
+        , chartInoutFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
+        , chartStatusFailure  :'<spring:message code="dashboard.message.chartFailure"/>'
     };
+
+    var areaId = "${area.areaId}";
 
     $(document).ready(function(){
         $(".ipop_close").on("click",function(){
@@ -304,6 +308,11 @@
 //        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
 //        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+
+        /* 진출입 */
+        dashBoardHelper.addRequestData('chartInout', urlConfig['chartInoutUrl'], {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        /* 상태  */
+        dashBoardHelper.addRequestData('chartStatus', urlConfig['chartStatusUrl'], {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
     });
 
     /*
@@ -358,9 +367,93 @@
             case 'inout':
                 inoutRender(data);
                 break;
-            case 'chart':
+            case 'chartInout':
+            case 'chartStatus':
+                chartRender(data);
+                dashBoardHelper.saveRequestData('chartInout', {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()});
+                dashBoardHelper.saveRequestData('chartStatus', {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()});
                 break;
         }
+    }
+
+    /**
+     * 차트 가공 [진출입 / 상태 ]
+     * @author dhj
+     */
+    function chartRender(data) {
+
+        /* 작업자 상태 */
+        if (data['eventLogWorkerChart'] != null) {
+            var eventLogWorkerChart = data['eventLogWorkerChart'];
+            var chartList = [];
+            var eventDateList = [];
+
+            for (var i =0;i<eventLogWorkerChart.length;i++) {
+                var item = eventLogWorkerChart[i];
+                var eventDate  = new Date();
+                eventDate.setTime(item['eventDatetime']);
+
+                chartList.push(item['eventCnt']);
+                eventDateList.push(eventDate.format("HH:mm"));
+            }
+            chartList.reverse();
+            eventDateList.reverse();
+            mychart2.data.series[0] = chartList;
+            mychart2.data.labels = eventDateList;
+        }
+
+        /* 크레인 용 */
+        if (data['eventLogCraneChart'] != null) {
+            var eventLogCraneChart = data['eventLogCraneChart'];
+            var chartList = [];
+
+            for (var i =0;i<eventLogCraneChart.length;i++) {
+                var item = eventLogCraneChart[i];
+                chartList.push(item['eventCnt']);
+            }
+            chartList.reverse();
+            mychart2.data.series[1] = chartList;
+        }
+
+        /* 진출입용 */
+        if (data['eventLogInoutChart'] != null) {
+            var eventLogInoutChart = data['eventLogInoutChart'];
+            var chartList1 = [];
+            var chartList2 = [];
+
+            var eventDateList = [];
+
+            for (var i =0;i<eventLogInoutChart.length;i++) {
+                var item = eventLogInoutChart[i];
+                var eventDate  = new Date();
+                eventDate.setTime(item['eventDatetime']);
+
+                chartList1.push(item['inCount']);
+                chartList2.push(item['outCount']);
+
+                eventDateList.push(eventDate.format("HH:mm"));
+            }
+
+            chartList1.reverse();
+            chartList2.reverse();
+
+            eventDateList.reverse();
+
+            mychart1.data.series[0] = chartList1;
+            mychart1.data.series[1] = chartList2;
+
+            mychart1.data.labels = eventDateList;
+        }
+
+        if (mychart1 != undefined) {
+            mychart1.update();
+        }
+
+        if (mychart2 != undefined) {
+            mychart2.update();
+        }
+
+
     }
 
     function workerRender(data){
@@ -508,8 +601,9 @@
         alert(messageConfig[type]);
     }
 
-    var mychart = new Chartist.Line('#chart', {
-        labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+    /* 진출입용 차트 */
+    var mychart1 = new Chartist.Line('#chart1', {
+        labels: [1,2,3,4,5,6,7,8,9,10],
         series: [
             [],
             []
@@ -522,7 +616,61 @@
         })
     });
 
-    mychart.on('draw', function(data) {
+
+    mychart1.on('draw', function(data) {
+        if(data.type === 'slice') {
+            if (data.index == 0) {
+                data.element.attr({
+                    'style': 'stroke: rgba(193, 0, 104, 1)'
+                });
+                data.element.animate ({
+                    'stroke-dashoffset': {
+                        begin: '1s',
+                        dur: '21s',
+                        from: '0',
+                        to: '600',
+                        easing: 'easeOutQuart',
+                        d:"part1"
+                    },
+                    'stroke-dasharray': {
+                        from: '0',
+                        to: '1000'
+                    }
+                }, false);
+            } else {
+                data.element.attr({
+                    'style': 'stroke: rgba(102, 102, 102, 1)'
+                });
+                data.element.animate ({
+                    'stroke-dashoffset': {
+                        begin: "part1.end",
+                        dur: 1000,
+                        from: '0 250 150',
+                        to: '360 250 150',
+                        easing: 'easeOutQuart'
+                    }
+                });
+            }
+        }
+    });
+
+
+    /* 알림 상태용 차트 */
+    var mychart2 = new Chartist.Line('#chart2', {
+        labels: [1,2,3,4,5,6,7,8,9,10],
+        series: [
+            [],
+            []
+        ]
+    }, {
+        low: 0,
+        showArea: true,
+        lineSmooth: Chartist.Interpolation.simple({
+            divisor: 100
+        })
+    });
+
+    mychart2.on('draw', function(data) {
         if(data.type === 'slice') {
             if (data.index == 0) {
                 data.element.attr({

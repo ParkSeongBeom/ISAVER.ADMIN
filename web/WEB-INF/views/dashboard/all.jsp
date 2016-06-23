@@ -170,7 +170,7 @@
         workerUrl  :   "${rootPath}/eventLogWorker/list.json"
         ,craneUrl  :   "${rootPath}/eventLogCrane/list.json"
         ,inoutUrl  :   "${rootPath}/eventLogInout/list.json"
-        ,chartUrl  :   "${rootPath}/eventLogChart/list.json"
+        ,chartUrl  :   "${rootPath}/eventLogChart/all.json"
     };
 
     var messageConfig = {
@@ -193,6 +193,7 @@
      * @private
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
+
         switch(actionType){
             case 'worker':
                 workerRender(data);
@@ -208,6 +209,7 @@
                 dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
                 break;
         }
+
     }
 
     function workerRender(data){
@@ -340,7 +342,7 @@
     }
 
     /**
-     * 차트 가공
+     * 차트 가공 [상태 ]
      * @author dhj
      */
     function chartRender(data) {

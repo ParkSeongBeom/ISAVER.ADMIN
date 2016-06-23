@@ -23,15 +23,28 @@ public class EventLogChartCtrl {
     private EventLogChartSvc eventLogChartSvc;
 
     /**
-     * [CHART] 로그 분류별 상태 데이터 로그를 가져온다.
+     * [전체][CHART] 로그 분류별 상태 데이터 로그를 가져온다.
      *
      * @author psb
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
-    public ModelAndView findChartEventLogCrane(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = eventLogChartSvc.findChartEventLog(parameters);
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/all")
+    public ModelAndView findAllChartEventLogCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogChartSvc.findAllChartEventLog(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * [상세][CHART] 로그 분류별 상태 데이터 로그를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
+    public ModelAndView findDetailChartEventLogCrane(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogChartSvc.findDetailChartEventLog(parameters);
         return modelAndView;
     }
 

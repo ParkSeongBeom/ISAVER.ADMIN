@@ -38,8 +38,11 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
     @Inject
     private EventLogWorkerDao eventLogWorkerDao;
 
+    @Inject
+    private EventLogInoutDao eventLogInoutDao;
+
     @Override
-    public ModelAndView findChartEventLog(Map<String, String> parameters) {
+    public ModelAndView findAllChartEventLog(Map<String, String> parameters) {
 
         List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
         List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(parameters);
@@ -48,6 +51,32 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
 
         modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
         modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);
+
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findDetailChartEventLog(Map<String, String> parameters) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (parameters.get("requestType") != null && parameters.get("areaId") != null) {
+            if (parameters.get("requestType").equals("1")) {
+                List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
+                List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(parameters);
+
+                modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
+                modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);
+            }
+
+            if (parameters.get("requestType").equals("0")) {
+                List<EventLogInoutBean> eventLogWorkerInout = eventLogInoutDao.findChartEventLogInout(parameters);
+
+                modelAndView.addObject("eventLogInoutChart", eventLogWorkerInout);
+            }
+        }
+
+
         return modelAndView;
     }
 }
