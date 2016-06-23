@@ -295,8 +295,6 @@
         , chartStatusFailure : '<spring:message code="dashboard.message.chartFailure"/>'
     };
 
-    var areaId = "${area.areaId}";
-
     $(document).ready(function(){
         $(".ipop_close").on("click",function(){
            $(".layer_popup").hide();
