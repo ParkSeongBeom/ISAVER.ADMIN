@@ -178,6 +178,10 @@ function MenuView(model) {
                 }
             }
 
+            if(selDepth==null){
+                selDepth = 'H00000';
+            }
+
             $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
             $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
         }
@@ -274,10 +278,6 @@ function MenuView(model) {
         }
 
         if (_listLength == _loopLength) {
-            if(MenuView._model.getParentMenuId()!=""){
-                setSelectedMenu(rootUlTag);
-            }
-
             if(areaList!=null){
                 if($(rootUlTag).find("li[name='H00000'] .nano-content").length==0){
                     $(rootUlTag).find("li[name='H00000']").append(
@@ -294,6 +294,10 @@ function MenuView(model) {
                     _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
                     $(rootUlTag).find("li[name='H00000'] .nano-content").append(_menuLiTag);
                 }
+            }
+
+            if(MenuView._model.getParentMenuId()!=""){
+                setSelectedMenu(rootUlTag);
             }
 
             $(".nav_area").html(rootUlTag);

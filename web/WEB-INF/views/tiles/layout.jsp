@@ -21,7 +21,6 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.mCustomScrollbar.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/design.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/default.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
     <%-- dynatree, dhj --%>
@@ -161,7 +160,10 @@
                     if(eventLog['eventType']!=null && eventLog['eventType']!=""){
                         var eventTypeName = null;
                         marqueeFlag = true;
-                        $('.marquee').marquee('destroy');
+
+                        if($("#marqueeList").length>0){
+                            $('.marquee').marquee('destroy');
+                        }
 
                         switch (eventLog['eventType']){
                             case "crane" :

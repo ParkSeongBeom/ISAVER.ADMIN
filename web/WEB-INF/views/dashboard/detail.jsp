@@ -11,12 +11,72 @@
 <!-- section Start -->
 <section  class="container">
     <!-- 확대보기 레이어 팝업 -->
-    <aside class="layer_popup detail_popup">
+    <aside id="workerPopup" class="layer_popup detail_popup">
         <section class="layer_wrap i_type05">
             <article class="layer_area">
                 <div class="mp_header">
-                    <h2 id="popupTitle"></h2>
+                    <h2><spring:message code="dashboard.title.worker"/></h2>
                     <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
+                </div>
+                <div class="mp_contents">
+                    <div class="mc_element_set nano">
+                        <div class="workerContens nano-content">
+                            <c:choose>
+                                <c:when test="${workerEvents != null and fn:length(workerEvents) > 0}">
+                                    <c:forEach var="workerEvent" items="${workerEvents}">
+                                        <div eventId="${workerEvent.eventId}" class="mc_element">
+                                            <div class="mc_bico type02 worker"></div>
+                                            <div class="mc_box">
+                                                <p>${workerEvent.eventName}</p>
+                                                <p class="eventCnt">0</p>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div class="mc_element nano">
+                        <ul class="workerList mc_list nano-content"></ul>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close"></div>
+    </aside>
+
+    <aside id="cranePopup" class="layer_popup detail_popup">
+        <section class="layer_wrap i_type05">
+            <article class="layer_area">
+                <div class="mp_header">
+                    <h2><spring:message code="dashboard.title.crane"/></h2>
+                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
+                </div>
+                <div class="mp_contents">
+                    <div class="mc_element_set nano">
+                        <div class="craneContens nano-content">
+                            <c:choose>
+                                <c:when test="${craneEvents != null and fn:length(craneEvents) > 0}">
+                                    <c:forEach var="craneEvent" items="${craneEvents}">
+                                        <div eventId="${craneEvent.eventId}" class="mc_element">
+                                            <div class="mc_bico type02 crane"></div>
+                                            <div class="mc_box">
+                                                <p>${craneEvent.eventName}</p>
+                                                <p class="eventCnt">0</p>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div class="mc_element nano">
+                        <ul class="craneList mc_list nano-content"></ul>
+                    </div>
                 </div>
             </article>
         </section>
@@ -134,7 +194,7 @@
                                                     <div class="mc_bico type02 worker"></div>
                                                     <div class="mc_box">
                                                         <p>${workerEvent.eventName}</p>
-                                                        <p id="eventCnt">0</p>
+                                                        <p class="eventCnt">0</p>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -167,7 +227,7 @@
                                                     <div class="mc_bico type02 crane"></div>
                                                     <div class="mc_box">
                                                         <p>${craneEvent.eventName}</p>
-                                                        <p id="eventCnt">0</p>
+                                                        <p class="eventCnt">0</p>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -207,7 +267,7 @@
                                 </div>
                             </div>
 
-                            <div id="chart1" class="ct-chart">
+                            <div class="ct-chart">
                                 <div class="mp_header ct-name">
                                     <div>
                                         <span class="ch_name co_gren"><spring:message code="dashboard.column.workerIn"/></span>
@@ -317,35 +377,16 @@
      @author psb
      */
     function openDetailPopup(type){
-        var targetTag = null;
-
         switch(type){
             case 'worker':
-                targetTag = $("#workerDiv");
+                $("#workerPopup").show();
                 break;
             case 'crane':
-                targetTag = $("#craneDiv");
+                $("#cranePopup").show();
                 break;
             case 'gas':
-                targetTag = $("#gasDiv");
                 break;
         }
-
-        if(targetTag==null){
-            console.error("[openDetailPopup] error - type fail");
-            return false;
-        }
-
-        var contentsTag = targetTag.find(".mp_contents").clone();
-
-        modifyElementClass(contentsTag,'vh_mode','remove');
-        modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
-
-        $("#popupTitle").text(targetTag.attr("title"));
-        $(".detail_popup").find(".mp_contents").remove();
-        $(".detail_popup .layer_area").append(contentsTag);
-        $(".detail_popup").show();
-        $(".detail_popup .layer_wrap").show();
     }
 
     /**
@@ -391,8 +432,8 @@
                     modifyElementClass(divTag.find(".worker"),'level03','remove');
                 }
 
-                if(divTag!=null && divTag.find("#eventCnt").text() != String(worker['eventCnt'])){
-                    divTag.find("#eventCnt").text(Number(worker['eventCnt']));
+                if(divTag!=null && divTag.find(".eventCnt").text() != String(worker['eventCnt'])){
+                    divTag.find(".eventCnt").text(Number(worker['eventCnt']));
                 }
             }
 
@@ -452,8 +493,8 @@
                     modifyElementClass(divTag.find(".crane"),'level03','remove');
                 }
 
-                if(divTag!=null && divTag.find("#eventCnt").text() != String(crane['eventCnt'])){
-                    divTag.find("#eventCnt").text(Number(crane['eventCnt']));
+                if(divTag!=null && divTag.find(".eventCnt").text() != String(crane['eventCnt'])){
+                    divTag.find(".eventCnt").text(Number(crane['eventCnt']));
                 }
             }
 
