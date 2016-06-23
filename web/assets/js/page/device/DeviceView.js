@@ -209,8 +209,8 @@ function DeviceView(model) {
         //$(formName + " [id='selectUpOrgSeq']").val("");
 
         //$(formName + " [name='areaName']").val("");
-        $(formName + " [name='deviceId']").removeAttr("readonly");
-        $(formName + " [name='serialNo']").removeAttr("readonly");
+        $(formName + " [name='deviceId']").attr("readonly", "readonly");
+        $(formName + " [name='serialNo']").attr("readonly", "readonly");
         //$(formName + " [name='orgDepth']").val("");
         //$(formName + " [name='sortOrder']").val("");
         $(formName + " td[name='insertUserId']").text("");

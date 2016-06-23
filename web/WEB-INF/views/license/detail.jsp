@@ -126,11 +126,11 @@
 
     function validate(type){
 
-        if (form.find('input[name=licenseText]:eq(0)').val().length == 0
-                &&form.find('input[name=licenseText]:eq(1)').val().length == 0
-                &&form.find('input[name=licenseText]:eq(2)').val().length == 0
-                &&form.find('input[name=licenseText]:eq(3)').val().length == 0
-                &&form.find('input[name=licenseText]:eq(4)').val().length == 0) {
+        if (form.find('input[name=licenseText]:eq(0)').val().length  < 5
+                || form.find('input[name=licenseText]:eq(1)').val().length < 5
+                || form.find('input[name=licenseText]:eq(2)').val().length < 5
+                || form.find('input[name=licenseText]:eq(3)').val().length < 5
+                || form.find('input[name=licenseText]:eq(4)').val().length < 5) {
             alertMessage('requireLicenseKey');
             return false;
         }

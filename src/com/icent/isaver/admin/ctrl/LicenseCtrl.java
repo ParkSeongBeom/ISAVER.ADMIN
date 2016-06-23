@@ -107,7 +107,7 @@ public class LicenseCtrl {
         return modelAndView;
     }
 
-    private final static String[] removeLicenseParam = new String[]{"licenseId"};
+    private final static String[] removeLicenseParam = new String[]{"licenseKey"};
 
     /**
      *  라이센스를 제거 한다.
