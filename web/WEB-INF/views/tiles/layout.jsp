@@ -184,7 +184,7 @@
                             // 알림센터
                             var alramTag = templateHelper.getTemplate("alram01");
                             alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
-                            alramTag.find("#eventType").text(eventTypeName);
+//                            alramTag.find("#eventType").text(eventTypeName);
                             alramTag.find("#eventName").text(eventLog['eventName']);
                             alramTag.find("#areaName").text(eventLog['areaName']);
                             alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));

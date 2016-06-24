@@ -18,15 +18,11 @@ var TemplateHelper = (
         ).append(
             $("<div/>", {class:"dbc_contents"}).append(
                 $("<div/>").append(
-                    $("<p/>", {id:"eventType"})
-                ).append(
-                    $("<p/>", {id:"eventName"})
-                )
-            ).append(
-                $("<div/>").append(
                     $("<p/>", {id:"areaName"})
                 ).append(
-                    $("<span/>", {id:"eventDatetime"})
+                    $("<p/>", {id:"eventName"})
+                ).append(
+                    $("<p/>", {id:"eventDatetime"})
                 )
             )
         ).append(
