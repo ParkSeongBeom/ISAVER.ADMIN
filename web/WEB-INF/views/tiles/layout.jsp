@@ -36,7 +36,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/dashboard/dashBoard-helper.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
 
     <script type="text/javascript">
@@ -103,6 +103,9 @@
             dashBoardHelper.addRequestData('alram', layoutUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
             dashBoardHelper.startInterval();
             aliveSend(900000);
+
+            //스크롤바 플러그인 호출
+            $(".nano").nanoScroller();
         });
 
         function alramTypeChangeHandler() {
@@ -433,7 +436,7 @@
 
     <!-- navigation 영역 Start -->
     <nav id="nav" class="nav">
-        <div class="nav_area nano"></div>
+        <div class="nav_area"></div>
     </nav>
     <!-- navigation 영역 End -->
 

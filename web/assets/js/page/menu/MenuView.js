@@ -192,7 +192,7 @@ function MenuView(model) {
 
         var _listLength = menuBarModel.length;
         var _loopLength = 0;
-        var rootUlTag = $("<ul/>").addClass("lnb nano-content");
+        var rootUlTag = $("<ul/>").addClass("lnb");
 
         var menuLiTag = $("<li/>").append(
             $("<button/>").attr("href","#")
@@ -247,16 +247,16 @@ function MenuView(model) {
                      /**
                      * 현병춘K 요청으로 대메뉴 클릭시 첫번째 하위메뉴의 화면 호출
                      */
-                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] .nano-content > li").length == 0){
+                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul > li").length == 0){
                         $(rootUlTag).find("li[name='"+item.parentMenuId+"'] > button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
                     }
 
-                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] .nano-content").length>0){
-                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] .nano-content").append(_menuLiTag);
+                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").length>0){
+                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").append(_menuLiTag);
                     }else{
                         $(rootUlTag).find("li[name='"+item.parentMenuId+"']").append(
-                            $("<div/>").addClass('nano').append(
-                                $("<ul/>").addClass('nano-content').append(_menuLiTag)
+                            $("<div/>").append(
+                                $("<ul/>").append(_menuLiTag)
                             )
                         )
                     }
@@ -279,10 +279,10 @@ function MenuView(model) {
 
         if (_listLength == _loopLength) {
             if(areaList!=null){
-                if($(rootUlTag).find("li[name='H00000'] .nano-content").length==0){
+                if($(rootUlTag).find("li[name='H00000'] ul").length==0){
                     $(rootUlTag).find("li[name='H00000']").append(
-                        $("<div/>").addClass('nano').append(
-                            $("<ul/>").addClass('nano-content')
+                        $("<div/>").append(
+                            $("<ul/>")
                         )
                     );
                 }
@@ -292,7 +292,7 @@ function MenuView(model) {
                     var _menuLiTag = menuLiTag.clone();
                     _menuLiTag.attr("name", area['areaId']);
                     _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
-                    $(rootUlTag).find("li[name='H00000'] .nano-content").append(_menuLiTag);
+                    $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
                 }
             }
 
@@ -301,9 +301,6 @@ function MenuView(model) {
             }
 
             $(".nav_area").html(rootUlTag);
-
-            //스크롤바 플러그인 호출
-            $(".nano").nanoScroller();
         }
     };
 
