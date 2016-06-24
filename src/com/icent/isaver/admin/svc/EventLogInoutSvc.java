@@ -21,13 +21,22 @@ import java.util.Map;
 public interface EventLogInoutSvc {
 
     /**
-     * 작업자 진출입 데이터를 가져온다.
+     * 작업자 진출입 전체 데이터를 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param parameters
      * @return
      */
     ModelAndView findListEventLogInout(Map<String, String> parameters);
+
+    /**
+     * 작업자 진출입 상세 데이터를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findByEventLogInout(Map<String, String> parameters);
 
     /**
      * 작업자 진출입 차트용 로그를 가져온다.

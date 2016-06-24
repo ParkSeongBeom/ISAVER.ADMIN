@@ -11,72 +11,12 @@
 <!-- section Start -->
 <section  class="container">
     <!-- 확대보기 레이어 팝업 -->
-    <aside id="workerPopup" class="layer_popup detail_popup">
+    <aside class="layer_popup detail_popup">
         <section class="layer_wrap i_type05">
             <article class="layer_area">
                 <div class="mp_header">
-                    <h2><spring:message code="dashboard.title.worker"/></h2>
+                    <h2 id="popupTitle"></h2>
                     <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
-                </div>
-                <div class="mp_contents">
-                    <div class="mc_element_set nano">
-                        <div class="workerContens nano-content">
-                            <c:choose>
-                                <c:when test="${workerEvents != null and fn:length(workerEvents) > 0}">
-                                    <c:forEach var="workerEvent" items="${workerEvents}">
-                                        <div eventId="${workerEvent.eventId}" class="mc_element">
-                                            <div class="mc_bico type02 worker"></div>
-                                            <div class="mc_box">
-                                                <p>${workerEvent.eventName}</p>
-                                                <p class="eventCnt">0</p>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                    <div class="mc_element nano">
-                        <ul class="workerList mc_list nano-content"></ul>
-                    </div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close"></div>
-    </aside>
-
-    <aside id="cranePopup" class="layer_popup detail_popup">
-        <section class="layer_wrap i_type05">
-            <article class="layer_area">
-                <div class="mp_header">
-                    <h2><spring:message code="dashboard.title.crane"/></h2>
-                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
-                </div>
-                <div class="mp_contents">
-                    <div class="mc_element_set nano">
-                        <div class="craneContens nano-content">
-                            <c:choose>
-                                <c:when test="${craneEvents != null and fn:length(craneEvents) > 0}">
-                                    <c:forEach var="craneEvent" items="${craneEvents}">
-                                        <div eventId="${craneEvent.eventId}" class="mc_element">
-                                            <div class="mc_bico type02 crane"></div>
-                                            <div class="mc_box">
-                                                <p>${craneEvent.eventName}</p>
-                                                <p class="eventCnt">0</p>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                    <div class="mc_element nano">
-                        <ul class="craneList mc_list nano-content"></ul>
-                    </div>
                 </div>
             </article>
         </section>
@@ -180,7 +120,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -213,7 +153,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -254,16 +194,16 @@
                         <div class="mp_contents vh_mode">
                             <div class="personnel">
                                 <div id="nowInout" class="now">
-                                    <p id="nowInoutDatetime">AM 08:00:00 ~</p>
-                                    <span id="nowInoutGap">76</span>
-                                    <div id="nowInCnt">98</div>
-                                    <div id="nowOutCnt">22</div>
+                                    <p id="nowInoutDatetime">AM 00:00:00 ~ PM 23:59:59</p>
+                                    <span id="nowInoutGap">0</span>
+                                    <div id="nowInCnt">0</div>
+                                    <div id="nowOutCnt">0</div>
                                 </div>
                                 <div id="beforeInout" class="past">
-                                    <p id="beforeInoutDatetime">AM 08:00:00 ~</p>
-                                    <span id="beforeInoutGap">76</span>
-                                    <div id="beforeInCnt">98</div>
-                                    <div id="beforeOutCnt">22</div>
+                                    <p id="beforeInoutDatetime">AM 00:00:00 ~ PM 23:59:59</p>
+                                    <span id="beforeInoutGap">0</span>
+                                    <div id="beforeInCnt">0</div>
+                                    <div id="beforeOutCnt">0</div>
                                 </div>
                             </div>
 
@@ -292,7 +232,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn">0</button>
+                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
@@ -357,7 +297,8 @@
 
     $(document).ready(function(){
         $(".ipop_close").on("click",function(){
-           $(".layer_popup").hide();
+            $(".layer_popup").hide();
+            $(".detail_popup").find(".mp_contents").remove();
         });
 
         /* 작업자 */
@@ -365,7 +306,7 @@
         /* 크래인 */
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 진출입 */
-//        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 진출입 차트 */
         dashBoardHelper.addRequestData('chartInout', urlConfig['chartInoutUrl'], {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 상태 차트 */
@@ -377,16 +318,39 @@
      @author psb
      */
     function openDetailPopup(type){
+        var targetTag = null;
+        var title;
+
         switch(type){
             case 'worker':
-                $("#workerPopup").show();
+                targetTag = $("#workerDiv");
+                title = '<spring:message code="dashboard.title.worker"/>';
                 break;
             case 'crane':
-                $("#cranePopup").show();
+                targetTag = $("#craneDiv");
+                title = '<spring:message code="dashboard.title.crane"/>';
                 break;
             case 'gas':
+                targetTag = $("#gasDiv");
+                title = '<spring:message code="dashboard.title.gas"/>';
                 break;
         }
+
+        if(targetTag==null){
+            console.error("[openDetailPopup] error - type fail");
+            return false;
+        }
+
+        var contentsTag = targetTag.find(".mp_contents").clone();
+
+        contentsTag.find(".mc_element_set").css("height","inherit");
+        modifyElementClass(contentsTag,'vh_mode','remove');
+        modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
+
+        $("#popupTitle").text(title);
+        $(".detail_popup .layer_area").append(contentsTag);
+        $(".detail_popup").find(".nano").nanoScroller();
+        $(".detail_popup").show();
     }
 
     /**
@@ -537,48 +501,20 @@
     }
 
     function inoutRender(data){
-        var inoutList = data['eventLogInoutList'];
-        if(inoutList!=null){
-            var inoutEventCnt = 0;
-            for(var index in inoutList){
-                var inout = inoutList[index];
+        var inout = data['eventLogInout'];
+        var paramBean = data['paramBean'];
+        var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
+        var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
 
-                var buttonTag = $("#eventLogInoutList button[areaId='"+inout['areaId']+"']");
-                var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
-                var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
+        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("A/P HH:mm:ss") + " ~ " + new Date(paramBean['nowInoutEndtime']).format("A/P HH:mm:ss"));
+        $("#nowInoutGap").text(Number(nowGap));
+        $("#nowInCnt").text(Number(inout['nowInCnt']));
+        $("#nowOutCnt").text(Number(inout['nowOutCnt']));
 
-                if(buttonTag.find("#nowGap").text() != String(nowGap)){
-                    buttonTag.find("#nowGap").text(String(nowGap));
-                }
-
-                if(beforeGap>0){
-                    if(buttonTag.find("#beforeGap").length>0){
-                        if(buttonTag.find("#beforeGap").text() != "/"+String(beforeGap)){
-                            buttonTag.find("#beforeGap").text(beforeGap);
-                        }
-                    }else{
-                        buttonTag.find("#nowGap").append(
-                            $("<em/>", {id:"beforeGap"}).text("/"+String(beforeGap))
-                        )
-                    }
-
-                    modifyElementClass(buttonTag,'level02','add');
-                    inoutEventCnt++;
-                }else{
-                    modifyElementClass(buttonTag,'level03','remove');
-
-                    if(buttonTag.find("#beforeGap").length>0){
-                        buttonTag.find("#beforeGap").remove();
-                    }
-                }
-            }
-
-            if(inoutEventCnt>0){
-                modifyElementClass($("#inoutDiv"),'level02','add');
-            }else{
-                modifyElementClass($("#inoutDiv"),'level03','remove');
-            }
-        }
+        $("#beforeInoutDatetime").text(new Date(paramBean['beforeInoutStarttime']).format("A/P HH:mm:ss") + " ~ " + new Date(paramBean['beforeInoutEndtime']).format("A/P HH:mm:ss"));
+        $("#beforeInoutGap").text(Number(beforeGap));
+        $("#beforeInCnt").text(Number(inout['beforeInCnt']));
+        $("#beforeOutCnt").text(Number(inout['beforeOutCnt']));
     }
 
     /**

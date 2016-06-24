@@ -31,7 +31,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="alra_btn">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -83,7 +83,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="alra_btn">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -109,7 +109,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gasState"/></h2>
                             <div>
-                                <button class="alra_btn">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -327,7 +327,7 @@
                     modifyElementClass(buttonTag,'level02','add');
                     inoutEventCnt++;
                 }else{
-                    modifyElementClass(buttonTag,'level03','remove');
+                    modifyElementClass(buttonTag,'level02','remove');
 
                     if(buttonTag.find("#beforeGap").length>0){
                         buttonTag.find("#beforeGap").remove();
@@ -338,7 +338,7 @@
             if(inoutEventCnt>0){
                 modifyElementClass($("#inoutDiv"),'level02','add');
             }else{
-                modifyElementClass($("#inoutDiv"),'level03','remove');
+                modifyElementClass($("#inoutDiv"),'level02','remove');
             }
         }
     }
