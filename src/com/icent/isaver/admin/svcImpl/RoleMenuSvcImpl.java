@@ -2,7 +2,9 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.RoleMenuSvc;
+import com.icent.isaver.repository.bean.MenuBean;
 import com.icent.isaver.repository.bean.RoleMenuBean;
+import com.icent.isaver.repository.dao.base.MenuDao;
 import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.RoleMenuDao;
 import com.kst.common.springutil.TransactionUtil;
@@ -47,6 +49,9 @@ public class RoleMenuSvcImpl implements RoleMenuSvc {
     @Inject
     private RoleMenuDao roleMenuDao;
 
+    @Inject
+    private MenuDao menuDao;
+
     @Override
     public ModelAndView findAllRoleMenu(Map<String, String> parameters) {
         if(StringUtils.nullCheck(parameters.get("roleId"))){
@@ -55,12 +60,17 @@ public class RoleMenuSvcImpl implements RoleMenuSvc {
 
         List<RoleMenuBean> unregiMenuList = roleMenuDao.findUnregiRoleMenu(parameters);
         List<RoleMenuBean> regiMenuList = roleMenuDao.findRegiRoleMenu(parameters);
+        List<MenuBean> menuTreeList = menuDao.findAllMenuTree(parameters);
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("roles",roleDao.findListRole(null));
         modelAndView.addObject("unregiMenuList",unregiMenuList);
         modelAndView.addObject("regiMenuList",regiMenuList);
         modelAndView.addObject("paramBean",parameters);
+
+        modelAndView.addObject("menuTreeList", menuTreeList);
+
         return modelAndView;
     }
 

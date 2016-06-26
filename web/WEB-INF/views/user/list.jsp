@@ -26,22 +26,21 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <form id="userForm" method="POST">
-        <input type="hidden" name="pageNumber"/>
-
+        <input type="hidden" name="pageNumber">
         <article class="search_area">
             <div class="search_contents">
                 <!-- 일반 input 폼 공통 -->
                 <p class="itype_01">
                     <span><spring:message code="user.column.userId" /></span>
-                    <span>
-                        <input type="text" name="userId" value="${paramBean.userId}"/>
-                    </span>
+                        <span>
+                            <input type="text" name="userId" value="${paramBean.userId}"/>
+                        </span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="user.column.userName" /></span>
-                    <span>
-                        <input type="text" name="userName" value="${paramBean.userName}"/>
-                    </span>
+                        <span>
+                            <input type="text" name="userName" value="${paramBean.userName}"/>
+                        </span>
                 </p>
             </div>
             <div class="search_btn">

@@ -26,26 +26,32 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <form id="licenseForm" method="POST">
-        <input type="hidden" name="pageNumber"/>
+        <input type="hidden" name="pageNumber">
+
 
         <article class="search_area">
             <div class="search_contents">
-                <!-- 일반 input 폼 공통 -->
-
                 <p class="itype_01">
-                    <span><spring:message code="license.column.licenseKey" /></span>
-                    <span>
-                        <input type="text" name="licenseKey" value="${paramBean.licenseKey}"/>
-                    </span>
+                    <span>License Key</span>
+                        <span>
+                            <input type="text" name="licenseKey" value="${paramBean.licenseKey}"/>
+                        </span>
                 </p>
-
                 <p class="itype_01">
                     <span><spring:message code="license.column.deviceType" /></span>
                     <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagId="selectDeviceCode" htmlTagName="deviceCode" allModel="true"/>
                 </p>
+                <p class="itype_04">
+                    <span><spring:message code="license.column.expireDate"/></span>
+                        <span class="plable04">
+                            <input type="text" name="" value="" id="" class="hasDatepicker"><img class="ui-datepicker-trigger" src="../../../assets/images/ico/ico_date.png" alt="" title="">
+                            <em>~</em>
+                            <input type="text" name="" value="" id="" class="hasDatepicker"><img class="ui-datepicker-trigger" src="../../../assets/images/ico/ico_date.png" alt="..." title="...">
+                        </span>
+                </p>
             </div>
             <div class="search_btn">
-                <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;">조회</button>
             </div>
         </article>
     </form>

@@ -22,13 +22,13 @@
                         <div class="search_contents">
                             <!-- 일반 input 폼 공통 -->
                             <p class="itype_01">
-                                <span>ID</span>
+                                <span><spring:message code="action.column.actionId"/></span>
                                     <span>
                                         <input type="text" name="pop_action_id" >
                                     </span>
                             </p>
                             <p class="itype_01">
-                                <span>구분</span>
+                                <span><spring:message code="action.column.actionCode"/></span>
                                     <span>
 
 
@@ -61,7 +61,7 @@
                             <tr>
                                 <th class="t_center"></th>
                                 <th><spring:message code="action.column.actionId"/></th>
-                                <th><spring:message code="action.column.actionId"/></th>
+                                <th><spring:message code="action.column.actionCode"/></th>
                                 <th><spring:message code="action.column.actionDesc"/></th>
                             </tr>
                             </thead>
@@ -348,6 +348,7 @@
         var data = {
             actionId : $("input[name=pop_action_id]").val()
             , actionCode : $("input[name=pop_action_code]").val()
+            , notInActionId : 'true'
         };
         /* 조치 목록 - 내용 */
         $("#actionList > tbody").empty();
