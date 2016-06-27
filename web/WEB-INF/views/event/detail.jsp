@@ -142,7 +142,7 @@
                     <tr>
                         <th class="point"><spring:message code="event.column.eventId"/></th>
                         <td class="point">
-                            <input type="text" name="eventId" value="${event.eventId}" placeholder="<spring:message code="event.message.requireEventId"/>" ${empty event ? '' : 'readonly="true"'}  maxlength="6"/>
+                            <input type="text" name="eventId" value="${event.eventId}" placeholder="<spring:message code="event.message.requireEventId"/>" readonly="readonly" maxlength="6"/>
                         </td>
                         <th class="point"><spring:message code="event.column.eventName"/></th>
                         <td class="point">
@@ -228,10 +228,10 @@
     };
 
     function validate(type){
-        if(form.find('input[name=eventId]').val().length == 0){
-            alertMessage('requireCodeId');
-            return false;
-        }
+//        if(form.find('input[name=eventId]').val().length == 0){
+//            alertMessage('requireCodeId');
+//            return false;
+//        }
 
         switch(type){
             case 1:
@@ -288,7 +288,6 @@
                 alertMessage(actionType + 'Complete');
                 break;
             case 'add':
-                    debugger;
                 if (data['existFlag'] == "true") {
                     alertMessage('eventAddExistFail');
                 } else {

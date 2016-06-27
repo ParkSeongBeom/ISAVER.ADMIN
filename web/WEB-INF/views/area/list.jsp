@@ -78,7 +78,7 @@
                     <tr>
                         <th><spring:message code="area.column.areaId"/></th>
                         <td>
-                            <input type="text" name="" value="" placeholder="<spring:message code="area.message.requiredAreaId"/>">
+                            <input type="text" name="" value="" placeholder="<spring:message code="area.message.requiredAreaId"/>" readonly="readonly">
                         </td>
                         <th class="point"><spring:message code="area.column.areaName"/></th>
                         <td class="point">

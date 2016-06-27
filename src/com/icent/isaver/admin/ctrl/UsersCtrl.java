@@ -118,7 +118,7 @@ public class UsersCtrl {
         return modelAndView;
     }
 
-    private final static String[] saveUserParam = new String[]{"userId", "userPassword", "userName"};
+    private final static String[] saveUserParam = new String[]{"userId", "userName"};
 
     /**
      * 사용자 정보를 수정한다.

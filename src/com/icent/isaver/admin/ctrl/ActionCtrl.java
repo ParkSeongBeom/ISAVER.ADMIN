@@ -78,7 +78,7 @@ public class ActionCtrl {
         return modelAndView;
     }
 
-    private final static String[] addActionParam = new String[]{"actionId", "actionCode"};
+    private final static String[] addActionParam = new String[]{"actionCode"};
 
     /**
      *  조치를 등록 한다.

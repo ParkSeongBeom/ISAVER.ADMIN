@@ -270,7 +270,7 @@ function DeviceView(model) {
 
         $("[name='showHideTag']").hide();
 
-        $("input[name='deviceId']").val("").removeAttr("readonly");
+        $("input[name='deviceId']").val("");
         $("input[name='serialNo']").val("").removeAttr("readonly");
 
         $("textarea[name='deviceDesc']").val("");

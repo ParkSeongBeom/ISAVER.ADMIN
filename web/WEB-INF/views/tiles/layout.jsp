@@ -396,7 +396,7 @@
         }
 
         function logout(){
-            location.href = layoutUrlConfig['logout'];
+            location.href = layoutUrlConfig['logoutUrl'];
         }
 
         function goHome(){

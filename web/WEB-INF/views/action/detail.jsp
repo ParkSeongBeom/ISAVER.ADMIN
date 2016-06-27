@@ -37,7 +37,7 @@
                     <tr>
                         <th class="point"><spring:message code="action.column.actionId"/></th>
                         <td class="point">
-                            <input type="text" name="actionId" value="${action.actionId}" ${empty action ? '' : 'readonly="true"'} />
+                            <input type="text" name="actionId" value="${action.actionId}" placeholder="<spring:message code="action.message.requireActionId"/>" readonly="readonly"/>
                         </td>
                         <th class="point"><spring:message code="action.column.actionCode"/></th>
                         <td class="point">
@@ -120,10 +120,10 @@
     };
 
     function validate(type){
-        if(form.find('input[name=actionId]').val().length == 0){
-            alertMessage('requireCodeId');
-            return false;
-        }
+//        if(form.find('input[name=actionId]').val().length == 0){
+//            alertMessage('requireCodeId');
+//            return false;
+//        }
 
         return true;
     }
@@ -169,7 +169,6 @@
                 alertMessage(actionType + 'Complete');
                 break;
             case 'add':
-                debugger;
                 if (data['existFlag'] == "true") {
                     alertMessage('actionAddExistFail');
                 } else {

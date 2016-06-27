@@ -182,6 +182,8 @@ function AreaView(model) {
         $(formName + " [name='areaId']").val("");
         $(formName + " [id='selectUpOrgSeq']").val("");
 
+        $(formName + " [name='areaId']").attr("readonly", "readonly");
+
         $(formName + " [name='areaName']").val("");
         $(formName + " [name='areaName']").removeAttr("readonly");
         $(formName + " [name='orgDepth']").val("");
@@ -190,6 +192,7 @@ function AreaView(model) {
         $(formName + " td[name='insertDatetime']").text("");
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
+
 
 
         $("table tbody tr").eq(1).show();
@@ -248,7 +251,7 @@ function AreaView(model) {
         $("tr[name='orgSortTr']").hide()
         $("tr[name='orgDateTr']").hide();
 
-        $("input[name='areaId']").val("").removeAttr("readonly");
+        $("input[name='areaId']").val("");
         $("input[name='areaName']").val("").removeAttr("readonly");
         $("textarea[name='areaDesc']").val("");
         $("input[name='sortOrder']").val(0);

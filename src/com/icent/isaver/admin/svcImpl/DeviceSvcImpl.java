@@ -89,6 +89,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         try {
+            parameters.put("deviceId", generatorFunc());
             deviceDao.addDevice(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -185,6 +186,22 @@ public class DeviceSvcImpl implements DeviceSvc {
         return deviceTreeModel.getDeviceModelList();
     }
 
+
+    /**
+     *
+     * @return
+     */
+    private String generatorFunc() {
+        StringBuilder sb = new StringBuilder();
+
+        Integer totalCount = deviceDao.findCountGenerator();
+
+        String id = "DE";
+
+        String suffix = String.format("%04d", totalCount);
+        sb.append(id).append(suffix);
+        return sb.toString();
+    }
 
     public DeviceTreeModel getParentNode(DeviceTreeModel deviceTreeModel) {
 

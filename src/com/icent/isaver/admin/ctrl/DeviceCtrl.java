@@ -78,7 +78,7 @@ public class DeviceCtrl {
         return modelAndView;
     }
 
-    private final static String[] addDeviceParam = new String[]{"deviceId", "serialNo", "deviceTypeCode", "deviceCode"};
+    private final static String[] addDeviceParam = new String[]{"serialNo", "deviceTypeCode", "deviceCode"};
 
     /**
      * 장치를 등록 한다.

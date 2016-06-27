@@ -86,11 +86,11 @@ function AreaCtrl(model) {
 
         if (flag != undefined && flag) {
 
-            if ($("input[name='areaId']").val().trim().length == 0) {
-                $("input[name='areaId']").focus();
-                alert(messageConfig['requiredAreaId']);
-                return;
-            }
+            //if ($("input[name='areaId']").val().trim().length == 0) {
+            //    $("input[name='areaId']").focus();
+            //    alert(messageConfig['requiredAreaId']);
+            //    return;
+            //}
 
             if ($("input[name='areaName']").val().trim().length == 0) {
                 $("input[name='areaName']").focus();

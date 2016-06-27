@@ -80,6 +80,7 @@ public class EventSvcImpl implements EventSvc {
         ModelAndView modelAndView = new ModelAndView();
 
         try {
+            parameters.put("eventId", generatorFunc());
             eventDao.addEvent(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -155,5 +156,20 @@ public class EventSvcImpl implements EventSvc {
         return modelAndView;
     }
 
+    /**
+     *
+     * @return
+     */
+    private String generatorFunc() {
+        StringBuilder sb = new StringBuilder();
+
+        Integer totalCount = eventDao.findCountGenerator();
+
+        String id = "EV";
+
+        String suffix = String.format("%04d", totalCount);
+        sb.append(id).append(suffix);
+        return sb.toString();
+    }
 
 }

@@ -91,6 +91,7 @@ public class AreaSvcImpl implements AreaSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         try {
+            parameters.put("areaId", generatorFunc());
             areaDao.addArea(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -187,6 +188,22 @@ public class AreaSvcImpl implements AreaSvc {
         areaTreeModel.setAreaBean(null);
 
         return areaTreeModel.getAreaModelList();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String generatorFunc() {
+        StringBuilder sb = new StringBuilder();
+
+        Integer totalCount = areaDao.findCountGenerator();
+
+        String id = "AR";
+
+        String suffix = String.format("%04d", totalCount);
+        sb.append(id).append(suffix);
+        return sb.toString();
     }
 
 

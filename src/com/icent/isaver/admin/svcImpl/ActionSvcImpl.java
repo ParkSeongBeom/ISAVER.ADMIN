@@ -86,6 +86,7 @@ public class ActionSvcImpl implements ActionSvc {
 
         if (eventExistCount == 0) {
             try {
+                parameters.put("actionId", generatorFunc());
                 actionDao.addAction(parameters);
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
@@ -133,6 +134,22 @@ public class ActionSvcImpl implements ActionSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String generatorFunc() {
+        StringBuilder sb = new StringBuilder();
+
+        Integer totalCount = actionDao.findCountGenerator();
+
+        String id = "AC";
+
+        String suffix = String.format("%04d", totalCount);
+        sb.append(id).append(suffix);
+        return sb.toString();
     }
 
 }

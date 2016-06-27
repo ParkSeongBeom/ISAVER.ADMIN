@@ -105,11 +105,11 @@ function DeviceCtrl(model) {
 
         if (flag != undefined && flag) {
 
-            if ($("input[name='deviceId']").val().trim().length == 0) {
-                $("input[name='deviceId']").focus();
-                alert(messageConfig['requiredDeviceId']);
-                return;
-            }
+            //if ($("input[name='deviceId']").val().trim().length == 0) {
+            //    $("input[name='deviceId']").focus();
+            //    alert(messageConfig['requiredDeviceId']);
+            //    return;
+            //}
 
             if ($("input[name='serialNo']").val().trim().length == 0) {
                 $("input[name='serialNo']").focus();

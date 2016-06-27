@@ -62,7 +62,7 @@ public class EventCtrl {
         return modelAndView;
     }
 
-    private final static String[] addEventParam = new String[]{"eventId","eventName","eventFlag"};
+    private final static String[] addEventParam = new String[]{"eventName","eventFlag"};
 
     /**
      *  이벤트를 등록 한다.
@@ -84,7 +84,7 @@ public class EventCtrl {
         return modelAndView;
     }
 
-    private final static String[] saveEventParam = new String[]{"eventId","eventName","eventFlag"};
+    private final static String[] saveEventParam = new String[]{"eventName","eventFlag"};
     /**
      *  이벤트를 수정 한다.
      *
