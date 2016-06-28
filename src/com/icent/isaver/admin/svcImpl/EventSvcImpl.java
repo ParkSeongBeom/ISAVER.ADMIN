@@ -165,9 +165,9 @@ public class EventSvcImpl implements EventSvc {
 
         Integer totalCount = eventDao.findCountGenerator();
 
-        String id = "EV";
+        String id = "EVT";
 
-        String suffix = String.format("%04d", totalCount);
+        String suffix = String.format("%03d", totalCount);
         sb.append(id).append(suffix);
         return sb.toString();
     }

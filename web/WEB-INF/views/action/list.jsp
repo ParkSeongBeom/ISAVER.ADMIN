@@ -44,6 +44,12 @@
                     <span><spring:message code="action.column.actionCode" /></span>
                     <isaver:codeSelectBox groupCodeId="ACT" codeId="${paramBean.actionCode}" htmlTagId="selectActionCode" htmlTagName="actionCode" allModel="true"/>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="action.column.actionDesc" /></span>
+                    <span>
+                        <input type="text" name="actionDesc" value="${paramBean.actionDesc}"/>
+                    </span>
+                </p>
                 <%--<p class="itype_01">--%>
                     <%--<span><spring:message code="action.column.actionCode" /></span>--%>
                     <%--<span>--%>
@@ -93,7 +99,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="3"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>

@@ -167,11 +167,11 @@
                             </div>
                         </td>
                         <th><spring:message code="action.column.actionCode"/></th>
-                        <td>${event.actionCodeName}</td>
+                        <td code>${event.actionCodeName}</td>
                     </tr>
                     <tr>
                         <th><spring:message code="action.column.actionDesc"/></th>
-                        <td colspan="3">${event.actionDesc}</td>
+                        <td colspan="3" desc>${event.actionDesc}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -329,8 +329,14 @@
         popup_cancelButton();
 
         var actionId = checkBoxList.parent().parent().attr("action_id");
+        var actionCode = checkBoxList.parent().parent().find("td[code]").text();
+        var actionDesc = checkBoxList.parent().parent().find("td[desc]").text();
+
         $("input[name=actionId]").val(actionId);
         $(".code_list > div[action_id]").remove();
+
+        form.find("td[code]").text(actionCode);
+        form.find("td[desc]").text(actionDesc);
         addActionId(actionId);
     }
 
@@ -379,8 +385,8 @@
             var html_item= "<tr>\n" +
                     "<td class=\"t_center\"><input id=\"\" type=\"checkbox\" class=\"checkbox\" name=\"checkbox01\"></td>\n" +
                     "<td title=\"\">" +actionId +"</td>\n" +
-                    "<td title=\"\">" + actionCode + "</td>" +
-                    "<td title=\"\">" + actionDesc + "</td>" +
+                    "<td title=\"\" code>" + actionCode + "</td>" +
+                    "<td title=\"\" desc>" + actionDesc + "</td>" +
             "    </p>\n" +
             "</td>\n" +
             "</tr>";

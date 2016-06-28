@@ -145,9 +145,9 @@ public class ActionSvcImpl implements ActionSvc {
 
         Integer totalCount = actionDao.findCountGenerator();
 
-        String id = "AC";
+        String id = "ACT";
 
-        String suffix = String.format("%04d", totalCount);
+        String suffix = String.format("%03d", totalCount);
         sb.append(id).append(suffix);
         return sb.toString();
     }
