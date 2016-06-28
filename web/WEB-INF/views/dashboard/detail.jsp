@@ -135,13 +135,13 @@
                         <div class="mp_contents vh_mode">
                             <div class="personnel">
                                 <div id="nowInout" class="now">
-                                    <p id="nowInoutDatetime">AM 00:00:00 ~ PM 23:59:59</p>
+                                    <p id="nowInoutDatetime">00:00:00</p>
                                     <span id="nowInoutGap">0</span>
                                     <div id="nowInCnt">0</div>
                                     <div id="nowOutCnt">0</div>
                                 </div>
                                 <div id="beforeInout" class="past">
-                                    <p id="beforeInoutDatetime">AM 00:00:00 ~ PM 23:59:59</p>
+                                    <p id="beforeInoutDatetime">00:00:00 ~ 23:59:59</p>
                                     <span id="beforeInoutGap">0</span>
                                     <div id="beforeInCnt">0</div>
                                     <div id="beforeOutCnt">0</div>
