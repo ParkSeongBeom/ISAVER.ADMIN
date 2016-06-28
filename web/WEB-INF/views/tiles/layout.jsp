@@ -168,21 +168,22 @@
             if(data!=null && data['eventLogs']!=null){
                 var marqueeFlag = false;
 
+                console.log(data);
                 for(var index in data['eventLogs']){
                     var eventLog = data['eventLogs'][index];
+                    var eventTypeName = null;
 
-                    if(eventLog['eventType']!=null && eventLog['eventType']!=""){
-                        var eventTypeName = null;
+                    switch (eventLog['eventType']){
+                        case "crane" :
+                            eventTypeName = "크래인";
+                            break;
+                        case "worker" :
+                            eventTypeName = "쓰러짐";
+                            break;
+                    }
+
+                    if(eventTypeName!=null){
                         marqueeFlag = true;
-
-                        switch (eventLog['eventType']){
-                            case "crane" :
-                                eventTypeName = "크래인";
-                                break;
-                            case "worker" :
-                                eventTypeName = "쓰러짐";
-                                break;
-                        }
 
                         if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
                             $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
@@ -242,7 +243,9 @@
                     }
                 }
 
-                dashBoardHelper.saveRequestData('alram',{datetime:new Date(data['eventLogs'][data['eventLogs'].length-1]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+                if(data['eventLogs'].length>0){
+                    dashBoardHelper.saveRequestData('alram',{datetime:new Date(data['eventLogs'][data['eventLogs'].length-1]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+                }
 
                 if(marqueeFlag && $("#marqueeList button").length>0 && $("#marqueeList .js-marquee-wrapper").length==0){
                     //마키 플러그인 호출
