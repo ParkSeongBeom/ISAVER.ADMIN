@@ -29,9 +29,9 @@
                 <div class="mp_contents vh_mode">
                     <p class="mpct">${area.areaName}</p>
                     <div class="time_select_contents">
-                        <input type="number" id="inoutHour" min="0" max="23" value="0"/>
-                        <input type="number" id="inoutMinute" min="0" max="59" value="0" />
-                        <input type="number" id="inoutSecond" min="0" max="59" value="0" />
+                        <input type="number" id="inoutHour" min="0" max="23" maxlength="2" value="0" onkeypress="onlyNumberPress(event);" oninput="inputNumberCheck(this)"/>
+                        <input type="number" id="inoutMinute" min="0" max="59" maxlength="2" value="0" onkeypress="onlyNumberPress(event);" oninput="inputNumberCheck(this)"/>
+                        <input type="number" id="inoutSecond" min="0" max="59" maxlength="2" value="0" onkeypress="onlyNumberPress(event);" oninput="inputNumberCheck(this)"/>
                         <button href="#" onclick="javascript:appendInoutConfiguration();"></button>
                     </div>
                     <div class="mc_element nano">
@@ -515,7 +515,10 @@
                     $(".workerList").prepend(eventListTag);
                 }
             }
-            dashBoardHelper.saveRequestData('worker',{areaId:areaId, datetime:new Date(workerList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+
+            if(workerList.length>0){
+                dashBoardHelper.saveRequestData('worker',{areaId:areaId, datetime:new Date(workerList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+            }
 
             $.each($(".workerList"),function(){
                 $(this).children(":gt(49)").remove();
@@ -581,7 +584,10 @@
                     $(".craneList").prepend(eventListTag);
                 }
             }
-            dashBoardHelper.saveRequestData('crane',{areaId:areaId, datetime:new Date(craneList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+
+            if(craneList.length>0){
+                dashBoardHelper.saveRequestData('crane',{areaId:areaId, datetime:new Date(craneList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+            }
 
             $.each($(".craneList"),function(){
                 $(this).children(":gt(49)").remove();

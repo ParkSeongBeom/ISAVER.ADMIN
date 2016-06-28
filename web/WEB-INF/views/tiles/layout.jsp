@@ -87,7 +87,7 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest(".ipop_close, .alra_btn, .db_area, .dbs_area, .issue_btn").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area").length) {
                     alramShowHide('list','hide');
                 }
             });
@@ -226,6 +226,7 @@
                             if(new Date(eventLog['eventDatetime']) > now){
                                 playSegment();
                                 var toastTag = templateHelper.getTemplate("toast");
+                                toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
                                 toastTag.attr("eventLogId",eventLog['eventLogId']);
                                 toastTag.find("#toastEventName").text(eventTypeName);
                                 toastTag.find("#toastEventDesc").text(eventLog['eventName']);

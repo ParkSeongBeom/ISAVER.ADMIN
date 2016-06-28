@@ -84,3 +84,17 @@ function modifyElementClass(_element, _className, _type){
             break;
     }
 }
+
+function inputNumberCheck(object){
+    if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+    }
+
+    if (object.value > object.max){
+        object.value = object.value.slice(0, object.maxLength);
+    }
+
+    if (object.value == '-'){
+        object.value = object.value.slice(0, object.maxLength);
+    }
+}
