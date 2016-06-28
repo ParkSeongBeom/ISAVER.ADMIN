@@ -57,10 +57,10 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
 
     @Override
     public ModelAndView saveInoutConfiguration(Map<String, String> parameters) {
-        String[] inoutDatetimes = parameters.get("inoutDatetimes").split("\\|");
+        String[] inoutDatetimes = parameters.get("inoutDatetimes").split(CommonResourceBean.COMMA_STRING);
         List<Map<String, String>> parameterList = new ArrayList<>();
         for (String inoutDatetime : inoutDatetimes) {
-            String[] datetime = inoutDatetime.split(CommonResourceBean.COMMA_STRING);
+            String[] datetime = inoutDatetime.split("\\|");
             Map<String, String> inoutConfigurationMap = new HashMap<>();
             inoutConfigurationMap.put("configId", StringUtils.getGUID32().substring(0,18));
             inoutConfigurationMap.put("userId", parameters.get("userId"));

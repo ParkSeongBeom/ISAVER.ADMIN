@@ -425,7 +425,8 @@ bottom button border gray active #4f4f4f
 
 
 button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before, .toast_popup:before,
-.db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before
+.db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before,
+.time_select_contents > div button:before, .time_select_list > li:before
 {
     font-family: 'japple';
     speak: none;

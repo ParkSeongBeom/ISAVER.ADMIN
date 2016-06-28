@@ -61,28 +61,10 @@ var TemplateHelper = (
         /********************************************************************************
          * 진출입 조회 주기 설정 template
          *********************************************************************************/
-        var INOUT_SETTING_TEMPLATE = $("<div/>").append(
-            $("<div/>", {class:"check_box_set"}).append(
-                $("<input/>", {type:"checkbox", class:"check_input"})
-            ).append(
-                $("<label/>", {class:"lablebase lb_style01"})
-            )
+        var INOUT_SETTING_TEMPLATE = $("<li/>").append(
+            $("<span/>")
         ).append(
-            $("<span/>", {id:"cycleName"})
-        ).append(
-            $("<select/>", {id:"datetimeType"}).append(
-                $("<option/>", {value:"AM"}).text("AM")
-            ).append(
-                $("<option/>", {value:"PM"}).text("PM")
-            )
-        ).append(
-            $("<input/>", {type:"number", id:"datetimeHour"})
-        ).append(
-            $("<input/>", {type:"number", id:"datetimeMinute"})
-        ).append(
-            $("<input/>", {type:"number", id:"datetimeSecond"})
-        ).append(
-            $("<p/>", {type:"number", id:"afterDatetime"})
+            $("<button/>", {href:"#"})
         );
 
         /**

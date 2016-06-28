@@ -27,14 +27,18 @@
                     <div><button class="db_btn zoomclose_btn ipop_close" href="#" onclick="javascript:closeDetailPopup();"></button></div>
                 </div>
                 <div class="mp_contents vh_mode">
-                    <div class="search_contents">
-                        <p class="itype_01">
-                            <span><spring:message code="dashboard.column.area"/></span>
-                            <span><isaver:areaSelectBox htmlTagId="inoutAreaType" allModel="true"/></span>
-                        </p>
+                    <p class="mpct">${area.areaName}</p>
+                    <div class="time_select_contents">
+                        <input type="number" id="inoutHour" max="23" value="0"/>
+                        <input type="number" id="inoutMinute" max="59" value="0" />
+                        <input type="number" id="inoutSecond" max="59" value="0" />
+                        <button href="#" onclick="javascript:appendInoutConfiguration();"></button>
                     </div>
                     <div class="mc_element nano">
-                        <div class="time_select_contents nano-content"></div>
+                        <ul class="nano-content time_select_list">
+                            <li class="fixedTime firstTime" time="000000"><span>00:00:00</span></li> <!-- 시작 시간 -->
+                            <li class="fixedTime lastTime" time="235959"><span>23:59:59</span></li> <!-- 종료 시간 -->
+                        </ul>
                     </div>
                     <div class="lmc_btn_area mc_tline">
                         <button class="btn btype01 bstyle07" href="#" onclick="javascript:saveInoutConfiguration();"><spring:message code="common.button.save"/></button>
@@ -236,13 +240,15 @@
         , inoutFailure : '<spring:message code="dashboard.message.inoutFailure"/>'
         , chartInoutFailure : '<spring:message code="dashboard.message.chartFailure"/>'
         , chartStatusFailure : '<spring:message code="dashboard.message.chartFailure"/>'
+        , inoutConfigHourFailure : '<spring:message code="dashboard.message.inoutConfigHourFailure"/>'
+        , inoutConfigMinuteFailure : '<spring:message code="dashboard.message.inoutConfigMinuteFailure"/>'
+        , inoutConfigSecondFailure : '<spring:message code="dashboard.message.inoutConfigSecondFailure"/>'
+        , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
+        , inoutConfigEmpty : '<spring:message code="dashboard.message.inoutConfigEmpty"/>'
+        , saveInoutConfigurationComplete : '<spring:message code="dashboard.message.saveInoutConfigurationComplete"/>'
     };
 
     $(document).ready(function(){
-        $("#inoutAreaType").on('change',function(){
-            openInoutSettingPopup();
-        });
-
         /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 크래인 */
@@ -275,7 +281,7 @@
         modifyElementClass(contentsTag,'vh_mode','remove');
         modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
 
-        $(".detail_popup .layer_area").append(headerTag).append(contentsTag);
+        $(".detail_popup .layer_area").attr("type",type).append(headerTag).append(contentsTag);
         $(".detail_popup").find(".nano").nanoScroller();
         $(".detail_popup").show();
     }
@@ -286,7 +292,8 @@
      */
     function closeDetailPopup(){
         $(".layer_popup").hide();
-        $(".detail_popup .layer_area").empty();
+        $(".time_select_list li:not('.fixedTime')").remove();
+        $(".detail_popup .layer_area").attr("type","").empty();
     }
 
     /*
@@ -294,7 +301,57 @@
      @author psb
      */
     function openInoutSettingPopup(){
-        callAjax('inoutConfigurationList', {areaId : $("#inoutAreaType option:selected").val()});
+        callAjax('inoutConfigurationList', {areaId : areaId});
+    }
+
+    /*
+     append inout setting
+     @author psb
+     */
+    function appendInoutConfiguration(_hour, _minute, _second){
+        var hour = _hour!=null?_hour:$("#inoutHour").val();
+        hour = Number(hour)<10?"0"+Number(hour):hour;
+        var minute = _minute!=null?_minute:$("#inoutMinute").val();
+        minute = Number(minute)<10?"0"+Number(minute):minute;
+        var second = _second!=null?_second:$("#inoutSecond").val();
+        second = Number(second)<10?"0"+Number(second):second;
+        var fullDate = hour+minute+second;
+
+        if(Number(hour)>23){
+            alertMessage('inoutConfigHourFailure');
+            $("#inoutHour").focus();
+            return false;
+        }else if(Number(minute)>59){
+            alertMessage('inoutConfigMinuteFailure');
+            $("#inoutMinute").focus();
+            return false;
+        }else if(Number(second)>59){
+            alertMessage('inoutConfigSecondFailure');
+            $("#inoutSecond").focus();
+            return false;
+        }
+
+        if($(".time_select_list li[time='"+fullDate+"']").length>0){
+            alertMessage('inoutConfigDuplication');
+            return false;
+        }
+
+        var inoutSettingTag = templateHelper.getTemplate("inoutSetting");
+        inoutSettingTag.attr("time",fullDate);
+        inoutSettingTag.find("span").text(hour + ":" + minute + ":" + second);
+        inoutSettingTag.find("button").on("click",function(){
+           $(this).parent().remove();
+        });
+
+        var beforeTag;
+        $.each($(".time_select_list li"),function(){
+            if(Number($(this).attr("time")) < Number(fullDate)){
+                beforeTag = $(this);
+            }else{
+                beforeTag.after(inoutSettingTag);
+                return false;
+            }
+        });
     }
 
     /*
@@ -302,12 +359,38 @@
      @author psb
      */
     function saveInoutConfiguration(){
+        if($(".time_select_list li:not('.fixedTime')").length==0){
+            alertMessage('inoutConfigEmpty');
+            return false;
+        }
+
         var param = {
-            'areaId' : $("#inoutAreaType option:selected").val()
+            'areaId' : areaId
+            ,'inoutDatetimes' : ""
         };
 
-        param['inoutDatetimes'] = '';
-        callAjax('saveConfiguration',param);
+        var beforeTag = null;
+        $.each($(".time_select_list li"),function(){
+            if(beforeTag!=null){
+                var inoutStarttime = beforeTag.find("span").text();
+                var inoutEndtime = $(this).find("span").text();
+
+                if(!$(this).hasClass("lastTime")){
+                    var inoutEndtimeArray = inoutEndtime.split(":");
+                    var dateTime = new Date();
+                    dateTime.setHours(Number(inoutEndtimeArray[0]));
+                    dateTime.setMinutes(Number(inoutEndtimeArray[1]));
+                    dateTime.setSeconds(Number(inoutEndtimeArray[2])-1);
+                    inoutEndtime = dateTime.format("HH:mm:ss");
+                }
+
+                param['inoutDatetimes'] += inoutStarttime + "|" + inoutEndtime + ",";
+            }
+            beforeTag = $(this);
+        });
+
+        param['inoutDatetimes'] = param['inoutDatetimes'].slice(0,-1);
+        callAjax('saveInoutConfiguration',param);
     }
 
     /*
@@ -341,7 +424,7 @@
             case 'inoutConfigurationList':
                 inoutConfigurationRender(data);
                 break;
-            case 'saveinoutConfiguration':
+            case 'saveInoutConfiguration':
                 alertMessage(actionType + 'Complete');
                 break;
         }
@@ -377,8 +460,10 @@
             }
 
             if(workerEventCnt>0){
+                modifyElementClass($(".detail_popup .layer_area[type='worker']"),'level03','add');
                 modifyElementClass($("#workerDiv"),'level03','add');
             }else{
+                modifyElementClass($(".detail_popup .layer_area[type='worker']"),'level03','remove');
                 modifyElementClass($("#workerDiv"),'level03','remove');
             }
         }
@@ -440,8 +525,10 @@
             }
 
             if(craneEventCnt>0){
+                modifyElementClass($(".detail_popup .layer_area[type='crane']"),'level03','add');
                 modifyElementClass($("#craneDiv"),'level03','add');
             }else{
+                modifyElementClass($(".detail_popup .layer_area[type='crane']"),'level03','remove');
                 modifyElementClass($("#craneDiv"),'level03','remove');
             }
         }
@@ -500,34 +587,16 @@
      * @author psb
      */
     function inoutConfigurationRender(data){
-        $(".time_select_contents").empty();
-        $("#inoutAreaType option[value='"+areaId+"']").attr("selected","selected");
-
         var inoutConfigurationList = data['inoutConfigurationList'];
 
         if(inoutConfigurationList!=null && inoutConfigurationList.length>0){
             for(var index in inoutConfigurationList){
                 var inoutConfiguration = inoutConfigurationList[index];
-                var inoutSettingTag = templateHelper.getTemplate("inoutSetting");
                 var inoutStarttime = inoutConfiguration['inoutStarttime'].split(":");
-                var inoutEndtime = inoutConfiguration['inoutEndtime'].split(":");
-
-                inoutSettingTag.find("#cycleName").text("cycle"+index);
-                inoutSettingTag.find("#datetimeType").val(inoutStarttime[0]<12?"AM":"PM");
-                inoutSettingTag.find("#datetimeHour").val(inoutStarttime[0]<12?inoutStarttime[0]:inoutStarttime[0]-12);
-                inoutSettingTag.find("#datetimeMinute").val(inoutStarttime[1]);
-                inoutSettingTag.find("#datetimeSecond").val(inoutStarttime[2]);
-                inoutSettingTag.find("#afterDatetime").text((inoutEndtime[0]<12?"AM":"PM") + " " + inoutConfiguration['inoutEndtime']);
-                $(".time_select_contents").append(inoutSettingTag);
+                if(!(inoutStarttime[0]=="00" && inoutStarttime[1]=="00" && inoutStarttime[2]=="00")){
+                    appendInoutConfiguration(inoutStarttime[0], inoutStarttime[1], inoutStarttime[2]);
+                }
             }
-        }else{
-            var inoutSettingTag = templateHelper.getTemplate("inoutSetting");
-            inoutSettingTag.find("#cycleName").text("cycle1");
-            inoutSettingTag.find("#datetimeHour").val("00");
-            inoutSettingTag.find("#datetimeMinute").val("00");
-            inoutSettingTag.find("#datetimeSecond").val("00");
-            inoutSettingTag.find("#afterDatetime").text("PM 23:59:59");
-            $(".time_select_contents").append(inoutSettingTag);
         }
         $(".sett_popup").show();
     }
