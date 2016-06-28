@@ -168,7 +168,6 @@
             if(data!=null && data['eventLogs']!=null){
                 var marqueeFlag = false;
 
-                console.log(data);
                 for(var index in data['eventLogs']){
                     var eventLog = data['eventLogs'][index];
                     var eventTypeName = null;
