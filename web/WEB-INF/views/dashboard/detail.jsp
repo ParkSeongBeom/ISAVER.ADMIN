@@ -696,12 +696,12 @@
 
     /* 진출입용 차트 */
     var mychart1 = new Chartist.Line('#chart1', {
-        labels: [1,2,3,4,5,6,7,8,9,10],
+        labels: [],
         series: [ [], [] ]
     }, {
         low: 0,
         showArea: true,
-        fullWidth: true,
+        fullWidth: false,
         axisY: {
             onlyInteger: true,
             offset: 20
@@ -750,12 +750,12 @@
 
     /* 알림 상태용 차트 */
     var mychart2 = new Chartist.Line('#chart2', {
-        labels: [1,2,3,4,5,6,7,8,9,10],
+        labels: [],
         series: [ [], [] ]
     }, {
         low: 0,
         showArea: true,
-        fullWidth: true,
+        fullWidth: false,
         axisY: {
             onlyInteger: true,
             offset: 20

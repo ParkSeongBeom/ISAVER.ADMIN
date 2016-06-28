@@ -393,7 +393,7 @@ function DeviceModel() {
 
             if (ipAddress != undefined) {
                 if (ipAddress.trim().length > 0 ) {
-                    if (device['ipAddress'] == ipAddress && device['delYn'] == "N") {
+                    if (device['ipAddress'] == ipAddress) {
                         if (device['deviceId'] != deviceId) {
                             _ipAddressExistFlag = true;
                         }
