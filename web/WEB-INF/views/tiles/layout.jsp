@@ -435,7 +435,7 @@
             }
 
             if (endTime == undefined) {
-                endTime = 10;
+                endTime = 5;
             }
             segmentEnd = endTime;
             alarmPlayer.currentTime = startTime;
