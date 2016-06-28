@@ -66,7 +66,7 @@
             <%--</article>--%>
 
             <div class="table_title_area">
-                <h4><spring:message code='device.column.deviceList'/></h4>
+                <h4><spring:message code='device.column.deviceInformation'/></h4>
             </div>
 
             <div class="table_contents">

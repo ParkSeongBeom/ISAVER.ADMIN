@@ -42,6 +42,12 @@
                             <input type="text" name="userName" value="${paramBean.userName}"/>
                         </span>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="role.column.roleName" /></span>
+                        <span>
+                            <%--<input type="text" name="roleName" value="${paramBean.roleName}"/>--%>
+                        </span>
+                </p>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
@@ -61,19 +67,20 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
+                    <col style="width: 20%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
                     <col style="width: *;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
                 </colgroup>
                 <thead>
                     <tr>
                         <th><spring:message code="user.column.userId"/></th>
                         <th><spring:message code="user.column.userName"/></th>
-                        <th><spring:message code="common.column.insertDatetime"/></th>
+                        <th><spring:message code="role.column.roleName"/></th>
                         <th><spring:message code="user.column.telephone"/></th>
                         <th><spring:message code="user.column.email"/></th>
+                        <th><spring:message code="common.column.insertDatetime"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,11 +90,12 @@
                                 <tr onclick="moveDetail(String('${user.userId}'));">
                                     <td>${user.userId}</td>
                                     <td>${user.userName}</td>
+                                    <td>${user.roleName}</td>
+                                    <td>${user.telephone}</td>
+                                    <td>${user.email}</td>
                                     <td>
                                         <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.insertDatetime}" />
                                     </td>
-                                    <td>${user.telephone}</td>
-                                    <td>${user.email}</td>
                                 </tr>
                             </c:forEach>
                         </c:when>
