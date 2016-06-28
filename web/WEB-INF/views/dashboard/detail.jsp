@@ -183,7 +183,7 @@
                         </div>
                         <div class="mp_contents">
                             <div class="mc_bico type03 gas_level02">
-                                <p>O2 22% / CO2 0.5% / H2S 0%</p>
+                                <p>O2 22% / CO2 21ppm / H2S 3ppm</p>
                             </div>
                             <div class="mc_element nano">
                                 <ul class="mc_list nano-content" tabindex="0" style="right: -8px;">
