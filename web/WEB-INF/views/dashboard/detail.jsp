@@ -522,7 +522,9 @@
 
             $.each($(".workerList"),function(){
                 $(this).children(":gt(49)").remove();
-            })
+            });
+
+            $("#workerDiv.nano").nanoScroller();
         }
     }
 
@@ -591,7 +593,9 @@
 
             $.each($(".craneList"),function(){
                 $(this).children(":gt(49)").remove();
-            })
+            });
+
+            $("#craneDiv .nano").nanoScroller();
         }
     }
 
