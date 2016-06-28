@@ -449,9 +449,20 @@
             if (endTime == undefined) {
                 endTime = 5;
             }
-            segmentEnd = endTime;
-            alarmPlayer.currentTime = startTime;
-            alarmPlayer.play();
+
+            if (alarmPlayer.duration > 0 && !alarmPlayer.paused) {
+
+                //Its playing...do your job
+
+            } else {
+
+                //Not playing...maybe paused, stopped or never played.
+                segmentEnd = endTime;
+                alarmPlayer.currentTime = startTime;
+                alarmPlayer.play();
+            }
+
+
         }
     </script>
 </head>

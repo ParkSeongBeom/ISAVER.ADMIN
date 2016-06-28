@@ -406,6 +406,11 @@
         ]
     }, {
         low: 0,
+        fullWidth: true,
+        axisY: {
+            onlyInteger: true,
+            offset: 20
+        },
         showArea: true,
         lineSmooth: Chartist.Interpolation.simple({
             divisor: 100
