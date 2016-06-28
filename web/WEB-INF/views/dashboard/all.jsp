@@ -18,7 +18,12 @@
         <!-- 2depth 타이틀 Start-->
         <h3 class="1depth_title">All</h3>
         <!-- 마키 영역 Start -->
-        <div id="marqueeList" class="marquee"></div>
+        <%--<div id="marqueeList" class="marquee"></div>--%>
+        <%--<div class="marquee"><div  id="marqueeList"></div></div>--%>
+        <div class="marquee">
+            <marquee DIRECTION="LEFT" id="marqueeList" onmouseover="this.stop();" onmouseout="this.start();" scrollamount="5"></marquee>
+        </div>
+
         <!-- 마키 영역 End -->
     </article>
 
@@ -187,13 +192,14 @@
             }
         });
 
-        $('.marqueeEm').marquee({
-            duration: 3000,
-            direction: 'up',
-            duplicated: true,
-            pauseOnHover: true,
-            startVisible: true
-        });
+//        $('.marqueeEm').marquee({
+//            duration: 3000,
+//            direction: 'up',
+//            duplicated: true,
+//            pauseOnHover: true,
+//            startVisible: true,
+//            allowCss3Support: true
+//        });
 
         /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);

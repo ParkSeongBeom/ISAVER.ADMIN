@@ -13,7 +13,7 @@ aside, header, section, .wrap, header, .header_area, article
 
 body {
     overflow: auto;
-    width:100%; min-width:1280px;  min-height:768px;
+    width:100%; min-width:1680px;  min-height:768px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
     box-sizing:         border-box;

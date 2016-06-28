@@ -224,6 +224,19 @@
 
                             // 토스트팝업
                             if(new Date(eventLog['eventDatetime']) > now){
+
+                                /* 애니메이션 */
+                                $(".issue_btn").removeClass("issue_on");
+                                try {
+                                    setTimeout(function() {
+                                        $(".issue_btn").addClass("issue_on");
+                                    }, 150);
+
+                                } catch(e) {
+
+                                }
+
+                                /* 싸이렌 */
                                 playSegment();
                                 var toastTag = templateHelper.getTemplate("toast");
                                 toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
@@ -249,14 +262,14 @@
 
                 if(marqueeFlag && $("#marqueeList button").length>0 && $("#marqueeList .js-marquee-wrapper").length==0){
                     //마키 플러그인 호출
-                    $('.marquee').marquee({
-                        duration: 20000,
-                        direction: 'left',
-                        gap: 20,
-                        duplicated: true,
-                        pauseOnHover: true,
-                        startVisible: true
-                    });
+//                    $('.marquee').marquee({
+//                        duration: 20000,
+//                        direction: 'left',
+//                        gap: 20,
+//                        duplicated: true,
+//                        pauseOnHover: true,
+//                        startVisible: true,
+//                    });
                 }
             }
 

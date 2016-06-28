@@ -14,8 +14,6 @@
 
 
 
-
-
 .login_area > article {width:260px; height:100%; margin:auto;}
 /*로그인 타이틀 영역 */
 .login_logo_area {
@@ -48,22 +46,72 @@
 .ha_right_set > div.hrs_btn_set, .ha_right_set > div.hrs_btn_set > button {display: inline-block}
 .ha_right_set > .hrs_btn_set > button {z-index: 1; width:40px; border:none; font-size:20px;}
 .ha_right_set > .hrs_btn_set > button:hover:before {}
-.ha_right_set > .hrs_btn_set > button.issue:after {opacity: 1;}
-.ha_right_set > .hrs_btn_set > button:after {
-    content: ""; opacity: 0;
+
+.ha_right_set > .hrs_btn_set > button.issue:after {
+    content: "";
     position: absolute; z-index:-1; left:50%; top:50%; margin:-14px 0 0 -15px;
     width:30px; height:30px; background-color: #ff4c38;
     -moz-border-radius:    20px;
     -webkit-border-radius: 20px;
     border-radius:         20px;
     -khtml-border-radius:  20px;
+    /*
     transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    */
 
 }
+
+
+.ha_right_set > .hrs_btn_set > button.issue_on:after {
+    animation-name: issue;
+    -webkit-animation-name: issue;
+    -webkit-animation-duration: 5s;
+    animation-duration:         5s;
+    -webkit-animation-iteration-count:  1;
+    animation-iteration-count:  1;
+    animation-fill-mode:             both;
+    -webkit-animation-fill-mode:     both;
+}
+@-webkit-keyframes issue {
+    0%   {opacity: 1;}
+    5%   {opacity: 0;}
+    10%  {opacity: 1;}
+    15%  {opacity: 0;}
+    20%  {opacity: 1;}
+    25%  {opacity: 0;}
+    30%  {opacity: 1;}
+    35%  {opacity: 0;}
+    40%  {opacity: 1;}
+
+    45%  {opacity: 0;}
+    50%  {opacity: 1;}
+    55%  {opacity: 0;}
+
+    100% {opacity: 1;}
+}
+
+@keyframes issue {
+    0%   {opacity: 1;}
+    5%   {opacity: 0;}
+    10%  {opacity: 1;}
+    15%  {opacity: 0;}
+    20%  {opacity: 1;}
+    25%  {opacity: 0;}
+    30%  {opacity: 1;}
+    35%  {opacity: 0;}
+    40%  {opacity: 1;}
+
+    45%  {opacity: 0;}
+    50%  {opacity: 1;}
+    55%  {opacity: 0;}
+
+    100% {opacity: 1;}
+}
+
 
 .hrs_date > span {height:auto; padding:0 20px; font-size:12px; }
 .hrs_date > span:first-of-type {font-size:20px; }
@@ -78,7 +126,9 @@
 /* 2depth 타이틀 영역 */
 .main_title_area, .sub_title_area {position: relative;width:100vh;     min-width: 100%;}
 
-.main_title_area {height: 32px; padding: 0 20px; margin:6px 0 0 0;}
+.main_title_area {
+    height: 32px; padding: 0 20px; margin:6px 0 0 0;
+}
 
 
 .sub_title_area  {
@@ -305,8 +355,11 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     background-repeat: no-repeat;
     background-size: 150px;
 }
-.layer_popup .mc_bico.type03 {height:150px;}
-
+.layer_popup .mc_bico.type03 {
+    min-width: 350px; height: 200px;
+    background-size: 260px;
+    background-position: 50% 10px;
+}
 
 
 .mc_bico.type03.gas_level01 {background-image: url(../images/ico/gas_level01.png);}
@@ -639,6 +692,15 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1d23', endColorstr='#001e1d23',GradientType=1 );
 }
 
+.marquee, .marquee * {height:100%; color:#29a1f7;}
+.marquee button {opacity: 0.8; height:100%; margin:0 15px; padding:6px 0 0 20px; font-size:14px; }
+.marquee button span {display:initial; font-weight:bold; font-size:16px;}
+.marquee button:hover {opacity: 1;}
+.marquee button:before {
+    content:"●"; position: absolute; left: 5px; top: 50%; margin: -4px 0 0 0; font-size:10px;
+}
+
+/*
 .marquee > div, .marquee > div * {height:100%; color:#29a1f7;}
 .marquee > div button {opacity: 0.8; height:100%; margin:0 15px; padding:0 0 0 20px; font-size:14px; }
 .marquee > div button span {display:initial; font-weight:bold; font-size:16px;}
@@ -646,6 +708,53 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .marquee > div button:before {
     content:"●"; position: absolute; left: 5px; top: 50%; margin: -7px 0 0 0; font-size:10px;
 }
+*/
+
+/*
+.marquee > div {
+    position: absolute; z-index:1;
+    top:8px;
+    box-align: center;
+    -webkit-box-align:   center;
+    -moz-box-align:      center;
+    -webkit-align-items: center;
+    -ms-flex-align:      center;
+    align-items:         center;
+
+    animation-name: marquee;
+    -webkit-animation-name: marquee;
+    -webkit-animation-duration: 30s;
+    animation-duration:         30s;
+    -webkit-animation-iteration-count:  infinite;
+    animation-iteration-count:  infinite;
+
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+.marquee > div:hover {
+    animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .marquee > div {top:2px;}
+}
+
+@-webkit-keyframes marquee {
+    0%   {left:0;}
+    100% {left:-100%;}
+}
+@keyframes marquee {
+    0%   {left:0;}
+    100% {left:-100%;}
+}
+*/
+
+
+
+
+
 /* 마키 끝 */
 
 

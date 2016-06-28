@@ -54,7 +54,10 @@
         <!-- 2depth 타이틀 -->
         <h3 class="1depth_title">${area.areaName}</h3>
         <!-- 마키 영역 -->
-        <div id="marqueeList" class="marquee"></div>
+        <%--<div id="marqueeList" class="marquee"></div>--%>
+        <div class="marquee">
+            <marquee DIRECTION="LEFT" id="marqueeList" onmouseover="this.stop();" onmouseout="this.start();" scrollamount="5"></marquee>
+        </div>
     </article>
 
     <article class="dash_contents_area">
