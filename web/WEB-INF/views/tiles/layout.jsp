@@ -209,6 +209,7 @@
 
                             // 토스트팝업
                             if(new Date(eventLog['eventDatetime']) > now){
+                                playSegment();
                                 var toastTag = templateHelper.getTemplate("toast");
                                 toastTag.attr("eventLogId",eventLog['eventLogId']);
                                 toastTag.find("#toastEventName").text(eventTypeName);
@@ -429,7 +430,6 @@
         * @param endTime
          */
         function playSegment(startTime, endTime){
-
             if (startTime == undefined) {
                 startTime = 0;
             }
