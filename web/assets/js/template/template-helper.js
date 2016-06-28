@@ -58,6 +58,33 @@ var TemplateHelper = (
             $("<span/>", {id:"eventDatetime"})
         );
 
+        /********************************************************************************
+         * 진출입 조회 주기 설정 template
+         *********************************************************************************/
+        var INOUT_SETTING_TEMPLATE = $("<div/>").append(
+            $("<div/>", {class:"check_box_set"}).append(
+                $("<input/>", {type:"checkbox", class:"check_input"})
+            ).append(
+                $("<label/>", {class:"lablebase lb_style01"})
+            )
+        ).append(
+            $("<span/>", {id:"cycleName"})
+        ).append(
+            $("<select/>", {id:"datetimeType"}).append(
+                $("<option/>", {value:"AM"}).text("AM")
+            ).append(
+                $("<option/>", {value:"PM"}).text("PM")
+            )
+        ).append(
+            $("<input/>", {type:"number", id:"datetimeHour"})
+        ).append(
+            $("<input/>", {type:"number", id:"datetimeMinute"})
+        ).append(
+            $("<input/>", {type:"number", id:"datetimeSecond"})
+        ).append(
+            $("<p/>", {type:"number", id:"afterDatetime"})
+        );
+
         /**
          * get template (동적생성 Tag)
          * @author psb
@@ -77,6 +104,9 @@ var TemplateHelper = (
                     break;
                 case "eventList":
                     _returnTag = EVENT_LIST_TEMPLATE.clone();
+                    break;
+                case "inoutSetting":
+                    _returnTag = INOUT_SETTING_TEMPLATE.clone();
                     break;
             }
 

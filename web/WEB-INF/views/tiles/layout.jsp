@@ -46,6 +46,7 @@
         var menuCtrl = null;
         var dashBoardHelper = new DashBoardHelper();
         var templateHelper = new TemplateHelper();
+        var now = new Date();
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -84,7 +85,7 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest(".alra_btn, .db_area, .dbs_area, .issue_btn").length) {
+                if (!$(event.target).closest(".ipop_close, .alra_btn, .db_area, .dbs_area, .issue_btn").length) {
                     alramShowHide('list','hide');
                 }
             });
@@ -126,7 +127,7 @@
         }
 
         function printTime() {
-            $("#nowTime").text(new Date().format("MM.dd E hh:mm A/P"));
+            $("#nowTime").text(new Date().format("MM.dd E HH:mm:ss"));
 
             setTimeout(function(){
                 printTime();
@@ -197,17 +198,19 @@
                             $("#marqueeList").prepend(marqueeTag);
 
                             // 토스트팝업
-                            var toastTag = templateHelper.getTemplate("toast");
-                            toastTag.attr("eventLogId",eventLog['eventLogId']);
-                            toastTag.find("#toastEventName").text(eventTypeName);
-                            toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                            $(".toast_popup").append(toastTag);
+                            if(new Date(eventLog['eventDatetime']) > now){
+                                var toastTag = templateHelper.getTemplate("toast");
+                                toastTag.attr("eventLogId",eventLog['eventLogId']);
+                                toastTag.find("#toastEventName").text(eventTypeName);
+                                toastTag.find("#toastEventDesc").text(eventLog['eventName']);
+                                $(".toast_popup").append(toastTag);
 
-                            removeToastTag(toastTag);
-                            function removeToastTag(_tag){
-                                setTimeout(function(){
-                                    _tag.remove();
-                                },2000);
+                                removeToastTag(toastTag);
+                                function removeToastTag(_tag){
+                                    setTimeout(function(){
+                                        _tag.remove();
+                                    },2000);
+                                }
                             }
                         }
                     }
@@ -233,7 +236,6 @@
             }
 
             alramTypeChangeHandler();
-            dashBoardHelper.saveRequestData('alram', {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
         }
 
         /**
@@ -400,7 +402,7 @@
         }
 
         function goHome(){
-            location.href = layoutUrlConfig['main'];
+            location.href = layoutUrlConfig['mainUrl'];
         }
 
         function moveDashBoardDetail(id,name){

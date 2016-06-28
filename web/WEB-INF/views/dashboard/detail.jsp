@@ -9,18 +9,13 @@
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
 <!-- section Start -->
-<section  class="container">
+<section class="container">
     <!-- 확대보기 레이어 팝업 -->
     <aside class="layer_popup detail_popup">
         <section class="layer_wrap i_type05">
-            <article class="layer_area">
-                <div class="mp_header">
-                    <h2 id="popupTitle"></h2>
-                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
-                </div>
-            </article>
+            <article class="layer_area"></article>
         </section>
-        <div class="layer_popupbg ipop_close"></div>
+        <div class="layer_popupbg ipop_close" href="#" onclick="javascript:closeDetailPopup();"></div>
     </aside>
 
     <!-- 진출입 셋팅 레이어 팝업 -->
@@ -29,88 +24,34 @@
             <article class="layer_area">
                 <div class="mp_header">
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
-                    <div><button class="db_btn zoomclose_btn ipop_close"></button></div>
+                    <div><button class="db_btn zoomclose_btn ipop_close" href="#" onclick="javascript:closeDetailPopup();"></button></div>
                 </div>
                 <div class="mp_contents vh_mode">
                     <div class="search_contents">
                         <p class="itype_01">
-                            <span>구역</span>
-                            <span>
-                                <select>
-                                    <option value="">A-Area</option>
-                                    <option value="">B-Area</option>
-                                    <option value="">C-Area</option>
-                                </select>
-                            </span>
+                            <span><spring:message code="dashboard.column.area"/></span>
+                            <span><isaver:areaSelectBox htmlTagId="inoutAreaType" allModel="true"/></span>
                         </p>
                     </div>
-                    <div class="mc_element nano ">
-                        <div class="time_select_contents nano-content">
-                            <div>
-                                <div class="check_box_set">
-                                    <input type="checkbox" name="" class="check_input">
-                                    <label class="lablebase lb_style01"></label>
-                                </div>
-                                <span>Cycle 01Cycle 01Cycle 01Cycle 01Cycle 01</span>
-                                <select>
-                                    <option value="">AM</option>
-                                    <option value="">PM</option>
-                                </select>
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <p>AM 07:59:59</p>
-                            </div>
-                            <div>
-                                <div class="check_box_set">
-                                    <input type="checkbox" name="" class="check_input">
-                                    <label class="lablebase lb_style01"></label>
-                                </div>
-                                <span>Cycle 02</span>
-                                <select>
-                                    <option value="">AM</option>
-                                    <option value="">PM</option>
-                                </select>
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <p>AM 07:59:59</p>
-                            </div>
-                            <div>
-                                <div class="check_box_set">
-                                    <input type="checkbox" name="" class="check_input">
-                                    <label class="lablebase lb_style01"></label>
-                                </div>
-                                <span>Cycle 02</span>
-                                <select>
-                                    <option value="">AM</option>
-                                    <option value="">PM</option>
-                                </select>
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <input type="number" name="" class="">
-                                <p>AM 07:59:59</p>
-                            </div>
-                        </div>
+                    <div class="mc_element nano">
+                        <div class="time_select_contents nano-content"></div>
                     </div>
                     <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" name="">저장</button>
+                        <button class="btn btype01 bstyle07" href="#" onclick="javascript:saveInoutConfiguration();"><spring:message code="common.button.save"/></button>
                     </div>
                 </div>
             </article>
         </section>
-        <div class="layer_popupbg ipop_close"></div>
+        <div class="layer_popupbg ipop_close" href="#" onclick="javascript:closeDetailPopup();"></div>
     </aside>
 
-    <!-- 2depth 타이틀 영역 Start -->
+    <!-- 2depth 타이틀 영역 -->
     <article class="main_title_area">
-        <!-- 2depth 타이틀 Start-->
+        <!-- 2depth 타이틀 -->
         <h3 class="1depth_title">${area.areaName}</h3>
-        <!-- 마키 영역 Start -->
+        <!-- 마키 영역 -->
         <div id="marqueeList" class="marquee"></div>
-        <!-- 마키 영역 End -->
     </article>
-    <!-- 2depth 타이틀 영역 End -->
 
     <article class="dash_contents_area nano">
         <div class="nano-content">
@@ -120,7 +61,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="db_btn alra_btn workerAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -153,7 +94,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="db_btn alra_btn craneAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -188,7 +129,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.inout"/></h2>
                             <div>
-                                <button class="db_btn sett_btn"></button>
+                                <button class="db_btn sett_btn" href="#" onclick="javascript:openInoutSettingPopup();"></button>
                             </div>
                         </div>
                         <div class="mp_contents vh_mode">
@@ -232,7 +173,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="db_btn alra_btn gasAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
@@ -283,6 +224,8 @@
         ,inoutUrl : "${rootPath}/eventLogInout/detail.json"
         ,chartInoutUrl : "${rootPath}/eventLogChart/detail.json"
         ,chartStatusUrl : "${rootPath}/eventLogChart/detail.json"
+        ,inoutConfigurationListUrl : "${rootPath}/inoutConfiguration/list.json"
+        ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
     };
 
     var messageConfig = {
@@ -296,9 +239,8 @@
     };
 
     $(document).ready(function(){
-        $(".ipop_close").on("click",function(){
-            $(".layer_popup").hide();
-            $(".detail_popup").find(".mp_contents").remove();
+        $("#inoutAreaType").on('change',function(){
+            openInoutSettingPopup();
         });
 
         /* 작업자 */
@@ -318,39 +260,62 @@
      @author psb
      */
     function openDetailPopup(type){
-        var targetTag = null;
-        var title;
-
-        switch(type){
-            case 'worker':
-                targetTag = $("#workerDiv");
-                title = '<spring:message code="dashboard.title.worker"/>';
-                break;
-            case 'crane':
-                targetTag = $("#craneDiv");
-                title = '<spring:message code="dashboard.title.crane"/>';
-                break;
-            case 'gas':
-                targetTag = $("#gasDiv");
-                title = '<spring:message code="dashboard.title.gas"/>';
-                break;
-        }
+        var targetTag = $("#"+type+"Div");
 
         if(targetTag==null){
             console.error("[openDetailPopup] error - type fail");
             return false;
         }
 
-        var contentsTag = targetTag.find(".mp_contents").clone();
+        var headerTag = targetTag.find(".mp_header").clone();
+        headerTag.find(".zoom_btn").removeClass("zoom_btn").addClass("zoomclose_btn ipop_close").attr("onclick","javascript:closeDetailPopup();");
 
+        var contentsTag = targetTag.find(".mp_contents").clone();
         contentsTag.find(".mc_element_set").css("height","inherit");
         modifyElementClass(contentsTag,'vh_mode','remove');
         modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
 
-        $("#popupTitle").text(title);
-        $(".detail_popup .layer_area").append(contentsTag);
+        $(".detail_popup .layer_area").append(headerTag).append(contentsTag);
         $(".detail_popup").find(".nano").nanoScroller();
         $(".detail_popup").show();
+    }
+
+    /*
+     close detail popup
+     @author psb
+     */
+    function closeDetailPopup(){
+        $(".layer_popup").hide();
+        $(".detail_popup .layer_area").empty();
+    }
+
+    /*
+     open setting popup
+     @author psb
+     */
+    function openInoutSettingPopup(){
+        callAjax('inoutConfigurationList', {areaId : $("#inoutAreaType option:selected").val()});
+    }
+
+    /*
+     save setting popup
+     @author psb
+     */
+    function saveInoutConfiguration(){
+        var param = {
+            'areaId' : $("#inoutAreaType option:selected").val()
+        };
+
+        param['inoutDatetimes'] = '';
+        callAjax('saveConfiguration',param);
+    }
+
+    /*
+     ajax call
+     @author psb
+     */
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,dashBoardSuccessHandler,dashBoardFailureHandler,actionType);
     }
 
     /**
@@ -372,15 +337,21 @@
             case 'chartInout':
             case 'chartStatus':
                 chartRender(data);
-                dashBoardHelper.saveRequestData('chartInout', {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()});
-                dashBoardHelper.saveRequestData('chartStatus', {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()});
+                break;
+            case 'inoutConfigurationList':
+                inoutConfigurationRender(data);
+                break;
+            case 'saveinoutConfiguration':
+                alertMessage(actionType + 'Complete');
                 break;
         }
     }
 
+    /**
+     * 작업자 상태
+     * @author psb
+     */
     function workerRender(data){
-        dashBoardHelper.saveRequestData('worker', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
-
         var countList = data['eventLogWorkerCountList'];
 
         if(countList!=null){
@@ -401,8 +372,8 @@
                 }
             }
 
-            if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
-                $("#workerDiv").find(".alra_btn").text(workerEventCnt);
+            if($(".workerAlramCnt").text() != String(workerEventCnt)){
+                $(".workerAlramCnt").text(workerEventCnt);
             }
 
             if(workerEventCnt>0){
@@ -424,10 +395,10 @@
                     if(cancelType=="N"){ // 감지
                         modifyElementClass(eventListTag,'level03','add');
                         eventListTag.find("#status").text(messageConfig['detection']);
-                        eventListTag.find("#eventDatetime").text(new Date(worker['eventDatetime']).format("A/P HH:mm:ss"));
+                        eventListTag.find("#eventDatetime").text(new Date(worker['eventDatetime']).format("HH:mm:ss"));
                     }else{ // 해제
                         eventListTag.find("#status").text(messageConfig['cancellation']);
-                        eventListTag.find("#eventDatetime").text(new Date(worker['eventCancelDatetime']).format("A/P HH:mm:ss"));
+                        eventListTag.find("#eventDatetime").text(new Date(worker['eventCancelDatetime']).format("HH:mm:ss"));
                     }
                     $(".workerList").prepend(eventListTag);
                 }
@@ -439,9 +410,11 @@
         }
     }
 
+    /**
+     * 크래인 상태
+     * @author psb
+     */
     function craneRender(data){
-        dashBoardHelper.saveRequestData('crane', {areaId:areaId,datetime:new Date().format("yyyy-MM-dd HH:mm:ss")});
-
         var countList = data['eventLogCraneCountList'];
 
         if(countList!=null){
@@ -462,8 +435,8 @@
                 }
             }
 
-            if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
-                $("#craneDiv").find(".alra_btn").text(craneEventCnt);
+            if($(".craneAlramCnt").text() != String(craneEventCnt)){
+                $(".craneAlramCnt").text(craneEventCnt);
             }
 
             if(craneEventCnt>0){
@@ -485,10 +458,10 @@
                     if(cancelType=="N"){ // 감지
                         modifyElementClass(eventListTag,'level03','add');
                         eventListTag.find("#status").text(messageConfig['detection']);
-                        eventListTag.find("#eventDatetime").text(new Date(crane['eventDatetime']).format("A/P HH:mm:ss"));
+                        eventListTag.find("#eventDatetime").text(new Date(crane['eventDatetime']).format("HH:mm:ss"));
                     }else{ // 해제
                         eventListTag.find("#status").text(messageConfig['cancellation']);
-                        eventListTag.find("#eventDatetime").text(new Date(crane['eventCancelDatetime']).format("A/P HH:mm:ss"));
+                        eventListTag.find("#eventDatetime").text(new Date(crane['eventCancelDatetime']).format("HH:mm:ss"));
                     }
                     $(".craneList").prepend(eventListTag);
                 }
@@ -500,21 +473,63 @@
         }
     }
 
+    /**
+     * 진출입
+     * @author psb
+     */
     function inoutRender(data){
         var inout = data['eventLogInout'];
         var paramBean = data['paramBean'];
         var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
         var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
 
-        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("A/P HH:mm:ss") + " ~ " + new Date(paramBean['nowInoutEndtime']).format("A/P HH:mm:ss"));
+//        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(paramBean['nowInoutEndtime']).format("HH:mm:ss"));
+        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss"));
         $("#nowInoutGap").text(Number(nowGap));
         $("#nowInCnt").text(Number(inout['nowInCnt']));
         $("#nowOutCnt").text(Number(inout['nowOutCnt']));
 
-        $("#beforeInoutDatetime").text(new Date(paramBean['beforeInoutStarttime']).format("A/P HH:mm:ss") + " ~ " + new Date(paramBean['beforeInoutEndtime']).format("A/P HH:mm:ss"));
+        $("#beforeInoutDatetime").text(new Date(paramBean['beforeInoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(paramBean['beforeInoutEndtime']).format("HH:mm:ss"));
         $("#beforeInoutGap").text(Number(beforeGap));
         $("#beforeInCnt").text(Number(inout['beforeInCnt']));
         $("#beforeOutCnt").text(Number(inout['beforeOutCnt']));
+    }
+
+    /**
+     * 진출입 설정
+     * @author psb
+     */
+    function inoutConfigurationRender(data){
+        $(".time_select_contents").empty();
+        $("#inoutAreaType option[value='"+areaId+"']").attr("selected","selected");
+
+        var inoutConfigurationList = data['inoutConfigurationList'];
+
+        if(inoutConfigurationList!=null && inoutConfigurationList.length>0){
+            for(var index in inoutConfigurationList){
+                var inoutConfiguration = inoutConfigurationList[index];
+                var inoutSettingTag = templateHelper.getTemplate("inoutSetting");
+                var inoutStarttime = inoutConfiguration['inoutStarttime'].split(":");
+                var inoutEndtime = inoutConfiguration['inoutEndtime'].split(":");
+
+                inoutSettingTag.find("#cycleName").text("cycle"+index);
+                inoutSettingTag.find("#datetimeType").val(inoutStarttime[0]<12?"AM":"PM");
+                inoutSettingTag.find("#datetimeHour").val(inoutStarttime[0]<12?inoutStarttime[0]:inoutStarttime[0]-12);
+                inoutSettingTag.find("#datetimeMinute").val(inoutStarttime[1]);
+                inoutSettingTag.find("#datetimeSecond").val(inoutStarttime[2]);
+                inoutSettingTag.find("#afterDatetime").text((inoutEndtime[0]<12?"AM":"PM") + " " + inoutConfiguration['inoutEndtime']);
+                $(".time_select_contents").append(inoutSettingTag);
+            }
+        }else{
+            var inoutSettingTag = templateHelper.getTemplate("inoutSetting");
+            inoutSettingTag.find("#cycleName").text("cycle1");
+            inoutSettingTag.find("#datetimeHour").val("00");
+            inoutSettingTag.find("#datetimeMinute").val("00");
+            inoutSettingTag.find("#datetimeSecond").val("00");
+            inoutSettingTag.find("#afterDatetime").text("PM 23:59:59");
+            $(".time_select_contents").append(inoutSettingTag);
+        }
+        $(".sett_popup").show();
     }
 
     /**
@@ -560,23 +575,19 @@
             var eventLogInoutChart = data['eventLogInoutChart'];
             var chartList1 = [];
             var chartList2 = [];
-
             var eventDateList = [];
 
             for (var i =0;i<eventLogInoutChart.length;i++) {
                 var item = eventLogInoutChart[i];
                 var eventDate  = new Date();
                 eventDate.setTime(item['eventDatetime']);
-
                 chartList1.push(item['inCount']);
                 chartList2.push(item['outCount']);
-
                 eventDateList.push(eventDate.format("HH:mm"));
             }
 
             chartList1.reverse();
             chartList2.reverse();
-
             eventDateList.reverse();
 
             mychart1.data.series[0] = chartList1;
@@ -613,10 +624,7 @@
     /* 진출입용 차트 */
     var mychart1 = new Chartist.Line('#chart1', {
         labels: [1,2,3,4,5,6,7,8,9,10],
-        series: [
-            [],
-            []
-        ]
+        series: [ [], [] ]
     }, {
         low: 0,
         showArea: true,
@@ -624,7 +632,6 @@
             divisor: 100
         })
     });
-
 
     mychart1.on('draw', function(data) {
         if(data.type === 'slice') {
@@ -663,14 +670,10 @@
         }
     });
 
-
     /* 알림 상태용 차트 */
     var mychart2 = new Chartist.Line('#chart2', {
         labels: [1,2,3,4,5,6,7,8,9,10],
-        series: [
-            [],
-            []
-        ]
+        series: [ [], [] ]
     }, {
         low: 0,
         showArea: true,

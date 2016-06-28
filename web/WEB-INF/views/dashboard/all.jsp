@@ -209,7 +209,6 @@
                 break;
             case 'chart':
                 chartRender(data);
-                dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
                 break;
         }
     }
