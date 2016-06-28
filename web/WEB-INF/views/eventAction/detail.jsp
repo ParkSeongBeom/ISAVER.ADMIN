@@ -423,6 +423,8 @@
         var actionId = $(_this).parent().attr("action_id");
         $("input[name=actionId]").val("");
         $(_this).parent().remove();
+        form.find("td[code]").text("");
+        form.find("td[desc]").text("");
     }
 
     $(document).ready(function() {
