@@ -29,9 +29,9 @@
                 <div class="mp_contents vh_mode">
                     <p class="mpct">${area.areaName}</p>
                     <div class="time_select_contents">
-                        <input type="number" id="inoutHour" max="23" value="0"/>
-                        <input type="number" id="inoutMinute" max="59" value="0" />
-                        <input type="number" id="inoutSecond" max="59" value="0" />
+                        <input type="number" id="inoutHour" min="0" max="23" value="0"/>
+                        <input type="number" id="inoutMinute" min="0" max="59" value="0" />
+                        <input type="number" id="inoutSecond" min="0" max="59" value="0" />
                         <button href="#" onclick="javascript:appendInoutConfiguration();"></button>
                     </div>
                     <div class="mc_element nano">
