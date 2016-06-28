@@ -64,6 +64,8 @@
             , emptyAlramCancel    :'<spring:message code="dashboard.message.emptyAlramCancel"/>'
         };
 
+        var alarmPlayer;
+        var segmentEnd;
 
         $(document).ready(function(){
             // 메뉴그리기
@@ -107,6 +109,14 @@
 
             //스크롤바 플러그인 호출
             $(".nano").nanoScroller();
+
+            alarmPlayer = document.getElementsByTagName("audio")[0];
+            alarmPlayer.addEventListener('timeupdate', function (){
+                if (segmentEnd && alarmPlayer.currentTime >= segmentEnd) {
+                    alarmPlayer.pause();
+                }
+//                    console.log(alarmPlayer.currentTime);
+            }, false);
         });
 
         function alramTypeChangeHandler() {
@@ -412,6 +422,25 @@
             document.body.appendChild(detailForm.get(0));
             detailForm.submit();
         }
+
+        /**
+        * 경고 알람 소리 재생
+         * @param startTime
+        * @param endTime
+         */
+        function playSegment(startTime, endTime){
+
+            if (startTime == undefined) {
+                startTime = 0;
+            }
+
+            if (endTime == undefined) {
+                endTime = 10;
+            }
+            segmentEnd = endTime;
+            alarmPlayer.currentTime = startTime;
+            alarmPlayer.play();
+        }
     </script>
 </head>
 <body>
@@ -490,6 +519,10 @@
     <!-- 토스트 영역 Start -->
     <aside class="toast_popup on"></aside>
     <!-- 토스트 영역 End -->
+
+    <audio controls style="display: none">
+        <source src="${rootPath}/assets/library/sound/alarm.mp3" type="audio/mpeg">
+    </audio>
 
     <tiles:insertAttribute name="body" />
 </div>
