@@ -183,10 +183,36 @@
                         </div>
                         <div class="mp_contents">
                             <div class="mc_bico type03 gas_level02">
-                                <p>CO2 62% / C 0.5% / H2S 0%</p>
+                                <p>O2 22% / CO2 0.5% / H2S 0%</p>
                             </div>
                             <div class="mc_element nano">
-                                <ul class="gasList mc_list nano-content"></ul>
+                                <ul class="mc_list nano-content" tabindex="0" style="right: -8px;">
+                                    <li>
+                                        <span>경고</span>
+                                        <span>산소 부족 탐지</span>
+                                        <span>23:00:20</span>
+                                    </li>
+                                    <li>
+                                        <span>경고</span>
+                                        <span>이산화탄소 과다 탐지</span>
+                                        <span>23:00:15</span>
+                                    </li>
+                                    <li>
+                                        <span>경고</span>
+                                        <span>산소 부족 탐지</span>
+                                        <span>23:00:13</span>
+                                    </li>
+                                    <li>
+                                        <span>경고</span>
+                                        <span>황화수소 과다 탐지</span>
+                                        <span>23:00:11</span>
+                                    </li>
+                                    <li>
+                                        <span>경고</span>
+                                        <span>산소 부족 탐지</span>
+                                        <span>22:59:23</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
