@@ -6,7 +6,7 @@
 
 .metro_root, .metro_parent, .mc_bico:before, .mc_bico, .mc_list > li, .personnel, .personnel > div, .personnel > div > span,
 .mc_element, .metro_child, .vh_mode, .mp_contents, .mp_header > h2, .mp_header > div, .ha_right_set > div, .ha_right_set,
-.personnel + .ct-chart,.main_title_area, .menu_tree_set li, .dash_contents_area > div
+.main_title_area, .menu_tree_set li, .dash_contents_area > div /*, .personnel + .ct-chart,*/
 {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;display:flexbox;display:box;}
 
 .mc_bico:before, .mc_bico, .mce_btn_area > button, .m_human
@@ -227,7 +227,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .mp_contents {top:50px; left:15px; right:15px; bottom:15px;}
 
 .mp_header.ct-name  {
-    position: relative; width:100%;
+    position: relative; width:100%; margin:50px 0 20px 0;
     /*top:50px; right:0;*/border-width:1px 0 0 0;
 }
 
@@ -652,6 +652,8 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 /* 차트 시작  */
 .ct-chart {position: relative;}
+.personnel + .ct-chart {padding:20px 0 0 0; height:220px;}
+/*
 .personnel + .ct-chart {
     -webkit-flex-flow: row wrap;
     -moz-flex-flow:    row wrap;
@@ -666,6 +668,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     -ms-flex-align:      flex-end;
     align-items:         flex-end;
 }
+*/
 
 .ct-chart-line {overflow: hidden; position: relative;}
 .personnel + .ct-chart .ct-chart-line {}
