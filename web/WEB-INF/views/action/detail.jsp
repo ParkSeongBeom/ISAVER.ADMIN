@@ -173,7 +173,9 @@
                     alertMessage('actionAddExistFail');
                 } else {
                     alertMessage(actionType + 'Complete');
+                    cancel();
                 }
+
                 break;
             case 'remove':
                 alertMessage(actionType + 'Complete');
