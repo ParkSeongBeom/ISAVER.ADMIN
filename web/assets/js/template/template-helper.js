@@ -11,7 +11,7 @@ var TemplateHelper = (
          *********************************************************************************/
         var ALRAM_CONTENT_TEMPLATE = $("<li/>").append(
             $("<div/>", {class:"check_box_set"}).append(
-                $("<input/>", {type:"checkbox" ,class:"check_input", onclick:"javascript:$(this).parent().parent().toggleClass('check')"})
+                $("<input/>", {type:"checkbox" ,class:"check_input"})
             ).append(
                 $("<label/>", {class:"lablebase lb_style01"})
             )

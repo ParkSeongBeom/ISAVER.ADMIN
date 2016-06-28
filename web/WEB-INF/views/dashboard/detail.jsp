@@ -20,7 +20,7 @@
 
     <!-- 진출입 셋팅 레이어 팝업 -->
     <aside class="layer_popup sett_popup">
-        <section class="layer_wrap i_type05">
+        <section class="layer_wrap i_type06">
             <article class="layer_area">
                 <div class="mp_header">
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>

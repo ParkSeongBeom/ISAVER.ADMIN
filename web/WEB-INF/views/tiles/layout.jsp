@@ -194,17 +194,29 @@
                         }else{
                             // 알림센터
                             var alramTag = templateHelper.getTemplate("alram01");
+                            alramTag.on("click",function(){
+                                if($(this).hasClass("check")){
+                                    $(this).find(".check_input").prop("checked",false);
+                                    modifyElementClass($(this),'check','remove');
+                                }else{
+                                    $(this).find(".check_input").prop("checked",true);
+                                    modifyElementClass($(this),'check','add');
+                                }
+                            });
                             alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
 //                            alramTag.find("#eventType").text(eventTypeName);
                             alramTag.find("#eventName").text(eventLog['eventName']);
                             alramTag.find("#areaName").text(eventLog['areaName']);
                             alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                            alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"');");
+                            alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
                             $("#alramList").prepend(alramTag);
 
                             // marquee
                             var marqueeTag = templateHelper.getTemplate("marquee01");
-                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(eventLog['eventName']).attr("onclick","javascript:alramShowHide('list', 'show');");
+                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
+                            marqueeTag.prepend(
+                                $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
+                            );
                             $("#marqueeList").prepend(marqueeTag);
 
                             // 토스트팝업
