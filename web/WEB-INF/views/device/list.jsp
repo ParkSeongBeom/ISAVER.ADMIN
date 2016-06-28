@@ -109,7 +109,7 @@
                                 <c:forEach items="${devices}" var="devices"  varStatus="status">
                                     <c:if test="${devices.delYn == 'N' }">
                                         <option value="${devices.deviceId}">
-                                            ${devices.deviceCodeName}(${devices.deviceId})
+                                            ${devices.path}
                                             <%--<c:forEach var="i" begin="1" end="${devices.depth}" step="1"><c:if test="${i != 1}"> &nbsp; &nbsp;</c:if></c:forEach>${devices.deviceCodeName}(${devices.deviceId})--%>
                                         </option>
                                     </c:if>

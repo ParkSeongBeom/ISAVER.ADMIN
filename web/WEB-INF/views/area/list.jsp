@@ -133,7 +133,7 @@
                                 <option value=""><spring:message code="device.message.emptyData"/></option>
                                 <c:forEach items="${areas}" var="areas">
                                     <c:if test="${areas.delYn == 'N'}">
-                                        <option value="${areas.areaId}">${areas.areaName}</option>
+                                        <option value="${areas.areaId}">${areas.path}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>

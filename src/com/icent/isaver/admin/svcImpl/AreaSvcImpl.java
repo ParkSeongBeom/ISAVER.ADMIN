@@ -57,13 +57,15 @@ public class AreaSvcImpl implements AreaSvc {
 
     @Override
     public ModelAndView findListArea(Map<String, String> parameters) {
-        List<AreaBean> areas = areaDao.findListArea(parameters);
-        Integer totalCount = areaDao.findCountArea(parameters);
+//        List<AreaBean> areas = areaDao.findListArea(parameters);
+//        Integer totalCount = areaDao.findCountArea(parameters);
 
-        AdminHelper.setPageTotalCount(parameters, totalCount);
+//        AdminHelper.setPageTotalCount(parameters, totalCount);
+
+        List<AreaBean> areaTreeList = this.areaTreeDataStructure(null);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areas", areas);
+        modelAndView.addObject("areas", areaTreeList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
