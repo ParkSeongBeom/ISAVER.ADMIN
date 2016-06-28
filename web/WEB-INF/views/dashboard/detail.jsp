@@ -152,7 +152,7 @@
                                 </div>
                             </div>
 
-                            <div class="ct-chart">
+                            <div class="ct-chart"  id="chart1">
                                 <div class="mp_header ct-name">
                                     <div>
                                         <span class="ch_name co_gren"><spring:message code="dashboard.column.workerIn"/></span>
@@ -165,7 +165,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="mp_contents" id="chart1"></div>
                             </div>
                         </div>
                     </div>

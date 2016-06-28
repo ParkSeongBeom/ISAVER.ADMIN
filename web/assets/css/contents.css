@@ -226,7 +226,10 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 }
 .mp_contents {top:50px; left:15px; right:15px; bottom:15px;}
 
-.mp_header.ct-name  {top:50px; right:0;border-width:1px 0 0 0;}
+.mp_header.ct-name  {
+    position: relative; width:100%;
+    /*top:50px; right:0;*/border-width:1px 0 0 0;
+}
 
 .mc_element_set, .mc_element { }
 .mc_element_set {width:100%; height:100%; max-height:300px; margin: 0 0 20px 0;}
@@ -261,7 +264,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     position: absolute; height:100%;
 }
 .mp_header > h2  {left:0; color:#fff; font-size:16px;}
-.mp_header > div {right:0;width:auto; }
+.mp_header > div {right:10px;width:auto; }
 .mp_header > div > button {color:#fff;}
 
 
@@ -650,6 +653,11 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 /* 차트 시작  */
 .ct-chart {position: relative;}
 .personnel + .ct-chart {
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow:    row wrap;
+    -ms-flex-flow:     row wrap;
+    flex-flow:         row wrap;
+
     flex:1; -webkit-flex:1; flexbox:1;
     box-align: end;
     -webkit-box-align:   end;
