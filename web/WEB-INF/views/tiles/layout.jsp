@@ -175,10 +175,6 @@
                         var eventTypeName = null;
                         marqueeFlag = true;
 
-                        if($("#marqueeList").length>0){
-                            $('.marquee').marquee('destroy');
-                        }
-
                         switch (eventLog['eventType']){
                             case "crane" :
                                 eventTypeName = "크래인";
@@ -190,8 +186,15 @@
 
                         if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
                             $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                            $("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                        }else{
+                            if($("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").length>0){
+                                $('.marquee').marquee('destroy');
+                                $("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").remove();
+                            }
+                        }else if($("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
+                            if($("#marqueeList .js-marquee-wrapper").length>0){
+                                $('.marquee').marquee('destroy');
+                            }
+
                             // 알림센터
                             var alramTag = templateHelper.getTemplate("alram01");
                             alramTag.on("click",function(){
@@ -239,7 +242,9 @@
                     }
                 }
 
-                if(marqueeFlag && $("#marqueeList").length>0){
+                dashBoardHelper.saveRequestData('alram',{datetime:new Date(data['eventLogs'][data['eventLogs'].length-1]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
+
+                if(marqueeFlag && $("#marqueeList button").length>0 && $("#marqueeList .js-marquee-wrapper").length==0){
                     //마키 플러그인 호출
                     $('.marquee').marquee({
                         duration: 20000,
@@ -451,18 +456,13 @@
             }
 
             if (alarmPlayer.duration > 0 && !alarmPlayer.paused) {
-
                 //Its playing...do your job
-
             } else {
-
                 //Not playing...maybe paused, stopped or never played.
                 segmentEnd = endTime;
                 alarmPlayer.currentTime = startTime;
                 alarmPlayer.play();
             }
-
-
         }
     </script>
 </head>

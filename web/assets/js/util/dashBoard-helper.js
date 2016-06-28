@@ -79,6 +79,16 @@ var DashBoardHelper = (
         };
 
         /**
+         * request data save
+         * @author psb
+         */
+        this.saveRequestData = function(_actionType, _data){
+            if(_requestData[_actionType]!=null){
+                _requestData[_actionType]['data'] = _data;
+            }
+        };
+
+        /**
          * request data remove
          * @author psb
          */
@@ -97,31 +107,7 @@ var DashBoardHelper = (
                 var _requestInfo = _requestData[index];
 
                 sendAjaxPostRequest(_requestInfo['url'],_requestInfo['data'],_requestInfo['success'],_requestInfo['failure'],index);
-                sendAjaxAfterHandler(index);
             }
         };
-
-        /**
-         * ajax call 이후 파라미터 변경
-         * @author psb
-         */
-        var sendAjaxAfterHandler = function(index){
-            switch (index){
-                case "alram":
-                case "worker":
-                case "crane":
-                    _requestData[index]['data'] = {datetime:new Date().format("yyyy-MM-dd HH:mm:ss")};
-                    break;
-                case "chart":
-                    _requestData[index]['data'] = {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()};
-                    break;
-                case "chartInout":
-                    _requestData[index]['data'] = {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()};
-                    break;
-                case "chartStatus":
-                    _requestData[index]['data'] = {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()};
-                    break;
-            }
-        }
     }
 );

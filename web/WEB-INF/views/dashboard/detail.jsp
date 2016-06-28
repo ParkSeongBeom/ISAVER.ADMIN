@@ -420,6 +420,8 @@
             case 'chartInout':
             case 'chartStatus':
                 chartRender(data);
+                dashBoardHelper.saveRequestData('chartInout', {'requestType' : 0, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime1]").val()});
+                dashBoardHelper.saveRequestData('chartStatus', {'requestType' : 1, 'areaId' : areaId, pageIndex : 10, minutesCount : $("select[id=chartRefreshTime2]").val()});
                 break;
             case 'inoutConfigurationList':
                 inoutConfigurationRender(data);
@@ -488,6 +490,7 @@
                     $(".workerList").prepend(eventListTag);
                 }
             }
+            dashBoardHelper.saveRequestData('worker',{areaId:areaId, datetime:new Date(workerList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
 
             $.each($(".workerList"),function(){
                 $(this).children(":gt(49)").remove();
@@ -553,6 +556,7 @@
                     $(".craneList").prepend(eventListTag);
                 }
             }
+            dashBoardHelper.saveRequestData('crane',{areaId:areaId, datetime:new Date(craneList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
 
             $.each($(".craneList"),function(){
                 $(this).children(":gt(49)").remove();
