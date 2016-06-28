@@ -57,8 +57,8 @@
         <div id="marqueeList" class="marquee"></div>
     </article>
 
-    <article class="dash_contents_area nano">
-        <div class="nano-content">
+    <article class="dash_contents_area">
+        <div>
             <div class="metro_root mr_h70">
                 <div class="metro_parent v_mode">
                     <div id="workerDiv" title="<spring:message code="dashboard.title.worker"/>">
@@ -385,10 +385,10 @@
      @author psb
      */
     function saveInoutConfiguration(){
-        if($(".time_select_list li:not('.fixedTime')").length==0){
-            alertMessage('inoutConfigEmpty');
-            return false;
-        }
+//        if($(".time_select_list li:not('.fixedTime')").length==0){
+//            alertMessage('inoutConfigEmpty');
+//            return false;
+//        }
 
         var param = {
             'areaId' : areaId

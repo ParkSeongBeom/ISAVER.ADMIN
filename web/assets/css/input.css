@@ -206,7 +206,7 @@ GNB ,버튼 active   #0c8dd0
 .db_btn:hover:before {color:#29a1f7;}
 
 .alra_btn {
-    width:70px; padding: 1px 1px 4px 0px; margin:0 27px; font-size:14px;
+    width:70px; padding: 1px 1px 4px 0px; margin:0 0; font-size:14px;
     -moz-border-radius:    20px;
     -webkit-border-radius: 20px;
     border-radius:         20px;

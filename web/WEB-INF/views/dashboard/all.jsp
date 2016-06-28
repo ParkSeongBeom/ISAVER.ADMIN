@@ -12,7 +12,7 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
 
 <!-- section Start -->
-<section  class="container">
+<section class="container">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="main_title_area">
         <!-- 2depth 타이틀 Start-->
@@ -23,8 +23,8 @@
     </article>
 
     <!-- 2depth 타이틀 영역 End -->
-    <article class="dash_contents_area nano">
-        <div class="nano-content">
+    <article class="dash_contents_area">
+        <div>
             <div class="metro_root mr_h70">
                 <div class="metro_parent">
                     <div id="workerDiv" title="<spring:message code="dashboard.title.worker"/>">
@@ -42,7 +42,7 @@
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
                                                 <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span>${area.areaName}</span>
+                                                    <span><em>${area.areaName}</em></span>
                                                 </button>
                                             </c:forEach>
                                         </c:when>
@@ -65,7 +65,7 @@
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
                                                 <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span>${area.areaName}</span>
+                                                    <span><em>${area.areaName}</em></span>
                                                     <span id="nowGap">0</span>
                                                 </button>
                                             </c:forEach>
@@ -94,7 +94,7 @@
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
                                                 <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span>${area.areaName}</span>
+                                                    <span><em>${area.areaName}</em></span>
                                                 </button>
                                             </c:forEach>
                                         </c:when>
@@ -120,7 +120,7 @@
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
                                                 <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span>${area.areaName}</span>
+                                                    <span><em>${area.areaName}</em></span>
                                                 </button>
                                             </c:forEach>
                                         </c:when>
@@ -181,6 +181,20 @@
     };
 
     $(document).ready(function(){
+        $.each($(".mce_btn_area button span em"),function(){
+            if($(this).height()>28){
+                $(this).addClass("marqueeEm");
+            }
+        });
+
+        $('.marqueeEm').marquee({
+            duration: 3000,
+            direction: 'up',
+            duplicated: true,
+            pauseOnHover: true,
+            startVisible: true
+        });
+
         /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 크래인 */
