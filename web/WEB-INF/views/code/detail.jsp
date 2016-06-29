@@ -124,6 +124,7 @@
         ,'requireCodeId':'<spring:message code="code.message.requireCodeId"/>'
         ,'lengthFailCodeId':'<spring:message code="code.message.lengthFailCodeId"/>'
         ,'requireCodeName':'<spring:message code="code.message.requireCodeName"/>'
+        ,'requireSortOrder':'<spring:message code="code.message.requireSortOrder"/>'
     };
 
     function validate(type){
@@ -132,6 +133,9 @@
             return false;
         }else if(form.find('input[name=codeId]').val().length != 6){
             alertMessage('lengthFailCodeId');
+            return false;
+        }else if(form.find('input[name=sortOrder]').val().length == 0){
+            alertMessage('requireSortOrder');
             return false;
         }
 
