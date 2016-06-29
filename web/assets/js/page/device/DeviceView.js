@@ -125,7 +125,7 @@ function DeviceView(model) {
         $(DeviceView._model.getTreaDevice()).dynatree({
             minExpandLevel: 2,
             debugLevel: 1,
-            persist: true,
+            persist: false,
             onPostInit: function (isReloading, isError) {
                 var myParam = location.search.split('ctrl=')[1];
 

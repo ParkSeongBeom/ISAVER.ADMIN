@@ -99,7 +99,7 @@ function AreaView(model) {
         $(AreaView._model.getTreaArea()).dynatree({
             minExpandLevel: 2,
             debugLevel: 1,
-            persist: true,
+            persist: false,
             onPostInit: function (isReloading, isError) {
 
                 var myParam = location.search.split('ctrl=')[1];
