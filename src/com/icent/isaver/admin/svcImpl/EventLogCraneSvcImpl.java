@@ -35,11 +35,14 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
 
     @Override
     public ModelAndView findAllEventLogCrane(Map<String, String> parameters) {
-        List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findAllEventLogCrane(parameters);
+        Map param = new HashMap();
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
+        List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findAllEventLogCrane(param);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogCraneList", eventLogCraneList);
         modelAndView.addObject("paramBean",parameters);
+
         return modelAndView;
     }
 
@@ -50,7 +53,7 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
         if(StringUtils.notNullCheck(parameters.get("datetime"))){
             param.put("datetime", parameters.get("datetime"));
         }
-        param.put("eventIds", AdminResource.CRANE_EVENT_ID);
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
 
         List<EventLogCraneBean> eventLogCraneCountList = eventLogCraneDao.findCountListEventLogCrane(param);
         List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findListEventLogCrane(param);

@@ -5,6 +5,7 @@ import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.EventBean;
 import com.icent.isaver.repository.bean.EventLogBean;
+import com.icent.isaver.repository.dao.base.ActionDao;
 import com.icent.isaver.repository.dao.base.EventLogDao;
 import com.kst.common.bean.CommonResourceBean;
 import com.kst.common.springutil.TransactionUtil;
@@ -32,6 +33,9 @@ public class EventLogSvcImpl implements EventLogSvc {
 
     @Inject
     private EventLogDao eventLogDao;
+
+    @Inject
+    private ActionDao actionDao;
 
     @Override
     public ModelAndView findListEventLog(Map<String, String> parameters) {

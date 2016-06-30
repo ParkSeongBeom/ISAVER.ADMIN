@@ -23,6 +23,137 @@
         <section class="layer_wrap i_type06">
             <article class="layer_area">
                 <div class="mp_header">
+                    <h2>진출입자 조회 주기 설정</h2>
+                    <div>
+                        <button class="db_btn zoomclose_btn ipop_close"></button>
+                    </div>
+                </div>
+                <div class="mp_contents vh_mode">
+                    <p class="area_title">구역명삽입</p>
+                    <div class="mc_element nano has-scrollbar">
+                        <div class="time_select_contents nano-content" tabindex="0" style="right: -8px;">
+                            <!-- 1 SET -->
+                            <div>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input" checked="">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit">
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="시">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="분">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="초">
+                                    </div>
+                                </div>
+                                <p>05:59:59</p>
+                            </div>
+
+                            <!-- 1 SET -->
+                            <div>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input" checked="">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit disabled">
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="text" name="format" value="" placeholder="시">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="text" name="format" value="" placeholder="분">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="text" name="format" value="" placeholder="초">
+                                    </div>
+                                </div> <!-- disabled 처리 됬을때 클래스 "disabled" 삽입  -->
+                                <p>05:59:59</p>
+                            </div>
+                        </div>
+                        <div class="nano-pane" style="display: none;"><div class="nano-slider" style="height: 20px; transform: translate(0px, 0px);"></div></div></div>
+                    <div class="lmc_btn_area mc_tline">
+                        <button class="btn btype01 bstyle07" name="">저장</button>
+                    </div>
+                </div>
+                <!--<div class="mp_contents vh_mode ">
+                    <p class="mpct">ART002</p>
+                    <div class="time_select_contents">
+                        <input type="number" name="" >
+                        <input type="number" name="" >
+                        <input type="number" name="" >
+                        <button></button>
+                    </div>
+                    <div class="mc_element nano">
+                        <ul class="nano-content time_select_list">
+                            <li><span>00:00:00</span></li> &lt;!&ndash; 시작 시간 &ndash;&gt;
+
+                            &lt;!&ndash; 추가 시간 시작 &ndash;&gt;
+                            <li><span>04:00:00</span><button></button></li>
+                            <li><span>12:00:00</span><button></button></li>
+                            <li><span>16:00:00</span><button></button></li>
+                            <li><span>20:00:00</span><button></button></li>
+                            &lt;!&ndash; 추가 시간 끝 &ndash;&gt;
+
+                            <li><span>23:59:59</span></li> &lt;!&ndash; 종료 시간 &ndash;&gt;
+                        </ul>
+                    </div>
+                    <div class="lmc_btn_area">
+                        <button class="btn btype01 bstyle07" name="">저장</button>
+                    </div>
+                </div>-->
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close"></div>
+    </aside>
+
+    <aside1 class="layer_popup1 sett_popup1" style="display: none;">
+        <section class="layer_wrap i_type05">
+            <article class="layer_area">
+                <div class="mp_header">
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
                     <div><button class="db_btn zoomclose_btn ipop_close" href="#" onclick="javascript:closeDetailPopup();"></button></div>
                 </div>
@@ -34,10 +165,10 @@
                         <input type="number" id="inoutSecond" min="0" max="59" maxlength="2" value="0" onkeypress="onlyNumberPress(event);" oninput="inputNumberCheck(this)"/>
                         <button href="#" onclick="javascript:appendInoutConfiguration();"></button>
                     </div>
-                    <div class="mc_element nano">
+                    <div class="mc_element nano mc_tline">
                         <ul class="nano-content time_select_list">
                             <li class="fixedTime firstTime" time="000000"><span>00:00:00</span></li> <!-- 시작 시간 -->
-                            <li class="fixedTime lastTime" time="235959"><span>23:59:59</span></li> <!-- 종료 시간 -->
+                            <li class="fixedTime lastTime"  time="235959"><span>23:59:59</span></li> <!-- 종료 시간 -->
                         </ul>
                     </div>
                     <div class="lmc_btn_area mc_tline">
@@ -47,7 +178,7 @@
             </article>
         </section>
         <div class="layer_popupbg ipop_close" href="#" onclick="javascript:closeDetailPopup();"></div>
-    </aside>
+    </aside1>
 
     <!-- 2depth 타이틀 영역 -->
     <article class="main_title_area">
@@ -79,7 +210,12 @@
                                         <c:when test="${workerEvents != null and fn:length(workerEvents) > 0}">
                                             <c:forEach var="workerEvent" items="${workerEvents}">
                                                 <div eventId="${workerEvent.eventId}" class="mc_element">
-                                                    <div class="mc_bico type02 worker"></div>
+                                                    <c:choose>
+                                                        <c:when test="${workerEvent.eventId == 'EVT015'}"><div class="mc_bico type02 cloth"></div></c:when>
+                                                        <c:when test="${workerEvent.eventId == 'EVT016'}"><div class="mc_bico type02 helmet"></div></c:when>
+                                                        <c:when test="${workerEvent.eventId == 'EVT009'}"><div class="mc_bico type02 worker"></div></c:when>
+                                                        <c:otherwise><div class="mc_bico type02 etc"></div></c:otherwise>
+                                                    </c:choose>
                                                     <div class="mc_box">
                                                         <p>${workerEvent.eventName}</p>
                                                         <p class="eventCnt">0</p>
@@ -92,7 +228,7 @@
                                     </c:choose>
                                 </div>
                             </div>
-                            <div class="mc_element mc_tline nano">
+                            <div class="mc_element mc_tline nano" detail_layout>
                                 <ul class="workerList mc_list nano-content"></ul>
                             </div>
                         </div>
@@ -108,24 +244,36 @@
                         <div class="mp_contents vh_mode">
                             <div class="mc_element_set nano">
                                 <div class="craneContens nano-content">
+                                    <c:set var="eventDenyList" value='<%=new String[]{"EVT100", "EVT210", "EVT102", "EVT211"} %>'/>
+                                    <%--<c:set var="eventDenyList" value="${['EVT100', 'EVT210', 'EVT102', 'EVT211']}" scope="application" />--%>
                                     <c:choose>
                                         <c:when test="${craneEvents != null and fn:length(craneEvents) > 0}">
                                             <c:forEach var="craneEvent" items="${craneEvents}">
-                                                <div eventId="${craneEvent.eventId}" class="mc_element">
-                                                    <div class="mc_bico type02 crane"></div>
-                                                    <div class="mc_box">
-                                                        <p>${craneEvent.eventName}</p>
-                                                        <p class="eventCnt">0</p>
+                                                <c:if test="${(craneEvent.eventId != eventDenyList[0] && craneEvent.eventId != eventDenyList[1] && craneEvent.eventId != eventDenyList[2] && craneEvent.eventId != eventDenyList[3]) }" >
+                                                    <div eventId="${craneEvent.eventId}" class="mc_element">
+                                                        <div class="mc_bico type02 cman"></div>
+                                                        <div class="mc_box">
+                                                            <p>${craneEvent.eventName}</p>
+                                                            <p class="eventCnt">0</p>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </c:if>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
                                         </c:otherwise>
                                     </c:choose>
+                                    <div eventId="evt_crane_detection" class="mc_element">
+                                        <div class="mc_bico type02 crane"></div>
+                                        <div class="mc_box">
+                                            <p><spring:message code="dashboard.column.evtCraneDetection"/></p>
+                                            <p class="eventCnt">0</p>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-                            <div class="mc_element mc_tline nano">
+                            <div class="mc_element mc_tline nano" detail_layout>
                                 <ul class="craneList mc_list nano-content"></ul>
                             </div>
                         </div>
@@ -140,23 +288,24 @@
                             </div>
                         </div>
                         <div class="mp_contents vh_mode">
-                            <div class="personnel">
-                                <div id="nowInout" class="now">
-                                    <p id="nowInoutDatetime">00:00:00</p>
-                                    <span id="nowInoutGap">0</span>
-                                    <div id="nowInCnt">0</div>
-                                    <div id="nowOutCnt">0</div>
-                                </div>
-                                <div id="beforeInout" class="past">
-                                    <p id="beforeInoutDatetime">00:00:00 ~ 23:59:59</p>
-                                    <span id="beforeInoutGap">0</span>
-                                    <div id="beforeInCnt">0</div>
-                                    <div id="beforeOutCnt">0</div>
+                            <div class="mc_element_set">
+                                <div class="personnel">
+                                    <div id="nowInout" class="now">
+                                        <p id="nowInoutDatetime">00:00:00</p>
+                                        <span id="nowInoutGap">0</span>
+                                        <div id="nowInCnt">0</div>
+                                        <div id="nowOutCnt">0</div>
+                                    </div>
+                                    <div id="beforeInout" class="past">
+                                        <p id="beforeInoutDatetime">00:00:00 ~ 23:59:59</p>
+                                        <span id="beforeInoutGap">0</span>
+                                        <div id="beforeInCnt">0</div>
+                                        <div id="beforeOutCnt">0</div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="ct-chart"  id="chart1">
-                                <div class="mp_header ct-name">
+                            <div class="mc_element mc_tline vh_mode">
+                                <div class="mp_header">
                                     <div>
                                         <span class="ch_name co_gren"><spring:message code="dashboard.column.workerIn"/></span>
                                         <span class="ch_name co_purp"><spring:message code="dashboard.column.workerOut"/></span>
@@ -168,6 +317,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mp_contents"  id="chart1"></div>
                             </div>
                         </div>
                     </div>
@@ -187,7 +337,7 @@
                             <div class="mc_bico type03 gas_level02">
                                 <p>O2 22% / CO2 21ppm / H2S 3ppm</p>
                             </div>
-                            <div class="mc_element nano">
+                            <div class="mc_element nano" detail_layout>
                                 <ul class="mc_list nano-content" tabindex="0" style="right: -8px;">
                                     <li>
                                         <span>경고</span>
@@ -311,6 +461,10 @@
 
         $(".detail_popup .layer_area").attr("type",type).append(headerTag).append(contentsTag);
         $(".detail_popup").find(".nano").nanoScroller();
+
+        /* @author dhj */
+        $("div[detail_layout]").removeClass("mc_tline").removeClass(" vtype").addClass("mc_tline vtype");
+
         $(".detail_popup").show();
     }
 
@@ -319,6 +473,9 @@
      @author psb
      */
     function closeDetailPopup(){
+        /* @author dhj */
+        $("div[detail_layout]").removeClass("mc_tline").removeClass(" vtype");
+
         $(".layer_popup").hide();
         $(".time_select_list li:not('.fixedTime')").remove();
         $(".detail_popup .layer_area").attr("type","").empty();
@@ -475,9 +632,9 @@
 
                 workerEventCnt += Number(worker['eventCnt']);
                 if(Number(worker['eventCnt'])>0){
-                    modifyElementClass(divTag.find(".worker"),'level03','add');
+                    modifyElementClass(divTag.find(".mc_bico"),'level03','add');
                 }else{
-                    modifyElementClass(divTag.find(".worker"),'level03','remove');
+                    modifyElementClass(divTag.find(".mc_bico"),'level03','remove');
                 }
 
                 if(divTag!=null && divTag.find(".eventCnt").text() != String(worker['eventCnt'])){
@@ -538,26 +695,95 @@
     function craneRender(data){
         var countList = data['eventLogCraneCountList'];
 
+        var craneClassName = "";
+
+        var evtCraneDetectionList = {
+            'EVT100' : 0
+            ,  'EVT210' : 0
+        };
+
         if(countList!=null){
-            var craneEventCnt = 0;
+
+            var craneEventTotalCnt = 0;
+
             for(var index in countList){
                 var crane = countList[index];
-                var divTag = $(".craneContens").find("div[eventId='"+crane['eventId']+"']");
+                var eventId = crane['eventId'];
+                var craneEventCnt = 0;
 
-                craneEventCnt += Number(crane['eventCnt']);
-                if(Number(crane['eventCnt'])>0){
-                    modifyElementClass(divTag.find(".crane"),'level03','add');
+                var divTag = $(".craneContens").find("div[eventId="+eventId+"]");
+
+                switch(eventId) {
+                    case "EVT101": //크레인 작업자 감지
+                        craneClassName = ".cman";
+                        if ( crane['eventCnt'] != null) {
+                            craneEventCnt = Number(crane['eventCnt']);
+                            craneEventTotalCnt ++;
+                        }
+                        break;
+                    case "EVT100": //크레인 충돌 감지(IVAS)
+                    case "EVT210": //크레인 충돌 감지(SIOC)
+                        craneClassName = ".crane";
+                        divTag = $(".craneContens").find("div[eventId=evt_crane_detection]");
+
+                        if ( crane['eventCnt'] != null) {
+                            craneEventCnt = Number(crane['eventCnt']);
+                            craneEventTotalCnt ++;
+                            evtCraneDetectionList[eventId] = craneEventCnt;
+                        }
+
+
+                        /* 충돌 감지 */
+//                        for (var i = 0 ; i<evtDetectionList.length; i ++) {
+//                            var item = evtDetectionList[i];
+//                            if (item == eventId && crane['eventCnt'] != null) {
+//                                divTag = $(".craneContens").find("div[eventId=evt_crane_detection]");
+//                                craneEventCnt = Number(crane['eventCnt']);
+//                                craneEventTotalCnt ++;
+//                                break;
+//                            }
+//                        }
+//                        /* 충돌 감지 해제 */
+//                        for (i = 0 ; i<evtDetectionCancelList.length; i ++) {
+//                            var item = evtDetectionCancelList[i];
+//                            if (item == eventId && crane['eventCnt'] != null) {
+//
+//                                if (craneEventCnt != 0) {
+//                                    craneEventCnt -= Number(crane['eventCnt']);
+//                                }
+//
+//                                break;
+//                            }
+//                        }
+                        break;
+                }
+
+
+                if(Number(craneEventCnt) > 0){
+                    modifyElementClass(divTag.find(craneClassName),'level03','add');
                 }else{
-                    modifyElementClass(divTag.find(".crane"),'level03','remove');
+                    modifyElementClass(divTag.find(craneClassName),'level03','remove');
                 }
 
-                if(divTag!=null && divTag.find(".eventCnt").text() != String(crane['eventCnt'])){
-                    divTag.find(".eventCnt").text(Number(crane['eventCnt']));
+                if(divTag!=null && divTag.find(".eventCnt").text() != String(craneEventCnt)){
+                    divTag.find(".eventCnt").text(Number(craneEventCnt));
                 }
+
             }
 
-            if($(".craneAlramCnt").text() != String(craneEventCnt)){
-                $(".craneAlramCnt").text(craneEventCnt);
+            var evtCraneDetectionCount = evtCraneDetectionList['EVT100'] + evtCraneDetectionList['EVT210'];
+            var divTag = $(".craneContens").find("div[eventId=evt_crane_detection]");
+
+            if (evtCraneDetectionCount > 0) {
+                modifyElementClass(divTag.find(".crane"),'level03','add');
+            } else {
+                modifyElementClass(divTag.find(".crane"),'level03','remove');
+            }
+
+            divTag.find(".eventCnt").text(evtCraneDetectionCount);
+
+            if($(".craneAlramCnt").text() != String(craneEventTotalCnt)){
+                $(".craneAlramCnt").text(craneEventTotalCnt);
             }
 
             if(craneEventCnt>0){
@@ -569,17 +795,35 @@
             }
         }
 
+        /***********/
+        /* 크레인 이력 */
+        /***********/
+
         var craneList = data['eventLogCraneList'];
+
         if(craneList!=null){
             for(var i=craneList.length-1; i >= 0; i--){
                 var crane = craneList[i];
+                var eventId = crane['eventId'];
+
                 var cancelType = crane['eventCancelUserId']==null?"N":"Y";
 
                 if($(".craneList li[eventLogId='"+crane['eventLogId']+"'][cancelType='"+cancelType+"']").length==0){
                     var eventListTag = templateHelper.getTemplate("eventList");
                     eventListTag.attr("eventLogId",crane['eventLogId']).attr("cancelType",cancelType).find("#eventName").text(crane['eventName']);
                     if(cancelType=="N"){ // 감지
-                        modifyElementClass(eventListTag,'level03','add');
+                        var levelType = "level03";
+
+                        /* 충돌 감지 해제 */
+                        for (var j = 0 ; j < evtDetectionCancelList.length; j++) {
+                            var item = evtDetectionCancelList[j];
+                            if (item == eventId) {
+                                levelType = "level01";
+                                break;
+                            }
+                        }
+
+                        modifyElementClass(eventListTag, levelType, 'add');
                         eventListTag.find("#status").text(messageConfig['detection']);
                         eventListTag.find("#eventDatetime").text(new Date(crane['eventDatetime']).format("HH:mm:ss"));
                     }else{ // 해제

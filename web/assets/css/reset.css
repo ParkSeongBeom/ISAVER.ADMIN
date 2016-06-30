@@ -8,7 +8,7 @@
 font-style:normal;font-weight:normal;font-size:14px;*zoom: 1;}
 
 html, body {
-    width:100%;  padding:0; margin:0;
+    width:100%; padding:0; margin:0;
     letter-spacing:-0.02em; line-height:normal;color:#3e3e3e;
     font-size:14px;font-family:'맑은고딕', 'Malgun Gothic','돋움', 'Dotum', sans-serif;
     -webkit-overflow-scrolling : touch;
@@ -292,10 +292,18 @@ flex-basis:  100%;
     outline: none;
 }
 
+
+.nano > .nano-pane, .nano > .nano-pane > .nano-slider {
+    transition: all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -moz-transition: all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -webkit-transition: all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -o-transition: all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -ms-transition: all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
 .nano > .nano-pane {
     background : rgba(0,0,0,.25);
     position   : absolute;
-    width      : 6px;
+    width      : 8px;
     right      : 0;
     top        : 0;
     bottom     : 0;
@@ -310,27 +318,20 @@ flex-basis:  100%;
     border-radius         : 5px;
 }
 .nano > .nano-pane > .nano-slider {
-    background: #444;
     background: rgba(0,0,0,.5);
     position              : relative;
-    margin                : 0 1px;
+    margin                : 2px;
     -moz-border-radius    : 3px;
     -webkit-border-radius : 3px;
     border-radius         : 3px;
 }
-.nano > .nano-pane > .nano-slider {
-    background: #444;
-    background: rgba(0,0,0,.5);
-    position              : relative;
-    margin                : 0 1px;
-    -moz-border-radius    : 3px;
-    -webkit-border-radius : 3px;
-    border-radius         : 3px;
-}
-.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {
+.nano:hover > .nano-pane, .nano:active > .nano-pane {
     visibility : visible\9; /* Target only IE7 and IE8 with this hack */
-    opacity    : 0.99;
+    background : rgba(0,0,0,.6);
 }
+
+.nano:hover > .nano-pane > .nano-slider,
+.nano:active > .nano-pane > .nano-slider {background: rgba(255,255,255,.2);}
 
 /* 컬러 정의 */
 .co_yell {background-color: #ffce53;} /* rgba(255,206,83,1) */
@@ -341,6 +342,13 @@ flex-basis:  100%;
 .co_gren {background-color: #01d65a;} /* rgba(0,212,88,1)  */
 
 /* 아이콘 정의  */
+
+
+.crash:before  {content: "\e915";} /*크래인 충돌 상태 */
+.cman:before   {content: "\e914";} /*크래인 사람감지 상태 */
+.cloth:before  {content: "\e912";} /*안전복 상태 */
+.helmet:before {content: "\e911";} /*안전모 상태 */
+.down:before   {content: "\e913";} /*쓰러짐 상태 */
 .worker:before {content: "\e90b";} /*작업자 상태 */
 .crane:before  {content: "\e90c";} /*크래인 상태 */
 .going:before  {content: "\e90d";} /*진출입 상태 */
@@ -406,11 +414,12 @@ bottom button border gray active #4f4f4f
 .sico_05:before {content: "\e904";}  .sico_15:before {content: "\e90e";}
 .sico_06:before {content: "\e905";}  .sico_16:before {content: "\e90f";}
 .sico_07:before {content: "\e906";}  .sico_17:before {content: "\e910";}
-.sico_08:before {content: "\e907";}
-.sico_09:before {content: "\e908";}
-.sico_10:before {content: "\e909";}
+.sico_08:before {content: "\e907";}  .sico_18:before {content: "\e911";}
+.sico_09:before {content: "\e908";}  .sico_19:before {content: "\e912";}
+.sico_10:before {content: "\e909";}  .sico_20:before {content: "\e913";}
 
-
+.sico_21:before {content: "\e914";}
+.sico_22:before {content: "\e915";}
 
 @font-face {
     font-family: 'japple';
@@ -426,7 +435,7 @@ bottom button border gray active #4f4f4f
 
 button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before, .toast_popup:before,
 .db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before,
-.time_select_contents > div button:before, .time_select_list > li:before
+.time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before
 {
     font-family: 'japple';
     speak: none;

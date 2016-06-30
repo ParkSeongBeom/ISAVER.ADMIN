@@ -23,7 +23,7 @@ textarea.noboder_type01 {border:none; min-height:150px; background-color: transp
 .table_area {width:100%; padding: 20px 0;}
 .layer_contents .table_area {
     overflow: auto;
-    height: calc(100% - 50px); height: -webkit-calc(100% - 120px); padding: 0;
+    height: calc(100% - 120px); height: -webkit-calc(100% - 120px); padding: 0;
 }
 .layer_contents .table_area + .table_title_area {margin:20px 0 0 0;}
 

@@ -118,5 +118,6 @@ public class AdminResource {
      * crane eventIds
      * @author psb
      */
-    public final static String[] CRANE_EVENT_ID = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
+    public final static String[] CRANE_EVENT_ID_ALL = new String[]{"EVT100", "EVT101", "EVT210"};
+    public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
 }

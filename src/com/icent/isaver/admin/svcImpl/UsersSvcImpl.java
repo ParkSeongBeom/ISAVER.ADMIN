@@ -55,6 +55,7 @@ public class UsersSvcImpl implements UsersSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("users",users);
         modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("roles",roleDao.findListRole(null));
         return modelAndView;
     }
 

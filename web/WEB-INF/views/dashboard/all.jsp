@@ -12,6 +12,7 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.marquee.js"></script>
 
 <!-- section Start -->
+<!-- section Start -->
 <section class="container">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="main_title_area">

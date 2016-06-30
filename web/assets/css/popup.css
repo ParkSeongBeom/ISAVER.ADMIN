@@ -2,18 +2,20 @@
 .db_header, .db_header > div, .db_contents > ul > li, .dbc_contents,.dbc_contents > div, .time_select_contents, .time_select_list > li
 {-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 
-.db_header, .db_header > div, .db_contents > ul > li, .dbc_contents, .time_select_contents, .time_select_list > li
+.db_header, .db_header > div, .db_contents > ul > li, .dbc_contents, .time_select_contents > div, .time_select_list > li
 {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;display:flexbox;display:box;}
 
 /*레이어 팝업 */
 .layer_popup, .admin_popup
-{display: none; position: fixed;z-index:100; top:50px; left:120px; bottom:0px; right: 0px;}
+{display: none; position: fixed;z-index:100; top:45px; left:120px; bottom:0px; right: 0px;}
+
 .layer_popupbg {width:100%;height:100%;top:0;left:0;background-color: rgba(0,0,0,0.7);}
 
 .layer_popup form {width:100%; height:100%;}
 /*.layer_popup .nano-pane {display: block !important;}*/
 .layer_wrap {
     position: absolute;
+    min-height:450px;
     left:50%;
     padding:20px;
     background-color: #fdfdfd;
@@ -23,10 +25,15 @@
 }
 .layer_popup .layer_wrap {background-color: #25252f;}
 
-.layer_popup .mp_header {}
+.layer_popup .mp_header   {}
 .layer_popup .mp_contents {}
-.layer_popup .mc_element {  overflow: hidden;}
-.layer_popup .search_contents + .mc_element {width:100%; margin:20px 0 0 0;}
+.layer_popup .mc_element  {}
+
+.layer_popup .search_contents {
+    min-height:40px; max-height:40px;
+    margin:20px 0 0 0;
+}
+.layer_popup .search_contents + .mc_element {width:100%; flex:8 0; -webkit-flex:8 0; flexbox:8 0;}
 .layer_popup .mc_element_set { overflow: hidden;}
 
 
@@ -52,9 +59,9 @@
 .i_type02.it_style01 {margin:20px 0 0 -250px;}
 .i_type03 {width:700px;margin:120px 0 0 -350px;}
 .i_type04 {left:50px; top:50px; right:50px; bottom: 50px;}
-.i_type05 {top:100px; bottom:100px; width:900px; max-height:700px; margin:0 0 0 -450px; }
-.i_type06 {top:100px; bottom:100px; width:450px; max-height:700px; margin:0 0 0 -225px; }
-
+.i_type05 {top:100px; bottom:130px; width:900px; max-height:630px; margin:0 0 0 -450px; }
+.i_type06 {top:100px; bottom:100px; width:600px; max-height:700px; margin:0 0 0 -300px; }
+.i_type06 {top:100px; bottom:200px; width:600px; max-height:500px; margin:0 0 0 -300px; }
 
 .layer_area {position: relative;width:100%;height:100%;}
 .layer_header {position: relative;width:100%;height:30px;font-size:20px;}
@@ -262,9 +269,8 @@
 
 .sett_popup {}
 
-.time_select_contents, .time_select_list > li {
+.time_select_contents > div, .time_select_list > li {
     position: relative;
-
     box-align: center;
     -webkit-box-align:   center;
     -moz-box-align:      center;
@@ -272,10 +278,10 @@
     -ms-flex-align:      center;
     align-items:         center;
 }
-.time_select_contents  {height:60px;}
-.time_select_list > li {height:44px;}
+.time_select_contents  {position: relative;/*height:60px;*/padding:20px 0;}
+.time_select_list > li, .time_select_contents > div {height:44px;}
 
-.time_select_contents + div { width:calc(100% - 20px); width:-webkit-calc(100% - 20px);}
+
 /*
 .time_select_contents > div:before {
     content:""; position: absolute; top:50%; left:0; margin:-1px 0 0 0;
@@ -283,12 +289,20 @@
 }
 */
 
-.mpct {color:#fff; font-size:30px; padding:20px 0 0 0;}
 
-.time_select_contents {padding:20px 0;}
-.time_select_contents > * {width:100%; color:#fff; }
+.time_select_contents + div { width:calc(100% - 20px); width:-webkit-calc(100% - 20px);}
 
-.time_select_contents > select, .time_select_contents > input {margin:0 3px 0 0;}
+
+
+.area_title {color:#fff; font-size:20px; padding:20px 0 0 0;}
+
+.time_select_contents > div > * {width:100%; color:#fff; margin:0 3px 0 0;}
+.time_select_contents > div select {font-size:15px;}
+
+.time_select_contents > div > .check_box_set {
+    min-width:30px; max-width:30px; margin:0 35px 0 0;}
+.time_select_contents > div > p {min-width:110px; max-width:110px;  font-size:16px; letter-spacing: 1px;}
+.time_select_contents > div > p:before {content:"~"; padding:0 5px;}
 
 .time_select_contents > button {min-width:40px; max-width:40px;}
 
@@ -327,4 +341,7 @@
 .time_select_list > li:first-of-type:after {top:25px;}
 .time_select_list > li:last-of-type:after  {bottom:24px;}
 
-.lmc_btn_area {position: relative; width:100%; text-align: right; margin:20px 0 0 0;}
+.lmc_btn_area {
+    position: relative; width:100%; min-height: 40px; max-height: 40px;
+    text-align: right; margin:20px 0 0 0;
+}

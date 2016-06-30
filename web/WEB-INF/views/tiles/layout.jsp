@@ -67,6 +67,9 @@
         var alarmPlayer;
         var segmentEnd;
 
+        var evtDetectionList = ["EVT100", "EVT210"];
+        var evtDetectionCancelList = ["EVT102", "EVT211"];
+
         $(document).ready(function(){
             // 메뉴그리기
             menuModel.setRootUrl(rootPath);
@@ -171,17 +174,28 @@
                 for(var index in data['eventLogs']){
                     var eventLog = data['eventLogs'][index];
                     var eventTypeName = null;
+                    var eventId = eventLog['eventId'];
 
                     switch (eventLog['eventType']){
                         case "crane" :
-                            eventTypeName = "크래인";
+                            eventTypeName = "크레인";
                             break;
                         case "worker" :
                             eventTypeName = "쓰러짐";
                             break;
                     }
 
-                    if(eventTypeName!=null){
+                    var makeAllowFlag = true;
+                    /* 충돌 감지 해제 */
+                    for (var j = 0 ; j < evtDetectionCancelList.length; j++) {
+                        var item = evtDetectionCancelList[j];
+                        if (item == eventId) {
+                            makeAllowFlag = false;
+                            break;
+                        }
+                    }
+
+                    if(eventTypeName!=null && makeAllowFlag){
                         marqueeFlag = true;
 
                         if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
@@ -369,7 +383,7 @@
 
                 switch (data['paramBean']['eventType']){
                     case "crane" :
-                        eventTypeName = "크래인";
+                        eventTypeName = "크레인";
                         break;
                     case "worker" :
                         eventTypeName = "쓰러짐";
@@ -441,6 +455,29 @@
             }
         }
 
+        /**
+         * 메뉴바 동작
+         */
+        function menuView(_this){
+
+//            var navPlusBtn = $(".nav_plus");
+//            var navPlusTarget = $("nav");
+
+//            navPlusBtn.on('click', function () {
+//                $(this).toggleClass("on");
+//                navPlusTarget.toggleClass("on");
+//                $("body").toggleClass("navzoom");
+//            });
+
+            if($(_this).hasClass("on")){
+                modifyElementClass($("body"),'navzoom','remove');
+                modifyElementClass($(_this),'on','remove');
+            }else{
+                modifyElementClass($("body"),'navzoom','add');
+                modifyElementClass($(_this),'on','add');
+            }
+        }
+
         function logout(){
             location.href = layoutUrlConfig['logoutUrl'];
         }
@@ -506,6 +543,7 @@
 
     <!-- navigation 영역 Start -->
     <nav id="nav" class="nav">
+        <button class="nav_plus" onclick="javascript:menuView(this);return false;"></button>
         <div class="nav_area"></div>
     </nav>
     <!-- navigation 영역 End -->

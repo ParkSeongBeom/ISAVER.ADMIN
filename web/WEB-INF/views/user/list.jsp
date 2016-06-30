@@ -44,6 +44,12 @@
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="role.column.roleName" /></span>
+                    <select name="roleName">
+                        <option value=""><spring:message code="common.button.select"/> </option>
+                        <c:forEach items="${roles}" var="role">
+                            <option value="${role.roleId}" ${paramBean.roleName == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                        </c:forEach>
+                    </select>
                         <span>
                             <%--<input type="text" name="roleName" value="${paramBean.roleName}"/>--%>
                         </span>
