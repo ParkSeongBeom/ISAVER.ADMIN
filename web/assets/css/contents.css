@@ -335,7 +335,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 }
 .mp_header > h2  {left:0; color:#fff; font-size:16px;}
 .mp_header > div {right:0px;width:auto; }
-.mp_header > div > button {color:#fff;}
+.mp_header > div > button, .mp_header > div > button:before {color:#fff;}
 
 
 /* 상태 아이콘 정의 시작*/
@@ -451,19 +451,19 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 .mce_btn_area, .mce_btn_area > button, .mce_btn_area > button > span {
     overflow: hidden;
-/*
-    -webkit-box-pack:        center;
-    -moz-box-pack:           center;
-    -webkit-justify-content: center;
-    -ms-flex-pack:           center;
-    justify-content:         center;
+    /*
+        -webkit-box-pack:        center;
+        -moz-box-pack:           center;
+        -webkit-justify-content: center;
+        -ms-flex-pack:           center;
+        justify-content:         center;
 
-    box-align: center;
-    -webkit-box-align:   center;
-    -moz-box-align:      center;
-    -webkit-align-items: center;
-    -ms-flex-align:      center;
-    align-items:         center;*/
+        box-align: center;
+        -webkit-box-align:   center;
+        -moz-box-align:      center;
+        -webkit-align-items: center;
+        -ms-flex-align:      center;
+        align-items:         center;*/
 
 }
 

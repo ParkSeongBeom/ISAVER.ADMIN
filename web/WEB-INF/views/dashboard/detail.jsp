@@ -23,22 +23,21 @@
         <section class="layer_wrap i_type06">
             <article class="layer_area">
                 <div class="mp_header">
-                    <h2>진출입자 조회 주기 설정</h2>
+                    <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
                     <div>
-                        <button class="db_btn zoomclose_btn ipop_close"></button>
+                        <div><button class="db_btn zoomclose_btn ipop_close" href="#" onclick="javascript:closeDetailPopup();"></button></div>
                     </div>
                 </div>
                 <div class="mp_contents vh_mode">
-                    <p class="area_title">구역명삽입</p>
+                    <p class="area_title">${area.areaName}</p>
                     <div class="mc_element nano has-scrollbar">
-                        <div class="time_select_contents nano-content" tabindex="0" style="right: -8px;">
-                            <!-- 1 SET -->
-                            <div>
+                        <div class="time_select_contents nano-content" tabindex="0" style="right: -8px;"  id="inout_datetime_config">
+                            <div time_zone>
                                 <div class="check_box_set">
-                                    <input type="checkbox" name="" class="check_input" checked="">
+                                    <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit">
+                                <div class="select_edit disabled" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -47,7 +46,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시">
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
                                     </div>
                                     <!-- 분 -->
                                     <div>
@@ -57,7 +56,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분">
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
                                     </div>
                                     <!-- 초 -->
                                     <div>
@@ -67,19 +66,18 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초">
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p>05:59:59</p>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
                             </div>
-
-                            <!-- 1 SET -->
-                            <div>
+                            <div time_zone>
                                 <div class="check_box_set">
-                                    <input type="checkbox" name="" class="check_input" checked="">
+                                    <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled">
+                                <div class="select_edit disabled" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -88,7 +86,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="text" name="format" value="" placeholder="시">
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
                                     </div>
                                     <!-- 분 -->
                                     <div>
@@ -98,7 +96,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="text" name="format" value="" placeholder="분">
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
                                     </div>
                                     <!-- 초 -->
                                     <div>
@@ -108,15 +106,176 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="text" name="format" value="" placeholder="초">
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
-                                </div> <!-- disabled 처리 됬을때 클래스 "disabled" 삽입  -->
-                                <p>05:59:59</p>
+                                </div>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
+                            </div>
+                            <div time_zone>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit disabled" >
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                    </div>
+                                </div>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
+                            </div>
+                            <div time_zone>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit disabled" >
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                    </div>
+                                </div>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
+                            </div>
+                            <div time_zone>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit disabled" >
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                    </div>
+                                </div>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
+                            </div>
+                            <div time_zone>
+                                <div class="check_box_set">
+                                    <input type="checkbox" name="" class="check_input">
+                                    <label class="lablebase lb_style01"></label>
+                                </div>
+                                <div class="select_edit disabled" >
+                                    <!-- 시 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">시</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                    </div>
+                                    <!-- 분 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">분</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                    </div>
+                                    <!-- 초 -->
+                                    <div>
+                                        <select onchange="this.nextElementSibling.value=this.value">
+                                            <option selected="selected">초</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                    </div>
+                                </div>
+                                <p end_time style="display: none;"></p>
+                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
                             </div>
                         </div>
                         <div class="nano-pane" style="display: none;"><div class="nano-slider" style="height: 20px; transform: translate(0px, 0px);"></div></div></div>
                     <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" name="">저장</button>
+                        <button class="btn btype01 bstyle07" name=""><spring:message code="common.button.save"/></button>
                     </div>
                 </div>
                 <!--<div class="mp_contents vh_mode ">
@@ -150,6 +309,7 @@
         <div class="layer_popupbg ipop_close"></div>
     </aside>
 
+    <!-- 기존 백업 본 -->
     <aside1 class="layer_popup1 sett_popup1" style="display: none;">
         <section class="layer_wrap i_type05">
             <article class="layer_area">
@@ -1083,4 +1243,124 @@
             }
         }
     });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("div[time_zone]").eq(0).find("input[type=number]").val("00");
+
+        $("div[time_zone] .check_box_set > input[type=checkbox]").bind("change", function() {
+            timeZoneCheckProcessFunc(this);
+        });
+
+        $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
+
+//        $("div[time_zone]").find("input[type=number]").bind("keyup", function() {
+//            timeZoneKeyDownEvent(this);
+//        });
+
+    });
+
+    /* 진출입 - 타임존 - 클릭 이벤트 */
+    function timeZoneCheckProcessFunc(_this) {
+
+        var selectTag = $(_this).parent().parent().find(".select_edit");
+        var endTimeTag = $(_this).parent().parent().find("p[end_time]");
+
+        if ($(_this).prop("checked")) {
+            selectTag.removeClass("disabled");
+            endTimeTag.text("");
+        } else {
+            selectTag.removeClass("disabled").addClass("disabled");
+            endTimeTag.text("");
+        }
+    }
+
+    /* 진출입 - 타임존 - 키보드 이벤트 */
+    function timeZoneKeyDownEvent(_this) {
+
+        var _tag = $(_this).parent().parent().find("input[type=number]");
+        var hh =_tag.eq(0).val();
+        var mm = _tag.eq(1).val();
+        var ss = _tag.eq(2).val();
+
+
+        var hour = Number(hh)<10?"0"+Number(hh):hh;
+        var minute = Number(mm)<10?"0"+Number(mm):mm;
+        var second = Number(ss)<10?"0"+Number(ss):ss;
+
+        var fullDate = hour+minute+second;
+
+        var dateTime = new Date();
+        dateTime.setHours(Number(hh));
+        dateTime.setMinutes(Number(mm));
+        dateTime.setSeconds(Number(ss));
+//        inoutEndtime = dateTime.format("HH:mm:ss");
+
+        console.log(dateTime.format("HH:mm:ss .."));
+    }
+
+    /* 진출입 - 타임존 - 적용 버튼 */
+    function timeZoneItemApplyFunc(_this) {
+
+        var selectTimeZoneTag = $(_this).parent();
+
+        var endTimeTag = $(_this).parent().find("p[end_time]");
+
+        var _tag = $(_this).parent().find("input[type=number]");
+        var hh =_tag.eq(0).val();
+        var mm = _tag.eq(1).val();
+        var ss = _tag.eq(2).val();
+
+
+        var hour = Number(hh)<10?"0"+Number(hh):hh;
+        var minute = Number(mm)<10?"0"+Number(mm):mm;
+        var second = Number(ss)<10?"0"+Number(ss):ss;
+
+        var fullDate = hour+minute+second;
+
+        var checkDateTime = new Date();
+        checkDateTime.setHours(Number(hh));
+        checkDateTime.setMinutes(Number(mm));
+        checkDateTime.setSeconds(Number(ss));
+
+//        console.log(checkDateTime.format("HH:mm:ss"));
+
+        $("div[time_zone] .check_box_set > input[type=checkbox]:checked").each(function() {
+
+            var loopTag = $(this).parent().parent();
+
+            var itemTime = convertTImeFunc(this);
+
+            if (checkDateTime > itemTime) {
+                loopTag.after(selectTimeZoneTag);
+            }
+
+//            console.log(convertTImeFunc(this).format("HH:mm:ss"));
+        });
+
+        endTimeTag.show();
+    }
+
+    function convertTImeFunc(_this) {
+
+        var _tag = $(_this).parent().parent("").find("input[type=number]");
+
+        var hh =_tag.eq(0).val();
+        var mm = _tag.eq(1).val();
+        var ss = _tag.eq(2).val()
+
+        var hour = Number(hh)<10?"0"+Number(hh):hh;
+        var minute = Number(mm)<10?"0"+Number(mm):mm;
+        var second = Number(ss)<10?"0"+Number(ss):ss;
+
+        var checkDateTime = new Date();
+
+        checkDateTime.setHours(Number(hh));
+        checkDateTime.setMinutes(Number(mm));
+        checkDateTime.setSeconds(Number(ss));
+
+        return checkDateTime;
+    }
 </script>

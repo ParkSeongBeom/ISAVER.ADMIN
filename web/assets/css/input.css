@@ -236,7 +236,7 @@ GNB ,버튼 active   #0c8dd0
 /*.bstyle01:hover, .bstyle02:hover {background-color: #555; color:#fff;}
 .bstyle03:hover, .bstyle04:hover {background-color: #b11831;}*/
 
-.db_btn {}
+.db_btn {color:#fff;}
 .db_btn:hover:before {color:#29a1f7;}
 
 .alra_btn {
