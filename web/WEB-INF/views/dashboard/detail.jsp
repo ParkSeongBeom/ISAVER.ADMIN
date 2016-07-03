@@ -20,7 +20,7 @@
 
     <!-- 진출입 셋팅 레이어 팝업 -->
     <aside class="layer_popup sett_popup">
-        <section class="layer_wrap i_type06">
+        <section class="layer_wrap i_type06" style="height:500px;">
             <article class="layer_area">
                 <div class="mp_header">
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
@@ -32,12 +32,12 @@
                     <p class="area_title">${area.areaName}</p>
                     <div class="mc_element nano has-scrollbar">
                         <div class="time_select_contents nano-content" tabindex="0" style="right: -8px;"  id="inout_datetime_config">
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -46,7 +46,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2">
                                     </div>
                                     <!-- 분 -->
                                     <div>
@@ -56,7 +56,7 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2">
                                     </div>
                                     <!-- 초 -->
                                     <div>
@@ -66,18 +66,17 @@
                                             <option value="02">02</option>
                                             <option value="03">03</option>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
+                                <p end_time style="display: block;"></p>
                             </div>
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -109,15 +108,14 @@
                                         <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
+                                <p end_time style="display: block;"></p>
                             </div>
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -149,15 +147,14 @@
                                         <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.confirm"/></button>
+                                <p end_time style="display: block;"></p>
                             </div>
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -189,15 +186,14 @@
                                         <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
+                                <p end_time style="display: block;"></p>
                             </div>
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -229,15 +225,14 @@
                                         <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
+                                <p end_time style="display: block;"></p>
                             </div>
-                            <div time_zone>
+                            <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
                                     <label class="lablebase lb_style01"></label>
                                 </div>
-                                <div class="select_edit disabled" >
+                                <div class="select_edit" >
                                     <!-- 시 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
@@ -269,13 +264,12 @@
                                         <input type="number" name="format" value="" placeholder="초" maxlength="2">
                                     </div>
                                 </div>
-                                <p end_time style="display: none;"></p>
-                                <button style="width: 50px;" onclick="javascript:timeZoneItemApplyFunc(this); return false;">적용</button>
+                                <p end_time style="display: block;"></p>
                             </div>
                         </div>
                         <div class="nano-pane" style="display: none;"><div class="nano-slider" style="height: 20px; transform: translate(0px, 0px);"></div></div></div>
                     <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" name=""><spring:message code="common.button.save"/></button>
+                        <button class="btn btype01 bstyle07" name="" onclick="javascript:timeZoneItemApplyFunc(this); return false;"><spring:message code="common.button.save"/></button>
                     </div>
                 </div>
                 <!--<div class="mp_contents vh_mode ">
@@ -701,9 +695,52 @@
 
     /*
      save setting popup
-     @author psb
+     @author dhj
      */
     function saveInoutConfiguration(){
+//        if($(".time_select_list li:not('.fixedTime')").length==0){
+//            alertMessage('inoutConfigEmpty');
+//            return false;
+//        }
+
+        var param = {
+            'areaId' : areaId
+            ,'inoutDatetimes' : ""
+        };
+
+        var beforeTag = null;
+
+
+        var _loopTag = $("div[time_zone] .check_box_set > input[type=checkbox]:checked");
+
+        for (var i = 0; i < _loopTag.length; i++ ) {
+            var _item = _loopTag.eq(i);
+
+            var selectTimeZoneTag = _item.parent().parent();
+
+            var endTimeTag = selectTimeZoneTag.find("p[end_time]");
+
+            var _tag = selectTimeZoneTag.find("input[type=number]");
+            var hh =_tag.eq(0).val();
+            var mm = _tag.eq(1).val();
+            var ss = _tag.eq(2).val();
+
+
+
+            var inoutStarttime = hh + ":" + mm +":" +ss;
+            var inoutEndtime = endTimeTag.text();
+            param['inoutDatetimes'] += inoutStarttime + "|" + inoutEndtime + ",";
+        }
+
+        param['inoutDatetimes'] = param['inoutDatetimes'].slice(0,-1);
+        callAjax('saveInoutConfiguration',param);
+    }
+
+    /*
+     save setting popup
+     @author psb
+     */
+    function saveInoutConfiguration_backup(){
 //        if($(".time_select_list li:not('.fixedTime')").length==0){
 //            alertMessage('inoutConfigEmpty');
 //            return false;
@@ -1030,9 +1067,20 @@
 
     /**
      * 진출입 설정
-     * @author psb
+     * @author dhj
      */
     function inoutConfigurationRender(data){
+        var inoutConfigurationList = data['inoutConfigurationList'];
+
+        openTimeZonePopupFunc(inoutConfigurationList);
+
+    }
+
+    /**
+     * 진출입 설정
+     * @author psb
+     */
+    function inoutConfigurationRender_backup(data){
         var inoutConfigurationList = data['inoutConfigurationList'];
 
         if(inoutConfigurationList!=null && inoutConfigurationList.length>0){
@@ -1254,26 +1302,76 @@
             timeZoneCheckProcessFunc(this);
         });
 
-        $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
+//        $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
 
-//        $("div[time_zone]").find("input[type=number]").bind("keyup", function() {
-//            timeZoneKeyDownEvent(this);
-//        });
+        $("div[time_zone]").find("input[type=number]").bind("keyup", function() {
+            timeZoneKeyDownEvent(this);
+        });
+//
+//        $("div[time_zone]:eq(0)").find("input[type=number]:eq(0)").val(3);
+//        $("div[time_zone]:eq(1)").find("input[type=number]:eq(0)").val(2);
+//        $("div[time_zone]:eq(2)").find("input[type=number]:eq(0)").val(1);
+//
+//        var time1 = new Date();
+//        var time2 = new Date();
+//        var time3 = new Date();
+//
+//        time1.setHours(3);
+//        time2.setHours(2);
+//        time3.setHours(1);
+//
+//
+//        $("div[time_zone]:eq(0)").attr("value", time1.getTime());
+//        $("div[time_zone]:eq(1)").attr("value", time2.getTime());
+//        $("div[time_zone]:eq(2)").attr("value", time3.getTime());
 
     });
 
+    function openTimeZonePopupFunc(inoutConfigurationList) {
+
+
+        $(".sett_popup").show();
+
+        if(inoutConfigurationList!=null && inoutConfigurationList.length>0){
+
+            $("div[time_zone]").attr("value","");
+            $("div[time_zone]").find("input[type=number]").val("");
+            $("div[time_zone] .check_box_set > input[type=checkbox]:checked").trigger("click");
+            $("div[time_zone]").parent().parent().find("p[end_time]").text("");
+
+            for(var index in inoutConfigurationList){
+                var inoutConfiguration = inoutConfigurationList[index];
+                var inoutStarttime = inoutConfiguration['inoutStarttime'].split(":");
+
+                var _tag = $("div[time_zone]").eq(Number(index));
+
+                _tag.find("input[type=number]:eq(0)").val((inoutStarttime[0]));
+                _tag.find("input[type=number]:eq(1)").val((inoutStarttime[1]));
+                _tag.find("input[type=number]:eq(2)").val((inoutStarttime[2]));
+                $("div[time_zone] .check_box_set > input[type=checkbox]").eq(index).trigger("click");
+            }
+        } else {
+            $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
+        }
+
+        timeZoneItemSetupFunc();
+
+    }
     /* 진출입 - 타임존 - 클릭 이벤트 */
     function timeZoneCheckProcessFunc(_this) {
 
         var selectTag = $(_this).parent().parent().find(".select_edit");
         var endTimeTag = $(_this).parent().parent().find("p[end_time]");
 
-        if ($(_this).prop("checked")) {
+
+        if (_this.checked) {
             selectTag.removeClass("disabled");
             endTimeTag.text("");
+//            selectTag.find("input[type=number]").val("00");
         } else {
             selectTag.removeClass("disabled").addClass("disabled");
             endTimeTag.text("");
+            selectTag.find("input[type=number]").val("");
         }
     }
 
@@ -1301,46 +1399,67 @@
         console.log(dateTime.format("HH:mm:ss .."));
     }
 
-    /* 진출입 - 타임존 - 적용 버튼 */
-    function timeZoneItemApplyFunc(_this) {
+    /* 진출입 - 타임존 - 확인  버튼 */
+    function timeZoneItemCheckFunc() {
 
-        var selectTimeZoneTag = $(_this).parent();
-
-        var endTimeTag = $(_this).parent().find("p[end_time]");
-
-        var _tag = $(_this).parent().find("input[type=number]");
-        var hh =_tag.eq(0).val();
-        var mm = _tag.eq(1).val();
-        var ss = _tag.eq(2).val();
-
-
-        var hour = Number(hh)<10?"0"+Number(hh):hh;
-        var minute = Number(mm)<10?"0"+Number(mm):mm;
-        var second = Number(ss)<10?"0"+Number(ss):ss;
-
-        var fullDate = hour+minute+second;
-
-        var checkDateTime = new Date();
-        checkDateTime.setHours(Number(hh));
-        checkDateTime.setMinutes(Number(mm));
-        checkDateTime.setSeconds(Number(ss));
-
-//        console.log(checkDateTime.format("HH:mm:ss"));
+        var resultFlag = 0;
 
         $("div[time_zone] .check_box_set > input[type=checkbox]:checked").each(function() {
 
-            var loopTag = $(this).parent().parent();
+            var selectTimeZoneTag = $(this).parent().parent();
 
-            var itemTime = convertTImeFunc(this);
+            var endTimeTag = selectTimeZoneTag.find("p[end_time]");
 
-            if (checkDateTime > itemTime) {
-                loopTag.after(selectTimeZoneTag);
+            var _tag = selectTimeZoneTag.find("input[type=number]");
+            var hh =_tag.eq(0).val();
+            var mm = _tag.eq(1).val();
+            var ss = _tag.eq(2).val();
+
+            if (hh.trim().length == 0 && mm.trim().length == 0 && ss.trim().length == 0) {
+                alert("시간을 입력해 주세요.");
+                _tag.eq(0).focus();
+                resultFlag = 1;
+                return false;
             }
 
-//            console.log(convertTImeFunc(this).format("HH:mm:ss"));
+            var hour = Number(hh)<10?"0"+Number(hh):hh;
+            var minute = Number(mm)<10?"0"+Number(mm):mm;
+            var second = Number(ss)<10?"0"+Number(ss):ss;
+
+            var fullDate = hour+minute+second;
+
+            var checkDateTime = new Date();
+            checkDateTime.setHours(Number(hour));
+            checkDateTime.setMinutes(Number(minute));
+            checkDateTime.setSeconds(Number(second));
+            checkDateTime.setMilliseconds(0);
+
+            selectTimeZoneTag.attr("value",checkDateTime.getTime() );
+
+            _tag.eq(0).val(hour);
+            _tag.eq(1).val(minute);
+            _tag.eq(2).val(second);
+
         });
 
-        endTimeTag.show();
+        $("div[time_zone]").each(function() {
+
+            var value = $(this).attr("value");
+
+           if ($(this).find(".check_box_set > input[type=checkbox]:checked")) {
+               if ($("div[time_zone][value="+ value +"]").find(".check_box_set > input[type=checkbox]:checked").length > 1) {
+                   resultFlag = 2;
+                   $("div[time_zone] .check_box_set > input[type=checkbox]:checked").parent().parent().find("p[end_time]").text("");
+//                timeZoneItemTuningFunc();
+                   alert("중복된 시간이 있습니다.");
+                   checkValFlag = false;
+                   return false;
+               }
+           }
+
+        });
+
+        return resultFlag;
     }
 
     function convertTImeFunc(_this) {
@@ -1363,4 +1482,102 @@
 
         return checkDateTime;
     }
+
+    function timeZoneItemSortFunc() {
+        var ascending = false;
+
+        var convertToNumber = function (value) {
+            return parseFloat(value.replace('$', ''));
+        }
+
+        var sorted = $("div[time_zone]").sort(function (a, b) {
+            return (ascending == ($(a).attr("value") <$(b).attr("value"))) ? 1 : -1;
+        });
+
+        ascending = ascending ? false : true;
+
+        $('#inout_datetime_config').html(sorted);
+    }
+
+    function timeZoneItemSetupFunc() {
+
+        var checkValFlag = true;
+
+        if (timeZoneItemCheckFunc() == 0) {
+
+            var checkLng = $("div[time_zone] .check_box_set > input[type=checkbox]:checked").length;
+
+            timeZoneItemSortFunc();
+            timeZoneTimeAfterMoveFunc();
+            timeZoneItemTuningFunc();
+
+            $("div[time_zone] .check_box_set > input[type=checkbox]:checked").each(function(index,item) {
+
+                var loopTag = $(item).parent().parent();
+                var endTimeTag = $(item).parent().parent().find("p[end_time]");
+                var itemTime = convertTImeFunc(this);
+
+                if (index == 0) {
+                    if (checkLng == 1) {
+                        endTimeTag.text(itemTime.format("23:59:59"));
+                    } else {
+                        var afterTag = $("div[time_zone]").eq(index+1);
+
+                        var afterTime = new Date();
+                        afterTime.setTime(afterTag.attr("value"));
+
+                        itemTime.setSeconds(afterTime.getSeconds()-1);
+                        endTimeTag.text(itemTime.format("HH:mm:ss"));
+                    }
+                } else {
+                    endTimeTag.text(itemTime.format("23:59:59"));
+
+                    var beforeTag = $("div[time_zone]").eq(index-1);
+                    itemTime.setSeconds(itemTime.getSeconds()-1);
+                    beforeTag.find("p[end_time]").text(itemTime.format("HH:mm:ss"));
+
+                }
+
+            });
+
+        }
+    }
+
+    var checkValFlag = true;
+
+    function timeZoneItemApplyFunc(_this) {
+
+        if ($("div[time_zone] .check_box_set > input[type=checkbox]:checked").length == 0) {
+            alert("작성 후 다시 시도해 주세요.");
+            return;
+        }
+
+        timeZoneItemSetupFunc();
+
+        if (checkValFlag) {
+            var r = confirm("저장하시겠습니까?");
+
+            if (r == true) {
+                saveInoutConfiguration();
+            }
+        }
+
+    }
+
+    function timeZoneTimeAfterMoveFunc() {
+//        $("div[time_zone] .check_box_set > input[type=checkbox]:not(:checked)")
+        var org = $("div[time_zone] .check_box_set > input[type=checkbox]:not(:checked)").parent().parent();
+
+        var orgClone = org.clone();
+        org.remove();
+        $("#inout_datetime_config").append(orgClone);
+
+    }
+
+    function timeZoneItemTuningFunc() {
+        $("div[time_zone] .check_box_set > input[type=checkbox]:not(:checked)").parent().parent().find("input[type=number]").val("");
+        $("div[time_zone] .check_box_set > input[type=checkbox]:not(:checked)").parent().parent().find("p[end_time]").text("");
+
+    }
+
 </script>
