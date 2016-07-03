@@ -1329,7 +1329,6 @@
 
     function openTimeZonePopupFunc(inoutConfigurationList) {
 
-
         $(".sett_popup").show();
 
         if(inoutConfigurationList!=null && inoutConfigurationList.length>0){
@@ -1351,7 +1350,10 @@
                 $("div[time_zone] .check_box_set > input[type=checkbox]").eq(index).trigger("click");
             }
         } else {
-            $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
+            if ($("div[time_zone] .check_box_set > input[type=checkbox]:eq(0):checked").length == 0) {
+                $("div[time_zone] .check_box_set > input[type=checkbox]").eq(0).trigger("click");
+            }
+
         }
 
         timeZoneItemSetupFunc();
