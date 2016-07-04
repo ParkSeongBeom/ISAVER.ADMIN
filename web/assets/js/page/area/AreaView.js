@@ -193,18 +193,15 @@ function AreaView(model) {
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
 
-
-
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
         $("table tbody tr").eq(4).show();
         $("table tbody tr").eq(5).show();
 
-
         if (AreaView._model.getAreaId() == AreaView._model.getRootOrgId()) {
 
-            $("table tbody tr").eq(1).hide();
+            //$("table tbody tr").eq(1).hide();
             $("table tbody tr").eq(2).hide();
             $("table tbody tr").eq(3).hide();
             $("table tbody tr").eq(4).hide();
