@@ -3,6 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <c:set value="H00000" var="subMenuId"/>
 
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
@@ -42,31 +46,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -81,31 +85,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -120,31 +124,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -159,31 +163,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -198,31 +202,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -237,31 +241,31 @@
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">시</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="12" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="시" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 12)">
                                     </div>
                                     <!-- 분 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">분</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="분" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                     <!-- 초 -->
                                     <div>
                                         <select onchange="this.nextElementSibling.value=this.value">
                                             <option selected="selected">초</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
+                                            <c:forEach begin="0" end="5" varStatus="loop">
+                                                <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                            </c:forEach>
                                         </select>
-                                        <input type="number" name="format" value="" placeholder="초" maxlength="2">
+                                        <input type="number" name="format" value="0" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                     </div>
                                 </div>
                                 <p end_time style="display: block;"></p>
@@ -1556,6 +1560,27 @@
 
         timeZoneItemSetupFunc();
 
+        var _tag = $("div[time_zone]:eq(0) input[type=number]");
+
+        var hh =_tag.eq(0).val();
+        var mm = _tag.eq(1).val();
+        var ss = _tag.eq(2).val()
+
+        var hour = Number(hh)<10?"0"+Number(hh):hh;
+        var minute = Number(mm)<10?"0"+Number(mm):mm;
+        var second = Number(ss)<10?"0"+Number(ss):ss;
+
+        var checkDateTime = new Date();
+
+        checkDateTime.setHours(Number(hh));
+        checkDateTime.setMinutes(Number(mm));
+        checkDateTime.setSeconds(Number(ss));
+
+        if (checkDateTime.format("HH:mm:ss") != "00:00:00") {
+            alert("최초 시간 설정은 00:00:00이 되어야 합니다.");
+            return;
+        }
+
         if (checkValFlag) {
             var r = confirm("저장하시겠습니까?");
 
@@ -1582,4 +1607,11 @@
 
     }
 
+    function minMaxFunc(value, min, max) {
+        if(parseInt(value) < min || isNaN(value))
+            return 0;
+        else if(parseInt(value) > max)
+            return max;
+        else return value;
+    }
 </script>
