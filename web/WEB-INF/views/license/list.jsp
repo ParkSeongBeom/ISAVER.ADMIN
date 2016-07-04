@@ -44,9 +44,10 @@
                 <p class="itype_04">
                     <span><spring:message code="license.column.expireDate"/></span>
                         <span class="plable04">
-                            <input type="text" name="" value="" id="" class="hasDatepicker"><img class="ui-datepicker-trigger" src="../../../assets/images/ico/ico_date.png" alt="" title="">
+                            <input type="text" name="expireStartDate" value="${paramBean.expireStartDate}">
                             <em>~</em>
-                            <input type="text" name="" value="" id="" class="hasDatepicker"><img class="ui-datepicker-trigger" src="../../../assets/images/ico/ico_date.png" alt="..." title="...">
+                            <input type="text" name="expireEndDate" value="${paramBean.expireEndDate}">
+
                         </span>
                 </p>
             </div>
@@ -139,6 +140,9 @@
     };
 
     $(document).ready(function(){
+
+        calendarHelper.load(form.find('input[name=expireStartDate]'));
+        calendarHelper.load(form.find('input[name=expireEndDate]'));
 
         drawPageNavigater(pageConfig['pageSize'],pageConfig['pageNumber'],pageConfig['totalCount']);
 
