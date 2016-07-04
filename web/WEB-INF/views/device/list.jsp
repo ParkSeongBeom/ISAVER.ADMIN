@@ -138,13 +138,17 @@
                         </td>
                     </tr>
                     <tr name="showHideTag">
-                        <th><spring:message code='device.column.provisionFlag'/></th>
-                        <td class="point">
-                            <span name="provisionFlag"></span>
+                        <th class=""><spring:message code='device.column.provisionFlag'/></th>
+                        <td class="">
+                            <input name="provisionFlag" type="radio" disabled>예
+                            <input name="provisionFlag" type="radio"checked="checked" disabled>아니오
+                            <%--<span name="provisionFlag"></span>--%>
                         </td>
-                        <th><spring:message code='device.column.deviceStat'/></th>
-                        <td>
-                            <span name="deviceStat"></span>
+                        <th class=""><spring:message code='device.column.deviceStat'/></th>
+                        <td class="">
+                            <input name="deviceStat" type="radio" disabled>연결됨
+                            <input name="deviceStat" type="radio"checked="checked" disabled>연결안됨
+                            <%--<span name="deviceStat"></span>--%>
                         </td>
                     </tr>
                     <tr>

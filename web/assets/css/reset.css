@@ -5,7 +5,7 @@
  현병춘 과장
 ******************************************************************/
 *{padding:0;margin:0;text-decoration:none;border:0 none;list-style-type:none;color:inherit;
-font-style:normal;font-weight:normal;font-size:14px;*zoom: 1;}
+    font-style:normal;font-weight:normal;font-size:14px;*zoom: 1;}
 
 html, body {
     width:100%; padding:0; margin:0;
@@ -78,7 +78,7 @@ label,input,textarea,select,optgroup {
     margin:0;padding:0;vertical-align: middle;*vertical-align: middle;outline: none;cursor:pointer;
     -webkit-tap-highlight-color:rgba(0,0,0,0);border-radius:0;
     -webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;
-   /* background-color:#fff; -webkit-appearance:none;*/
+    /* background-color:#fff; -webkit-appearance:none;*/
 
     border:1px solid #ccc;
 }
@@ -97,9 +97,13 @@ input, select {
     text-overflow:ellipsis;white-space:nowrap;overflow:hidden;word-wrap:normal;
 }
 
+select option, select optgroup{
+    text-indent: 10px;
+}
 
+select optgroup option {margin:0 0 0 10px;}
 
-textarea {overflow: auto; padding:4px;}
+textarea {overflow: auto; padding:4px; font-family:'맑은고딕', 'Malgun Gothic','돋움', 'Dotum', sans-serif;}
 input:focus,  select:focus, textarea:focus {border:1px solid #555;}
 
 input.radio, input[type="radio"],
@@ -391,7 +395,8 @@ bottom button border gray active #4f4f4f
 .svgbase02, .hrs_btn_set > button:before, .mp_header button.alra_btn:before, .sett_btn:before, .refl_btn:before,
 .mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before,
 .nl_dash > button:before, .nl_reco > button:before, .nl_stat > button:before, .toast_popup:before, .tp_contents:before,
-.mp_header > div > .zoomclose_btn:before, .change_btn:before, .mp_header:before
+.zoomclose_btn:before, .change_btn:before, .mp_header:before, .issue_btn:before,
+.mac_set > li > button:before, .db_set  > li  > button:before
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sico' !important;
@@ -435,7 +440,8 @@ bottom button border gray active #4f4f4f
 
 button:before, button:after, .svgbase:before, .hrs_date > span:last-of-type:before, .toast_popup:before,
 .db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before,
-.time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before
+.time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before, .mac_set > li > button:after,
+.aac_set > div > button:after
 {
     font-family: 'japple';
     speak: none;

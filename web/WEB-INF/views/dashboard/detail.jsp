@@ -34,8 +34,8 @@
                 </div>
                 <div class="mp_contents vh_mode">
                     <p class="area_title">${area.areaName}</p>
-                    <div class="mc_element nano has-scrollbar">
-                        <div class="time_select_contents nano-content" tabindex="0" style="right: -8px;"  id="inout_datetime_config">
+                    <div class="mc_element">
+                        <div class="time_select_contents" tabindex="0" style="right: -8px;"  id="inout_datetime_config">
                             <div time_zone value="0">
                                 <div class="check_box_set">
                                     <input type="checkbox" name="" class="check_input">
@@ -496,7 +496,7 @@
                                 <p>O2 22% / CO2 21ppm / H2S 3ppm</p>
                             </div>
                             <div class="mc_element nano" detail_layout>
-                                <ul class="mc_list nano-content" tabindex="0" style="right: -8px;">
+                                <ul class="mc_list nano-content" tabindex="0" style="right: -8px;" id="gas_list">
                                     <li>
                                         <span>경고</span>
                                         <span>산소 부족 탐지</span>
@@ -522,6 +522,27 @@
                                         <span>산소 부족 탐지</span>
                                         <span>22:59:23</span>
                                     </li>
+                                    <c:forEach begin="0" end="10" varStatus="loop">
+                                        <li>
+                                            <span>경고</span>
+                                            <span>황화수소 과다 탐지</span>
+                                            <span>22:58:<fmt:formatNumber value="${10-loop.index}" pattern="00" type="Number"/></span>
+                                        </li>
+                                    </c:forEach>
+                                    <c:forEach begin="0" end="10" varStatus="loop">
+                                        <li>
+                                            <span>경고</span>
+                                            <span>산소 부족 탐지</span>
+                                            <span>21:40:<fmt:formatNumber value="${10-loop.index}" pattern="00" type="Number"/></span>
+                                        </li>
+                                    </c:forEach>
+                                    <c:forEach begin="0" end="30" varStatus="loop">
+                                        <li>
+                                            <span>경고</span>
+                                            <span>이산화탄소 과다 탐지</span>
+                                            <span>20:30:<fmt:formatNumber value="${30-loop.index}" pattern="00" type="Number"/></span>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>

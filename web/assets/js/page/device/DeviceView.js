@@ -60,10 +60,26 @@ function DeviceView(model) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
         },
         provisionFlag: function (data) {
-            $(formName + " span[name='provisionFlag']").text(data['provisionFlag']);
+            //$(formName + " span[name='provisionFlag']").text(data['provisionFlag']);
+
+            //$(formName + " input[type=radio][name=provisionFlag]").removeAttr("checked");
+            if (data['provisionFlag'] == 'Y') {
+                $(formName + " input[type=radio][name=provisionFlag]").eq(0).attr("checked", "checked");
+            } else {
+                $(formName + " input[type=radio][name=provisionFlag]").eq(1).attr("checked", "checked");
+            }
         },
         deviceStat: function (data) {
-            $(formName + " span[name='deviceStat']").text(data['deviceStat']);
+            //$(formName + " span[name='deviceStat']").text(data['deviceStat']);
+
+            //debugger;
+            //$(formName + " input[type=radio][name=deviceStat]").removeAttr("checked");
+            if (data['deviceStat'] == 'Y') {
+                $(formName + " input[type=radio][name=deviceStat]").eq(0).attr("checked", "checked");
+            } else {
+                $(formName + " input[type=radio][name=deviceStat]").eq(1).attr("checked", "checked");
+            }
+
         },
         insertUserName: function (data) {
             $(formName + " td[name='insertUserName']").text(data.insertUserName);
@@ -300,7 +316,7 @@ function DeviceView(model) {
             $( formName + " [id='selectParentDeviceId']").val(DeviceView._model.getDeviceId());
         }
 
-        $("input[name='deviceId']").focus();
+        $("input[name='serialNo']").focus();
 
     };
 
