@@ -77,18 +77,22 @@
         <article class="search_area">
             <div class="search_contents">
                 <!-- 일반 input 폼 공통 -->
-
                 <p class="itype_01">
                     <span><spring:message code="event.column.eventId" /></span>
                     <span>
                         <input type="text" name="eventId" value="${paramBean.eventId}"/>
                     </span>
                 </p>
-
                 <p class="itype_01">
                     <span><spring:message code="event.column.eventName" /></span>
                     <span>
                         <input type="text" name="eventName" value="${paramBean.eventName}"/>
+                    </span>
+                </p>
+                <p class="itype_01">
+                    <span><spring:message code="event.column.eventFlag" /></span>
+                    <span>
+                        <isaver:codeSelectBox groupCodeId="EVT" codeId="${paramBean.eventFlag}" htmlTagName="eventFlag" allModel="true"/>
                     </span>
                 </p>
             </div>

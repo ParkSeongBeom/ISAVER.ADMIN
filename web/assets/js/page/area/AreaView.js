@@ -268,7 +268,7 @@ function AreaView(model) {
         $( formName + " [id='selectParentAreaId'] option").attr('disabled', false);
         $( formName + " [id='selectParentAreaId']").val(AreaView._model.getAreaId());
 
-        $("input[name='areaId']").focus();
+        $("input[name='areaName']").focus();
 
     };
 
@@ -287,6 +287,7 @@ function AreaView(model) {
         $("button[name='orgUserAddBtn']").show();
         $("button[name='orgUserRemoveBtn']").show();
 
+        $("input[name='areaName']").focus();
     };
 
     /**

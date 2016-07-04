@@ -36,7 +36,8 @@
                 <p class="itype_01">
                     <span><spring:message code="eventlog.column.areaName" /></span>
                     <span>
-                        <input type="text" name="areaName" value="${paramBean.areaName}"/>
+                        <isaver:areaSelectBox htmlTagName="areaId" allModel="true" areaId="${paramBean.areaId}"/>
+                        <%--<input type="text" name="areaName" value="${paramBean.areaName}"/>--%>
                     </span>
                 </p>
 
