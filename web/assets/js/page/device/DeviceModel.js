@@ -376,32 +376,32 @@ function DeviceModel() {
         var _serialNoExistFlag = false;
         var _ipAddressExistFlag = false;
 
-        for (var i =0; i < this.model.deviceTreeList.length; i++) {
-            var device = this.model.deviceTreeList[i];
+        if (this.model.deviceTreeList != null) {
+            for (var i =0; i < this.model.deviceTreeList.length; i++) {
+                var device = this.model.deviceTreeList[i];
 
-            if (device['deviceId'] == deviceId) {
-                _deviceIdExistFlag = true;
-            }
-
-            if (device['serialNo'] == serialNo) {
-
-                if (device['deviceId'] != deviceId) {
-                    _serialNoExistFlag = true;
+                if (device['deviceId'] == deviceId) {
+                    _deviceIdExistFlag = true;
                 }
 
-            }
+                if (device['serialNo'] == serialNo) {
 
-            if (ipAddress != undefined) {
-                if (ipAddress.trim().length > 0 ) {
-                    if (device['ipAddress'] == ipAddress) {
-                        if (device['deviceId'] != deviceId) {
-                            _ipAddressExistFlag = true;
+                    if (device['deviceId'] != deviceId) {
+                        _serialNoExistFlag = true;
+                    }
+
+                }
+
+                if (ipAddress != undefined) {
+                    if (ipAddress.trim().length > 0 ) {
+                        if (device['ipAddress'] == ipAddress) {
+                            if (device['deviceId'] != deviceId) {
+                                _ipAddressExistFlag = true;
+                            }
                         }
                     }
                 }
             }
-
-
         }
 
         return {'deviceIdExistFlag' : _deviceIdExistFlag, 'serialNoExistFlag': _serialNoExistFlag, 'ipAddressExistFlag': _ipAddressExistFlag};
