@@ -21,7 +21,7 @@ public class EventLogCraneCtrl {
     private EventLogCraneSvc eventLogCraneSvc;
 
     /**
-     * 크래인 상태 전체 데이터를 가져온다.
+     * 크레인 상태 전체 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
@@ -34,7 +34,7 @@ public class EventLogCraneCtrl {
     }
 
     /**
-     * 크래인 상태 상세 데이터를 가져온다.
+     * 크레인 상태 상세 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
@@ -47,7 +47,7 @@ public class EventLogCraneCtrl {
     }
 
     /**
-     * [CHART] 크래인 상태 데이터 로그를 가져온다.
+     * [CHART] 크레인 상태 데이터 로그를 가져온다.
      *
      * @author psb
      * @param parameters

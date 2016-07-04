@@ -344,13 +344,13 @@ flex-basis:  100%;
 /* 아이콘 정의  */
 
 
-.crash:before  {content: "\e915";} /*크래인 충돌 상태 */
-.cman:before   {content: "\e914";} /*크래인 사람감지 상태 */
+.crash:before  {content: "\e915";} /*크레인 충돌 상태 */
+.cman:before   {content: "\e914";} /*크레인 사람감지 상태 */
 .cloth:before  {content: "\e912";} /*안전복 상태 */
 .helmet:before {content: "\e911";} /*안전모 상태 */
 .down:before   {content: "\e913";} /*쓰러짐 상태 */
 .worker:before {content: "\e90b";} /*작업자 상태 */
-.crane:before  {content: "\e90c";} /*크래인 상태 */
+.crane:before  {content: "\e90c";} /*크레인 상태 */
 .going:before  {content: "\e90d";} /*진출입 상태 */
 .gas:before    {content: "\e910";} /*유해가스 상태 */
 .etc:before    {content: "\e907";} /*기타 상태     */

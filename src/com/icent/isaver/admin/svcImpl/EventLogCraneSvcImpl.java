@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 이벤트 로그 크래인 Service implements
+ * 이벤트 로그 크레인 Service implements
  * @author : psb
  * @version : 1.0
  * @since : 2016. 6. 21.

@@ -583,7 +583,7 @@
     $(document).ready(function(){
         /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
-        /* 크래인 */
+        /* 크레인 */
         dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 진출입 */
         dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
@@ -886,7 +886,7 @@
     }
 
     /**
-     * 크래인 상태
+     * 크레인 상태
      * @author psb
      */
     function craneRender(data){

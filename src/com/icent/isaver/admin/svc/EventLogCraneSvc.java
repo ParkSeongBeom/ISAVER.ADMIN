@@ -5,7 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
 
 /**
- * 이벤트 로그 크래인 Service 관리
+ * 이벤트 로그 크레인 Service 관리
  * @author : psb
  * @version : 1.0
  * @since : 2016. 6. 21.
@@ -21,7 +21,7 @@ import java.util.Map;
 public interface EventLogCraneSvc {
 
     /**
-     * 크래인 상태 전체 데이터를 가져온다.
+     * 크레인 상태 전체 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
@@ -30,7 +30,7 @@ public interface EventLogCraneSvc {
     ModelAndView findAllEventLogCrane(Map<String, String> parameters);
 
     /**
-     * 크래인 상태 상세 데이터를 가져온다.
+     * 크레인 상태 상세 데이터를 가져온다.
      *
      * @author psb
      * @param parameters
