@@ -278,7 +278,7 @@
     -ms-flex-align:      center;
     align-items:         center;
 }
-.time_select_contents  {position: relative;/*height:60px;*/padding:20px 0;}
+.time_select_contents  {position: relative;/*height:60px;*/padding:20px 0; width:100%;}
 .time_select_list > li, .time_select_contents > div {height:44px;}
 
 
