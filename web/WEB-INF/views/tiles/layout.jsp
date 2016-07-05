@@ -564,7 +564,7 @@
                     <option value="">전체</option>
                     <option value="crane"><spring:message code="dashboard.selectbox.crane"/></option>
                     <option value="worker"><spring:message code="dashboard.selectbox.worker"/></option>
-                    <option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>
+                    <%--<option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>--%>
                 </select>
                 <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
             </div>

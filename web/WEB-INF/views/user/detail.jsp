@@ -57,7 +57,6 @@
                         <th><spring:message code="user.column.role"/></th>
                         <td>
                             <select name="roleId">
-                                <option value=""><spring:message code="common.button.select"/> </option>
                                 <c:forEach items="${roles}" var="role">
                                     <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
                                 </c:forEach>
