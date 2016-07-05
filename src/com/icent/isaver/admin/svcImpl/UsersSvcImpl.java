@@ -6,8 +6,8 @@ import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
-import com.kst.common.bean.CommonResourceBean;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.resource.CommonResource;
+import com.kst.common.spring.TransactionUtil;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -72,7 +72,7 @@ public class UsersSvcImpl implements UsersSvc {
     @Override
     public ModelAndView findByUserCheckExist(Map<String, String> parameters) {
         Integer count = usersDao.findByUserCheckExist(parameters);
-        String existFlag = count > 0 ? CommonResourceBean.YES : CommonResourceBean.NO;
+        String existFlag = count > 0 ? CommonResource.YES : CommonResource.NO;
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exist",existFlag);

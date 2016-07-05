@@ -7,7 +7,7 @@ import com.icent.isaver.repository.bean.RoleMenuBean;
 import com.icent.isaver.repository.dao.base.MenuDao;
 import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.RoleMenuDao;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
