@@ -39,7 +39,7 @@ textarea.noboder_type01 {border:none; min-height:150px; background-color: transp
 .center_table {float: left;  padding: 20px 0;}
 .right_table  {float: right; padding: 20px 0 20px 10px;}
 /*트리 테이블 삽입 */
-.tree_table  {width:280px !important; float: left; padding:20px 0 0 0;}
+.tree_table  {position: absolute; z-index: 1;  width:280px !important; float: left; padding:20px 0 0 0;}
 .tr_table    { padding: 20px 0 0 320px;}
 
 .main_type00 {width:40%;  padding:20px 40px 20px 0;}

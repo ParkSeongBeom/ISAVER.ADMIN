@@ -44,18 +44,29 @@
             </div>
         </div>
     </article>
+    <%--<article class="table_area tree_table">--%>
+    <%--<div class="table_title_area">--%>
+    <%--<h4></h4>--%>
+    <%--<div class="table_btn_set">--%>
+    <%--<button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.treeExpandAll(); return false;"><spring:message code='menu.button.viewTheFullMenu'/></button>--%>
+    <%--<button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.setAddBefore(); return false;" ><spring:message code='menu.button.addMenu'/></button>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="table_contents">--%>
+    <%--<div id="menuTreeArea" class="tree_box"></div>--%>
+    <%--</div>--%>
+    <%--</article>--%>
     <!-- 트리 영역 End -->
 
+    <form id="areaForm" method="POST" onsubmit="return false;" >
+        <input type="hidden" name="parentAreaId" />
+        <article class="table_area tr_table">
+            <div class="table_title_area">
+                <h4><spring:message code="area.column.areaInformation"/></h4>
+            </div>
 
-    <article class="table_area tr_table" id="editArea">
-        <div class="table_title_area">
-            <h4><spring:message code="area.column.areaInformation"/></h4>
-        </div>
-
-        <div class="table_contents area_enrolment">
-            <!-- 입력 테이블 Start -->
-            <form id="areaForm" method="POST" onsubmit="return false;" >
-                <input type="hidden" name="parentAreaId" />
+            <div class="table_contents area_enrolment">
+                <!-- 입력 테이블 Start -->
                 <table class="t_defalut t_type02 t_style03">
                     <colgroup>
                         <col style="width:16%">  <!-- 01 -->
@@ -74,12 +85,28 @@
                             <input type="text" name="" value="" placeholder="<spring:message code="area.message.requiredAreaName"/>">
                         </td>
                     </tr>
+                    <%--<tr>--%>
+                    <%--<th>부모구역 명</th>--%>
+                    <%--<td colspan="3">--%>
+                    <%--<select id="selectParentMenuId">--%>
+                    <%--<option value="">Area01</option>--%>
+                    <%--<option value="">Area01 〉 Area01_01</option>--%>
+                    <%--</select>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
                     </tbody>
                 </table>
-            </form>
-        </div>
+                <!-- 입력 테이블 End -->
+                <%--<div class="table_title_area">--%>
+                <%--<div class="table_btn_set">--%>
+                <%--<button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:areaCtrl.addMenuVaild(); return false;"><spring:message code="common.button.add"/></button>--%>
+                <%--<button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:areaCtrl.saveMenuVaild(); return false;"><spring:message code="common.button.save"/></button>--%>
+                <%--<button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:areaCtrl.removeMenuVaild(); return false;"><spring:message code="common.button.remove"/></button>--%>
+                <%--</div>--%>
+                <%--</div>--%>
+            </div>
 
-        <div class="table_contents">
+            <div class="table_contents">
                 <!-- 입력 테이블 Start -->
                 <table class="t_defalut t_type02 t_style03">
                     <colgroup>
@@ -141,11 +168,11 @@
                 </table>
                 <!-- 입력 테이블 End -->
             </div>
-        <div class="table_title_area" name="showHideTag" >
+            <div class="table_title_area" name="showHideTag" >
                 <h4><spring:message code="device.column.deviceList"/></h4>
             </div>
 
-        <div class="table_contents" name="showHideTag" >
+            <div class="table_contents" name="showHideTag" >
                 <table name="roleListTable" class="t_defalut t_type01 t_style02">
                     <colgroup>
                         <col style="width: 20%;">
@@ -176,17 +203,17 @@
                     </p>
                 </div>
             </div>
-        <div class="table_title_area">
+            <div class="table_title_area">
                 <div class="table_btn_set">
                     <button class="btn btype01 bstyle03" name="addBtn" onclick="javascript:areaCtrl.addAreaVaild(); return false;"><spring:message code="common.button.add"/> </button>
                     <button class="btn btype01 bstyle03" name="saveBtn" onclick="javascript:areaCtrl.saveAreaVaild(); return false;"><spring:message code="common.button.save"/> </button>
                     <button class="btn btype01 bstyle03" name="removeBtn" onclick="javascript:areaCtrl.removeAreaVaild(); return false;"><spring:message code="common.button.remove"/> </button>
                 </div>
             </div>
-    </article>
+        </article>
         <!-- 테이블 입력 / 조회 영역 End -->
         <!-- END : contents -->
-
+    </form>
 
 </section>
 
@@ -200,7 +227,7 @@
     var subMenuId = String('${subMenuId}');
 
     var messageConfig = {
-            menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
+        menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
         ,   addFailure                :'<spring:message code="area.message.addFailure"/>'
         ,   saveFailure               :'<spring:message code="area.message.saveFailure"/>'

@@ -585,13 +585,13 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 
 /* 메뉴관리권한 UI */
-.menu_tree_set {width:100%;}
+.menu_tree_set {width:100%; height:100%;}
 .menu_tree_set > li,
 .menu_tree_set > li button {border-style:solid;}
 .menu_tree_set > li        {border-color:#e4e4e4;}
 .menu_tree_set > li button {border-color:#b3b2b2;}
 
-.menu_tree_set > li, .menu_tree_set > li ul {position: relative;}
+.menu_tree_set li, .menu_tree_set li ul {position: relative;}
 .menu_tree_set > li {
     /* display:inline-block  flex알쓸때 */
     width:100%; border-width:0 0 1px 0; padding:10px 0;
@@ -599,7 +599,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 .menu_tree_set > li button {
     text-align: left; width:220px; min-width:220px; height:40px;
-    padding:0 10px 0 40px; margin:5px 0; border-width:1px;
+    padding:0 10px 0 40px; margin:3px 0; border-width:1px;
 }
 .menu_tree_set > li button:hover {border-color:#b11831;}
 .menu_tree_set > li button:before
@@ -608,13 +608,21 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .menu_tree_set > li button.on {background-color: #29a1f7; border-color:#29a1f7; color:#fff;}
 .menu_tree_set > li button.on:before {content: "\e91a";}
 .menu_tree_set > li ul {margin:0 0 0 20px}
-.menu_tree_set > li ul:after, .menu_tree_set > li ul:before, .menu_tree_set > li > ul button:after {
+
+.menu_tree_set > li ul:before,
+.menu_tree_set > li > ul button:after,
+.menu_tree_set > li ul li:after{
     content:""; position: absolute; background-color:#d0d0d0;
 }
-.menu_tree_set > li ul:after          {top:24px; left:-10px; bottom:24px; width:1px;}
-.menu_tree_set > li ul:before,.menu_tree_set > li > ul button:after {width:10px; height:1px;}
+/*.menu_tree_set > li ul:after {top:24px; left:-10px; height:calc(100% - 48px);height:-webkit-calc(100% - 48px);  width:1px;}*/
+.menu_tree_set > li ul:before,
+.menu_tree_set > li > ul button:after {width:10px; height:1px;}
 .menu_tree_set > li ul:before         {top:24px; left:-20px;}
-.menu_tree_set > li > ul button:after {top:50%;  left:-10px; margin:-1px 0 0 0;}
+.menu_tree_set > li > ul button:after {top:50%;  left:-10px; margin:-1px 0 0 -1px;}
+
+.menu_tree_set > li ul li:after {top:24px;; left:-10px; bottom:-25px; width:1px;}
+.menu_tree_set > li ul li:first-of-type:after {}
+.menu_tree_set > li ul li:last-of-type:after  {display: none;}
 /*.menu_tree_set > li ul {margin: -50px 0 0 240px;} flex알쓸때  */
 
 
