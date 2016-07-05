@@ -8,7 +8,7 @@ import com.icent.isaver.repository.bean.LoginHistoryBean;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.LoginHistoryDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;

@@ -2,7 +2,7 @@ package com.icent.isaver.admin.util;
 
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.repository.bean.UsersBean;
-import com.kst.common.bean.CommonResourceBean;
+import com.kst.common.resource.CommonResource;
 import com.kst.common.util.BeanUtils;
 import com.kst.common.util.CookieUtils;
 import com.kst.common.util.StringUtils;
@@ -229,7 +229,7 @@ public class AdminHelper {
     public static Map<String, String> checkSearchDate(Map<String, String> parameters,Integer durationDate, Locale locale){
         // 일자검색이 둘다 NULL이라면 초기 진입이라 가정
         if(parameters.get("startDatetimeStr") == null && parameters.get("endDatetimeStr") == null){
-            SimpleDateFormat sdf = new SimpleDateFormat(CommonResourceBean.PATTERN_DATE,locale);
+            SimpleDateFormat sdf = new SimpleDateFormat(CommonResource.PATTERN_DATE,locale);
             Calendar calendar = Calendar.getInstance();
             durationDate = -1 * durationDate;
             calendar.add(calendar.DATE, durationDate);
@@ -259,7 +259,7 @@ public class AdminHelper {
     public static Map<String, String> checkSearchDate(Map<String, String> parameters, Integer startDate, Integer endDate){
         // 일자검색이 둘다 NULL이라면 초기 진입이라 가정
         if(parameters.get("startDatetimeStr") == null && parameters.get("endDatetimeStr") == null){
-            SimpleDateFormat sdf = new SimpleDateFormat(CommonResourceBean.PATTERN_DATE,Locale.KOREA);
+            SimpleDateFormat sdf = new SimpleDateFormat(CommonResource.PATTERN_DATE,Locale.KOREA);
             Calendar startCalendar = Calendar.getInstance();
             Calendar endCalendar = Calendar.getInstance();
             startCalendar.set(Calendar.DAY_OF_WEEK, startDate); // 주어진 날짜의 요일을 세팅
@@ -308,7 +308,7 @@ public class AdminHelper {
                 stringBuilder.append(key);
                 stringBuilder.append("|");
                 stringBuilder.append(parameters.get(key));
-                stringBuilder.append(CommonResourceBean.COMMA_STRING);
+                stringBuilder.append(CommonResource.COMMA_STRING);
             }
             CookieUtils.addCookie(request, response, type, stringConverter(0, stringBuilder.toString()), 60 * 60);
         }else if(StringUtils.notNullCheck(parameters.get("reloadList")) && Boolean.valueOf(parameters.get("reloadList"))){
@@ -318,7 +318,7 @@ public class AdminHelper {
                 return parameters;
             }
 
-            String[] values = value.split(CommonResourceBean.COMMA_STRING);
+            String[] values = value.split(CommonResource.COMMA_STRING);
             for(String temp : values){
                 String[] tempArr = temp.split("\\|");
                 if(tempArr != null && tempArr.length > 1){
@@ -336,16 +336,16 @@ public class AdminHelper {
         try {
             switch (type) {
                 case 0:
-                    result = URLEncoder.encode(value, CommonResourceBean.CHARSET_UTF8);
+                    result = URLEncoder.encode(value, CommonResource.CHARSET_UTF8);
                     break;
                 case 1:
-                    result = URLDecoder.decode(value, CommonResourceBean.CHARSET_UTF8);
+                    result = URLDecoder.decode(value, CommonResource.CHARSET_UTF8);
                     break;
                 default:
                     result = value;
             }
         } catch (UnsupportedEncodingException e) {
-            result = CommonResourceBean.EMPTY_STRING;
+            result = CommonResource.EMPTY_STRING;
         }
 
         return result;

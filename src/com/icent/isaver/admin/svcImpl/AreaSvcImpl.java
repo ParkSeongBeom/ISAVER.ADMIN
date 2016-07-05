@@ -7,7 +7,7 @@ import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.spring.TransactionUtil;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
