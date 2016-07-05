@@ -141,6 +141,7 @@
     var urlConfig = {
         'listUrl':'${rootPath}/eventLog/list.html'
         ,'detailUrl':'${rootPath}/eventLog/detail.html'
+        ,'excelUrl':'${rootPath}/eventLog/excel.html'
     };
 
     var searchConfig = {
@@ -277,7 +278,8 @@
 
     /* Excel File Download*/
     function excelFileDownloadFunc() {
-
+        form.attr('action',urlConfig['excelUrl']);
+        form.submit();
     }
 
 </script>

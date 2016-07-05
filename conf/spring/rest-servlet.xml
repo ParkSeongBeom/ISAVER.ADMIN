@@ -28,30 +28,10 @@
                     </bean>
                 </constructor-arg>
             </bean>
-            <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
-                <!--<property name="mediaTypes">-->
-                    <!--<value>-->
-                        <!--xml=application/rss+xml-->
-                        <!--htm=text/html;charset=UTF-8-->
-                        <!--html=text/html;charset=UTF-8-->
-                        <!--ajax=text/html;charset=UTF-8-->
-                        <!--scr=application/x-javascript;charset=UTF-8-->
-                        <!--json=application/json;charset=UTF-8-->
-                        <!--jsonp=application/javascript;charset=UTF-8-->
-                        <!--xml=application/xml;charset=UTF-8-->
-                        <!--do=text/html;charset=UTF-8-->
-                    <!--</value>-->
-                <!--</property>-->
-            <!--</bean>-->
         </property>
         <property name="defaultViews">
             <list>
                 <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-                <!--<bean class="org.springframework.web.servlet.view.xml.MarshallingView">-->
-                <!--<property name="marshaller">-->
-                <!--<ref bean="marshaller" />-->
-                <!--</property>-->
-                <!--</bean>-->
             </list>
         </property>
     </bean>
@@ -112,5 +92,11 @@
         <property name="defaultLocale" value="ko" />
     </bean>
 
+    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" >
+        <property name="order" value="2" />
+    </bean>
+    <bean id="excelDownloadView" class="com.kst.common.util.POIExcelView">
+        <property name="fileExtension" value=".xls" /> <!-- 확장자 설정 -->
+    </bean>
 </beans>
 
