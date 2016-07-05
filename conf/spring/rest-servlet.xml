@@ -112,4 +112,10 @@
         <property name="defaultLocale" value="ko" />
     </bean>
 
+    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" >
+        <property name="order" value="2" />
+    </bean>
+    <bean id="excelDownloadView" class="com.kst.common.util.POIExcelView">
+        <property name="fileExtension" value=".xls" /> <!-- 확장자 설정 -->
+    </bean>
 </beans>
