@@ -182,7 +182,8 @@ function MenuView(model) {
                 selDepth = 'H00000';
             }
 
-            $(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
+            /* @author dhj, @since 2017.07.05 */
+            //$(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
             $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
         }
 
@@ -289,10 +290,13 @@ function MenuView(model) {
 
                 for(var index in areaList){
                     var area = areaList[index];
-                    var _menuLiTag = menuLiTag.clone();
-                    _menuLiTag.attr("name", area['areaId']);
-                    _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
-                    $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
+                    if (area['delYn'] == 'N') {
+                        var _menuLiTag = menuLiTag.clone();
+                        _menuLiTag.attr("name", area['areaId']);
+                        _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
+                        $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
+                    }
+
                 }
             }
 
@@ -301,6 +305,18 @@ function MenuView(model) {
             }
 
             $(".nav_area").html(rootUlTag);
+
+            /* @author dhj, @since 2017.07.05 */
+            $(".nav_area .lnb").children().bind("mouseover", function() {
+
+                if ($(this).find("div").length == 0) {
+                    $(".nav_area").addClass("depthno");
+                } else {
+                    $(".nav_area").removeClass("depthno");
+                }
+
+            });
+
         }
     };
 

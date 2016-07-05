@@ -127,9 +127,16 @@ public class AreaSvcImpl implements AreaSvc {
     @Override
     public ModelAndView removeArea(Map<String, String> parameters) {
 
+        List<AreaBean> areas = areaDao.findByAreaTreeChildNodes(parameters);
+
+        for (Integer i =0; i <areas.size(); i ++) {
+            areas.get(i).setUpdateUserId(parameters.get("updateUserId"));
+        }
+
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
         try{
-            areaDao.removeArea(parameters);
+            areaDao.removeListAreaForTree(areas);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

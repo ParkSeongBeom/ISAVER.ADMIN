@@ -58,7 +58,7 @@
     <%--</article>--%>
     <!-- 트리 영역 End -->
 
-    <form id="areaForm" method="POST" onsubmit="return false;" >
+    <form id="areaForm" method="POST" onsubmit="return false;" class="form_type01">
         <input type="hidden" name="parentAreaId" />
         <article class="table_area tr_table">
             <div class="table_title_area">

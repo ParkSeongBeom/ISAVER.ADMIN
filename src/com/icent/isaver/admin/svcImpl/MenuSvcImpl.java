@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.MenuBean;
@@ -50,6 +51,9 @@ public class MenuSvcImpl implements MenuSvc {
     private AreaDao areaDao;
 
     @Inject
+    private AreaSvc areaSvc;
+
+    @Inject
     private RoleMenuDao roleMenuDao;
 
     @Override
@@ -63,10 +67,15 @@ public class MenuSvcImpl implements MenuSvc {
     @Override
     public ModelAndView findAllMenuTopBar(Map<String, String> parameters) {
         List<MenuBean> menuBarList = menuDao.findAllMenuTopBar(parameters);
+
+        ModelAndView areaView = areaSvc.findAllAreaTree(parameters);
+
         List<AreaBean> areaList = areaDao.findListArea(new HashMap<String, String>(){{put("delYn","N");}});
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("menuBarList", menuBarList);
+//        modelAndView.addObject("areaList", areaView.getModel().get("areaList"));
         modelAndView.addObject("areaList", areaList);
+
         return modelAndView;
     }
 

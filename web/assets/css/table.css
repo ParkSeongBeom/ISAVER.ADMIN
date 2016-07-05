@@ -20,7 +20,7 @@ textarea.noboder_type01 {border:none; min-height:150px; background-color: transp
 
 
 
-.table_area {width:100%; padding: 20px 0;}
+.table_area {width:100%; /*padding: 20px 0;*/}
 .layer_contents .table_area {
     overflow: auto;
     height: calc(100% - 120px); height: -webkit-calc(100% - 120px); padding: 0;
@@ -40,7 +40,7 @@ textarea.noboder_type01 {border:none; min-height:150px; background-color: transp
 .right_table  {float: right; padding: 20px 0 20px 10px;}
 /*트리 테이블 삽입 */
 .tree_table  {position: absolute; z-index: 1;  width:280px !important; float: left; padding:20px 0 0 0;}
-.tr_table    { padding: 20px 0 0 320px;}
+.tr_table    { /*padding: 20px 0 0 320px;*/}
 
 .main_type00 {width:40%;  padding:20px 40px 20px 0;}
 .main_type01 {width:40%;  padding:20px 40px 20px 0;}

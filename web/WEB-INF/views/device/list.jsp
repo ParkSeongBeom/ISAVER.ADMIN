@@ -43,27 +43,9 @@
     </article>
     <!-- 트리 영역 End -->
 
-
-    <form id="deviceForm" method="POST" onsubmit="return false;">
+    <form id="deviceForm" method="POST" onsubmit="return false;" class="form_type01">
         <input type="hidden" name="parentDeviceId" />
         <article class="table_area tr_table">
-            <%--<div class="table_title_area area_enrolment">--%>
-                <%--<h4>장치 조회</h4>--%>
-            <%--</div>--%>
-            <%--<article class="search_area" name="showHideTag" style="display: table;">--%>
-                <%--<div class="search_contents">--%>
-                    <%--<!-- 일반 input 폼 공통 -->--%>
-                    <%--<p class="itype_01">--%>
-                        <%--<span><spring:message code='device.column.deviceId'/></span>--%>
-                        <%--<span>--%>
-                            <%--<input type="text" name="search_deviceId" value="">--%>
-                        <%--</span>--%>
-                    <%--</p>--%>
-                <%--</div>--%>
-                <%--<div class="search_btn">--%>
-                    <%--<button onclick="javascript:organizationCtrl.searchOrgUser(); return false;" class="btn bstyle01 btype01">조회</button>--%>
-                <%--</div>--%>
-            <%--</article>--%>
 
             <div class="table_title_area">
                 <h4><spring:message code='device.column.deviceInformation'/></h4>

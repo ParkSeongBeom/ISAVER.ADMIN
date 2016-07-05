@@ -147,3 +147,5 @@ body.on.navzoom.admin_mode section.container {padding-left:140px;}
 
 body.admin_mode.on .zoom_btn.on:before {color:#3e3e3e;}
 
+form {display: block;}
+form.form_type01 { margin: 20px 0 0 320px;}

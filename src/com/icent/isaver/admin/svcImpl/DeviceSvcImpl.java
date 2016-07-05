@@ -121,9 +121,16 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Override
     public ModelAndView removeDevice(Map<String, String> parameters) {
 
+        List<DeviceBean> devices = deviceDao.findByDeviceTreeChildNodes(parameters);
+
+        for (Integer i =0; i <devices.size(); i ++) {
+            devices.get(i).setUpdateUserId(parameters.get("updateUserId"));
+        }
+
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
         try{
-            deviceDao.removeDevice(parameters);
+            deviceDao.removeListDeviceForTree(devices);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
