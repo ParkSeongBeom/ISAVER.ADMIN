@@ -5,7 +5,7 @@ import com.icent.isaver.admin.svc.GroupCodeSvc;
 import com.icent.isaver.repository.bean.GroupCodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
 import com.icent.isaver.repository.dao.base.GroupCodeDao;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;

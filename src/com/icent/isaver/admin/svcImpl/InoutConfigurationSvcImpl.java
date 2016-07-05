@@ -4,8 +4,8 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.repository.bean.InoutConfigurationBean;
 import com.icent.isaver.repository.dao.base.InoutConfigurationDao;
-import com.kst.common.bean.CommonResourceBean;
-import com.kst.common.springutil.TransactionUtil;
+import com.kst.common.resource.CommonResource;
+import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.ListUtils;
 import com.kst.common.util.MapUtils;
 import com.kst.common.util.StringUtils;
@@ -57,7 +57,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
 
     @Override
     public ModelAndView saveInoutConfiguration(Map<String, String> parameters) {
-        String[] inoutDatetimes = parameters.get("inoutDatetimes").split(CommonResourceBean.COMMA_STRING);
+        String[] inoutDatetimes = parameters.get("inoutDatetimes").split(CommonResource.COMMA_STRING);
         List<Map<String, String>> parameterList = new ArrayList<>();
         for (String inoutDatetime : inoutDatetimes) {
             String[] datetime = inoutDatetime.split("\\|");
