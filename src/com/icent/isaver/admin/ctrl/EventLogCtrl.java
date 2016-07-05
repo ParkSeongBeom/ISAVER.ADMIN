@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-/**
- * Created by icent on 16. 6. 1..
- */
 @Controller
 @RequestMapping(value="/eventLog/*")
 public class EventLogCtrl {
@@ -94,6 +91,14 @@ public class EventLogCtrl {
 
         parameters.put("eventCancelUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = eventLogSvc.cancelEventLog(parameters);
+        return modelAndView;
+    }
+
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
+    public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogForExcel(request, response, parameters);
+        modelAndView.setViewName("excelDownloadView");
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 }

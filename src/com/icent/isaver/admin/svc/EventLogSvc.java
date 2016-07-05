@@ -2,6 +2,8 @@ package com.icent.isaver.admin.svc;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -55,4 +57,11 @@ public interface EventLogSvc {
      * @return
      */
     ModelAndView cancelEventLog(Map<String, String> parameters);
+
+    /**
+     *
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListEventLogForExcel(HttpServletRequest request,  HttpServletResponse response, Map<String, String> parameters);
 }
