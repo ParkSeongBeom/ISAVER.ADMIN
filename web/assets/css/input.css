@@ -256,12 +256,14 @@ GNB ,버튼 active   #0c8dd0
 
 .zoom_btn, .sett_btn, .refl_btn {margin:0 0 0 15px;}
 .zoom_btn, .sett_btn, .zoomclose_btn  {font-size:26px;}
-.zoom_btn:before    {content: "\e904";}
-.zoomclose_btn:before, .zoom_btn.on:before {content: "\e903";}
-.sett_btn:before    {content: "\e905";}
-.refl_btn:before    {content: "\e902"; font-size:22px;}
-.issue_btn:before    {content:"\e907";}
-.loginout_btn:before {content:"\e900";}
+.zoom_btn:before      {content: "\e904";}
+.zoom_btn.on:before   {content: "\e903";}
+.zoomclose_btn:before {content: "\e925";}
+
+.sett_btn:before      {content: "\e905";}
+.refl_btn:before      {content: "\e902"; font-size:22px;}
+.issue_btn:before     {content:"\e907";}
+.loginout_btn:before  {content:"\e900";}
 
 
 .stion_btn {

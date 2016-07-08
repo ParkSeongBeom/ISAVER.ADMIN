@@ -167,7 +167,6 @@
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
-
     /*
      url defind
      @author psb

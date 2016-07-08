@@ -54,10 +54,12 @@
 
     $(document).ready(function(){
         var userId = $.cookie("userId");
+
         if(userId != null && userId.length > 0){
             form.find('input[name=userId]').val($.cookie("userId"));
             $("#saveAdminIdCheck").attr("checked", true);
         }
+
         form.find('input[name=userId], input[name=userPassword]').bind("keyup", function(evt){
             var code = evt.keyCode || evt.which;
             if(code == 13){
@@ -111,7 +113,6 @@
     function login(){
         if(validate()){
             setCookieAdminId();
-
             sendAjaxPostRequest(urlConfig['loginUrl'],form.serialize(),login_successHandler,login_failureHandler);
         }
     }

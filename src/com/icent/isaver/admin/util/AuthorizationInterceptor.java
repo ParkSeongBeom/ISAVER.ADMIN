@@ -7,6 +7,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * @author : kst
@@ -82,6 +83,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+        Date serverDatetime = new Date();
+        modelAndView.addObject("serverDatetime", serverDatetime.getTime());
         super.postHandle(request, response, handler, modelAndView);
     }
 

@@ -2,8 +2,10 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set var="rootPath" value="${pageContext.servletContext.contextPath}" scope="application"/>
+<%--<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${serverDatetime}" var="serverDatetime"/>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,6 +49,8 @@
         var dashBoardHelper = new DashBoardHelper();
         var templateHelper = new TemplateHelper();
         var now = new Date();
+        var serverDatetime = new Date();
+        serverDatetime.setTime(${serverDatetime});
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -71,6 +75,13 @@
         var evtDetectionCancelList = ["EVT102", "EVT211"];
 
         $(document).ready(function(){
+
+            /* 브라우저 종료 */
+
+//            $(window).bind("beforeunload", function() {
+//                return confirm("Do you really want to close?");
+//            });
+
             // 메뉴그리기
             menuModel.setRootUrl(rootPath);
             menuModel.setViewStatus('detail');
@@ -140,9 +151,11 @@
         }
 
         function printTime() {
-            $("#nowTime").text(new Date().format("MM.dd E HH:mm:ss"));
+
+            $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
 
             setTimeout(function(){
+                serverDatetime.setSeconds(serverDatetime.getSeconds()+1);
                 printTime();
             },1000);
         }
