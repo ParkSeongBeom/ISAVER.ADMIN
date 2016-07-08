@@ -164,7 +164,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn workerAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="db_btn alra_btn workerAlramCnt" href="#" onclick="javascript:alramShowHide('list','show', 'worker', '${area.areaId}');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn craneAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="db_btn alra_btn craneAlramCnt" href="#" onclick="javascript:alramShowHide('list','show','crane', '${area.areaId}');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -811,11 +811,11 @@
 
             divTag.find(".eventCnt").text(evtCraneDetectionCount);
 
-            if($(".craneAlramCnt").text() != String(craneEventTotalCnt)){
-                $(".craneAlramCnt").text(craneEventTotalCnt);
+            if($(".craneAlramCnt").text() != String(evtCraneDetectionCount)){
+                $(".craneAlramCnt").text(evtCraneDetectionCount);
             }
 
-            if(craneEventCnt>0){
+            if(evtCraneDetectionCount>0){
                 modifyElementClass($(".detail_popup .layer_area[type='crane']"),'level03','add');
                 modifyElementClass($("#craneDiv"),'level03','add');
             }else{

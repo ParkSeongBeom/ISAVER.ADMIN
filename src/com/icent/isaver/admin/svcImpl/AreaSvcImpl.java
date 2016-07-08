@@ -77,8 +77,8 @@ public class AreaSvcImpl implements AreaSvc {
 
         AreaBean area = areaDao.findByArea(parameters);
 
-        List<DeviceBean> deviceBeanList = deviceDao.findListDevice(parameters);
-        Integer deviceTotalCount = deviceDao.findCountDevice(parameters);
+        List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
+        Integer deviceTotalCount = deviceDao.findCountDeviceArea(parameters);
 
         modelAndView.addObject("area", area);
         modelAndView.addObject("devices", deviceBeanList);

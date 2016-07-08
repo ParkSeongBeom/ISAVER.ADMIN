@@ -70,10 +70,10 @@ public class MenuSvcImpl implements MenuSvc {
 
         ModelAndView areaView = areaSvc.findAllAreaTree(parameters);
 
-        List<AreaBean> areaList = areaDao.findListArea(new HashMap<String, String>(){{put("delYn","N");}});
+        List<AreaBean> areaList = (List<AreaBean>) areaView.getModel().get("areaList");
+//        List<AreaBean> areaList = areaDao.findListArea(new HashMap<String, String>(){{put("delYn","N");}});
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("menuBarList", menuBarList);
-//        modelAndView.addObject("areaList", areaView.getModel().get("areaList"));
         modelAndView.addObject("areaList", areaList);
 
         return modelAndView;

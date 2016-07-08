@@ -283,7 +283,6 @@ function AreaEvent(model) {
     AreaEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
         AreaEvent._model.setAreaTreeList(JSON.parse(JSON.stringify(data['areaList'])));
         var menuTreeModel = AreaEvent._model.processMenuTreeData(data['areaList'], AreaEvent._model.getRootOrgId());
-
         areaView.setMenuTree(menuTreeModel);
     };
 

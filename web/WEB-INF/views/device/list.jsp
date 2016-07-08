@@ -64,11 +64,11 @@
                     <tr>
                         <th class="point"><spring:message code='device.column.deviceId'/></th>
                         <td class="point">
-                            <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>"  readonly="readonly" maxlength="6">
+                            <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>"  disabled>
                         </td>
                         <th class="point"><spring:message code='device.column.serialNo'/></th>
                         <td class="point">
-                            <input type="text" name="serialNo" placeholder="<spring:message code='device.message.requiredSerialNo'/>" maxlength="32">
+                            <input type="text" name="serialNo" placeholder="<spring:message code='device.message.requiredSerialNo'/>" maxlength="32" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -115,22 +115,21 @@
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.ipAddress'/></th>
-                        <td colspan="3">
-                            <input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20">
+                        <td colspan="3" name="ipAddress">
+                            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20">--%>
                         </td>
                     </tr>
                     <tr name="showHideTag">
                         <th class=""><spring:message code='device.column.provisionFlag'/></th>
                         <td class="">
-                            <input name="provisionFlag" type="radio" disabled>예
-                            <input name="provisionFlag" type="radio"checked="checked" disabled>아니오
+                            <input name="provisionFlag" type="radio" value="Y" disabled>예
+                            <input name="provisionFlag" type="radio" value="N" disabled>아니오
                             <%--<span name="provisionFlag"></span>--%>
                         </td>
                         <th class=""><spring:message code='device.column.deviceStat'/></th>
                         <td class="">
-                            <input name="deviceStat" type="radio" disabled>연결됨
-                            <input name="deviceStat" type="radio"checked="checked" disabled>연결안됨
-                            <%--<span name="deviceStat"></span>--%>
+                            <input name="deviceStat" type="radio" value="Y"  disabled>연결됨
+                            <input name="deviceStat" type="radio" value="N" disabled>연결안됨
                         </td>
                     </tr>
                     <tr>
@@ -201,7 +200,8 @@
         ,   existsDeviceId            :"<spring:message code='device.message.existsDeviceId'/>"
         ,   existsSerialNo            :"<spring:message code='device.message.existsSerialNo'/>"
         ,   existsIpAddress            :"<spring:message code='device.message.existsIpAddress'/>"
-        ,   regexpIpAddress :"<spring:message code='device.message.regexpIpAddress'/>"
+        ,   regexpIpAddress : "<spring:message code='device.message.regexpIpAddress'/>"
+        ,   provisionExistError : "<spring:message code='device.message.provisionExistError'/>"
     };
 
     $(document).ready(function(){

@@ -141,6 +141,7 @@ function MenuView(model) {
      * @param obj
      */
     MenuView.setTopMenuBar = function (menuBarModel, areaList) {
+
         var textSpaceSize = 9;
         function leadingSpaces(n, digits) {
             var space = '';

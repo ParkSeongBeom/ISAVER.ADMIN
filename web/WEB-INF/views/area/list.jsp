@@ -119,7 +119,7 @@
                     <tr>
                         <th class="point"><spring:message code="area.column.areaId"/></th>
                         <td class="point">
-                            <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" readonly="true" maxlength="6">
+                            <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" disabled>
                         </td>
                         <th class="point"><spring:message code="area.column.areaName"/></th>
                         <td class="point">
@@ -184,8 +184,8 @@
                     <tr>
                         <th><spring:message code="device.column.deviceId"/></th>
                         <th><spring:message code="device.column.serialNo"/></th>
-                        <th><spring:message code="device.column.deviceCode"/></th>
                         <th><spring:message code="device.column.deviceType"/></th>
+                        <th><spring:message code="device.column.deviceCode"/></th>
                     </tr>
                     </thead>
                     <tbody>

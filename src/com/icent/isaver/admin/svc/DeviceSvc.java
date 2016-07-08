@@ -32,6 +32,13 @@ public interface DeviceSvc {
     ModelAndView findAllDeviceTree(Map<String, String> parameters);
 
     /**
+     * 장치 트리를 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListDeviceArea(Map<String, String> parameters);
+
+    /**
      * 장치 목록을 가져온다.
      *
      * @author dhj

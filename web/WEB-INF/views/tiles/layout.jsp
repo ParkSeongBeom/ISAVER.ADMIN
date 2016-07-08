@@ -414,15 +414,33 @@
         /**
          * 알람 show / hide
          */
-        function alramShowHide(_type, _action){
+        function alramShowHide(_type, _action, _status, _area){
             switch (_type){
                 case "list":
                     if(_action == 'show'){
                         modifyElementClass($(".db_area"),'on','add');
+                        if (_status != undefined) {
+                            switch(_status) {
+                                case "worker":
+                                    $("#eventType option[value=worker]").prop("selected", "selected");
+                                    break;
+                                case "crane":
+                                    $("#eventType option[value=crane]").prop("selected", "selected");
+                                    break;
+                            }
+                        }
+
+                        if (_area != undefined) {
+                            $("#areaType option[value="+areaId+"]").prop("selected", "selected");
+                        }
+
                     }else if(_action == 'hide'){
                         modifyElementClass($(".dbs_area"),'on','remove');
                         modifyElementClass($(".db_area"),'on','remove');
                         modifyElementClass($("#alramList > li"),'infor','remove');
+
+                        $("#eventType option:eq(0)").prop("selected", "selected");
+                        $("#areaType option:eq(0)").prop("selected", "selected");
                     }else{
                         if($(".db_area").hasClass("on")){
                             alramShowHide('list','hide');
@@ -532,12 +550,12 @@
                     <span>${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list');"></button>
-                    <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();"></button>
+                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list');" title="<spring:message code="dashboard.title.alramCenter"/>"></button>
+                    <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
                 </div>
             </div>
         </div>
-        <button class="db_btn zoom_btn change_btn" href="#" onclick="javascript:allView(this);"></button>
+        <button class="db_btn zoom_btn change_btn" href="#" onclick="javascript:allView(this);" title="<spring:message code="dashboard.title.screenZoomout"/>"></button>
     </header>
     <!-- hearder End -->
 
@@ -552,7 +570,7 @@
     <aside class="db_area">
         <div class="db_header">
             <div>
-                <h3><spring:message code="dashboard.title.alramCenter"/></h3>
+                <h3 onclick="javascript:alramShowHide('list', 'hide'); return false;"><spring:message code="dashboard.title.alramCenter"/></h3>
                 <button class="btn btype03 bstyle07" href="#" onclick="javascript:alramCancel();"><spring:message code="dashboard.title.alramCancel"/></button>
             </div>
             <div>
@@ -581,7 +599,7 @@
     <!-- 알림상세 영역 Start -->
     <aside class="dbs_area">
         <div class="db_header">
-            <div><h3><spring:message code="dashboard.title.action"/></h3></div>
+            <div><h3 onclick="javascript:alramShowHide('detail', 'hide'); return false;"><spring:message code="dashboard.title.action"/></h3></div>
             <div><p id="alramEvent"></p></div>
         </div>
         <div class="db_contents nano">

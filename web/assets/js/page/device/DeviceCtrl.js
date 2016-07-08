@@ -116,7 +116,7 @@ function DeviceCtrl(model) {
                 alert(messageConfig['requiredSerialNo']);
                 return;
             }
-
+/*
             if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                 if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
@@ -125,7 +125,7 @@ function DeviceCtrl(model) {
                     return;
                 }
             }
-
+*/
 
         }
 
@@ -154,6 +154,7 @@ function DeviceCtrl(model) {
                 return;
             }
 
+            /*
             if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                 if (deviceObj['ipAddressExistFlag'] == true) {
@@ -163,7 +164,7 @@ function DeviceCtrl(model) {
                 }
 
             }
-
+            */
             var deviceId = $("input[name=deviceId]").val();
 
             if(confirm('[' + deviceId + '] ' + messageConfig['addConfirmMessage'] + '?')) {
@@ -190,7 +191,7 @@ function DeviceCtrl(model) {
                 $("input[name=serialNo]").focus();
                 return;
             }
-
+            /*
             if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                 if (deviceObj['ipAddressExistFlag'] == true) {
@@ -199,6 +200,7 @@ function DeviceCtrl(model) {
                     return;
                 }
             }
+            */
             var deviceId = $("input[name=deviceId]").val();
             if(confirm('[' + deviceId + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
                 this.saveDevice();
@@ -213,14 +215,11 @@ function DeviceCtrl(model) {
      */
     DeviceCtrl.removeDeviceVaild = function () {
 
-        if (this.commonVaild()) {
+        var deviceId = $("input[name=deviceId]").val();
 
-            var deviceId = document.forms[DeviceCtrl._model.getFormName()]['deviceId'].value;
+        if (!confirm("[ " + deviceId + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
 
-            if (!confirm("[ " + deviceId + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
-
-            DeviceCtrl.removeDevice();
-        }
+        DeviceCtrl.removeDevice(deviceId);
 
     };
 
@@ -257,7 +256,7 @@ function DeviceCtrl(model) {
     /**
      * [cruD] 장치 삭제
      */
-    DeviceCtrl.removeDevice = function () {
+    DeviceCtrl.removeDevice = function (_deviceId) {
 
         var type = DeviceCtrl._model.model.ACTION.REMOVE;
         this._model.setViewStatus(type);
@@ -265,7 +264,11 @@ function DeviceCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + DeviceCtrl._model.getFormName();
 
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
+        var param = {
+           'deviceId' : _deviceId
+        };
+
+        sendAjaxPostRequest(requestUrl, param, this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
 
     };
 
@@ -426,15 +429,23 @@ function DeviceEvent(model) {
      * [SUCCESS][RES] 장치 CUD 성공 시 이벤트
      */
     DeviceEvent.areaCudSuccessHandler = function (data, dataType, actionType) {
-        /*
-         * 좌측 트리 및 상단 메뉴 바 초기화
-         */
-//        menuCtrl.findMenuTopBar();
-//        menuCtrl.setMenuTreeReset();
 
-        alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
-        //window.location.reload();
-        location.href = "./list.html?ctrl=reload";
+        if (actionType =="remove") {
+            if (data['provisionExist'] != null && data['provisionExist'] =='Y' && actionType =="remove") {
+
+                alert(messageConfig['provisionExistError']);
+            }  else {
+                alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
+                //window.location.reload();
+                location.href = "./list.html?ctrl=reload";
+            }
+        } else {
+            alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
+            //window.location.reload();
+            location.href = "./list.html?ctrl=reload";
+        }
+
+
     };
 
     /**

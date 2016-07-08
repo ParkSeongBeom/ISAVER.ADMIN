@@ -8,6 +8,7 @@ import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
@@ -56,6 +57,12 @@ public class DeviceSvcImpl implements DeviceSvc {
         modelAndView.addObject("deviceList", deviceTreeList);
         return modelAndView;
     }
+
+    @Override
+    public ModelAndView findListDeviceArea(Map<String, String> parameters) {
+        return null;
+    }
+
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
 
@@ -123,21 +130,33 @@ public class DeviceSvcImpl implements DeviceSvc {
 
         List<DeviceBean> devices = deviceDao.findByDeviceTreeChildNodes(parameters);
 
+        Boolean provisionExist = false;
+
         for (Integer i =0; i <devices.size(); i ++) {
+            if (devices.get(i).getProvisionFlag().equals(CommonResource.YES)) {
+                provisionExist = true;
+                break;
+            }
             devices.get(i).setUpdateUserId(parameters.get("updateUserId"));
         }
 
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        if (!provisionExist) {
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try{
-            deviceDao.removeListDeviceForTree(devices);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            try{
+                deviceDao.removeListDeviceForTree(devices);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new JabberException("");
+            }
         }
 
+
         ModelAndView modelAndView = new ModelAndView();
+        if (provisionExist) {
+            modelAndView.addObject("provisionExist", "Y");
+        }
         return modelAndView;
     }
 

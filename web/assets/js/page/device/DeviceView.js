@@ -48,7 +48,7 @@ function DeviceView(model) {
             $(formName + " [name='serialNo']").val(data.serialNo);
         },
         ipAddress: function (data) {
-            $(formName + " [name='ipAddress']").val(data.ipAddress);
+            $(formName + " [name='ipAddress']").text(data.ipAddress);
         },
         deviceDesc: function (data) {
             $(formName + " [name='deviceDesc']").val(data.deviceDesc);
@@ -60,24 +60,19 @@ function DeviceView(model) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
         },
         provisionFlag: function (data) {
-            //$(formName + " span[name='provisionFlag']").text(data['provisionFlag']);
 
-            //$(formName + " input[type=radio][name=provisionFlag]").removeAttr("checked");
             if (data['provisionFlag'] == 'Y') {
-                $(formName + " input[type=radio][name=provisionFlag]").eq(0).attr("checked", "checked");
+                $("input:radio[name='provisionFlag']:radio[value='Y']").prop("checked",true);
             } else {
-                $(formName + " input[type=radio][name=provisionFlag]").eq(1).attr("checked", "checked");
+                $("input:radio[name='provisionFlag']:radio[value='N']").prop("checked",true);
             }
         },
         deviceStat: function (data) {
-            //$(formName + " span[name='deviceStat']").text(data['deviceStat']);
 
-            //debugger;
-            //$(formName + " input[type=radio][name=deviceStat]").removeAttr("checked");
             if (data['deviceStat'] == 'Y') {
-                $(formName + " input[type=radio][name=deviceStat]").eq(0).attr("checked", "checked");
+                $("input:radio[name='deviceStat']:radio[value='Y']").prop("checked",true);
             } else {
-                $(formName + " input[type=radio][name=deviceStat]").eq(1).attr("checked", "checked");
+                $("input:radio[name='deviceStat']:radio[value='N']").prop("checked",true);
             }
 
         },
@@ -225,8 +220,8 @@ function DeviceView(model) {
         //$(formName + " [id='selectUpOrgSeq']").val("");
 
         //$(formName + " [name='areaName']").val("");
-        $(formName + " [name='deviceId']").attr("readonly", "readonly");
-        $(formName + " [name='serialNo']").attr("readonly", "readonly");
+        $(formName + " [name='deviceId']").attr("disabled", "disabled");
+        $(formName + " [name='serialNo']").attr("disabled", "disabled");
         //$(formName + " [name='orgDepth']").val("");
         //$(formName + " [name='sortOrder']").val("");
         $(formName + " td[name='insertUserId']").text("");
@@ -234,6 +229,7 @@ function DeviceView(model) {
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
         $(formName + " textarea[name='deviceDesc']").val("");
+        $(formName + " td[name=ipAddress]").text("");
 
         //$("table tbody tr").eq(0).show();
         $("table tbody tr").eq(1).show();
@@ -280,14 +276,14 @@ function DeviceView(model) {
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
-        $("table tbody tr").eq(4).show();
+        $("table tbody tr").eq(4).hide();
         $("table tbody tr").eq(5).show();
         $("table tbody tr").eq(6).show();
 
         $("[name='showHideTag']").hide();
 
         $("input[name='deviceId']").val("");
-        $("input[name='serialNo']").val("").removeAttr("readonly");
+        $("input[name='serialNo']").val("").removeAttr("disabled");
 
         $("textarea[name='deviceDesc']").val("");
         $("input[name='ipAddress']").val("");
@@ -299,19 +295,20 @@ function DeviceView(model) {
 
         $("input:hidden[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
 
-        $("select[id=selectDeviceType]  option:eq(0)").attr("selected", "selected");
-        $("select[id=selectDeviceCode]  option:eq(0)").attr("selected", "selected");
+        $("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
+        $("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
         $("select[id=selectAreaId]").val("");
 
         $("input[name=deviceTypeCode]").val($("select[id=selectDeviceType]  option:eq(0)").val());
         $("input[name=deviceCode]").val($("select[id=selectDeviceCode]  option:eq(0)").val());
         $("input[name=areaId]").val("");
+        $("td[name=ipAddress]").text("");
 
         var formName = "#" +DeviceView._model.getFormName();
         $( formName + " [id='selectParentDeviceId'] option").attr('disabled', false);
 
         if (DeviceView._model.getParentDeviceId() == null || DeviceView._model.getParentDeviceId() == "") {
-            $( formName + " [id='selectParentDeviceId']").val("");
+            $("select[id='selectParentDeviceId'] option:eq(0)").prop("selected", "selected");
         } else {
             $( formName + " [id='selectParentDeviceId']").val(DeviceView._model.getDeviceId());
         }
