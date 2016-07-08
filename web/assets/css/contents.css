@@ -6,7 +6,7 @@
 
 .metro_root, .metro_parent, .mc_bico:before, .mc_bico, .mc_list > li, .personnel, .personnel > div, .personnel > div > span,
 .mc_element, .metro_child, .vh_mode, .mp_contents, .mp_header > h2, .mp_header > div, .ha_right_set > div, .ha_right_set,
-.main_title_area, .menu_tree_set li, .dash_contents_area > div /*, .personnel + .ct-chart,*/
+.main_title_area, .menu_tree_set li, .dash_contents_area > div, .hrs_date > span /*, .personnel + .ct-chart,*/
 {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;display:flexbox;display:box;}
 
 .mc_bico:before, .mc_bico, .mce_btn_area > button, .m_human
@@ -14,10 +14,10 @@
 
 
 
-.login_area > article {width:260px; height:100%; margin:auto;}
+.login_area > article {width: 100%; height: 100%; margin: auto; text-align: center;}
 /*로그인 타이틀 영역 */
 .login_logo_area {
-    display: table; position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+    display: table; width: 100%; height: 60px;
     background-image: url(../images/logo/login_logo.png);
     background-position: 50% 50%;
     background-repeat: no-repeat;
@@ -29,7 +29,8 @@
     position: relative; z-index:1; width: 100%; height: 100%;
     font-size: 30px;color: #fff;
 }
-.login_input_area {width: 100%; text-align: left; margin: 100px auto 20px; }
+.login_input_area {position: relative; width: 260px; text-align: left; margin: 36px auto 0;}
+.caps {position: absolute; left:0; bottom: 24px; width:100%; text-align:center; color:red; font-size:13px;}
 
 /*헤더 로고 영역*/
 .ha_right_set, .ha_right_set > div, .ha_right_set > div > * {height: 100%;}
@@ -113,7 +114,16 @@
 }
 
 
-.hrs_date > span {height:auto; padding:0 20px; font-size:12px; }
+.hrs_date > span {
+
+    -webkit-box-align:   center;
+    -moz-box-align:      center;
+    -webkit-align-items: center;
+    -ms-flex-align:      center;
+    align-items:         center;
+
+    height:100%; padding:0 20px; font-size:12px;
+}
 .hrs_date > span:first-of-type {font-size:20px; }
 .hrs_date > span:first-of-type:after {
     content:"";
@@ -121,7 +131,7 @@
     width:1px; height:10px; background-color: #fff;
     opacity: 0.4;
 }
-.hrs_date > span:last-of-type:before {content: "\e92f"; font-size:16px; padding:0 8px 0 0; }
+.hrs_date > span:last-of-type:before {content: "\e92f"; font-size:18px; padding:0 8px 4px 0; }
 
 /* 2depth 타이틀 영역 */
 .main_title_area, .sub_title_area {position: relative;width:100vh;     min-width: 100%;}
@@ -295,7 +305,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 
 
 .mc_tline       {width:100%; height:100%; margin: 20px 0 0 0;}
-.mc_tline.vtype {width:1px;  height:100%; margin: 0 0 0 20px;}
+.mc_tline.vtype {  height:100%; margin: 0 0 0 20px;}
 
 
 .mc_tline:after, .mc_tline:before ,

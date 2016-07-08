@@ -13,7 +13,7 @@ aside, header, section, .wrap, header, .header_area, article
 
 body {
     overflow: auto;
-    width:100%; min-width:1680px;  min-height:768px;
+    width:100%; min-width:1280px;  min-height:768px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
     box-sizing:         border-box;
@@ -68,9 +68,11 @@ nav.nav {
     scrollbar-track-color      : transparent;
     scrollbar-base-color       : transparent;*/
 }
+/*
 nav.nav:after { content:"";
     position: fixed; left:0; top:0; bottom:0; width:120px;
 }
+*/
 
 body section.container {
      display: table;
@@ -83,7 +85,7 @@ body.admin_mode section.container {
     height: -webkit-calc(100% - 45px);
     margin: 50px 0 0 120px;
     padding: 30px;*/
-    height:100%; padding:70px 50px 0 150px;  background-color: #fcfcfc;
+    height:100%; padding:70px 80px 0 200px;  background-color: #fcfcfc;
 }
 
 .metro_root.mr_h100 {min-height:620px; max-height:620px;   }

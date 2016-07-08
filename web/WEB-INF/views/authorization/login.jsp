@@ -31,6 +31,7 @@
                 <div class="login_input_area">
                     <input type="text" name="userId" placeholder="ID" class="log_id"/>
                     <input type="password" name="userPassword" placeholder="Password" class="log_pw"/>
+                    <p class="caps" style="display: none;">CapsLock이 켜져 있습니다!</p>
                     <input type="checkbox" id="saveAdminIdCheck" name="id_save" />아이디 저장
                 </div>
                 <!-- 로그인 입력 폼 End -->
@@ -61,6 +62,26 @@
             var code = evt.keyCode || evt.which;
             if(code == 13){
                 login();
+            }
+        });
+
+        $('.log_pw').keypress(function(e) {
+            e = e || window.event;
+            if (this.value === '') {
+                $('.caps').hide();
+                return;
+            }
+            var character = String.fromCharCode(e.keyCode || e.which);
+            if (character.toUpperCase() === character.toLowerCase()) {
+                return;
+            }
+            if ((e.shiftKey && character.toLowerCase() === character) ||
+                    (!e.shiftKey && character.toUpperCase() === character)) {
+                $('.caps').show();
+                $('.log_pw').addClass("red");
+            } else {
+                $('.caps').hide();
+                $('.log_pw').removeClass("red");
             }
         });
     });
@@ -112,6 +133,7 @@
     function alertMessage(type){
         alert(messageConfig[type]);
     }
+
 </script>
 </body>
 </html>
