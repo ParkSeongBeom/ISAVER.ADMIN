@@ -47,7 +47,7 @@
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')" style="display: none;">
                                                     <span><em>${area.areaName}</em></span>
                                                 </button>
                                             </c:forEach>
@@ -99,7 +99,7 @@
                                     <c:choose>
                                         <c:when test="${areas != null and fn:length(areas) > 0}">
                                             <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')"  style="display: none;">
                                                     <span><em>${area.areaName}</em></span>
                                                 </button>
                                             </c:forEach>
@@ -262,6 +262,11 @@
                         buttonTag.find("#eventCnt").remove();
                     }
                 }
+                if (worker['eventCnt'] == 0) {
+                    buttonTag.hide();
+                } else {
+                    buttonTag.show();
+                }
             }
 
             if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
@@ -303,6 +308,12 @@
                     if(buttonTag.find("#eventCnt").length>0){
                         buttonTag.find("#eventCnt").remove();
                     }
+                }
+
+                if (crane['eventCnt'] == 0) {
+                    buttonTag.hide();
+                } else {
+                    buttonTag.show();
                 }
             }
 

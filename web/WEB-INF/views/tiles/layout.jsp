@@ -331,7 +331,11 @@
                 return false;
             }
 
-            layoutAjaxCall('alramCancel',{eventLogIds : eventLogIdList.join(",")});
+            var r = confirm("<spring:message code="dashboard.message.alramConfirm"/>");
+            if (r == true) {
+                layoutAjaxCall('alramCancel',{eventLogIds : eventLogIdList.join(",")});
+            }
+
         }
 
         /**
