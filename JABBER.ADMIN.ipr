@@ -21,7 +21,7 @@
       </root>
     </artifact>
     <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war">
-      <output-path>$PROJECT_DIR$/../../../../BIN/isaver_web/</output-path>
+      <output-path>$PROJECT_DIR$/../../../BIN</output-path>
       <root id="archive" name="ISAVER.ADMIN.war">
         <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
         <element id="directory" name="WEB-INF">
@@ -316,7 +316,7 @@
         <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-api-1.7.7.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-log4j12-1.7.7.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.942.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.943.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
