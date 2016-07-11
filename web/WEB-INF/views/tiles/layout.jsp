@@ -59,6 +59,7 @@
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
             ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
+            ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
         };
 
         var layoutMessageConfig = {
@@ -548,6 +549,13 @@
                 alarmPlayer.play();
             }
         }
+        /* 대쉬보드 전체 페이지 이동*/
+        function moveFullDashFunc() {
+            var deviceListForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashBoardAllUrl']);
+            deviceListForm.appendTo(document.body);
+            deviceListForm.submit();
+        }
+
     </script>
 </head>
 <body>
@@ -556,7 +564,7 @@
     <!-- hearder Start 고통부분 -->
     <header id="header">
         <div class="header_area">
-            <h1><button></button></h1>
+            <h1><button onclick="javascript:moveFullDashFunc(); return false;" href="#"></button></h1>
             <div class="ha_right_set">
                 <div class="hrs_date">
                     <span id="nowTime"></span>
@@ -634,5 +642,49 @@
 
     <tiles:insertAttribute name="body" />
 </div>
+<script type="text/javascript">
+    var validNavigation = false;
+//
+//    $(document).load(function(){
+//
+//        window.onbeforeunload = function() {
+//            debugger;
+//            if (!validNavigation) {
+//                endSession();
+//            }
+//        }
+//
+//        // Attach the event click for all links in the page
+//        $("a").bind("click", function() {
+//            debugger;
+//            validNavigation = true;
+//        });
+//
+//        $("button").bind("click", function() {
+//            debugger;
+//            validNavigation = true;
+//        });
+//
+//        $("li").bind("click", function() {
+//            debugger;
+//            validNavigation = true;
+//        });
+//
+//        // Attach the event submit for all forms in the page
+//        $("form").bind("submit", function() {
+//            debugger;
+//            validNavigation = true;
+//        });
+//    });
+
+    function endSession() {
+        $.ajax({
+            url: layoutUrlConfig['logoutUrl'],
+            type: 'GET',
+            async: false,
+            timeout: 4000
+        });
+    }
+</script>
 </body>
 </html>

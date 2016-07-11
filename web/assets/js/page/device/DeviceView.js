@@ -157,7 +157,6 @@ function DeviceView(model) {
                     }
                 }
 
-
             }
             ,children: menuTreeModel
             ,onActivate: deviceCtrl.selectMenuTree
