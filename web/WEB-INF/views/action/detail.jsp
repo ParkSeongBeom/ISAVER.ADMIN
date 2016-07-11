@@ -119,6 +119,7 @@
         <%--,'requireActionId':'<spring:message code="action.message.requireActionId"/>'--%>
     };
 
+
     function validate(type){
 //        if(form.find('input[name=actionId]').val().length == 0){
 //            alertMessage('requireCodeId');
@@ -144,7 +145,9 @@
         }
 
         if(validate(1)){
+            var disabled = form.find(':input:disabled').removeAttr('disabled');
             callAjax('save', form.serialize());
+            disabled.attr('disabled','disabled');
         }
     }
 
@@ -154,7 +157,9 @@
         }
 
         if(validate(2)){
+            var disabled = form.find(':input:disabled').removeAttr('disabled');
             callAjax('remove', form.serialize());
+            disabled.attr('disabled','disabled');
         }
     }
 
@@ -167,6 +172,7 @@
         switch(actionType){
             case 'save':
                 alertMessage(actionType + 'Complete');
+                cancel();
                 break;
             case 'add':
                 if (data['existFlag'] == "true") {
@@ -175,7 +181,6 @@
                     alertMessage(actionType + 'Complete');
                     cancel();
                 }
-
                 break;
             case 'remove':
                 alertMessage(actionType + 'Complete');

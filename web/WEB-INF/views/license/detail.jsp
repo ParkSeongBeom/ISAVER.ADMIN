@@ -186,7 +186,6 @@
         alertMessage(actionType + 'Complete');
         switch(actionType){
             case 'save':
-                break;
             case 'add':
             case 'remove':
                 cancel();

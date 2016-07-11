@@ -67,6 +67,7 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
+                <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
                 <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
             </div>
         </div>

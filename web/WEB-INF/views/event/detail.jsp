@@ -296,9 +296,9 @@
                 break;
             case 'remove':
                 alertMessage(actionType + 'Complete');
-                cancel();
                 break;
         }
+        cancel();
     }
 
     function requestEvent_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
