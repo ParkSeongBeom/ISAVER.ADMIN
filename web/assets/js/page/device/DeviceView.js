@@ -131,7 +131,6 @@ function DeviceView(model) {
      * @param obj
      */
     DeviceView.setMenuTree = function (menuTreeModel) {
-
         var deviceCtrl = new DeviceCtrl(DeviceView._model);
         $(DeviceView._model.getTreaDevice()).dynatree({
             minExpandLevel: 2,
@@ -145,6 +144,19 @@ function DeviceView(model) {
                         this.reactivate();
                     }
                 }
+
+                if (selectedDeviceId.trim().length > 0) {
+                    try {
+                        setTimeout(function() {
+                            deviceCtrl.treeExpandAll();
+                            $("span[device_id=" +selectedDeviceId+"]").parent().parent().trigger("click");
+                        }, 250);
+
+                    } catch(e) {
+                        console.log("device tree error : " + e);
+                    }
+                }
+
 
             }
             ,children: menuTreeModel
@@ -273,6 +285,9 @@ function DeviceView(model) {
      */
     DeviceView.setAddBefore = function() {
 
+        var parenDeviceCode = $("select[id='selectDeviceCode']").val();
+        var parentDeviceTypeCode = $("select[id='selectDeviceType']").val();
+
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
@@ -295,12 +310,13 @@ function DeviceView(model) {
 
         $("input:hidden[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
 
-        $("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
-        $("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
+        //$("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
+        //$("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
+
         $("select[id=selectAreaId]").val("");
 
-        $("input[name=deviceTypeCode]").val($("select[id=selectDeviceType]  option:eq(0)").val());
-        $("input[name=deviceCode]").val($("select[id=selectDeviceCode]  option:eq(0)").val());
+        $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
+        $("input[name=deviceCode]").val(parenDeviceCode);
         $("input[name=areaId]").val("");
         $("td[name=ipAddress]").text("");
 

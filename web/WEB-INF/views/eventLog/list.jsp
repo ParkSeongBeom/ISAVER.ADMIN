@@ -93,7 +93,7 @@
                 <tr>
                     <th><spring:message code="eventlog.column.areaName"/></th>
                     <th><spring:message code="eventlog.column.eventFlag"/></th>
-                    <th><spring:message code="eventlog.column.deviceType"/></th>
+                    <th><spring:message code="eventlog.column.deviceCode"/></th>
                     <th><spring:message code="eventlog.column.eventDatetime"/></th>
                     <th><spring:message code="eventlog.column.eventName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelUserName"/></th>
@@ -225,7 +225,6 @@
      @author kst
      */
     function moveDetail(id){
-        debugger;
         var detailForm = $('<FORM>').attr('action',urlConfig['detailUrl']).attr('method','POST');
         detailForm.append($('<INPUT>').attr('type','hidden').attr('name','eventId').attr('value',id));
         document.body.appendChild(detailForm.get(0));

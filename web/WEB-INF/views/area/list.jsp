@@ -226,6 +226,10 @@
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
 
+    var urlConfig = {
+        'deviceListUrl':'${rootPath}/device/list.html'
+    };
+
     var messageConfig = {
         menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'

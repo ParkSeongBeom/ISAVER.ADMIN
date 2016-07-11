@@ -391,7 +391,8 @@ bottom button border gray active #4f4f4f
 
 .svgbase:before, .btn_x:before, .hrs_date > span:last-of-type:before, .toast_popup:before, .zoomclose_btn:before,
 .db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before,
-.time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before, .quick_nav > button:before
+.time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before, .quick_nav > button:before,
+.code_list > button:before, .code_list > div > button:nth-of-type(2):after
 {
     font-family: 'japple';
     speak: none;

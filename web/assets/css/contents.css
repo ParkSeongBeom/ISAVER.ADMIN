@@ -215,8 +215,12 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .code_list > button:hover { background-color: #2692ec;}
 .code_list > button:before {content:"\e922"; font-weight:bold; font-size:16px; color:#fff; padding:0 5px 0 0;}
 .code_list > div {
-    float:left; height:32px; margin:0 5px 5px 0; border-style:solid; border-width:1px; border-color:#b7b7b7;
+    overflow: hidden; float:left; height:32px; margin:0 5px 5px 0; border-style:solid; border-width:1px; border-color:#b7b7b7;
 }
+.code_list > div:hover > button {background-color: #b11831 !important; color:#fff;}
+
+
+
 .code_list > div > button, .code_list > div > button:nth-of-type(2):after {height:100%; font-weight: bold;}
 .code_list > div > button:nth-of-type(1) {padding:0 0 0 10px; line-height: 11px;}
 .code_list > div > button:nth-of-type(2):after {content:"\e925"; padding:0 10px; }
@@ -628,12 +632,14 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .menu_tree_set > li ul:before,
 .menu_tree_set > li > ul button:after {width:10px; height:1px;}
 .menu_tree_set > li ul:before         {top:24px; left:-20px;}
-.menu_tree_set > li > ul button:after {top:50%;  left:-10px; margin:-1px 0 0 -1px;}
+.menu_tree_set > li > ul button:after {top:50%;  left:-10px; margin:1px 0 0 -1px;}
 
 .menu_tree_set > li ul li:after {top:24px;; left:-10px; bottom:-25px; width:1px;}
 .menu_tree_set > li ul li:first-of-type:after {}
 .menu_tree_set > li ul li:last-of-type:after  {display: none;}
 /*.menu_tree_set > li ul {margin: -50px 0 0 240px;} flex알쓸때  */
+
+
 
 
 /* 마키 시작 */

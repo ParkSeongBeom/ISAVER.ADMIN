@@ -145,11 +145,19 @@ function AreaView(model) {
 
                 deviceCode_TD.textContent = device['deviceCode'];
 
+                tr.setAttribute("device_id", device['deviceId']);
                 tr.appendChild(deviceId_TD);
                 tr.appendChild(serialNo_TD);
                 tr.appendChild(deviceTypeCode_TD);
                 tr.appendChild(deviceCode_TD);
+                $(tr).bind("click", function() {
+                    var id = $(this).attr("device_id");
+                    var deviceListForm = $('<FORM>').attr('method','POST').attr('action',urlConfig['deviceListUrl']);
+                    deviceListForm.append($('<INPUT>').attr('type','hidden').attr('name','deviceId').attr('value',id));
+                    deviceListForm.appendTo(document.body);
+                    deviceListForm.submit();
 
+                });
                 $(table).append(tr);
             }
 

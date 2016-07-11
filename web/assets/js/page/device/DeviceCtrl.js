@@ -352,7 +352,6 @@ function DeviceEvent(model) {
         DeviceEvent._model.setDeviceTreeList(JSON.parse(JSON.stringify(data['deviceList'])));
 
         var menuTreeModel = DeviceEvent._model.processMenuTreeData(data['deviceList'], DeviceEvent._model.getRootOrgId());
-
         deviceView.setMenuTree(menuTreeModel);
     };
 

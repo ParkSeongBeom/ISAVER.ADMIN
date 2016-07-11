@@ -176,6 +176,7 @@
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
+    var selectedDeviceId = String("${paramBean.deviceId}");
 
     var messageConfig = {
         menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
