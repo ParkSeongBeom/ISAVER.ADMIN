@@ -276,7 +276,7 @@
                                 function removeToastTag(_tag){
                                     setTimeout(function(){
                                         _tag.remove();
-                                    },2000);
+                                    },3000);
                                 }
                             }
                         }

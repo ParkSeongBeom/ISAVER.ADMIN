@@ -256,7 +256,7 @@
                             <div class="mc_element_set">
                                 <div class="personnel">
                                     <div id="nowInout" class="now">
-                                        <p id="nowInoutDatetime">00:00:00</p>
+                                        <p id="nowInoutDatetime">00:00:00 ~</p>
                                         <span id="nowInoutGap">0</span>
                                         <div id="nowInCnt">0</div>
                                         <div id="nowOutCnt">0</div>
@@ -885,13 +885,33 @@
         var nowGap = inout['nowInCnt'] - inout['nowOutCnt'];
         var beforeGap = inout['beforeInCnt'] - inout['beforeOutCnt'];
 
-//        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(paramBean['nowInoutEndtime']).format("HH:mm:ss"));
-        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss"));
+        var nowInoutStarttime, beforeInoutStarttime, beforeInoutEndtime;
+        if(new Date(paramBean['nowInoutStarttime']).toString() == 'Invalid Date' || new Date(paramBean['nowInoutStarttime']).toString() == 'NaN'){
+            nowInoutStarttime = paramBean['nowInoutStarttime'].substring(11);
+        }else{
+            nowInoutStarttime = new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss");
+        }
+
+        if(new Date(paramBean['beforeInoutStarttime']).toString() == 'Invalid Date' || new Date(paramBean['beforeInoutStarttime']).toString() == 'NaN'){
+            beforeInoutStarttime = paramBean['beforeInoutStarttime'].substring(11);
+        }else{
+            beforeInoutStarttime = new Date(paramBean['beforeInoutStarttime']).format("HH:mm:ss");
+        }
+
+        if(new Date(paramBean['beforeInoutEndtime']).toString() == 'Invalid Date' || new Date(paramBean['beforeInoutEndtime']).toString() == 'NaN'){
+            beforeInoutEndtime = paramBean['beforeInoutEndtime'].substring(11);
+        }else{
+            beforeInoutEndtime = new Date(paramBean['beforeInoutEndtime']).format("HH:mm:ss");
+        }
+
+//        $("#nowInoutDatetime").text(new Date(paramBean['nowInoutStarttime']).format("HH:mm:ss") + " ~");
+        $("#nowInoutDatetime").text(nowInoutStarttime + " ~");
         $("#nowInoutGap").text(Number(nowGap));
         $("#nowInCnt").text(Number(inout['nowInCnt']));
         $("#nowOutCnt").text(Number(inout['nowOutCnt']));
 
-        $("#beforeInoutDatetime").text(new Date(paramBean['beforeInoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(paramBean['beforeInoutEndtime']).format("HH:mm:ss"));
+//        $("#beforeInoutDatetime").text(new Date(paramBean['beforeInoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(paramBean['beforeInoutEndtime']).format("HH:mm:ss"));
+        $("#beforeInoutDatetime").text(beforeInoutStarttime + " ~ " + beforeInoutEndtime);
         $("#beforeInoutGap").text(Number(beforeGap));
         $("#beforeInCnt").text(Number(inout['beforeInCnt']));
         $("#beforeOutCnt").text(Number(inout['beforeOutCnt']));
