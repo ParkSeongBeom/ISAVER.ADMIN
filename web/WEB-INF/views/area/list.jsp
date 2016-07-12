@@ -235,7 +235,7 @@
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
         ,   addFailure                :'<spring:message code="area.message.addFailure"/>'
         ,   saveFailure               :'<spring:message code="area.message.saveFailure"/>'
-        ,   removeFailure             :'<spring:message code="menu.message.removeFailure"/>'
+        ,   removeFailure             :'<spring:message code="area.message.removeFailure"/>'
         ,   addComplete               :'<spring:message code="area.message.addComplete"/>'
         ,   saveComplete              :'<spring:message code="area.message.saveComplete"/>'
         ,   removeComplete            :'<spring:message code="area.message.removeComplete"/>'

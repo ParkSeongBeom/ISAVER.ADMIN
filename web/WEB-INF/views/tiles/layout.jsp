@@ -192,10 +192,10 @@
 
                     switch (eventLog['eventType']){
                         case "crane" :
-                            eventTypeName = "크레인";
+                            eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
                             break;
                         case "worker" :
-                            eventTypeName = "쓰러짐";
+                            eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
                             break;
                     }
 
@@ -646,49 +646,5 @@
 
     <tiles:insertAttribute name="body" />
 </div>
-<script type="text/javascript">
-    var validNavigation = false;
-//
-//    $(document).load(function(){
-//
-//        window.onbeforeunload = function() {
-//            debugger;
-//            if (!validNavigation) {
-//                endSession();
-//            }
-//        }
-//
-//        // Attach the event click for all links in the page
-//        $("a").bind("click", function() {
-//            debugger;
-//            validNavigation = true;
-//        });
-//
-//        $("button").bind("click", function() {
-//            debugger;
-//            validNavigation = true;
-//        });
-//
-//        $("li").bind("click", function() {
-//            debugger;
-//            validNavigation = true;
-//        });
-//
-//        // Attach the event submit for all forms in the page
-//        $("form").bind("submit", function() {
-//            debugger;
-//            validNavigation = true;
-//        });
-//    });
-
-    function endSession() {
-        $.ajax({
-            url: layoutUrlConfig['logoutUrl'],
-            type: 'GET',
-            async: false,
-            timeout: 4000
-        });
-    }
-</script>
 </body>
 </html>

@@ -200,7 +200,7 @@ function AreaCtrl(model) {
     /**
      * [cruD] 구역 삭제
      */
-    AreaCtrl.removeArea = function () {
+    AreaCtrl.removeArea = function (areaId) {
 
         var type = AreaCtrl._model.model.ACTION.REMOVE;
         this._model.setViewStatus(type);
@@ -208,7 +208,11 @@ function AreaCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
 
-        sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
+        var param = {
+            'areaId' : areaModel.getAreaId()
+        };
+
+        sendAjaxPostRequest(requestUrl, param, this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
 
     };
 

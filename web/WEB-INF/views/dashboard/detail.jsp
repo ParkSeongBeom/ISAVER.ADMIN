@@ -178,7 +178,7 @@
                                                     <c:choose>
                                                         <c:when test="${workerEvent.eventId == 'EVT015'}"><div class="mc_bico type02 cloth"></div></c:when>
                                                         <c:when test="${workerEvent.eventId == 'EVT016'}"><div class="mc_bico type02 helmet"></div></c:when>
-                                                        <c:when test="${workerEvent.eventId == 'EVT009'}"><div class="mc_bico type02 worker"></div></c:when>
+                                                        <c:when test="${workerEvent.eventId == 'EVT009'}"><div class="mc_bico type02 down"></div></c:when>
                                                         <c:otherwise><div class="mc_bico type02 etc"></div></c:otherwise>
                                                     </c:choose>
                                                     <div class="mc_box">
@@ -229,7 +229,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <div eventId="evt_crane_detection" class="mc_element">
-                                        <div class="mc_bico type02 crane"></div>
+                                        <div class="mc_bico type02 crash"></div>
                                         <div class="mc_box">
                                             <p><spring:message code="dashboard.column.evtCraneDetection"/></p>
                                             <p class="eventCnt">0</p>
@@ -676,10 +676,10 @@
             }
 
             if(workerEventCnt>0){
-                modifyElementClass($(".detail_popup .layer_area[type='worker']"),'level03','add');
+                modifyElementClass($(".detail_popup .layer_area[type='down']"),'level03','add');
                 modifyElementClass($("#workerDiv"),'level03','add');
             }else{
-                modifyElementClass($(".detail_popup .layer_area[type='worker']"),'level03','remove');
+                modifyElementClass($(".detail_popup .layer_area[type='down']"),'level03','remove');
                 modifyElementClass($("#workerDiv"),'level03','remove');
             }
         }
@@ -752,7 +752,7 @@
                         break;
                     case "EVT100": //크레인 충돌 감지(IVAS)
                     case "EVT210": //크레인 충돌 감지(SIOC)
-                        craneClassName = ".crane";
+                        craneClassName = ".crash";
                         divTag = $(".craneContens").find("div[eventId=evt_crane_detection]");
 
                         if ( crane['eventCnt'] != null) {
