@@ -194,7 +194,13 @@ function AreaCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
 
+
+        $(formName + " [name='areaId']").removeAttr("disabled");
+
         sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
+
+        $(formName + " [name='areaId']").attr("disabled", "disabled");
+
     };
 
     /**

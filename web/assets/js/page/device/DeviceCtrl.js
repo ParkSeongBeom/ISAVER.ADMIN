@@ -250,7 +250,13 @@ function DeviceCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + DeviceCtrl._model.getFormName();
 
+        $(formName + " [name='deviceId']").removeAttr("disabled");
+        $(formName + " [name='serialNo']").removeAttr("disabled");
+
         sendAjaxPostRequest(requestUrl, $(formName).serialize(), this._event.areaCudSuccessHandler, this._event.areaCudErrorHandler, type);
+
+        $(formName + " [name='deviceId']").attr("disabled", "disabled");
+        $(formName + " [name='serialNo']").attr("disabled", "disabled");
     };
 
     /**
@@ -432,7 +438,7 @@ function DeviceEvent(model) {
         if (actionType =="remove") {
             if (data['provisionExist'] != null && data['provisionExist'] =='Y' && actionType =="remove") {
 
-                alert(messageConfig['provisionExistError']);
+                alert("장치 ID[" + data['provisionDeviceId'] + "] 의 " +  messageConfig['provisionExistError']);
             }  else {
                 alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
                 //window.location.reload();

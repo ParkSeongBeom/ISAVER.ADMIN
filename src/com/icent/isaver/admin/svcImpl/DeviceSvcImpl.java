@@ -131,10 +131,12 @@ public class DeviceSvcImpl implements DeviceSvc {
         List<DeviceBean> devices = deviceDao.findByDeviceTreeChildNodes(parameters);
 
         Boolean provisionExist = false;
+        String provisionDeviceId = "";
 
         for (Integer i =0; i <devices.size(); i ++) {
             if (devices.get(i).getProvisionFlag().equals(CommonResource.YES)) {
                 provisionExist = true;
+                provisionDeviceId = devices.get(i).getDeviceId();
                 break;
             }
             devices.get(i).setUpdateUserId(parameters.get("updateUserId"));
@@ -156,6 +158,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         ModelAndView modelAndView = new ModelAndView();
         if (provisionExist) {
             modelAndView.addObject("provisionExist", "Y");
+            modelAndView.addObject("provisionDeviceId", provisionDeviceId);
         }
         return modelAndView;
     }
