@@ -133,6 +133,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         Boolean provisionExist = false;
         String provisionDeviceId = "";
 
+        /*
         for (Integer i =0; i <devices.size(); i ++) {
             if (devices.get(i).getProvisionFlag().equals(CommonResource.YES)) {
                 provisionExist = true;
@@ -141,6 +142,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             }
             devices.get(i).setUpdateUserId(parameters.get("updateUserId"));
         }
+        */
 
         if (!provisionExist) {
             TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
