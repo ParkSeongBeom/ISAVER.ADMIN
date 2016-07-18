@@ -254,8 +254,8 @@ GNB ,버튼 active   #0c8dd0
 
 .alra_btn:before {content: "\e907"; padding:0 4px 0 0; font-size: 13px;}
 
-.zoom_btn, .sett_btn, .refl_btn {margin:0 0 0 15px;}
-.zoom_btn, .sett_btn, .zoomclose_btn  {font-size:26px;}
+.zoom_btn, .sett_btn, .refl_btn, .zoomclose_btn {margin:0 0 0 15px;}
+.zoom_btn, .sett_btn, .zoomclose_btn  {font-size:26px; }
 .zoom_btn:before      {content: "\e904";}
 .zoom_btn.on:before   {content: "\e903";}
 .zoomclose_btn:before {content: "\e925";}
