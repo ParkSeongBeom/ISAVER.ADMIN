@@ -33,6 +33,11 @@
     <script src="${rootPath}/assets/js/page/menu/MenuCtrl.js" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/menu/MenuView.js" type="text/javascript" charset="UTF-8"></script>
 
+    <%-- dynatree, dhj --%>
+    <script src="${rootPath}/assets/js/page/area/AreaModel.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/area/AreaCtrl.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/area/AreaView.js" type="text/javascript" charset="UTF-8"></script>
+
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>

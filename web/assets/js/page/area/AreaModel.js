@@ -508,6 +508,17 @@ function AreaModel() {
         return _treeModel;
     }
 
+    /**
+     * 구역 목록 가공
+     * @author dhj
+     */
+    AreaModel.processMenuListData = function (_list) {
+
+        var _treeModel = [];
+
+        return _treeModel;
+    }
+
     return AreaModel;
 }
 
