@@ -78,6 +78,7 @@ public class EventLogSvcImpl implements EventLogSvc {
             Map<String, String> eventLogParamMap = new HashMap<>();
             eventLogParamMap.put("eventLogId", eventLogId);
             eventLogParamMap.put("eventCancelUserId", parameters.get("eventCancelUserId"));
+            eventLogParamMap.put("eventCancelDesc", parameters.get("eventCancelDesc"));
             parameterList.add(eventLogParamMap);
         }
 

@@ -286,7 +286,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
 .mp_header, .mp_contents {position: absolute; z-index:1; }
 .mp_header {
     top:0; left:15px; right:15px; height:40px; margin:5px 0;
-    border-width:0 0 1px 0; border-style:dotted; border-color:#1e1d22;
+    border-width:0 0 1px 0; border-style:dotted; border-color:#131313;
 }
 .mp_contents {overflow: hidden;  top:50px; left:15px; right:10px; bottom:15px;}
 
@@ -345,6 +345,7 @@ span.holiday_span > span {display: inline;   cursor: pointer;}
     position: absolute; height:100%;
 }
 .mp_header > h2  {left:0; color:#fff; font-size:16px;}
+.layer_popup .mp_header > h2  {font-size:20px;}
 .mp_header > div {right:0px;width:auto; }
 .mp_header > div > button, .mp_header > div > button:before {color:#fff;}
 

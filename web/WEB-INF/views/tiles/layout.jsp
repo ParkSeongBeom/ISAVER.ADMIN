@@ -107,7 +107,7 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup").length) {
                     alramShowHide('list','hide');
                 }
             });
@@ -325,10 +325,10 @@
         }
 
         /**
-         * alram cencel
+         * open alram cencel popup
          * @author psb
          */
-        function alramCancel(){
+        function openAlramCancelPopup(){
             var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
 
             if(eventLogIdList==null || eventLogIdList.length == 0){
@@ -336,11 +336,31 @@
                 return false;
             }
 
-            var r = confirm("<spring:message code="dashboard.message.alramConfirm"/>");
-            if (r == true) {
-                layoutAjaxCall('alramCancel',{eventLogIds : eventLogIdList.join(",")});
-            }
+            $(".attention_popup").show();
+        }
 
+        /**
+         * close alram cencel popup
+         * @author psb
+         */
+        function closeAlramCancelPopup(){
+            $("#eventCancelDesc").val("");
+            $(".attention_popup").hide();
+        }
+
+        /**
+         * alram cencel
+         * @author psb
+         */
+        function alramCancel(){
+            var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+
+            var param = {
+                'eventLogIds' : eventLogIdList.join(",")
+                ,'eventCancelDesc' : $("#eventCancelDesc").val()
+            };
+
+            layoutAjaxCall('alramCancel',param);
         }
 
         /**
@@ -352,7 +372,7 @@
                 eventLogId  : eventLogId
                 , eventId   : eventId
                 , eventType : eventType
-            }
+            };
 
             alramShowHide('detail','hide');
             layoutAjaxCall('alramDetail',paramData);
@@ -377,6 +397,7 @@
                     alramDetailRender(data);
                     break;
                 case 'alramCancel':
+                    closeAlramCancelPopup();
                     layoutAlertMessage('alramCancelSuccess');
                     break;
             }
@@ -601,7 +622,7 @@
         <div class="db_header">
             <div>
                 <h3 onclick="javascript:alramShowHide('list', 'hide'); return false;"><spring:message code="dashboard.title.alramCenter"/></h3>
-                <button class="btn btype03 bstyle07" href="#" onclick="javascript:alramCancel();"><spring:message code="dashboard.title.alramCancel"/></button>
+                <button class="btn btype03 bstyle07" href="#" onclick="javascript:openAlramCancelPopup();"><spring:message code="dashboard.title.alramCancel"/></button>
             </div>
             <div>
                 <div class="check_box_set">
@@ -644,6 +665,33 @@
     <!-- 토스트 영역 Start -->
     <aside class="toast_popup on"></aside>
     <!-- 토스트 영역 End -->
+
+    <!-- 알림해지 레이어 팝업 Start -->
+    <aside class="layer_popup attention_popup">
+        <section class="layer_wrap i_type07">
+            <article class="layer_area">
+                <div class="mp_header">
+                    <h2><spring:message code="dashboard.title.alramCancel"/></h2>
+                </div>
+                <div class="mp_contents vh_mode">
+                    <div class="mc_element">
+                        <div class="time_select_contents">
+                            <!-- 1 SET -->
+                            <div>
+                                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alramCancel'/>"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lmc_btn_area mc_tline">
+                        <button class="btn btype01 bstyle07" onclick="javascript:alramCancel();"><spring:message code="common.button.save"/></button>
+                        <button class="btn btype01 bstyle07" onclick="javascript:closeAlramCancelPopup();"><spring:message code="common.button.cancel"/></button>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlramCancelPopup(); event.stopPropagation();"></div>
+    </aside>
+    <!-- 알림해지 레이어 팝업 End -->
 
     <audio controls style="display: none">
         <source src="${rootPath}/assets/library/sound/alarm.mp3" type="audio/mpeg">

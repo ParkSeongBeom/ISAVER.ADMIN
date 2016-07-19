@@ -99,7 +99,7 @@ input, select {
 
 
 
-textarea {overflow: auto; padding:4px;}
+textarea {overflow: auto; padding:4px; font-family:'맑은고딕';}
 input:focus,  select:focus, textarea:focus {border:1px solid #555;}
 
 input.radio, input[type="radio"],

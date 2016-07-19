@@ -12,8 +12,16 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 
 /* 데시보드 셀렉트  */
-.dashboard_mode select, .dashboard_mode input, .db_area select, .db_area input
+.dashboard_mode select, .dashboard_mode input, .dashboard_mode textarea, .db_area select, .db_area input
 {color:#fff; font-size:16px; background-color: #1e1d23; border: none; }
+
+.dashboard_mode input::-webkit-input-placeholder   {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+.dashboard_mode select::-webkit-input-placeholder  {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+.dashboard_mode textarea::-webkit-input-placeholder{letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+.dashboard_mode input:-ms-input-placeholder        {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+.dashboard_mode select:-ms-input-placeholder       {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+.dashboard_mode textarea:-ms-input-placeholder     {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+
 
 /*테이블 삽입 입력 폼 */
 .t_defalut tbody td input,.t_defalut tbody td select {width:100%;height:30px;}
@@ -48,10 +56,7 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 .select_edit.disabled input, .select_edit.disabled select {disabled: true; pointer-events:none; background-color: #22202a;}
 .select_edit.disabled select {opacity: 0.2;}
 
-.select_edit input::-webkit-input-placeholder {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
-.select_edit input::-moz-placeholder          {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
-.select_edit input:-ms-input-placeholder      {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
-.select_edit input::-moz-placeholder          {letter-spacing:-1px; color:rgba(255,255,255, 0.4);}
+
 
 
 /* label base */
