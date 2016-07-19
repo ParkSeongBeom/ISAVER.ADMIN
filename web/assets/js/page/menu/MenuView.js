@@ -280,6 +280,8 @@ function MenuView(model) {
         }
 
         if (_listLength == _loopLength) {
+            areaList = MenuView._model.getAreaList();
+
             if(areaList!=null){
                 if($(rootUlTag).find("li[name='H00000'] ul").length==0){
                     $(rootUlTag).find("li[name='H00000']").append(
@@ -291,12 +293,11 @@ function MenuView(model) {
 
                 for(var index in areaList){
                     var area = areaList[index];
-                    if (area['delYn'] == 'N') {
-                        var _menuLiTag = menuLiTag.clone();
-                        _menuLiTag.attr("name", area['areaId']);
-                        _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
-                        $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
-                    }
+
+                    var _menuLiTag = menuLiTag.clone();
+                    _menuLiTag.attr("name", area['areaId']);
+                    _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
+                    $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
 
                 }
             }

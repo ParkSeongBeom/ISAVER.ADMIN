@@ -45,6 +45,7 @@ function AreaModel() {
         ,pageCount: 0
         ,rootName: "HOME"
         ,areaTreeList: []
+        ,areaList: []
     };
 
     /**
@@ -348,6 +349,14 @@ function AreaModel() {
         return this.model.userId;
     };
 
+    AreaModel.setAreaList = function(areaList) {
+        this.model.areaList = areaList;
+    };
+
+    AreaModel.getAreaList = function() {
+        return this.model.areaList;
+    };
+
     /**
      * 전체 구역 목록을 정의
      * @param menuName
@@ -394,7 +403,7 @@ function AreaModel() {
      * 구역 트리 가공
      * @author dhj
      */
-    AreaModel.processMenuTreeData = function (_list, _rootId) {
+    AreaModel.processMenuTreeData = function (_list, _rootId, arrayFlag) {
         var obj = {};
 
         obj.orgCode = null;
@@ -431,7 +440,8 @@ function AreaModel() {
                         title     : "<span style='font-weight: bold;'>"+String(item['areaName'] + "</span> (" + item['areaId'] +")"),
                         isFolder  : false,
                         orgSort   : Number(item.sortOrder),
-                        children  : []
+                        children  : [],
+                        areaName : item['areaName']
                     };
 
                     //현재 요소를 추가하고
@@ -445,11 +455,12 @@ function AreaModel() {
                     //데이터상에서는 삭제
                     _list.splice(_list.indexOf(item), 1);
 
-
                     //현재 트리 계층을 정렬
                     child.children.sort(function (a, b) {
                         return a.orgSort < b.orgSort ? -1 : a.orgSort > b.orgSort ? 1 : 0;
                     });
+
+
 //                    child.children.sortByProp('orgSort');
                 } else {
 
@@ -489,6 +500,7 @@ function AreaModel() {
                     _treeModel.sort(function (a, b) {
                         return a.orgSort < b.orgSort ? -1 : a.orgSort > b.orgSort ? 1 : 0;
                     });
+
 //                    _treeModel.sortByProp('orgSort');
                     break;
                 }else if(item.depth == 1){
@@ -504,6 +516,26 @@ function AreaModel() {
 //        console.debug("_listLength : " + _listLength);
 //        console.debug("_treeLength : " + _treeLength);
 //        console.debug("_loopLength : " + _loopLength);
+
+        function eachRecursive(obj) {
+
+            for (var k in obj) {
+                if (typeof obj[k] == "object" && obj[k] !== null) {
+                    eachRecursive(obj[k]);
+                } else {
+
+
+                    if (k == "title" && obj['id'] != "") {
+                        AreaModel.getAreaList().push({"areaId" : obj['id'], "areaName" : obj['areaName']});
+                    }
+
+                }
+            }
+        };
+
+        if (arrayFlag != undefined) {
+            eachRecursive(_treeModel);
+        }
 
         return _treeModel;
     }

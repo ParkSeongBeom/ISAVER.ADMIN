@@ -31,7 +31,8 @@ function MenuModel() {
             SAVE: 'save',
             REMOVE: 'remove',
             DETAIL: 'detail'
-        }
+        },
+        areaList : []
     };
 
     MenuModel.setMenuDepth = function (menuDepth) {
@@ -187,6 +188,14 @@ function MenuModel() {
 
     MenuModel.getTargetMenuId = function() {
         return this.model.targetMenuId;
+    };
+
+    MenuModel.setAreaList = function(areaList) {
+        this.model.areaList = areaList;
+    };
+
+    MenuModel.getAreaList = function() {
+        return this.model.areaList;
     };
 
     /**
