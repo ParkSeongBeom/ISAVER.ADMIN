@@ -72,6 +72,8 @@
             , alramDetailFailure  :'<spring:message code="dashboard.message.alramDetailFailure"/>'
             , alramCancelFailure  :'<spring:message code="dashboard.message.alramCancelFailure"/>'
             , emptyAlramCancel    :'<spring:message code="dashboard.message.emptyAlramCancel"/>'
+            , emptyAlramCancelDesc:'<spring:message code="dashboard.message.emptyAlramCancelDesc"/>'
+
         };
 
         var alarmPlayer;
@@ -354,10 +356,16 @@
          */
         function alramCancel(){
             var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+            var eventCancelDesc = $("#eventCancelDesc").val();
+
+            if(eventCancelDesc==null || eventLogIdList.length == 0){
+                layoutAlertMessage('emptyAlramCancelDesc');
+                return false;
+            }
 
             var param = {
                 'eventLogIds' : eventLogIdList.join(",")
-                ,'eventCancelDesc' : $("#eventCancelDesc").val()
+                ,'eventCancelDesc' : eventCancelDesc
             };
 
             layoutAjaxCall('alramCancel',param);
