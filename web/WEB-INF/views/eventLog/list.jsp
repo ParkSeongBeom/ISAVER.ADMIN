@@ -98,6 +98,7 @@
                     <th><spring:message code="eventlog.column.eventName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelUserName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelDatetime"/></th>
+                    <th><spring:message code="eventlog.column.eventCancelDesc"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,12 +113,13 @@
                                 <td>${eventLog.eventName}</td>
                                 <td>${eventLog.eventCancelUserName}</td>
                                 <td><fmt:formatDate value="${eventLog.eventCancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                <td>${eventLog.eventCancelDesc}</td>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="8"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
