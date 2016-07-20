@@ -301,12 +301,15 @@
      @author psb
      */
     function openEventCancelDescPopup(_this){
-        $("#eventLogCancelDescText").text($(_this).text());
-        $(".eventdetail_popup").show();
+        var eventLogCancelDescText = $(_this).text();
+        if(eventLogCancelDescText!="" && eventLogCancelDescText!=null){
+            $("#eventLogCancelDescText").text(eventLogCancelDescText);
+            $(".eventdetail_popup").show();
+        }
     }
 
     /*
-     open 이벤트 해제사유 popup
+     close 이벤트 해제사유 popup
      @author psb
      */
     function closeEventCancelDescPopup(){
