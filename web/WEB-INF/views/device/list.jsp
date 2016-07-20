@@ -120,11 +120,12 @@
                         </td>
                     </tr>
                     <tr name="showHideTag">
-                        <th class=""><spring:message code='device.column.provisionFlag'/></th>
-                        <td class="">
-                            <input name="provisionFlag" type="radio" value="Y" disabled>예
-                            <input name="provisionFlag" type="radio" value="N" disabled>아니오
-                            <%--<span name="provisionFlag"></span>--%>
+                        <th class="point"><spring:message code='device.column.provisionFlag'/></th>
+                        <td class="point">
+                            <select name="provisionFlag" >
+                                <option value="Y">예</option>
+                                <option value="N">아니오</option>
+                            </select>
                         </td>
                         <th class=""><spring:message code='device.column.deviceStat'/></th>
                         <td class="">

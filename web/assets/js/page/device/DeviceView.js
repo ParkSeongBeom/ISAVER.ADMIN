@@ -62,9 +62,9 @@ function DeviceView(model) {
         provisionFlag: function (data) {
 
             if (data['provisionFlag'] == 'Y') {
-                $("input:radio[name='provisionFlag']:radio[value='Y']").prop("checked",true);
+                $(formName + " [name='provisionFlag']").val("Y");
             } else {
-                $("input:radio[name='provisionFlag']:radio[value='N']").prop("checked",true);
+                $(formName + " [name='provisionFlag']").val("N");
             }
         },
         deviceStat: function (data) {

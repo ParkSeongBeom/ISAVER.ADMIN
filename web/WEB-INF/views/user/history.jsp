@@ -37,16 +37,16 @@
                         <input type="text" name="userName" value="${paramBean.userName}"/>
                     </span>
                 </p>
-                <p class="itype_01">
-                    <span><spring:message code="loginHistory.column.loginFlag" /></span>
-                    <span>
-                        <select name="loginFlag">
-                            <option value="" <c:if test="${empty paramBean.loginFlag}">selected</c:if>><spring:message code="common.button.select"/></option>
-                            <option value="1" <c:if test="${paramBean.loginFlag == '1'}">selected</c:if>><spring:message code="loginHistory.column.login"/></option>
-                            <option value="0" <c:if test="${paramBean.loginFlag == '0'}">selected</c:if>><spring:message code="loginHistory.column.logout"/></option>
-                        </select>
-                    </span>
-                </p>
+                <%--<p class="itype_01">--%>
+                    <%--<span><spring:message code="loginHistory.column.loginFlag" /></span>--%>
+                    <%--<span>--%>
+                        <%--<select name="loginFlag">--%>
+                            <%--<option value="" <c:if test="${empty paramBean.loginFlag}">selected</c:if>><spring:message code="common.button.select"/></option>--%>
+                            <%--<option value="1" <c:if test="${paramBean.loginFlag == '1'}">selected</c:if>><spring:message code="loginHistory.column.login"/></option>--%>
+                            <%--<option value="0" <c:if test="${paramBean.loginFlag == '0'}">selected</c:if>><spring:message code="loginHistory.column.logout"/></option>--%>
+                        <%--</select>--%>
+                    <%--</span>--%>
+                <%--</p>--%>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>

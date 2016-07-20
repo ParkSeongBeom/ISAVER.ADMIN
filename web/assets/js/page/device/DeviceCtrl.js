@@ -183,7 +183,6 @@ function DeviceCtrl(model) {
 
         if (this.commonVaild(true)) {
 
-
             var deviceObj = DeviceCtrl._model.getDeviceDetail($("input[name='deviceId']").val(), $("input[name='serialNo']").val(), $("input[name='ipAddress']").val());
 
             if (deviceObj['serialNoExistFlag'] == true) {
