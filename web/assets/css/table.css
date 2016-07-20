@@ -7,7 +7,13 @@
 
 
 textarea.noboder_type01 {border:none; min-height:150px; background-color: transparent; font-family: inherit; }
-.editable01 {overflow: auto; width:100%; height:auto !important; /*max-height:200px*/ !important; margin:10px 0;white-space:normal;}
+
+.editable01, .editable02 {
+    overflow: auto; width:100%; margin:10px 0; white-space:normal;
+}
+
+.editable01 { height:auto !important; /*max-height:200px*/ }
+.editable02 { height:calc(100% - 10px); height:-webkit-calc(100% - 10px); }
 /*달력 CSS*/
 .ui-jqgrid-sortable {
     padding:8px 0;

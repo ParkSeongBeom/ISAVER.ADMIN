@@ -109,7 +109,7 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup, .admin_popup").length) {
                     alramShowHide('list','hide');
                 }
             });

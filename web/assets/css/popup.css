@@ -63,7 +63,7 @@
 .i_type01 {width:400px;margin:120px 0 0 -200px;}
 .i_type02, .i_type022 {width:500px; margin:120px 0 0 -250px;}
 .i_type02.it_style01 {margin:20px 0 0 -250px;}
-.i_type03 {width:700px;margin:120px 0 0 -350px;}
+.i_type03 {width:700px; height:450px; margin:120px 0 0 -350px;}
 .i_type04 {left:50px; top:50px; right:50px; bottom: 50px;}
 .i_type05 {top:100px; bottom:130px; width:900px; max-height:630px; margin:0 0 0 -450px; }
 .i_type06 {top:100px; bottom:100px; width:600px; max-height:700px; margin:0 0 0 -300px; }

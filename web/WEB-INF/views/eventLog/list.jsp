@@ -26,6 +26,21 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
+    <aside class="admin_popup eventdetail_popup">
+        <section class="layer_wrap i_type07">
+            <article class="layer_area">
+                <div class="layer_header">
+                    <spring:message code="eventlog.column.eventCancelDesc"/>
+                    <button class="ipop_x" onclick="closeEventCancelDescPopup();"></button>
+                </div>
+                <div class="layer_contents">
+                    <div class="editable02" id="eventLogCancelDescText"></div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close" onclick="closeEventCancelDescPopup();"></div>
+    </aside>
+
     <form id="eventLogForm" method="POST">
         <input type="hidden" name="pageNumber"/>
 
@@ -80,14 +95,14 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
-                    <col style="width: 10%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: 15%;" />
-                    <col style="width: *%;" />
+                    <col style="width: 10%;"> <!-- 1 구역명 -->
+                    <col style="width: 8%;"> <!-- 2 이벤트유형 -->
+                    <col style="width: 10%;"> <!-- 3 장치유형 -->
+                    <col style="width: 13%;"> <!-- 4 이벤트발생일시 -->
+                    <col style="width: 15%;"> <!-- 5 이벤트명 -->
+                    <col style="width: 10%;"> <!-- 6 이벤트해제자 -->
+                    <col style="width: 13%;"> <!-- 7 이벤트해제일시 -->
+                    <col style="width: *;">  <!-- 8 이벤트해지사유-->
                 </colgroup>
                 <thead>
                 <tr>
@@ -113,7 +128,7 @@
                                 <td>${eventLog.eventName}</td>
                                 <td>${eventLog.eventCancelUserName}</td>
                                 <td><fmt:formatDate value="${eventLog.eventCancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                <td>${eventLog.eventCancelDesc}</td>
+                                <td class="eventdetail_btn" onclick="javascript:openEventCancelDescPopup(this);">${eventLog.eventCancelDesc}</td>
                             </tr>
                         </c:forEach>
                     </c:when>
@@ -159,7 +174,6 @@
     };
 
     $(document).ready(function(){
-
         calendarHelper.load(form.find('input[name=startDatetimeStr]'));
         calendarHelper.load(form.find('input[name=endDatetimeStr]'));
 
@@ -173,8 +187,6 @@
                 search();
             }
         });
-
-
     });
 
     /*
@@ -284,4 +296,21 @@
         form.submit();
     }
 
+    /*
+     open 이벤트 해제사유 popup
+     @author psb
+     */
+    function openEventCancelDescPopup(_this){
+        $("#eventLogCancelDescText").text($(_this).text());
+        $(".eventdetail_popup").show();
+    }
+
+    /*
+     open 이벤트 해제사유 popup
+     @author psb
+     */
+    function closeEventCancelDescPopup(){
+        $("#eventLogCancelDescText").text("");
+        $(".eventdetail_popup").hide();
+    }
 </script>
