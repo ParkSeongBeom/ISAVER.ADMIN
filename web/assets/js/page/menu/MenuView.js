@@ -371,10 +371,9 @@ function MenuView(model) {
 
         for(var i = 0; i < areaList.length; i ++) {
             var areaItem = areaList[i];
-            var buttonTag = $("<button />", {'href' : "#" , 'onclick' : "moveDashBoardDetail('" +areaItem['areaId'] +"')"});
+            var buttonTag = $("<button />", {'areaId' : areaItem['areaId'], 'href' : "#" , 'onclick' : "moveDashBoardDetail('" +areaItem['areaId'] +"')"});
 
             buttonTag.append($("<span><em>"+areaItem['areaName']+"</em></span>"));
-
 
             $("#eventLogWorkerList").append(buttonTag.clone());
             $("#eventLogInoutList").append(buttonTag.clone());
@@ -382,13 +381,6 @@ function MenuView(model) {
             $("#eventLogGasList").append(buttonTag.clone());
 
         }
-
-        //var areaItem = {areaId:"123", areaName: "455"};
-
-
-        //<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-        //    <span><em>${area.areaName}</em></span>
-        //</button>
 
     };
 

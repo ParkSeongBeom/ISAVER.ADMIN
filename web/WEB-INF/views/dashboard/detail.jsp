@@ -161,7 +161,7 @@
                     <div id="workerDiv" title="<spring:message code="dashboard.title.worker"/>">
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
-                            <div>
+                            <div id="alarm_worker_layer" style="display: none;">
                                 <button class="db_btn alra_btn workerAlramCnt" href="#" onclick="javascript:alramShowHide('list','show', 'worker', '${area.areaId}');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
@@ -199,7 +199,7 @@
                     <div id="craneDiv" title="<spring:message code="dashboard.title.crane"/>">
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
-                            <div>
+                            <div id="alarm_crane_layer" style="display: none;">
                                 <button class="db_btn alra_btn craneAlramCnt" href="#" onclick="javascript:alramShowHide('list','show','crane', '${area.areaId}');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
@@ -291,7 +291,7 @@
                     <div id="gasDiv" title="<spring:message code="dashboard.title.gas"/>">
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
-                            <div>
+                            <div id="alarm_gas_layer" style="display: none;">
                                 <button class="db_btn alra_btn gasAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
@@ -411,6 +411,7 @@
     };
 
     $(document).ready(function(){
+
         /* 작업자 */
         dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 크레인 */
@@ -676,9 +677,11 @@
             if(workerEventCnt>0){
                 modifyElementClass($(".detail_popup .layer_area[type='down']"),'level03','add');
                 modifyElementClass($("#workerDiv"),'level03','add');
+                $("#alarm_worker_layer").show();
             }else{
                 modifyElementClass($(".detail_popup .layer_area[type='down']"),'level03','remove');
                 modifyElementClass($("#workerDiv"),'level03','remove');
+                $("#alarm_worker_layer").hide();
             }
         }
 
@@ -703,7 +706,7 @@
                 }
             }
 
-            if(workerList.length>0){
+            if(workerList.length > 0){
                 dashBoardHelper.saveRequestData('worker',{areaId:areaId, datetime:new Date(workerList[0]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
             }
 
@@ -816,9 +819,11 @@
             if(evtCraneDetectionCount>0){
                 modifyElementClass($(".detail_popup .layer_area[type='crane']"),'level03','add');
                 modifyElementClass($("#craneDiv"),'level03','add');
+                $("#alarm_crane_layer").show();
             }else{
                 modifyElementClass($(".detail_popup .layer_area[type='crane']"),'level03','remove');
                 modifyElementClass($("#craneDiv"),'level03','remove');
+                $("#alarm_crane_layer").hide();
             }
         }
 

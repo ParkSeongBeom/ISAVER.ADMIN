@@ -37,7 +37,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="worker" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -89,7 +89,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="crane" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -115,7 +115,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gasState"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="gas" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -186,6 +186,7 @@
     };
 
     $(document).ready(function(){
+
         $.each($(".mce_btn_area button span em"),function(){
             if($(this).height()>28){
                 $(this).addClass("marqueeEm");
@@ -234,6 +235,9 @@
         }
     }
 
+    /**
+     * 작업자 상태
+     */
     function workerRender(data){
         var workerList = data['eventLogWorkerList'];
         if(workerList!=null){
@@ -275,12 +279,17 @@
 
             if(workerEventCnt>0){
                 modifyElementClass($("#workerDiv"),'level03','add');
+                $(".alra_btn[name=worker]").show();
             }else{
                 modifyElementClass($("#workerDiv"),'level03','remove');
+                $(".alra_btn[name=worker]").hide();
             }
         }
     }
 
+    /**
+     * 크레인 관련
+     */
     function craneRender(data){
         var craneList = data['eventLogCraneList'];
         if(craneList!=null){
@@ -323,12 +332,17 @@
 
             if(craneEventCnt>0){
                 modifyElementClass($("#craneDiv"),'level03','add');
+                $(".alra_btn[name=crane]").show();
             }else{
                 modifyElementClass($("#craneDiv"),'level03','remove');
+                $(".alra_btn[name=crane]").hide();
             }
         }
     }
 
+    /**
+     * 진출입 관련
+     */
     function inoutRender(data){
         var inoutList = data['eventLogInoutList'];
         if(inoutList!=null){
