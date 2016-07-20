@@ -357,5 +357,40 @@ function MenuView(model) {
         $("button[name='saveBtn']").show();
         $("button[name='removeBtn']").show();
     };
+
+    /**
+     * 대쉬보드 - 전체 - 구역 리스트 그리기
+     */
+    MenuView.drawAllDashBoardAreaList = function() {
+
+        if (menuModel.getAreaList().length == 0) {
+                return;
+        }
+
+        var areaList = menuModel.getAreaList();
+
+        for(var i = 0; i < areaList.length; i ++) {
+            var areaItem = areaList[i];
+            var buttonTag = $("<button />", {'href' : "#" , 'onclick' : "moveDashBoardDetail('" +areaItem['areaId'] +"')"});
+
+            buttonTag.append($("<span><em>"+areaItem['areaName']+"</em></span>"));
+
+
+            $("#eventLogWorkerList").append(buttonTag.clone());
+            $("#eventLogInoutList").append(buttonTag.clone());
+            $("#eventLogCraneList").append(buttonTag.clone());
+            $("#eventLogGasList").append(buttonTag.clone());
+
+        }
+
+        //var areaItem = {areaId:"123", areaName: "455"};
+
+
+        //<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+        //    <span><em>${area.areaName}</em></span>
+        //</button>
+
+    };
+
     return MenuView;
 };

@@ -653,7 +653,7 @@
 
         if(countList!=null){
             var workerEventCnt = 0;
-            for(var index in countList){
+            for(var index =0; index < countList.length; index++){
                 var worker = countList[index];
                 var divTag = $(".workerContens").find("div[eventId='"+worker['eventId']+"']");
 
@@ -733,7 +733,7 @@
 
             var craneEventTotalCnt = 0;
 
-            for(var index in countList){
+            for(var index =0;index<countList.length;index++){
                 var crane = countList[index];
                 var eventId = crane['eventId'];
                 var craneEventCnt = 0;

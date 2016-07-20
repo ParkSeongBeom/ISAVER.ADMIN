@@ -44,17 +44,17 @@
                             <div class="mc_bico type01 worker"></div>
                             <div class="mc_element nano">
                                 <div id="eventLogWorkerList" class="mce_btn_area nano-content">
-                                    <c:choose>
-                                        <c:when test="${areas != null and fn:length(areas) > 0}">
-                                            <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span><em>${area.areaName}</em></span>
-                                                </button>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${areas != null and fn:length(areas) > 0}">--%>
+                                            <%--<c:forEach var="area" items="${areas}">--%>
+                                                <%--<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">--%>
+                                                    <%--<span><em>${area.areaName}</em></span>--%>
+                                                <%--</button>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
                                 </div>
                             </div>
                         </div>
@@ -67,18 +67,18 @@
                             <div class="mc_bico type01 going"></div>
                             <div class="mc_element nano">
                                 <div id="eventLogInoutList" class="mce_btn_area nano-content">
-                                    <c:choose>
-                                        <c:when test="${areas != null and fn:length(areas) > 0}">
-                                            <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span><em>${area.areaName}</em></span>
-                                                    <span id="nowGap">0</span>
-                                                </button>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${areas != null and fn:length(areas) > 0}">--%>
+                                            <%--<c:forEach var="area" items="${areas}">--%>
+                                                <%--<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">--%>
+                                                    <%--<span><em>${area.areaName}</em></span>--%>
+                                                    <%--<span id="nowGap">0</span>--%>
+                                                <%--</button>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
                                 </div>
                             </div>
                         </div>
@@ -96,17 +96,17 @@
                             <div class="mc_bico type01 crane"></div>
                             <div class="mc_element nano">
                                 <div id="eventLogCraneList" class="mce_btn_area nano-content">
-                                    <c:choose>
-                                        <c:when test="${areas != null and fn:length(areas) > 0}">
-                                            <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span><em>${area.areaName}</em></span>
-                                                </button>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${areas != null and fn:length(areas) > 0}">--%>
+                                            <%--<c:forEach var="area" items="${areas}">--%>
+                                                <%--<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">--%>
+                                                    <%--<span><em>${area.areaName}</em></span>--%>
+                                                <%--</button>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
                                 </div>
                             </div>
                         </div>
@@ -121,18 +121,18 @@
                         <div class="mp_contents">
                             <div class="mc_bico type01 gas"></div>
                             <div class="mc_element nano">
-                                <div class="mce_btn_area nano-content">
-                                    <c:choose>
-                                        <c:when test="${areas != null and fn:length(areas) > 0}">
-                                            <c:forEach var="area" items="${areas}">
-                                                <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
-                                                    <span><em>${area.areaName}</em></span>
-                                                </button>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <div id="eventLogGasList" class="mce_btn_area nano-content">
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${areas != null and fn:length(areas) > 0}">--%>
+                                            <%--<c:forEach var="area" items="${areas}">--%>
+                                                <%--<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">--%>
+                                                    <%--<span><em>${area.areaName}</em></span>--%>
+                                                <%--</button>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +238,7 @@
         var workerList = data['eventLogWorkerList'];
         if(workerList!=null){
             var workerEventCnt = 0;
-            for(var index in workerList){
+            for(var index =0; index < workerList.length; index++){
                 var worker = workerList[index];
                 var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
 
@@ -285,7 +285,7 @@
         var craneList = data['eventLogCraneList'];
         if(craneList!=null){
             var craneEventCnt = 0;
-            for(var index in craneList){
+            for(var index = 0;index< craneList.length; index ++){
                 var crane = craneList[index];
                 var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
 
@@ -333,7 +333,7 @@
         var inoutList = data['eventLogInoutList'];
         if(inoutList!=null){
             var inoutEventCnt = 0;
-            for(var index in inoutList){
+            for(var index =0; index < inoutList.length; index++){
                 var inout = inoutList[index];
 
                 var buttonTag = $("#eventLogInoutList button[areaId='"+inout['areaId']+"']");
