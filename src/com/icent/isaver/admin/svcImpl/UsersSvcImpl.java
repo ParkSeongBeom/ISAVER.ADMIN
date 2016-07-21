@@ -70,6 +70,15 @@ public class UsersSvcImpl implements UsersSvc {
     }
 
     @Override
+    public ModelAndView findByUserProfile(Map<String, String> parameters) {
+        UsersBean user = usersDao.findByUsers(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user",user);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findByUserCheckExist(Map<String, String> parameters) {
         Integer count = usersDao.findByUserCheckExist(parameters);
         String existFlag = count > 0 ? CommonResource.YES : CommonResource.NO;

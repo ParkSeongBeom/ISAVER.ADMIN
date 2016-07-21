@@ -76,6 +76,21 @@ public class UsersCtrl {
         return modelAndView;
     }
 
+
+    /**
+     * 사용자 프로필 정보를 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/profile")
+    public ModelAndView findByUserProfile(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        ModelAndView modelAndView = usersSvc.findByUserProfile(parameters);
+        return modelAndView;
+    }
+
     private final static String[] findByUserCheckExistParam = new String[]{"userId"};
 
     /**

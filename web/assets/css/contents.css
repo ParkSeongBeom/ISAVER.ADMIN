@@ -131,6 +131,7 @@
     width:1px; height:10px; background-color: #fff;
     opacity: 0.4;
 }
+.hrs_date > span:last-of-type {cursor:pointer;}
 .hrs_date > span:last-of-type:before {content: "\e92f"; font-size:18px; padding:0 8px 4px 0; }
 
 /* 2depth 타이틀 영역 */

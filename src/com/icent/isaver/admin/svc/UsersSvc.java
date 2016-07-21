@@ -38,6 +38,15 @@ public interface UsersSvc {
     public ModelAndView findByUser(Map<String, String> parameters);
 
     /**
+     * 사용자 정보를 가져온다.
+     *
+     * @author kst
+     * @param parameters
+     * @return
+     */
+    public ModelAndView findByUserProfile(Map<String, String> parameters);
+
+    /**
      * 사용자 존재여부를 확인판다.
      *
      * @author kst

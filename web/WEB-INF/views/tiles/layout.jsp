@@ -65,6 +65,8 @@
             ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
+            ,'profileUrl':'${rootPath}/user/profile.json'
+            ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
 
         var layoutMessageConfig = {
@@ -73,7 +75,9 @@
             , alramCancelFailure  :'<spring:message code="dashboard.message.alramCancelFailure"/>'
             , emptyAlramCancel    :'<spring:message code="dashboard.message.emptyAlramCancel"/>'
             , emptyAlramCancelDesc:'<spring:message code="dashboard.message.emptyAlramCancelDesc"/>'
-
+            , profileFailure      :'<spring:message code="dashboard.message.profileFailure"/>'
+            , emptyUserName       :'<spring:message code="dashboard.message.emptyUserName"/>'
+            , saveProfileSuccess  :'<spring:message code="dashboard.message.saveProfileSuccess"/>'
         };
 
         var alarmPlayer;
@@ -109,7 +113,7 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup, .admin_popup").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup, .personal_popup, .admin_popup").length) {
                     alramShowHide('list','hide');
                 }
             });
@@ -372,6 +376,56 @@
         }
 
         /**
+         * get profile
+         * @author psb
+         */
+        function getProfile(){
+            layoutAjaxCall('profile',{userId:"${sessionScope.authAdminInfo.userId}"});
+        }
+
+        /**
+         * save profile
+         * @author psb
+         */
+        function saveProfile(){
+            var userName = $("#userName").val();
+
+            if(userName==null || userName==""){
+                layoutAlertMessage('alramCancelSuccess');
+                return false;
+            }
+
+            var paramData = {
+                userId : "${sessionScope.authAdminInfo.userId}"
+                , userName : userName
+                , telephone : $("#telephone").val()
+                , email : $("#email").val()
+            };
+
+            layoutAjaxCall('saveProfile',paramData);
+        }
+
+        /**
+         * open profile popup
+         * @author psb
+         */
+        function openProfile(user){
+            $("#userName").val(user['userName']);
+            $("#telephone").val(user['telephone']);
+            $("#email").val(user['email']);
+
+            $(".personal_popup").show();
+        }
+
+        /**
+         * close profile popup
+         * @author psb
+         */
+        function closeProfile(){
+            $(".personal_popup").hide();
+        }
+
+        /**
          * search alram detail (action)
          * @author psb
          */
@@ -407,6 +461,18 @@
                 case 'alramCancel':
                     closeAlramCancelPopup();
                     layoutAlertMessage('alramCancelSuccess');
+                    break;
+                case 'profile':
+                    var user = data['user'];
+                    if(user!=null){
+                        openProfile(user);
+                    }else{
+                        layoutAlertMessage('profileFailure');
+                    }
+                    break;
+                case 'saveProfile':
+                    closeProfile();
+                    layoutAlertMessage('saveProfileSuccess');
                     break;
             }
         }
@@ -606,7 +672,7 @@
             <div class="ha_right_set">
                 <div class="hrs_date">
                     <span id="nowTime"></span>
-                    <span>${sessionScope.authAdminInfo.userName}</span>
+                    <span onclick="javascript:getProfile(); event.stopPropagation();">${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
                     <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list');" title="<spring:message code="dashboard.title.alramCenter"/>"></button>
@@ -620,7 +686,7 @@
 
     <!-- navigation 영역 Start -->
     <nav id="nav" class="nav">
-        <button class="nav_plus" onclick="javascript:menuView(this);return false;"></button>
+        <button class="nav_plus" onclick="javascript:menuView(this); return false;"></button>
         <div class="nav_area"></div>
     </nav>
     <!-- navigation 영역 End -->
@@ -697,9 +763,49 @@
                 </div>
             </article>
         </section>
-        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlramCancelPopup(); event.stopPropagation();"></div>
+        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlramCancelPopup();"></div>
     </aside>
     <!-- 알림해지 레이어 팝업 End -->
+
+    <!-- 개인정보 레이어 팝업 Start -->
+    <aside class="layer_popup personal_popup">
+        <section class="layer_wrap i_type07">
+            <article class="layer_area">
+                <div class="mp_header">
+                    <h2><spring:message code="dashboard.title.profile"/></h2>
+                    <div>
+                        <button class="db_btn zoomclose_btn ipop_close" onclick="javascript:closeProfile();"></button>
+                    </div>
+                </div>
+                <div class="mp_contents vh_mode">
+                    <div class="mc_element">
+                        <div class="time_select_contents">
+                            <!-- 1 SET -->
+                            <div>
+                                <span><spring:message code="dashboard.column.userName"/></span>
+                                <input type="text" id="userName" />
+                            </div>
+                            <!-- 1 SET -->
+                            <div>
+                                <span><spring:message code="dashboard.column.telephone"/></span>
+                                <input type="text" id="telephone" />
+                            </div>
+                            <!-- 1 SET -->
+                            <div>
+                                <span><spring:message code="dashboard.column.email"/></span>
+                                <input type="text" id="email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lmc_btn_area mc_tline">
+                        <button class="btn btype01 bstyle07" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close" onclick="javascript:closeProfile();"></div>
+    </aside>
+    <!-- 개인정보 레이어 팝업 End -->
 
     <audio controls style="display: none">
         <source src="${rootPath}/assets/library/sound/alarm.mp3" type="audio/mpeg">
