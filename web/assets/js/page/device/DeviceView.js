@@ -60,11 +60,25 @@ function DeviceView(model) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
         },
         provisionFlag: function (data) {
-
             if (data['provisionFlag'] == 'Y') {
                 $(formName + " [name='provisionFlag']").val("Y");
             } else {
                 $(formName + " [name='provisionFlag']").val("N");
+            }
+        },
+        deviceAliveFlag: function (data) {
+            if (data['deviceAliveFlag'] == 'Y') {
+                $(formName + " [name='deviceAliveFlag']").val("Y");
+            } else {
+                $(formName + " [name='deviceAliveFlag']").val("N");
+            }
+        },
+        deviceAliveCheckType: function (data) {
+
+            if (data.deviceAliveCheckType == "") {
+                $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
+            } else {
+                $(formName + " [name='deviceAliveCheckType']").val(data.deviceAliveCheckType);
             }
         },
         deviceStat: function (data) {

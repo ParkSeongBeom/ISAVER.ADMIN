@@ -120,17 +120,30 @@
                         </td>
                     </tr>
                     <tr name="showHideTag">
+                        <th class=""><spring:message code='device.column.deviceStatusCheckFlag'/></th>
+                        <td class="">
+                            <select name="deviceAliveFlag" >
+                                <option value="Y"><spring:message code='common.message.Y'/></option>
+                                <option value="N"><spring:message code='common.message.N'/></option>
+                            </select>
+                        </td>
+                        <th class=""><spring:message code='device.column.deviceStatusCheckType'/></th>
+                        <td class="">
+                            <isaver:codeSelectBox groupCodeId="DAL" codeId="${action.actionCode}" htmlTagId="deviceAliveCheckType" htmlTagName="deviceAliveCheckType"  />
+                        </td>
+                    </tr>
+                    <tr name="showHideTag">
                         <th class="point"><spring:message code='device.column.provisionFlag'/></th>
                         <td class="point">
                             <select name="provisionFlag" >
-                                <option value="Y">예</option>
-                                <option value="N">아니오</option>
+                                <option value="Y"><spring:message code='common.message.Y'/></option>
+                                <option value="N"><spring:message code='common.message.N'/></option>
                             </select>
                         </td>
                         <th class=""><spring:message code='device.column.deviceStat'/></th>
                         <td class="">
-                            <input name="deviceStat" type="radio" value="Y"  disabled>연결됨
-                            <input name="deviceStat" type="radio" value="N" disabled>연결안됨
+                            <input name="deviceStat" type="radio" value="Y"  disabled><spring:message code='device.button.statusOn'/>
+                            <input name="deviceStat" type="radio" value="N" disabled><spring:message code='device.button.statusOff'/>
                         </td>
                     </tr>
                     <tr>
@@ -228,6 +241,9 @@
             var id  = $(event.currentTarget).val();
             $("input[name=areaId]").val(id);
         });
+        $("select[name=deviceAliveCheckType]").prepend($("<option />").text("없음"));
+        $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
+        $("select[name= deviceAliveCheckType]").val("없음");
     });
 
     var deviceModel = new DeviceModel();
