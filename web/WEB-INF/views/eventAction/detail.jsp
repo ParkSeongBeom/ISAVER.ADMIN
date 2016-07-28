@@ -353,7 +353,7 @@
 
         var data = {
             actionId : $("input[name=pop_action_id]").val()
-            , actionCode : $("input[name=pop_action_code]").val()
+            , actionCode : $("#pop_action_code").val()
             , notInActionId : 'true'
         };
         /* 조치 목록 - 내용 */
@@ -435,6 +435,8 @@
             removeActoinId(this);
         });
 
+        $("#pop_action_code").prepend($("<option />").text("전체").attr("value", ""));
+        $("#pop_action_code").val($("#pop_action_code option:first").val());
 
     })
 </script>
