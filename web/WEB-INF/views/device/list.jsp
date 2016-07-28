@@ -68,7 +68,16 @@
                         </td>
                         <th class="point"><spring:message code='device.column.serialNo'/></th>
                         <td class="point">
-                            <input type="text" name="serialNo" placeholder="<spring:message code='device.message.requiredSerialNo'/>" maxlength="32" disabled>
+                            <input type="text" name="serialNo" placeholder="<spring:message code='device.message.requiredSerialNo'/>" maxlength="32" disabled title=" - 형식 : XX-YYYYY
+  → XX : 장치유형, YYYYY : 넘버 (랜덤 제너레이션)
+   > TMS(00), IVAS(10), SIOC(20)
+      IP Camera(11)
+      IR Sensor(21), Laser Scanner(22), Speaker(23), LED Light(24),
+      경광등(25)
+      People Count Device(31), 유해가스감지센서(32)
+ ex) 00-YYYYY TMS , 10-YYYYY IVAS, 20-YYYYY SIOC,
+      21-YYYYY IR Sensor
+      ※ S/N에 대한 형식은 숫자로만 구성 ">
                         </td>
                     </tr>
                     <tr>
