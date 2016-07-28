@@ -33,13 +33,12 @@
         <article class="search_area">
             <div class="search_contents">
                 <!-- 일반 input 폼 공통 -->
-
-                <p class="itype_01">
-                    <span><spring:message code="action.column.actionId" /></span>
-                    <span>
-                        <input type="text" name="actionId" value="${paramBean.actionId}"/>
-                    </span>
-                </p>
+                <%--<p class="itype_01">--%>
+                    <%--<span><spring:message code="action.column.actionId" /></span>--%>
+                    <%--<span>--%>
+                        <%--<input type="text" name="actionId" value="${paramBean.actionId}"/>--%>
+                    <%--</span>--%>
+                <%--</p>--%>
                 <p class="itype_01">
                     <span><spring:message code="action.column.actionCode" /></span>
                     <isaver:codeSelectBox groupCodeId="ACT" codeId="${paramBean.actionCode}" htmlTagId="selectActionCode" htmlTagName="actionCode" allModel="true"/>
