@@ -78,6 +78,7 @@
             , profileFailure      :'<spring:message code="dashboard.message.profileFailure"/>'
             , emptyUserName       :'<spring:message code="dashboard.message.emptyUserName"/>'
             , saveProfileSuccess  :'<spring:message code="dashboard.message.saveProfileSuccess"/>'
+            , notEqualPassword    :'<spring:message code="dashboard.message.notEqualPassword"/>'
         };
 
         var alarmPlayer;
@@ -388,16 +389,24 @@
          * @author psb
          */
         function saveProfile(){
-            var userName = $("#userName").val();
+            var userName = $("#userName").val().trim();
+            var userPassword = $("#userPassword").val().trim();
+            var password_confirm = $("#password_confirm").val().trim();
 
             if(userName==null || userName==""){
                 layoutAlertMessage('alramCancelSuccess');
                 return false;
             }
 
+            if(userPassword!="" && userPassword != password_confirm){
+                layoutAlertMessage('notEqualPassword');
+                return false;
+            }
+
             var paramData = {
                 userId : "${sessionScope.authAdminInfo.userId}"
                 , userName : userName
+                , userPassword : userPassword
                 , telephone : $("#telephone").val()
                 , email : $("#email").val()
             };
@@ -413,6 +422,8 @@
             $("#userName").val(user['userName']);
             $("#telephone").val(user['telephone']);
             $("#email").val(user['email']);
+            $("#userPassword").val("");
+            $("#password_confirm").val("");
 
             $(".personal_popup").show();
         }
@@ -780,17 +791,22 @@
                 <div class="mp_contents vh_mode">
                     <div class="mc_element">
                         <div class="time_select_contents">
-                            <!-- 1 SET -->
                             <div>
                                 <span><spring:message code="dashboard.column.userName"/></span>
                                 <input type="text" id="userName" />
                             </div>
-                            <!-- 1 SET -->
+                            <div>
+                                <span><spring:message code="dashboard.column.password"/></span>
+                                <input type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                            </div>
+                            <div>
+                                <span><spring:message code="dashboard.column.passwordConfirm"/></span>
+                                <input type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                            </div>
                             <div>
                                 <span><spring:message code="dashboard.column.telephone"/></span>
                                 <input type="text" id="telephone" />
                             </div>
-                            <!-- 1 SET -->
                             <div>
                                 <span><spring:message code="dashboard.column.email"/></span>
                                 <input type="text" id="email" />
