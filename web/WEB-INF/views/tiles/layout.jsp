@@ -144,6 +144,10 @@
                 }
 //                    console.log(alarmPlayer.currentTime);
             }, false);
+
+            $("#eventType option[value=SCT001]").attr("value", "worker");
+            $("#eventType option[value=SCT002]").attr("value", "crane");
+            $("#eventType option[value=SCT003]").attr("value", "gas");
         });
 
         function alramTypeChangeHandler() {
@@ -714,12 +718,13 @@
                     <input type="checkbox" class="check_input" onclick="javascript:alramAllCheck(this);"/>
                     <label class="lablebase lb_style01"></label>
                 </div>
-                <select id="eventType">
-                    <option value="">전체</option>
-                    <option value="crane"><spring:message code="dashboard.selectbox.crane"/></option>
-                    <option value="worker"><spring:message code="dashboard.selectbox.worker"/></option>
-                    <%--<option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>--%>
-                </select>
+                <isaver:codeSelectBox groupCodeId="SCT" htmlTagId="eventType" allModel="true"  />
+                <%--<select id="eventType">--%>
+                    <%--<option value="">전체</option>                    --%>
+                    <%--<option value="crane"><spring:message code="dashboard.selectbox.crane"/></option>--%>
+                    <%--<option value="worker"><spring:message code="dashboard.selectbox.worker"/></option>--%>
+                    <%--&lt;%&ndash;<option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>&ndash;%&gt;--%>
+                <%--</select>--%>
                 <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
             </div>
         </div>

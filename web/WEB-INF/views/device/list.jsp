@@ -138,7 +138,7 @@
                         </td>
                         <th class=""><spring:message code='device.column.deviceStatusCheckType'/></th>
                         <td class="">
-                            <isaver:codeSelectBox groupCodeId="DAL" codeId="${action.actionCode}" htmlTagId="deviceAliveCheckType" htmlTagName="deviceAliveCheckType"  />
+                            <isaver:codeSelectBox groupCodeId="DAL" codeId="${action.actionCode}" htmlTagId="deviceAliveCheckType" htmlTagName="deviceAliveCheckType" allModel="true"  />
                         </td>
                     </tr>
                     <tr name="showHideTag">
@@ -250,9 +250,9 @@
             var id  = $(event.currentTarget).val();
             $("input[name=areaId]").val(id);
         });
-        $("select[name=deviceAliveCheckType]").prepend($("<option />").text("없음"));
-        $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
-        $("select[name= deviceAliveCheckType]").val("없음");
+//        $("select[name=deviceAliveCheckType]").prepend($("<option />").text("없음"));
+//        $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
+//        $("select[name= deviceAliveCheckType]").val("없음");
     });
 
     var deviceModel = new DeviceModel();
