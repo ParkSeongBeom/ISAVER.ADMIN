@@ -45,8 +45,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
-
-    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';

@@ -18,8 +18,7 @@
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.cookie.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/util/ajax-util.js"></script>
-
-    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/util/md5.min.js"></script>
 </head>
 <body class="login_mode">
 <form id="loginForm" method="POST">
