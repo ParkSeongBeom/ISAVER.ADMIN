@@ -18,6 +18,8 @@
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.cookie.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/util/ajax-util.js"></script>
+
+    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
 </head>
 <body class="login_mode">
 <form id="loginForm" method="POST">
@@ -113,7 +115,12 @@
     function login(){
         if(validate()){
             setCookieAdminId();
-            sendAjaxPostRequest(urlConfig['loginUrl'],form.serialize(),login_successHandler,login_failureHandler);
+
+            var userInfo = {
+                'userId' : $("input[name=userId]").val(),
+                'userPassword' : md5($("input[name=userPassword]").val()),
+            };
+            sendAjaxPostRequest(urlConfig['loginUrl'], userInfo,login_successHandler,login_failureHandler);
         }
     }
 

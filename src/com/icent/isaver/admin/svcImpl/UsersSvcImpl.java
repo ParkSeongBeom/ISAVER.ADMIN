@@ -8,6 +8,8 @@ import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.digest.resource.DigestAlgorithm;
+import com.kst.digest.util.DigestUtils;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -92,6 +94,8 @@ public class UsersSvcImpl implements UsersSvc {
     public ModelAndView addUser(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
+        parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
+
         try {
             usersDao.addUsers(parameters);
             transactionManager.commit(transactionStatus);
@@ -106,6 +110,8 @@ public class UsersSvcImpl implements UsersSvc {
     @Override
     public ModelAndView saveUser(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+        parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
 
         try {
             usersDao.saveUsers(parameters);
