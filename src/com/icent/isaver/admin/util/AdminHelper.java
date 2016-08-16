@@ -366,4 +366,51 @@ public class AdminHelper {
     public static String convertNullToString(String str) {
         return str != null ? str : "";
     }
+
+
+    public static List<String> findListDateTimeForType(String searchDatetime, String type) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(sdf.parse(searchDatetime));
+        } catch (Exception e) {
+        }
+
+        List<String> dateLists = new LinkedList<>();
+        SimpleDateFormat reSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        switch (type){
+            case "day":
+                for (int i = 0; i < 24; i++) {
+                    dateLists.add(i,reSdf.format(cal.getTime()));
+                    cal.add(Calendar.HOUR, 1);
+                }
+                break;
+            case "week":
+                cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                for (int i = 0; i < 7; i++) {
+                    dateLists.add(i,reSdf.format(cal.getTime()));
+                    cal.add(Calendar.DATE, 1);
+                }
+                break;
+            case "month":
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+
+                for (int i = 0; i < cal.getMaximum(Calendar.DAY_OF_MONTH); i++) {
+                    dateLists.add(i,reSdf.format(cal.getTime()));
+                    cal.add(Calendar.DATE, 1);
+                }
+                break;
+            case "year":
+                cal.set(Calendar.MONTH, Calendar.JANUARY);
+
+                for (int i = 0; i < 12; i++) {
+                    dateLists.add(i,reSdf.format(cal.getTime()));
+                    cal.add(Calendar.MONTH, 1);
+                }
+                break;
+        }
+
+        return dateLists;
+    }
 }

@@ -68,6 +68,7 @@
                 <value>properties/message/device</value>
                 <value>properties/message/loginHistory</value>
                 <value>properties/message/dashboard</value>
+                <value>properties/message/statistics</value>
                 <!-- [END] 안전 방재 -->
             </list>
         </property>

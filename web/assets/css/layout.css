@@ -10,16 +10,16 @@ aside.db_area, aside.dbs_area, header, nav, nav.nav:after  {
 aside, header, section, .wrap, header, .header_area, article
 {-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 
-
+html {}
 body {
-    overflow: auto;
-    width:100%; min-width:1280px;  min-height:768px;
+    width:100%; min-width:1280px;
+    min-height:768px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
     box-sizing:         border-box;
 }
+.wrap {width:100%;}
 /*
-
 ::-webkit-scrollbar {width: 8px;height: 8px; }
 !* Track *!
 ::-webkit-scrollbar-track {background:#fdfdfd;}
@@ -37,7 +37,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {background-color: rgba(94,94,94,0.8);  border: 1px solid #fff;}
 */
 
-
 body.login_mode {
     background: #333240; /* Old browsers */
     background: -moz-linear-gradient(160deg,  #333240 0%, #333240 50%, #2e2e3a 50%, #2e2e3a 100%); /* FF3.6-15 */
@@ -47,7 +46,7 @@ body.login_mode {
     height: 100vh;
 }
 body.admin_mode {background-color: #fcfcfc;}
-body.dashboard_mode {position: absolute; background-color: #25252f;}
+body.dashboard_mode {background-color:#1e1d23;}
 
 /*.wrap {overflow: hidden; width:100%; !*height:100%; *!margin:auto;}
 body.dashboard_mode .wrap {position: absolute;}*/
@@ -58,15 +57,15 @@ header  {position: fixed; z-index:40; top:0; left:0; width:100%; height:45px; ba
 header .header_area {position: relative; width:100%; height:100%;}
 
 nav.nav {
-    /*overflow:hidden;*/ z-index:10; position: fixed; top:45px;  left:0; bottom:0;
-/*    scrollbar-arrow-color      : transparent;
-    scrollbar-face-color       : transparent;
-    scrollbar-highlight-color  : transparent;
-    scrollbar-3dlight-color    : transparent;
-    scrollbar-shadow-color     : transparent;
-    scrollbar-darkshadow-color : transparent;
-    scrollbar-track-color      : transparent;
-    scrollbar-base-color       : transparent;*/
+    /*overflow:hidden;*/ z-index:10; position: fixed; top:0;  left:0; bottom:0;
+    /*    scrollbar-arrow-color      : transparent;
+        scrollbar-face-color       : transparent;
+        scrollbar-highlight-color  : transparent;
+        scrollbar-3dlight-color    : transparent;
+        scrollbar-shadow-color     : transparent;
+        scrollbar-darkshadow-color : transparent;
+        scrollbar-track-color      : transparent;
+        scrollbar-base-color       : transparent;*/
 }
 /*
 nav.nav:after { content:"";
@@ -75,20 +74,20 @@ nav.nav:after { content:"";
 */
 
 body section.container {
-     display: table;
-    /*overflow: hidden; position: absolute; top:45px; right:0; bottom:0; left:120px; padding:0;*/
-    position: relative; padding:45px 0 0 120px; width:100%; height:100vh;
-    background-color:#1e1d23;
+    /*overflow: hidden; display: table; position: absolute; top:45px; right:0; bottom:0; left:120px; padding:0;*/
+    display: inline-block; position: relative; padding:45px 0 0 120px; width:100%; height:100vh;
 }
 body.admin_mode section.container {
-/*    height: calc(100% - 45px);
+    /*
+    height: calc(100% - 45px);
     height: -webkit-calc(100% - 45px);
     margin: 50px 0 0 120px;
-    padding: 30px;*/
+    padding: 30px;
+    */
     height:100%; padding:70px 80px 0 200px;  background-color: #fcfcfc;
 }
 
-.metro_root.mr_h100 {min-height:620px; max-height:620px;   }
+.metro_root.mr_h100 {min-height:620px; max-height:620px;}
 .metro_root.mr_h70  {min-height:640px; height:640px; max-height:640px;}
 .metro_root.mr_h30  {min-height:200px; }
 
@@ -101,17 +100,18 @@ body.admin_mode.on section.container {/*top:0px; left:0px; margin:0;*/ padding:4
 body.on .layer_popup, .admin_popup {top:0; left:0;}
 body.on .lnb > li > div > ul:before {top:0;}
 
-body.navzoom .lnb:before  {left:-120px !important;}
-body.navzoom nav.nav, body.navzoom nav.nav:after,body.navzoom .lnb:before  {left:-120px;}
+body.navzoom .lnb:before  {left:-120px;}
+body.navzoom nav.nav, body.navzoom nav.nav:after, body.navzoom .lnb:before  {left:-120px;}
+body.on.navzoom .lnb:before  {left:0px;}
+
 body.navzoom section.container {padding-left:0;}
 body.navzoom.admin_mode section.container {padding-left:50px;}
 
-body.on.navzoom nav.nav, body.on.navzoom nav.nav:after  {left:0px;}
+body.on.navzoom nav.nav, body.on.navzoom nav.nav:after {left:0px;}
 body.on.navzoom section.container {padding-left:120px;}
 body.on.navzoom.admin_mode section.container {padding-left:140px;}
 
 /*body.admin_mode.navzoom section.container {padding:70px 50px 0 70px;}*/
-
 
 .nav_plus {
     position: absolute; z-index:1; left:120px; top:50%; margin:-25px 0 0 0;
@@ -121,7 +121,6 @@ body.on.navzoom.admin_mode section.container {padding-left:140px;}
 .nav_plus:hover{background-color: #fe4d3b;}
 .nav_plus:before {content:"\e927"; color:#fff;}
 .nav_plus.on:before {content:"\e926";}
-
 
 
 /*로그인 영역 */

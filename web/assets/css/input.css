@@ -83,24 +83,28 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 
     position:relative;width:30px;height:30px;
 }
+.check_box_set.type02 {position: absolute; top:0; right:10px; height:100%; }
+
+
 
 input[type="checkbox"].check_input, input[type="radio"].check_input
 {position: absolute;z-index: 1;top:0;left:0;width:100%;height:100%;opacity: 0;}
 input[type="checkbox"].check_input:checked, input[type="radio"]:checked
 {-webkit-tap-highlight-color:rgba(0, 0, 0, 0);background-color: transparent;}
 
-.check_input:checked + .lb_style01        {}
+.check_input:checked + .lb_style01 {}
 .check_input:checked + .lb_style01:before {
     color:#fff; font-weight: bold;
     text-shadow:         1px 2px 4px rgba(0,0,0,0.8);
     -webkit-text-shadow: 1px 2px 4px rgba(0,0,0,0.8);
     -moz-text-shadow:    1px 2px 4px rgba(0,0,0,0.8);
 }
-
+.check_box_set.type02 .check_input:checked + .lb_style01:before {opacity: 1;}
 
 .lablebase {display: inline-block;position: relative;border:none;}
 .lablebase:before {font-size:16px;}
 .lablebase.lb_style01:before {content:"\e921";color:#999; }
+.check_box_set.type02 .lablebase.lb_style01:before {color:#fff; opacity: 0.6;}
 
 .lablebase, .lablebase:after, .lablebase:before {
     transition:        all 300ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
@@ -187,21 +191,6 @@ button.refresh:before {
 }
 button.refresh:hover:before {color:#555;}
 td button.refresh:before {font-size:16px; color:#2692ec;}
-
-
-.month_btn_set {position: relative; width:220px;}
-.month_btn_set > p { text-align:center; font-size:30px; padding:0 20px;}
-.mon_allow {
-    position: absolute;top:4px;
-    border:none;background-color: transparent;
-}
-.mon_allow:hover:before { color: #b11831;}
-.ma_left  {left:0;}
-.ma_right {right:0;}
-.mon_allow:before          { font-size:36px;}
-.mon_allow.ma_left:before  {content:"\f053";}
-.mon_allow.ma_right:before {content:"\f054";}
-
 
 
 .btn {position: relative; padding: 0 10px; color:#fff; border:none;}
@@ -574,7 +563,7 @@ input.searchbase:focus { border: none;}
 
 /* 상태 표시 */
 .ch_name {
-    position: relative; width:100px; margin:0 2px; padding:0 0 0 20px;
+    position: relative; min-width:100px; margin:0 5px 0 0; padding:0 0 0 20px;
     font-size:13px; color:#fff; font-weight: bold;
     background-color: transparent;
 }

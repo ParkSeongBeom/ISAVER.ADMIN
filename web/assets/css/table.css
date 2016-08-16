@@ -1,19 +1,13 @@
 ﻿.t_defalut, .t_defalut th, .t_defalut td, .left_table, .right_table, .tr_table, .before_file > p, .table_contents, .table_title_area > h4 ,
-.editable01, .ul_t_defalut, .t_defalut, .t_scroll, .ul_t_defalut > button:after, .ul_t_defalut > li
+.editable01, .ul_t_defalut, .t_defalut, .t_scroll, .ul_t_defalut > button:after, .ul_t_defalut > li, .d_defalut span, .d_defalut div
 {-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 
-.table_title_area, .table_btn_set
+.table_title_area, .table_btn_set, .d_type01 .d_thead > div > span
 {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;display:flexbox;display:box;}
 
 
 textarea.noboder_type01 {border:none; min-height:150px; background-color: transparent; font-family: inherit; }
-
-.editable01, .editable02 {
-    overflow: auto; width:100%; margin:10px 0; white-space:normal;
-}
-
-.editable01 { height:auto !important; /*max-height:200px*/ }
-.editable02 { height:calc(100% - 10px); height:-webkit-calc(100% - 10px); }
+.editable01 {overflow: auto; width:100%; height:auto !important; /*max-height:200px*/ !important; margin:10px 0;white-space:normal;}
 /*달력 CSS*/
 .ui-jqgrid-sortable {
     padding:8px 0;
@@ -218,7 +212,7 @@ thead 기본 백그라운드 컬러 #787878
 
 .t_defalut {
     height: 100%;
-    border-width:0 1px;
+    border-width:1px;
     border-style:solid;
     border-color:#e4e4e4;
 }
@@ -238,52 +232,130 @@ thead 기본 백그라운드 컬러 #787878
 .t_defalut td.point > span {color:#f37949;}
 
 /*테이블 타입01 .t_type01 */
+
+.t_defalut .t_type01 {border-width:0 1px;}
 .t_type01 tbody tr:hover td, .ul_t_defalut > li:hover, .ul_t_defalut > button:hover
-    /*
-    , .fchover
-    td.fc-day:hover,
-    .fc-content-skeleton thead td:hover,
-    .fc-content-skeleton tbody td:hover
-    */
-{
-    background-color: #cde6f7 !important;
-    cursor: pointer;
-    color:#3e3e3e;
-}
+{background-color: #cde6f7 !important; cursor: pointer; color:#3e3e3e;}
 .cursor_no tbody tr:hover td {cursor:default !important;}
-.t_type01 thead th, .t_type01 tbody td {
-    height: 36px;
-    padding: 0 4px;
-    font-size:14px;
-}
+.t_type01 thead th, .t_type01 tbody td {height: 36px; padding: 0 4px; font-size:14px;}
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .t_type01 thead th, .t_type01 tbody td{height: 36px; padding: 0px 4px;}
 }
+.t_type01 td, .t_type01 th {position: relative;}
+.t_type01 thead th {cursor:pointer;}
+.t_type01 thead th:before, .t_type01 thead th:after
+{content:""; position: absolute; right:10px; width:0; height:0; border-style:solid;}
 
-.t_type01 th { }
+.t_type01 thead th:before {border-width:0 4px 6px 4px;  border-color:transparent transparent #fff transparent; top:10px;}
+.t_type01 thead th:after  {border-width:6px 4px 0 4px;  border-color:#fff transparent transparent transparent; bottom:10px;}
+
+.t_type01 thead th.up:before  {opacity:1;}
+.t_type01 thead th.up:after   {opacity:0.5;}
+.t_type01 thead th.down:before{opacity:0.5;}
+.t_type01 thead th.down:after {opacity:1;}
+
 .t_type01 tbody td {border-bottom: 1px solid #e4e4e4;  }
 .t_type01 tbody tr:nth-child(even) td {background-color:#f8f8f8;}
 
-
 /*테이블 타입02 .t_type02 */
 .t_type02 {border-top: 1px solid #e4e4e4;}
-.t_type02 th, .t_type02 td {
-    height: 41px;
-    padding:5px;
-
-}
+.t_type02 th, .t_type02 td {height: 41px;padding:5px;}
 .t_type02 th {border: 1px solid #4583CC;}
 .t_type02 td {border: 1px solid #e4e4e4;}
+
 
 /*테이블 정렬 스타일*/
 .t_style01 th, .t_style01 td {text-align:left;}
 .t_style02 th, .t_style02 td {text-align:left;}
-.main_area .t_style02 th, .main_area .t_style02 td {text-align:center;}
 .t_style03 th {text-align:center;} .t_style03 td {text-align:left;}
+.t_style04 {padding:0 0 50px 0;}
+.t_style04 th, .t_style04 td {text-align:left; width:*;}
+.t_style04 th:first-of-type, .t_style04 td:first-of-type {width:300px;}
 
+.main_area .t_style02 th, .main_area .t_style02 td {text-align:center;}
 .main_area table td {height:36px;}
-/*테이블 리스트 페이징*/
+
+.x_defalut, .d_defalut {
+    display: inline-block; position: relative; width:calc(100% - 2px); width:-webkit-calc(100% - 2px); margin:0 0 40px 0;
+    table-layout:fixed;border-spacing:0;/*border-collapse:collapse*/
+    border-width:0 1px;
+    border-style:solid;
+    border-color:#e4e4e4;
+}
+
+.x_defalut {}
+.x_defalut div:first-of-type {position: relative; z-index:2; width:200px;}
+.x_defalut div:last-of-type  {
+    overflow-x: auto; position: absolute; z-index:1;
+    width:calc(100% - 200px); width:-webkit-calc(100% - 200px);
+}
+
+.d_defalut {}
+.d_thead {}
+.d_tbody {}
+.d_thead > div {}
+.d_tbody > div {}
+.d_defalut span {
+    display: table-cell;
+    vertical-align: middle;
+    height:36px; padding: 0px 4px; border-bottom: 1px solid #e4e4e4;
+}
+.d_defalut > div > div {display: table; width:100%; }
+.d_type01 {}
+.d_type01 > div {float:left;}
+.d_type01 .d_thead {position: relative;  z-index:2; width:200px; background-color: #fff;}
+.d_type01 .d_tbody {
+    overflow-x: auto; /*width:-webkit-calc(100% - 200px);width:calc(100% - 200px);*/
+    position: absolute;  z-index:1; width:100%; padding:0 0 0 200px;
+}
+
+.d_type01 .d_tbody > div {float:left;}
+.d_type01 .d_thead > div > span {
+    -webkit-box-align:   center;
+    -moz-box-align:      center;
+    -webkit-align-items: center;
+    -ms-flex-align:      center;
+    align-items:         center;
+
+    width:100%;
+}
+
+.d_type01 .d_tbody > div {}
+.d_type01 .d_tbody > div:first-of-type > span, .d_type01 .d_thead > div > span:first-of-type {border: none;}
+.d_type01 .d_tbody > div:first-of-type, .d_type01 .d_thead > div > span:first-of-type
+{background-color: #5093e1; color: #fff; font-weight: bold; }
+.d_type01 .d_tbody > div > span,
+.d_type01 .d_tbody table th,
+.d_type01 .d_tbody table td {min-width:120px; width:120px;}
+
+.d_type01 table {
+    border:none;
+    box-shadow:         none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow:    none;
+}
+.d_type01 table th {height:36px; padding:0 4px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*테이블 리스트 페이징*/
 .page {
     position:relative;
     width:100%;

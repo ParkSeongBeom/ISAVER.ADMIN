@@ -120,4 +120,16 @@ public class AdminResource {
      */
     public final static String[] CRANE_EVENT_ID_ALL = new String[]{"EVT100", "EVT101", "EVT210"};
     public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
+
+    /**
+     * in eventIds
+     * @author psb
+     */
+    public final static String[] IN_EVENT_ID = new String[]{"EVT002", "EVT221"};
+
+    /**
+     * out eventIds
+     * @author psb
+     */
+    public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222"};
 }

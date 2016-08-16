@@ -43,6 +43,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>

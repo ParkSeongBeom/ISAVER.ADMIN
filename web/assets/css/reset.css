@@ -12,7 +12,6 @@ html, body {
     letter-spacing:-0.02em; line-height:normal;color:#3e3e3e;
     font-size:14px;font-family:'맑은고딕', 'Malgun Gothic','돋움', 'Dotum', sans-serif;
     -webkit-overflow-scrolling : touch;
-    background-color: #fdfdfd;
     outline: none;
     -webkit-touch-callout: none;
     -webkit-appearance:none;
@@ -22,7 +21,7 @@ html, body {
 
 
 html, body, div, span,  object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, em, font,
-img, strong, sub, sup,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,input, label,  legend, textarea, button, table,
+img, strong, sub, sup, dl, dt, dd, ol, ul, li,fieldset, form, label, legend,input, label,  legend, textarea, button, table,
 caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0; border: 0; font-style:normal;}
 article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary {display:block; }
 audio,canvas,video,span {display: inline-block;}
@@ -40,7 +39,7 @@ caption  {position:static;}
 optgroup {font-weight: bold;}
 form     {display: block;}
 
-table    {table-layout:fixed;border-spacing:0;border-collapse:collapse}
+table    {table-layout:fixed;border-spacing:0;border-collapse:collapse;}
 table.tl {table-layout: auto;}
 table td, table th {overflow: hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;}
 
@@ -84,12 +83,12 @@ label,input,textarea,select,optgroup {
 }
 
 input, select, textarea, a, button {display: inline-block;}
-input, select, textarea, a, button, button:after, button:before {
-    transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
-    -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
-    -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
-    -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
-    -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+input, select, textarea, a, button {
+    transition:        all 200ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -moz-transition:   all 200ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -webkit-transition:all 200ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -o-transition:     all 200ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -ms-transition:    all 200ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
 
 input, select {
@@ -392,7 +391,9 @@ bottom button border gray active #4f4f4f
 .svgbase:before, .btn_x:before, .hrs_date > span:last-of-type:before, .toast_popup:before, .zoomclose_btn:before,
 .db_header h3:before, .lablebase:before, .lnb > li > button:before, .menu_tree_set > li button:before,
 .time_select_contents > div button:before, .time_select_list > li:before, .nav_plus:before, .quick_nav > button:before,
-.code_list > button:before, .code_list > div > button:nth-of-type(2):after
+.code_list > button:before, .code_list > div > button:nth-of-type(2):after, .chart_table_area table thead button:before,
+.month_btn_set > button:before, .depthtabs_btn_set > button:last-of-type:before, .check_th thead th:before
+
 {
     font-family: 'japple';
     speak: none;
@@ -446,7 +447,7 @@ bottom button border gray active #4f4f4f
 .svgbase02, .hrs_btn_set > button:before, .mp_header button.alra_btn:before, .sett_btn:before, .refl_btn:before,
 .mp_header button.refre_btn:before, .mp_header > div > button.zoom_btn:before, .mc_bico:before, .dbc_contents:before,
 .nl_dash > button:before, .nl_reco > button:before, .nl_stat > button:before, .toast_popup:before, .tp_contents:before,
-.change_btn:before, .mp_header:before, .zoom_btn.on:before
+.change_btn:before, .mp_header:before, .zoom_btn.on:before, .depthtabs_btn_set > button:first-of-type:before
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sico' !important;
