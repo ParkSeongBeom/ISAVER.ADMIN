@@ -175,6 +175,15 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
     }
 
     @Override
+    public ModelAndView findListGasEventStatistics(Map<String, String> parameters) {
+        List<String> dateLists = AdminHelper.findListDateTimeForType(parameters.get("searchDatetime"), parameters.get("dateGubn"));
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("dateLists",dateLists);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findListInoutEventStatistics(Map<String, String> parameters) {
         List<String> dateLists = AdminHelper.findListDateTimeForType(parameters.get("searchDatetime"), parameters.get("dateGubn"));
 

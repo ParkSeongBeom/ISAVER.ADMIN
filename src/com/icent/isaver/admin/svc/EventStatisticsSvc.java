@@ -49,6 +49,15 @@ public interface EventStatisticsSvc {
     public ModelAndView findListCraneEventStatistics(Map<String, String> parameters);
 
     /**
+     * 유해가스 이벤트 통계 목록을 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    public ModelAndView findListGasEventStatistics(Map<String, String> parameters);
+
+    /**
      * 진출입자 이벤트 통계 목록을 가져온다.
      *
      * @author psb

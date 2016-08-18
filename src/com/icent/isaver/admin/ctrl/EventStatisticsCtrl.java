@@ -101,6 +101,10 @@ public class EventStatisticsCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/gas")
     public ModelAndView findListGasEventStatistics(@RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = new ModelAndView();
+
+        if(StringUtils.notNullCheck(parameters.get("mode"))){
+            modelAndView = eventStatisticsSvc.findListGasEventStatistics(parameters);
+        }
         modelAndView.setViewName("gasEventStatistics");
         return modelAndView;
     }

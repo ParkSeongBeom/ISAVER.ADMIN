@@ -314,6 +314,7 @@
                 offset: 60
             },
             axisY: {
+                onlyInteger: true,
                 offset: 80,
                 scaleMinSpace: 15
             },
