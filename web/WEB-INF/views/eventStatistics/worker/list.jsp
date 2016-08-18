@@ -58,7 +58,7 @@
     };
 
     var messageConfig = {
-        'searchFailure'       :'<spring:message code="statistics.message.searchFailure"/>'
+        'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
     var workerSearchParam = {
