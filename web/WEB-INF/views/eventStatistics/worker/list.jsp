@@ -31,16 +31,16 @@
         </p>
     </div>
     <div class="search_btn">
-        <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+        <button onclick="javascript:workerSearch(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
     </div>
 </article>
 
 <article id="workerArticle" class="chart_table_area type02">
     <div class="table_title_area">
         <div class="month_btn_set">
-            <button onclick="javascript:search('before'); return false;"></button>
+            <button onclick="javascript:workerSearch('before'); return false;"></button>
             <p id="workerSearchDatetime"></p>
-            <button onclick="javascript:search('after'); return false;"></button>
+            <button onclick="javascript:workerSearch('after'); return false;"></button>
         </div>
         <div class="depthtabs_btn_set">
             <button rel="chartView"><spring:message code="statistics.tab.graph"/></button>
@@ -53,11 +53,11 @@
 </article>
 
 <script type="text/javascript">
-    var urlConfig = {
+    var workerUrlConfig = {
         'listUrl':'${rootPath}/eventStatistics/worker.json'
     };
 
-    var messageConfig = {
+    var workerMessageConfig = {
         'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
@@ -68,7 +68,7 @@
         ,'chartData' : null
     };
 
-    var chartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
+    var workerChartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
         $("<div/>",{class:'chart_box type01'}).append(
             $("<div/>",{class:'chartDiv'})
         )
@@ -76,7 +76,7 @@
         $("<div/>",{class:'chart_label'})
     );
 
-    var tableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
+    var workerTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
                 $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
@@ -99,19 +99,19 @@
     $(document).ready(function(){
         $("#workerArticle .depthtabs_btn_set > button").on('click',function(){
            if(!$(this).hasClass("tabs_on")){
-               tabShowHide(this);
+               workerTabShowHide(this);
            }
         });
 
         $("#workerArticle .depthtabs_btn_set > button:eq(0)").trigger('click');
-        search();
+        workerSearch();
     });
 
     /*
      tab Show Hide
      @author psb
      */
-    function tabShowHide(_this){
+    function workerTabShowHide(_this){
         var rel = $(_this).attr("rel");
         $("#workerArticle .depthtabs_btn_set > button").removeClass("tabs_on");
         $(_this).addClass("tabs_on");
@@ -120,7 +120,7 @@
         $("#workerArticle ."+rel).show();
 
         if(rel=="chartView" && workerSearchParam['chartData']!=null){
-            chartRender(workerSearchParam['chartData']);
+            workerChartRender(workerSearchParam['chartData']);
         }
     }
 
@@ -128,7 +128,7 @@
      set datetime
      @author psb
      */
-    function setDatetimeText(){
+    function workerSetDatetimeText(){
         var searchDatetimeText;
 
         switch (workerSearchParam['dateGubn']){
@@ -153,7 +153,7 @@
      search
      @author psb
      */
-    function search(type){
+    function workerSearch(type){
         switch (type){
             case 'before':
                 switch (workerSearchParam['dateGubn']){
@@ -194,7 +194,7 @@
                 break;
         }
 
-        setDatetimeText();
+        workerSetDatetimeText();
 
         var param = {
             'mode' : 'search'
@@ -203,34 +203,34 @@
             ,'searchDatetime' : workerSearchParam['searchDatetime'].format("yyyy-MM-dd")
         };
 
-        callAjax('list',param);
+        workerCallAjax('list',param);
     }
 
     /*
      ajax call
      @author psb
      */
-    function callAjax(actionType, data){
-        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,successHandler,failureHandler,actionType);
+    function workerCallAjax(actionType, data){
+        sendAjaxPostRequest(workerUrlConfig[actionType + 'Url'],data,workerSuccessHandler,workerFailureHandler,actionType);
     }
 
     /*
      ajax success handler
      @author psb
      */
-    function successHandler(data, dataType, actionType){
-        listRender(data);
+    function workerSuccessHandler(data, dataType, actionType){
+        workerListRender(data);
     }
 
     /*
      list Render
      @author psb
      */
-    function listRender(data){
+    function workerListRender(data){
         $("#workerEventStatisticsList").empty();
 
-        var chartDivHtml = chartDivTag.clone();
-        var tableDivHtml = tableDivTag.clone();
+        var chartDivHtml = workerChartDivTag.clone();
+        var tableDivHtml = workerTableDivTag.clone();
 
         workerSearchParam['chartData'] = {
             labels: []
@@ -301,14 +301,14 @@
 
         $("#workerEventStatisticsList").append(chartDivHtml).append(tableDivHtml);
 
-        tabShowHide($("#workerArticle .depthtabs_btn_set > button.tabs_on"));
+        workerTabShowHide($("#workerArticle .depthtabs_btn_set > button.tabs_on"));
     }
 
     /*
      chart Render
      @author psb
      */
-    function chartRender(data){
+    function workerChartRender(data){
         new Chartist.Bar('#workerArticle .chartDiv', data, {
             seriesBarDistance: 10,
             axisX: {
@@ -329,16 +329,16 @@
      ajax error handler
      @author psb
      */
-    function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.error(messageConfig['searchFailure']);
-//        alertMessage('searchFailure');
+    function workerFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.error(workerMessageConfig['searchFailure']);
+//        workerAlertMessage('searchFailure');
     }
 
     /*
      alert message method
      @author psb
      */
-    function alertMessage(type){
-        alert(messageConfig[type]);
+    function workerAlertMessage(type){
+        alert(workerMessageConfig[type]);
     }
 </script>

@@ -31,16 +31,16 @@
         </p>
     </div>
     <div class="search_btn">
-        <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+        <button onclick="javascript:craneSearch(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
     </div>
 </article>
 
 <article id="craneArticle" class="chart_table_area type02">
     <div class="table_title_area">
         <div class="month_btn_set">
-            <button onclick="javascript:search('before'); return false;"></button>
+            <button onclick="javascript:craneSearch('before'); return false;"></button>
             <p id="craneSearchDatetime"></p>
-            <button onclick="javascript:search('after'); return false;"></button>
+            <button onclick="javascript:craneSearch('after'); return false;"></button>
         </div>
         <div class="depthtabs_btn_set">
             <button rel="chartView"><spring:message code="statistics.tab.graph"/></button>
@@ -53,11 +53,11 @@
 </article>
 
 <script type="text/javascript">
-    var urlConfig = {
+    var craneUrlConfig = {
         'listUrl':'${rootPath}/eventStatistics/crane.json'
     };
 
-    var messageConfig = {
+    var craneMessageConfig = {
         'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
@@ -68,7 +68,7 @@
         ,'chartData' : null
     };
 
-    var chartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
+    var craneChartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
         $("<div/>",{class:'chart_box type01'}).append(
             $("<div/>",{class:'chartDiv'})
         )
@@ -76,7 +76,7 @@
         $("<div/>",{class:'chart_label'})
     );
 
-    var tableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
+    var craneTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
                 $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
@@ -99,19 +99,19 @@
     $(document).ready(function(){
         $("#craneArticle .depthtabs_btn_set > button").on('click',function(){
            if(!$(this).hasClass("tabs_on")){
-               tabShowHide(this);
+               craneTabShowHide(this);
            }
         });
 
         $("#craneArticle .depthtabs_btn_set > button:eq(0)").trigger('click');
-        search();
+        craneSearch();
     });
 
     /*
      tab Show Hide
      @author psb
      */
-    function tabShowHide(_this){
+    function craneTabShowHide(_this){
         var rel = $(_this).attr("rel");
         $("#craneArticle .depthtabs_btn_set > button").removeClass("tabs_on");
         $(_this).addClass("tabs_on");
@@ -120,7 +120,7 @@
         $("#craneArticle ."+rel).show();
 
         if(rel=="chartView" && craneSearchParam['chartData']!=null){
-            chartRender(craneSearchParam['chartData']);
+            craneChartRender(craneSearchParam['chartData']);
         }
     }
 
@@ -128,7 +128,7 @@
      set datetime
      @author psb
      */
-    function setDatetimeText(){
+    function craneSetDatetimeText(){
         var searchDatetimeText;
 
         switch (craneSearchParam['dateGubn']){
@@ -153,7 +153,7 @@
      search
      @author psb
      */
-    function search(type){
+    function craneSearch(type){
         switch (type){
             case 'before':
                 switch (craneSearchParam['dateGubn']){
@@ -194,7 +194,7 @@
                 break;
         }
 
-        setDatetimeText();
+        craneSetDatetimeText();
 
         var param = {
             'mode' : 'search'
@@ -203,34 +203,34 @@
             ,'searchDatetime' : craneSearchParam['searchDatetime'].format("yyyy-MM-dd")
         };
 
-        callAjax('list',param);
+        craneCallAjax('list',param);
     }
 
     /*
      ajax call
      @author psb
      */
-    function callAjax(actionType, data){
-        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,successHandler,failureHandler,actionType);
+    function craneCallAjax(actionType, data){
+        sendAjaxPostRequest(craneUrlConfig[actionType + 'Url'],data,craneSuccessHandler,craneFailureHandler,actionType);
     }
 
     /*
      ajax success handler
      @author psb
      */
-    function successHandler(data, dataType, actionType){
-        listRender(data);
+    function craneSuccessHandler(data, dataType, actionType){
+        craneListRender(data);
     }
 
     /*
      list Render
      @author psb
      */
-    function listRender(data){
+    function craneListRender(data){
         $("#craneEventStatisticsList").empty();
 
-        var chartDivHtml = chartDivTag.clone();
-        var tableDivHtml = tableDivTag.clone();
+        var chartDivHtml = craneChartDivTag.clone();
+        var tableDivHtml = craneTableDivTag.clone();
         craneSearchParam['chartData'] = {
             labels: []
             ,series: []
@@ -300,14 +300,14 @@
 
         $("#craneEventStatisticsList").append(chartDivHtml).append(tableDivHtml);
 
-        tabShowHide($("#craneArticle .depthtabs_btn_set > button.tabs_on"));
+        craneTabShowHide($("#craneArticle .depthtabs_btn_set > button.tabs_on"));
     }
 
     /*
      chart Render
      @author psb
      */
-    function chartRender(data){
+    function craneChartRender(data){
         new Chartist.Bar('#craneArticle .chartDiv', data, {
             seriesBarDistance: 10,
             axisX: {
@@ -328,16 +328,16 @@
      ajax error handler
      @author psb
      */
-    function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.error(messageConfig['searchFailure']);
-//        alertMessage('searchFailure');
+    function craneFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.error(craneMessageConfig['searchFailure']);
+//        craneAlertMessage('searchFailure');
     }
 
     /*
      alert message method
      @author psb
      */
-    function alertMessage(type){
-        alert(messageConfig[type]);
+    function craneAlertMessage(type){
+        alert(craneMessageConfig[type]);
     }
 </script>

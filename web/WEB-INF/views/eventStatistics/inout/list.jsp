@@ -31,16 +31,16 @@
         </p>
     </div>
     <div class="search_btn">
-        <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+        <button onclick="javascript:inoutSearch(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
     </div>
 </article>
 
 <article id="inoutArticle" class="chart_table_area type02">
     <div class="table_title_area">
         <div class="month_btn_set">
-            <button onclick="javascript:search('before'); return false;"></button>
+            <button onclick="javascript:inoutSearch('before'); return false;"></button>
             <p id="inoutSearchDatetime"></p>
-            <button onclick="javascript:search('after'); return false;"></button>
+            <button onclick="javascript:inoutSearch('after'); return false;"></button>
         </div>
         <div class="depthtabs_btn_set">
             <button rel="chartView"><spring:message code="statistics.tab.graph"/></button>
@@ -53,11 +53,11 @@
 </article>
 
 <script type="text/javascript">
-    var urlConfig = {
+    var inoutUrlConfig = {
         'listUrl':'${rootPath}/eventStatistics/inout.json'
     };
 
-    var messageConfig = {
+    var inoutMessageConfig = {
         'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
@@ -68,7 +68,7 @@
         ,'chartData' : null
     };
 
-    var chartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
+    var inoutChartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
         $("<div/>",{class:'chart_box type01'}).append(
             $("<div/>",{class:'chartDiv'})
         )
@@ -80,7 +80,7 @@
         )
     );
 
-    var tableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
+    var inoutTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
                 $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
@@ -111,19 +111,19 @@
     $(document).ready(function(){
         $("#inoutArticle .depthtabs_btn_set > button").on('click',function(){
            if(!$(this).hasClass("tabs_on")){
-               tabShowHide(this);
+               inoutTabShowHide(this);
            }
         });
 
         $("#inoutArticle .depthtabs_btn_set > button:eq(0)").trigger('click');
-        search();
+        inoutSearch();
     });
 
     /*
      tab Show Hide
      @author psb
      */
-    function tabShowHide(_this){
+    function inoutTabShowHide(_this){
         var rel = $(_this).attr("rel");
         $("#inoutArticle .depthtabs_btn_set > button").removeClass("tabs_on");
         $(_this).addClass("tabs_on");
@@ -132,7 +132,7 @@
         $("#inoutArticle ."+rel).show();
 
         if(rel=="chartView" && inoutSearchParam['chartData']!=null){
-            chartRender(inoutSearchParam['chartData']);
+            inoutChartRender(inoutSearchParam['chartData']);
         }
     }
 
@@ -140,7 +140,7 @@
      set datetime
      @author psb
      */
-    function setDatetimeText(){
+    function inoutSetDatetimeText(){
         var searchDatetimeText;
 
         switch (inoutSearchParam['dateGubn']){
@@ -165,7 +165,7 @@
      search
      @author psb
      */
-    function search(type){
+    function inoutSearch(type){
         switch (type){
             case 'before':
                 switch (inoutSearchParam['dateGubn']){
@@ -206,7 +206,7 @@
                 break;
         }
 
-        setDatetimeText();
+        inoutSetDatetimeText();
 
         var param = {
             'mode' : 'search'
@@ -215,33 +215,33 @@
             ,'searchDatetime' : inoutSearchParam['searchDatetime'].format("yyyy-MM-dd")
         };
 
-        callAjax('list',param);
+        inoutCallAjax('list',param);
     }
 
     /*
      ajax call
      @author psb
      */
-    function callAjax(actionType, data){
-        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,successHandler,failureHandler,actionType);
+    function inoutCallAjax(actionType, data){
+        sendAjaxPostRequest(inoutUrlConfig[actionType + 'Url'],data,inoutSuccessHandler,inoutFailureHandler,actionType);
     }
 
     /*
      ajax success handler
      @author psb
      */
-    function successHandler(data, dataType, actionType){
-        listRender(data);
+    function inoutSuccessHandler(data, dataType, actionType){
+        inoutListRender(data);
     }
 
     /*
      list Render
      @author psb
      */
-    function listRender(data){
+    function inoutListRender(data){
         $("#inoutEventStatisticsList").empty();
 
-        var tableDivHtml = tableDivTag.clone();
+        var tableDivHtml = inoutTableDivTag.clone();
         inoutSearchParam['chartData'] = {
             labels: []
             ,series: []
@@ -308,16 +308,16 @@
 
         inoutSearchParam['chartData']['series'].push(outSeries);
 
-        $("#inoutEventStatisticsList").append(chartDivTag.clone()).append(tableDivHtml);
+        $("#inoutEventStatisticsList").append(inoutChartDivTag.clone()).append(tableDivHtml);
 
-        tabShowHide($("#inoutArticle .depthtabs_btn_set > button.tabs_on"));
+        inoutTabShowHide($("#inoutArticle .depthtabs_btn_set > button.tabs_on"));
     }
 
     /*
      chart Render
      @author psb
      */
-    function chartRender(data){
+    function inoutChartRender(data){
         new Chartist.Bar('#inoutArticle .chartDiv', data, {
             seriesBarDistance: 10,
             axisX: {
@@ -338,16 +338,16 @@
      ajax error handler
      @author psb
      */
-    function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.error(messageConfig['searchFailure']);
-//        alertMessage('searchFailure');
+    function inoutFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.error(inoutMessageConfig['searchFailure']);
+//        inoutAlertMessage('searchFailure');
     }
 
     /*
      alert message method
      @author psb
      */
-    function alertMessage(type){
-        alert(messageConfig[type]);
+    function inoutAlertMessage(type){
+        alert(inoutMessageConfig[type]);
     }
 </script>

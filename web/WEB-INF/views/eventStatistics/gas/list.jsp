@@ -40,16 +40,16 @@
         </p>
     </div>
     <div class="search_btn">
-        <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+        <button onclick="javascript:gasSearch(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
     </div>
 </article>
 
 <article id="gasArticle" class="chart_table_area type02">
     <div class="table_title_area">
         <div class="month_btn_set">
-            <button onclick="javascript:search('before'); return false;"></button>
+            <button onclick="javascript:gasSearch('before'); return false;"></button>
             <p id="gasSearchDatetime"></p>
-            <button onclick="javascript:search('after'); return false;"></button>
+            <button onclick="javascript:gasSearch('after'); return false;"></button>
         </div>
         <div class="depthtabs_btn_set">
             <button rel="chartView"><spring:message code="statistics.tab.graph"/></button>
@@ -62,11 +62,11 @@
 </article>
 
 <script type="text/javascript">
-    var urlConfig = {
+    var gasUrlConfig = {
         'listUrl':'${rootPath}/eventStatistics/gas.json'
     };
 
-    var messageConfig = {
+    var gasMessageConfig = {
         'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
@@ -84,7 +84,7 @@
         ,'hydrogenSulfide' : [1, 5, 2, 5, 3, 1, 0, 3, 6, 7, 2, 7, 3, 6, 8, 9, 1, 3, 1, 2, 6, 3, 6, 7]
     };
 
-    var chartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
+    var gasChartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
         $("<div/>",{class:'chart_box type01'}).append(
             $("<div/>",{class:'chartDiv'})
         )
@@ -92,7 +92,7 @@
         $("<div/>",{class:'chart_label'})
     );
 
-    var tableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
+    var gasTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
                 $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
@@ -124,19 +124,19 @@
 
         $("#gasArticle .depthtabs_btn_set > button").on('click',function(){
            if(!$(this).hasClass("tabs_on")){
-               tabShowHide(this);
+               gasTabShowHide(this);
            }
         });
 
         $("#gasArticle .depthtabs_btn_set > button:eq(0)").trigger('click');
-        search();
+        gasSearch();
     });
 
     /*
      tab Show Hide
      @author psb
      */
-    function tabShowHide(_this){
+    function gasTabShowHide(_this){
         var rel = $(_this).attr("rel");
         $("#gasArticle .depthtabs_btn_set > button").removeClass("tabs_on");
         $(_this).addClass("tabs_on");
@@ -145,7 +145,7 @@
         $("#gasArticle ."+rel).show();
 
         if(rel=="chartView" && gasSearchParam['chartData']!=null){
-            chartRender(gasSearchParam['chartData']);
+            gasChartRender(gasSearchParam['chartData']);
         }
     }
 
@@ -153,7 +153,7 @@
      set datetime
      @author psb
      */
-    function setDatetimeText(){
+    function gasSetDatetimeText(){
         var searchDatetimeText;
 
         switch (gasSearchParam['dateGubn']){
@@ -178,7 +178,7 @@
      search
      @author psb
      */
-    function search(type){
+    function gasSearch(type){
         switch (type){
             case 'before':
                 switch (gasSearchParam['dateGubn']){
@@ -220,7 +220,7 @@
                 break;
         }
 
-        setDatetimeText();
+        gasSetDatetimeText();
 
         var param = {
             'mode' : 'search'
@@ -230,34 +230,34 @@
             ,'searchDatetime' : gasSearchParam['searchDatetime'].format("yyyy-MM-dd")
         };
 
-        callAjax('list',param);
+        gasCallAjax('list',param);
     }
 
     /*
      ajax call
      @author psb
      */
-    function callAjax(actionType, data){
-        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,successHandler,failureHandler,actionType);
+    function gasCallAjax(actionType, data){
+        sendAjaxPostRequest(gasUrlConfig[actionType + 'Url'],data,gasSuccessHandler,gasFailureHandler,actionType);
     }
 
     /*
      ajax success handler
      @author psb
      */
-    function successHandler(data, dataType, actionType){
-        listRender(data);
+    function gasSuccessHandler(data, dataType, actionType){
+        gasListRender(data);
     }
 
     /*
      list Render
      @author psb
      */
-    function listRender(data){
+    function gasListRender(data){
         $("#gasEventStatisticsList").empty();
 
-        var chartDivHtml = chartDivTag.clone();
-        var tableDivHtml = tableDivTag.clone();
+        var chartDivHtml = gasChartDivTag.clone();
+        var tableDivHtml = gasTableDivTag.clone();
         gasSearchParam['chartData'] = {
             labels: []
             ,series: []
@@ -351,14 +351,14 @@
 
         $("#gasEventStatisticsList").append(chartDivHtml).append(tableDivHtml);
 
-        tabShowHide($("#gasArticle .depthtabs_btn_set > button.tabs_on"));
+        gasTabShowHide($("#gasArticle .depthtabs_btn_set > button.tabs_on"));
     }
 
     /*
      chart Render
      @author psb
      */
-    function chartRender(data){
+    function gasChartRender(data){
         if(gasSearchParam['chartGubn']=="state"){
             new Chartist.Line('#gasArticle .chartDiv', data, {
                 low: 0,
@@ -393,16 +393,16 @@
      ajax error handler
      @author psb
      */
-    function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.error(messageConfig['searchFailure']);
-//        alertMessage('searchFailure');
+    function gasFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.error(gasMessageConfig['searchFailure']);
+//        gasAlertMessage('searchFailure');
     }
 
     /*
      alert message method
      @author psb
      */
-    function alertMessage(type){
-        alert(messageConfig[type]);
+    function gasAlertMessage(type){
+        alert(gasMessageConfig[type]);
     }
 </script>
