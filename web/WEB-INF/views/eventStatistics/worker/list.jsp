@@ -310,13 +310,14 @@
      */
     function workerChartRender(data){
         new Chartist.Bar('#workerArticle .chartDiv', data, {
+            height: 400,
             seriesBarDistance: 10,
             axisX: {
                 offset: 60
             },
             axisY: {
                 onlyInteger: true,
-                offset: 80,
+                offset: 40,
                 scaleMinSpace: 15
             },
             plugins: [

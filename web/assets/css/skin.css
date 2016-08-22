@@ -1,0 +1,132 @@
+﻿/* test */
+.dashboard_mode.skin_etc01, .dashboard_mode.skin_etc01 .layer_popup .layer_wrap {background-color: #2aad9b;}
+.dashboard_mode.skin_etc02, .dashboard_mode.skin_etc02 .layer_popup .layer_wrap {background-color: #569a17;}
+
+
+/* 화이트 모드  */
+.dashboard_mode.skin_white, .dashboard_mode.skin_white .layer_popup .layer_wrap {background-color: #eaeaea;}
+
+/* 화이트 모드 마키 */
+.dashboard_mode.skin_white .marquee:after  {
+    background: -moz-linear-gradient(left,   rgba(237,237,237,1) 0%, rgba(237,237,237,0) 100%);
+    background: -webkit-linear-gradient(left,rgba(237,237,237,1) 0%, rgba(237,237,237,0) 100%);
+    background: linear-gradient(to right,    rgba(237,237,237,1) 0%, rgba(237,237,237,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ededed',GradientType=1 );
+}
+.dashboard_mode.skin_white .marquee:before {
+    background: -moz-linear-gradient(left,   rgba(237,237,237,0) 0%, rgba(237,237,237,1) 100%);
+    background: -webkit-linear-gradient(left,rgba(237,237,237,0) 0%, rgba(237,237,237,1) 100%);
+    background: linear-gradient(to right,    rgba(237,237,237,0) 0%, rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ededed',GradientType=1 );
+}
+
+.dashboard_mode.skin_white .marquee,
+.dashboard_mode.skin_white .marquee *,
+.dashboard_mode.skin_white .mp_header > h2,
+.dashboard_mode.skin_white .mp_header > div > button,
+.dashboard_mode.skin_white .mp_header > div > button:before,
+.dashboard_mode.skin_white .ch_name,
+.dashboard_mode.skin_white .mce_btn_area > button,
+.dashboard_mode.skin_white .mc_box > p,
+.dashboard_mode.skin_white .mc_list > li > span,
+.dashboard_mode.skin_white .mc_bico.type03 > p,
+.dashboard_mode.skin_white .personnel > div > span,
+.dashboard_mode.skin_white .area_title,
+.dashboard_mode.skin_white .check_input:checked + .lb_style01:before
+{color:#25252f;}
+.dashboard_mode.skin_white .marquee button:hover * {color:#fe4d3b;}
+.dashboard_mode.skin_white .check_input:checked + .lb_style01:before {
+    text-shadow:         1px 2px 4px rgba(0,0,0,0.0);
+    -webkit-text-shadow: 1px 2px 4px rgba(0,0,0,0.0);
+    -moz-text-shadow:    1px 2px 4px rgba(0,0,0,0.0);
+}
+
+
+.dashboard_mode.skin_white .metro_parent > div {
+    background-color: #f6f6f6;
+    box-shadow:         0px 0px 1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+}
+
+/* 화이트 모드 헤더  */
+.dashboard_mode.skin_white .mp_header { border-style: dotted; border-color: #c5c5c5;}
+.dashboard_mode.skin_white .level03 .mp_header > div > button.alra_btn,
+.dashboard_mode.skin_white .level03 .mp_header > div > button.alra_btn:before,
+.dashboard_mode.skin_white .mp_header > div > button.alra_btn.on {color:#fff;}
+
+/* 화이트 모드 토스트 팝업  */
+.dashboard_mode.skin_white .toast_popup > div  {
+    box-shadow:         0px 0px 1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+}
+
+/* 화이트 모드 구분 아이콘  */
+.dashboard_mode.skin_white .mc_bico.type01,
+.dashboard_mode.skin_white .mc_bico.type01:before,
+.dashboard_mode.skin_white .mc_bico.type02
+{border-color: #2cc56c;  color: #2cc56c; }
+.dashboard_mode.skin_white .mc_bico.type02,
+.dashboard_mode.skin_white .mc_bico.type03 > p {background-color: transparent;}
+
+
+.dashboard_mode.skin_white .level02 .mc_bico.type01,
+.dashboard_mode.skin_white .level02 .mc_bico.type01:before
+{ border-color: #fe4d3b; color: #fe4d3b; }
+
+.dashboard_mode.skin_white .level03 .mc_bico.type01,
+.dashboard_mode.skin_white .level03 .mc_bico.type01:before,
+.dashboard_mode.skin_white .mc_bico.type02.level03,
+.dashboard_mode.skin_white .mc_bico.type02.level03:before
+{border-color: #fe4d3b; color: #fff; }
+.dashboard_mode.skin_white .mc_bico.type02.level03 {background-color:#fe4d3b;}
+
+
+/* 화이트 모드 구역명  */
+.dashboard_mode.skin_white .mce_btn_area > button
+{border:2px solid #bcbcbc;  background-color: #f6f6f6;}
+
+.dashboard_mode.skin_white .mce_btn_area > button.level03
+{background-color: #fe4d3b; border-color: #fe4d3b;  color: #fff;}
+
+.dashboard_mode.skin_white .mce_btn_area > button.level02 {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #fe4d3b;
+    color: #fe4d3b;
+}
+
+.dashboard_mode.skin_white .mc_box > p:nth-of-type(2),
+.dashboard_mode.skin_white .mc_list > li.level03 > span /* Sub 감지 이벤트 기록  */
+{color:#fff;}
+
+.dashboard_mode.skin_white .mc_tline:before {background-color:#d4d4d4;}
+.dashboard_mode.skin_white .mc_tline:after  {background-color:#fff;}
+.dashboard_mode.skin_white .personnel > div.past > span {color:#999;}
+.dashboard_mode.skin_white .personnel > div.now > div:nth-of-type(1) {color: #7fab37;}
+
+
+/* 테이블 스킨 */
+.t_skin_line {}
+
+.t_skin_line .sub_title_area {height:45px;}
+.t_skin_line .search_btn {border:none;}
+.t_skin_line .table_title_area {height:60px;  }
+.t_skin_line .t_defalut {border-width:0 0 1px 0;}
+.t_skin_line .t_defalut th, .t_skin_line .t_defalut td { padding:13px; }
+
+
+.t_skin_line .t_defalut th {
+    /*
+    background-color: rgba(51,50,64,0.6); border:none; height:40px; font-weight:normal; font-size:13px;
+    */
+    background-color: transparent; border-style:solid;
+    border-width:0 0 1px 0; border-color:#d5d4dd #000 #9e9da6 #000;
+    font-size:13px; color:rgba(62,62,62,0.7); font-weight:normal;
+
+}
+.t_skin_line .t_defalut td {border:none; height:55px; background-color: transparent; font-size:14px !important;}
+.t_skin_line .t_defalut.t_type01 tbody tr:nth-child(even) td {background-color: rgba(51,50,64,0.04); }
+
+.t_skin_line .t_defalut th:before {top:13px;}
+.t_skin_line .t_defalut th:after  {bottom:13px;}
+.t_skin_line .t_defalut th:before, .t_skin_line .t_defalut th:after {right:15px;}

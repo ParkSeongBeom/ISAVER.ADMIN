@@ -79,9 +79,15 @@
     };
 
     var tempData = {
-        'oxygen' : [63, 72, 59, 60, 51, 76, 72, 55, 51, 52, 55, 54, 62, 76, 58, 71, 70, 59, 68, 55, 51, 73, 66, 60]
-        ,'carbonMonoxide' : [35, 20, 10, 15, 20, 25, 32, 15, 17, 16, 22, 29, 19, 18, 25, 28, 29, 13, 19, 16, 28, 27, 33, 32]
-        ,'hydrogenSulfide' : [1, 5, 2, 5, 3, 1, 0, 3, 6, 7, 2, 7, 3, 6, 8, 9, 1, 3, 1, 2, 6, 3, 6, 7]
+        'oxygen' : [63, 72, 59, 60, 51, 76, 72, 55, 51, 52, 55, 54, 62, 76, 58, 71, 70, 59, 68, 55, 51, 73, 66, 60, 76, 72, 55, 51, 52, 55, 54]
+        ,'oxygenMin' : [51, 52, 55, 54, 62, 76, 58, 71, 70, 59, 68, 55, 51, 73, 66, 60, 63, 72, 59, 60, 51, 76, 72, 55, 76, 72, 55, 51, 52, 55, 54]
+        ,'oxygenMax' : [51, 76, 72, 55, 51, 52, 55, 54, 62, 76, 58, 71, 63, 72, 59, 60, 70, 59, 68, 55, 51, 73, 66, 60, 76, 72, 55, 51, 52, 55, 54]
+        ,'carbonMonoxide' : [35, 20, 10, 15, 20, 25, 32, 15, 17, 16, 22, 29, 19, 18, 25, 28, 29, 13, 19, 16, 28, 27, 33, 32, 15, 17, 16, 22, 29, 19, 18]
+        ,'carbonMonoxideMin' : [29, 13, 19, 16, 28, 27, 33, 32, 15, 17, 16, 35, 20, 10, 15, 20, 25, 32, 15, 17, 16, 22, 29, 19, 18, 25, 28, 22, 29, 19, 18]
+        ,'carbonMonoxideMax' : [15, 17, 16, 22, 29, 19, 18, 25, 28, 29, 13, 19, 16, 28, 27, 33, 32, 35, 20, 10, 15, 20, 25, 32, 15, 17, 16, 22, 29, 19, 18]
+        ,'hydrogenSulfide' : [1, 5, 2, 5, 3, 1, 0, 3, 6, 7, 2, 7, 3, 6, 8, 9, 1, 3, 1, 2, 6, 3, 6, 7, 3, 6, 7, 2, 7, 3, 6]
+        ,'hydrogenSulfideMin' : [2, 7, 3, 6, 8, 1, 5, 2, 5, 3, 1, 0, 3, 9, 1, 3, 1, 2, 6, 3, 6, 7, 6, 7, 3, 6, 7, 2, 7, 3, 6]
+        ,'hydrogenSulfideMax' : [9, 1, 3, 1, 2, 6, 3, 1, 5, 2, 5, 3, 1, 0, 3, 6, 7, 2, 7, 6, 7, 3, 6, 7, 2, 7, 3, 6, 3, 6, 8]
     };
 
     var gasChartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
@@ -296,6 +302,44 @@
             ).append(
                 $("<span/>").text('황하수소(ppm)')
             );
+
+
+            tableDivHtml.find(".theadDiv").append(
+                $("<span/>").text('산소(%)')
+            ).append(
+                $("<span/>").text('일산화탄소(ppm)')
+            ).append(
+                $("<span/>").text('황하수소(ppm)')
+            );
+
+            tableDivHtml.find(".d_tbody").append(
+                $("<div/>",{id:'oxygen'})
+            ).append(
+                $("<div/>",{id:'carbonMonoxide'})
+            ).append(
+                $("<div/>",{id:'hydrogenSulfide'})
+            );
+
+            var oxygenSeries = [];
+            var carbonMonoxideSeries = [];
+            var hydrogenSulfideSeries = [];
+            for(var index=0; index<dateLists.length; index++){
+                tableDivHtml.find("#oxygen").append(
+                    $("<span/>").text(tempData['oxygen'][index])
+                );
+                oxygenSeries.push(tempData['oxygen'][index]);
+                tableDivHtml.find("#carbonMonoxide").append(
+                    $("<span/>").text(tempData['carbonMonoxide'][index])
+                );
+                carbonMonoxideSeries.push(tempData['carbonMonoxide'][index]);
+                tableDivHtml.find("#hydrogenSulfide").append(
+                    $("<span/>").text(tempData['hydrogenSulfide'][index])
+                );
+                hydrogenSulfideSeries.push(tempData['hydrogenSulfide'][index]);
+            }
+            gasSearchParam['chartData']['series'].push(oxygenSeries);
+            gasSearchParam['chartData']['series'].push(carbonMonoxideSeries);
+            gasSearchParam['chartData']['series'].push(hydrogenSulfideSeries);
         }else{
             chartDivHtml.find(".chart_label").append(
                 $("<span/>").text('산소 결핍')
@@ -310,44 +354,76 @@
             ).append(
                 $("<span/>").text('황하수소 경고')
             );
+
+            tableDivHtml.find(".theadDiv").append(
+                $("<span/>").text('산소 결핍')
+            ).append(
+                $("<span/>").text('산소 경고')
+            ).append(
+                $("<span/>").text('일산화탄소 과다')
+            ).append(
+                $("<span/>").text('일산화탄소 경고')
+            ).append(
+                $("<span/>").text('황하수소 과다')
+            ).append(
+                $("<span/>").text('황하수소 경고')
+            );
+
+            tableDivHtml.find(".d_tbody").append(
+                $("<div/>",{id:'oxygenMin'})
+            ).append(
+                $("<div/>",{id:'oxygenMax'})
+            ).append(
+                $("<div/>",{id:'carbonMonoxideMin'})
+            ).append(
+                $("<div/>",{id:'carbonMonoxideMax'})
+            ).append(
+                $("<div/>",{id:'hydrogenSulfideMin'})
+            ).append(
+                $("<div/>",{id:'hydrogenSulfideMax'})
+            );
+
+            var oxygenMinSeries = [];
+            var oxygenMaxSeries = [];
+            var carbonMonoxideMinSeries = [];
+            var carbonMonoxideMaxSeries = [];
+            var hydrogenSulfideMinSeries = [];
+            var hydrogenSulfideMaxSeries = [];
+            for(var index=0; index<dateLists.length; index++){
+                tableDivHtml.find("#oxygenMin").append(
+                    $("<span/>").text(tempData['oxygenMin'][index])
+                );
+                oxygenMinSeries.push(tempData['oxygenMin'][index]);
+                tableDivHtml.find("#oxygenMax").append(
+                    $("<span/>").text(tempData['oxygenMax'][index])
+                );
+                oxygenMaxSeries.push(tempData['oxygenMax'][index]);
+
+                tableDivHtml.find("#carbonMonoxideMin").append(
+                    $("<span/>").text(tempData['carbonMonoxideMin'][index])
+                );
+                carbonMonoxideMinSeries.push(tempData['carbonMonoxideMin'][index]);
+                tableDivHtml.find("#carbonMonoxideMax").append(
+                    $("<span/>").text(tempData['carbonMonoxideMax'][index])
+                );
+                carbonMonoxideMaxSeries.push(tempData['carbonMonoxideMax'][index]);
+
+                tableDivHtml.find("#hydrogenSulfideMin").append(
+                    $("<span/>").text(tempData['hydrogenSulfideMin'][index])
+                );
+                hydrogenSulfideMinSeries.push(tempData['hydrogenSulfideMin'][index]);
+                tableDivHtml.find("#hydrogenSulfideMax").append(
+                    $("<span/>").text(tempData['hydrogenSulfideMax'][index])
+                );
+                hydrogenSulfideMaxSeries.push(tempData['hydrogenSulfideMax'][index]);
+            }
+            gasSearchParam['chartData']['series'].push(oxygenMinSeries);
+            gasSearchParam['chartData']['series'].push(oxygenMaxSeries);
+            gasSearchParam['chartData']['series'].push(carbonMonoxideMinSeries);
+            gasSearchParam['chartData']['series'].push(carbonMonoxideMaxSeries);
+            gasSearchParam['chartData']['series'].push(hydrogenSulfideMinSeries);
+            gasSearchParam['chartData']['series'].push(hydrogenSulfideMaxSeries);
         }
-
-        tableDivHtml.find(".theadDiv").append(
-            $("<span/>").text('산소(%)')
-        ).append(
-            $("<span/>").text('일산화탄소(ppm)')
-        ).append(
-            $("<span/>").text('황하수소(ppm)')
-        );
-
-        tableDivHtml.find(".d_tbody").append(
-            $("<div/>",{id:'oxygen'})
-        ).append(
-            $("<div/>",{id:'carbonMonoxide'})
-        ).append(
-            $("<div/>",{id:'hydrogenSulfide'})
-        );
-
-        var oxygenSeries = [];
-        var carbonMonoxideSeries = [];
-        var hydrogenSulfideSeries = [];
-        for(var index=0; index<dateLists.length; index++){
-            tableDivHtml.find("#oxygen").append(
-                $("<span/>").text(tempData['oxygen'][index])
-            );
-            oxygenSeries.push(tempData['oxygen'][index]);
-            tableDivHtml.find("#carbonMonoxide").append(
-                $("<span/>").text(tempData['carbonMonoxide'][index])
-            );
-            carbonMonoxideSeries.push(tempData['carbonMonoxide'][index]);
-            tableDivHtml.find("#hydrogenSulfide").append(
-                $("<span/>").text(tempData['hydrogenSulfide'][index])
-            );
-            hydrogenSulfideSeries.push(tempData['hydrogenSulfide'][index]);
-        }
-        gasSearchParam['chartData']['series'].push(oxygenSeries);
-        gasSearchParam['chartData']['series'].push(carbonMonoxideSeries);
-        gasSearchParam['chartData']['series'].push(hydrogenSulfideSeries);
 
         $("#gasEventStatisticsList").append(chartDivHtml).append(tableDivHtml);
 
@@ -361,6 +437,7 @@
     function gasChartRender(data){
         if(gasSearchParam['chartGubn']=="state"){
             new Chartist.Line('#gasArticle .chartDiv', data, {
+                height: 400,
                 low: 0,
                 fullWidth : false,
                 axisY: {
@@ -373,13 +450,14 @@
             });
         }else{
             new Chartist.Bar('#gasArticle .chartDiv', data, {
+                height: 400,
                 seriesBarDistance: 10,
                 axisX: {
                     offset: 60
                 },
                 axisY: {
                     onlyInteger: true,
-                    offset: 80,
+                    offset: 40,
                     scaleMinSpace: 15
                 },
                 plugins: [

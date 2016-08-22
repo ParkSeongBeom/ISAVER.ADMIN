@@ -259,6 +259,7 @@ GNB ,버튼 active   #0c8dd0
 .issue_btn:before     {content:"\e907";}
 .loginout_btn:before  {content:"\e900";}
 
+.skin_btn:before  {content:"\e908"; font-size:22px;}
 
 .stion_btn {
     width:64px;
