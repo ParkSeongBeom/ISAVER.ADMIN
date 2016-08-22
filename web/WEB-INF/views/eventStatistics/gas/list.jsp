@@ -32,9 +32,9 @@
             <span>
                 <select id="gasDateGubn">
                     <option value="day">일간</option>
-                    <option value="week">주간</option>
-                    <option value="month">월간</option>
-                    <option value="year">년간</option>
+                    <option value="week" disabled="disabled">주간</option>
+                    <option value="month" disabled="disabled">월간</option>
+                    <option value="year" disabled="disabled">년간</option>
                 </select>
             </span>
         </p>
