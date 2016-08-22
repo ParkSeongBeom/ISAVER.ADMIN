@@ -164,7 +164,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         paramBean.put("dateLists",dateLists);
         paramBean.put("areaId",parameters.get("areaId"));
         paramBean.put("dateGubn",parameters.get("dateGubn"));
-        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
 
         List<Map> resultList = eventStatisticsDao.findListCraneEventStatistics(paramBean);
 
