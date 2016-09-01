@@ -125,11 +125,11 @@ public class AdminResource {
      * in eventIds
      * @author psb
      */
-    public final static String[] IN_EVENT_ID = new String[]{"EVT002", "EVT221"};
+    public final static String[] IN_EVENT_ID = new String[]{"EVT002", "EVT221", "EVT300"};
 
     /**
      * out eventIds
      * @author psb
      */
-    public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222"};
+    public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222", "EVT301"};
 }
