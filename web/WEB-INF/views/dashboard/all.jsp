@@ -67,18 +67,18 @@
                             <div class="mc_bico type01 going"></div>
                             <div class="mc_element nano">
                                 <div id="eventLogInoutList" class="mce_btn_area nano-content">
-                                    <%--<c:choose>--%>
-                                        <%--<c:when test="${areas != null and fn:length(areas) > 0}">--%>
-                                            <%--<c:forEach var="area" items="${areas}">--%>
-                                                <%--<button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">--%>
-                                                    <%--<span><em>${area.areaName}</em></span>--%>
-                                                    <%--<span id="nowGap">0</span>--%>
-                                                <%--</button>--%>
-                                            <%--</c:forEach>--%>
-                                        <%--</c:when>--%>
-                                        <%--<c:otherwise>--%>
-                                        <%--</c:otherwise>--%>
-                                    <%--</c:choose>--%>
+                                    <c:choose>
+                                    <c:when test="${areas != null and fn:length(areas) > 0}">
+                                        <c:forEach var="area" items="${areas}">
+                                            <button areaId="${area.areaId}" href="#" onclick="javascript:moveDashBoardDetail('${area.areaId}')">
+                                                <span><em>${area.areaName}</em></span>
+                                                <span id="nowGap">0</span>
+                                            </button>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
