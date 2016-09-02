@@ -116,16 +116,18 @@ function DeviceCtrl(model) {
                 alert(messageConfig['requiredSerialNo']);
                 return;
             }
-/*
-            if ($("input[name='ipAddress']").val().trim().length > 0) {
 
-                if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
-                    alert(messageConfig['regexpIpAddress']);
-                    $("input[name='ipAddress']").focus();
-                    return;
+            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+                if ($("input[name='ipAddress']").val().trim().length > 0) {
+
+                    if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
+                        alert(messageConfig['regexpIpAddress']);
+                        $("input[name='ipAddress']").focus();
+                        return;
+                    }
                 }
             }
-*/
+
 
         }
 
@@ -154,17 +156,18 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            /*
-            if ($("input[name='ipAddress']").val().trim().length > 0) {
+            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+                if ($("input[name='ipAddress']").val().trim().length > 0) {
 
-                if (deviceObj['ipAddressExistFlag'] == true) {
-                    alert( messageConfig['existsIpAddress'] );
-                    $("input[name=ipAddress]").focus();
-                    return;
+                    if (deviceObj['ipAddressExistFlag'] == true) {
+                        alert( messageConfig['existsIpAddress'] );
+                        $("input[name=ipAddress]").focus();
+                        return;
+                    }
+
                 }
-
             }
-            */
+
             var deviceId = $("input[name=deviceId]").val();
 
             if(confirm('[' + deviceId + '] ' + messageConfig['addConfirmMessage'] + '?')) {

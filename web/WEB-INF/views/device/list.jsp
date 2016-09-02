@@ -125,7 +125,7 @@
                     <tr>
                         <th><spring:message code='device.column.ipAddress'/></th>
                         <td colspan="3" name="ipAddress">
-                            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20">--%>
+                            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20" />--%>
                         </td>
                     </tr>
                     <tr name="showHideTag">
@@ -244,6 +244,19 @@
         $("select[id=selectDeviceCode]").change(function() {
             var id  = $(event.currentTarget).val();
             $("input[name=deviceCode]").val(id);
+
+            if (deviceModel.getViewStatus() == "add" && $(this).val() == "DEV009") {
+
+            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20" />--%>
+
+                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});
+                $("table tbody tr:eq(4) td").append(ipTag);
+                $("table tbody tr").eq(4).show();
+            } else {
+                $("table tbody tr:eq(4) td").empty();
+                $("table tbody tr").eq(4).hide();
+            }
+
         });
 
         $("select[id=selectAreaId]").change(function() {

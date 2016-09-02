@@ -386,7 +386,7 @@ function DeviceModel() {
 
                 if (device['serialNo'] == serialNo) {
 
-                    if (device['deviceId'] != deviceId) {
+                    if (device['deviceId'] != deviceId && device['delYn'] == 'N') {
                         _serialNoExistFlag = true;
                     }
 

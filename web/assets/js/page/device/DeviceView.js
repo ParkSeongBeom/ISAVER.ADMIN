@@ -342,6 +342,9 @@ function DeviceView(model) {
             $( formName + " [id='selectParentDeviceId']").val(DeviceView._model.getDeviceId());
         }
 
+        $("select[id='selectDeviceCode'] option:eq(0)").prop("selected", "selected");
+
+
         //$("input[name='serialNo']").focus();
 
     };
