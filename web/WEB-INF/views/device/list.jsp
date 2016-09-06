@@ -245,16 +245,34 @@
             var id  = $(event.currentTarget).val();
             $("input[name=deviceCode]").val(id);
 
-            if (deviceModel.getViewStatus() == "add" && $(this).val() == "DEV009") {
-
-            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20" />--%>
-
+            if ($(this).val() == "DEV009") {
+                var ipAddress = $("form td[name=ipAddress]").attr("ip");
                 var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});
-                $("table tbody tr:eq(4) td").append(ipTag);
-                $("table tbody tr").eq(4).show();
+                ipTag.val(ipAddress);
+                switch (deviceModel.getViewStatus()) {
+                    case "add":
+                        $("table tbody tr:eq(4) td").append(ipTag);
+                        $("table tbody tr").eq(4).show();
+                        break;
+                    case "detail":
+                        $("table tbody tr:eq(4) td").empty();
+                        $("table tbody tr:eq(4) td").append(ipTag);
+                        break;
+                }
+
             } else {
-                $("table tbody tr:eq(4) td").empty();
-                $("table tbody tr").eq(4).hide();
+                switch (deviceModel.getViewStatus()) {
+                    case "add":
+                        $("table tbody tr:eq(4) td").empty();
+                        $("table tbody tr").eq(4).hide();
+                        break;
+                    case "detail":
+                        var ipAddress = $("form td[name=ipAddress]").attr("ip");
+
+                        $("table tbody tr:eq(4) td").empty().text(ipAddress);
+                        break;
+                }
+
             }
 
         });

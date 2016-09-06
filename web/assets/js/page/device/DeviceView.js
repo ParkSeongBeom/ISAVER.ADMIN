@@ -49,6 +49,21 @@ function DeviceView(model) {
         },
         ipAddress: function (data) {
             $(formName + " [name='ipAddress']").text(data.ipAddress);
+            $(formName + " [name=ipAddress]").attr("ip", data.ipAddress);
+
+            var deviceCode = data['deviceCode'];
+
+            if (deviceCode == "DEV009") {
+                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "1", maxlength : "20"});
+                ipTag.val(data.ipAddress);
+                switch (deviceModel.getViewStatus()) {
+                    case "detail":
+                        $("table tbody tr:eq(4) td").empty();
+                        $("table tbody tr:eq(4) td").append(ipTag);
+                        break;
+                }
+
+            }
         },
         deviceDesc: function (data) {
             $(formName + " [name='deviceDesc']").val(data.deviceDesc);

@@ -193,16 +193,19 @@ function DeviceCtrl(model) {
                 $("input[name=serialNo]").focus();
                 return;
             }
-            /*
-            if ($("input[name='ipAddress']").val().trim().length > 0) {
 
-                if (deviceObj['ipAddressExistFlag'] == true) {
-                    alert(messageConfig['existsIpAddress']);
-                    $("input[name=ipAddress]").focus();
-                    return;
+            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+                if ($("input[name='ipAddress']").val().trim().length > 0) {
+
+                    if (deviceObj['ipAddressExistFlag'] == true) {
+                        alert(messageConfig['existsIpAddress']);
+                        $("input[name=ipAddress]").focus();
+                        return;
+                    }
                 }
             }
-            */
+
+
             var deviceId = $("input[name=deviceId]").val();
             if(confirm('[' + deviceId + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
                 this.saveDevice();
