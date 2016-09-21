@@ -111,7 +111,10 @@ public class UsersSvcImpl implements UsersSvc {
     public ModelAndView saveUser(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
+        if (!parameters.get("userPassword").isEmpty()) {
+            parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
+        }
+
 
         try {
             usersDao.saveUsers(parameters);

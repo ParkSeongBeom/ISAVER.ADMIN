@@ -30,7 +30,7 @@ public class LicenseCtrl {
     private LicenseSvc licenseSvc;
 
     /**
-     * 라이센스 목록을 가져온다.
+     * 라이센스 목록을 가져온다.(관리자용)
      *
      * @author dhj
      * @param request
@@ -45,6 +45,27 @@ public class LicenseCtrl {
         ModelAndView modelAndView = licenseSvc.findListLicense(parameters);
         modelAndView.setViewName("licenseList");
         modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("viewOnly", false);
+        return modelAndView;
+    }
+
+    /**
+     * 라이센스 목록을 가져온다.(사용자용)
+     *
+     * @author dhj
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/listView")
+    public ModelAndView findListViewOnlyLicense(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters) {
+        parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
+        AdminHelper.setPageParam(parameters, defaultPageSize);
+
+        ModelAndView modelAndView = licenseSvc.findListLicense(parameters);
+        modelAndView.setViewName("licenseList");
+        modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("viewOnly", true);
         return modelAndView;
     }
     /**

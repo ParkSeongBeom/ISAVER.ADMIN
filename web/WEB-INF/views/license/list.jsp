@@ -62,7 +62,9 @@
             <h4></h4>
             <div class="table_btn_set">
                 <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
-                <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
+                <c:if test="${viewOnly == false}">
+                    <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/></button>
+                </c:if>
             </div>
         </div>
 
@@ -98,7 +100,7 @@
                             <c:set var="expireDate_yyyy" value="${fn:substring(license.expireDate, 0, 4)}" />
                             <c:set var="expireDate_MM" value="${fn:substring(license.expireDate, 4, 6)}" />
                             <c:set var="expireDate_dd" value="${fn:substring(license.expireDate, 6, 8)}" />
-                            <tr onclick="moveDetail(String('${license.licenseKey}'));">
+                            <tr <c:if test="${viewOnly == false}"> onclick="moveDetail(String('${license.licenseKey}'));"</c:if>>
                                 <td>${license.deviceCode}</td>
                                 <td>${licenseKey1}-${licenseKey2}-${licenseKey3}-${licenseKey4}-${licenseKey5}</td>
                                 <td>${license.licenseCount}</td>

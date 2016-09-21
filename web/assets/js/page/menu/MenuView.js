@@ -231,8 +231,10 @@ function MenuView(model) {
                             _menuLiTag.addClass("nl_devi");
                             break;
                         case "E00000": // 라이센스관리
+                        case "K00000": // 라이센스보기
                             _menuLiTag.addClass("nl_lice");
                             break;
+
                     }
 
                     _menuLiTag.attr("name", item.menuId);
