@@ -450,9 +450,27 @@ function DeviceEvent(model) {
                 location.href = "./list.html?ctrl=reload";
             }
         } else {
-            alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
-            //window.location.reload();
-            location.href = "./list.html?ctrl=reload";
+
+            if (data['resultFlag'] == false) {
+                switch(data['licenseMsg']) {
+                    case "NOT_EXIST":
+                        alert("라이센스 정보가 존재하지 않습니다.");
+                        break;
+                    case "DAY_OVER":
+                        alert("라이센스 유효기간이 경과 했습니다.");
+                        break;
+                    case "QUANTITY_SHORTAGE":
+                        alert("라이센스 수량이 부족합니다.");
+                        break;
+                    default:
+                        alert("관리자에게 문의해 주세요.");
+                        break;
+                }
+            } else {
+                alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Complete']);
+                location.href = "./list.html?ctrl=reload";
+            }
+
         }
 
 

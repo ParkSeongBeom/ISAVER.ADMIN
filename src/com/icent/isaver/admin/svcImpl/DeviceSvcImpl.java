@@ -1,13 +1,16 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.DeviceBean;
+import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
@@ -20,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -48,6 +53,9 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Inject
     private AreaSvc areaSvc;
+
+    @Inject
+    private LicenseDao licenseDao;
 
     @Override
     public ModelAndView findAllDeviceTree(Map<String, String> parameters) {
@@ -90,21 +98,94 @@ public class DeviceSvcImpl implements DeviceSvc {
         return modelAndView;
     }
 
+    private DeviceLicenceBean getVerificationDeviceLicense(Map<String, String> parameters) {
+
+        DeviceLicenceBean deviceLicenceBean = new DeviceLicenceBean();
+
+        LicenseBean licenseBean = null;
+        Boolean resultFlag = false;
+        Boolean dateDiff = false;
+        Integer deviceCount = 0;
+
+        if (parameters.get("deviceCode").equals(AdminResource.PEOPLE_COUNT_DEVICE_ID)) {
+            licenseBean = licenseDao.findByLicense(parameters);
+
+            deviceCount = deviceDao.findCountDeviceLicense(parameters);
+
+            Date deviceLicenseDate = null;
+
+            if (  licenseBean != null && licenseBean.getLicenseCount() > 0 ) {
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+
+                try {
+                    deviceLicenseDate = format.parse(licenseBean.getExpireDate());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(deviceLicenseDate);
+                    calendar.set(Calendar.HOUR_OF_DAY, 23);
+                    calendar.set(Calendar.MINUTE, 59);
+                    calendar.set(Calendar.SECOND, 59);
+                    calendar.set(Calendar.MILLISECOND, 999);
+                    deviceLicenseDate = calendar.getTime();
+
+                } catch (ParseException e) {
+                    throw new JabberException("");
+                }
+
+                if (  licenseBean.getLicenseCount() > deviceCount ) {
+                    resultFlag = true;
+
+                }
+
+                if (deviceLicenseDate.getTime() >= new Date().getTime()) {
+                    dateDiff = true;
+                }
+            }
+        } else {
+            resultFlag = true;
+        }
+
+        deviceLicenceBean.setLicenseBean(licenseBean);
+        deviceLicenceBean.setResultFlag(resultFlag);
+        deviceLicenceBean.setDateDiff(dateDiff);
+        deviceLicenceBean.setDeviceCount(deviceCount);
+        return deviceLicenceBean;
+    }
+
     @Override
     public ModelAndView addDevice(HttpServletRequest request, Map<String, String> parameters) {
 
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        DeviceLicenceBean deviceLicenceBean = getVerificationDeviceLicense(parameters);
 
-        try {
-            parameters.put("deviceId", generatorFunc());
-            deviceDao.addDevice(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+        if (deviceLicenceBean.getResultFlag()) {
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+            try {
+                parameters.put("deviceId", generatorFunc());
+                deviceDao.addDevice(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new JabberException("");
+            }
         }
 
         ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("resultFlag", deviceLicenceBean.getResultFlag());
+
+        if (deviceLicenceBean.getResultFlag() == false && parameters.get("deviceCode").equals(AdminResource.PEOPLE_COUNT_DEVICE_ID)) {
+
+            if (deviceLicenceBean.getLicenseBean() == null ) {
+                modelAndView.addObject("licenseMsg", "NOT_EXIST");
+            } else if(deviceLicenceBean.getLicenseBean() != null && deviceLicenceBean.getDateDiff()  == false) {
+                modelAndView.addObject("licenseMsg", "DAY_OVER");
+            } else if (deviceLicenceBean.getLicenseBean() != null  && deviceLicenceBean.getLicenseBean().getLicenseCount() <= deviceLicenceBean.deviceCount) {
+                modelAndView.addObject("licenseMsg", "QUANTITY_SHORTAGE");
+            }
+
+        }
+
         return modelAndView;
     }
 
@@ -336,6 +417,45 @@ public class DeviceSvcImpl implements DeviceSvc {
 
         public void setLoopLength(Integer loopLength) {
             this.loopLength = loopLength;
+        }
+    }
+
+    class DeviceLicenceBean {
+        LicenseBean licenseBean = null;
+        Boolean resultFlag = false;
+        Boolean dateDiff = false;
+        Integer deviceCount = 0;
+
+        public LicenseBean getLicenseBean() {
+            return licenseBean;
+        }
+
+        public void setLicenseBean(LicenseBean licenseBean) {
+            this.licenseBean = licenseBean;
+        }
+
+        public Boolean getResultFlag() {
+            return resultFlag;
+        }
+
+        public void setResultFlag(Boolean resultFlag) {
+            this.resultFlag = resultFlag;
+        }
+
+        public Boolean getDateDiff() {
+            return dateDiff;
+        }
+
+        public void setDateDiff(Boolean dateDiff) {
+            this.dateDiff = dateDiff;
+        }
+
+        public Integer getDeviceCount() {
+            return deviceCount;
+        }
+
+        public void setDeviceCount(Integer deviceCount) {
+            this.deviceCount = deviceCount;
         }
     }
 }

@@ -132,4 +132,6 @@ public class AdminResource {
      * @author psb
      */
     public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222", "EVT301"};
+
+    public final static String PEOPLE_COUNT_DEVICE_ID = "DEV009";
 }

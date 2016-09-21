@@ -253,6 +253,7 @@
                     case "add":
                         $("table tbody tr:eq(4) td").append(ipTag);
                         $("table tbody tr").eq(4).show();
+                        ipTag.val("");
                         break;
                     case "detail":
                         $("table tbody tr:eq(4) td").empty();
@@ -265,6 +266,7 @@
                     case "add":
                         $("table tbody tr:eq(4) td").empty();
                         $("table tbody tr").eq(4).hide();
+                        $("table tbody tr:eq(4) td").val("");
                         break;
                     case "detail":
                         var ipAddress = $("form td[name=ipAddress]").attr("ip");
