@@ -17,6 +17,8 @@
 
     <util:properties id="configProperties" location="classpath:properties/config.properties" />
 
+    <!--<util:properties id="configProperties" location="classpath:properties/config-local.properties" />-->
+
     <!-- 필요한 클래스를 로드하기 위한 유틸 -->
     <bean id="appContextUtil" class="com.icent.isaver.admin.util.AppContextUtil" />
 </beans>
