@@ -140,7 +140,7 @@ public class AreaCtrl {
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = areaSvc.removeArea(parameters);
+        ModelAndView modelAndView = areaSvc.removeArea(request, parameters);
         return modelAndView;
     }
 }

@@ -134,7 +134,7 @@ public class DeviceCtrl {
             throw new JabberException("");
         }
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = deviceSvc.removeDevice(parameters);
+        ModelAndView modelAndView = deviceSvc.removeDevice(request, parameters);
         return modelAndView;
     }
 }

@@ -222,6 +222,9 @@ function MenuModel() {
      * 메뉴 트리 가공
      */
     MenuModel.processMenuTreeData = function (_list, _rootId) {
+        if(_list==null){
+            return false;
+        }
 
         //최종적인 트리 데이터
         var _treeModel = [];

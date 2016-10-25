@@ -365,16 +365,17 @@ function AreaModel() {
 
         var resultData = null;
 
-        for (var i =0; i < this.model.areaTreeList.length; i++) {
-            var area = this.model.areaTreeList[i];
+        if(this.model.areaTreeList!=null){
+            for (var i =0; i < this.model.areaTreeList.length; i++) {
+                var area = this.model.areaTreeList[i];
 
-            if (area['areaId'] == areaId) {
-                resultData = area;
-                break;
+                if (area['areaId'] == areaId) {
+                    resultData = area;
+                    break;
+                }
+
             }
-
         }
-
         return resultData;
     };
 
@@ -412,6 +413,10 @@ function AreaModel() {
         obj.areaId = AreaModel.getRootOrgId();
         obj.sortOrder = null;
         obj.upOrgId = null;
+
+        if(_list==null){
+            return false;
+        }
 
         _list.unshift(obj);
         //최종적인 트리 데이터

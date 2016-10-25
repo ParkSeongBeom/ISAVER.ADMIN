@@ -109,6 +109,31 @@ public class AdminResource {
     };
 
     /**
+     * 장치동기화 요청구분 코드정의
+     * @author psb
+     */
+    public final static Map<String, String> SYNC_TYPE = new HashMap<String, String>(){
+        {
+            put("add","T01001");
+            put("save","T01002");
+            put("remove","T01003");
+        }
+    };
+
+    /**
+     * 장치동기화 처리상태 코드정의
+     * @author psb
+     */
+    public final static Map<String, String> SYNC_STATUS = new HashMap<String, String>(){
+        {
+            put("wait","S01001");
+            put("progress","S01002");
+            put("success","S01003");
+            put("fail","S01004");
+        }
+    };
+
+    /**
      * worker eventIds
      * @author psb
      */

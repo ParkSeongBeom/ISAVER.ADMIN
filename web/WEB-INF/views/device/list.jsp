@@ -109,11 +109,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code='area.column.areaName'/></th>
-                        <td colspan="3">
+                        <th class="point"><spring:message code='area.column.areaName'/></th>
+                        <td class="point" colspan="3">
                             <input type="hidden"  name="areaId"/>
                             <select id="selectAreaId">
-                                <option value=""><spring:message code="device.message.emptyData"/></option>
+                                <%--<option value=""><spring:message code="device.message.emptyData"/></option>--%>
                                 <c:forEach items="${areas}" var="areas">
                                     <c:if test="${areas.delYn == 'N'}">
                                         <option value="${areas.areaId}">${areas.path}</option>
@@ -214,6 +214,7 @@
         ,   saveConfirmMessage        :'<spring:message code="common.message.saveConfirm"/>'
         ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
         ,   requiredDeviceId            :"<spring:message code='device.message.requiredDeviceId'/>"
+        ,   requiredAreaId            :"<spring:message code='device.message.requiredAreaId'/>"
         ,   requiredSerialNo          :"<spring:message code='device.message.requiredSerialNo'/>"
         ,   requiredIpAddress          :"<spring:message code='device.message.requiredIpAddress'/>"
         ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"

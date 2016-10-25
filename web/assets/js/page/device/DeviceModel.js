@@ -442,6 +442,9 @@ function DeviceModel() {
         obj.sortOrder = null;
         obj.upOrgId = null;
 
+        if(_list==null){
+            return false;
+        }
         _list.unshift(obj);
         //최종적인 트리 데이터
         var _treeModel = [];

@@ -4,12 +4,14 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
+import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.icent.isaver.repository.dao.base.DeviceSyncRequestDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
@@ -56,6 +58,9 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Inject
     private LicenseDao licenseDao;
+
+    @Inject
+    private DeviceSyncRequestDao deviceSyncRequestDao;
 
     @Override
     public ModelAndView findAllDeviceTree(Map<String, String> parameters) {
@@ -163,6 +168,17 @@ public class DeviceSvcImpl implements DeviceSvc {
             try {
                 parameters.put("deviceId", generatorFunc());
                 deviceDao.addDevice(parameters);
+
+                List<Map<String, String>> addDeviceSyncRequestParamList = new ArrayList<>();
+                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                addDeviceSyncRequestParam.put("deviceSyncRequestId", StringUtils.getGUID32());
+                addDeviceSyncRequestParam.put("deviceId", parameters.get("deviceId"));
+                addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("add"));
+                addDeviceSyncRequestParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
+                addDeviceSyncRequestParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
+                addDeviceSyncRequestParamList.add(addDeviceSyncRequestParam);
+
+                deviceSyncRequestDao.addDeviceSyncRequest(addDeviceSyncRequestParamList);
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
@@ -191,10 +207,24 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView saveDevice(HttpServletRequest request, Map<String, String> parameters) {
-
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         try {
+            DeviceBean device = deviceDao.findByDevice(parameters);
+
+            if(!parameters.get("areaId").equals(device.getAreaId()) || !parameters.get("deviceCode").equals(device.getDeviceCode())){
+                List<Map<String, String>> addDeviceSyncRequestParamList = new ArrayList<>();
+                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                addDeviceSyncRequestParam.put("deviceSyncRequestId", StringUtils.getGUID32());
+                addDeviceSyncRequestParam.put("deviceId", parameters.get("deviceId"));
+                addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
+                addDeviceSyncRequestParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
+                addDeviceSyncRequestParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
+                addDeviceSyncRequestParamList.add(addDeviceSyncRequestParam);
+
+                deviceSyncRequestDao.addDeviceSyncRequest(addDeviceSyncRequestParamList);
+            }
+
             deviceDao.saveDevice(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -207,7 +237,7 @@ public class DeviceSvcImpl implements DeviceSvc {
     }
 
     @Override
-    public ModelAndView removeDevice(Map<String, String> parameters) {
+    public ModelAndView removeDevice(HttpServletRequest request, Map<String, String> parameters) {
 
         List<DeviceBean> devices = deviceDao.findByDeviceTreeChildNodes(parameters);
 
@@ -229,6 +259,16 @@ public class DeviceSvcImpl implements DeviceSvc {
             TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
             try{
+                List<Map<String, String>> addDeviceSyncRequestParamList = new ArrayList<>();
+                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                addDeviceSyncRequestParam.put("deviceSyncRequestId", StringUtils.getGUID32());
+                addDeviceSyncRequestParam.put("deviceId", parameters.get("deviceId"));
+                addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("remove"));
+                addDeviceSyncRequestParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
+                addDeviceSyncRequestParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
+                addDeviceSyncRequestParamList.add(addDeviceSyncRequestParam);
+
+                deviceSyncRequestDao.addDeviceSyncRequest(addDeviceSyncRequestParamList);
                 deviceDao.removeListDeviceForTree(devices);
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){

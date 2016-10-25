@@ -81,7 +81,7 @@ public interface DeviceSvc {
      * @param parameters
      * @return
      */
-    ModelAndView removeDevice(Map<String, String> parameters);
+    ModelAndView removeDevice(HttpServletRequest request, Map<String, String> parameters);
 
     /**
      * 전체 장치 트리를 반환한다.
