@@ -69,17 +69,17 @@
                 <colgroup>
                     <col style="width: 5%;" />
                     <col style="width: *;" />
-                    <%--<col style="width: 15%;" />--%>
-                    <col style="width: 10%;" />
-                    <col style="width: 10%;" />
                     <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 10%;" />
                     <col style="width: 20%;" />
                     <col style="width: 20%;" />
                 </colgroup>
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="mainCheck" value=""></th>
-                        <%--<th><spring:message code="deviceSyncRequest.column.deviceSyncRequestId"/></th>--%>
+                        <th><spring:message code="deviceSyncRequest.column.deviceSyncRequestId"/></th>
                         <th><spring:message code="deviceSyncRequest.column.deviceName"/></th>
                         <th><spring:message code="deviceSyncRequest.column.type"/></th>
                         <th><spring:message code="deviceSyncRequest.column.status"/></th>
@@ -94,7 +94,7 @@
                             <c:forEach var="deviceSyncRequest" items="${deviceSyncRequestList}">
                                 <tr>
                                     <td><input type="checkbox" name="subCheck" value="${deviceSyncRequest.deviceSyncRequestId}"></td>
-                                    <%--<td>${deviceSyncRequest.deviceSyncRequestId}</td>--%>
+                                    <td>${deviceSyncRequest.deviceSyncRequestId}</td>
                                     <td>${deviceSyncRequest.deviceName}</td>
                                     <td>${deviceSyncRequest.type}</td>
                                     <td>${deviceSyncRequest.status}</td>
@@ -110,7 +110,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td colspan="7"><spring:message code="common.message.emptyData"/></td>
+                                <td colspan="8"><spring:message code="common.message.emptyData"/></td>
                             </tr>
                         </c:otherwise>
                     </c:choose>
