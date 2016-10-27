@@ -1,7 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.svc.EventLogChartSvc;
-import com.icent.isaver.admin.svc.EventLogCraneSvc;
 import com.icent.isaver.repository.bean.EventLogCraneBean;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
 import com.icent.isaver.repository.bean.EventLogWorkerBean;

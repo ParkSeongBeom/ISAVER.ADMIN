@@ -1,6 +1,5 @@
 package com.icent.isaver.admin.svc;
 
-import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import org.springframework.web.servlet.ModelAndView;
 

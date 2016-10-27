@@ -4,12 +4,10 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
-import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
-import com.icent.isaver.repository.dao.base.DeviceSyncRequestDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
@@ -51,7 +49,7 @@ public class AreaSvcImpl implements AreaSvc {
     private DeviceDao deviceDao;
 
     @Inject
-    private DeviceSyncRequestDao deviceSyncRequestDao;
+    private DeviceSyncRequestSvc deviceSyncRequestSvc;
 
     @Override
     public ModelAndView findAllAreaTree(Map<String, String> parameters) {
@@ -117,26 +115,32 @@ public class AreaSvcImpl implements AreaSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
+        AreaBean area = areaDao.findByArea(parameters);
+
         try {
-            AreaBean area = areaDao.findByArea(parameters);
-
             areaDao.saveArea(parameters);
-            if(!parameters.get("areaName").equals(area.getAreaName())){
-                List<Map<String, String>> addDeviceSyncRequestParamList = new ArrayList<>();
-                List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new JabberException("");
+        }
 
+        transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        try {
+            if(!parameters.get("areaName").equals(area.getAreaName())){
+                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                String deviceIds = "";
+
+                List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
                 for(DeviceBean deviceBean : deviceBeanList){
-                    Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
-                    addDeviceSyncRequestParam.put("deviceSyncRequestId", StringUtils.getGUID32());
-                    addDeviceSyncRequestParam.put("deviceId", deviceBean.getDeviceId());
-                    addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
-                    addDeviceSyncRequestParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
-                    addDeviceSyncRequestParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
-                    addDeviceSyncRequestParamList.add(addDeviceSyncRequestParam);
+                    deviceIds += deviceBean.getDeviceId() + ",";
                 }
 
-                if(addDeviceSyncRequestParamList!=null){
-                    deviceSyncRequestDao.addDeviceSyncRequest(addDeviceSyncRequestParamList);
+                if(StringUtils.notNullCheck(deviceIds)){
+                    deviceIds = deviceIds.substring(0, deviceIds.length()-1);
+                    addDeviceSyncRequestParam.put("deviceIds",deviceIds);
+                    addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
+                    deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
                 }
             }
             transactionManager.commit(transactionStatus);
@@ -144,6 +148,7 @@ public class AreaSvcImpl implements AreaSvc {
             transactionManager.rollback(transactionStatus);
             throw new JabberException("");
         }
+
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
     }
@@ -159,23 +164,30 @@ public class AreaSvcImpl implements AreaSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try{
-            List<Map<String, String>> addDeviceSyncRequestParamList = new ArrayList<>();
+        try {
+            Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+            String deviceIds = "";
+
             List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
-
             for(DeviceBean deviceBean : deviceBeanList){
-                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
-                addDeviceSyncRequestParam.put("deviceSyncRequestId", StringUtils.getGUID32());
-                addDeviceSyncRequestParam.put("deviceId", deviceBean.getDeviceId());
-                addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("remove"));
-                addDeviceSyncRequestParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
-                addDeviceSyncRequestParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
-                addDeviceSyncRequestParamList.add(addDeviceSyncRequestParam);
+                deviceIds += deviceBean.getDeviceId() + ",";
             }
 
-            if(addDeviceSyncRequestParamList!=null){
-                deviceSyncRequestDao.addDeviceSyncRequest(addDeviceSyncRequestParamList);
+            if(StringUtils.notNullCheck(deviceIds)){
+                deviceIds = deviceIds.substring(0, deviceIds.length()-1);
+                addDeviceSyncRequestParam.put("deviceIds",deviceIds);
+                addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("remove"));
+                deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
             }
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new JabberException("");
+        }
+
+        transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+        try{
             areaDao.removeListAreaForTree(areas);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

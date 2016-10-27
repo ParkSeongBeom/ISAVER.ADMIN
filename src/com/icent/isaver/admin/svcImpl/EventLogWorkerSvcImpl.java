@@ -2,7 +2,6 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogWorkerSvc;
-import com.icent.isaver.repository.bean.EventLogCraneBean;
 import com.icent.isaver.repository.bean.EventLogWorkerBean;
 import com.icent.isaver.repository.dao.base.EventLogWorkerDao;
 import com.kst.common.util.StringUtils;

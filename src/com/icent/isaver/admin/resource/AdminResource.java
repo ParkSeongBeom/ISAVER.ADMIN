@@ -21,6 +21,12 @@ import java.util.Map;
 public class AdminResource {
 
     /**
+     * 콤마
+     * @author psb
+     */
+    public final static String COMMA_STRING = ",";
+
+    /**
      * 빈문자
      * @author kst
      */

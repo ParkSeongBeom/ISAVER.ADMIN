@@ -48,6 +48,9 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
     @Override
     public ModelAndView findListDeviceSyncRequest(Map<String, String> parameters) {
         List<DeviceSyncRequestBean> deviceSyncRequestList = deviceSyncRequestDao.findListDeviceSyncRequest(parameters);
+        Integer totalCount = deviceSyncRequestDao.findCountDeviceSyncRequest(parameters);
+
+        AdminHelper.setPageTotalCount(parameters, totalCount);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("deviceSyncRequestList", deviceSyncRequestList);
@@ -60,7 +63,7 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         List<Map<String, String>> addParamList = new ArrayList<>();
-        String[] deviceIds = parameters.get("deviceIds").split(",");
+        String[] deviceIds = parameters.get("deviceIds").split(AdminResource.COMMA_STRING);
 
         for (String deviceId : deviceIds) {
             Map<String, String> addParam = new HashMap<>();
@@ -89,11 +92,11 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
         List<Map<String, String>> saveParamList = new ArrayList<>();
-        String[] devices = parameters.get("devices").split(",");
+        String[] deviceSyncRequestIds = parameters.get("deviceSyncRequestIds").split(",");
 
-        for (String device : devices) {
+        for (String deviceSyncRequestId : deviceSyncRequestIds) {
             Map<String, String> saveParam = new HashMap<>();
-            saveParam.put("deviceId", device);
+            saveParam.put("deviceSyncRequestId", deviceSyncRequestId);
             saveParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
             saveParam.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
             saveParamList.add(saveParam);
