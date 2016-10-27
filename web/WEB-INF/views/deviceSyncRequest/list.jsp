@@ -110,7 +110,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td colspan="8"><spring:message code="common.message.emptyData"/></td>
+                                <td colspan="7"><spring:message code="common.message.emptyData"/></td>
                             </tr>
                         </c:otherwise>
                     </c:choose>
