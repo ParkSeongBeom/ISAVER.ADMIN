@@ -70,11 +70,11 @@
                     <col style="width: 5%;" />
                     <col style="width: *;" />
                     <col style="width: 15%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 10%;" />
                     <col style="width: 15%;" />
-                    <col style="width: 10%;" />
-                    <col style="width: 10%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
+                    <col style="width: 15%;" />
                 </colgroup>
                 <thead>
                     <tr>
