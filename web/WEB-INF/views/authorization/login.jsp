@@ -117,7 +117,7 @@
 
             var userInfo = {
                 'userId' : $("input[name=userId]").val(),
-                'userPassword' : md5($("input[name=userPassword]").val()),
+                'userPassword' : md5($("input[name=userPassword]").val())
             };
             sendAjaxPostRequest(urlConfig['loginUrl'], userInfo,login_successHandler,login_failureHandler);
         }
