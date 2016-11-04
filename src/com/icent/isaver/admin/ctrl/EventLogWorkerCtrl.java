@@ -54,7 +54,7 @@ public class EventLogWorkerCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chartList")
-    public ModelAndView findChartEventLogCrane(@RequestParam Map<String, String> parameters){
+    public ModelAndView findChartEventLogWorker(@RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogWorkerSvc.findChartEventLogWorker(parameters);
         return modelAndView;
     }

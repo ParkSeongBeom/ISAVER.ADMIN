@@ -378,7 +378,7 @@ function MenuView(model) {
             buttonTag.append($("<span><em>"+areaItem['areaName']+"</em></span>"));
 
             $("#eventLogWorkerList").append(buttonTag.clone());
-            $("#eventLogInoutList").append(buttonTag.clone());
+//            $("#eventLogInoutList").append(buttonTag.clone());
             $("#eventLogCraneList").append(buttonTag.clone());
             $("#eventLogGasList").append(buttonTag.clone());
 

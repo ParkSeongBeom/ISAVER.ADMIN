@@ -69,7 +69,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
                 }
                 break;
             case "crane": // 크레인 상태
-                List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID_DETAIL);}});
+                List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID_ALL);}});
 
                 for(EventBean crane : craneEvents){
                     Map craneMap = new HashMap();
@@ -167,7 +167,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         paramBean.put("dateLists",dateLists);
         paramBean.put("areaId",parameters.get("areaId"));
         paramBean.put("dateGubn",parameters.get("dateGubn"));
-        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
+        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
 
         List<Map> resultList = eventStatisticsDao.findListCraneEventStatistics(paramBean);
 

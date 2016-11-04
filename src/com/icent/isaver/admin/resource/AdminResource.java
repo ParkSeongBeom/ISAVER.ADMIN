@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.resource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,9 +122,9 @@ public class AdminResource {
      */
     public final static Map<String, String> SYNC_TYPE = new HashMap<String, String>(){
         {
-            put("add","T01001");
-            put("save","T01002");
-            put("remove","T01003");
+            put("add","T01001"); // 등록
+            put("save","T01002"); // 수정
+            put("remove","T01003"); // 삭제
         }
     };
 
@@ -132,10 +134,10 @@ public class AdminResource {
      */
     public final static Map<String, String> SYNC_STATUS = new HashMap<String, String>(){
         {
-            put("wait","S01001");
-            put("progress","S01002");
-            put("success","S01003");
-            put("fail","S01004");
+            put("wait","S01001"); // 대기
+            put("progress","S01002"); // 처리중
+            put("success","S01003"); // 성공
+            put("fail","S01004"); // 실패
         }
     };
 
@@ -149,8 +151,27 @@ public class AdminResource {
      * crane eventIds
      * @author psb
      */
-    public final static String[] CRANE_EVENT_ID_ALL = new String[]{"EVT100", "EVT101", "EVT210"};
-    public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
+    public final static String[] CRANE_EVENT_ID_ALL = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
+    public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT210"};
+
+    /**
+     * alram eventIds
+     * @author psb
+     */
+    public final static List<String> ALRAM_EVENT = new ArrayList(){{
+        add("EVT009");
+        add("EVT015");
+        add("EVT016");
+        add("EVT100");
+        add("EVT101");
+        add("EVT210");
+    }};
+
+    /**
+     * in, out eventIds
+     * @author psb
+     */
+    public final static String[] INOUT_EVENT_ID = new String[]{"EVT002", "EVT221", "EVT300", "EVT003", "EVT222", "EVT301"};
 
     /**
      * in eventIds

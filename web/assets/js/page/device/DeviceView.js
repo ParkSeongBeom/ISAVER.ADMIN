@@ -48,22 +48,34 @@ function DeviceView(model) {
             $(formName + " [name='serialNo']").val(data.serialNo);
         },
         ipAddress: function (data) {
-            $(formName + " [name='ipAddress']").text(data.ipAddress);
-            $(formName + " [name=ipAddress]").attr("ip", data.ipAddress);
-
-            var deviceCode = data['deviceCode'];
-
-            if (deviceCode == "DEV009") {
-                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "1", maxlength : "20"});
-                ipTag.val(data.ipAddress);
-                switch (deviceModel.getViewStatus()) {
-                    case "detail":
-                        $("table tbody tr:eq(4) td").empty();
-                        $("table tbody tr:eq(4) td").append(ipTag);
-                        break;
-                }
-
-            }
+            $(formName + " [name='ipAddress']").val(data.ipAddress);
+//            $(formName + " [name=ipAddress]").attr("ip", data.ipAddress);
+//
+//            var deviceCode = data['deviceCode'];
+//
+//            if (deviceCode == "DEV009") {
+//                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "1", maxlength : "20"});
+//                ipTag.val(data.ipAddress);
+//                switch (deviceModel.getViewStatus()) {
+//                    case "detail":
+//                        $("table tbody tr:eq(4) td").empty();
+//                        $("table tbody tr:eq(4) td").append(ipTag);
+//                        break;
+//                }
+//
+//            }
+        },
+        webPort: function (data) {
+            $(formName + " [name='webPort']").val(data.webPort);
+        },
+        rtspPort: function (data) {
+            $(formName + " [name='rtspPort']").val(data.rtspPort);
+        },
+        deviceUserId: function (data) {
+            $(formName + " [name='deviceUserId']").val(data.deviceUserId);
+        },
+        devicePassword: function (data) {
+            $(formName + " [name='devicePassword']").val(data.devicePassword);
         },
         deviceDesc: function (data) {
             $(formName + " [name='deviceDesc']").val(data.deviceDesc);
@@ -269,7 +281,11 @@ function DeviceView(model) {
         $(formName + " td[name='updateUserId']").text("");
         $(formName + " td[name='updateDatetime']").text("");
         $(formName + " textarea[name='deviceDesc']").val("");
-        $(formName + " td[name=ipAddress]").text("");
+        $(formName + " [name=ipAddress]").val("");
+        $(formName + " [name=webPort]").val("");
+        $(formName + " [name=rtspPort]").val("");
+        $(formName + " [name=deviceUserId]").val("");
+        $(formName + " [name=devicePassword").val("");
 
         //$("table tbody tr").eq(0).show();
         $("table tbody tr").eq(1).show();
@@ -319,7 +335,7 @@ function DeviceView(model) {
         $("table tbody tr").eq(1).show();
         $("table tbody tr").eq(2).show();
         $("table tbody tr").eq(3).show();
-        $("table tbody tr").eq(4).hide();
+        $("table tbody tr").eq(4).show();
         $("table tbody tr").eq(5).show();
         $("table tbody tr").eq(6).show();
 
@@ -335,6 +351,10 @@ function DeviceView(model) {
         $("button[name='removeBtn']").hide();
         $("button[name='orgUserAddBtn']").hide()
         $("button[name='orgUserRemoveBtn']").hide();
+        $("input[name='webPort']").val("");
+        $("input[name='rtspPort']").val("");
+        $("input[name='deviceUserId']").val("");
+        $("input[name='devicePassword']").val("");
 
         $("input:hidden[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
 
@@ -346,7 +366,7 @@ function DeviceView(model) {
         $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
         $("input[name=deviceCode]").val(parenDeviceCode);
         $("input[name=areaId]").val("");
-        $("td[name=ipAddress]").text("");
+//        $("td[name=ipAddress]").text("");
 
         var formName = "#" +DeviceView._model.getFormName();
         $( formName + " [id='selectParentDeviceId'] option").attr('disabled', false);

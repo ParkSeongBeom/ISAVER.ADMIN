@@ -133,9 +133,7 @@
             printTime();
 
             dashBoardHelper.addRequestData('alram', layoutUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
-
-            // 10-24 dashboard DB 변경 완료후 주석 해제
-//            dashBoardHelper.startInterval();
+            dashBoardHelper.startInterval();
             aliveSend(900000);
 
             //스크롤바 플러그인 호출

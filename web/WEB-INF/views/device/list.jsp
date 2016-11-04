@@ -125,7 +125,27 @@
                     <tr>
                         <th><spring:message code='device.column.ipAddress'/></th>
                         <td colspan="3" name="ipAddress">
-                            <%--<input type="text" name="ipAddress" placeholder="<spring:message code='device.message.requiredIpAddress' />" maxlength="20" />--%>
+                            <input type="text" name="ipAddress" maxlength="20" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.webPort'/></th>
+                        <td name="webPort">
+                            <input type="text" name="webPort" maxlength="20" />
+                        </td>
+                        <th><spring:message code='device.column.rtspPort'/></th>
+                        <td name="rtspPort">
+                            <input type="text" name="rtspPort" maxlength="20" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.deviceUserId'/></th>
+                        <td name="deviceUserId">
+                            <input type="text" name="deviceUserId" maxlength="20" />
+                        </td>
+                        <th><spring:message code='device.column.devicePassword'/></th>
+                        <td name="devicePassword">
+                            <input type="text" name="devicePassword" maxlength="50" />
                         </td>
                     </tr>
                     <tr name="showHideTag">
@@ -246,37 +266,37 @@
             var id  = $(event.currentTarget).val();
             $("input[name=deviceCode]").val(id);
 
-            if ($(this).val() == "DEV009") {
-                var ipAddress = $("form td[name=ipAddress]").attr("ip");
-                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});
-                ipTag.val(ipAddress);
-                switch (deviceModel.getViewStatus()) {
-                    case "add":
-                        $("table tbody tr:eq(4) td").append(ipTag);
-                        $("table tbody tr").eq(4).show();
-                        ipTag.val("");
-                        break;
-                    case "detail":
-                        $("table tbody tr:eq(4) td").empty();
-                        $("table tbody tr:eq(4) td").append(ipTag);
-                        break;
-                }
+            <%--if ($(this).val() == "DEV009") {--%>
+                <%--var ipAddress = $("form td[name=ipAddress]").attr("ip");--%>
+                <%--var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});--%>
+                <%--ipTag.val(ipAddress);--%>
+                <%--switch (deviceModel.getViewStatus()) {--%>
+                    <%--case "add":--%>
+                        <%--$("table tbody tr:eq(4) td").append(ipTag);--%>
+                        <%--$("table tbody tr").eq(4).show();--%>
+                        <%--ipTag.val("");--%>
+                        <%--break;--%>
+                    <%--case "detail":--%>
+                        <%--$("table tbody tr:eq(4) td").empty();--%>
+                        <%--$("table tbody tr:eq(4) td").append(ipTag);--%>
+                        <%--break;--%>
+                <%--}--%>
 
-            } else {
-                switch (deviceModel.getViewStatus()) {
-                    case "add":
-                        $("table tbody tr:eq(4) td").empty();
-                        $("table tbody tr").eq(4).hide();
-                        $("table tbody tr:eq(4) td").val("");
-                        break;
-                    case "detail":
-                        var ipAddress = $("form td[name=ipAddress]").attr("ip");
+            <%--} else {--%>
+                <%--switch (deviceModel.getViewStatus()) {--%>
+                    <%--case "add":--%>
+                        <%--$("table tbody tr:eq(4) td").empty();--%>
+                        <%--$("table tbody tr").eq(4).hide();--%>
+                        <%--$("table tbody tr:eq(4) td").val("");--%>
+                        <%--break;--%>
+                    <%--case "detail":--%>
+                        <%--var ipAddress = $("form td[name=ipAddress]").attr("ip");--%>
 
-                        $("table tbody tr:eq(4) td").empty().text(ipAddress);
-                        break;
-                }
+                        <%--$("table tbody tr:eq(4) td").empty().text(ipAddress);--%>
+                        <%--break;--%>
+                <%--}--%>
 
-            }
+            <%--}--%>
 
         });
 

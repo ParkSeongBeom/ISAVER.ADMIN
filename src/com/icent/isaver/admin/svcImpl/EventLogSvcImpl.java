@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.EventLogBean;
@@ -61,7 +62,19 @@ public class EventLogSvcImpl implements EventLogSvc {
 
     @Override
     public ModelAndView findListEventLogForAlram(Map<String, String> parameters) {
-        List<EventLogBean> events = eventLogDao.findListEventLogForAlram(parameters);
+
+        Map param = new HashMap();
+        StringBuilder builder = new StringBuilder();
+
+        for(int index=0; index< AdminResource.ALRAM_EVENT.size(); index++){
+            if(index!=0){builder.append(CommonResource.COMMA_STRING);}
+            builder.append(AdminResource.ALRAM_EVENT.get(index));
+        }
+        param.put("alramEventId", builder.toString());
+        param.put("craneEventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+        param.put("workerEventIds", AdminResource.WORKER_EVENT_ID);
+
+        List<EventLogBean> events = eventLogDao.findListEventLogForAlram(param);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogs", events);

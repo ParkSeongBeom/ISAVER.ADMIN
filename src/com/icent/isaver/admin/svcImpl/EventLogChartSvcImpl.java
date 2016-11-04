@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogChartSvc;
 import com.icent.isaver.repository.bean.EventLogCraneBean;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
@@ -7,10 +8,12 @@ import com.icent.isaver.repository.bean.EventLogWorkerBean;
 import com.icent.isaver.repository.dao.base.EventLogCraneDao;
 import com.icent.isaver.repository.dao.base.EventLogInoutDao;
 import com.icent.isaver.repository.dao.base.EventLogWorkerDao;
+import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,9 +45,19 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
 
     @Override
     public ModelAndView findAllChartEventLog(Map<String, String> parameters) {
+        Map param = new HashMap();
+        param.put("minutesCount", parameters.get("minutesCount"));
+        if(StringUtils.notNullCheck(parameters.get("pageIndex"))){
+            param.put("pageIndex", parameters.get("pageIndex"));
+        }
+        if(StringUtils.notNullCheck(parameters.get("areaId"))){
+            param.put("areaId", parameters.get("areaId"));
+        }
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
 
-        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
-        List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(parameters);
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -58,18 +71,30 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
     public ModelAndView findDetailChartEventLog(Map<String, String> parameters) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Map param = new HashMap();
+        param.put("minutesCount", parameters.get("minutesCount"));
+        if(StringUtils.notNullCheck(parameters.get("pageIndex"))){
+            param.put("pageIndex", parameters.get("pageIndex"));
+        }
+        if(StringUtils.notNullCheck(parameters.get("areaId"))){
+            param.put("areaId", parameters.get("areaId"));
+        }
 
         if (parameters.get("requestType") != null && parameters.get("areaId") != null) {
             if (parameters.get("requestType").equals("1")) {
-                List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
-                List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(parameters);
+                param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+                List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
+
+                param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+                List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
 
                 modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
                 modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);
             }
 
             if (parameters.get("requestType").equals("0")) {
-                List<EventLogInoutBean> eventLogWorkerInout = eventLogInoutDao.findChartEventLogInout(parameters);
+                param.put("eventIds", AdminResource.INOUT_EVENT_ID);
+                List<EventLogInoutBean> eventLogWorkerInout = eventLogInoutDao.findChartEventLogInout(param);
 
                 modelAndView.addObject("eventLogInoutChart", eventLogWorkerInout);
             }

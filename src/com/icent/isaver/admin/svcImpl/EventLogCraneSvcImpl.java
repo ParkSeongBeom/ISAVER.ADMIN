@@ -36,7 +36,7 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
     @Override
     public ModelAndView findAllEventLogCrane(Map<String, String> parameters) {
         Map param = new HashMap();
-        param.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
         List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findAllEventLogCrane(param);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -53,7 +53,7 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
         if(StringUtils.notNullCheck(parameters.get("datetime"))){
             param.put("datetime", parameters.get("datetime"));
         }
-        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
 
         List<EventLogCraneBean> eventLogCraneCountList = eventLogCraneDao.findCountListEventLogCrane(param);
         List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findListEventLogCrane(param);
@@ -67,8 +67,16 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
 
     @Override
     public ModelAndView findChartEventLogCrane(Map<String, String> parameters) {
-
-        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(parameters);
+        Map param = new HashMap();
+        param.put("minutesCount", parameters.get("minutesCount"));
+        if(StringUtils.notNullCheck(parameters.get("pageIndex"))){
+            param.put("pageIndex", parameters.get("pageIndex"));
+        }
+        if(StringUtils.notNullCheck(parameters.get("areaId"))){
+            param.put("areaId", parameters.get("areaId"));
+        }
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
         return modelAndView;

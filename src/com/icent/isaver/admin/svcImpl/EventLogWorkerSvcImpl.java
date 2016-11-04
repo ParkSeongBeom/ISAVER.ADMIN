@@ -35,7 +35,9 @@ public class EventLogWorkerSvcImpl implements EventLogWorkerSvc {
 
     @Override
     public ModelAndView findAllEventLogWorker(Map<String, String> parameters) {
-        List<EventLogWorkerBean> eventLogWorkerList = eventLogWorkerDao.findAllEventLogWorker(parameters);
+        Map param = new HashMap();
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        List<EventLogWorkerBean> eventLogWorkerList = eventLogWorkerDao.findAllEventLogWorker(param);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogWorkerList", eventLogWorkerList);
@@ -64,8 +66,16 @@ public class EventLogWorkerSvcImpl implements EventLogWorkerSvc {
 
     @Override
     public ModelAndView findChartEventLogWorker(Map<String, String> parameters) {
-
-        List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(parameters);
+        Map param = new HashMap();
+        param.put("minutesCount", parameters.get("minutesCount"));
+        if(StringUtils.notNullCheck(parameters.get("pageIndex"))){
+            param.put("pageIndex", parameters.get("pageIndex"));
+        }
+        if(StringUtils.notNullCheck(parameters.get("areaId"))){
+            param.put("areaId", parameters.get("areaId"));
+        }
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);
         return modelAndView;

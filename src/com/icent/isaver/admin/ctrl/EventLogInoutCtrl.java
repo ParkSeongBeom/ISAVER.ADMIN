@@ -58,7 +58,7 @@ public class EventLogInoutCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chartList")
-    public ModelAndView findChartEventLogCrane(@RequestParam Map<String, String> parameters){
+    public ModelAndView findChartEventLogInout(@RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogInoutSvc.findChartEventLogInout(parameters);
         return modelAndView;
     }
