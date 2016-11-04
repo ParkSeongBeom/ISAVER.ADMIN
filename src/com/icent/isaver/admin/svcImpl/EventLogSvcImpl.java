@@ -5,11 +5,11 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.EventLogBean;
-import com.icent.isaver.repository.dao.base.ActionDao;
 import com.icent.isaver.repository.dao.base.EventLogDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.POIExcelUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -35,9 +35,6 @@ public class EventLogSvcImpl implements EventLogSvc {
     @Inject
     private EventLogDao eventLogDao;
 
-    @Inject
-    private ActionDao actionDao;
-
     @Override
     public ModelAndView findListEventLog(Map<String, String> parameters) {
         List<EventLogBean> events = eventLogDao.findListEventLog(parameters);
@@ -62,13 +59,15 @@ public class EventLogSvcImpl implements EventLogSvc {
 
     @Override
     public ModelAndView findListEventLogForAlram(Map<String, String> parameters) {
-
         Map param = new HashMap();
         StringBuilder builder = new StringBuilder();
 
         for(int index=0; index< AdminResource.ALRAM_EVENT.size(); index++){
             if(index!=0){builder.append(CommonResource.COMMA_STRING);}
             builder.append(AdminResource.ALRAM_EVENT.get(index));
+        }
+        if(StringUtils.notNullCheck(parameters.get("datetime"))){
+            param.put("datetime", parameters.get("datetime"));
         }
         param.put("alramEventId", builder.toString());
         param.put("craneEventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
