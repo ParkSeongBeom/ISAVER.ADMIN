@@ -22,7 +22,6 @@ function DeviceModel() {
         ,treeDevice: '#menuTreeArea'
         ,targetMenuId: ''
         ,rootOrgId: ''
-        ,deviceId : ''
         ,areaId : ''
         ,serialNo : ''
         ,METHOD: {
@@ -46,6 +45,20 @@ function DeviceModel() {
         ,pageCount: 0
         ,rootName: "HOME"
         ,deviceTreeList: []
+        ,modifyDeviceIpList: ['DEV002','DEV009']
+    };
+
+    /**
+     * IP 수정 디바이스 권한 체크
+     * @param orgdepth
+     */
+    DeviceModel.checkModifyDeviceIpList = function (deviceId) {
+        for(var i in this.model.modifyDeviceIpList){
+            if(this.model.modifyDeviceIpList[i] == deviceId){
+                return true;
+            }
+        }
+        return false;
     };
 
     /**

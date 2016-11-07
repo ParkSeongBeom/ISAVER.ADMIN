@@ -11,6 +11,7 @@ import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -207,7 +208,8 @@ public class DeviceSvcImpl implements DeviceSvc {
 
         DeviceBean device = deviceDao.findByDevice(parameters);
         try {
-            if(!parameters.get("areaId").equals(device.getAreaId()) || !parameters.get("deviceCode").equals(device.getDeviceCode())){
+            if(!parameters.get("areaId").equals(device.getAreaId()) || !parameters.get("deviceCode").equals(device.getDeviceCode())
+                    || (StringUtils.notNullCheck(parameters.get("ipAddress")) && !parameters.get("ipAddress").equals(device.getIpAddress()))){
                 Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
                 addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
                 addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
