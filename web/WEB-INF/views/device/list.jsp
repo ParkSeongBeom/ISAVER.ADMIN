@@ -271,6 +271,7 @@
                 var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});
                 ipTag.val(ipAddress);
                 switch (deviceModel.getViewStatus()) {
+                    case "menuTree":
                     case "add":
                         $("table tbody tr:eq(4) td").append(ipTag);
                         $("table tbody tr").eq(4).show();
@@ -284,6 +285,7 @@
 
             } else {
                 switch (deviceModel.getViewStatus()) {
+                    case "menuTree":
                     case "add":
                         $("table tbody tr:eq(4) td").empty();
                         $("table tbody tr").eq(4).hide();
