@@ -138,14 +138,14 @@
             tagHtml.find("h4").text(event['eventName']);
 
             var chartData = {
-                series: []
+                labels: []
+                ,series: []
             };
 
             for(var i in areaList){
                 var area = areaList[i];
                 var trHtml = trTag.clone();
                 var rank = Number(i)+1;
-
                 if(rank<10){
                     trHtml.addClass("top0"+rank);
                     chartData['series'].push(area['eventCnt']);
@@ -177,7 +177,11 @@
 
         new Chartist.Pie('.'+eventId, data, {
             labelInterpolationFnc: function(value) {
-                return Math.round(value / data.series.reduce(sum) * 100) + '%';
+                var returnValue = "0%";
+                if(value > 0){
+                    returnValue = Math.round(value / data.series.reduce(sum) * 100) + '%';
+                }
+                return returnValue;
             },
             plugins: [
                 Chartist.plugins.tooltip()

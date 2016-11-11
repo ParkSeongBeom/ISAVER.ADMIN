@@ -122,7 +122,7 @@
                         <c:forEach var="eventLog" items="${eventLogs}">
                             <tr event_log_id="${eventLog.eventLogId}">
                                 <td>${eventLog.areaName}</td>
-                                <td>${eventLog.eventFlag}</td>
+                                <td><isaver:codeText groupCodeId="EVT" codeId="${eventLog.eventFlag}"/></td>
                                 <td>${eventLog.deviceCode}</td>
                                 <td><fmt:formatDate value="${eventLog.eventDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td>${eventLog.eventName}</td>

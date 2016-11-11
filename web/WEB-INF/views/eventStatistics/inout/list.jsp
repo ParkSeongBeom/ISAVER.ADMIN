@@ -271,40 +271,43 @@
             inoutSearchParam['chartData']['labels'].push(datetimeText);
         }
 
-
         // 진입 통계
         var inResultList = data['inResultList'];
         var inSeries = [];
-        Object.keys(inResultList).sort(function keyOrder(a, b) {
-            var k1 = Number(a.split("date")[1]);
-            var k2 = Number(b.split("date")[1]);
-            if (k1 < k2) return -1;
-            else if (k1 > k2) return +1;
-            else return 0;
-        }).forEach(function (key) {
-            tableDivHtml.find("#bodyIn").append(
-                $("<span/>").text(inResultList[key])
-            );
-            inSeries.push(inResultList[key]);
-        });
+        if(inResultList!=null){
+            Object.keys(inResultList).sort(function keyOrder(a, b) {
+                var k1 = Number(a.split("date")[1]);
+                var k2 = Number(b.split("date")[1]);
+                if (k1 < k2) return -1;
+                else if (k1 > k2) return +1;
+                else return 0;
+            }).forEach(function (key) {
+                tableDivHtml.find("#bodyIn").append(
+                        $("<span/>").text(inResultList[key])
+                );
+                inSeries.push(inResultList[key]);
+            });
+        }
 
         inoutSearchParam['chartData']['series'].push(inSeries);
 
         // 진출 통계
         var outResultList = data['outResultList'];
         var outSeries = [];
-        Object.keys(outResultList).sort(function keyOrder(a, b) {
-            var k1 = Number(a.split("date")[1]);
-            var k2 = Number(b.split("date")[1]);
-            if (k1 < k2) return -1;
-            else if (k1 > k2) return +1;
-            else return 0;
-        }).forEach(function (key) {
-            tableDivHtml.find("#bodyOut").append(
-                $("<span/>").text(outResultList[key])
-            );
-            outSeries.push(outResultList[key]);
-        });
+        if(outResultList!=null){
+            Object.keys(outResultList).sort(function keyOrder(a, b) {
+                var k1 = Number(a.split("date")[1]);
+                var k2 = Number(b.split("date")[1]);
+                if (k1 < k2) return -1;
+                else if (k1 > k2) return +1;
+                else return 0;
+            }).forEach(function (key) {
+                tableDivHtml.find("#bodyOut").append(
+                        $("<span/>").text(outResultList[key])
+                );
+                outSeries.push(outResultList[key]);
+            });
+        }
 
         inoutSearchParam['chartData']['series'].push(outSeries);
 

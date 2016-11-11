@@ -40,7 +40,7 @@ public class CodeTextTagSupport extends ParamTag {
 
         if(StringUtils.notNullCheck(groupCodeId) && StringUtils.notNullCheck(codeId)) {
             Map<String, String> paramBean = new HashMap<>();
-            paramBean.put("id",groupCodeId);
+            paramBean.put("groupCodeId",groupCodeId);
             paramBean.put("useYn","Y");
 
             List<CodeBean> codes = codeDao.findListCode(paramBean);
@@ -48,7 +48,7 @@ public class CodeTextTagSupport extends ParamTag {
             if (codes != null) {
                 if (codes.size() > 0 ) {
                     for(CodeBean code:codes) {
-                        if (codeId.equals(code.getCodeId())) {
+                        if (codeId.trim().equalsIgnoreCase(code.getCodeId().trim())) {
                             sb.append(code.getCodeName());
                         }
                     }
