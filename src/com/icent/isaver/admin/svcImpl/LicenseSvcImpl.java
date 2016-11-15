@@ -6,6 +6,7 @@ import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,11 @@ public class LicenseSvcImpl implements LicenseSvc {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        LicenseBean license = licenseDao.findByLicense(parameters);
+        LicenseBean license = new LicenseBean();
+
+        if(StringUtils.notNullCheck(parameters.get("licenseKey"))){
+            license = licenseDao.findByLicense(parameters);
+        }
         modelAndView.addObject("license", license);
         return modelAndView;
     }

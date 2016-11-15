@@ -83,10 +83,10 @@
 
             <div class="table_title_area">
                 <div class="table_btn_set">
-                    <c:if test="${empty license}">
+                    <c:if test="${empty license.licenseKey}">
                         <button class="btn btype01 bstyle03" onclick="javascript:addLicense(); return false;"><spring:message code="common.button.add"/> </button>
                     </c:if>
-                    <c:if test="${!empty license}">
+                    <c:if test="${!empty license.licenseKey}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveLicense(); return false;"><spring:message code="common.button.save"/> </button>
                         <button class="btn btype01 bstyle03" onclick="javascript:removeLicense(); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
