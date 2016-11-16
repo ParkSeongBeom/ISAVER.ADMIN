@@ -221,7 +221,7 @@ function MenuView(model) {
                         case "A00000": // 사용자관리
                             _menuLiTag.addClass("nl_user");
                             break;
-                        case "F00000": // 조치관리
+                        case "F00000": // 대응관리
                             _menuLiTag.addClass("nl_even");
                             break;
                         case "C00000": // 구역관리

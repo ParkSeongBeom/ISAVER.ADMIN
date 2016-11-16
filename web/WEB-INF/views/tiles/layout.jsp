@@ -531,7 +531,7 @@
                 modifyElementClass($("#alramList li[eventLogId='"+data['paramBean']['eventLogId']+"']"),'infor','add');
                 alramShowHide('detail','show');
             }else{
-                alert("조치 정보가 없습니다.");
+                alert("대응 정보가 없습니다.");
             }
         }
 
@@ -547,7 +547,7 @@
         }
 
         /**
-         * 알람 show / hide
+         * 경보 show / hide
          */
         function alramShowHide(_type, _action, _status, _area){
             switch (_type){
@@ -648,7 +648,7 @@
         }
 
         /**
-        * 경고 알람 소리 재생
+        * 경보 소리 재생
          * @param startTime
         * @param endTime
          */

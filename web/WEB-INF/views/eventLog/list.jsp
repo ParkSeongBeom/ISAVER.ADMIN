@@ -245,7 +245,7 @@
         detailForm.submit();
     }
 
-    /* 조치 상세 조회*/
+    /* 대응 상세 조회*/
     function actionDetailLoad(_actionId) {
         var actionType = "actionDetail";
 
@@ -253,7 +253,7 @@
             'actionId' : _actionId
         };
 
-        /* 조치 상세 - 내용 */
+        /* 대응 상세 - 내용 */
 //        $("#actionList > tbody").empty();
 
         sendAjaxPostRequest(urlConfig[actionType + 'Url'], data, requestEventLog_successHandler,requestEventLog_errorHandler,actionType);

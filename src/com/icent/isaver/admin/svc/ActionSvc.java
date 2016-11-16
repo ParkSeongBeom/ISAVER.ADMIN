@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * 조치 Service 관리
+ * 대응 Service 관리
  * @author : dhj
  * @version : 1.0
  * @since : 2016. 6. 1.
@@ -22,7 +22,7 @@ import java.util.Map;
 public interface ActionSvc {
 
     /**
-     * 조치 목록을 가져온다.
+     * 대응 목록을 가져온다.
      *
      * @author dhj
      * @param parameters
@@ -31,7 +31,7 @@ public interface ActionSvc {
     ModelAndView findListAction(Map<String, String> parameters);
 
     /**
-     * 조치 정보를 가져온다.
+     * 대응 정보를 가져온다.
      *
      * @author dhj
      * @param parameters
@@ -40,7 +40,7 @@ public interface ActionSvc {
     ModelAndView findByAction(Map<String, String> parameters);
 
     /**
-     * 이벤트 조치 정보를 가져온다.
+     * 이벤트 대응 정보를 가져온다.
      *
      * @author psb
      * @param parameters
@@ -49,7 +49,7 @@ public interface ActionSvc {
     ModelAndView findByActionFromEventId(Map<String, String> parameters);
 
     /**
-     * 조치를 등록한다.
+     * 대응을 등록한다.
      *
      * @author dhj
      * @param parameters
@@ -58,7 +58,7 @@ public interface ActionSvc {
     ModelAndView addAction(HttpServletRequest request, Map<String, String> parameters);
 
     /**
-     * 조치를 수정한다.
+     * 대응을 수정한다.
      *
      * @author dhj
      * @param parameters
@@ -67,7 +67,7 @@ public interface ActionSvc {
     ModelAndView saveAction(HttpServletRequest request, Map<String, String> parameters);
 
     /**
-     * 조치를 제거한다
+     * 대응을 제거한다
      *
      * @author dhj
      * @param parameters

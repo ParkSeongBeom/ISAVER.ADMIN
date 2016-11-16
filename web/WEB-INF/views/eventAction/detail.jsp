@@ -13,7 +13,7 @@
     <section class="layer_wrap i_type04">
         <article class="layer_area">
             <div class="layer_header">
-                조치목록
+                대응목록
             </div>
             <div class="layer_contents">
                 <%--<form id="userForm" method="POST">--%>
@@ -74,7 +74,7 @@
                                 </td>
                                 <td title="">
                                     <p class="editable01">
-                                        크레인 충돌 발생시 조치 방법<br>
+                                        크레인 충돌 발생시 대응 방법<br>
                                         비상연락망<br>
                                         홍길동 주임 : 010.0000.0000<br>
                                         크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
@@ -89,7 +89,7 @@
                                 </td>
                                 <td title="">
                                     <p class="editable01">
-                                        크레인 충돌 발생시 조치 방법<br>
+                                        크레인 충돌 발생시 대응 방법<br>
                                         비상연락망<br>
                                         홍길동 주임 : 010.0000.0000<br>
                                         크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
@@ -316,7 +316,7 @@
         actionListLoad();
     }
 
-    /* 조치코드 추가 하기*/
+    /* 대응코드 추가 하기*/
     function popup_applyButton() {
 
         var checkBoxList = $("#actionList input[type=checkbox]:checkbox:checked");
@@ -347,7 +347,7 @@
         return false;
     }
 
-    /* 조치 목록 조회*/
+    /* 대응 목록 조회*/
     function actionListLoad() {
         var actionType = "actionList";
 
@@ -356,7 +356,7 @@
             , actionCode : $("#pop_action_code").val()
             , notInActionId : 'true'
         };
-        /* 조치 목록 - 내용 */
+        /* 대응 목록 - 내용 */
         $("#actionList > tbody").empty();
 
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestAction_successHandler,requestAction_errorHandler,actionType);
@@ -406,7 +406,7 @@
         alert(actionType + 'Failure');
     }
 
-    /* 조치 코드 추가 -> hidden */
+    /* 대응 코드 추가 -> hidden */
     function addActionId(_actionId) {
         if (_actionId != null && _actionId != "") {
             $("input[name=actionId]").val(_actionId);
@@ -418,7 +418,7 @@
 
     };
 
-    /* 조치 코드 삭제 */
+    /* 대응 코드 삭제 */
     function removeActoinId(_this) {
         var actionId = $(_this).parent().attr("action_id");
         $("input[name=actionId]").val("");
@@ -430,7 +430,7 @@
     $(document).ready(function() {
 
         var clistRemove = $(".code_list > div > button:nth-of-type(2)");
-        /* 조치 코드 삭제 */
+        /* 대응 코드 삭제 */
         clistRemove.click(function () {
             removeActoinId(this);
         });

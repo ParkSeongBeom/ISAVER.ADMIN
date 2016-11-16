@@ -16,7 +16,7 @@
     <section class="layer_wrap i_type03">
         <article class="layer_area">
             <div class="layer_header">
-                조치목록
+                대응목록
                 <button class="ipop_x" onclick="javascript:popup_cancelButton();return false;"></button>
             </div>
             <div class="layer_contents">
@@ -31,9 +31,9 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>조치 ID</th>
-                                <th>조치 구분</th>
-                                <th>조치방법</th>
+                                <th>대응 ID</th>
+                                <th>대응 구분</th>
+                                <th>대응 방법</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -257,7 +257,7 @@
         })
     }
 
-    /* 조치 상세 조회*/
+    /* 대응 상세 조회*/
     function actionDetailLoad(_actionId) {
         var actionType = "actionDetail";
 
@@ -265,7 +265,7 @@
             'actionId' : _actionId
         };
 
-        /* 조치 상세 - 내용 */
+        /* 대응 상세 - 내용 */
 //        $("#actionList > tbody").empty();
 
         sendAjaxPostRequest(urlConfig[actionType + 'Url'], data, requestAction_successHandler,requestAction_errorHandler,actionType);

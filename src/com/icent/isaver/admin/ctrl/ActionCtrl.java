@@ -31,7 +31,7 @@ public class ActionCtrl {
     private ActionSvc actionSvc;
 
     /**
-     * 조치 목록을 가져온다.
+     * 대응 목록을 가져온다.
      *
      * @author dhj
      * @param request
@@ -49,7 +49,7 @@ public class ActionCtrl {
         return modelAndView;
     }
     /**
-     *  조치 정보를 가져온다.
+     * 대응 정보를 가져온다.
      *
      * @author dhj
      * @param request
@@ -65,7 +65,7 @@ public class ActionCtrl {
     }
 
     /**
-     * 이벤트 조치 정보를 가져온다.
+     * 이벤트 대응 정보를 가져온다.
      *
      * @author psb
      * @param request
@@ -81,7 +81,7 @@ public class ActionCtrl {
     private final static String[] addActionParam = new String[]{"actionCode"};
 
     /**
-     *  조치를 등록 한다.
+     * 대응을 등록 한다.
      *
      * @author dhj
      * @param request
@@ -102,7 +102,7 @@ public class ActionCtrl {
     private final static String[] saveActionParam = new String[]{"actionId", "actionCode"};
 
     /**
-     *  조치를 수정 한다.
+     * 대응을 수정 한다.
      *
      * @author dhj
      * @param request
@@ -123,7 +123,7 @@ public class ActionCtrl {
     private final static String[] removeActionParam = new String[]{"actionId"};
 
     /**
-     *   조치를 제거 한다.
+     * 대응을 제거 한다.
      *
      * @author dhj
      * @param request

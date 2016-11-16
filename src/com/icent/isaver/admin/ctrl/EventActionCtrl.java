@@ -29,7 +29,7 @@ public class EventActionCtrl {
     @Inject
     private EventSvc eventSvc;
     /**
-     * 이벤트 조치 목록을 가져온다.
+     * 이벤트 대응 목록을 가져온다.
      *
      * @author dhj
      * @param request
@@ -47,7 +47,7 @@ public class EventActionCtrl {
         return modelAndView;
     }
     /**
-     *  이벤트 조치 정보를 가져온다.
+     *  이벤트 대응 정보를 가져온다.
      *
      * @author dhj
      * @param request
@@ -64,7 +64,7 @@ public class EventActionCtrl {
 
     private final static String[] saveEventParam = new String[]{"eventId"};
     /**
-     *  이벤트 조치를 수정 한다.
+     *  이벤트 대응을 수정 한다.
      *
      * @author dhj
      * @param request

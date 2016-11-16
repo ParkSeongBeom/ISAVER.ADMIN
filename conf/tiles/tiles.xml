@@ -36,7 +36,7 @@
     </definition>
 
     <!--
-        조치  관리
+        대응 관리
         @author dhj
     -->
     <definition name="actionList" extends="base">
@@ -47,7 +47,7 @@
     </definition>
 
     <!--
-        이벤트 조치 관리
+        이벤트 대응 관리
         @author dhj
     -->
     <definition name="eventActionList" extends="base">

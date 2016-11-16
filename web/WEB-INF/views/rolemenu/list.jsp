@@ -83,7 +83,7 @@
                         </ul>
                     </li><!-- 01 depth  -->
                     <li><button>사용자 관리</button></li><!-- 01 depth  -->
-                    <li><button>조치 관리</button></li><!-- 01 depth  -->
+                    <li><button>대응 관리</button></li><!-- 01 depth  -->
                     <li><button>구역 관리</button></li><!-- 01 depth  -->
                     <li><button>장치 관리</button></li><!-- 01 depth  -->
                     <li><button>라이센스 관리</button></li><!-- 01 depth  -->

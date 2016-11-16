@@ -58,7 +58,7 @@ public interface EventSvc {
     ModelAndView saveEvent(HttpServletRequest request, Map<String, String> parameters);
 
     /**
-     * 이벤트 조치를 수정한다.
+     * 이벤트 대응을 수정한다.
      *
      * @author dhj
      * @param parameters

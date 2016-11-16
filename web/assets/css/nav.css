@@ -184,7 +184,7 @@ h4 {display: inline-block;font-size:18px;color:#4d4d4d;}
 .lnb > li.nl_stat > button:before {content: "\e906";} /*통계 */
 .lnb > li.nl_user > button:before {content: "\e92f";} /*사용자관리 */
 .lnb > li.nl_syst > button:before {content: "\e92d";} /*시스템관리 */
-.lnb > li.nl_even > button:before {content: "\e934";} /*이벤트조치관리 */
+.lnb > li.nl_even > button:before {content: "\e934";} /*이벤트대응관리 */
 .lnb > li.nl_watc > button:before {content: "\e910";} /*감시구역관리 */
 .lnb > li.nl_devi > button:before {content: "\e93b";} /*장치관리 */
 .lnb > li.nl_lice > button:before {content: "\e908";} /*라이센스관리 */
