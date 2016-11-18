@@ -102,7 +102,7 @@ function DeviceView(model) {
         },
         deviceAliveCheckType: function (data) {
 
-            if (data.deviceAliveCheckType == "") {
+            if (data.deviceAliveCheckType !=null || data.deviceAliveCheckType == "") {
                 $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
             } else {
                 $(formName + " [name='deviceAliveCheckType']").val(data.deviceAliveCheckType);
