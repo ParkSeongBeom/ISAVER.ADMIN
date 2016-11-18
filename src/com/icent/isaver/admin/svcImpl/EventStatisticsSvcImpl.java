@@ -58,7 +58,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
 
         switch (parameters.get("eventGubn")){
             case "worker": // 작업자상태
-                List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID);}});
+                List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID_ALL);}});
 
                 for(EventBean worker : workerEvents){
                     Map workerMap = new HashMap();
@@ -150,7 +150,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         paramBean.put("dateLists",dateLists);
         paramBean.put("areaId",parameters.get("areaId"));
         paramBean.put("dateGubn",parameters.get("dateGubn"));
-        paramBean.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        paramBean.put("eventIds", AdminResource.WORKER_EVENT_ID_ALL);
 
         List<Map> resultList = eventStatisticsDao.findListWorkerEventStatistics(paramBean);
 
@@ -167,7 +167,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         paramBean.put("dateLists",dateLists);
         paramBean.put("areaId",parameters.get("areaId"));
         paramBean.put("dateGubn",parameters.get("dateGubn"));
-        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
+        paramBean.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
 
         List<Map> resultList = eventStatisticsDao.findListCraneEventStatistics(paramBean);
 

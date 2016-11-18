@@ -50,8 +50,8 @@ public class DashBoardSvcImpl implements DashBoardSvc {
 
     @Override
     public ModelAndView findByDashBoard(Map<String, String> parameters) {
-        List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID);}});
-        List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID_ALL);}});
+        List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);}});
+        List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID_DETAIL);}});
         AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();

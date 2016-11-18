@@ -145,7 +145,8 @@ public class AdminResource {
      * worker eventIds
      * @author psb
      */
-    public final static String[] WORKER_EVENT_ID = new String[]{"EVT009", "EVT015","EVT016"};
+    public final static String[] WORKER_EVENT_ID_ALL = new String[]{"EVT009", "EVT015","EVT016","EVT013","EVT014"};
+    public final static String[] WORKER_EVENT_ID_DETAIL = new String[]{"EVT009", "EVT015","EVT016","EVT013"};
 
     /**
      * crane eventIds

@@ -71,7 +71,7 @@ public class EventLogSvcImpl implements EventLogSvc {
         }
         param.put("alramEventId", builder.toString());
         param.put("craneEventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
-        param.put("workerEventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("workerEventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
 
         List<EventLogBean> events = eventLogDao.findListEventLogForAlram(param);
 

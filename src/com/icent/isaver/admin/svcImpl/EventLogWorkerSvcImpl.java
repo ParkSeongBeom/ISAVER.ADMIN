@@ -36,7 +36,7 @@ public class EventLogWorkerSvcImpl implements EventLogWorkerSvc {
     @Override
     public ModelAndView findAllEventLogWorker(Map<String, String> parameters) {
         Map param = new HashMap();
-        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
         List<EventLogWorkerBean> eventLogWorkerList = eventLogWorkerDao.findAllEventLogWorker(param);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -52,9 +52,11 @@ public class EventLogWorkerSvcImpl implements EventLogWorkerSvc {
         if(StringUtils.notNullCheck(parameters.get("datetime"))){
             param.put("datetime", parameters.get("datetime"));
         }
-        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
 
         List<EventLogWorkerBean> eventLogWorkerCountList = eventLogWorkerDao.findCountListEventLogWorker(param);
+
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID_ALL);
         List<EventLogWorkerBean> eventLogWorkerList = eventLogWorkerDao.findListEventLogWorker(param);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -74,7 +76,7 @@ public class EventLogWorkerSvcImpl implements EventLogWorkerSvc {
         if(StringUtils.notNullCheck(parameters.get("areaId"))){
             param.put("areaId", parameters.get("areaId"));
         }
-        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
         List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);

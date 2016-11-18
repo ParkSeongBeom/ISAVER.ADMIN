@@ -53,9 +53,11 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
         if(StringUtils.notNullCheck(parameters.get("datetime"))){
             param.put("datetime", parameters.get("datetime"));
         }
-        param.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
 
         List<EventLogCraneBean> eventLogCraneCountList = eventLogCraneDao.findCountListEventLogCrane(param);
+
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_ALL);
         List<EventLogCraneBean> eventLogCraneList = eventLogCraneDao.findListEventLogCrane(param);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -75,7 +77,7 @@ public class EventLogCraneSvcImpl implements EventLogCraneSvc {
         if(StringUtils.notNullCheck(parameters.get("areaId"))){
             param.put("areaId", parameters.get("areaId"));
         }
-        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
         List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);

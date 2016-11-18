@@ -56,7 +56,7 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
         param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
         List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
 
-        param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+        param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
         List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -85,7 +85,7 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
                 param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
                 List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
 
-                param.put("eventIds", AdminResource.WORKER_EVENT_ID);
+                param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
                 List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
 
                 modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
