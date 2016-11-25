@@ -5,9 +5,8 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
-import com.icent.isaver.repository.bean.AreaBean;
-import com.icent.isaver.repository.bean.DeviceBean;
-import com.icent.isaver.repository.bean.LicenseBean;
+import com.icent.isaver.repository.bean.*;
+import com.icent.isaver.repository.dao.base.AlarmTargetDeviceConfigDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
@@ -57,6 +56,9 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Inject
     private DeviceSyncRequestSvc deviceSyncRequestSvc;
+
+    @Inject
+    private AlarmTargetDeviceConfigDao alarmTargetDeviceConfigDao;
 
     @Override
     public ModelAndView findAllDeviceTree(Map<String, String> parameters) {
@@ -340,6 +342,37 @@ public class DeviceSvcImpl implements DeviceSvc {
         return deviceTreeModel.getDeviceModelList();
     }
 
+    @Override
+    public ModelAndView findListAlarmMappingDetail(Map<String, String> parameters) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<AlarmTargetDeviceConfigBean> alarmTargetDeviceConfigList = alarmTargetDeviceConfigDao.findListAlarmTargetDeviceConfig(parameters);
+
+        String deviceId = parameters.get("deviceId");
+
+        DeviceParamBean deviceParamBean = new DeviceParamBean();
+
+        deviceParamBean.setDeviceId(deviceId);
+        if (parameters.get("findDeviceId") != "" && parameters.get("findDeviceId") != null) {
+            deviceParamBean.setFindDeviceId(parameters.get("findDeviceId"));
+        }
+
+        if (parameters.get("findDeviceTypeCode") != "" && parameters.get("findDeviceTypeCode") != null) {
+            deviceParamBean.setFindDeviceTypeCode(parameters.get("findDeviceTypeCode"));
+        }
+
+        if (alarmTargetDeviceConfigList.size() > 0) {
+            deviceParamBean.setDeviceBeanList(alarmTargetDeviceConfigList);
+        }
+
+        List<DeviceBean> deviceBeanList = deviceDao.findListAlarmMapping(deviceParamBean);
+
+        modelAndView.addObject("alarmTargetDeviceConfigList", alarmTargetDeviceConfigList);
+        modelAndView.addObject("deviceBeanList", deviceBeanList);
+
+        return modelAndView;
+    }
+
 
     /**
      *
@@ -401,6 +434,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         }
 
     }
+
 
     public static List<DeviceBean> copyDeviceListFunc(List<DeviceBean> orgList) {
 

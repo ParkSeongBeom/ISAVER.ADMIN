@@ -13,6 +13,111 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 <link rel="stylesheet" href="${rootPath}/assets/css/jqueryui/jquery-ui-1.10.4.min.css">
 
+<!-- 알림 장치 맵핑 팝업-->
+<aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">
+    <section class="layer_wrap i_type04">
+        <article class="layer_area">
+            <div class="layer_header">
+                알림 대상 장치 목록
+            </div>
+            <div class="layer_contents">
+                <%--<form id="userForm" method="POST">--%>
+                <input type="hidden" name="pageNumber">
+                <article class="search_area">
+                    <div class="search_contents">
+                        <!-- 일반 input 폼 공통 -->
+                        <p class="itype_01">
+                            <span><spring:message code="device.column.deviceId"/></span>
+                                    <span>
+                                        <input type="text" name="pop_device_id" >
+                                    </span>
+                        </p>
+                        <p class="itype_01">
+                            <span><spring:message code="device.column.deviceCode"/></span>
+                                    <span>
+                                        <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="pop_device_code" allModel="true"/>
+                                    </span>
+                        </p>
+                        <p class="itype_01">
+                            <span><spring:message code="device.column.areaName"/></span>
+                                    <span>
+                                        <input type="text" name="pop_areaName" >
+                                    </span>
+                        </p>
+                    </div>
+                    <div class="search_btn">
+                        <button onclick="javascript:deviceCtrl.alarmDeviceLoadFunc(); return false;" class="btn bstyle01 btype01">조회</button>
+                    </div>
+                </article>
+                <%--</form>--%>
+                <article class="table_area">
+                    <div class="table_contents">
+                        <!-- 입력 테이블 Start -->
+                        <table id="actionList" class="t_defalut t_type01 t_style02">
+                            <colgroup>
+                                <col style="width: 5%;">
+                                <col style="width: 15%;">
+                                <col style="width: 20%;">
+                                <col style="width: *%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th class="t_center"></th>
+                                <th><spring:message code="device.column.deviceId"/></th>
+                                <th><spring:message code="device.column.deviceCode"/></th>
+                                <th><spring:message code="device.column.areaName"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
+                                <td title="">001</td>
+                                <td title="">
+                                    크레인 충돌
+                                </td>
+                                <td title="">
+                                    <p class="editable01">
+                                        크레인 충돌 발생시 대응 방법<br>
+                                        비상연락망<br>
+                                        홍길동 주임 : 010.0000.0000<br>
+                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
+                                <td title="">001</td>
+                                <td title="">
+                                    크레인 충돌
+                                </td>
+                                <td title="">
+                                    <p class="editable01">
+                                        크레인 충돌 발생시 대응 방법<br>
+                                        비상연락망<br>
+                                        홍길동 주임 : 010.0000.0000<br>
+                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+                <div class="table_title_area">
+                    <div class="table_btn_set">
+                        <button class="btn btype01 bstyle03 c_ok" name="" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;">저장</button>
+                        <button class="btn btype01 bstyle03 c_cancle" name="" onclick="javascript:popup_cancelButton(); return false;">취소</button>
+                        <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
+                        <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+    <div class="layer_popupbg ipop_close"></div>
+</aside>
+
+<!-- 장치 상세 화면 -->
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
@@ -89,7 +194,8 @@
                         <th><spring:message code='device.column.deviceCode'/></th>
                         <td>
                             <input type="hidden"  name="deviceCode" />
-                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/>
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/><br />
+                            <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); return false;"><spring:message code="device.button.ivasSetting"/></button>
                         </td>
                     </tr>
                     <tr>
@@ -274,7 +380,7 @@
                     case "menuTree":
                     case "add":
                         $("table tbody tr:eq(4) td").append(ipTag);
-                        $("table tbody tr").eq(4).show();
+//                        $("table tbody tr").eq(4).show();
                         ipTag.val("");
                         break;
                     case "detail":
@@ -300,6 +406,14 @@
 
             }
 
+            if (deviceModel.getViewStatus() == "detail") {
+                if (id == "DEV002") {
+                    $("#ipCameraSetting").show();
+                } else {
+                    $("#ipCameraSetting").hide();
+                }
+            }
+
         });
 
         $("select[id=selectAreaId]").change(function() {
@@ -309,6 +423,7 @@
 //        $("select[name=deviceAliveCheckType]").prepend($("<option />").text("없음"));
 //        $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
 //        $("select[name= deviceAliveCheckType]").val("없음");
+
     });
 
     var deviceModel = new DeviceModel();
@@ -338,6 +453,35 @@
     function goPage(pageNumber){
         form.find('input[name=pageNumber]').val(pageNumber);
         search();
+    }
+
+    /* 팝업 보이기 버튼 */
+    function popup_openButton() {
+        var code_openTarget = $(".code_select_popup");
+        code_openTarget.css("display", "block");
+//        actionListLoad();
+    }
+
+
+    /* 팝업 취소 버튼 */
+    function popup_cancelButton() {
+        var code_openTarget = $(".code_select_popup");
+        code_openTarget.css("display", "none");
+        return false;
+    }
+
+    /* 알림 장치 목록 조회*/
+    function alarmListLoad() {
+        var actionType = "actionList";
+
+        var data = {
+            deviceId : deviceModel.getDeviceId()
+        };
+
+        /*  테이블 목록 - 내용 */
+        $("#actionList > tbody").empty();
+
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestAction_successHandler,requestAction_errorHandler,actionType);
     }
 
 </script>

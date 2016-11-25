@@ -437,7 +437,8 @@ function DeviceModel() {
             'detail'  : rootUrl + "/device/detail.json",
             'menuTree': rootUrl + "/device/treeList.json",
             'addOrgUser': rootUrl + "/device/detailUserPopup.html",
-            'orgUserRemove': rootUrl + "/device/remove.json"
+            'orgUserRemove': rootUrl + "/device/remove.json",
+            'alarmMappingList' : rootUrl + "/device/alarmMappingList.json"
         }[viewStatus];
     };
 

@@ -62,6 +62,7 @@ public class DeviceCtrl {
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
+
     /**
      * 장치 정보를 가져온다.
      *
@@ -75,6 +76,29 @@ public class DeviceCtrl {
         ModelAndView modelAndView = deviceSvc.findByDevice(parameters);
         modelAndView.setViewName("deviceDetail");
         modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    private final static String[] findAlarmMappingParam = new String[]{"deviceId"};
+
+    /**
+     * 알림 장치 매핑 목록을 가져온다.
+     *
+     * @author dhj
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/alarmMappingList")
+    public ModelAndView findListAlarmMappingDetail(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters) {
+
+        if(MapUtils.nullCheckMap(parameters, findAlarmMappingParam)){
+            throw new JabberException("");
+        }
+
+        parameters = AdminHelper.checkReloadList(request, response, "deviceList", parameters);
+        AdminHelper.setPageParam(parameters, defaultPageSize);
+        ModelAndView modelAndView = deviceSvc.findListAlarmMappingDetail(parameters);
         return modelAndView;
     }
 

@@ -164,6 +164,13 @@ function DeviceView(model) {
 
         DeviceView.setSaveBefore();
 
+        var deviceTypeCode = $("#selectDeviceCode").val();
+
+        if (deviceTypeCode == "DEV002") {
+            $("#ipCameraSetting").show();
+        } else {
+            $("#ipCameraSetting").hide();
+        }
 
     };
 
@@ -295,6 +302,8 @@ function DeviceView(model) {
         $("table tbody tr").eq(5).show();
         $("table tbody tr").eq(6).show();
 
+        $("#ipCameraSetting").hide();
+
         if (DeviceView._model.getDeviceId() == DeviceView._model.getRootOrgId()) {
 
             //$("table tbody tr").eq(0).hide();
@@ -323,6 +332,7 @@ function DeviceView(model) {
             $(".search_area").show();
             $("#roleListTable").show();
         }
+
     };
     /**
      * 장치 등록 전 초기화 모드
@@ -340,6 +350,7 @@ function DeviceView(model) {
         $("table tbody tr").eq(6).show();
 
         $("[name='showHideTag']").hide();
+        $("#ipCameraSetting").hide();
 
         $("input[name='deviceId']").val("");
         $("input[name='serialNo']").val("").removeAttr("disabled");
@@ -414,6 +425,46 @@ function DeviceView(model) {
     DeviceView.resetOrgDepth = function() {
         $(formName + " [name='orgDepth']").val("0");
     };
+
+
+    DeviceView.makeAlarmDeviceListFunc = function(devices, alarmTargetDeviceConfigList) {
+        if (devices == null && devices.length == 0) {
+            return;
+        }
+
+        for (var i=0; i< devices.length; i++) {
+            var device = devices[i];
+
+            var deviceId = device['deviceId'];
+            var deviceCode = device['deviceCode'];
+            var areaName = device['areaName'];
+
+            var html_item= "<tr>\n" +
+                "<td class=\"t_center\"><input device_id='" + deviceId +"' type=\"checkbox\" class=\"checkbox\" name=\"checkbox01\"></td>\n" +
+                "<td title=\"\">" +deviceId +"</td>\n" +
+                "<td title=\"\" code>" + deviceCode + "</td>" +
+                "<td title=\"\" desc>" + areaName + "</td>" +
+                "    </p>\n" +
+                "</td>\n" +
+                "</tr>";
+
+            var itemObject = $(html_item);
+
+            for (var j =0; j < alarmTargetDeviceConfigList.length; j++) {
+
+                var alarmDeviceId = alarmTargetDeviceConfigList[j]['alarmDeviceId'];
+
+                if (alarmDeviceId == deviceId) {
+                    itemObject.find("input[type='checkbox']").attr("checked", "checked");
+                    break;
+                }
+
+            }
+
+            itemObject.attr("device_id", deviceId );
+            $("#actionList > tbody").append(itemObject);
+        }
+    }
 
     return DeviceView;
 };

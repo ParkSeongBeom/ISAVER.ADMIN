@@ -70,6 +70,7 @@
                 <value>properties/message/dashboard</value>
                 <value>properties/message/statistics</value>
                 <value>properties/message/deviceSyncRequest</value>
+                <value>properties/message/alarmRequestHistory</value>
                 <!-- [END] 안전 방재 -->
             </list>
         </property>

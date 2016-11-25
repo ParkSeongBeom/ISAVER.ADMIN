@@ -344,6 +344,62 @@ function DeviceCtrl(model) {
         var parentDeviceId  = $(event.currentTarget).val();
         $("input[name=parentDeviceId]").val(parentDeviceId);
     };
+
+    /**
+     * 알림 대상 전송 IVAS->SIOC
+     */
+    DeviceCtrl.alarmListLoadFunc = function() {
+
+        popup_openButton();
+        DeviceCtrl.alarmDeviceLoadFunc();
+    };
+
+    /**
+     * 알림 대상 장치 추가 / 제거
+     */
+    DeviceCtrl.appendAlarmDeviceFunc = function() {
+        var _tags = $("input[type=checkbox]:checked");
+
+        var sendData = [];
+
+        for (var i =0; i < _tags.length; i++) {
+            var aDeviceId = _tags.eq(i).attr("device_id");
+            sendData.push(aDeviceId);
+        }
+
+        var data = {
+            tDeviceId : DeviceCtrl._model.getDeviceId()
+            , aDeviceId : sendData.join()
+        };
+
+        var rootUrl = DeviceCtrl._model.getRootUrl();
+        var _url = rootUrl + "/alarmTargetDevice/append.json";
+        var actionType = "alarmAppend";
+
+        sendAjaxPostRequest(_url, data, this._event.alarmTargetAppendSuccessHandler, this._event.alarmTargetAppendErrorHandler, actionType);
+
+    };
+
+    /**
+     * 알림 목록 장치 불러오기
+     */
+    DeviceCtrl.alarmDeviceLoadFunc = function() {
+
+        var data = {
+            deviceId : DeviceCtrl._model.getDeviceId()
+            , findDeviceId : $("input[name=pop_device_id]").val()
+            , findDeviceTypeCode : $("#pop_device_code").val()
+            , findAreaName : $("input[name=pop_areaName]").val()
+        };
+
+        /*  테이블 목록 - 내용 */
+        $("#actionList > tbody").empty();
+        var rootUrl = DeviceCtrl._model.getRootUrl();
+        var _url = rootUrl + "/device/alarmMappingList.json";
+        var actionType = "alarmListLoad";
+        sendAjaxPostRequest(_url, data, this._event.alarmListLoadSuccessHandler, this._event.alarmListLoadErrorHandler, actionType);
+    };
+
     return DeviceCtrl;
 
 }
@@ -485,7 +541,43 @@ function DeviceEvent(model) {
      * [FAIL][RES] 장치 CUD 실패 시 이벤트
      */
     DeviceEvent.areaCudErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
-        console.error("[Error][DeviceEvent.organizationCudErrorHandler] " + errorThrown);
+        console.error("[Error][DeviceEvent.areaCudErrorHandler] " + errorThrown);
+        alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Failure']);
+
+    };
+
+    /**
+     * [SUCCESS][RES] 알림 장치 목록 불러오기 성공 시 이벤트
+     */
+    DeviceEvent.alarmListLoadSuccessHandler = function (data, dataType, actionType) {
+
+        if (typeof data == "object" && data.hasOwnProperty("deviceBeanList") && data['deviceBeanList']!=null) {
+            deviceView.makeAlarmDeviceListFunc(data['deviceBeanList'], data['alarmTargetDeviceConfigList']);
+        }
+
+    };
+
+    /**
+     * [FAIL][RES] 알림 장치 목록 불러오기 실패 시 이벤트
+     */
+    DeviceEvent.alarmListLoadErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][DeviceEvent.alarmListLoadErrorHandler] " + errorThrown);
+        alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Failure']);
+
+    };
+
+    /**
+     * [SUCCESS][RES] 알림 장치 목록 저장 성공 시 이벤트
+     */
+    DeviceEvent.alarmTargetAppendSuccessHandler = function (data, dataType, actionType) {
+        alert("알림 대상 장치 목록을 저장하였습니다");
+    };
+
+    /**
+     * [FAIL][RES] 알림 장치 목록 저장 실패 시 이벤트
+     */
+    DeviceEvent.alarmTargetAppendErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][DeviceEvent.alarmTargetAppendErrorHandler] " + errorThrown);
         alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Failure']);
 
     };

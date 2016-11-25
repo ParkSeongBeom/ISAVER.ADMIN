@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svc;
 
+import com.icent.isaver.repository.bean.AlarmTargetDeviceConfigBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -89,4 +90,12 @@ public interface DeviceSvc {
      * @return
      */
     List<DeviceBean> deviceTreeDataStructure(Map<String, String> parameters);
+
+    /**
+     * 알림 장치 매핑 목록을 가져온다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListAlarmMappingDetail(Map<String, String> parameters);
+
 }
