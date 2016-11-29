@@ -30,9 +30,9 @@ function DeviceView(model) {
             $(formName + " [id='selectDeviceType']").val(deviceTypeCode);
         },
         areaId: function (data) {
-
+            debugger;
             if (data['areaId'] != null && String(data['areaId']).trim().length > 0) {
-                $(formName + " [id='selectAreaId']").val(data.areaId);
+                $(formName + " [id='selectAreaId']").val(data.areaId).prop("selected", "selected");
             } else {
                 $(formName + " [id='selectAreaId']").val("");
             }
@@ -42,7 +42,7 @@ function DeviceView(model) {
         deviceCode: function (data) {
             var deviceCode = data['deviceCode'];
             $(formName + " [name='deviceCode']").val(data.deviceCode);
-            $(formName + " [id='selectDeviceCode']").val(deviceCode);
+            $(formName + " [id='selectDeviceCode']").val(deviceCode).prop("selected", "selected");
         },
         serialNo: function (data) {
             $(formName + " [name='serialNo']").val(data.serialNo);
@@ -372,8 +372,7 @@ function DeviceView(model) {
         //$("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
         //$("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
 
-        $("select[id=selectAreaId]").val("");
-
+        $("select[id='selectAreaId'] option:eq(0)").prop("selected", "selected");
         $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
         $("input[name=deviceCode]").val(parenDeviceCode);
         $("input[name=areaId]").val("");
