@@ -46,6 +46,8 @@ function DeviceModel() {
         ,rootName: "HOME"
         ,deviceTreeList: []
         ,modifyDeviceIpList: ['DEV002','DEV009']
+        /* 알림 전송 소스 장치 목록 */
+        ,alarmSettingDeviceList : ['DEV002', 'DEV005']
     };
 
     /**
