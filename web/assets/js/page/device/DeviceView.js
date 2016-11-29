@@ -30,7 +30,6 @@ function DeviceView(model) {
             $(formName + " [id='selectDeviceType']").val(deviceTypeCode);
         },
         areaId: function (data) {
-            debugger;
             if (data['areaId'] != null && String(data['areaId']).trim().length > 0) {
                 $(formName + " [id='selectAreaId']").val(data.areaId).prop("selected", "selected");
             } else {
