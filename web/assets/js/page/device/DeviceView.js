@@ -372,7 +372,7 @@ function DeviceView(model) {
         //$("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
         //$("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
 
-        $("select[id='selectAreaId'] option:eq(0)").prop("selected", "selected");
+
         $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
         $("input[name=deviceCode]").val(parenDeviceCode);
         $("input[name=areaId]").val("");
@@ -388,9 +388,7 @@ function DeviceView(model) {
         }
 
         $("select[id='selectDeviceCode'] option:eq(0)").prop("selected", "selected");
-
-
-        //$("input[name='serialNo']").focus();
+        $("select[id='selectAreaId'] option:eq(0)").prop("selected", "selected");
 
     };
 
