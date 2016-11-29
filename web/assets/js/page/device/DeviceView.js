@@ -165,7 +165,7 @@ function DeviceView(model) {
 
         var deviceTypeCode = $("#selectDeviceCode").val();
 
-        if (deviceTypeCode == "DEV002") {
+        if (deviceTypeCode == "DEV002" || deviceTypeCode == "DEV005") {
             $("#ipCameraSetting").show();
         } else {
             $("#ipCameraSetting").hide();
