@@ -58,8 +58,8 @@ function DeviceView(model) {
                 ipTag.val(data.ipAddress);
                 switch (deviceModel.getViewStatus()) {
                     case "detail":
-                        $("table tbody tr:eq(4) td").empty();
-                        $("table tbody tr:eq(4) td").append(ipTag);
+                        $(formName + " table tbody tr:eq(4) td").empty();
+                        $(formName + " table tbody tr:eq(4) td").append(ipTag);
                         break;
                 }
 
@@ -294,25 +294,25 @@ function DeviceView(model) {
         $(formName + " [name=deviceUserId]").val("");
         $(formName + " [name=devicePassword").val("");
 
-        //$("table tbody tr").eq(0).show();
-        $("table tbody tr").eq(1).show();
-        $("table tbody tr").eq(2).show();
-        $("table tbody tr").eq(3).show();
-        $("table tbody tr").eq(4).show();
-        $("table tbody tr").eq(5).show();
-        $("table tbody tr").eq(6).show();
+        //$(formName + " table tbody tr").eq(0).show();
+        $(formName + " table tbody tr").eq(1).show();
+        $(formName + " table tbody tr").eq(2).show();
+        $(formName + " table tbody tr").eq(3).show();
+        $(formName + " table tbody tr").eq(4).show();
+        $(formName + " table tbody tr").eq(5).show();
+        $(formName + " table tbody tr").eq(6).show();
 
         $("#ipCameraSetting").hide();
 
         if (DeviceView._model.getDeviceId() == DeviceView._model.getRootOrgId()) {
 
-            //$("table tbody tr").eq(0).hide();
-            $("table tbody tr").eq(1).hide();
-            $("table tbody tr").eq(2).hide();
-            $("table tbody tr").eq(3).hide();
-            $("table tbody tr").eq(4).hide();
-            $("table tbody tr").eq(5).hide();
-            $("table tbody tr").eq(6).hide();
+            //$(formName + " table tbody tr").eq(0).hide();
+            $(formName + " table tbody tr").eq(1).hide();
+            $(formName + " table tbody tr").eq(2).hide();
+            $(formName + " table tbody tr").eq(3).hide();
+            $(formName + " table tbody tr").eq(4).hide();
+            $(formName + " table tbody tr").eq(5).hide();
+            $(formName + " table tbody tr").eq(6).hide();
 
             //$(formName + " [name='areaName']").attr("readonly", "readonly");
             $(formName + " [name='deviceId']").attr("readonly", "readonly");
@@ -342,12 +342,12 @@ function DeviceView(model) {
         var parenDeviceCode = $("select[id='selectDeviceCode']").val();
         var parentDeviceTypeCode = $("select[id='selectDeviceType']").val();
 
-        $("table tbody tr").eq(1).show();
-        $("table tbody tr").eq(2).show();
-        $("table tbody tr").eq(3).show();
-        $("table tbody tr").eq(4).hide();
-        $("table tbody tr").eq(5).show();
-        $("table tbody tr").eq(6).show();
+        $(formName + " table tbody tr").eq(1).show();
+        $(formName + " table tbody tr").eq(2).show();
+        $(formName + " table tbody tr").eq(3).show();
+        $(formName + " table tbody tr").eq(4).hide();
+        $(formName + " table tbody tr").eq(5).show();
+        $(formName + " table tbody tr").eq(6).show();
 
         $("[name='showHideTag']").hide();
         $("#ipCameraSetting").hide();
