@@ -380,7 +380,7 @@
                     case "menuTree":
                     case "add":
                         $("#deviceForm table tbody tr:eq(4) td").append(ipTag);
-                        $("#deviceForm table tbody tr").eq(4).show();
+//                        $("#deviceForm table tbody tr").eq(4).show();
                         ipTag.val("");
                         break;
                     case "detail":
