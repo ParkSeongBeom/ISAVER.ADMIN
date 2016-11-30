@@ -161,6 +161,7 @@ public class AdminResource {
      */
     public final static List<String> ALRAM_EVENT = new ArrayList(){{
         add("EVT009");
+        add("EVT013");
         add("EVT015");
         add("EVT016");
         add("EVT100");
