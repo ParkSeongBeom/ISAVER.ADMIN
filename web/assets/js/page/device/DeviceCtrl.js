@@ -117,12 +117,12 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if ($("#selectAreaId").val() == null) {
+            if ($("#selectAreaId").val() == "" || $("#selectAreaId").val() == null) {
                 alert(messageConfig['requiredAreaId']);
                 return;
             }
 
-            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV00F9") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                     if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {

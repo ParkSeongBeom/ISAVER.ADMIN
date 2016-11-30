@@ -343,6 +343,7 @@ function DeviceView(model) {
 
         var parenDeviceCode = $("select[id='selectDeviceCode']").val();
         var parentDeviceTypeCode = $("select[id='selectDeviceType']").val();
+        var formName = "#" + model.getFormName();
 
         $(formName + " table tbody tr").eq(1).show();
         $(formName + " table tbody tr").eq(2).show();
@@ -377,7 +378,6 @@ function DeviceView(model) {
 
         $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
         $("input[name=deviceCode]").val(parenDeviceCode);
-        $("input[name=areaId]").val("");
         $("td[name=ipAddress]").text("");
 
         var formName = "#" +DeviceView._model.getFormName();
@@ -391,6 +391,7 @@ function DeviceView(model) {
 
         $("select[id='selectDeviceCode'] option:eq(0)").prop("selected", "selected");
         $("select[id='selectAreaId'] option:eq(0)").prop("selected", "selected");
+        $("input[name=areaId]").val($("select[id='selectAreaId']").val());
 
     };
 
