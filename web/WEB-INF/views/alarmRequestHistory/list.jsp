@@ -35,40 +35,14 @@
                             <tr>
                                 <th><spring:message code="alarmRequestHistory.column.deviceName"/></th>
                                 <th><spring:message code="alarmRequestHistory.column.areaName"/></th>
+                                <th><spring:message code="device.column.provisionFlag"/></th>
                                 <th><spring:message code="alarmRequestHistory.column.receiveApplyFlag"/></th>
                                 <th><spring:message code="alarmRequestHistory.column.receiveApplyDetail"/></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
-                                <td title="">001</td>
-                                <td title="">
-                                    크레인 충돌
-                                </td>
-                                <td title="">
-                                    <p class="editable01">
-                                        크레인 충돌 발생시 대응 방법<br>
-                                        비상연락망<br>
-                                        홍길동 주임 : 010.0000.0000<br>
-                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
-                                <td title="">001</td>
-                                <td title="">
-                                    크레인 충돌
-                                </td>
-                                <td title="">
-                                    <p class="editable01">
-                                        크레인 충돌 발생시 대응 방법<br>
-                                        비상연락망<br>
-                                        홍길동 주임 : 010.0000.0000<br>
-                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
-                                    </p>
-                                </td>
+                                <td colspan="5"><spring:message code="common.message.emptyData"/></td>
                             </tr>
                             </tbody>
                         </table>
@@ -316,9 +290,10 @@
 
             var deviceId = alarmRequestHistoryDetail['deviceId'];
             var deviceCodeName = alarmRequestHistoryDetail['deviceCodeName'];
-            var areaName = alarmRequestHistoryDetail['areaName'];
+            var areaName = alarmRequestHistoryDetail['areaName'] != "" && alarmRequestHistoryDetail['areaName'] !=null ? alarmRequestHistoryDetail['areaName'] : "";
             var alarmRequestFlag = alarmRequestHistoryDetail['alarmRequestFlag'];
             var alarmRequestDetail = alarmRequestHistoryDetail['alarmRequestDetail'];
+            var provisionFlag = alarmRequestHistoryDetail['provisionFlag'];
 
             if (alarmRequestDetail == "null" || alarmRequestDetail == null || alarmRequestDetail == undefined) {
                 alarmRequestDetail = "";
@@ -327,6 +302,7 @@
             var html_item= "<tr>\n" +
                     "<td title=\"\">" +deviceCodeName + " (" + deviceId +")</td>\n" +
                     "<td title=\"\">" + areaName + "</td>" +
+                    "<td title=\"\">" + provisionFlag + "</td>" +
                     "<td title=\"\">" + alarmRequestFlag + "</td>" +
                     "<td title=\"\">" + alarmRequestDetail + "</td>" +
                     "</tr>";

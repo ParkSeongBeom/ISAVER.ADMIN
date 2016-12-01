@@ -427,6 +427,11 @@ function DeviceView(model) {
     };
 
 
+    /**
+     * 알림 전송 장치 설정 목록 그리기
+     * @param devices
+     * @param alarmTargetDeviceConfigList
+     */
     DeviceView.makeAlarmDeviceListFunc = function(devices, alarmTargetDeviceConfigList) {
         if (devices == null && devices.length == 0) {
             return;
@@ -437,15 +442,15 @@ function DeviceView(model) {
 
             var deviceId = device['deviceId'];
             var deviceCode = device['deviceCode'];
-            var areaName = device['areaName'];
+            var areaName = device['areaName'] != "" && device['areaName'] != null ? device['areaName'] : "없음";
+            var provisionFlag = device['provisionFlag'];
 
             var html_item= "<tr>\n" +
                 "<td class=\"t_center\"><input device_id='" + deviceId +"' type=\"checkbox\" class=\"checkbox\" name=\"checkbox01\"></td>\n" +
                 "<td title=\"\">" +deviceId +"</td>\n" +
-                "<td title=\"\" code>" + deviceCode + "</td>" +
-                "<td title=\"\" desc>" + areaName + "</td>" +
-                "    </p>\n" +
-                "</td>\n" +
+                "<td title=\"\">" + deviceCode + "</td>" +
+                "<td title=\"\">" + areaName + "</td>" +
+                "<td title=\"\">" + provisionFlag + "</td>" +
                 "</tr>";
 
             var itemObject = $(html_item);

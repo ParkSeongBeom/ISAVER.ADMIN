@@ -66,39 +66,13 @@
                                 <th><spring:message code="device.column.deviceId"/></th>
                                 <th><spring:message code="device.column.deviceCode"/></th>
                                 <th><spring:message code="device.column.areaName"/></th>
+                                <th><spring:message code="device.column.provisionFlag"/></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
-                                <td title="">001</td>
-                                <td title="">
-                                    크레인 충돌
-                                </td>
-                                <td title="">
-                                    <p class="editable01">
-                                        크레인 충돌 발생시 대응 방법<br>
-                                        비상연락망<br>
-                                        홍길동 주임 : 010.0000.0000<br>
-                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="t_center"><input id="" type="checkbox" class="checkbox" name="checkbox01"></td>
-                                <td title="">001</td>
-                                <td title="">
-                                    크레인 충돌
-                                </td>
-                                <td title="">
-                                    <p class="editable01">
-                                        크레인 충돌 발생시 대응 방법<br>
-                                        비상연락망<br>
-                                        홍길동 주임 : 010.0000.0000<br>
-                                        크레인 충돌 방생 시 신속한 대처와 인명 사고 최소화를 위해 각 구역 담당관 및 주변인과의 실시간 무전 상태를 유지
-                                    </p>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5"><spring:message code="common.message.emptyData"/></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
