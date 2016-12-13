@@ -4,12 +4,14 @@ import com.icent.isaver.admin.bean.JabberException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.EventLogBean;
 import com.icent.isaver.repository.dao.base.EventLogDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.POIExcelUtil;
 import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,6 +31,9 @@ import java.util.*;
  */
 @Service
 public class EventLogSvcImpl implements EventLogSvc {
+
+    @Value("#{configProperties['api.server.address']}")
+    private String urlApiSocketUrl = null;
 
     @Resource(name="mybatisIsaverTxManager")
     private DataSourceTransactionManager transactionManager;
@@ -101,6 +107,13 @@ public class EventLogSvcImpl implements EventLogSvc {
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
             throw new JabberException("");
+        }
+
+
+        try {
+            AlarmRequestUtil.sendAlarmRequestFunc(parameters, urlApiSocketUrl + AdminResource.API_PATH_URL_SENDEVENT);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         ModelAndView modelAndView = new ModelAndView();

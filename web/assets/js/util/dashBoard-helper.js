@@ -99,6 +99,12 @@ var DashBoardHelper = (
         };
 
         /**
+         * @author dhj
+         */
+        this.getDataFunc = function() {
+            _getData();
+        }
+        /**
          * get data
          * @author psb
          */

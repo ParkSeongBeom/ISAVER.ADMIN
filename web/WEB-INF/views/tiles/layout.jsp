@@ -133,7 +133,8 @@
             printTime();
 
             dashBoardHelper.addRequestData('alram', layoutUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
-            dashBoardHelper.startInterval();
+//            dashBoardHelper.startInterval();
+            wsConnect();
             aliveSend(900000);
 
             //스크롤바 플러그인 호출
@@ -677,6 +678,105 @@
             deviceListForm.submit();
         }
 
+    </script>
+
+    <!--
+        웝소켓
+        @authro dhj
+        @date 2016.12.12
+    -->
+    <script type="text/javascript">
+        var ws;
+        var reConnectFlag = true;
+
+        $(document).ready(function(){
+//            wsConnect();
+//            dashBoardHelper.getDataFunc();
+        });
+        /**
+         * 웹소켓 접속 연결
+         * @author dhj
+         */
+        function wsConnect() {
+
+            setTimeout(function() {
+                dashBoardHelper.getDataFunc();
+
+                var url = "ws://172.16.110.200:8820/ISAVER.SOCKET/eventAlarm";
+
+                ws = new WebSocket(url);
+                ws.onopen = function () {
+                    console.log('websocket opened');
+                };
+
+                ws.onmessage = messageEventHandler;
+
+                ws.onclose = function (event) {
+                    console.log(event);
+                    console.log('websocket closed');
+
+                    if (reConnectFlag) {
+                        setTimeout(function() {
+                            wsConnect();
+                        }, 5000);
+                    }
+
+                };
+            }, 250);
+
+        }
+
+        /**
+        * 웹소켓 메세지 전송
+        * @param _text
+         * @author dhj
+         */
+        function wsSendMsg(_text) {
+
+            if (ws) {
+                if (_text != null && _text != "") {
+                    ws.send(_text);
+                }
+            } else {
+                console.log("ws disConnect!");
+            }
+
+        }
+
+        /**
+        * 웹소켓 접속 종료
+         * @author dhj
+         */
+        function wsDisconnect() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+
+        /**
+        * 웹소켓 메세지 리스너
+        * @param message
+        */
+        function messageEventHandler(message) {
+//            console.log(message);
+            console.log('[messageEventHandler message] : ' + message.data);
+
+            var resultData = JSON.parse(message.data);
+
+            switch (resultData['eventName']) {
+                case "getEventAlarmList": //이벤트 알림 갱신
+                    dashBoardHelper.getDataFunc();
+                    break;
+                default:
+                    break;
+            }
+
+//            switch(message.data) {
+//
+//            }
+//            dashBoardHelper.getDataFunc();
+        }
     </script>
 </head>
 <body>
