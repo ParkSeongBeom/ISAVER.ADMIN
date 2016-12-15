@@ -9,6 +9,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,22 +51,22 @@ public class AlarmRequestUtil {
         final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout* 1000).setSocketTimeout(timeout* 1000).build();
         httpPost.setConfig(params);
 
+        /**
+         * Set Header
+         */
+        httpPost.addHeader("charset", "UTF-8");
+        httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+
+        /**
+         * Set Body
+         */
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("charset", "UTF-8"));
-        nvps.add(new BasicNameValuePair("content-type", "application/x-www-form-urlencoded"));
+        nvps.add(new BasicNameValuePair("jsonData", new ObjectMapper().writeValueAsString(parameters)));
+        httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 
-        for (NameValuePair h : nvps) {
-            httpPost.addHeader(h.getName(), h.getValue());
-        }
-
-        ArrayList<NameValuePair> postParameters = new ArrayList<>();
-        postParameters.add(new BasicNameValuePair("deviceId", parameters.get("deviceId")));
-        postParameters.add(new BasicNameValuePair("areaId", parameters.get("areaId")));
-        postParameters.add(new BasicNameValuePair("eventTime", parameters.get("eventTime")));
-        postParameters.add(new BasicNameValuePair("eventId", parameters.get("eventId")));
-
-        httpPost.setEntity(new UrlEncodedFormEntity(postParameters));
-
+        /**
+         * Set Config
+         */
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(timeout * 1000)
                 .setConnectTimeout(timeout * 1000)

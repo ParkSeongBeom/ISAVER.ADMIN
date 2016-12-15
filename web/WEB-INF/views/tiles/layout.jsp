@@ -55,15 +55,14 @@
         var menuCtrl = null;
         var dashBoardHelper = new DashBoardHelper();
         var templateHelper = new TemplateHelper();
-        var now = new Date();
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
             ,'mainUrl':'${rootPath}/main.html'
-            ,'listUrl':'${rootPath}/eventLog/alram.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
+            ,'alramListUrl':'${rootPath}/eventLog/alram.html'
             ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
@@ -132,8 +131,11 @@
             bodyAddClass();
             printTime();
 
-            dashBoardHelper.addRequestData('alram', layoutUrlConfig['listUrl'], null, alramSuccessHandler, alramFailureHandler);
+//            dashBoardHelper.addRequestData('alram', layoutUrlConfig['alramListUrl'], null, alramSuccessHandler, alramFailureHandler);
 //            dashBoardHelper.startInterval();
+            // 알람 리스트 불러오기
+            layoutAjaxCall('alramList');
+
             wsConnect();
             aliveSend(900000);
 
@@ -153,6 +155,14 @@
             $("#eventType option[value=SCT003]").attr("value", "gas");
         });
 
+        function alramListRefresh() {
+            if($("#alramList li").length>0){
+                modifyElementClass($(".issue_btn"),'issue','add');
+            }else{
+                modifyElementClass($(".issue_btn"),'issue','remove');
+            }
+        }
+
         function alramTypeChangeHandler() {
             $("#alramList li").hide();
             var eventType = $("#eventType option:selected").val() != "" ? "[eventType='"+$("#eventType option:selected").val()+"']" : "";
@@ -171,7 +181,6 @@
         }
 
         function printTime() {
-
             $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
 
             setTimeout(function(){
@@ -193,149 +202,6 @@
                 }).always(function() {
                 });
             }, _time);
-        }
-
-        /**
-         * alram success handler
-         * @author psb
-         * @private
-         */
-        function alramSuccessHandler(data, dataType, actionType){
-            if(data!=null && data['eventLogs']!=null){
-                var marqueeFlag = false;
-
-                for(var index in data['eventLogs']){
-                    var eventLog = data['eventLogs'][index];
-                    var eventTypeName = null;
-                    var eventId = eventLog['eventId'];
-
-                    switch (eventLog['eventType']){
-                        case "crane" :
-                            eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
-                            break;
-                        case "worker" :
-                            eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
-                            break;
-                    }
-
-                    var makeAllowFlag = true;
-                    /* 충돌 감지 해제 */
-                    for (var j = 0 ; j < evtDetectionCancelList.length; j++) {
-                        var item = evtDetectionCancelList[j];
-                        if (item == eventId) {
-                            makeAllowFlag = false;
-                            break;
-                        }
-                    }
-
-                    if(eventTypeName!=null && makeAllowFlag){
-                        marqueeFlag = true;
-
-                        if(eventLog['eventCancelUserId']!="" && eventLog['eventCancelUserId']!=null){
-                            $("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                            if($("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").length>0){
-                                $('.marquee').marquee('destroy');
-                                $("#marqueeList button[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                            }
-                        }else if($("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
-                            if($("#marqueeList .js-marquee-wrapper").length>0){
-                                $('.marquee').marquee('destroy');
-                            }
-
-                            // 알림센터
-                            var alramTag = templateHelper.getTemplate("alram01");
-                            alramTag.on("click",function(){
-                                if($(this).hasClass("check")){
-                                    $(this).find(".check_input").prop("checked",false);
-                                    modifyElementClass($(this),'check','remove');
-                                }else{
-                                    $(this).find(".check_input").prop("checked",true);
-                                    modifyElementClass($(this),'check','add');
-                                }
-                            });
-                            alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
-//                            alramTag.find("#eventType").text(eventTypeName);
-                            alramTag.find("#eventName").text(eventLog['eventName']);
-                            alramTag.find("#areaName").text(eventLog['areaName']);
-                            alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                            alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
-                            $("#alramList").prepend(alramTag);
-
-                            // marquee
-                            var marqueeTag = templateHelper.getTemplate("marquee01");
-                            marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
-                            marqueeTag.prepend(
-                                $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
-                            );
-                            $("#marqueeList").prepend(marqueeTag);
-
-                            // 토스트팝업
-                            if(new Date(eventLog['eventDatetime']) > now){
-
-                                /* 애니메이션 */
-                                $(".issue_btn").removeClass("issue_on");
-                                try {
-                                    setTimeout(function() {
-                                        $(".issue_btn").addClass("issue_on");
-                                    }, 150);
-
-                                } catch(e) {
-
-                                }
-
-                                /* 싸이렌 */
-                                playSegment();
-                                var toastTag = templateHelper.getTemplate("toast");
-                                toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
-                                toastTag.attr("eventLogId",eventLog['eventLogId']);
-                                toastTag.find("#toastEventName").text(eventTypeName);
-                                toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                                $(".toast_popup").append(toastTag);
-
-                                removeToastTag(toastTag);
-                                function removeToastTag(_tag){
-                                    setTimeout(function(){
-                                        _tag.remove();
-                                    },3000);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if(data['eventLogs'].length>0){
-                    dashBoardHelper.saveRequestData('alram',{datetime:new Date(data['eventLogs'][data['eventLogs'].length-1]['eventDatetime']).format("yyyy-MM-dd HH:mm:ss")});
-                }
-
-                if(marqueeFlag && $("#marqueeList button").length>0 && $("#marqueeList .js-marquee-wrapper").length==0){
-                    //마키 플러그인 호출
-//                    $('.marquee').marquee({
-//                        duration: 20000,
-//                        direction: 'left',
-//                        gap: 20,
-//                        duplicated: true,
-//                        pauseOnHover: true,
-//                        startVisible: true,
-//                    });
-                }
-            }
-
-            if($("#alramList li").length>0){
-                modifyElementClass($(".issue_btn"),'issue','add');
-            }else{
-                modifyElementClass($(".issue_btn"),'issue','remove');
-            }
-
-            alramTypeChangeHandler();
-        }
-
-        /**
-         * alram failure handler
-         * @author psb
-         * @private
-         */
-        function alramFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-            console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
         }
 
         /**
@@ -473,6 +339,9 @@
          */
         function layoutSuccessHandler(data, dataType, actionType){
             switch(actionType){
+                case 'alramList':
+                    alramListRender(data);
+                    break;
                 case 'alramDetail':
                     alramDetailRender(data);
                     break;
@@ -512,6 +381,174 @@
             alert(layoutMessageConfig[type]);
         }
 
+        /**
+         * Alram List Render
+         * @author psb
+         * @private
+         */
+        function alramListRender(data){
+            if(data!=null && data['eventLogs']!=null){
+                for(var index in data['eventLogs']){
+                    var eventLog = data['eventLogs'][index];
+                    var eventTypeName = null;
+                    var eventId = eventLog['eventId'];
+
+                    switch (eventLog['eventType']){
+                        case "crane" :
+                            eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
+                            break;
+                        case "worker" :
+                            eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
+                            break;
+                    }
+
+                    if(eventTypeName!=null){
+                        if($("#marqueeList .js-marquee-wrapper").length>0){
+                            $('.marquee').marquee('destroy');
+                        }
+
+                        // 알림센터
+                        var alramTag = templateHelper.getTemplate("alram01");
+                        alramTag.on("click",function(){
+                            if($(this).hasClass("check")){
+                                $(this).find(".check_input").prop("checked",false);
+                                modifyElementClass($(this),'check','remove');
+                            }else{
+                                $(this).find(".check_input").prop("checked",true);
+                                modifyElementClass($(this),'check','add');
+                            }
+                        });
+                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
+//                        alramTag.find("#eventType").text(eventTypeName);
+                        alramTag.find("#eventName").text(eventLog['eventName']);
+                        alramTag.find("#areaName").text(eventLog['areaName']);
+                        alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                        alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
+                        $("#alramList").prepend(alramTag);
+
+                        // marquee
+                        var marqueeTag = templateHelper.getTemplate("marquee01");
+                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
+                        marqueeTag.prepend(
+                            $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
+                        );
+                        $("#marqueeList").prepend(marqueeTag);
+                    }
+                }
+
+                alramListRefresh();
+                alramTypeChangeHandler();
+            }
+        }
+
+        /**
+         * Add Alram
+         * @author psb
+         * @private
+         */
+        function addAlram(eventLog){
+            if(eventLog!=null){
+                var eventTypeName = null;
+                var eventId = eventLog['eventId'];
+
+                switch (eventLog['eventType']){
+                    case "crane" :
+                        eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
+                        break;
+                    case "worker" :
+                        eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
+                        break;
+                }
+
+                if(eventTypeName!=null){
+                    if($("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
+                        if($("#marqueeList .js-marquee-wrapper").length>0){
+                            $('.marquee').marquee('destroy');
+                        }
+
+                        // 알림센터
+                        var alramTag = templateHelper.getTemplate("alram01");
+                        alramTag.on("click",function(){
+                            if($(this).hasClass("check")){
+                                $(this).find(".check_input").prop("checked",false);
+                                modifyElementClass($(this),'check','remove');
+                            }else{
+                                $(this).find(".check_input").prop("checked",true);
+                                modifyElementClass($(this),'check','add');
+                            }
+                        });
+                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
+//                        alramTag.find("#eventType").text(eventTypeName);
+                        alramTag.find("#eventName").text(eventLog['eventName']);
+                        alramTag.find("#areaName").text(eventLog['areaName']);
+                        alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                        alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
+                        $("#alramList").prepend(alramTag);
+
+                        // marquee
+                        var marqueeTag = templateHelper.getTemplate("marquee01");
+                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
+                        marqueeTag.prepend(
+                            $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
+                        );
+                        $("#marqueeList").prepend(marqueeTag);
+
+                        /* 애니메이션 */
+                        $(".issue_btn").removeClass("issue_on");
+                        try {
+                            setTimeout(function() {
+                                $(".issue_btn").addClass("issue_on");
+                            }, 150);
+                        } catch(e) {}
+
+                        /* 싸이렌 */
+                        playSegment();
+                        var toastTag = templateHelper.getTemplate("toast");
+                        toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
+                        toastTag.attr("eventLogId",eventLog['eventLogId']);
+                        toastTag.find("#toastEventName").text(eventTypeName);
+                        toastTag.find("#toastEventDesc").text(eventLog['eventName']);
+                        $(".toast_popup").append(toastTag);
+
+                        removeToastTag(toastTag);
+                        function removeToastTag(_tag){
+                            setTimeout(function(){
+                                _tag.remove();
+                            },3000);
+                        }
+                    }
+                }
+
+                alramListRefresh();
+                alramTypeChangeHandler();
+            }
+        }
+
+        /**
+         * Remove Alram
+         * @author psb
+         * @private
+         */
+        function removeAlram(eventLog){
+            if(eventLog!=null && eventLog['eventLogIds']!=null){
+                var eventLogIds = eventLog['eventLogIds'].split(",");
+                for(var index in eventLogIds){
+                    $("#alramList li[eventLogId='"+eventLogIds[index]+"']").remove();
+                    if($("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").length>0){
+                        $('.marquee').marquee('destroy');
+                        $("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").remove();
+                    }
+                }
+
+                alramListRefresh();
+            }
+        }
+
+        /**
+         * Alram Detail Render
+         * @author psb
+         * @private
+         */
         function alramDetailRender(data){
             if(data!=null && data['action']!=null){
                 var action = data['action'];
@@ -689,18 +726,13 @@
         var ws;
         var reConnectFlag = true;
 
-        $(document).ready(function(){
-//            wsConnect();
-//            dashBoardHelper.getDataFunc();
-        });
         /**
          * 웹소켓 접속 연결
          * @author dhj
          */
         function wsConnect() {
-
             setTimeout(function() {
-                dashBoardHelper.getDataFunc();
+                dashBoardHelper.getData();
 
                 var url = "ws://172.16.110.200:8820/ISAVER.SOCKET/eventAlarm";
 
@@ -720,7 +752,6 @@
                             wsConnect();
                         }, 5000);
                     }
-
                 };
             }, 250);
 
@@ -759,23 +790,28 @@
         * @param message
         */
         function messageEventHandler(message) {
-//            console.log(message);
-            console.log('[messageEventHandler message] : ' + message.data);
-
             var resultData = JSON.parse(message.data);
+            var refreshData = false;
 
-            switch (resultData['eventName']) {
-                case "getEventAlarmList": //이벤트 알림 갱신
-                    dashBoardHelper.getDataFunc();
+            switch (resultData['messageType']) {
+                case "eventRefresh": // 알림등록
+                    refreshData = true;
+                    break;
+                case "addAlramEvent": // 알림등록
+                    addAlram(resultData['alramEventLog'][0]);
+                    refreshData = true;
+                    break;
+                case "removeAlramEvent": // 알림해제
+                    removeAlram(resultData['alramEventLog']);
+                    refreshData = true;
                     break;
                 default:
                     break;
             }
 
-//            switch(message.data) {
-//
-//            }
-//            dashBoardHelper.getDataFunc();
+            if(refreshData){
+                dashBoardHelper.getData();
+            }
         }
     </script>
 </head>

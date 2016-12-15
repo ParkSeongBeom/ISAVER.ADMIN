@@ -26,7 +26,7 @@ var DashBoardHelper = (
 
             _self.stopInterval();
             _intervalInfo['interval'] = setInterval(function() {
-                _getData();
+                _self.getData();
             }, time);
         };
 
@@ -99,16 +99,10 @@ var DashBoardHelper = (
         };
 
         /**
-         * @author dhj
-         */
-        this.getDataFunc = function() {
-            _getData();
-        }
-        /**
          * get data
          * @author psb
          */
-        var _getData = function(){
+        this.getData = function(){
             for(var index in _requestData){
                 var _requestInfo = _requestData[index];
 

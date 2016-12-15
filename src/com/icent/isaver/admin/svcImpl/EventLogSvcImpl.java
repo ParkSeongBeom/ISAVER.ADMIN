@@ -32,8 +32,8 @@ import java.util.*;
 @Service
 public class EventLogSvcImpl implements EventLogSvc {
 
-    @Value("#{configProperties['api.server.address']}")
-    private String urlApiSocketUrl = null;
+    @Value("#{configProperties['ws.server.address']}")
+    private String urlWebSocket = null;
 
     @Resource(name="mybatisIsaverTxManager")
     private DataSourceTransactionManager transactionManager;
@@ -109,9 +109,19 @@ public class EventLogSvcImpl implements EventLogSvc {
             throw new JabberException("");
         }
 
-
+        /**
+         * = 웹소켓 서버로 알림 전송
+         * @author psb
+         * @date 2016.12.15
+         */
         try {
-            AlarmRequestUtil.sendAlarmRequestFunc(parameters, urlApiSocketUrl + AdminResource.API_PATH_URL_SENDEVENT);
+            Map websocketParam = new HashMap();
+            Map warnParam = new HashMap();
+            warnParam.put("eventLogIds", parameters.get("eventLogIds"));
+            websocketParam.put("alramEventLog", warnParam);
+            websocketParam.put("messageType","removeAlramEvent");
+
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
         } catch (IOException e) {
             e.printStackTrace();
         }
