@@ -57,8 +57,6 @@ a.btn_logout, .btn, .btn_infile:before, .excel_set01 , a.btn_logout > span, td .
 .select_edit.disabled select {opacity: 0.2;}
 
 
-
-
 /* label base */
 .check_box_set {
     display: -webkit-box;
@@ -583,11 +581,10 @@ input.searchbase:focus { border: none;}
     width:15px; height:4px;
 }
 
-.ch_name.co_gren:before {background-color: rgba(0,212,88,  0.4); border-color:#01d65a;}
-.ch_name.co_purp:before {background-color: rgba(204,61,211,0.4); border-color:#cc3dd3;}
-.ch_name.co_yell:before {background-color: rgba(255,206,83,0.4); border-color:#ffce53;}
+
+.ch_name.co_gren:before {background-color: rgba(0,212,88,  0.4); border-color:#01d65a;} /* 작업자상태 */
+.ch_name.co_purp:before {background-color: rgba(204,61,211,0.4); border-color:#cc3dd3;} /* 크레인상태 */
+.ch_name.co_yell:before {background-color: rgba(255,206,83,0.4); border-color:#ffce53;} /* 유해가스상태 */
 
 .mh_name.co_gren:before {background-color:#01d65a;}
 .mh_name.co_purp:before {background-color:#cc3dd3;}
-
-
