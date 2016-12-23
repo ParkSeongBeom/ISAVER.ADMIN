@@ -121,7 +121,7 @@ public class EventLogSvcImpl implements EventLogSvc {
             websocketParam.put("alramEventLog", warnParam);
             websocketParam.put("messageType","removeAlramEvent");
 
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
         } catch (IOException e) {
             e.printStackTrace();
         }

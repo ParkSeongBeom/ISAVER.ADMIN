@@ -725,6 +725,7 @@
     <script type="text/javascript">
         var ws;
         var reConnectFlag = true;
+        var webSocketUrl = "${webSocketUrl}";
 
         /**
          * 웹소켓 접속 연결
@@ -734,9 +735,12 @@
             setTimeout(function() {
                 dashBoardHelper.getData();
 
-                var url = "ws://172.16.110.200:8820/ISAVER.SOCKET/eventAlarm";
+                if(webSocketUrl=="" || webSocketUrl==null){
+                    console.error('[wsConnect]websocket url is null');
+                    return false;
+                }
 
-                ws = new WebSocket(url);
+                ws = new WebSocket(webSocketUrl);
                 ws.onopen = function () {
                     console.log('websocket opened');
                 };
@@ -763,7 +767,6 @@
          * @author dhj
          */
         function wsSendMsg(_text) {
-
             if (ws) {
                 if (_text != null && _text != "") {
                     ws.send(_text);
@@ -771,7 +774,6 @@
             } else {
                 console.log("ws disConnect!");
             }
-
         }
 
         /**
@@ -794,15 +796,18 @@
             var refreshData = false;
 
             switch (resultData['messageType']) {
-                case "eventRefresh": // 알림등록
+                case "addEvent": // 일반이벤트 등록
                     refreshData = true;
                     break;
-                case "addAlramEvent": // 알림등록
+                case "addAlramEvent": // 알림이벤트 등록
                     addAlram(resultData['alramEventLog'][0]);
                     refreshData = true;
                     break;
-                case "removeAlramEvent": // 알림해제
+                case "removeAlramEvent": // 알림이벤트 해제
                     removeAlram(resultData['alramEventLog']);
+                    refreshData = true;
+                    break;
+                case "refreshView": // 화면갱신
                     refreshData = true;
                     break;
                 default:

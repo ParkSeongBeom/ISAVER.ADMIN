@@ -1,13 +1,16 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.InoutConfigurationBean;
 import com.icent.isaver.repository.dao.base.InoutConfigurationDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.ListUtils;
 import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +44,9 @@ import java.util.Map;
 public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
     @Resource(name="mybatisIsaverTxManager")
     private DataSourceTransactionManager transactionManager;
+
+    @Value("#{configProperties['ws.server.address']}")
+    private String urlWebSocket = null;
 
     @Inject
     private InoutConfigurationDao inoutConfigurationDao;
@@ -80,6 +87,20 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
                 transactionManager.rollback(transactionStatus);
                 throw new JabberException("");
             }
+        }
+
+        /**
+         * = 웹소켓 서버로 알림 전송
+         * @author psb
+         * @date 2016.12.15
+         */
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("messageType","refreshView");
+
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         ModelAndView modelAndView = new ModelAndView();

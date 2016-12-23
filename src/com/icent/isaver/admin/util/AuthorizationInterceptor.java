@@ -1,7 +1,9 @@
 package com.icent.isaver.admin.util;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -23,6 +25,9 @@ import java.util.Date;
  * </pre>
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
+
+    @Value("#{configProperties['ws.server.address']}")
+    private String urlWebSocket = null;
 
     /**
      * 인자절차가 필요없는 path</br>
@@ -86,6 +91,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
+        modelAndView.addObject("webSocketUrl", "ws://" + urlWebSocket + AdminResource.WS_PATH_URL_CONNECT);
+
         super.postHandle(request, response, handler, modelAndView);
     }
 
