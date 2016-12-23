@@ -389,51 +389,7 @@
         function alramListRender(data){
             if(data!=null && data['eventLogs']!=null){
                 for(var index in data['eventLogs']){
-                    var eventLog = data['eventLogs'][index];
-                    var eventTypeName = null;
-                    var eventId = eventLog['eventId'];
-
-                    switch (eventLog['eventType']){
-                        case "crane" :
-                            eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
-                            break;
-                        case "worker" :
-                            eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
-                            break;
-                    }
-
-                    if(eventTypeName!=null){
-                        if($("#marqueeList .js-marquee-wrapper").length>0){
-                            $('.marquee').marquee('destroy');
-                        }
-
-                        // 알림센터
-                        var alramTag = templateHelper.getTemplate("alram01");
-                        alramTag.on("click",function(){
-                            if($(this).hasClass("check")){
-                                $(this).find(".check_input").prop("checked",false);
-                                modifyElementClass($(this),'check','remove');
-                            }else{
-                                $(this).find(".check_input").prop("checked",true);
-                                modifyElementClass($(this),'check','add');
-                            }
-                        });
-                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
-//                        alramTag.find("#eventType").text(eventTypeName);
-                        alramTag.find("#eventName").text(eventLog['eventName']);
-                        alramTag.find("#areaName").text(eventLog['areaName']);
-                        alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                        alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
-                        $("#alramList").prepend(alramTag);
-
-                        // marquee
-                        var marqueeTag = templateHelper.getTemplate("marquee01");
-                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
-                        marqueeTag.prepend(
-                            $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
-                        );
-                        $("#marqueeList").prepend(marqueeTag);
-                    }
+                    addAlram(data['eventLogs'][index], false);
                 }
 
                 alramListRefresh();
@@ -446,17 +402,17 @@
          * @author psb
          * @private
          */
-        function addAlram(eventLog){
+        function addAlram(eventLog, flag){
             if(eventLog!=null){
                 var eventTypeName = null;
                 var eventId = eventLog['eventId'];
 
                 switch (eventLog['eventType']){
-                    case "crane" :
-                        eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
-                        break;
                     case "worker" :
                         eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
+                        break;
+                    case "crane" :
+                        eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
                         break;
                 }
 
@@ -483,6 +439,10 @@
                         alramTag.find("#areaName").text(eventLog['areaName']);
                         alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
                         alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
+
+                        // 현C 요청으로 클래스 삽입
+                        // 알림센터 아이콘 노출(2016-12-23)
+                        alramTag.find(".dbc_contents").addClass(eventLog['eventType']);
                         $("#alramList").prepend(alramTag);
 
                         // marquee
@@ -493,34 +453,35 @@
                         );
                         $("#marqueeList").prepend(marqueeTag);
 
-                        /* 애니메이션 */
-                        $(".issue_btn").removeClass("issue_on");
-                        try {
-                            setTimeout(function() {
-                                $(".issue_btn").addClass("issue_on");
-                            }, 150);
-                        } catch(e) {}
+                        if(flag==true){
+                            /* 애니메이션 */
+                            $(".issue_btn").removeClass("issue_on");
+                            try {
+                                setTimeout(function() {
+                                    $(".issue_btn").addClass("issue_on");
+                                }, 150);
+                            } catch(e) {}
 
-                        /* 싸이렌 */
-                        playSegment();
-                        var toastTag = templateHelper.getTemplate("toast");
-                        toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
-                        toastTag.attr("eventLogId",eventLog['eventLogId']);
-                        toastTag.find("#toastEventName").text(eventTypeName);
-                        toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                        $(".toast_popup").append(toastTag);
+                            /* 싸이렌 */
+                            playSegment();
+                            var toastTag = templateHelper.getTemplate("toast");
+                            toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
+                            toastTag.attr("eventLogId",eventLog['eventLogId']);
+                            toastTag.find("#toastEventName").text(eventTypeName);
+                            toastTag.find("#toastEventDesc").text(eventLog['eventName']);
+                            $(".toast_popup").append(toastTag);
 
-                        removeToastTag(toastTag);
-                        function removeToastTag(_tag){
-                            setTimeout(function(){
-                                _tag.remove();
-                            },3000);
+                            removeToastTag(toastTag);
+                            function removeToastTag(_tag){
+                                setTimeout(function(){
+                                    _tag.remove();
+                                },3000);
+                            }
+
+                            alramTypeChangeHandler();
                         }
                     }
                 }
-
-                alramListRefresh();
-                alramTypeChangeHandler();
             }
         }
 
@@ -708,6 +669,7 @@
                 alarmPlayer.play();
             }
         }
+
         /* 대쉬보드 전체 페이지 이동*/
         function moveFullDashFunc() {
             var deviceListForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashBoardAllUrl']);
@@ -800,7 +762,7 @@
                     refreshData = true;
                     break;
                 case "addAlramEvent": // 알림이벤트 등록
-                    addAlram(resultData['alramEventLog'][0]);
+                    addAlram(resultData['alramEventLog'][0], true);
                     refreshData = true;
                     break;
                 case "removeAlramEvent": // 알림이벤트 해제

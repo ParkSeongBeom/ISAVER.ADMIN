@@ -371,12 +371,6 @@
 .on_type02 .mc_bico.type01:before {background-color:#ffce53; color:#1f1e24;}
 */
 
-/* 이슈 아이콘 설정 시작  */
-.worker, .worker:before {}
-.crane, .crane:before   {}
-.going, .going:before   {}
-.etc, .etc:before       {}
-/* 이슈 아이콘 설정 끝  */
 
 .mc_box {flex:1; -webkit-flex:1; flexbox:1; overflow: hidden; margin: 0 20px;}
 .mc_box > p {
