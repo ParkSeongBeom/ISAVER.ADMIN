@@ -149,6 +149,14 @@ public class FileSvcImpl implements FileSvc {
 
         if(file != null){
             parameters.put("physicalFileName", file.getName());
+
+            if(StringUtils.notNullCheck(parameters.get("selDevices"))){
+                if(StringUtils.nullCheck(parameters.get("addDeviceSyncRequests"))){
+                    parameters.put("addDeviceSyncRequests", parameters.get("selDevices"));
+                }else{
+                    parameters.put("addDeviceSyncRequests", parameters.get("addDeviceSyncRequests") + "," + parameters.get("selDevices"));
+                }
+            }
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);

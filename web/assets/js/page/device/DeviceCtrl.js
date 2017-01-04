@@ -429,6 +429,7 @@ function DeviceCtrl(model) {
         var data = {
             title : $("#fileTitle").val()
             , fileName : $("#fileName").val()
+            , useYn : "Y"
         };
 
         /*  테이블 목록 - 내용 */

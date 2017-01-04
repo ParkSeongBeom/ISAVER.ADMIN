@@ -86,6 +86,7 @@
 
     <form id="fileForm" method="POST">
         <input type="hidden" name="fileId" value="${file.fileId}" />
+        <input type="hidden" name="selDevices" />
         <input type="hidden" name="addDevices" />
         <input type="hidden" name="removeDevices" />
         <input type="hidden" name="addDeviceSyncRequests" />
@@ -272,6 +273,7 @@
         }
 
         if(validate(1)){
+            $("input[name='selDevices']").val(deviceInfo['selDeviceList'].toString());
             $("input[name='addDevices']").val(deviceInfo['addDeviceList'].toString());
             $("input[name='removeDevices']").val(deviceInfo['removeDeviceList'].toString());
             $("input[name='addDeviceSyncRequests']").val(deviceInfo['addDeviceList'].concat(deviceInfo['removeDeviceList']).toString());
