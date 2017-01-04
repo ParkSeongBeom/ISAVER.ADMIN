@@ -8,6 +8,7 @@ import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.repository.bean.*;
 import com.icent.isaver.repository.dao.base.AlarmTargetDeviceConfigDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.icent.isaver.repository.dao.base.EventDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
@@ -52,6 +53,9 @@ public class DeviceSvcImpl implements DeviceSvc {
     private AreaSvc areaSvc;
 
     @Inject
+    private EventDao eventDao;
+
+    @Inject
     private LicenseDao licenseDao;
 
     @Inject
@@ -70,6 +74,14 @@ public class DeviceSvcImpl implements DeviceSvc {
     }
 
     @Override
+    public ModelAndView findListDeviceForFile(Map<String, String> parameters) {
+        List<DeviceBean> deviceList = deviceDao.findListDeviceForFile(parameters);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("deviceList", deviceList);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findListDeviceArea(Map<String, String> parameters) {
         return null;
     }
@@ -81,12 +93,14 @@ public class DeviceSvcImpl implements DeviceSvc {
         ModelAndView areaModelAndView = areaSvc.findAllAreaTree(parameters);
 
         List<AreaBean> areaTreeList = (List<AreaBean>) areaModelAndView.getModel().get("areaList");
+        List<EventBean> events = eventDao.findListEvent(null);
 //        Integer totalCount = deviceDao.findCountDevice(parameters);
 //        AdminHelper.setPageTotalCount(parameters, totalCount);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceTreeList);
         modelAndView.addObject("areas", areaTreeList);
+        modelAndView.addObject("events", events);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -208,15 +222,15 @@ public class DeviceSvcImpl implements DeviceSvc {
     public ModelAndView saveDevice(HttpServletRequest request, Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        DeviceBean device = deviceDao.findByDevice(parameters);
+//        DeviceBean device = deviceDao.findByDevice(parameters);
         try {
-            if(!parameters.get("areaId").equals(device.getAreaId()) || !parameters.get("deviceCode").equals(device.getDeviceCode())
-                    || (StringUtils.notNullCheck(parameters.get("ipAddress")) && !parameters.get("ipAddress").equals(device.getIpAddress()))){
+//            if(!parameters.get("areaId").equals(device.getAreaId()) || !parameters.get("deviceCode").equals(device.getDeviceCode())
+//                    || (StringUtils.notNullCheck(parameters.get("ipAddress")) && !parameters.get("ipAddress").equals(device.getIpAddress()))){
                 Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
                 addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
                 addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
                 deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
-            }
+//            }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

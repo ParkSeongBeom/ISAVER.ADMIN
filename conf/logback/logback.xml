@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds">
 
-    <property name="project_name" value="jabber_admin" />
-    <property name="logDirPath" value="/jabberplus/was/logs" />
+    <property name="project_name" value="isaver_admin" />
+    <property name="logDirPath" value="/isaver/was/logs" />
 
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

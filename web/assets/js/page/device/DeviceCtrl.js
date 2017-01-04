@@ -58,7 +58,7 @@ function DeviceCtrl(model) {
 
 
             var formName = "#" + this._model.getFormName();
-            $( formName + " [id='selectParentDeviceId'] option").attr('disabled', false);
+            $( formName + " [name='parentDeviceId'] option").attr('disabled', false);
 
             sendAjaxPostRequest(requestUrl, this.param, this._event.detailSuccessHandler, this._event.detailErrorHandler, type);
         }
@@ -70,9 +70,8 @@ function DeviceCtrl(model) {
     DeviceCtrl.searchDevice = function() {
         this._model.setDeviceId($("input[name='deviceId']").val());
         this._model.setSerialNo($("input[name='serialNo']").val());
-        this._model.setAreaId($("select[id=selectAreaId]").val());
+        this._model.setAreaId($("select[name=areaId]").val());
         DeviceCtrl.findMenuDetail();
-
     };
 
 
@@ -117,12 +116,12 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if ($("#selectAreaId").val() == "" || $("#selectAreaId").val() == null) {
+            if ($("select[name='areaId']").val() == "" || $("select[name='areaId']").val() == null) {
                 alert(messageConfig['requiredAreaId']);
                 return;
             }
 
-            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV00F9") {
+            if (deviceModel.getViewStatus() == "add" && $("select[name=deviceCode]").val() == "DEV00F9") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                     if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
@@ -161,7 +160,7 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+            if ($("select[name=deviceCode]").val() == "DEV009") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                     if (deviceObj['ipAddressExistFlag'] == true) {
@@ -169,8 +168,26 @@ function DeviceCtrl(model) {
                         $("input[name=ipAddress]").focus();
                         return;
                     }
-
                 }
+            }
+
+            if ($("select[name=deviceCode]").val() == "DEV002") {
+                if ($("select[name='eventId']").val().trim().length == 0) {
+                    alert( messageConfig['emptyEventId'] );
+                    $("select[name=eventId]").focus();
+                    return;
+                }
+
+                if ($("select[name='cameraManufacturer']").val().trim().length == 0) {
+                    alert( messageConfig['emptyCameraManufacturer'] );
+                    $("select[name=cameraManufacturer]").focus();
+                    return;
+                }
+            }else{
+                $("select[name=eventId] option:eq(0)").prop("selected", true);
+                $("input[name=fileName]").val("");
+                $("input[name=fileId]").val("");
+                $("select[name=cameraManufacturer] option:eq(0)").prop("selected", true);
             }
 
             var deviceId = $("input[name=deviceId]").val();
@@ -199,9 +216,8 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if (deviceModel.getViewStatus() == "add" && $("select[id=selectDeviceCode]").val() == "DEV009") {
+            if ($("select[name=deviceCode]").val() == "DEV009") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
-
                     if (deviceObj['ipAddressExistFlag'] == true) {
                         alert(messageConfig['existsIpAddress']);
                         $("input[name=ipAddress]").focus();
@@ -210,6 +226,24 @@ function DeviceCtrl(model) {
                 }
             }
 
+            if ($("select[name=deviceCode]").val() == "DEV002") {
+                if ($("select[name='eventId']").val().trim().length == 0) {
+                    alert( messageConfig['emptyEventId'] );
+                    $("select[name=eventId]").focus();
+                    return;
+                }
+
+                if ($("select[name='cameraManufacturer']").val().trim().length == 0) {
+                    alert( messageConfig['emptyCameraManufacturer'] );
+                    $("select[name=cameraManufacturer]").focus();
+                    return;
+                }
+            }else{
+                $("select[name=eventId]").val("");
+                $("input[name=fileName]").val("");
+                $("input[name=fileId]").val("");
+                $("select[name=cameraManufacturer]").val("");
+            }
 
             var deviceId = $("input[name=deviceId]").val();
             if(confirm('[' + deviceId + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
@@ -313,16 +347,8 @@ function DeviceCtrl(model) {
     DeviceCtrl.setAddBefore = function() {
         this._model.setViewStatus(MenuModel().model.ACTION.ADD);
         var deviceView = new DeviceView(this._model);
+        deviceView.resetData();
         deviceView.setAddBefore();
-    };
-
-    /**
-     * 장치 저장 전 초기화 모드
-     */
-    DeviceCtrl.setSaveBefore = function() {
-        this._model.setViewStatus(MenuModel().model.ACTION.SAVE);
-        var orgView = new DeviceView(this._model);
-        orgView.setSaveBefore();
     };
 
     /**
@@ -334,24 +360,22 @@ function DeviceCtrl(model) {
             var orgView = new DeviceView(this._model);
             orgView.openPopupUserPage();
         }
-
-    };
-
-    /**
-     *부모장치 콤보박스 - 변경 이벤트
-     */
-    DeviceCtrl.selectParentDeviceIdChangeEvent = function() {
-        var parentDeviceId  = $(event.currentTarget).val();
-        $("input[name=parentDeviceId]").val(parentDeviceId);
     };
 
     /**
      * 알림 대상 전송 IVAS->SIOC
      */
     DeviceCtrl.alarmListLoadFunc = function() {
-
-        popup_openButton();
+        openPopup('code_select_popup');
         DeviceCtrl.alarmDeviceLoadFunc();
+    };
+
+    /**
+     * 파일리스트 로드
+     */
+    DeviceCtrl.fileListLoadFunc = function() {
+        openPopup('file_popup');
+        DeviceCtrl.fileLoadFunc();
     };
 
     /**
@@ -377,14 +401,12 @@ function DeviceCtrl(model) {
         var actionType = "alarmAppend";
 
         sendAjaxPostRequest(_url, data, this._event.alarmTargetAppendSuccessHandler, this._event.alarmTargetAppendErrorHandler, actionType);
-
     };
 
     /**
      * 알림 목록 장치 불러오기
      */
     DeviceCtrl.alarmDeviceLoadFunc = function() {
-
         var data = {
             deviceId : DeviceCtrl._model.getDeviceId()
             , findDeviceId : $("input[name=pop_device_id]").val()
@@ -398,6 +420,22 @@ function DeviceCtrl(model) {
         var _url = rootUrl + "/device/alarmMappingList.json";
         var actionType = "alarmListLoad";
         sendAjaxPostRequest(_url, data, this._event.alarmListLoadSuccessHandler, this._event.alarmListLoadErrorHandler, actionType);
+    };
+
+    /**
+     * 파일 목록 불러오기
+     */
+    DeviceCtrl.fileLoadFunc = function() {
+        var data = {
+            title : $("#fileTitle").val()
+            , fileName : $("#fileName").val()
+        };
+
+        /*  테이블 목록 - 내용 */
+        var rootUrl = DeviceCtrl._model.getRootUrl();
+        var _url = rootUrl + "/file/deviceFileList.json";
+        var actionType = "fileListLoad";
+        sendAjaxPostRequest(_url, data, this._event.fileListLoadSuccessHandler, this._event.fileListLoadErrorHandler, actionType);
     };
 
     return DeviceCtrl;
@@ -442,11 +480,10 @@ function DeviceEvent(model) {
      * @param actionType
      */
     DeviceEvent.detailSuccessHandler = function (data, dataType, actionType) {
-
+        deviceView.resetData();
         deviceView.setFindDetailBefore(data);
 
         if (typeof data == "object" && data.hasOwnProperty("device") && data['device']!=null) {
-
             try {
                 DeviceEvent._model.setDeviceId(data['device'].deviceId);
             } catch (e) {
@@ -550,11 +587,9 @@ function DeviceEvent(model) {
      * [SUCCESS][RES] 알림 장치 목록 불러오기 성공 시 이벤트
      */
     DeviceEvent.alarmListLoadSuccessHandler = function (data, dataType, actionType) {
-
         if (typeof data == "object" && data.hasOwnProperty("deviceBeanList") && data['deviceBeanList']!=null) {
             deviceView.makeAlarmDeviceListFunc(data['deviceBeanList'], data['alarmTargetDeviceConfigList']);
         }
-
     };
 
     /**
@@ -563,7 +598,22 @@ function DeviceEvent(model) {
     DeviceEvent.alarmListLoadErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
         console.error("[Error][DeviceEvent.alarmListLoadErrorHandler] " + errorThrown);
         alert(messageConfig[DeviceEvent._model.getViewStatus() + 'Failure']);
+    };
 
+    /**
+     * [SUCCESS][RES] 파일 목록 불러오기 성공 시 이벤트
+     */
+    DeviceEvent.fileListLoadSuccessHandler = function (data, dataType, actionType) {
+        if (typeof data == "object" && data.hasOwnProperty("files")) {
+            deviceView.makeFileListFunc(data['files']);
+        }
+    };
+
+    /**
+     * [FAIL][RES] 파일 목록 불러오기 실패 시 이벤트
+     */
+    DeviceEvent.fileListLoadErrorHandler = function (XMLHttpRequest, textStatus, errorThrown, actionType) {
+        console.error("[Error][DeviceEvent.fileListLoadErrorHandler] " + errorThrown);
     };
 
     /**

@@ -13,84 +13,6 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 <link rel="stylesheet" href="${rootPath}/assets/css/jqueryui/jquery-ui-1.10.4.min.css">
 
-<!-- 알림 장치 맵핑 팝업-->
-<aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">
-    <section class="layer_wrap i_type04">
-        <article class="layer_area">
-            <div class="layer_header">
-                알림 대상 장치 목록
-            </div>
-            <div class="layer_contents">
-                <%--<form id="userForm" method="POST">--%>
-                <input type="hidden" name="pageNumber">
-                <article class="search_area">
-                    <div class="search_contents">
-                        <!-- 일반 input 폼 공통 -->
-                        <p class="itype_01">
-                            <span><spring:message code="device.column.deviceId"/></span>
-                                    <span>
-                                        <input type="text" name="pop_device_id" >
-                                    </span>
-                        </p>
-                        <p class="itype_01">
-                            <span><spring:message code="device.column.deviceCode"/></span>
-                                    <span>
-                                        <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="pop_device_code" allModel="true"/>
-                                    </span>
-                        </p>
-                        <p class="itype_01">
-                            <span><spring:message code="device.column.areaName"/></span>
-                                    <span>
-                                        <input type="text" name="pop_areaName" >
-                                    </span>
-                        </p>
-                    </div>
-                    <div class="search_btn">
-                        <button onclick="javascript:deviceCtrl.alarmDeviceLoadFunc(); return false;" class="btn bstyle01 btype01">조회</button>
-                    </div>
-                </article>
-                <%--</form>--%>
-                <article class="table_area">
-                    <div class="table_contents">
-                        <!-- 입력 테이블 Start -->
-                        <table id="actionList" class="t_defalut t_type01 t_style02">
-                            <colgroup>
-                                <col style="width: 5%;">
-                                <col style="width: 15%;">
-                                <col style="width: 20%;">
-                                <col style="width: *%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th class="t_center"></th>
-                                <th><spring:message code="device.column.deviceId"/></th>
-                                <th><spring:message code="device.column.deviceCode"/></th>
-                                <th><spring:message code="device.column.areaName"/></th>
-                                <th><spring:message code="device.column.provisionFlag"/></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="5"><spring:message code="common.message.emptyData"/></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </article>
-                <div class="table_title_area">
-                    <div class="table_btn_set">
-                        <button class="btn btype01 bstyle03 c_ok" name="" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;">저장</button>
-                        <button class="btn btype01 bstyle03 c_cancle" name="" onclick="javascript:popup_cancelButton(); return false;">취소</button>
-                        <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
-                        <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
-                    </div>
-                </div>
-            </div>
-        </article>
-    </section>
-    <div class="layer_popupbg ipop_close"></div>
-</aside>
-
 <!-- 장치 상세 화면 -->
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
@@ -103,6 +25,153 @@
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
+
+    <!-- 알림 장치 맵핑 팝업-->
+    <aside class="admin_popup ipop_type01 code_select_popup">
+        <section class="layer_wrap i_type04">
+            <article class="layer_area">
+                <div class="layer_header">
+                    알림 대상 장치 목록
+                    <button class="ipop_x" onclick="closePopup('code_select_popup');"></button>
+                </div>
+                <div class="layer_contents">
+                    <%--<form id="userForm" method="POST">--%>
+                    <input type="hidden" name="pageNumber">
+                    <article class="search_area">
+                        <div class="search_contents">
+                            <!-- 일반 input 폼 공통 -->
+                            <p class="itype_01">
+                                <span><spring:message code="device.column.deviceId"/></span>
+                            <span>
+                                <input type="text" name="pop_device_id" >
+                            </span>
+                            </p>
+                            <p class="itype_01">
+                                <span><spring:message code="device.column.deviceCode"/></span>
+                            <span>
+                                <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="pop_device_code" allModel="true"/>
+                            </span>
+                            </p>
+                            <p class="itype_01">
+                                <span><spring:message code="device.column.areaName"/></span>
+                            <span>
+                                <input type="text" name="pop_areaName" >
+                            </span>
+                            </p>
+                        </div>
+                        <div class="search_btn">
+                            <button onclick="javascript:deviceCtrl.alarmDeviceLoadFunc(); return false;" class="btn bstyle01 btype01">조회</button>
+                        </div>
+                    </article>
+                    <%--</form>--%>
+                    <article class="table_area">
+                        <div class="table_contents">
+                            <!-- 입력 테이블 Start -->
+                            <table id="actionList" class="t_defalut t_type01 t_style02">
+                                <colgroup>
+                                    <col style="width: 5%;">
+                                    <col style="width: 15%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: *%;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="t_center"></th>
+                                    <th><spring:message code="device.column.deviceId"/></th>
+                                    <th><spring:message code="device.column.deviceCode"/></th>
+                                    <th><spring:message code="device.column.areaName"/></th>
+                                    <th><spring:message code="device.column.provisionFlag"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="5"><spring:message code="common.message.emptyData"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <div class="table_title_area">
+                        <div class="table_btn_set">
+                            <button class="btn btype01 bstyle03 c_ok" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;"><spring:message code="common.button.save"/></button>
+                            <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup('code_select_popup'); return false;"><spring:message code="common.button.cancel"/></button>
+                            <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
+                            <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close" onclick="closePopup('code_select_popup');"></div>
+    </aside>
+
+    <aside class="admin_popup file_popup">
+        <section class="layer_wrap i_type05">
+            <article class="layer_area">
+                <div class="layer_header">
+                    <spring:message code="device.column.fileList"/>
+                    <button class="ipop_x" onclick="closePopup('file_popup');"></button>
+                </div>
+                <div class="layer_contents">
+                    <input type="hidden" name="pageNumber">
+                    <article class="search_area">
+                        <div class="search_contents">
+                            <!-- 일반 input 폼 공통 -->
+                            <p class="itype_01">
+                                <span><spring:message code="device.column.title"/></span>
+                                <span>
+                                    <input type="text" id="fileTitle" />
+                                </span>
+                            </p>
+                            <p class="itype_01">
+                                <span><spring:message code="device.column.fileName"/></span>
+                                <span>
+                                    <input type="text" id="fileName" />
+                                </span>
+                            </p>
+                        </div>
+                        <div class="search_btn">
+                            <button onclick="javascript:deviceCtrl.fileLoadFunc(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                        </div>
+                    </article>
+                    <%--</form>--%>
+                    <article class="table_area">
+                        <div class="table_contents">
+                            <!-- 입력 테이블 Start -->
+                            <table class="t_defalut t_type01 t_style02">
+                                <colgroup>
+                                    <col style="width: 5%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: *%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: 10%;">
+                                    <col style="width: 20%;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="t_center"></th>
+                                    <th><spring:message code="device.column.title"/></th>
+                                    <th><spring:message code="device.column.fileName"/></th>
+                                    <th><spring:message code="device.column.description"/></th>
+                                    <th><spring:message code="device.column.insertUserName"/></th>
+                                    <th><spring:message code="device.column.insertDatetime"/></th>
+                                </tr>
+                                </thead>
+                                <tbody id="fileList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <div class="table_title_area">
+                        <div class="table_btn_set">
+                            <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup('file_popup'); return false;">닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <div class="layer_popupbg ipop_close" onclick="closePopup('file_popup');"></div>
+    </aside>
 
     <!-- 트리 영역 Start -->
     <article class="table_area tree_table">
@@ -123,7 +192,6 @@
     <!-- 트리 영역 End -->
 
     <form id="deviceForm" method="POST" onsubmit="return false;" class="form_type01">
-        <input type="hidden" name="parentDeviceId" />
         <article class="table_area tr_table">
 
             <div class="table_title_area">
@@ -140,10 +208,10 @@
                         <col style="width:*">    <!-- 04 -->
                     </colgroup>
                     <tbody>
-                    <tr>
+                    <tr class="rootShow">
                         <th class="point"><spring:message code='device.column.deviceId'/></th>
                         <td class="point">
-                            <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>"  disabled>
+                            <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>" disabled="disabled" />
                         </td>
                         <th class="point"><spring:message code='device.column.serialNo'/></th>
                         <td class="point">
@@ -156,26 +224,24 @@
       People Count Device(31), 유해가스감지센서(32)
  ex) 00-YYYYY TMS , 10-YYYYY IVAS, 20-YYYYY SIOC,
       21-YYYYY IR Sensor
-      ※ S/N에 대한 형식은 숫자로만 구성 ">
+      ※ S/N에 대한 형식은 숫자로만 구성 " />
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.deviceType'/></th>
                         <td>
-                            <input type="hidden"  name="deviceTypeCode" />
-                            <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagId="selectDeviceType"/>
+                            <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagName="deviceTypeCode"/>
                         </td>
                         <th><spring:message code='device.column.deviceCode'/></th>
                         <td>
-                            <input type="hidden"  name="deviceCode" />
-                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="selectDeviceCode"/><br />
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
                             <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); return false;"><spring:message code="device.button.ivasSetting"/></button>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.parentdeviceName'/></th>
                         <td colspan="3">
-                            <select id="selectParentDeviceId" onchange="deviceCtrl.selectParentDeviceIdChangeEvent(event);">
+                            <select name="parentDeviceId">
                                 <option value=""><spring:message code="device.message.emptyData"/></option>
                                 <c:forEach items="${devices}" var="devices"  varStatus="status">
                                     <c:if test="${devices.delYn == 'N' }">
@@ -191,8 +257,7 @@
                     <tr>
                         <th class="point"><spring:message code='area.column.areaName'/></th>
                         <td class="point" colspan="3">
-                            <input type="hidden"  name="areaId"/>
-                            <select id="selectAreaId">
+                            <select name="areaId">
                                 <%--<option value=""><spring:message code="device.message.emptyData"/></option>--%>
                                 <c:forEach items="${areas}" var="areas">
                                     <c:if test="${areas.delYn == 'N'}">
@@ -202,29 +267,54 @@
                             </select>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ipCamShowHide">
+                        <th class="point"><spring:message code='device.column.eventName'/></th>
+                        <td class="point">
+                            <select name="eventId">
+                                <option value="">이벤트를 선택하세요.</option>
+                                <c:forEach items="${events}" var="event">
+                                    <option value="${event.eventId}">[${event.eventId}]${event.eventName}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <th><spring:message code='device.column.fileName'/></th>
+                        <td>
+                            <div class="infile_set">
+                                <input type="text" name="fileName" readonly="readonly"/>
+                                <input type="hidden" name="fileId"/>
+                                <span class="btn_infile btype03 bstyle04" onclick="javascript:deviceCtrl.fileListLoadFunc(); return false;"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="ipCamShowHide">
+                        <th class="point"><spring:message code='device.column.cameraManufacturer'/></th>
+                        <td class="point">
+                            <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="cameraManufacturer" allModel="true" allText="카메라 제조사를 선택하세요."/>
+                        </td>
+                    </tr>
+                    <tr class="ipAddressShowHide">
                         <th><spring:message code='device.column.ipAddress'/></th>
                         <td colspan="3" name="ipAddress">
-                            <%--<input type="text" name="ipAddress" maxlength="20" />--%>
+                            <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />"/>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.webPort'/></th>
-                        <td name="webPort">
+                        <td>
                             <input type="text" name="webPort" maxlength="20" />
                         </td>
                         <th><spring:message code='device.column.rtspPort'/></th>
-                        <td name="rtspPort">
+                        <td>
                             <input type="text" name="rtspPort" maxlength="20" />
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.deviceUserId'/></th>
-                        <td name="deviceUserId">
+                        <td>
                             <input type="text" name="deviceUserId" maxlength="20" />
                         </td>
                         <th><spring:message code='device.column.devicePassword'/></th>
-                        <td name="devicePassword">
+                        <td>
                             <input type="text" name="devicePassword" maxlength="50" />
                         </td>
                     </tr>
@@ -255,7 +345,7 @@
                             <input name="deviceStat" type="radio" value="N" disabled><spring:message code='device.button.statusOff'/>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="rootShow">
                         <th><spring:message code='device.column.deviceDesc'/></th>
                         <td class="point" colspan="3">
                             <textarea name="deviceDesc" class="textboard"></textarea>
@@ -324,80 +414,58 @@
         ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
         ,   existsDeviceId            :"<spring:message code='device.message.existsDeviceId'/>"
         ,   existsSerialNo            :"<spring:message code='device.message.existsSerialNo'/>"
-        ,   existsIpAddress            :"<spring:message code='device.message.existsIpAddress'/>"
+        ,   existsIpAddress           :"<spring:message code='device.message.existsIpAddress'/>"
         ,   regexpIpAddress : "<spring:message code='device.message.regexpIpAddress'/>"
         ,   provisionExistError : "<spring:message code='device.message.provisionExistError'/>"
+        ,   emptyEventId              :"<spring:message code='device.message.emptyEventId'/>"
+        ,   emptyCameraManufacturer   :"<spring:message code='device.message.emptyCameraManufacturer'/>"
     };
+
+    var emptyListTag = $("<tr/>").append(
+        $("<td/>", {colspan:"6"}).text('<spring:message code="common.message.emptyData"/>')
+    );
 
     $(document).ready(function(){
         /**
          * 장치 트리 생성
          */
         deviceCtrl.findMenuTree();
-        var view = new DeviceView(deviceModel);
-        view.setAddBefore();
+        deviceCtrl.setAddBefore();
 
-        $("select[id=selectDeviceType]").change(function() {
+        $("select[name=deviceCode]").change(function() {
             var id  = $(event.currentTarget).val();
-            $("input[name=deviceTypeCode]").val(id);
-        });
+            $("select[name=deviceCode]").val(id);
 
-        $("select[id=selectDeviceCode]").change(function() {
-            var id  = $(event.currentTarget).val();
-            $("input[name=deviceCode]").val(id);
-
-            if(deviceModel.checkModifyDeviceIpList($(this).val())){
-                var ipAddress = $("form td[name=ipAddress]").attr("ip");
-                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "<spring:message code='device.message.requiredIpAddress' />", maxlength : "20"});
-                ipTag.val(ipAddress);
-                switch (deviceModel.getViewStatus()) {
-                    case "menuTree":
-                    case "add":
-                        $("#deviceForm table tbody tr:eq(4) td").append(ipTag);
-                        $("#deviceForm table tbody tr").eq(4).show();
-                        ipTag.val("");
-                        break;
-                    case "detail":
-                        $("#deviceForm table tbody tr:eq(4) td").empty();
-                        $("#deviceForm table tbody tr:eq(4) td").append(ipTag);
-                        break;
-                }
-
+            if (id == "DEV002") {
+                $(".ipCamShowHide").show();
             } else {
-                switch (deviceModel.getViewStatus()) {
-                    case "menuTree":
-                    case "add":
-                        $("#deviceForm table tbody tr:eq(4) td").empty();
-                        $("#deviceForm table tbody tr").eq(4).hide();
-                        $("#deviceForm table tbody tr:eq(4) td").val("");
-                        break;
-                    case "detail":
-                        var ipAddress = $("form td[name=ipAddress]").attr("ip");
-
-                        $("#deviceForm table tbody tr:eq(4) td").empty().text(ipAddress);
-                        break;
-                }
-
+                $(".ipCamShowHide").hide();
             }
 
-            if (deviceModel.getViewStatus() == "detail") {
-                if (id == "DEV002") {
-                    $("#ipCameraSetting").show();
-                } else {
-                    $("#ipCameraSetting").hide();
-                }
+            switch (deviceModel.getViewStatus()) {
+                case "menuTree":
+                case "add":
+                    if(deviceModel.checkModifyDeviceIpList(id)){
+                        $(".ipAddressShowHide").show();
+                    }else{
+                        $(".ipAddressShowHide").hide();
+                    }
+                    break;
+                case "detail":
+                    if(deviceModel.checkModifyDeviceIpList(id)){
+                        $("#deviceForm input[name='ipAddress']").prop("disabled",false);
+                    }else{
+                        $("#deviceForm input[name='ipAddress']").prop("disabled",true);
+                    }
+
+                    if (id == "DEV002") {
+                        $("#ipCameraSetting").show();
+                    } else {
+                        $("#ipCameraSetting").hide();
+                    }
+                    break;
             }
-
         });
-
-        $("select[id=selectAreaId]").change(function() {
-            var id  = $(event.currentTarget).val();
-            $("input[name=areaId]").val(id);
-        });
-//        $("select[name=deviceAliveCheckType]").prepend($("<option />").text("없음"));
-//        $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
-//        $("select[name= deviceAliveCheckType]").val("없음");
-
     });
 
     var deviceModel = new DeviceModel();
@@ -430,18 +498,13 @@
     }
 
     /* 팝업 보이기 버튼 */
-    function popup_openButton() {
-        var code_openTarget = $(".code_select_popup");
-        code_openTarget.css("display", "block");
-//        actionListLoad();
+    function openPopup(className) {
+        $("."+className).show();
     }
 
-
     /* 팝업 취소 버튼 */
-    function popup_cancelButton() {
-        var code_openTarget = $(".code_select_popup");
-        code_openTarget.css("display", "none");
-        return false;
+    function closePopup(className) {
+        $("."+className).hide();
     }
 
     /* 알림 장치 목록 조회*/

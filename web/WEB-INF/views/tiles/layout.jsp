@@ -666,7 +666,7 @@
                 //Not playing...maybe paused, stopped or never played.
                 segmentEnd = endTime;
                 alarmPlayer.currentTime = startTime;
-                alarmPlayer.play();
+//                alarmPlayer.play();
             }
         }
 

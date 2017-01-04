@@ -175,6 +175,7 @@ public class AdminResource {
      */
     public final static String[] INOUT_EVENT_ID = new String[]{"EVT002", "EVT221", "EVT300", "EVT003", "EVT222", "EVT301"};
 
+
     /**
      * in eventIds
      * @author psb

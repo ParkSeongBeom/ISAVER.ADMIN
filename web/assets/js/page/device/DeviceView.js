@@ -13,62 +13,45 @@ function DeviceView(model) {
             $(formName + " [name='deviceId']").val(data.deviceId);
         },
         parentDeviceId: function (data) {
-
-            $(formName + " [name='parentDeviceId']").val(data.parentDeviceId);
-            $(formName + " [id='selectParentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', true);
+            $(formName + " [name='parentDeviceId']").val(data.parentDeviceId).prop("selected", true);
+            $(formName + " [name='parentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', true);
 
             if (data.parentDeviceId != null && String(data['parentDeviceId']).trim().length > 0) {
-                $(formName + " [id='selectParentDeviceId']").val(data.parentDeviceId);
-            } else {
-                $(formName + " [id='selectParentDeviceId']").val("");
+                $(formName + " [name='parentDeviceId']").val(data.parentDeviceId);
             }
-
         },
         deviceTypeCode: function (data) {
-            var deviceTypeCode = data['deviceTypeCode'];
-            $(formName + " [name='deviceTypeCode']").val(data.deviceTypeCode);
-            $(formName + " [id='selectDeviceType']").val(deviceTypeCode);
+            $(formName + " [name='deviceTypeCode']").val(data.deviceTypeCode).prop("selected", true);
         },
         areaId: function (data) {
-            if (data['areaId'] != null && String(data['areaId']).trim().length > 0) {
-                $(formName + " [id='selectAreaId']").val(data.areaId).prop("selected", "selected");
-            } else {
-                $(formName + " [id='selectAreaId']").val("");
-            }
-
-            $(formName + " [name='areaId']").val(data.areaId);
+            $(formName + " [name='areaId']").val(data.areaId).prop("selected", true);
         },
         deviceCode: function (data) {
-            var deviceCode = data['deviceCode'];
-            $(formName + " [name='deviceCode']").val(data.deviceCode);
-            $(formName + " [id='selectDeviceCode']").val(deviceCode).prop("selected", "selected");
+            $(formName + " [name='deviceCode']").val(data.deviceCode).prop("selected", true);
         },
         serialNo: function (data) {
             $(formName + " [name='serialNo']").val(data.serialNo);
         },
         ipAddress: function (data) {
-            $(formName + " [name='ipAddress']").text(data.ipAddress);
-            $(formName + " [name=ipAddress]").attr("ip", data.ipAddress);
-
-            var deviceCode = data['deviceCode'];
-
-            if(deviceModel.checkModifyDeviceIpList(deviceCode)){
-                var ipTag = $("<input />", {name : "ipAddress",'placeholder' :  "1", maxlength : "20"});
-                ipTag.val(data.ipAddress);
-                switch (deviceModel.getViewStatus()) {
-                    case "detail":
-                        $(formName + " table tbody tr:eq(4) td").empty();
-                        $(formName + " table tbody tr:eq(4) td").append(ipTag);
-                        break;
-                }
-
-            }
+            $(formName + " [name='ipAddress']").val(data.ipAddress);
         },
         webPort: function (data) {
             $(formName + " [name='webPort']").val(data.webPort);
         },
         rtspPort: function (data) {
             $(formName + " [name='rtspPort']").val(data.rtspPort);
+        },
+        fileId: function (data) {
+            $(formName + " [name='fileId']").val(data.fileId);
+        },
+        fileName: function (data) {
+            $(formName + " [name='fileName']").val(data.fileName);
+        },
+        eventId: function (data) {
+            $(formName + " [name='eventId']").val(data.eventId).prop("selected", true);
+        },
+        cameraManufacturer: function (data) {
+            $(formName + " [name='cameraManufacturer']").val(data.cameraManufacturer).prop("selected", true);
         },
         deviceUserId: function (data) {
             $(formName + " [name='deviceUserId']").val(data.deviceUserId);
@@ -145,35 +128,37 @@ function DeviceView(model) {
      * @date 2014.05.20
      */
     DeviceView.setDetail = function (obj) {
-
         Object.keys(obj).forEach(function (key) {
-
             try {
                 if (this[key] == null)  {
                     this[key] = "";
                 }
 
                 switchMenuDetailObj[key](this);
-
             } catch (e) {
 //                console.error("[Error][MenuView.setDetail] " + e);
             }
-
         }, obj);
 
-        DeviceView.setSaveBefore();
+        var id  = $("select[name='deviceCode']").val();
 
-        var deviceTypeCode = $("#selectDeviceCode").val();
-
-        $("#ipCameraSetting").hide();
-
-        for(var i = 0; i < deviceModel.model.alarmSettingDeviceList.length; i++) {
-            if (deviceTypeCode == deviceModel.model.alarmSettingDeviceList[i]) {
-                $("#ipCameraSetting").show();
-                break;
-            }
+        if(deviceModel.checkAlaramSettingDeviceList(id)){
+            $("#ipCameraSetting").show();
+        }else{
+            $("#ipCameraSetting").hide();
         }
 
+        if (id == "DEV002") {
+            $(".ipCamShowHide").show();
+        } else {
+            $(".ipCamShowHide").hide();
+        }
+
+        if(deviceModel.checkModifyDeviceIpList(id)){
+            $("#deviceForm input[name='ipAddress']").prop("disabled",false);
+        }else{
+            $("#deviceForm input[name='ipAddress']").prop("disabled",true);
+        }
     };
 
     /**
@@ -255,7 +240,6 @@ function DeviceView(model) {
                 return (/\d/.test(String.fromCharCode(event.which) ))
             });
         }
-
     };
 
     /**
@@ -271,145 +255,79 @@ function DeviceView(model) {
      * 장치 상세 정보 호출 전 초기화 모드
      */
     DeviceView.setFindDetailBefore = function (data) {
-
         var DeviceView = new Object();
         DeviceView._model = model;
         var formName = "#" + model.getFormName();
-
-        $(formName + " [name='deviceId']").val("");
-        $(formName + " [name='serialNo']").val("");
-        //$(formName + " [id='selectUpOrgSeq']").val("");
-
-        //$(formName + " [name='areaName']").val("");
         $(formName + " [name='deviceId']").attr("disabled", "disabled");
         $(formName + " [name='serialNo']").attr("disabled", "disabled");
-        //$(formName + " [name='orgDepth']").val("");
-        //$(formName + " [name='sortOrder']").val("");
-        $(formName + " td[name='insertUserId']").text("");
-        $(formName + " td[name='insertDatetime']").text("");
-        $(formName + " td[name='updateUserId']").text("");
-        $(formName + " td[name='updateDatetime']").text("");
-        $(formName + " textarea[name='deviceDesc']").val("");
-        $(formName + " [name=ipAddress]").text("");
-        $(formName + " [name=webPort]").val("");
-        $(formName + " [name=rtspPort]").val("");
-        $(formName + " [name=deviceUserId]").val("");
-        $(formName + " [name=devicePassword").val("");
-
-        //$(formName + " table tbody tr").eq(0).show();
-        $(formName + " table tbody tr").eq(1).show();
-        $(formName + " table tbody tr").eq(2).show();
-        $(formName + " table tbody tr").eq(3).show();
-        $(formName + " table tbody tr").eq(4).show();
-        $(formName + " table tbody tr").eq(5).show();
-        $(formName + " table tbody tr").eq(6).show();
-
-        $("#ipCameraSetting").hide();
 
         if (DeviceView._model.getDeviceId() == DeviceView._model.getRootOrgId()) {
-
-            //$(formName + " table tbody tr").eq(0).hide();
-            $(formName + " table tbody tr").eq(1).hide();
-            $(formName + " table tbody tr").eq(2).hide();
-            $(formName + " table tbody tr").eq(3).hide();
-            $(formName + " table tbody tr").eq(4).hide();
-            $(formName + " table tbody tr").eq(5).hide();
-            $(formName + " table tbody tr").eq(6).hide();
-
-            //$(formName + " [name='areaName']").attr("readonly", "readonly");
-            $(formName + " [name='deviceId']").attr("readonly", "readonly");
+            $(formName + " table tbody tr").hide();
+            $(formName + " table tbody tr[name='rootShow']").show();
             $(formName + " [name='deviceId']").val("HOME");
-            //$(formName + " [name='areaId']").val(DeviceView._model.getDeviceId());
-            //$(formName + " [name='parentDeviceId']").val("");
-
-            //$("table[name='roleListTable'] tbody").empty();
-            //$("#pageContainer").empty();
-            //$('#selectAll').checked = false;
-
-            $("[name='showHideTag']").hide();
             $("button[name='addBtn']").hide();
             $("button[name='saveBtn']").hide();
             $("button[name='removeBtn']").hide();
-
-            $(".search_area").show();
-            $("#roleListTable").show();
+        }else{
+            $("button[name='addBtn']").hide();
         }
-
     };
+
     /**
      * 장치 등록 전 초기화 모드
      */
     DeviceView.setAddBefore = function() {
-
-        var parenDeviceCode = $("select[id='selectDeviceCode']").val();
-        var parentDeviceTypeCode = $("select[id='selectDeviceType']").val();
-        var formName = "#" + model.getFormName();
-
-        $(formName + " table tbody tr").eq(1).show();
-        $(formName + " table tbody tr").eq(2).show();
-        $(formName + " table tbody tr").eq(3).show();
-        $(formName + " table tbody tr").eq(4).hide();
-        $(formName + " table tbody tr").eq(5).show();
-        $(formName + " table tbody tr").eq(6).show();
-
-        $("[name='showHideTag']").hide();
-        $("#ipCameraSetting").hide();
-
-        $("input[name='deviceId']").val("");
-        $("input[name='serialNo']").val("").removeAttr("disabled");
-
-        $("textarea[name='deviceDesc']").val("");
-        $("input[name='ipAddress']").val("");
-        $("button[name='addBtn']").show();
-        $("button[name='saveBtn']").hide();
-        $("button[name='removeBtn']").hide();
-        $("button[name='orgUserAddBtn']").hide()
-        $("button[name='orgUserRemoveBtn']").hide();
-        $("input[name='webPort']").val("");
-        $("input[name='rtspPort']").val("");
-        $("input[name='deviceUserId']").val("");
-        $("input[name='devicePassword']").val("");
-
-        $("input:hidden[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
-
-        //$("select[id=selectDeviceType]  option:eq(0)").prop("selected", "selected");
-        //$("select[id=selectDeviceCode]  option:eq(0)").prop("selected", "selected");
-
-
-        $("input[name=deviceTypeCode]").val(parentDeviceTypeCode);
-        $("input[name=deviceCode]").val(parenDeviceCode);
-        $("td[name=ipAddress]").text("");
-
         var formName = "#" +DeviceView._model.getFormName();
-        $( formName + " [id='selectParentDeviceId'] option").attr('disabled', false);
 
-        if (DeviceView._model.getParentDeviceId() == null || DeviceView._model.getParentDeviceId() == "") {
-            $("select[id='selectParentDeviceId'] option:eq(0)").prop("selected", "selected");
-        } else {
-            $( formName + " [id='selectParentDeviceId']").val(DeviceView._model.getDeviceId());
-        }
+        $(formName + " input[name='serialNo']").removeAttr("disabled");
 
-        $("select[id='selectDeviceCode'] option:eq(0)").prop("selected", "selected");
-        $("select[id='selectAreaId'] option:eq(0)").prop("selected", "selected");
-        $("input[name=areaId]").val($("select[id='selectAreaId']").val());
+        $(formName + " select[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
+        $(formName + " select[name='parentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', false);
 
+        $(formName + " .ipAddressShowHide").hide();
+        $(formName + " .ipCamShowHide").hide();
+        $(formName + " tr[name='showHideTag']").hide();
+        $(formName + " button[name='saveBtn']").hide();
+        $(formName + " button[name='removeBtn']").hide();
     };
 
-    /**
-     * 장치 저장 전 초기화 모드
-     */
-    DeviceView.setSaveBefore = function() {
-        $("[name='showHideTag']").show();
+    DeviceView.resetData = function(){
+        var DeviceView = new Object();
+        DeviceView._model = model;
+        var formName = "#" + model.getFormName();
 
-        $("tr[name='orgSortTr']").show();
-        $("tr[name='orgDateTr']").show();
-        $("button[name='addBtn']").hide();
+        $(formName + " input[name='deviceId']").val("");
+        $(formName + " input[name='serialNo']").val("");
+
+        $(formName + " select[name='deviceTypeCode'] option").eq(0).prop("checked", true);;
+        $(formName + " select[name='deviceCode'] option").eq(0).prop("checked", true);;
+        $(formName + " select[name='parentDeviceId'] option").eq(0).prop("checked", true);;
+        $(formName + " select[name='areaId'] option").eq(0).prop("checked", true);;
+
+        $(formName + " select[name=eventId]").val("");
+        $(formName + " input[name=fileName]").val("");
+        $(formName + " input[name=fileId]").val("");
+        $(formName + " select[name=cameraManufacturer]").val("");
+
+        $(formName + " input[name=ipAddress]").val("");
+        $(formName + " input[name=webPort]").val("");
+        $(formName + " input[name=rtspPort]").val("");
+
+        $(formName + " input[name=deviceUserId]").val("");
+        $(formName + " input[name=devicePassword").val("");
+
+        $(formName + " textarea[name='deviceDesc']").val("");
+
+        $(formName + " td[name='insertUserId']").text("");
+        $(formName + " td[name='insertDatetime']").text("");
+        $(formName + " td[name='updateUserId']").text("");
+        $(formName + " td[name='updateDatetime']").text("");
+
+        $(formName + " table tbody tr").show();
+        $("#ipCameraSetting").hide();
+        $("button[name='addBtn']").show();
         $("button[name='saveBtn']").show();
-        $("input[name='orgSort']").show();
         $("button[name='removeBtn']").show();
-        $("button[name='orgUserAddBtn']").show();
-        $("button[name='orgUserRemoveBtn']").show();
-
     };
 
     /**
@@ -425,7 +343,6 @@ function DeviceView(model) {
     DeviceView.resetOrgDepth = function() {
         $(formName + " [name='orgDepth']").val("0");
     };
-
 
     /**
      * 알림 전송 장치 설정 목록 그리기
@@ -469,7 +386,57 @@ function DeviceView(model) {
             itemObject.attr("device_id", deviceId );
             $("#actionList > tbody").append(itemObject);
         }
-    }
+    };
+
+    /**
+     * 파일 설정 목록 그리기
+     * @param files
+     */
+    DeviceView.makeFileListFunc = function(files) {
+        $("#fileList").empty();
+
+        if (files == null && files.length == 0) {
+            $("#fileList").append(emptyListTag.clone());
+            return;
+        }
+
+        for (var i=0; i< files.length; i++) {
+            var file = files[i];
+            var selYn = false;
+
+            if(file['fileId']==$("input[name='fileId']").val()){
+                selYn = true;
+            }
+
+            $("#fileList").append(
+                $("<tr/>").append(
+                    $("<td/>", {class:'t_center'}).append(
+                        $("<input/>", {type:'checkbox', class:'checkbox', name:'fileCheckbox', fileId:file['fileId'], fileName:file['logicalFileName'], checked:selYn}).on("click",function(){
+                            if($(this).is(":checked")){
+                                $("input[name='fileCheckbox']").prop("checked",false);
+                                $(this).prop("checked",true);
+                                $("input[name='fileId']").val($(this).attr("fileId"));
+                                $("input[name='fileName']").val($(this).attr("fileName"));
+                            }else{
+                                $("input[name='fileId']").val("");
+                                $("input[name='fileName']").val("");
+                            }
+                        })
+                    )
+                ).append(
+                    $("<td/>").text(file['title'])
+                ).append(
+                    $("<td/>").text(file['logicalFileName'])
+                ).append(
+                    $("<td/>").text(file['description'])
+                ).append(
+                    $("<td/>").text(file['insertUserName'])
+                ).append(
+                    $("<td/>").text(new Date(file['insertDatetime']).format("yyyy-mm-dd HH:mm:ss"))
+                )
+            );
+        }
+    };
 
     return DeviceView;
 };

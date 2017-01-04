@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svc;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -31,6 +32,15 @@ public interface FileSvc {
     ModelAndView findListFile(Map<String, String> parameters);
 
     /**
+     * 파일 목록을 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListFileForDevice(Map<String, String> parameters);
+
+    /**
      * 파일 상세을 가져온다.
      *
      * @author psb
@@ -55,5 +65,12 @@ public interface FileSvc {
      * 파일을 제거한다.
      * @author psb
      */
-    ModelAndView removeFile(Map<String, String> parameters);
+    ModelAndView removeFile(HttpServletRequest request, Map<String, String> parameters);
+
+    /**
+     * 첨부 파일을 다운로드 한다.
+     * @param parameters
+     * @return
+     */
+    ModelAndView downloadFile(Map<String, String> parameters, HttpServletRequest request, HttpServletResponse response);
 }

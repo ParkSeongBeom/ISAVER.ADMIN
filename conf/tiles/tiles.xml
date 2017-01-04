@@ -246,5 +246,15 @@
     -->
     <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
 
+    <!--
+        파일 관리
+        @author psb
+    -->
+    <definition name="fileList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/list.jsp" />
+    </definition>
+    <definition name="fileDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/detail.jsp" />
+    </definition>
 
 </tiles-definitions>

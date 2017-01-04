@@ -55,10 +55,19 @@ function DeviceModel() {
      * @param orgdepth
      */
     DeviceModel.checkModifyDeviceIpList = function (deviceId) {
-        for(var i in this.model.modifyDeviceIpList){
-            if(this.model.modifyDeviceIpList[i] == deviceId){
-                return true;
-            }
+        if(this.model.modifyDeviceIpList.indexOf(deviceId) > -1){
+            return true;
+        }
+        return false;
+    };
+
+    /**
+     * 알림전송 소스 장치 체크
+     * @param orgdepth
+     */
+    DeviceModel.checkAlaramSettingDeviceList = function (deviceId) {
+        if(this.model.alarmSettingDeviceList.indexOf(deviceId) > -1){
+            return true;
         }
         return false;
     };

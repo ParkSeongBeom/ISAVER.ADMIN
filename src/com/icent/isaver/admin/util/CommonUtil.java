@@ -27,10 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -156,5 +158,71 @@ public class CommonUtil {
 //		CommonUtil.showMemoryFunc();
         return commonHttpClient;
 
+    }
+
+    public static void download(HttpServletRequest request, HttpServletResponse response, String filePath, String fileName, int bufferSize) throws IOException, ServletException {
+        download(request, response, new FileInputStream(new File(filePath)), fileName, 0L, (String)null, bufferSize);
+    }
+
+    public static void download(HttpServletRequest request, HttpServletResponse response, File file, String fileName, long fileSize, int bufferSize) throws ServletException, IOException {
+        download(request, response, new FileInputStream(file), fileName, fileSize, (String)null, bufferSize);
+    }
+
+    public static void download(HttpServletRequest request, HttpServletResponse response, File file, String fileName, int bufferSize) throws ServletException, IOException {
+        download(request, response, new FileInputStream(file), fileName, 0L, (String)null, bufferSize);
+    }
+
+    public static void download(HttpServletRequest request, HttpServletResponse response, InputStream is, String filename, long filesize, String mimetype, int bufferSize) throws ServletException, IOException {
+        String mime = mimetype;
+        if(mimetype == null || mimetype.length() == 0) {
+            mime = "application/octet-stream;";
+        }
+
+        byte[] buffer = new byte[bufferSize];
+        response.setContentType(mime + "; charset=" + "EUC-KR");
+        String userAgent = request.getHeader("User-Agent");
+        if(userAgent != null && userAgent.indexOf("MSIE 5.5") > -1) {
+            response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(filename, "UTF-8") + ";");
+        } else if(userAgent != null && userAgent.indexOf("MSIE") > -1) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(filename, "UTF-8") + ";");
+        } else {
+            response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes("EUC-KR"), "latin1") + ";");
+        }
+
+        if(filesize > 0L) {
+            response.setHeader("Content-Length", "" + filesize);
+        }
+
+        BufferedInputStream fin = null;
+        BufferedOutputStream outs = null;
+
+        try {
+            fin = new BufferedInputStream(is);
+            outs = new BufferedOutputStream(response.getOutputStream());
+            boolean e = false;
+
+            int e1;
+            while((e1 = fin.read(buffer)) != -1) {
+                outs.write(buffer, 0, e1);
+            }
+        } catch (IOException var21) {
+            throw var21;
+        } finally {
+            try {
+                if(outs != null) {
+                    outs.close();
+                }
+
+                if(fin != null) {
+                    fin.close();
+                }
+
+                if(is != null) {
+                    is.close();
+                }
+            } catch (Exception var20) {
+                ;
+            }
+        }
     }
 }
