@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/excelexport/jquery.techbytarun.excelexportjs.js"></script>
 
 <article class="search_area">
     <div class="search_contents">
@@ -79,11 +80,11 @@
     var workerTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
-                $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
+                $("<button/>",{class:'btn btype01 bstyle03', onclick:"javascript:excelDownload('worker'); return false;"}).text("<spring:message code="common.button.excelDownload"/>")
             )
         )
     ).append(
-        $("<div/>",{class:'d_defalut d_type01'}).append(
+        $("<div/>",{class:'d_defalut d_type01 workerExcelDownload'}).append(
             $("<div/>",{class:'d_thead'}).append(
                 $("<div/>",{class:'theadDiv'}).append(
                     $("<span/>").text("<spring:message code="statistics.column.gubn"/>")

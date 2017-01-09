@@ -55,6 +55,7 @@
 <script type="text/javascript">
     var inoutUrlConfig = {
         'listUrl':'${rootPath}/eventStatistics/inout.json'
+        ,'excelUrl':'${rootPath}/eventStatistics/excel.html'
     };
 
     var inoutMessageConfig = {
@@ -83,11 +84,11 @@
     var inoutTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
-                $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
+                $("<button/>",{class:'btn btype01 bstyle03', onclick:"javascript:excelDownload('inout'); return false;"}).text("<spring:message code="common.button.excelDownload"/>")
             )
         )
     ).append(
-        $("<div/>",{class:'d_defalut d_type01'}).append(
+        $("<div/>",{class:'d_defalut d_type01 inoutExcelDownload'}).append(
             $("<div/>",{class:'d_thead'}).append(
                 $("<div/>",{class:'theadDiv'}).append(
                     $("<span/>").text('<spring:message code="statistics.column.gubn"/>')
@@ -283,10 +284,17 @@
                 else return 0;
             }).forEach(function (key) {
                 tableDivHtml.find("#bodyIn").append(
-                        $("<span/>").text(inResultList[key])
+                    $("<span/>").text(inResultList[key])
                 );
                 inSeries.push(inResultList[key]);
             });
+        }else{
+            for(var index in dateLists){
+                tableDivHtml.find("#bodyIn").append(
+                    $("<span/>").text(0)
+                );
+                inSeries.push(0);
+            }
         }
 
         inoutSearchParam['chartData']['series'].push(inSeries);
@@ -303,10 +311,17 @@
                 else return 0;
             }).forEach(function (key) {
                 tableDivHtml.find("#bodyOut").append(
-                        $("<span/>").text(outResultList[key])
+                    $("<span/>").text(outResultList[key])
                 );
                 outSeries.push(outResultList[key]);
             });
+        }else{
+            for(var index in dateLists){
+                tableDivHtml.find("#bodyOut").append(
+                    $("<span/>").text(0)
+                );
+                inSeries.push(0);
+            }
         }
 
         inoutSearchParam['chartData']['series'].push(outSeries);

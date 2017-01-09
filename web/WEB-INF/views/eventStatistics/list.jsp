@@ -6,6 +6,8 @@
 <c:set value="G00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 
+<script type="text/javascript" src="${rootPath}/assets/library/excelexport/jquery.techbytarun.excelexportjs.js"></script>
+
 <!-- section Start -->
 <section class="container">
     <article class="sub_title_area">
@@ -36,6 +38,8 @@
         </div>
     </article>
     <!-- 탭 컨테이너 끝   -->
+
+    <div id="excelEventStatisticsList" style="display:none;"></div>
 </section>
 
 <script type="text/javascript">
@@ -65,4 +69,87 @@
             $("ul.tabs li[rel='#area']").trigger("click");
         }
     });
+
+    /*
+     excel download
+     @author psb
+     */
+    function excelDownload(type){
+        $("#excelEventStatisticsList").empty();
+
+        var excelDownloadHtml = $("<table/>",{id:"excelDownloadTb"}).append(
+            $("<thead/>").append(
+                $("<tr/>").append()
+            )
+        ).append(
+            $("<tbody/>")
+        );
+
+        var excelTag = null;
+        var sheetName;
+
+        switch (type){
+            case "worker":
+                excelTag = $(".workerExcelDownload").clone();
+                sheetName = "<spring:message code="statistics.tab.worker"/>";
+                break;
+            case "crane":
+                excelTag = $(".craneExcelDownload").clone();
+                sheetName = "<spring:message code="statistics.tab.crane"/>";
+                break;
+            case "gas":
+                excelTag = $(".gasExcelDownload").clone();
+                sheetName = "<spring:message code="statistics.tab.gas"/>";
+                break;
+            case "inout":
+                excelTag = $(".inoutExcelDownload").clone();
+                sheetName = "<spring:message code="statistics.tab.inout"/>";
+                break;
+        }
+
+        if(excelTag==null){
+            console.error("[excelDownload] type error : "+ type);
+            return false;
+        }
+
+        excelTag.find(".theadDiv span").each(function (key) {
+            if(key==0){
+                excelDownloadHtml.find("thead tr").append(
+                    $("<th/>").text($(this).text())
+                );
+
+                excelTag.find("#gubnBody span").each(function () {
+                    excelDownloadHtml.find("thead tr").append(
+                        $("<th/>").text($(this).text())
+                    );
+                });
+            }else{
+                excelDownloadHtml.find("tbody").append(
+                    $("<tr/>",{id:"excelBody"+key}).append(
+                        $("<td/>").text($(this).text())
+                    )
+                );
+
+                excelTag.find(".d_tbody div:eq("+key+") span").each(function () {
+                    excelDownloadHtml.find("#excelBody"+key).append(
+                        $("<td/>").text($(this).text())
+                    );
+                });
+            }
+        });
+
+        $("#excelEventStatisticsList").append(excelDownloadHtml);
+
+        var uri = $("#excelDownloadTb").excelexportjs({
+            containerid: "excelDownloadTb"
+            , datatype: 'table'
+            , worksheetName: sheetName
+            , returnUri: true
+        });
+
+        var link = document.createElement('a');
+        link.download = "<spring:message code="common.title.eventStatistics"/>_"+sheetName+"_"+new Date().format("yyyyMMddhhmmss")+".xls";
+        link.href = uri;
+        link.click();
+    }
 </script>

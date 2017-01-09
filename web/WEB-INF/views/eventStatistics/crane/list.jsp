@@ -79,11 +79,11 @@
     var craneTableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
         $("<div/>",{class:'table_title_area'}).append(
             $("<div/>",{class:'table_btn_set'}).append(
-                $("<button/>",{class:'btn btype01 bstyle03'}).text("<spring:message code="common.button.excelDownload"/>")
+                $("<button/>",{class:'btn btype01 bstyle03', onclick:"javascript:excelDownload('crane'); return false;"}).text("<spring:message code="common.button.excelDownload"/>")
             )
         )
     ).append(
-        $("<div/>",{class:'d_defalut d_type01'}).append(
+        $("<div/>",{class:'d_defalut d_type01 craneExcelDownload'}).append(
             $("<div/>",{class:'d_thead'}).append(
                 $("<div/>",{class:'theadDiv'}).append(
                     $("<span/>").text("<spring:message code="statistics.column.gubn"/>")
