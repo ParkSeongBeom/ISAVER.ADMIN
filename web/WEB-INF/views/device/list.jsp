@@ -446,8 +446,10 @@
                 case "menuTree":
                 case "add":
                     if(deviceModel.checkModifyDeviceIpList(id)){
+                        $("#deviceForm input[name='ipAddress']").prop("disabled",false);
                         $(".ipAddressShowHide").show();
                     }else{
+                        $("#deviceForm input[name='ipAddress']").prop("disabled",true);
                         $(".ipAddressShowHide").hide();
                     }
                     break;
