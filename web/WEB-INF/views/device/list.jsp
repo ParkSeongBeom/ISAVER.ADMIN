@@ -288,14 +288,20 @@
                     </tr>
                     <tr class="ipCamShowHide">
                         <th class="point"><spring:message code='device.column.cameraManufacturer'/></th>
-                        <td class="point">
+                        <td class="point" colspan="3">
                             <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="cameraManufacturer" allModel="true" allText="카메라 제조사를 선택하세요."/>
                         </td>
                     </tr>
                     <tr class="ipAddressShowHide">
-                        <th><spring:message code='device.column.ipAddress'/></th>
-                        <td colspan="3" name="ipAddress">
+                        <th><spring:message code='device.column.hostType'/></th>
+                        <td>
+                            <isaver:codeSelectBox groupCodeId="H01" codeId="" htmlTagName="hostType"/>
+                        </td>
+                        <td ipAddress colspan="2">
                             <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />"/>
+                        </td>
+                        <td domain colspan="2">
+                            <input type="text" name="domain" maxlength="100" placeholder="<spring:message code='device.message.requiredDomain' />"/>
                         </td>
                     </tr>
                     <tr>
@@ -432,8 +438,24 @@
         deviceCtrl.findMenuTree();
         deviceCtrl.setAddBefore();
 
+        $("select[name=hostType]").change(function() {
+            $(this).prop("disabled",false);
+
+            if($(this).val()=="H01001"){
+                $("#deviceForm input[name='ipAddress']").prop("disabled",false);
+                $("#deviceForm input[name='domain']").prop("disabled",true);
+                $("#deviceForm tr td[ipAddress]").show();
+                $("#deviceForm tr td[domain]").hide();
+            }else{
+                $("#deviceForm input[name='domain']").prop("disabled",false);
+                $("#deviceForm input[name='ipAddress']").prop("disabled",true);
+                $("#deviceForm tr td[ipAddress]").hide();
+                $("#deviceForm tr td[domain]").show();
+            }
+        });
+
         $("select[name=deviceCode]").change(function() {
-            var id  = $(event.currentTarget).val();
+            var id  = $(this).val();
             $("select[name=deviceCode]").val(id);
 
             if (id == "DEV002") {
@@ -446,18 +468,21 @@
                 case "menuTree":
                 case "add":
                     if(deviceModel.checkModifyDeviceIpList(id)){
-                        $("#deviceForm input[name='ipAddress']").prop("disabled",false);
                         $(".ipAddressShowHide").show();
+                        $("select[name=hostType]").trigger("change");
                     }else{
+                        $("#deviceForm select[name='hostType']").prop("disabled",true);
                         $("#deviceForm input[name='ipAddress']").prop("disabled",true);
+                        $("#deviceForm input[name='domain']").prop("disabled",true);
                         $(".ipAddressShowHide").hide();
                     }
                     break;
                 case "detail":
-                    if(deviceModel.checkModifyDeviceIpList(id)){
-                        $("#deviceForm input[name='ipAddress']").prop("disabled",false);
-                    }else{
+                    $("select[name=hostType]").trigger("change");
+                    if(!deviceModel.checkModifyDeviceIpList(id)){
+                        $("#deviceForm select[name='hostType']").prop("disabled",true);
                         $("#deviceForm input[name='ipAddress']").prop("disabled",true);
+                        $("#deviceForm input[name='domain']").prop("disabled",true);
                     }
 
                     if (id == "DEV002") {

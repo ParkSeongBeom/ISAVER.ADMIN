@@ -514,7 +514,8 @@ function DeviceModel() {
 
                     //현재 트리 계층을 정렬
                     child.children.sort(function (a, b) {
-                        return a.orgSort < b.orgSort ? -1 : a.orgSort > b.orgSort ? 1 : 0;
+                        return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+                        //return a.orgSort < b.orgSort ? -1 : a.orgSort > b.orgSort ? 1 : 0;
                     });
 //                    child.children.sortByProp('orgSort');
                 } else {

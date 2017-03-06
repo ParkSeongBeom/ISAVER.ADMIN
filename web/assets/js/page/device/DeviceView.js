@@ -35,6 +35,14 @@ function DeviceView(model) {
         ipAddress: function (data) {
             $(formName + " [name='ipAddress']").val(data.ipAddress);
         },
+        domain: function (data) {
+            $(formName + " [name='domain']").val(data.domain);
+        },
+        hostType: function (data) {
+            if(data.hostType!='' && data.hostType!=null){
+                $(formName + " [name='hostType']").val(data.hostType).prop("selected", true);
+            }
+        },
         webPort: function (data) {
             $(formName + " [name='webPort']").val(data.webPort);
         },
@@ -140,25 +148,7 @@ function DeviceView(model) {
             }
         }, obj);
 
-        var id  = $("select[name='deviceCode']").val();
-
-        if(deviceModel.checkAlaramSettingDeviceList(id)){
-            $("#ipCameraSetting").show();
-        }else{
-            $("#ipCameraSetting").hide();
-        }
-
-        if (id == "DEV002") {
-            $(".ipCamShowHide").show();
-        } else {
-            $(".ipCamShowHide").hide();
-        }
-
-        if(deviceModel.checkModifyDeviceIpList(id)){
-            $("#deviceForm input[name='ipAddress']").prop("disabled",false);
-        }else{
-            $("#deviceForm input[name='ipAddress']").prop("disabled",true);
-        }
+        $("select[name=deviceCode]").trigger("change");
     };
 
     /**
@@ -299,10 +289,11 @@ function DeviceView(model) {
         $(formName + " input[name='deviceId']").val("");
         $(formName + " input[name='serialNo']").val("");
 
-        $(formName + " select[name='deviceTypeCode'] option").eq(0).prop("checked", true);;
-        $(formName + " select[name='deviceCode'] option").eq(0).prop("checked", true);;
-        $(formName + " select[name='parentDeviceId'] option").eq(0).prop("checked", true);;
-        $(formName + " select[name='areaId'] option").eq(0).prop("checked", true);;
+        $(formName + " select[name='deviceTypeCode'] option").eq(0).prop("selected", true);
+        $(formName + " select[name='deviceCode'] option").eq(0).prop("selected", true);
+        $(formName + " select[name='parentDeviceId'] option").eq(0).prop("selected", true);
+        $(formName + " select[name='areaId'] option").eq(0).prop("selected", true);
+        $(formName + " select[name='hostType'] option").eq(0).prop("selected", true);
 
         $(formName + " select[name=eventId]").val("");
         $(formName + " input[name=fileName]").val("");
@@ -310,6 +301,7 @@ function DeviceView(model) {
         $(formName + " select[name=cameraManufacturer]").val("");
 
         $(formName + " input[name=ipAddress]").val("");
+        $(formName + " input[name=domain]").val("");
         $(formName + " input[name=webPort]").val("");
         $(formName + " input[name=rtspPort]").val("");
 

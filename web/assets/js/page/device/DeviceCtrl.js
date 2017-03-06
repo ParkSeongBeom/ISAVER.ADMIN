@@ -121,7 +121,7 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if (deviceModel.getViewStatus() == "add" && $("select[name=deviceCode]").val() == "DEV00F9") {
+            if (deviceModel.getViewStatus() == "add" && $("select[name=deviceCode]").val() == "DEV009" && $("select[name=hostType]").val()=="H01001") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                     if (false == DeviceCtrl.validateIPaddress($("input[name='ipAddress']").val())) {
@@ -160,7 +160,7 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if ($("select[name=deviceCode]").val() == "DEV009") {
+            if ($("select[name=deviceCode]").val() == "DEV009" && $("select[name=hostType]").val()=="H01001") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
 
                     if (deviceObj['ipAddressExistFlag'] == true) {
@@ -216,7 +216,7 @@ function DeviceCtrl(model) {
                 return;
             }
 
-            if ($("select[name=deviceCode]").val() == "DEV009") {
+            if ($("select[name=deviceCode]").val() == "DEV009" && $("select[name=hostType]").val()=="H01001") {
                 if ($("input[name='ipAddress']").val().trim().length > 0) {
                     if (deviceObj['ipAddressExistFlag'] == true) {
                         alert(messageConfig['existsIpAddress']);
