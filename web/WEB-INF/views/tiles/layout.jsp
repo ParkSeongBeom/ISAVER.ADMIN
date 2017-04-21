@@ -17,12 +17,9 @@
     <%-- dynatree, dhj --%>
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/css/dynatree/skin-vista/ui.dynatree.css" >
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.autosize.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.touchSlider.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/default.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
     <%-- dynatree, dhj --%>

@@ -8,7 +8,6 @@
 <c:set value="G00040" var="menuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
-<script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 

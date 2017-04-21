@@ -8,8 +8,8 @@
 var CalendarHelper = (
     function(_rootPath){
         $.datepicker.regional['ko'] = {
-            prevText: '이전달',
-            nextText: '다음달',
+            prevText: '',
+            nextText: '',
             monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             dayNames: ['일', '월', '화', '수', '목', '금', '토'],
@@ -59,11 +59,11 @@ var CalendarHelper = (
 
             $(target).datepicker({
                 showOn: "button",
-                buttonImage: _imgUrlConfig['button'],
-                buttonImageOnly: true,
+                //buttonImage: _imgUrlConfig['button'],
+                //buttonImageOnly: true,
                 changeMonth: true,
                 changeYear: true,
-                showButtonPanel: false,
+                //showButtonPanel: false,
                 dateFormat: 'yy-mm-dd'
             });
         };
