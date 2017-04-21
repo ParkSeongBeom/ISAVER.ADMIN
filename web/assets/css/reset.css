@@ -125,7 +125,7 @@ button[disabled], html input[disabled] {cursor:default}
 
 label, optgroup, textarea, a {-webkit-appearance:none;}
 input, select {vertical-align: middle;}
-input + span {margin:0 10px 0 0;}
+/*input + span {margin:0 10px 0 0;}*/
 
 input, textarea, select, div[contenteditable]
 {color:#3c3c3c; padding:7px 10px; border-style:solid; border-width:1px; border-color:#a9a9a9; }

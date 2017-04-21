@@ -184,18 +184,18 @@
 
   &.type03 {
     width:auto; height:100%; min-height: 100px; max-height: 220px;
-    background-position: 50% 30%; background-repeat: no-repeat; background-size: 55%;
+    background-position: 50% 30%; background-repeat: no-repeat; background-size: 50%;
     -webkit-align-self: center; align-self: center;
     & > p {
       position: absolute; bottom:0; left:0;
-      width:100%; text-align: center; color:#999; background-color:$color-dark-01;
+      width:100%; text-align: center; color:#999;
     }
 
     &.gas_level01 {background-image: url(../images/ico/gas_level01.png);}
     &.gas_level02 {background-image: url(../images/ico/gas_level02.png);}
     &.gas_level03 {background-image: url(../images/ico/gas_level03.png);}
 
-    .layer_popup &.type03 {background-size: 70%; background-position: 50% 0;}
+    .layer_popup &.type03 {background-size: 65%; background-position: 50% 0;}
   }
 
   &.type04 {
@@ -226,7 +226,7 @@
   & + .mc_box * {color:$color-red-01 !important; }
 }
 .level02, .level03 { & + .mc_box * {font-weight:bold; opacity: 1 !important;} }
-.level03 button.alra_btn,  button.alra_btn.on {background-color: $color-red-01;}
+.level03 button.alra_btn,  button.alra_btn.on {background-color: $color-red-01 !important;}
 /////..... 상태 아이콘 일반, 경고, 감지 정의 End
 
 

@@ -14,10 +14,8 @@ form-bg-effect :
   button {
     opacity: 0.8; height:100%; margin:0 15px; padding:6px 0 0 20px; font-size:14px;
     span {display:initial; font-weight:bold; font-size:16px;}
-    &:hover *{opacity: 1; color:#fff;}
-    &:before {
-      content:"●"; position: absolute; left: 5px; top: 50%; margin: -4px 0 0 0; font-size:10px;
-    }
+    &:hover { &, & span, &:before {opacity: 1; color:#fff;} }
+    &:before { content:"●"; position: absolute; left: 5px; top: 50%; margin: -4px 0 0 0; font-size:10px; }
   }
 }
 ////// 마키 End
@@ -267,27 +265,28 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   */
   width:auto;height:30px;
   & > * {position: relative; height: 100%;}
-  & > input {flex:1 0 300px; -webkit-flex:1 0 300px; flexbox:1 0 300px;}
+  & > input, & > select {@include flex-option(0, 1, 100%);}
+  & > span, & > button {@include flex-option(1, 0, 100px); height:100%;}
   & > span  {
-    flex:1 0 100px; -webkit-flex:1 0 100px; flexbox:1 0 100px; height:100%;
     &:before {
       content:"파일찾기";
       position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $bas-color;
       @include flex-justify-content-center;
       @include flex-align-items-center;
     }
-
     input[type="file"]
     {position: absolute;z-index: 1;left:0;top:0;width:100%;height:100%;opacity: 0; cursor:pointer;}
   }
   & > p {
-    flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
-    @include flex-align-items-center;
+    padding:0 0 0 10px;
+    @include flex-option(0, 1, 100%);  @include flex-align-items-center;
     a {
       text-align: left; text-decoration:underline; color:#3e3e3e; @include text-overflow-ellipsis;
       &:hover {color:#f37949;}
     }
   }
+
+
 }
 .infile_sets {
   /*
@@ -426,9 +425,11 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   .db_btn, .alra_btn {@include icon_btn;} //아이콘버튼
   .alra_btn {
     width:80px; height:30px;  padding: 0 5px 4px 5px; margin:0;
-    line-height: 0; font-size:1.3rem;
+    line-height: 0; font-size:1.3rem; background-color: $color-red-01;
     @include border-radius(20px);
     &:before {content: "\e907"; position: relative; top: 1px; padding: 0 5px 0 0; font-size:1.3rem;}
+
+    &:hover {&:before {color:#fff !important;}}
   }
   .stion_btn {
     width:64px;
@@ -574,20 +575,24 @@ div.tablebase, .d_defalut {display: inline-block;}
 
   td {
 
-
     & > input, & > select, & > div[contenteditable], & > textarea , & > .infile_set,
     & > .timepicker, & > .in-timepicker, & > .filter_set {
       float:left; width:calc(100% + 20px); width:-webkit-calc(100% + 20px); height:100%;
       border-color:transparent; margin:0 0 0 -10px;
     }
 
+    & > select[name="deviceCode"] {
+      //width:calc(100% - 130px); width:-webkit-calc(100% - 130px);
+      //& + br {display: none; }
+      //& ~ button { position: absolute; right:0; top:0; height:100%; max-width:100px;}
+    }
     @mixin table_in_divset {height:100%; border-color: transparent $color-gray-01 transparent $color-gray-01;}
 
     .filter_set { input, select {@include table_in_divset; width:100%;  min-width:0;} }
 
     .timepicker, .in-timepicker, .w_input { input, select {height:100%; border-color: transparent;} }
 
-    .infile_set { input, button {height:100%; border:none; background-color: #fff;} }
+    .infile_set { input, button, select {height:100%; border:none;} }
 
     .checkbox_set.csl_style02 {margin:0 20px 0 10px;}
 
@@ -598,6 +603,8 @@ div.tablebase, .d_defalut {display: inline-block;}
     & > input[type="radio"] + input[type="radio"] {margin: -4px 5px 0 10px;}
 
     span {position: relative; font-weight:bold; padding: 0 10px 0 0;}
+
+
   }
 
   //div형 테이블
@@ -628,7 +635,6 @@ div.tablebase, .d_defalut {display: inline-block;}
     th, & > div > div > p, & > div.d_thead > div > *
     {
       @include borderwidth(1px 1px 1px 0);
-
       /* th에 정렬 버튼 아이콘
       &:before, &:after {content:""; position: absolute; right:10px; width:0; height:0; border-style:solid;}
       &:before {@include triangle-top(0 4px 6px 4px,#fff); top:10px;}
@@ -646,7 +652,6 @@ div.tablebase, .d_defalut {display: inline-block;}
         }
       }
       */
-
     }
 
     &.notbefore { th, & > div > div > p { &:before, &:after {display: none !important;}  }  }
@@ -659,11 +664,9 @@ div.tablebase, .d_defalut {display: inline-block;}
   }
   //읽기, 쓰기
   &.write_type, &.t_type02 {
+    th, td, & > div > div > p, & > div.d_thead > div > * {@include borderwidth(0 1px 1px 0);}
     th {width:160px;}
-    td {
-      //padding:0;
-      //& > span {@include table_padding;}
-    }
+    td { /*padding:0; & > span {@include table_padding;}*/}
   }
 
 }
@@ -818,7 +821,7 @@ ul.u_defalut {
        </p>
    </div>
    */
-  position:relative; width:100%; height:40px; margin:20px 0 0 0; text-align:center;
+  position:relative; width:100%; height:40px; margin:20px 0; text-align:center;
 
   .paging {
     display:inline-block;

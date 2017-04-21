@@ -375,7 +375,7 @@
     max-height: 220px;
     background-position: 50% 30%;
     background-repeat: no-repeat;
-    background-size: 55%;
+    background-size: 50%;
     -webkit-align-self: center;
     align-self: center; }
     .mc_bico.type03 > p {
@@ -384,8 +384,7 @@
       left: 0;
       width: 100%;
       text-align: center;
-      color: #999;
-      background-color: #1e1e1e; }
+      color: #999; }
     .mc_bico.type03.gas_level01 {
       background-image: url(../images/ico/gas_level01.png); }
     .mc_bico.type03.gas_level02 {
@@ -393,7 +392,7 @@
     .mc_bico.type03.gas_level03 {
       background-image: url(../images/ico/gas_level03.png); }
     .layer_popup .mc_bico.type03.type03 {
-      background-size: 70%;
+      background-size: 65%;
       background-position: 50% 0; }
   .mc_bico.type04 {
     background-color: #01d65a; }
@@ -442,7 +441,7 @@
   opacity: 1 !important; }
 
 .level03 button.alra_btn, button.alra_btn.on {
-  background-color: #e41717; }
+  background-color: #e41717 !important; }
 
 .treffic_set {
   max-width: 90%;

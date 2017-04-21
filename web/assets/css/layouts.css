@@ -429,7 +429,7 @@ aside {
     display: none;
     z-index: 50;
     top: 45px;
-    left: 120px;
+    left: 100px;
     bottom: 0px;
     right: 0px; }
 
@@ -795,6 +795,9 @@ body.dashboard_mode .layer_wrap {
   box-shadow: -60px 0px 100px -50px black;
   -webkit-box-shadow: -60px 0px 100px -50px black;
   -moz-box-shadow: -60px 0px 100px -50px black; }
+  .db_area .check_box_set, .dbs_area .check_box_set {
+    min-width: 40px;
+    color: #fff; }
   .db_area > div, .dbs_area > div {
     width: 100%; }
   .db_area .db_header, .dbs_area .db_header {
@@ -815,9 +818,6 @@ body.dashboard_mode .layer_wrap {
       -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
       justify-content: space-between; }
-    .db_area .db_header > div:nth-of-type(2) .check_box_set, .dbs_area .db_header > div:nth-of-type(2) .check_box_set {
-      min-width: 40px;
-      color: #fff; }
     .db_area .db_header > div:nth-of-type(2) select, .dbs_area .db_header > div:nth-of-type(2) select {
       width: 100%; }
       .db_area .db_header > div:nth-of-type(2) select:nth-of-type(1), .dbs_area .db_header > div:nth-of-type(2) select:nth-of-type(1) {
@@ -845,7 +845,7 @@ body.dashboard_mode .layer_wrap {
     .db_area .db_contents ul li.infor:after, .dbs_area .db_contents ul li.infor:after {
       opacity: 1;
       border: 3px solid #e41717; }
-    .db_area .db_contents ul li.infor .dbc_contents > div *, .db_area .db_contents ul li.check .dbc_contents > div *, .db_area .db_contents ul li:hover .dbc_contents > div *, .dbs_area .db_contents ul li.infor .dbc_contents > div *, .dbs_area .db_contents ul li.check .dbc_contents > div *, .dbs_area .db_contents ul li:hover .dbc_contents > div * {
+    .db_area .db_contents ul li .dbc_contents > div *, .db_area .db_contents ul li.infor .dbc_contents > div *, .db_area .db_contents ul li.check .dbc_contents > div *, .db_area .db_contents ul li:hover .dbc_contents > div *, .dbs_area .db_contents ul li .dbc_contents > div *, .dbs_area .db_contents ul li.infor .dbc_contents > div *, .dbs_area .db_contents ul li.check .dbc_contents > div *, .dbs_area .db_contents ul li:hover .dbc_contents > div * {
       color: white; }
     .db_area .db_contents ul li .infor_open, .dbs_area .db_contents ul li .infor_open {
       width: 30px;

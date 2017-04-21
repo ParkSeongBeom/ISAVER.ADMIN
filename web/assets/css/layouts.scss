@@ -227,7 +227,7 @@ aside {
 
   // 레이어 팝업,  layer_popup 레이어 팝업 공통,  admin_popup 어드민 전용
   &.layer_popup, &.admin_popup {
-    display: none; z-index:50; top:45px; left:120px; bottom:0px; right: 0px;
+    display: none; z-index:50; top:45px; left:$nav_width; bottom:0px; right: 0px;
 
   }
 
@@ -452,7 +452,7 @@ $db_area_width:400px;
   top:45px; bottom:0; width:400px;  padding:10px;
 
   @include box-shadow01(-60px, 0px, 100px, -50px, #000, 1);
-
+  .check_box_set {min-width:40px; color:#fff;}
   & > div { width:100%; }
 
   .db_header   {flex:1;}
@@ -464,7 +464,7 @@ $db_area_width:400px;
       height:40px; margin:0 0 10px 0;
       &:nth-of-type(1) {@include flex-justify-content-between;}
       &:nth-of-type(2) {
-        .check_box_set {min-width:40px; color:#fff;}
+
         select {width:100%; &:nth-of-type(1) {margin:0 4px 0 0;} }
         & > p {width:100%; padding:0 30px; color:#fff; font-weight: bold;}
       }
@@ -479,7 +479,7 @@ $db_area_width:400px;
 
       &:hover:after, &.check:after {background-color: $color-red-01;}
       &.infor:after {opacity: 1; border:3px solid $color-red-01;}
-      &.infor, &.check, &:hover { .dbc_contents > div * {color:rgba(255,255,255,1);} }
+      &, &.infor, &.check, &:hover { .dbc_contents > div * {color:rgba(255,255,255,1);} }
 
 
       .infor_open {

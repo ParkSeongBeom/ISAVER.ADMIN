@@ -232,8 +232,10 @@
                         </td>
                         <th><spring:message code='device.column.deviceCode'/></th>
                         <td>
-                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
-                            <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); return false;"><spring:message code="device.button.ivasSetting"/></button>
+                            <div class="infile_set">
+                                <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
+                                <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); return false;"><spring:message code="device.button.ivasSetting"/></button>
+                            </div>
                         </td>
                     </tr>
                     <tr>
