@@ -37,7 +37,6 @@
 
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/jquery.nanoscroller.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
@@ -137,7 +136,7 @@
             aliveSend(900000);
 
             //스크롤바 플러그인 호출
-            $(".nano").nanoScroller();
+//            $(".nano").nanoScroller();
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
             alarmPlayer.addEventListener('timeupdate', function (){

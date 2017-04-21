@@ -445,7 +445,7 @@
         modifyElementClass(contentsTag.find(".mc_element"),'mc_tline','remove');
 
         $(".detail_popup .layer_area").attr("type",type).append(headerTag).append(contentsTag);
-        $(".detail_popup").find(".nano").nanoScroller();
+//        $(".detail_popup").find(".nano").nanoScroller();
 
         /* @author dhj */
         $("div[detail_layout]").removeClass("mc_tline").removeClass(" vtype").addClass("mc_tline vtype");
@@ -714,7 +714,7 @@
                 $(this).children(":gt(49)").remove();
             });
 
-            $("#workerDiv.nano").nanoScroller();
+//            $("#workerDiv.nano").nanoScroller();
         }
     }
 
@@ -874,7 +874,7 @@
                 $(this).children(":gt(49)").remove();
             });
 
-            $("#craneDiv .nano").nanoScroller();
+//            $("#craneDiv .nano").nanoScroller();
         }
     }
 
