@@ -1,0 +1,235 @@
+@charset "utf-8";
+@import "filters";
+
+
+.sub_title_area {@include sub_title_area;}
+
+
+/////..... 트리 테이블 시작
+.tree_table  {
+
+  $tree-table-width:320px;
+
+  position: absolute; z-index: 1; width:$tree-table-width !important; float: left;
+  margin:20px 0 0 0;  padding:20px; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
+  @include border01(1px,$color-gray-06,1 );
+
+  & ~ .form_type01 { padding: 20px 0 0 ($tree-table-width + 60px);}
+
+  .table_title_area {height:40px;}
+
+  .tree_box {
+    width:100%; margin:20px 0;
+    $tree-bwidth:26px;
+
+    ul {
+      font-size: 16px; white-space: nowrap;
+      &, li, a, span { padding: 0; margin: 0; background-color:transparent; border:none;}
+      span.dynatree-icon { display: none;}
+
+      a {position: relative;}
+
+      li {
+        position: relative;
+        & > span {
+
+          &, & > a { @include flex-align-items-center; }
+          height:40px;
+
+          & > a {
+            &:before {content:"\e929"; width:$tree-bwidth; height:$tree-bwidth; font-size:26px; margin:0 10px 0 0; }
+            span {font-weight:bold;}
+
+            &:hover, &:focus {color:$color-red-01; background-color: transparent;}
+          }
+
+          span.dynatree-expander, span.dynatree-connector {
+            & ~ a { &:before {display: none;} }
+
+            position: relative; z-index: 1; width:$tree-bwidth; min-width:$tree-bwidth; height:$tree-bwidth;
+            margin:0 10px 0 0;  background-image: none;
+
+            &:before, &:after {content:""; background-color: $color-gray-08;}
+
+            /*
+            &:after {
+              position: absolute; top:($tree-bwidth / 2); left:7px;
+              width:$tree-bwidth; height:1px; opacity: 0.4;
+            }
+            */
+
+            &:before {
+              @include flex-midddle; @include border-radius(200px);
+              width:100%; height:100%;  color:#fff; z-index:1;
+            }
+          }
+
+          span.dynatree-connector:before {content:"·"; font-weight:bold; line-height: 16px;}
+
+          span.dynatree-expander:before {content:"\e92b";  }
+
+          &.dynatree-ico-e span.dynatree-expander:before {content:"\e92c"; background-color: $color-red-01; }
+
+        }
+
+      }
+    }
+
+
+    ul, li { &:after, &:before {content:""; position: absolute; background-color: $color-gray-06; } }
+
+    & > ul > li {
+
+      & ul {padding:0 0 0 ($tree-bwidth + 10px);}
+      & > ul {padding:0;}
+    }
+
+
+
+
+    & > ul > li > ul li {
+
+      &:before, &:after {width:1px; left:($tree-bwidth / 2);}
+      & ul li:before {top:-5px; height:20px;}
+      &:after { bottom:-10px; top:10px; }
+      &:last-of-type:after {display: none;}
+    }
+
+
+
+/*
+    & > ul > li > ul > li {
+      &:after  {width:1px; bottom:-18px; top:-5px; left:-$tree-bwidth;}
+      &:before {top:17px;  width:$tree-bwidth; height:1px; left:-$tree-bwidth;}
+      &:last-of-type:after {display: none;}
+    }
+    */
+
+    /*& > ul > li > ul > li > ul li {
+      &:after, &:before {left:-($tree-bwidth - 2px); }
+      &:after {width:1px; height:100%; top:-16px;}
+      &:before {top:50%;  width:($tree-bwidth - 10px); height:1px; }
+    }*/
+  }
+
+}
+.tr_table    { /*padding: 20px 0 0 320px;*/}
+/////..... 트리 테이블 끝
+
+
+/////..... 이벤트 관리 상세 조치코드 테이블 리스트 버튼 시작
+.code_list {
+  float:left; position: relative; width:100%;
+  & > button, & > div {
+    overflow: hidden; float:left; @include border-radius(200px);  margin:0 5px 0 0;
+    &:hover {background-color: $color-blue-01; border-color: $color-blue-01; color:#fff;}
+  }
+  & > button, & > div > button {
+    height:40px;
+    &, &:before {font-weight:bold;}
+  }
+  & > button {
+    background-color: $bas-color; color:#fff; padding:0 20px;
+    &:before {content:"\e925";  color:#fff; padding:0 5px 0 0;}
+  }
+  & > div {
+    @include border01(1px,$bas-color,1 );
+    & > button {
+      &:nth-of-type(1) {padding:0 0 0 10px; line-height: 11px;}
+      &:nth-of-type(2):before {content:"\e91a"; padding:0 10px;}
+    }
+  }
+}
+/////..... 이벤트 관리 상세 조치코드 테이블 리스트 버튼 끝
+
+
+/////..... 통계 툴팁 시작
+.chartist-tooltip {
+  min-width:0  !important;
+  width:  40px !important;
+  height: 40px !important;
+  padding: 12px 0 0 0 !important;
+  background-color: #333240 !important;
+  color: #fff !important;
+
+  -moz-border-radius:    200px !important;
+  -webkit-border-radius: 200px !important;
+  border-radius:         200px !important;
+  -khtml-border-radius:  200px !important;
+
+  &:before {
+    margin: -2px 0 0 -5px  !important;
+    border-style:solid !important;
+    border-width: 10px 5px 0 5px !important;
+    border-color:#333240 transparent transparent transparent !important;
+  }
+}
+/////..... 통계 툴팁 끝
+
+
+/////..... 코드관리 좌우 테이블 배치 시작
+.left_table, .right_table { width:50% !important;}
+
+.width60p  { width:55% !important;}
+.width40p  { width:45% !important;}
+.width45p  { width:45% !important;}
+.width10p  { width:10% !important;}
+
+.left_table   {float: left;  padding: 20px 20px 20px 0;}
+.center_table {float: left;  padding: 20px 0;}
+.right_table  {float: right; padding: 20px 0 20px 20px;}
+/////..... 코드관리 좌우 테이블 배치 끝
+
+
+/////..... 테이블 타이틀 영역 시작
+.table_title_area {
+  position: relative; width:100%; @include flex-option(1,0,65px); height:65px;
+
+  @include flex-align-items-center; @include flex-justify-content-between;
+
+  & > h4 {border:none;}
+}
+/////..... 테이블 타이틀 영역 끝
+
+
+/////..... 테이블 버튼 영역 시작
+.table_btn_set {
+  flex:1; -webkit-flex:1; flexbox:1; position: relative;
+  @include flex-justify-content-end; @include flex-align-items-center;
+
+  & > select {width:120px;}
+  & > p {
+    position: absolute; top: 50%; left: 0; height: 18px;
+    margin: -9px 0 0 0; opacity: 0.8;
+    & > span {
+      height:100%;
+      & > em {padding:0 5px 0 10px; font-weight:bold;}
+    }
+  }
+}
+/////..... 테이블 버튼 영역 끝
+
+
+textarea.noboder_type01 {border:none; min-height:150px; background-color: transparent; font-family: inherit; }
+.editable01 {overflow: auto; width:100%; height:auto !important; margin:10px 0;white-space:normal; }
+
+
+.main_type00 {width:40%; padding:20px 40px 20px 0;}
+.main_type01 {width:40%; padding:20px 40px 20px 0;}
+.main_type02 {width:60%; }
+.main_type03 {width:100%;}
+.main_type04 {width:30%; padding:20px 20px 20px 0;}
+.main_type05 {width:30%; padding:20px 0 20px 20px;}
+
+.area_enrolment  {display:none;}
+
+.mon_ico {position: relative; height:100%;}
+.ico_mon:before {content:"\f133";}
+.ico_rev:before {content:"\f017";}
+.mon_ico:before {text-align: center; position: relative; top: 8px; width: 100%;  font-size: 14px; }
+
+.fc-day.fc-widget-content:hover{background-color: #bce8f1;opacity: .3;}
+a.fc-more {position: relative; z-index: 2;}
+.fc-day-number{position: relative; z-index: 2;}
+.colorbox {width: 20px; height: 20px; margin: auto;}
+

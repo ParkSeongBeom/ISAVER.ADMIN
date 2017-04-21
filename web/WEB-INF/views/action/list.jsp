@@ -13,7 +13,6 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
-<link rel="stylesheet" href="${rootPath}/assets/css/jqueryui/jquery-ui-1.10.4.min.css">
 
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->

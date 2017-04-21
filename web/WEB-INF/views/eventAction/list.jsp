@@ -11,7 +11,6 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui-1.10.4.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
-<link rel="stylesheet" href="${rootPath}/assets/css/jqueryui/jquery-ui-1.10.4.min.css">
 <aside class="admin_popup ap_type01 code_select_popup" style="display: none;">
     <section class="layer_wrap i_type03">
         <article class="layer_area">
