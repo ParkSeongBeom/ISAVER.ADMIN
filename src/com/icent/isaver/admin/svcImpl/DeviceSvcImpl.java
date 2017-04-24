@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
@@ -11,7 +11,6 @@ import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
-import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ import java.util.*;
 @Service
 public class DeviceSvcImpl implements DeviceSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -146,7 +145,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                     deviceLicenseDate = calendar.getTime();
 
                 } catch (ParseException e) {
-                    throw new JabberException("");
+                    throw new IcentException("");
                 }
 
                 if (  licenseBean.getLicenseCount() > deviceCount ) {
@@ -183,7 +182,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
+                throw new IcentException("");
             }
 
             transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
@@ -195,7 +194,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
+                throw new IcentException("");
             }
         }
 
@@ -234,7 +233,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
@@ -244,7 +243,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -281,7 +280,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
+                throw new IcentException("");
             }
 
             transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
@@ -291,7 +290,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
+                throw new IcentException("");
             }
         }
 

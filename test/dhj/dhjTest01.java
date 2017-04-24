@@ -2,8 +2,6 @@ package dhj;
 
 import org.junit.Test;
 
-import java.text.DecimalFormat;
-
 /**
  * Created by icent on 16. 6. 27..
  */

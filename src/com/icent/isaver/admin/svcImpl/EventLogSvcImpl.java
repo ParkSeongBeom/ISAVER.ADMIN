@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -32,10 +32,10 @@ import java.util.*;
 @Service
 public class EventLogSvcImpl implements EventLogSvc {
 
-    @Value("#{configProperties['ws.server.address']}")
+    @Value("${ws.server.address}")
     private String urlWebSocket = null;
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -106,7 +106,7 @@ public class EventLogSvcImpl implements EventLogSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         /**

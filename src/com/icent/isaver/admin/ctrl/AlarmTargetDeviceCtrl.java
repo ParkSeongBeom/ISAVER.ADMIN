@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.AlarmTargetDeviceSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class AlarmTargetDeviceCtrl {
     public ModelAndView appendAlarmTargetDevice(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
 
         if(MapUtils.nullCheckMap(parameters, appendAlarmTargetDeviceParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = alarmTargetDeviceSvc.appendAlarmTargetDevice(parameters);

@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -42,10 +42,10 @@ import java.util.Map;
  */
 @Service
 public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
-    @Value("#{configProperties['ws.server.address']}")
+    @Value("${ws.server.address}")
     private String urlWebSocket = null;
 
     @Inject
@@ -85,7 +85,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new JabberException("");
+                throw new IcentException("");
             }
         }
 

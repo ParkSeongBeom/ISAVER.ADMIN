@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping(value="/event/*")
 public class EventCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     @Inject
@@ -76,7 +76,7 @@ public class EventCtrl {
     public ModelAndView addEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, addEventParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -97,7 +97,7 @@ public class EventCtrl {
     public ModelAndView saveEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, saveEventParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -119,7 +119,7 @@ public class EventCtrl {
     public ModelAndView removeEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, removeEventParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

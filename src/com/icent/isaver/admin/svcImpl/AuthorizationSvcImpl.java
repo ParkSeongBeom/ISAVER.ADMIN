@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AuthorizationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -45,7 +45,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Inject
     private LoginHistoryDao loginHistoryDao;
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Override
@@ -57,7 +57,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             AdminHelper.setAdminInfo(request, usersBean);
             addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
         }else{
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
 
@@ -116,7 +116,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
     }
 }

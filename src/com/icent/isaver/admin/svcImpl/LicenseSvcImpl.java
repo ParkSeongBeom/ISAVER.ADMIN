@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.LicenseSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.LicenseBean;
@@ -37,7 +37,7 @@ import java.util.Map;
 @Service
 public class LicenseSvcImpl implements LicenseSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -80,7 +80,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -99,7 +99,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -115,7 +115,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

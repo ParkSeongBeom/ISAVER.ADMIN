@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.UsersBean;
@@ -44,7 +44,7 @@ public class UsersSvcImpl implements UsersSvc {
     @Inject
     private RoleDao roleDao;
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Override
@@ -101,7 +101,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
@@ -121,7 +121,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
@@ -136,7 +136,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;

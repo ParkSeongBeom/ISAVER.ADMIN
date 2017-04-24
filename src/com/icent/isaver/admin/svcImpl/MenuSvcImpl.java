@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.repository.bean.AreaBean;
@@ -41,7 +41,7 @@ import java.util.Map;
 @Service("menuSvc")
 public class MenuSvcImpl implements MenuSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -109,7 +109,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -125,7 +125,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -143,7 +143,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         } catch(DataAccessException e) {
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;

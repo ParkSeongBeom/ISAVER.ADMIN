@@ -1,16 +1,9 @@
 package com.icent.isaver.admin.tag;
 
-import com.icent.isaver.admin.util.AppContextUtil;
-import com.icent.isaver.repository.bean.AreaBean;
-import com.icent.isaver.repository.dao.base.AreaDao;
-import com.kst.common.util.StringUtils;
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * [Spring Custom Tag] 구역용 SELECT BOX HTML TAG

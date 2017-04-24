@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -35,7 +35,7 @@ import java.util.Map;
 @RequestMapping(value="/user/*")
 public class UsersCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     @Inject
@@ -103,7 +103,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value = "/exist")
     public ModelAndView findByUserCheckExist(@RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByUserCheckExistParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = usersSvc.findByUserCheckExist(parameters);
@@ -124,7 +124,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addUserParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -146,7 +146,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveUserParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -168,7 +168,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeUserParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

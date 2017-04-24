@@ -34,7 +34,7 @@ public class LoginHistoryCtrl {
     @Inject
     private LoginHistorySvc loginHistorySvc;
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     /**

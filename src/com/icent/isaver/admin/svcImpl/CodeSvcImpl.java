@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.icent.isaver.repository.bean.CodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
@@ -35,7 +35,7 @@ import java.util.Map;
 @Service
 public class CodeSvcImpl implements CodeSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -72,7 +72,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -87,7 +87,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -102,7 +102,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

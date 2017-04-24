@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.AlarmRequestHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping(value="/alarmRequestHistory/*")
 public class AlarmRequestHistoryCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     @Inject
@@ -46,7 +46,7 @@ public class AlarmRequestHistoryCtrl {
     public ModelAndView findByAlarmRequestHistory(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
 
         if(MapUtils.nullCheckMap(parameters, findByAlarmRequestHistoryParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
         return alarmRequestHistorySvc.findByAlarmRequestHistoryDetail(parameters);
     }

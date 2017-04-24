@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping(value="/eventLog/*")
 public class EventLogCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     @Inject
@@ -86,7 +86,7 @@ public class EventLogCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/cancel")
     public ModelAndView cancelEventLog(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, cancelEventLogParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("eventCancelUserId",AdminHelper.getAdminIdFromSession(request));

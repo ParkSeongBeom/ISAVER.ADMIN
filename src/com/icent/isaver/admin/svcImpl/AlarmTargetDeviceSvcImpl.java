@@ -1,7 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import antlr.StringUtils;
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.AlarmTargetDeviceSvc;
 import com.icent.isaver.repository.bean.AlarmTargetDeviceConfigBean;
 import com.icent.isaver.repository.dao.base.AlarmTargetDeviceConfigDao;
@@ -24,7 +23,7 @@ import java.util.Map;
 @Service
 public class AlarmTargetDeviceSvcImpl implements AlarmTargetDeviceSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -64,7 +63,7 @@ public class AlarmTargetDeviceSvcImpl implements AlarmTargetDeviceSvc {
             transactionManager.commit(transactionStatus);
         } catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

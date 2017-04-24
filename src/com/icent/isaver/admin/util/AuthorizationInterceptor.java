@@ -26,7 +26,7 @@ import java.util.Date;
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("#{configProperties['ws.server.address']}")
+    @Value("${ws.server.address}")
     private String urlWebSocket = null;
 
     /**

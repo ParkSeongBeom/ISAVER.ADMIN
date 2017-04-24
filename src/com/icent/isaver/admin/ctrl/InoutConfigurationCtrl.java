@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -60,7 +60,7 @@ public class InoutConfigurationCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveInoutConfiguration(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveInoutConfigurationParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("userId",AdminHelper.getAdminIdFromSession(request));

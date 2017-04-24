@@ -25,7 +25,7 @@ public class AppContextUtil implements ApplicationContextAware {
     private static final AppContextUtil instance = new AppContextUtil();
     private ApplicationContext applicationContext = null;
 
-    private AppContextUtil() {
+    public AppContextUtil() {
     }
 
     public static AppContextUtil getInstance() {

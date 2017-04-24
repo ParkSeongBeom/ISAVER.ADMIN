@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.GroupCodeSvc;
 import com.icent.isaver.repository.bean.GroupCodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
@@ -40,7 +40,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
     @Inject
     private CodeDao codeDao;
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Override
@@ -72,7 +72,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -87,7 +87,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -103,7 +103,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

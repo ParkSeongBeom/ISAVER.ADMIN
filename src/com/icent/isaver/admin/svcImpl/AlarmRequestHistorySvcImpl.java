@@ -4,7 +4,6 @@ import com.icent.isaver.admin.svc.AlarmRequestHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.AlarmRequestHistoryBean;
 import com.icent.isaver.repository.bean.AlarmRequestHistoryDetailBean;
-import com.icent.isaver.repository.bean.LoginHistoryBean;
 import com.icent.isaver.repository.dao.base.AlarmRequestHistoryDao;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

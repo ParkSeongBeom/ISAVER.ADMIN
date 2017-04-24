@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.RoleMenuSvc;
 import com.icent.isaver.repository.bean.MenuBean;
 import com.icent.isaver.repository.bean.RoleMenuBean;
@@ -40,7 +40,7 @@ import java.util.Map;
 @Service
 public class RoleMenuSvcImpl implements RoleMenuSvc {
 
-    @Resource(name="mybatisIsaverTxManager")
+    @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Inject
@@ -88,7 +88,7 @@ public class RoleMenuSvcImpl implements RoleMenuSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

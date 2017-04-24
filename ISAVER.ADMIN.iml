@@ -3,20 +3,33 @@
   <component name="FacetManager">
     <facet type="web" name="Web">
       <configuration>
-        <descriptors>
-          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
-        </descriptors>
         <webroots>
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src" />
-          <root url="file://$MODULE_DIR$/conf" />
         </sourceRoots>
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="web application context" name="MVC application context" removed="true">
+          <file>file://$MODULE_DIR$/conf/spring/context-views.xml</file>
+          <file>file://$MODULE_DIR$/conf/spring/context-annotation.xml</file>
+          <file>file://$MODULE_DIR$/conf/spring/context-persistance_mybatis.xml</file>
+        </fileset>
+        <fileset id="web dispatcher servlet context" name="MVC dispatcher servlet context" removed="true">
+          <file>file://$MODULE_DIR$/conf/spring/rest-servlet.xml</file>
+        </fileset>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/conf/context/ApplicationContext.java</file>
+          <file>file://$MODULE_DIR$/conf/spring/BeanConfigurer.java</file>
+          <file>file://$MODULE_DIR$/conf/spring/MybatisConfigurer.java</file>
+          <file>file://$MODULE_DIR$/conf/spring/PersistenceConfigurer.java</file>
+          <file>file://$MODULE_DIR$/conf/context/ServletContext.java</file>
+          <file>file://$MODULE_DIR$/conf/spring/WebConfigurer.java</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">

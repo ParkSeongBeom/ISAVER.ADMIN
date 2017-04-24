@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.RoleMenuSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -61,7 +61,7 @@ public class RoleMenuCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveRoleMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, saveRoleParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));

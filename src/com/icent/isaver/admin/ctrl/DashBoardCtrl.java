@@ -32,7 +32,7 @@ import java.util.Map;
 @RequestMapping(value="/dashboard/*")
 public class DashBoardCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
     @Inject

@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.bean.JabberException;
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.ActionSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping(value="/action/*")
 public class ActionCtrl {
 
-    @Value("#{configProperties['cnf.defaultPageSize']}")
+    @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
 
 
@@ -92,7 +92,7 @@ public class ActionCtrl {
     public ModelAndView addAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, addActionParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = actionSvc.addAction(request, parameters);
@@ -113,7 +113,7 @@ public class ActionCtrl {
     public ModelAndView saveAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, saveActionParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = actionSvc.saveAction(request, parameters);
@@ -134,7 +134,7 @@ public class ActionCtrl {
     public ModelAndView removeAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, removeActionParam)){
-            throw new JabberException("");
+            throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
