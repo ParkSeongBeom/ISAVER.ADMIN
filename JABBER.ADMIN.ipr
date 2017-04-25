@@ -21,7 +21,7 @@
       </root>
     </artifact>
     <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war">
-      <output-path>$PROJECT_DIR$/../../../BIN</output-path>
+      <output-path>$PROJECT_DIR$/../../../0.bin/ISAVER.ADMIN</output-path>
       <root id="archive" name="ISAVER.ADMIN.war">
         <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
         <element id="directory" name="WEB-INF">
@@ -74,7 +74,33 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/conf/context/ApplicationContext.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conf/context/ServletContext.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conf/context/WebApplicationInitializer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/BeanConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/ExceptionResolver.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/MybatisConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/PersistenceConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/WebConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ApplicationContextManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/bean/Result.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/CrossDomainFilter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/PropertyManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/PropertyManagerImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/XMLMarshaller.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/resource/ApiResource.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/resource/CommonResource.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/resource/ConvertType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/resource/IcentException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/FilterUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/ListUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/ResourceFinder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/SSLSocketFactoryEx.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/StringUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/TransactionUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/ResultState.java" charset="UTF-8" />
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -210,7 +236,7 @@
       <module fileurl="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/ISAVER.ADMIN.RESPOSIORY.iml" filepath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/ISAVER.ADMIN.RESPOSIORY.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SvnBranchConfigurationManager">
@@ -222,6 +248,7 @@
               <option name="branchUrls">
                 <list>
                   <option value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.1.0" />
+                  <option value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN/branches" />
                 </list>
               </option>
               <option name="trunkUrl" value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.2.0" />
@@ -247,6 +274,13 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
+  </component>
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" value="file://$PROJECT_DIR$/web/WEB-INF/views/tiles" />
+      </map>
+    </option>
   </component>
   <component name="dataSourceStorageLocal">
     <data-source name="[DEV] 172.16.110.199" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
@@ -400,9 +434,11 @@
         <root url="jar://$PROJECT_DIR$/lib/spring-test-3.2.8.RELEASE.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/spring-tx-3.2.8.RELEASE.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/aopalliance-1.0.jar!/" />
+        <root url="file://$PROJECT_DIR$/lib/jasypt-1.9.2" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/jasypt-1.9.2" recursive="false" />
     </library>
   </component>
 </project>
