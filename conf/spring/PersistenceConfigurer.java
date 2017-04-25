@@ -2,6 +2,10 @@ package spring;
 
 import com.icent.isaver.admin.common.PropertyManager;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +21,12 @@ public class PersistenceConfigurer {
     @Bean
     public DataSource isaverDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
+
+//        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+//        encryptor.setAlgorithm("PBEWithMD5AndDES");
+//        encryptor.setPassword("isaverPassKey");
+//        System.out.println(encryptor.encrypt("jdbc:postgresql://172.16.110.200:5432/isaver?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8"));
+//        System.out.println(encryptor.encrypt("isaveruser"));
 
         dataSource.setDriverClassName(propertyManager.getProperty("db.isaver.driver"));
         dataSource.setUrl(propertyManager.getProperty("db.isaver.url"));
