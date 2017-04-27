@@ -74,10 +74,10 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/conf/context/ApplicationContext.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/conf/context/ServletContext.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/conf/context/WebApplicationInitializer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/context/WebApplicationInitializer.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/conf/spring/BeanConfigurer.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/ExceptionResolver.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/MybatisConfigurer.java" charset="x-windows-949" />
@@ -100,6 +100,7 @@
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/StringUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/TransactionUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/ResultState.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
@@ -351,6 +352,7 @@
         <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-log4j12-1.7.7.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.943.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/ISAVER.UTIL.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

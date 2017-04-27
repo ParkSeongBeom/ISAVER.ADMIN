@@ -2,8 +2,12 @@ package context;
 
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.ext.spring.LogbackConfigurer;
+import com.icent.dhj.util.FindSystemUtil;
+import com.icent.dhj.util.ResultSystemBean;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.FilterUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -18,6 +22,8 @@ import java.util.EnumSet;
  * Created by icent on 2017. 2. 1..
  */
 public class WebApplicationInitializer implements org.springframework.web.WebApplicationInitializer {
+
+    static Logger logger = LoggerFactory.getLogger(WebApplicationInitializer.class);
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -36,7 +42,6 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
             e.printStackTrace();
         }
 
-
         AnnotationConfigWebApplicationContext restContext = new AnnotationConfigWebApplicationContext();
         restContext.register(context.ServletContext.class);
 
@@ -51,5 +56,41 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         characterEncodingFilter.setInitParameter("encoding", "UTF-8");
         characterEncodingFilter.setInitParameter("forceEncoding", "true");
+
+//        StringBuilder sb = new StringBuilder();
+//        String s;
+//        try {
+//            FileReader file = new FileReader("/isaver/was/bin/uuid.key");
+//            BufferedReader e1 = new BufferedReader(file);
+//            s = "";
+//
+//            while(true) {
+//                s = e1.readLine();
+//                if(s == null) {
+//                    e1.close();
+//                    break;
+//                }
+//                sb.append(s);
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        //정지
+        FindSystemUtil findSystemUtil = new FindSystemUtil();
+        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("icent", "/isaver/was/bin/uuid.key");
+
+        if(!resultSystemBean.getaBoolean()){
+            logger.error(resultSystemBean.getLogdata());
+            System.exit(0);
+
+//            try {
+//                Process p = Runtime.getRuntime().exec("systemctl stop isaver_web");
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            }
+        }
     }
 }
