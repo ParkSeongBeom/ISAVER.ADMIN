@@ -57,28 +57,7 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         characterEncodingFilter.setInitParameter("encoding", "UTF-8");
         characterEncodingFilter.setInitParameter("forceEncoding", "true");
 
-//        StringBuilder sb = new StringBuilder();
-//        String s;
-//        try {
-//            FileReader file = new FileReader("/isaver/was/bin/uuid.key");
-//            BufferedReader e1 = new BufferedReader(file);
-//            s = "";
-//
-//            while(true) {
-//                s = e1.readLine();
-//                if(s == null) {
-//                    e1.close();
-//                    break;
-//                }
-//                sb.append(s);
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        //정지
+        // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
         ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("icent", "/isaver/was/bin/uuid.key");
 
