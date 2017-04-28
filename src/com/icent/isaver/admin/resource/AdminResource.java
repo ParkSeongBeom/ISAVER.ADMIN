@@ -192,6 +192,10 @@ public class AdminResource {
 
     public final static String API_PATH_URL_SENDEVENT = "/alarm/eventSend.json";
 
+    public final static String WS_PORT = "8820";
+
+    public final static String WS_PROJECT_NAME = "ISAVER.SOCKET";
+
     public final static String WS_PATH_URL_SENDEVENT = "/eventAlarm/eventSend.json";
 
     public final static String WS_PATH_URL_CONNECT = "/eventAlarm";

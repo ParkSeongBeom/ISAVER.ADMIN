@@ -9,6 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
 import java.util.Date;
 
 /**
@@ -91,7 +92,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
-        modelAndView.addObject("webSocketUrl", "ws://" + urlWebSocket + AdminResource.WS_PATH_URL_CONNECT);
+        InetAddress address = InetAddress.getByName(urlWebSocket);
+        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_CONNECT);
 
         super.postHandle(request, response, handler, modelAndView);
     }

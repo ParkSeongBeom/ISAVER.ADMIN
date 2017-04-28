@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +99,8 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             Map websocketParam = new HashMap();
             websocketParam.put("messageType","refreshView");
 
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
+            InetAddress address = InetAddress.getByName(urlWebSocket);
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_SENDEVENT);
         } catch (IOException e) {
             e.printStackTrace();
         }

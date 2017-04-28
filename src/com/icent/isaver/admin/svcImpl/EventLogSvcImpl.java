@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -121,7 +122,8 @@ public class EventLogSvcImpl implements EventLogSvc {
             websocketParam.put("alramEventLog", warnParam);
             websocketParam.put("messageType","removeAlramEvent");
 
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + urlWebSocket + AdminResource.WS_PATH_URL_SENDEVENT);
+            InetAddress address = InetAddress.getByName(urlWebSocket);
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_SENDEVENT);
         } catch (IOException e) {
             e.printStackTrace();
         }
