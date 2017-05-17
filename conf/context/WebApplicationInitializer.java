@@ -17,6 +17,7 @@ import javax.servlet.*;
 import javax.servlet.ServletContext;
 import java.io.FileNotFoundException;
 import java.util.EnumSet;
+import java.util.HashSet;
 
 /**
  * Created by icent on 2017. 2. 1..
@@ -56,6 +57,11 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         characterEncodingFilter.setInitParameter("encoding", "UTF-8");
         characterEncodingFilter.setInitParameter("forceEncoding", "true");
+
+        // jsessionid 값이 url에 노출되는것을 방지
+        HashSet<SessionTrackingMode> set = new HashSet<SessionTrackingMode>();
+        set.add(SessionTrackingMode.COOKIE);
+        servletContext.setSessionTrackingModes(set);
 
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();

@@ -4,14 +4,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set var="rootPath" value="${pageContext.servletContext.contextPath}" scope="application"/>
+<%--<c:set var="rootPath" value="${pageContext.servletContext.contextPath}" scope="application"/>--%>
 <%--<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${serverDatetime}" var="serverDatetime"/>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${pageContext.servletContext.contextPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
     <!--[endif] -->
     <title>iSaver Admin</title>
     <%-- dynatree, dhj --%>

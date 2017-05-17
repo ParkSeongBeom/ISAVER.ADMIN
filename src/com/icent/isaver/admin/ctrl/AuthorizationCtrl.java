@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -53,16 +56,14 @@ public class AuthorizationCtrl {
         return modelAndView;
     }
 
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/vms")
+    @RequestMapping(method={RequestMethod.GET}, value="/vms")
     public ModelAndView vms(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         parameters.put("userId","admin");
-        ModelAndView modelAndView = authorizationSvc.externalLogin(request, parameters);
 
-        if(modelAndView.getModel().get("result").equals("success")) {
-            modelAndView.setViewName("redirect:/dashboard/all.html");
-        }else{
-            modelAndView.setViewName("login");
-        }
+        ModelAndView modelAndView = authorizationSvc.externalLogin(request, parameters);
+        RedirectView rv = new RedirectView(request.getContextPath()+"/dashboard/all.html");
+        rv.setExposeModelAttributes(false);
+        modelAndView.setView(rv);
         return modelAndView;
     }
 

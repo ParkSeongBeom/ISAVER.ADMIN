@@ -67,18 +67,14 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
 
     @Override
     public ModelAndView externalLogin(HttpServletRequest request, Map<String, String> parameters) {
-
         UsersBean usersBean = usersDao.findByUsers(parameters);
-        String result = "failure";
 
         if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){
             AdminHelper.setAdminInfo(request, usersBean);
             addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
-            result = "success";
         }
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("result",result);
         return modelAndView;
     }
 

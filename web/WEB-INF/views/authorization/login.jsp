@@ -10,15 +10,15 @@
     <meta http-equiv="imagetoolbar" content="no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${pageContext.servletContext.contextPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
     <!--[if lt IE 9] -->
-    <script src="${pageContext.servletContext.contextPath}/assets/js/util/html5.js"></script>
+    <script src="${rootPath}/assets/js/util/html5.js"></script>
     <!--[endif] -->
     <title>i-saver Admin</title>
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.js"></script>
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/common/jquery.cookie.js"></script>
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/util/ajax-util.js"></script>
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/util/md5.min.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 </head>
 <body class="login_mode">
 <form id="loginForm" method="POST">
@@ -43,17 +43,22 @@
         <!-- section End -->
     </div>
 </form>
-<%--<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/retina.js"></script>--%>
+<%--<script type="text/javascript" src="${rootPath}/assets/js/retina.js"></script>--%>
 <script type="text/javascript">
 
     var form = $('#loginForm');
+    var autoLoginFlag = "${autoLoginFlag}"
 
     var urlConfig = {
-        'loginUrl':'${pageContext.servletContext.contextPath}/login.json'
-        ,'mainUrl':'${pageContext.servletContext.contextPath}/dashboard/all.html'
+        'loginUrl':'${rootPath}/login.json'
+        ,'mainUrl':'${rootPath}/dashboard/all.html'
     };
 
     $(document).ready(function(){
+        if(autoLoginFlag=="true"){
+            location.href=urlConfig['mainUrl'];
+        }
+
         var userId = $.cookie("userId");
 
         if(userId != null && userId.length > 0){

@@ -94,6 +94,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
         InetAddress address = InetAddress.getByName(urlWebSocket);
         modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_CONNECT);
+        modelAndView.addObject("rootPath", request.getContextPath());
 
         super.postHandle(request, response, handler, modelAndView);
     }
