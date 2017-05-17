@@ -53,6 +53,19 @@ public class AuthorizationCtrl {
         return modelAndView;
     }
 
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/vms")
+    public ModelAndView vms(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        parameters.put("userId","admin");
+        ModelAndView modelAndView = authorizationSvc.externalLogin(request, parameters);
+
+        if(modelAndView.getModel().get("result").equals("success")) {
+            modelAndView.setViewName("redirect:/dashboard/all.html");
+        }else{
+            modelAndView.setViewName("login");
+        }
+        return modelAndView;
+    }
+
     /**
      * 기동여부를 확인한다.
      * @author psb

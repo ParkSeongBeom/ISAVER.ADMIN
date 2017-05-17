@@ -59,6 +59,7 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
 
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
+//        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("dev", "/isaver/was/bin/uuid.key");
         ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("icent", "/isaver/was/bin/uuid.key");
 
         if(!resultSystemBean.getaBoolean()){

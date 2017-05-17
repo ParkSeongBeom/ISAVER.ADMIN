@@ -31,6 +31,14 @@ public interface AuthorizationSvc {
     public ModelAndView login(HttpServletRequest request, Map<String, String> parameters);
 
     /**
+     * 관리자 로그인 처리를 한다.(텔코웨어 전용)
+     *
+     * @author psb
+     * @return
+     */
+    public ModelAndView externalLogin(HttpServletRequest request, Map<String, String> parameters);
+
+    /**
      * 관리자 로그아웃 처리를 한다.
      *
      * @author kst
