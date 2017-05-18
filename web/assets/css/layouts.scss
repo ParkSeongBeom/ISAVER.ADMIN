@@ -237,7 +237,7 @@ aside {
 
 ///// ----------------- container START
 section.container {
-  display: inline-block; position: relative; padding:$headerHeight 0 0 $nav_width; width:100%; height:100vh;
+  position: relative; padding:$headerHeight 0 0 $nav_width; width:100%; height:100vh;
   .admin_mode & {height:auto; padding:($headerHeight + 25px) $nav_width 0 ($nav_width * 2) !important;}
   .dashboard_mode & {}
 }
@@ -291,15 +291,24 @@ h4 {
 
 /////..... 레이어 팝업 Start
 .layer_popup, .admin_popup {
+
   @at-root {
-    body.admin_mode { .layer_wrap {background-color:$adm-color;} }
-    body.dashboard_mode { .layer_wrap {background-color:$bas-color;} }
+    body.admin_mode {
+      .layer_wrap {
+        background-color:$adm-color;
+        .mp_header *, .mp_header button:before, .time_select_contents > div > span
+        {color:$bas-color !important; }
+      }
+    }
+
+    body.dashboard_mode {
+      .layer_wrap {background-color:$bas-color;}
+    }
   }
 
-  .layer_wrap {
-    position: absolute; min-height:450px; left:50%;
 
-    height:auto;
+  .layer_wrap {
+    position: absolute; min-height:450px; left:50%; height:auto;
 
     @include box-shadow01(1px, 2px, 8px, 0px, #000, 0.4);
 
@@ -346,7 +355,6 @@ h4 {
       .layer_header   {@include sub_title_area; font-size: 24px;}
       .layer_contents {@include common_contents; @include flex-column;}
     }
-
   }
 
   .layer_popupbg
@@ -455,7 +463,7 @@ $db_area_width:400px;
   .check_box_set {min-width:40px; color:#fff;}
   & > div { width:100%; }
 
-  .db_header   {flex:1;}
+  .db_header   {}
   .db_contents {flex:0 1 100%; overflow: hidden; position: relative;}
   .db_bottom   {flex:1 0 40px; text-align: right;}
 
@@ -509,7 +517,6 @@ $db_area_width:400px;
         &.skin_gray:before  {background-color: $color-gray-08}
         &.skin_white:before {background-color: $adm-color}
 
-
         & > div {
           position: relative;
           & * { }
@@ -555,6 +562,8 @@ $db_area_width:400px;
 .going:before  {content: "\e90d" !important;} /*진출입 상태 */
 .gas:before    {content: "\e910" !important;} /*유해가스 상태 */
 .etc:before    {content: "\e90f" !important;} /*기타 상태 (위험지역)*/
+.using:before  {content: "\e933" !important;} /*전력사용량*/
+.fire:before   {content: "\e920" !important;} /*화재연기*/
 
 aside.db_area, aside.dbs_area, header, nav, nav.nav:after, .toast_popup, button,
 .marquee, .marquee *, .gas_panel_set, .gas_panel_set:after, .gas_panel_set:before,

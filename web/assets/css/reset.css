@@ -50,7 +50,7 @@ audio:not([controls]) {display: none; height: 0;}
 /* [hidden]` 속성의 스타일이 IE 8/9/10에서 존재하지 않는 것을 해결, IE 8/9/10/11, Safari, Firefox < 22 에서 `template` 요소를 숨김. */
 
 form {display: block; width:100%;}
-table {/*table-layout:fixed;*/border-spacing:0; border-collapse:collapse; }
+table {/*table-layout:fixed;*/border-spacing:0; /*border-collapse:collapse; */}
 
 /*
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -245,16 +245,22 @@ input[type="search"]::-webkit-search-decoration
 .sico_10:before {content: "\e909";}    .sico_20:before {content: "\e913";}    .sico_30:before {content: "\e91d";}
 
 
-.sico_31:before {content: "\e91e";}    .sico_41:before {content: "\e928";}
-.sico_32:before {content: "\e91f";}    .sico_42:before {content: "\e929";}
-.sico_33:before {content: "\e920";}    .sico_43:before {content: "\e92a";}
+.sico_31:before {content: "\e91e";}    .sico_41:before {content: "\e928";}    .sico_51:before {content: "\e932";}
+.sico_32:before {content: "\e91f";}    .sico_42:before {content: "\e929";}    .sico_52:before {content: "\e933";}
+.sico_33:before {content: "\e920";}    .sico_43:before {content: "\e92a";}    .sico_53:before {content: "\e934";}
 .sico_34:before {content: "\e921";}    .sico_44:before {content: "\e92b";}
 .sico_35:before {content: "\e922";}    .sico_45:before {content: "\e92c";}
 .sico_36:before {content: "\e923";}    .sico_46:before {content: "\e92d";}
 .sico_37:before {content: "\e924";}    .sico_47:before {content: "\e92e";}
 .sico_38:before {content: "\e925";}    .sico_48:before {content: "\e92f";}
-.sico_39:before {content: "\e926";}
-.sico_40:before {content: "\e927";}
+.sico_39:before {content: "\e926";}    .sico_49:before {content: "\e930";}
+.sico_40:before {content: "\e927";}    .sico_50:before {content: "\e931";}
+
+
+
+
+
+
 
 
 

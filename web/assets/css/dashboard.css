@@ -93,6 +93,7 @@
     flexbox: 0 1 100%;
     min-height: auto; }
   * .metro_parent > div {
+    overflow: hidden;
     position: relative;
     width: 100%;
     padding: 6px;
@@ -150,6 +151,7 @@
   * .mp_header > div {
     position: absolute;
     right: 10px;
+    top: 0;
     width: auto; }
     * .mp_header > div > button, * .mp_header > div > button:before {
       color: #fff; }
@@ -187,7 +189,7 @@
       -ms-flex-pack: flex-end;
       justify-content: flex-end;
       height: auto;
-      padding: 10px 0 0 0 !important;
+      padding: 10px 5px 0 5px !important;
       flex: 1 0 50px;
       -webkit-flex: 1 0 50px;
       flexbox: 1 0 50px; }

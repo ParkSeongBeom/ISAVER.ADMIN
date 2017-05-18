@@ -53,7 +53,7 @@
     @include flex-column; position: relative;
     &.v_mode  > .flex100 {flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;  min-height:auto;}
     & > div {
-      position: relative; width:100%; padding:6px; @include flex-column;
+      overflow: hidden; position: relative; width:100%; padding:6px; @include flex-column;
       flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
       &:before {
         content:""; position: absolute; top:5px; left:5px; right:5px; bottom:5px;
@@ -73,7 +73,7 @@
     .layer_popup & > h2  {font-size:20px;}
 
     & > div {
-      position: absolute; right:10px; width:auto;
+      position: absolute; right:10px; top:0; width:auto;
       & > button,  & > button:before {color:#fff;}
     }
   }
@@ -87,7 +87,7 @@
 
       &.lmc_btn_area {
         @include flex-justify-content-end;
-        height:auto; padding:10px 0 0 0 !important;
+        height:auto; padding:10px 5px 0 5px !important;
         flex:1 0 50px; -webkit-flex:1 0 50px; flexbox:1 0 50px;
       }
     }
@@ -368,6 +368,7 @@
 
 /////..... 메인 구역 리스트 시작
 .mce_btn_area {
+
   & > button {
     float:left; position: relative; margin:4px; padding: 10px;
 
