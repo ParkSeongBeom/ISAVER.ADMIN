@@ -194,6 +194,7 @@
      @author psb
      */
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.error(XMLHttpRequest, textStatus, errorThrown, actionType);
         console.error(messageConfig['searchFailure']);
 //        alertMessage('searchFailure');
     }

@@ -32,36 +32,20 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         applicationContext.register(ApplicationContext.class);
 
         servletContext.addListener(new ContextLoaderListener(applicationContext));
-        FilterUtils.useEncoding(servletContext, CommonResource.CHARSET_UTF8, "/*");
-        FilterUtils.useCrossDomain(servletContext,"/*");
+//        FilterUtils.useEncoding(servletContext, CommonResource.CHARSET_UTF8, "/*");
+//        FilterUtils.useCrossDomain(servletContext,"/*");
 
         try {
-            LogbackConfigurer.initLogging("classpath:logback/logback.xml");
+            registerLogbackFunc();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JoranException e) {
             e.printStackTrace();
         }
 
-        AnnotationConfigWebApplicationContext restContext = new AnnotationConfigWebApplicationContext();
-        restContext.register(context.ServletContext.class);
-
-//        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("rest-servlet",new DispatcherServlet(restContext));
-//        dispatcher.setLoadOnStartup(1);
-//        dispatcher.addMapping("/*");
-        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",new DispatcherServlet(restContext));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
-
-        FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
-        characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-        characterEncodingFilter.setInitParameter("encoding", "UTF-8");
-        characterEncodingFilter.setInitParameter("forceEncoding", "true");
-
-        // jsessionid 값이 url에 노출되는것을 방지
-        HashSet<SessionTrackingMode> set = new HashSet<SessionTrackingMode>();
-        set.add(SessionTrackingMode.COOKIE);
-        servletContext.setSessionTrackingModes(set);
+        registerDispatcherServlet(servletContext);
+        registerCharacterEncodingFilter(servletContext);
+        registerSessionTrackingModes(servletContext);
 
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
@@ -78,5 +62,44 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
 //                e1.printStackTrace();
 //            }
         }
+    }
+
+    /**
+     * Logback
+     * @throws FileNotFoundException
+     * @throws JoranException
+     */
+    private void registerLogbackFunc() throws FileNotFoundException, JoranException {
+        LogbackConfigurer.initLogging("classpath:logback/logback.xml");
+    }
+
+    private void registerDispatcherServlet(ServletContext servletContext) {
+        AnnotationConfigWebApplicationContext restContext = new AnnotationConfigWebApplicationContext();
+        restContext.register(context.ServletContext.class);
+
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",new DispatcherServlet(restContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+    }
+
+    /**
+     * EncodingFilter
+     * @param servletContext
+     */
+    private void registerCharacterEncodingFilter(ServletContext servletContext) {
+        FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
+        characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        characterEncodingFilter.setInitParameter("encoding", "UTF-8");
+        characterEncodingFilter.setInitParameter("forceEncoding", "true");
+    }
+
+    /**
+     * jsessionid 값이 url에 노출되는것을 방지
+     * @param servletContext
+     */
+    private void registerSessionTrackingModes(ServletContext servletContext) {
+        HashSet<SessionTrackingMode> set = new HashSet<SessionTrackingMode>();
+        set.add(SessionTrackingMode.COOKIE);
+        servletContext.setSessionTrackingModes(set);
     }
 }

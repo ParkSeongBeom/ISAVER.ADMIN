@@ -28,7 +28,16 @@ import java.util.Date;
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Value("${ws.server.address}")
-    private String urlWebSocket = null;
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlConnect}")
+    private String wsUrlConnect = null;
 
     /**
      * 인자절차가 필요없는 path</br>
@@ -92,8 +101,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
-        InetAddress address = InetAddress.getByName(urlWebSocket);
-        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_CONNECT);
+        InetAddress address = InetAddress.getByName(wsAddress);
+        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
 
         super.postHandle(request, response, handler, modelAndView);

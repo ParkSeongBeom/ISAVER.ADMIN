@@ -104,7 +104,7 @@
     };
 
     var urlConfig = {
-        'listUrl':'${rootPath}/roleMenu/list.html'
+        'listUrl':'${rootPath}/roleMenu/list.json'
         ,'saveUrl':"${rootPath}/roleMenu/save.json"
     };
 
@@ -118,7 +118,8 @@
      */
     function menuLoadFunc() {
         var data = {
-            roleId : $("#roleId option:selected").val()
+            'mode' : 'search'
+            ,'roleId' : $("#roleId option:selected").val()
         };
 
         var actionType = "list";
@@ -267,6 +268,7 @@
      @author kst
      */
     function requestRoleMenu_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
         alertMessage(actionType + 'Failure');
     }
 

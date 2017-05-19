@@ -56,8 +56,9 @@ public class EventStatisticsCtrl {
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
             modelAndView = eventStatisticsSvc.findListAreaEventStatistics(parameters);
+        }else{
+            modelAndView.setViewName("areaEventStatistics");
         }
-        modelAndView.setViewName("areaEventStatistics");
         return modelAndView;
     }
 
@@ -72,8 +73,9 @@ public class EventStatisticsCtrl {
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
             modelAndView = eventStatisticsSvc.findListWorkerEventStatistics(parameters);
+        }else{
+            modelAndView.setViewName("workerEventStatistics");
         }
-        modelAndView.setViewName("workerEventStatistics");
         return modelAndView;
     }
 
@@ -88,8 +90,9 @@ public class EventStatisticsCtrl {
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
             modelAndView = eventStatisticsSvc.findListCraneEventStatistics(parameters);
+        }else{
+            modelAndView.setViewName("craneEventStatistics");
         }
-        modelAndView.setViewName("craneEventStatistics");
         return modelAndView;
     }
 
@@ -104,8 +107,9 @@ public class EventStatisticsCtrl {
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
             modelAndView = eventStatisticsSvc.findListGasEventStatistics(parameters);
+        }else{
+            modelAndView.setViewName("gasEventStatistics");
         }
-        modelAndView.setViewName("gasEventStatistics");
         return modelAndView;
     }
 
@@ -120,8 +124,9 @@ public class EventStatisticsCtrl {
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
             modelAndView = eventStatisticsSvc.findListInoutEventStatistics(parameters);
+        }else{
+            modelAndView.setViewName("inoutEventStatistics");
         }
-        modelAndView.setViewName("inoutEventStatistics");
         return modelAndView;
     }
 }

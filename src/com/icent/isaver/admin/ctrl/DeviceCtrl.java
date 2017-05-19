@@ -88,7 +88,7 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByDevice(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = deviceSvc.findByDevice(parameters);
-        modelAndView.setViewName("deviceDetail");
+//        modelAndView.setViewName("deviceDetail");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

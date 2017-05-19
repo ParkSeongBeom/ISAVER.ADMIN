@@ -4,6 +4,7 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.RoleMenuSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
+import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +46,9 @@ public class RoleMenuCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
     public ModelAndView findAllRoleMenu(@RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = roleMenuSvc.findAllRoleMenu(parameters);
-        modelAndView.setViewName("roleMenuList");
+        if(StringUtils.nullCheck(parameters.get("mode"))){
+            modelAndView.setViewName("roleMenuList");
+        }
         return modelAndView;
     }
 

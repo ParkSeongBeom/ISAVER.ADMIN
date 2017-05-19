@@ -72,7 +72,7 @@ public class AuthorizationCtrl {
      * @author psb
      * @return
      */
-    @RequestMapping(method={RequestMethod.GET}, value="/alive")
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/alive")
     public ModelAndView alive(){
         return new ModelAndView();
     }

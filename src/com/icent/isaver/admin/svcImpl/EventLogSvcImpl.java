@@ -34,7 +34,31 @@ import java.util.*;
 public class EventLogSvcImpl implements EventLogSvc {
 
     @Value("${ws.server.address}")
-    private String urlWebSocket = null;
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSendEvent}")
+    private String wsUrlSendEvent = null;
+
+    @Value("${vms.server.logSendFlag}")
+    private String vmsLogSend = null;
+
+    @Value("${vms.server.address}")
+    private String vmsAddress = null;
+
+    @Value("${vms.server.port}")
+    private String vmsPort = null;
+
+    @Value("${vms.server.projectName}")
+    private String vmsProjectName = null;
+
+    @Value("${vms.server.urlSendEvent}")
+    private String vmsUrlSendEvent = null;
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
@@ -93,11 +117,16 @@ public class EventLogSvcImpl implements EventLogSvc {
         String[] eventLogIds = parameters.get("eventLogIds").split(CommonResource.COMMA_STRING);
 
         List<Map<String, String>> parameterList = new ArrayList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String eventCancelDatetime = sdf.format(new Date());
+
         for (String eventLogId : eventLogIds) {
             Map<String, String> eventLogParamMap = new HashMap<>();
             eventLogParamMap.put("eventLogId", eventLogId);
             eventLogParamMap.put("eventCancelUserId", parameters.get("eventCancelUserId"));
             eventLogParamMap.put("eventCancelDesc", parameters.get("eventCancelDesc"));
+            eventLogParamMap.put("eventCancelDatetime", eventCancelDatetime);
             parameterList.add(eventLogParamMap);
         }
 
@@ -122,10 +151,27 @@ public class EventLogSvcImpl implements EventLogSvc {
             websocketParam.put("alramEventLog", warnParam);
             websocketParam.put("messageType","removeAlramEvent");
 
-            InetAddress address = InetAddress.getByName(urlWebSocket);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_SENDEVENT);
+            InetAddress address = InetAddress.getByName(wsAddress);
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, true);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        /**
+         * VMS에 이벤트 해제 데이터 전송 (Restful)
+         * @author psb
+         * @date 2017.05.19
+         */
+        if (StringUtils.notNullCheck(parameters.get("alramIds")) && vmsLogSend.equals(CommonResource.YES)) {
+            try {
+                Map<String, String> vmsParam = new HashMap();
+                vmsParam.put("alramId",parameters.get("alramIds"));
+                vmsParam.put("time",eventCancelDatetime);
+
+                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + "/" + vmsProjectName + vmsUrlSendEvent, false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         ModelAndView modelAndView = new ModelAndView();

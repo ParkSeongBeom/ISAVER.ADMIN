@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class AlarmRequestUtil {
      * @return
      * @throws IOException
      */
-    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl) throws IOException {
+    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, boolean jsonFlag) throws IOException {
 
         CloseableHttpClient commonHttpClient = null;
         HttpPost httpPost = null;
@@ -61,7 +62,14 @@ public class AlarmRequestUtil {
          * Set Body
          */
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("jsonData", new ObjectMapper().writeValueAsString(parameters)));
+        if(jsonFlag){
+            nvps.add(new BasicNameValuePair("jsonData", new ObjectMapper().writeValueAsString(parameters)));
+        }else{
+            for (String key : parameters.keySet()){
+                nvps.add(new BasicNameValuePair(key, parameters.get(key)));
+                System.out.println("key:"+key+",value:"+parameters.get(key));
+            }
+        }
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 
         /**

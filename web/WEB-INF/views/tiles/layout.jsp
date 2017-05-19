@@ -58,7 +58,7 @@
             'logoutUrl':'${rootPath}/logout.html'
             ,'mainUrl':'${rootPath}/main.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
-            ,'alramListUrl':'${rootPath}/eventLog/alram.html'
+            ,'alramListUrl':'${rootPath}/eventLog/alram.json'
             ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
@@ -230,6 +230,7 @@
          */
         function alramCancel(){
             var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+            var alramIdList = $("#alramList li.check").map(function(){return $(this).attr("alramId")}).get();
             var eventCancelDesc = $("#eventCancelDesc").val();
 
             if(eventCancelDesc==null || eventLogIdList.length == 0){
@@ -239,6 +240,7 @@
 
             var param = {
                 'eventLogIds' : eventLogIdList.join(",")
+                ,'alramIds' : alramIdList.join(",")
                 ,'eventCancelDesc' : eventCancelDesc
             };
 
@@ -429,7 +431,19 @@
                                 modifyElementClass($(this),'check','add');
                             }
                         });
-                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']);
+
+                        var eventInfos = eventLog['infos'];
+                        var alramId = "";
+                        if(eventInfos!=null){
+                            for(var i in eventInfos){
+                                if(eventInfos[i]['key']=='alramId'){
+                                    alramId = eventInfos[i]['value'];
+                                    break;
+                                }
+                            }
+                        }
+                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']).attr("alramId",alramId);
+
 //                        alramTag.find("#eventType").text(eventTypeName);
                         alramTag.find("#eventName").text(eventLog['eventName']);
                         alramTag.find("#areaName").text(eventLog['areaName']);
@@ -451,10 +465,10 @@
 
                         if(flag==true){
                             /* 애니메이션 */
-                            $(".issue_btn").removeClass("issue_on");
+                            $(".issue_btn").removeClass("issue");
                             try {
                                 setTimeout(function() {
-                                    $(".issue_btn").addClass("issue_on");
+                                    $(".issue_btn").addClass("issue");
                                 }, 150);
                             } catch(e) {}
 

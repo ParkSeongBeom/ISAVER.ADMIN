@@ -73,7 +73,7 @@ public class AreaCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = areaSvc.findByArea(parameters);
-        modelAndView.setViewName("areaDetail");
+//        modelAndView.setViewName("areaDetail");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

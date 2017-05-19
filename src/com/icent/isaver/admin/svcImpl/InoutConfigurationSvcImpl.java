@@ -47,7 +47,16 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
     private DataSourceTransactionManager transactionManager;
 
     @Value("${ws.server.address}")
-    private String urlWebSocket = null;
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSendEvent}")
+    private String wsUrlSendEvent = null;
 
     @Inject
     private InoutConfigurationDao inoutConfigurationDao;
@@ -99,8 +108,8 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             Map websocketParam = new HashMap();
             websocketParam.put("messageType","refreshView");
 
-            InetAddress address = InetAddress.getByName(urlWebSocket);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + AdminResource.WS_PORT + "/" + AdminResource.WS_PROJECT_NAME + AdminResource.WS_PATH_URL_SENDEVENT);
+            InetAddress address = InetAddress.getByName(wsAddress);
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
