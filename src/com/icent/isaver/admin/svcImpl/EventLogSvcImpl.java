@@ -168,7 +168,7 @@ public class EventLogSvcImpl implements EventLogSvc {
                 vmsParam.put("alarmId",parameters.get("alarmIds"));
                 vmsParam.put("time",eventCancelDatetime);
 
-                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + "/" + vmsProjectName + vmsUrlSendEvent, false);
+                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + vmsUrlSendEvent, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
