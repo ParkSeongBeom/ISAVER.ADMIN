@@ -58,20 +58,20 @@
             'logoutUrl':'${rootPath}/logout.html'
             ,'mainUrl':'${rootPath}/main.html'
             ,'detailUrl':'${rootPath}/dashboard/detail.html'
-            ,'alramListUrl':'${rootPath}/eventLog/alram.json'
-            ,'alramDetailUrl':'${rootPath}/action/eventDetail.json'
-            ,'alramCancelUrl':'${rootPath}/eventLog/cancel.json'
+            ,'alarmListUrl':'${rootPath}/eventLog/alarm.json'
+            ,'alarmDetailUrl':'${rootPath}/action/eventDetail.json'
+            ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
 
         var layoutMessageConfig = {
-            alramCancelSuccess    :'<spring:message code="dashboard.message.alramCancelSuccess"/>'
-            , alramDetailFailure  :'<spring:message code="dashboard.message.alramDetailFailure"/>'
-            , alramCancelFailure  :'<spring:message code="dashboard.message.alramCancelFailure"/>'
-            , emptyAlramCancel    :'<spring:message code="dashboard.message.emptyAlramCancel"/>'
-            , emptyAlramCancelDesc:'<spring:message code="dashboard.message.emptyAlramCancelDesc"/>'
+            alarmCancelSuccess    :'<spring:message code="dashboard.message.alarmCancelSuccess"/>'
+            , alarmDetailFailure  :'<spring:message code="dashboard.message.alarmDetailFailure"/>'
+            , alarmCancelFailure  :'<spring:message code="dashboard.message.alarmCancelFailure"/>'
+            , emptyAlarmCancel    :'<spring:message code="dashboard.message.emptyAlarmCancel"/>'
+            , emptyAlarmCancelDesc:'<spring:message code="dashboard.message.emptyAlarmCancelDesc"/>'
             , profileFailure      :'<spring:message code="dashboard.message.profileFailure"/>'
             , emptyUserName       :'<spring:message code="dashboard.message.emptyUserName"/>'
             , saveProfileSuccess  :'<spring:message code="dashboard.message.saveProfileSuccess"/>'
@@ -112,25 +112,25 @@
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
                 if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup, .personal_popup, .admin_popup").length) {
-                    alramShowHide('list','hide');
+                    alarmShowHide('list','hide');
                 }
             });
 
             // 알림센터 내부 셀렉트 박스 클릭시 이벤트
             $("#eventType").on("change",function(){
-                alramTypeChangeHandler();
+                alarmTypeChangeHandler();
             });
             $("#areaType").on("change",function(){
-                alramTypeChangeHandler();
+                alarmTypeChangeHandler();
             });
 
             bodyAddClass();
             printTime();
 
-//            dashBoardHelper.addRequestData('alram', layoutUrlConfig['alramListUrl'], null, alramSuccessHandler, alramFailureHandler);
+//            dashBoardHelper.addRequestData('alarm', layoutUrlConfig['alarmListUrl'], null, alarmSuccessHandler, alarmFailureHandler);
 //            dashBoardHelper.startInterval();
             // 알람 리스트 불러오기
-            layoutAjaxCall('alramList');
+            layoutAjaxCall('alarmList');
 
             wsConnect();
             aliveSend(900000);
@@ -151,28 +151,28 @@
             $("#eventType option[value=SCT003]").attr("value", "gas");
         });
 
-        function alramListRefresh() {
-            if($("#alramList li").length>0){
+        function alarmListRefresh() {
+            if($("#alarmList li").length>0){
                 modifyElementClass($(".issue_btn"),'issue','add');
             }else{
                 modifyElementClass($(".issue_btn"),'issue','remove');
             }
         }
 
-        function alramTypeChangeHandler() {
-            $("#alramList li").hide();
+        function alarmTypeChangeHandler() {
+            $("#alarmList li").hide();
             var eventType = $("#eventType option:selected").val() != "" ? "[eventType='"+$("#eventType option:selected").val()+"']" : "";
             var areaType = $("#areaType option:selected").val() != "" ? "[areaId='"+$("#areaType option:selected").val()+"']" : "";
-            $("#alramList li"+eventType+areaType).show();
+            $("#alarmList li"+eventType+areaType).show();
         }
 
-        function alramAllCheck(_this){
+        function alarmAllCheck(_this){
             if($(_this).is(":checked")){
-                $("#alramList li").addClass("check");
-                $("#alramList .check_input").prop("checked",true);
+                $("#alarmList li").addClass("check");
+                $("#alarmList .check_input").prop("checked",true);
             }else{
-                $("#alramList li").removeClass("check");
-                $("#alramList .check_input").prop("checked",false);
+                $("#alarmList li").removeClass("check");
+                $("#alarmList .check_input").prop("checked",false);
             }
         }
 
@@ -201,14 +201,14 @@
         }
 
         /**
-         * open alram cencel popup
+         * open alarm cencel popup
          * @author psb
          */
-        function openAlramCancelPopup(){
-            var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+        function openAlarmCancelPopup(){
+            var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
 
             if(eventLogIdList==null || eventLogIdList.length == 0){
-                layoutAlertMessage('emptyAlramCancel');
+                layoutAlertMessage('emptyAlarmCancel');
                 return false;
             }
 
@@ -216,35 +216,35 @@
         }
 
         /**
-         * close alram cencel popup
+         * close alarm cencel popup
          * @author psb
          */
-        function closeAlramCancelPopup(){
+        function closeAlarmCancelPopup(){
             $("#eventCancelDesc").val("");
             $(".attention_popup").hide();
         }
 
         /**
-         * alram cencel
+         * alarm cencel
          * @author psb
          */
-        function alramCancel(){
-            var eventLogIdList = $("#alramList li.check").map(function(){return $(this).attr("eventLogId")}).get();
-            var alramIdList = $("#alramList li.check").map(function(){return $(this).attr("alramId")}).get();
+        function alarmCancel(){
+            var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+            var alarmIdList = $("#alarmList li.check").map(function(){return $(this).attr("alarmId")}).get();
             var eventCancelDesc = $("#eventCancelDesc").val();
 
             if(eventCancelDesc==null || eventLogIdList.length == 0){
-                layoutAlertMessage('emptyAlramCancelDesc');
+                layoutAlertMessage('emptyAlarmCancelDesc');
                 return false;
             }
 
             var param = {
                 'eventLogIds' : eventLogIdList.join(",")
-                ,'alramIds' : alramIdList.join(",")
+                ,'alarmIds' : alarmIdList.join(",")
                 ,'eventCancelDesc' : eventCancelDesc
             };
 
-            layoutAjaxCall('alramCancel',param);
+            layoutAjaxCall('alarmCancel',param);
         }
 
         /**
@@ -265,7 +265,7 @@
             var password_confirm = $("#password_confirm").val().trim();
 
             if(userName==null || userName==""){
-                layoutAlertMessage('alramCancelSuccess');
+                layoutAlertMessage('alarmCancelSuccess');
                 return false;
             }
 
@@ -308,18 +308,18 @@
         }
 
         /**
-         * search alram detail (action)
+         * search alarm detail (action)
          * @author psb
          */
-        function searchAlramDetail(eventLogId, eventId, eventType){
+        function searchAlarmDetail(eventLogId, eventId, eventType){
             var paramData = {
                 eventLogId  : eventLogId
                 , eventId   : eventId
                 , eventType : eventType
             };
 
-            alramShowHide('detail','hide');
-            layoutAjaxCall('alramDetail',paramData);
+            alarmShowHide('detail','hide');
+            layoutAjaxCall('alarmDetail',paramData);
         }
 
         /**
@@ -337,15 +337,15 @@
          */
         function layoutSuccessHandler(data, dataType, actionType){
             switch(actionType){
-                case 'alramList':
-                    alramListRender(data);
+                case 'alarmList':
+                    alarmListRender(data);
                     break;
-                case 'alramDetail':
-                    alramDetailRender(data);
+                case 'alarmDetail':
+                    alarmDetailRender(data);
                     break;
-                case 'alramCancel':
-                    closeAlramCancelPopup();
-                    layoutAlertMessage('alramCancelSuccess');
+                case 'alarmCancel':
+                    closeAlarmCancelPopup();
+                    layoutAlertMessage('alarmCancelSuccess');
                     break;
                 case 'profile':
                     var user = data['user'];
@@ -380,27 +380,27 @@
         }
 
         /**
-         * Alram List Render
+         * Alarm List Render
          * @author psb
          * @private
          */
-        function alramListRender(data){
+        function alarmListRender(data){
             if(data!=null && data['eventLogs']!=null){
                 for(var index in data['eventLogs']){
-                    addAlram(data['eventLogs'][index], false);
+                    addAlarm(data['eventLogs'][index], false);
                 }
 
-                alramListRefresh();
-                alramTypeChangeHandler();
+                alarmListRefresh();
+                alarmTypeChangeHandler();
             }
         }
 
         /**
-         * Add Alram
+         * Add Alarm
          * @author psb
          * @private
          */
-        function addAlram(eventLog, flag){
+        function addAlarm(eventLog, flag){
             if(eventLog!=null){
                 var eventTypeName = null;
                 var eventId = eventLog['eventId'];
@@ -415,14 +415,14 @@
                 }
 
                 if(eventTypeName!=null){
-                    if($("#alramList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
+                    if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
                         if($("#marqueeList .js-marquee-wrapper").length>0){
                             $('.marquee').marquee('destroy');
                         }
 
                         // 알림센터
-                        var alramTag = templateHelper.getTemplate("alram01");
-                        alramTag.on("click",function(){
+                        var alarmTag = templateHelper.getTemplate("alarm01");
+                        alarmTag.on("click",function(){
                             if($(this).hasClass("check")){
                                 $(this).find(".check_input").prop("checked",false);
                                 modifyElementClass($(this),'check','remove');
@@ -433,31 +433,31 @@
                         });
 
                         var eventInfos = eventLog['infos'];
-                        var alramId = "";
+                        var alarmId = "";
                         if(eventInfos!=null){
                             for(var i in eventInfos){
-                                if(eventInfos[i]['key']=='alramId'){
-                                    alramId = eventInfos[i]['value'];
+                                if(eventInfos[i]['key']=='alarmId'){
+                                    alarmId = eventInfos[i]['value'];
                                     break;
                                 }
                             }
                         }
-                        alramTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']).attr("alramId",alramId);
+                        alarmTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']).attr("alarmId",alarmId);
 
-//                        alramTag.find("#eventType").text(eventTypeName);
-                        alramTag.find("#eventName").text(eventLog['eventName']);
-                        alramTag.find("#areaName").text(eventLog['areaName']);
-                        alramTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                        alramTag.find(".infor_open").attr("onclick","javascript:searchAlramDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
+//                        alarmTag.find("#eventType").text(eventTypeName);
+                        alarmTag.find("#eventName").text(eventLog['eventName']);
+                        alarmTag.find("#areaName").text(eventLog['areaName']);
+                        alarmTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                        alarmTag.find(".infor_open").attr("onclick","javascript:searchAlarmDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
 
                         // 현C 요청으로 클래스 삽입
                         // 알림센터 아이콘 노출(2016-12-23)
-                        alramTag.find(".dbc_contents").addClass(eventLog['eventType']);
-                        $("#alramList").prepend(alramTag);
+                        alarmTag.find(".dbc_contents").addClass(eventLog['eventType']);
+                        $("#alarmList").prepend(alarmTag);
 
                         // marquee
                         var marqueeTag = templateHelper.getTemplate("marquee01");
-                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alramShowHide('list', 'show');");
+                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alarmShowHide('list', 'show');");
                         marqueeTag.prepend(
                             $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
                         );
@@ -475,7 +475,7 @@
                             /* 싸이렌 */
                             playSegment();
                             var toastTag = templateHelper.getTemplate("toast");
-                            toastTag.attr("onclick","javascript:alramShowHide('list', 'show');");
+                            toastTag.attr("onclick","javascript:alarmShowHide('list', 'show');");
                             toastTag.attr("eventLogId",eventLog['eventLogId']);
                             toastTag.find("#toastEventName").text(eventTypeName);
                             toastTag.find("#toastEventDesc").text(eventLog['eventName']);
@@ -488,7 +488,7 @@
                                 },3000);
                             }
 
-                            alramTypeChangeHandler();
+                            alarmTypeChangeHandler();
                         }
                     }
                 }
@@ -496,31 +496,31 @@
         }
 
         /**
-         * Remove Alram
+         * Remove Alarm
          * @author psb
          * @private
          */
-        function removeAlram(eventLog){
+        function removeAlarm(eventLog){
             if(eventLog!=null && eventLog['eventLogIds']!=null){
                 var eventLogIds = eventLog['eventLogIds'].split(",");
                 for(var index in eventLogIds){
-                    $("#alramList li[eventLogId='"+eventLogIds[index]+"']").remove();
+                    $("#alarmList li[eventLogId='"+eventLogIds[index]+"']").remove();
                     if($("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").length>0){
                         $('.marquee').marquee('destroy');
                         $("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").remove();
                     }
                 }
 
-                alramListRefresh();
+                alarmListRefresh();
             }
         }
 
         /**
-         * Alram Detail Render
+         * Alarm Detail Render
          * @author psb
          * @private
          */
-        function alramDetailRender(data){
+        function alarmDetailRender(data){
             if(data!=null && data['action']!=null){
                 var action = data['action'];
                 var eventTypeName;
@@ -534,11 +534,11 @@
                         break;
                 }
 
-                $("#alramEvent").text(eventTypeName + " / " + action['eventName']);
-                $("#alramActionDesc").html(action['actionDesc']);
+                $("#alarmEvent").text(eventTypeName + " / " + action['eventName']);
+                $("#alarmActionDesc").html(action['actionDesc']);
 
-                modifyElementClass($("#alramList li[eventLogId='"+data['paramBean']['eventLogId']+"']"),'infor','add');
-                alramShowHide('detail','show');
+                modifyElementClass($("#alarmList li[eventLogId='"+data['paramBean']['eventLogId']+"']"),'infor','add');
+                alarmShowHide('detail','show');
             }else{
                 alert("대응 정보가 없습니다.");
             }
@@ -558,7 +558,7 @@
         /**
          * 경보 show / hide
          */
-        function alramShowHide(_type, _action, _status, _area){
+        function alarmShowHide(_type, _action, _status, _area){
             switch (_type){
                 case "list":
                     if(_action == 'show'){
@@ -581,15 +581,15 @@
                     }else if(_action == 'hide'){
                         modifyElementClass($(".dbs_area"),'on','remove');
                         modifyElementClass($(".db_area"),'on','remove');
-                        modifyElementClass($("#alramList > li"),'infor','remove');
+                        modifyElementClass($("#alarmList > li"),'infor','remove');
 
                         $("#eventType option:eq(0)").prop("selected", "selected");
                         $("#areaType option:eq(0)").prop("selected", "selected");
                     }else{
                         if($(".db_area").hasClass("on")){
-                            alramShowHide('list','hide');
+                            alarmShowHide('list','hide');
                         }else{
-                            alramShowHide('list','show');
+                            alarmShowHide('list','show');
                         }
                     }
                     break;
@@ -598,7 +598,7 @@
                         modifyElementClass($(".dbs_area"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".dbs_area"),'on','remove');
-                        modifyElementClass($("#alramList > li"),'infor','remove');
+                        modifyElementClass($("#alarmList > li"),'infor','remove');
                     }
                     break;
             }
@@ -771,12 +771,12 @@
                 case "addEvent": // 일반이벤트 등록
                     refreshData = true;
                     break;
-                case "addAlramEvent": // 알림이벤트 등록
-                    addAlram(resultData['alramEventLog'][0], true);
+                case "addAlarmEvent": // 알림이벤트 등록
+                    addAlarm(resultData['alarmEventLog'][0], true);
                     refreshData = true;
                     break;
-                case "removeAlramEvent": // 알림이벤트 해제
-                    removeAlram(resultData['alramEventLog']);
+                case "removeAlarmEvent": // 알림이벤트 해제
+                    removeAlarm(resultData['alarmEventLog']);
                     refreshData = true;
                     break;
                 case "refreshView": // 화면갱신
@@ -805,7 +805,7 @@
                     <span onclick="javascript:getProfile(); event.stopPropagation();">${sessionScope.authAdminInfo.userName}</span>
                 </div>
                 <div class="hrs_btn_set">
-                    <button class="db_btn issue_btn" onclick="javascript:alramShowHide('list');" title="<spring:message code="dashboard.title.alramCenter"/>"></button>
+                    <button class="db_btn issue_btn" onclick="javascript:alarmShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
                     <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
                 </div>
             </div>
@@ -825,12 +825,12 @@
     <aside class="db_area">
         <div class="db_header">
             <div>
-                <h3 onclick="javascript:alramShowHide('list', 'hide'); return false;"><spring:message code="dashboard.title.alramCenter"/></h3>
-                <button class="btn btype03 bstyle07" href="#" onclick="javascript:openAlramCancelPopup();"><spring:message code="dashboard.title.alramCancel"/></button>
+                <h3 onclick="javascript:alarmShowHide('list', 'hide'); return false;"><spring:message code="dashboard.title.alarmCenter"/></h3>
+                <button class="btn btype03 bstyle07" href="#" onclick="javascript:openAlarmCancelPopup();"><spring:message code="dashboard.title.alarmCancel"/></button>
             </div>
             <div>
                 <div class="check_box_set">
-                    <input type="checkbox" class="check_input" onclick="javascript:alramAllCheck(this);"/>
+                    <input type="checkbox" class="check_input" onclick="javascript:alarmAllCheck(this);"/>
                     <label class="lablebase lb_style01"></label>
                 </div>
                 <isaver:codeSelectBox groupCodeId="SCT" htmlTagId="eventType" allModel="true"  />
@@ -844,10 +844,10 @@
             </div>
         </div>
         <div class="db_contents nano">
-            <ul class="nano-content" id="alramList"></ul>
+            <ul class="nano-content" id="alarmList"></ul>
         </div>
         <div class="db_bottom">
-            <button href="#" onclick="alramShowHide('list', 'hide');"><spring:message code="common.button.close"/></button>
+            <button href="#" onclick="alarmShowHide('list', 'hide');"><spring:message code="common.button.close"/></button>
         </div>
     </aside>
     <!-- 알림목록 영역 End -->
@@ -855,14 +855,14 @@
     <!-- 알림상세 영역 Start -->
     <aside class="dbs_area">
         <div class="db_header">
-            <div><h3 onclick="javascript:alramShowHide('detail', 'hide'); return false;"><spring:message code="dashboard.title.action"/></h3></div>
-            <div><p id="alramEvent"></p></div>
+            <div><h3 onclick="javascript:alarmShowHide('detail', 'hide'); return false;"><spring:message code="dashboard.title.action"/></h3></div>
+            <div><p id="alarmEvent"></p></div>
         </div>
         <div class="db_contents nano">
-            <div class="nano-content text_area" id="alramActionDesc"></div>
+            <div class="nano-content text_area" id="alarmActionDesc"></div>
         </div>
         <div class="db_bottom">
-            <button href="#" onclick="alramShowHide('detail', 'hide');"><spring:message code="common.button.close"/></button>
+            <button href="#" onclick="alarmShowHide('detail', 'hide');"><spring:message code="common.button.close"/></button>
         </div>
     </aside>
     <!-- 알림상세 영역 End -->
@@ -876,25 +876,25 @@
         <section class="layer_wrap i_type07">
             <article class="layer_area">
                 <div class="mp_header">
-                    <h2><spring:message code="dashboard.title.alramCancel"/></h2>
+                    <h2><spring:message code="dashboard.title.alarmCancel"/></h2>
                 </div>
                 <div class="mp_contents vh_mode">
                     <div class="mc_element">
                         <div class="time_select_contents">
                             <!-- 1 SET -->
                             <div>
-                                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alramCancel'/>"></textarea>
+                                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alarmCancel'/>"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" onclick="javascript:alramCancel();"><spring:message code="common.button.save"/></button>
-                        <button class="btn btype01 bstyle07" onclick="javascript:closeAlramCancelPopup();"><spring:message code="common.button.cancel"/></button>
+                        <button class="btn btype01 bstyle07" onclick="javascript:alarmCancel();"><spring:message code="common.button.save"/></button>
+                        <button class="btn btype01 bstyle07" onclick="javascript:closeAlarmCancelPopup();"><spring:message code="common.button.cancel"/></button>
                     </div>
                 </div>
             </article>
         </section>
-        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlramCancelPopup();"></div>
+        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlarmCancelPopup();"></div>
     </aside>
     <!-- 알림해지 레이어 팝업 End -->
 

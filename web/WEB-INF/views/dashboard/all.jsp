@@ -37,7 +37,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="worker" style="display: none;">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alarmShowHide('list','show');" name="worker" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -89,7 +89,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="crane" style="display: none;">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alarmShowHide('list','show');" name="crane" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -115,7 +115,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gasState"/></h2>
                             <div>
-                                <button class="alra_btn" href="#" onclick="javascript:alramShowHide('list','show');" name="gas" style="display: none;">0</button>
+                                <button class="alra_btn" href="#" onclick="javascript:alarmShowHide('list','show');" name="gas" style="display: none;">0</button>
                             </div>
                         </div>
                         <div class="mp_contents">
@@ -213,7 +213,7 @@
     });
 
     /**
-     * alram success handler
+     * alarm success handler
      * @author psb
      * @private
      */

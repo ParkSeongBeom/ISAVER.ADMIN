@@ -162,7 +162,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.worker"/></h2>
                             <div>
-                                <button class="db_btn alra_btn workerAlramCnt" href="#" onclick="javascript:alramShowHide('list','show', 'worker', '${area.areaId}');" id="alarm_worker_layer" style="display: none;">0</button>
+                                <button class="db_btn alra_btn workerAlarmCnt" href="#" onclick="javascript:alarmShowHide('list','show', 'worker', '${area.areaId}');" id="alarm_worker_layer" style="display: none;">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('worker');"></button>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.crane"/></h2>
                             <div>
-                                <button class="db_btn alra_btn craneAlramCnt" href="#" onclick="javascript:alramShowHide('list','show','crane', '${area.areaId}');"  id="alarm_crane_layer" style="display: none;">0</button>
+                                <button class="db_btn alra_btn craneAlarmCnt" href="#" onclick="javascript:alarmShowHide('list','show','crane', '${area.areaId}');"  id="alarm_crane_layer" style="display: none;">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('crane');"></button>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                         <div class="mp_header">
                             <h2><spring:message code="dashboard.title.gas"/></h2>
                             <div>
-                                <button class="db_btn alra_btn gasAlramCnt" href="#" onclick="javascript:alramShowHide('list','show');"  id="alarm_gas_layer" style="display: none;">0</button>
+                                <button class="db_btn alra_btn gasAlarmCnt" href="#" onclick="javascript:alarmShowHide('list','show');"  id="alarm_gas_layer" style="display: none;">0</button>
                                 <button class="db_btn zoom_btn" href="#" onclick="javascript:openDetailPopup('gas');"></button>
                             </div>
                         </div>
@@ -615,7 +615,7 @@
     }
 
     /**
-     * alram success handler
+     * alarm success handler
      * @author psb
      * @private
      */
@@ -670,8 +670,8 @@
                 }
             }
 
-            if($(".workerAlramCnt").text() != String(workerEventCnt)){
-                $(".workerAlramCnt").text(workerEventCnt);
+            if($(".workerAlarmCnt").text() != String(workerEventCnt)){
+                $(".workerAlarmCnt").text(workerEventCnt);
             }
 
             if(workerEventCnt>0){
@@ -812,8 +812,8 @@
 
             divTag.find(".eventCnt").text(evtCraneDetectionCount);
 
-            if($(".craneAlramCnt").text() != String(evtCraneDetectionCount)){
-                $(".craneAlramCnt").text(evtCraneDetectionCount);
+            if($(".craneAlarmCnt").text() != String(evtCraneDetectionCount)){
+                $(".craneAlarmCnt").text(evtCraneDetectionCount);
             }
 
             if(evtCraneDetectionCount>0){

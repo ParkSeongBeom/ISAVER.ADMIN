@@ -47,7 +47,7 @@ public interface EventLogSvc {
      * @param parameters
      * @return
      */
-    ModelAndView findListEventLogForAlram(Map<String, String> parameters);
+    ModelAndView findListEventLogForAlarm(Map<String, String> parameters);
 
     /**
      * 알림 해제한다

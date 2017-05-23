@@ -68,9 +68,9 @@ public class EventLogCtrl {
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alram")
-    public ModelAndView findListEventLogForAlram(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlram(parameters);
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alarm")
+    public ModelAndView findListEventLogForAlarm(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlarm(parameters);
         return modelAndView;
     }
 

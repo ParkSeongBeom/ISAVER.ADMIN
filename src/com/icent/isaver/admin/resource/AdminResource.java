@@ -156,10 +156,10 @@ public class AdminResource {
     public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT210"};
 
     /**
-     * alram eventIds
+     * alarm eventIds
      * @author psb
      */
-    public final static List<String> ALRAM_EVENT = new ArrayList(){{
+    public final static List<String> ALARM_EVENT = new ArrayList(){{
         add("EVT009");
         add("EVT013");
         add("EVT015");

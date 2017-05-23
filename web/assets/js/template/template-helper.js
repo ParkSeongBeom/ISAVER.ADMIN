@@ -9,7 +9,7 @@ var TemplateHelper = (
         /********************************************************************************
          * 알림 리스트 template
          *********************************************************************************/
-        var ALRAM_CONTENT_TEMPLATE = $("<li/>").append(
+        var ALARM_CONTENT_TEMPLATE = $("<li/>").append(
             $("<div/>", {class:"check_box_set"}).append(
                 $("<input/>", {type:"checkbox" ,class:"check_input"})
             ).append(
@@ -75,8 +75,8 @@ var TemplateHelper = (
             var _returnTag = null;
 
             switch (target) {
-                case "alram01":
-                    _returnTag = ALRAM_CONTENT_TEMPLATE.clone();
+                case "alarm01":
+                    _returnTag = ALARM_CONTENT_TEMPLATE.clone();
                     break;
                 case "marquee01":
                     _returnTag = MARQUEE_CONTENT_TEMPLATE.clone();

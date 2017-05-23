@@ -89,22 +89,22 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
-    public ModelAndView findListEventLogForAlram(Map<String, String> parameters) {
+    public ModelAndView findListEventLogForAlarm(Map<String, String> parameters) {
         Map param = new HashMap();
         StringBuilder builder = new StringBuilder();
 
-        for(int index=0; index< AdminResource.ALRAM_EVENT.size(); index++){
+        for(int index=0; index< AdminResource.ALARM_EVENT.size(); index++){
             if(index!=0){builder.append(CommonResource.COMMA_STRING);}
-            builder.append(AdminResource.ALRAM_EVENT.get(index));
+            builder.append(AdminResource.ALARM_EVENT.get(index));
         }
         if(StringUtils.notNullCheck(parameters.get("datetime"))){
             param.put("datetime", parameters.get("datetime"));
         }
-        param.put("alramEventId", builder.toString());
+        param.put("alarmEventId", builder.toString());
         param.put("craneEventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
         param.put("workerEventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
 
-        List<EventLogBean> events = eventLogDao.findListEventLogForAlram(param);
+        List<EventLogBean> events = eventLogDao.findListEventLogForAlarm(param);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogs", events);
@@ -148,8 +148,8 @@ public class EventLogSvcImpl implements EventLogSvc {
             Map websocketParam = new HashMap();
             Map warnParam = new HashMap();
             warnParam.put("eventLogIds", parameters.get("eventLogIds"));
-            websocketParam.put("alramEventLog", warnParam);
-            websocketParam.put("messageType","removeAlramEvent");
+            websocketParam.put("alarmEventLog", warnParam);
+            websocketParam.put("messageType","removeAlarmEvent");
 
             InetAddress address = InetAddress.getByName(wsAddress);
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, true);
@@ -162,10 +162,10 @@ public class EventLogSvcImpl implements EventLogSvc {
          * @author psb
          * @date 2017.05.19
          */
-        if (StringUtils.notNullCheck(parameters.get("alramIds")) && vmsLogSend.equals(CommonResource.YES)) {
+        if (StringUtils.notNullCheck(parameters.get("alarmIds")) && vmsLogSend.equals(CommonResource.YES)) {
             try {
                 Map<String, String> vmsParam = new HashMap();
-                vmsParam.put("alramId",parameters.get("alramIds"));
+                vmsParam.put("alarmId",parameters.get("alarmIds"));
                 vmsParam.put("time",eventCancelDatetime);
 
                 AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + "/" + vmsProjectName + vmsUrlSendEvent, false);
