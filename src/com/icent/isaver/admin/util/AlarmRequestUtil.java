@@ -67,7 +67,6 @@ public class AlarmRequestUtil {
         }else{
             for (String key : parameters.keySet()){
                 nvps.add(new BasicNameValuePair(key, parameters.get(key)));
-                System.out.println("key:"+key+",value:"+parameters.get(key));
             }
         }
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
