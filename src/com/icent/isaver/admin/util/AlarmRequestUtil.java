@@ -1,12 +1,14 @@
 package com.icent.isaver.admin.util;
 
 
+import com.kst.common.util.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -39,7 +41,7 @@ public class AlarmRequestUtil {
      * @return
      * @throws IOException
      */
-    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, boolean jsonFlag) throws IOException {
+    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, String jsonName) throws IOException {
 
         CloseableHttpClient commonHttpClient = null;
         HttpPost httpPost = null;
@@ -51,29 +53,21 @@ public class AlarmRequestUtil {
         httpPost = new HttpPost(requestHttpUrl);
         final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout* 1000).setSocketTimeout(timeout* 1000).build();
         httpPost.setConfig(params);
-
-        /**
-         * Set Header
-         */
         httpPost.addHeader("charset", "UTF-8");
-        httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
 
-        /**
-         * Set Body
-         */
-        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        if(jsonFlag){
-            nvps.add(new BasicNameValuePair("jsonData", new ObjectMapper().writeValueAsString(parameters)));
+        if(StringUtils.notNullCheck(jsonName)){
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            nvps.add(new BasicNameValuePair(jsonName, new ObjectMapper().writeValueAsString(parameters)));
+
+            httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
         }else{
-            for (String key : parameters.keySet()){
-                nvps.add(new BasicNameValuePair(key, parameters.get(key)));
-            }
-        }
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+            StringEntity stringEntity = new StringEntity(new ObjectMapper().writeValueAsString(parameters));
 
-        /**
-         * Set Config
-         */
+            httpPost.addHeader("content-type", "application/json");
+            httpPost.setEntity(stringEntity);
+        }
+
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(timeout * 1000)
                 .setConnectTimeout(timeout * 1000)
