@@ -1514,12 +1514,12 @@ ul.u_defalut {
     width: 40px;
     height: 40px;
     font-size: 22px; }
-  .menu_tree_set button.on, .menu_tree_set button.on + ul li button, .menu_tree_set.divtree_type button.on, .menu_tree_set.divtree_type button.on + ul li button {
+  .menu_tree_set button.on, .menu_tree_set.divtree_type button.on {
     background-color: #e41717;
     border-color: transparent;
     color: #fff;
     opacity: 0.4; }
-    .menu_tree_set button.on:before, .menu_tree_set button.on + ul li button:before, .menu_tree_set.divtree_type button.on:before, .menu_tree_set.divtree_type button.on + ul li button:before {
+    .menu_tree_set button.on:before, .menu_tree_set.divtree_type button.on:before {
       content: "\e92c"; }
   .menu_tree_set input[type="checkbox"]:checked + button, .menu_tree_set input[type="checkbox"]:checked + button + ul li button, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button + ul li button {
     background-color: #e41717;

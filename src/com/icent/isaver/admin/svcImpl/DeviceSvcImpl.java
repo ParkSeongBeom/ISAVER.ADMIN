@@ -105,6 +105,22 @@ public class DeviceSvcImpl implements DeviceSvc {
     }
 
     @Override
+    public ModelAndView findTbListDevice(Map<String, String> parameters) {
+        List<DeviceBean> deviceList = deviceDao.findTbListDevice(parameters);
+        ModelAndView areaModelAndView = areaSvc.findAllAreaTree(parameters);
+
+        List<AreaBean> areaTreeList = (List<AreaBean>) areaModelAndView.getModel().get("areaList");
+        List<EventBean> events = eventDao.findListEvent(null);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("devices", deviceList);
+        modelAndView.addObject("areas", areaTreeList);
+        modelAndView.addObject("events", events);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findByDevice(Map<String, String> parameters) {
 
         ModelAndView modelAndView = new ModelAndView();

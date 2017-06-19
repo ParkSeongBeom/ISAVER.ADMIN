@@ -203,14 +203,37 @@
 //        });
 
         /* 작업자 */
-        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('worker', urlConfig['workerUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler, appendEventHandler);
         /* 크레인 */
-        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('crane', urlConfig['craneUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler, appendEventHandler);
         /* 진출입 */
-        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('inout', urlConfig['inoutUrl'], null, dashBoardSuccessHandler, dashBoardFailureHandler, appendEventHandler);
         /* 차트 */
-        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashBoardHelper.addRequestData('chart', urlConfig['chartUrl'], {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()}, dashBoardSuccessHandler, dashBoardFailureHandler, appendEventHandler);
     });
+
+    /**
+     * alarm success handler
+     * @author psb
+     * @private
+     */
+    function appendEventHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'worker':
+                workerRender(data);
+                break;
+            case 'crane':
+                craneRender(data);
+                break;
+            case 'inout':
+                inoutRender(data);
+                break;
+            case 'chart':
+                chartRender(data);
+                dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
+                break;
+        }
+    }
 
     /**
      * alarm success handler

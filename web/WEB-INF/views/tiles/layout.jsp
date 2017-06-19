@@ -786,8 +786,9 @@
                     break;
             }
 
-            if(refreshData){
+            if(refreshData){a
                 dashBoardHelper.getData();
+//                dashBoardHelper.appendEvent(resultData['eventLog']);
             }
         }
     </script>

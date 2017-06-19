@@ -44,7 +44,7 @@ var DashBoardHelper = (
          * request data add
          * @author psb
          */
-        this.addRequestData = function(_actionType, _url, _data, _successHandler, _failureHandler){
+        this.addRequestData = function(_actionType, _url, _data, _successHandler, _failureHandler, _appendEventHandler){
             if(_actionType==null){
                 console.error('[DashBoardHelper][addRequestData] _actionType is null');
                 return false;
@@ -75,6 +75,7 @@ var DashBoardHelper = (
                 ,'data' : _data
                 ,'success' : _successHandler
                 ,'failure' : _failureHandler
+                ,'appendEvent' : _appendEventHandler
             };
         };
 
@@ -107,6 +108,20 @@ var DashBoardHelper = (
                 var _requestInfo = _requestData[index];
 
                 sendAjaxPostRequest(_requestInfo['url'],_requestInfo['data'],_requestInfo['success'],_requestInfo['failure'],index);
+            }
+        };
+
+        /**
+         * append data
+         * @author psb
+         */
+        this.appendEvent = function(eventLog){
+            for(var index in _requestData){
+                var _appendEventHandler = _requestData[index]['appendEvent'];
+
+                if(_appendEventHandler!=null){
+                    _appendEventHandler(eventLog);
+                }
             }
         };
     }

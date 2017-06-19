@@ -212,15 +212,15 @@
         $(".menu_tree_set Button").not("#allButton").on("click", function() {
 
             if ($(this).hasClass("on")) {
-                $(this).parent().find("ul button").removeAttr("class");
-                $(this).removeAttr("class");
+                $(this).parent().find("ul button").removeClass("on");
+                $(this).removeClass("on");
             } else {
-                $(this).parent().find("ul button").removeAttr("class").attr("class", "on");
-                $(this).attr("class", "on");
+                $(this).parent().find("ul button").not(".on").addClass("on");
+                $(this).addClass("on");
             }
 
-            var menuId = $(this).attr("menu_id");
-            $(this).parents("li").children("button").not("#allButton").not("button[menu_id=" +menuId + "]").attr("class", "on");
+//            var menuId = $(this).attr("menu_id");
+//            $(this).parents("li").children("button").not("#allButton").not("button[menu_id=" +menuId + "]").attr("class", "on");
 
         });
 
@@ -268,7 +268,6 @@
      @author kst
      */
     function requestRoleMenu_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
         alertMessage(actionType + 'Failure');
     }
 

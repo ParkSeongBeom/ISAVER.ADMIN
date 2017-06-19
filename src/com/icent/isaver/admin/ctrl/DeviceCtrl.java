@@ -78,6 +78,25 @@ public class DeviceCtrl {
     }
 
     /**
+     * 장치 목록을 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/tbList")
+    public ModelAndView findTbListDevice(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters = AdminHelper.checkReloadList(request, response, "deviceTbList", parameters);
+        AdminHelper.setPageParam(parameters, defaultPageSize);
+
+        ModelAndView modelAndView = deviceSvc.findTbListDevice(parameters);
+        modelAndView.setViewName("deviceTbList");
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    /**
      * 장치 정보를 가져온다.
      *
      * @author dhj
@@ -88,7 +107,7 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByDevice(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = deviceSvc.findByDevice(parameters);
-//        modelAndView.setViewName("deviceDetail");
+        modelAndView.setViewName("deviceDetail");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

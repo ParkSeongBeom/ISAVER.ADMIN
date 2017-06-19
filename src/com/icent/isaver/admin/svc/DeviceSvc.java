@@ -54,6 +54,15 @@ public interface DeviceSvc {
     ModelAndView findListDevice(Map<String, String> parameters);
 
     /**
+     * 장치 목록을 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findTbListDevice(Map<String, String> parameters);
+
+    /**
      * 장치 정보를 가져온다.
      *
      * @author dhj

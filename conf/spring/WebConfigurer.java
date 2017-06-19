@@ -4,7 +4,6 @@ import com.icent.isaver.admin.common.PropertyManager;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.icent.isaver.admin.util.AuthorizationInterceptor;
-import com.kst.common.spring.XMLMarshaller;
 import com.kst.common.util.POIExcelView;
 import com.sun.org.glassfish.gmbal.Description;
 import org.springframework.context.MessageSource;
@@ -13,12 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -32,7 +29,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
-import org.springframework.web.servlet.view.xml.MarshallingView;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -54,7 +50,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     private PropertyManager propertyManager;
 
     @Override
-    @Description("HTML ¡§¿˚ ∏Æº“Ω∫ ºº∆√")
+    @Description("HTML Ï†ïÏ†Å Î¶¨ÏÜåÏä§ ÏÑ∏ÌåÖ")
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**").addResourceLocations("/assets/").setCachePeriod(31556926);
     }
@@ -76,26 +72,26 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         return new MappingJacksonJsonView();
     }
 
-    @Bean
-    public Jaxb2Marshaller xmlMarshaller() {
-        XMLMarshaller xmlMarshaller = new XMLMarshaller();
-        List<String> packages = new ArrayList<String>() {{
-            add("**.bean");
-        }};
-        xmlMarshaller.setBasePackages(packages);
-        xmlMarshaller.addClasses(
-                "java.util.ArrayList"
-                , "java.util.HashMap"
-        );
-        return xmlMarshaller;
-    }
-
-    @Bean
-    public MarshallingView xmlView() {
-        MarshallingView marshallingView = new MarshallingView(xmlMarshaller());
-        marshallingView.setContentType("application/xml");
-        return marshallingView;
-    }
+//    @Bean
+//    public Jaxb2Marshaller xmlMarshaller() {
+//        XMLMarshaller xmlMarshaller = new XMLMarshaller();
+//        List<String> packages = new ArrayList<String>() {{
+//            add("**.bean");
+//        }};
+//        xmlMarshaller.setBasePackages(packages);
+//        xmlMarshaller.addClasses(
+//                "java.util.ArrayList"
+//                , "java.util.HashMap"
+//        );
+//        return xmlMarshaller;
+//    }
+//
+//    @Bean
+//    public MarshallingView xmlView() {
+//        MarshallingView marshallingView = new MarshallingView(xmlMarshaller());
+//        marshallingView.setContentType("application/xml");
+//        return marshallingView;
+//    }
 
     @Bean
     public ContentNegotiationManager negotiationManager() {
@@ -111,7 +107,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 
         List<View> views = new ArrayList<View>() {{
             add(jsonView());
-            add(xmlView());
+//            add(xmlView());
         }};
 
         viewResolver.setDefaultViews(views);
@@ -133,19 +129,20 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 //    }
 
     @Bean
-    @Description("tiles º≥¡§ ∑ŒµÂ")
+    public UrlBasedViewResolver viewResolver() {
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setViewClass(TilesView.class);
+        resolver.setOrder(2);
+        resolver.setCache(true);
+        return resolver;
+    }
+
+    @Bean
+    @Description("tiles ÏÑ§Ï†ï Î°úÎìú")
     public TilesConfigurer tilesConfigurer() {
         TilesConfigurer configure = new TilesConfigurer();
         configure.setDefinitions("classpath:tiles/tiles.xml");
         return configure;
-    }
-
-    @Bean
-    public UrlBasedViewResolver urlBasedViewResolver() {
-        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-        resolver.setViewClass(TilesView.class);
-        resolver.setOrder(1);
-        return resolver;
     }
 
     @Bean
@@ -185,7 +182,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocaleResolver localeResolver() {
+    public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(Locale.KOREA); // change this
         return localeResolver;

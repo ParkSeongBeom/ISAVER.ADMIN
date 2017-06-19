@@ -69,6 +69,14 @@
     </definition>
 
     <!--
+        장치 목록
+        @author psb
+    -->
+    <definition name="deviceTbList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/device/tbList.jsp" />
+    </definition>
+
+    <!--
         알림 장치 매핑 설정(ivas->sioc)
         @author dhj
     -->

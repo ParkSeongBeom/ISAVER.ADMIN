@@ -51,7 +51,7 @@ function MenuCtrl(model) {
         var type = this._model.getViewStatus();
         var requestUrl = this._model.getRequestUrl();
         sendAjaxPostRequest(requestUrl, this.param, this._event.menuTopBarSuccessHandler, this._event.menuTopBarErrorHandler, type);
-    },
+    };
 
     /**
      * [cRud]메뉴 트리 불러오기

@@ -171,6 +171,14 @@ function DeviceCtrl(model) {
                 }
             }
 
+            if ($("select[name=deviceCode]").val() == "DEV010") {
+                if ($("select[name='linkUrl']").val().trim().length == 0) {
+                    alert( messageConfig['emptyLinkUrl'] );
+                    $("select[name=linkUrl]").focus();
+                    return;
+                }
+            }
+
             if ($("select[name=deviceCode]").val() == "DEV002") {
                 if ($("select[name='eventId']").val().trim().length == 0) {
                     alert( messageConfig['emptyEventId'] );
@@ -223,6 +231,14 @@ function DeviceCtrl(model) {
                         $("input[name=ipAddress]").focus();
                         return;
                     }
+                }
+            }
+
+            if ($("select[name=deviceCode]").val() == "DEV010") {
+                if ($("select[name='linkUrl']").val().trim().length == 0) {
+                    alert( messageConfig['emptyLinkUrl'] );
+                    $("select[name=linkUrl]").focus();
+                    return;
                 }
             }
 

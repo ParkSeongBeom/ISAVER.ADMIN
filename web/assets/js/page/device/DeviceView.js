@@ -43,6 +43,9 @@ function DeviceView(model) {
                 $(formName + " [name='hostType']").val(data.hostType).prop("selected", true);
             }
         },
+        linkUrl: function (data) {
+            $(formName + " [name='linkUrl']").val(data.linkUrl);
+        },
         webPort: function (data) {
             $(formName + " [name='webPort']").val(data.webPort);
         },
@@ -309,6 +312,7 @@ function DeviceView(model) {
         $(formName + " input[name=devicePassword").val("");
 
         $(formName + " textarea[name='deviceDesc']").val("");
+        $(formName + " input[name=linkUrl]").val("");
 
         $(formName + " td[name='insertUserId']").text("");
         $(formName + " td[name='insertDatetime']").text("");

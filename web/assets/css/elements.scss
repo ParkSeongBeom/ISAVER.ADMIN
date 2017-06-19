@@ -47,6 +47,7 @@ form-bg-effect :
 ////// 어드민 검색영역  End
 
 
+
 ////// 시,분, 초 선택 폼 Start
 .select_edit {
   position: relative; height:40px;
@@ -922,7 +923,7 @@ ul.u_defalut {
       width:40px; height:40px; font-size:22px;
     }
 
-    button {&.on ,  &.on + ul li button {@include tree-on;} }
+    button {&.on {@include tree-on;} }
 
     // 체크가 삽입될 때
     input[type="checkbox"] {

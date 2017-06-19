@@ -267,6 +267,12 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <th><spring:message code='area.column.linkUrl'/></th>
+                        <td colspan="3">
+                            <input type="text" name="linkUrl" maxlength="200"/>
+                        </td>
+                    </tr>
                     <tr class="ipCamShowHide">
                         <th class="point"><spring:message code='device.column.eventName'/></th>
                         <td class="point">
@@ -425,6 +431,7 @@
         ,   provisionExistError : "<spring:message code='device.message.provisionExistError'/>"
         ,   emptyEventId              :"<spring:message code='device.message.emptyEventId'/>"
         ,   emptyCameraManufacturer   :"<spring:message code='device.message.emptyCameraManufacturer'/>"
+        ,   emptyLinkUrl           :"<spring:message code='device.message.emptyLinkUrl'/>"
     };
 
     var emptyListTag = $("<tr/>").append(

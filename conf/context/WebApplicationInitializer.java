@@ -4,8 +4,6 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.ext.spring.LogbackConfigurer;
 import com.icent.dhj.util.FindSystemUtil;
 import com.icent.dhj.util.ResultSystemBean;
-import com.kst.common.resource.CommonResource;
-import com.kst.common.spring.FilterUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
@@ -32,8 +30,6 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         applicationContext.register(ApplicationContext.class);
 
         servletContext.addListener(new ContextLoaderListener(applicationContext));
-//        FilterUtils.useEncoding(servletContext, CommonResource.CHARSET_UTF8, "/*");
-//        FilterUtils.useCrossDomain(servletContext,"/*");
 
         try {
             registerLogbackFunc();
@@ -49,8 +45,8 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
 
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
-//        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("dev", "/isaver/was/bin/uuid.key");
-        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("icent", "/isaver/was/bin/uuid.key");
+        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("dev", "/isaver/was/bin/uuid.key");
+//        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID("icent", "/isaver/was/bin/uuid.key");
 
         if(!resultSystemBean.getaBoolean()){
             logger.error(resultSystemBean.getLogdata());
@@ -79,7 +75,8 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",new DispatcherServlet(restContext));
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
+        dispatcher.addMapping("*.html");
+        dispatcher.addMapping("*.json");
     }
 
     /**

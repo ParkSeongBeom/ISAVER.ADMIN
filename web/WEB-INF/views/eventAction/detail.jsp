@@ -201,7 +201,7 @@
 
     var urlConfig = {
         'listUrl':'${rootPath}/eventAction/list.html'
-        ,'actionListUrl':'${rootPath}/action/list.html'
+        ,'actionListUrl':'${rootPath}/action/list.json'
         ,'saveUrl':'${rootPath}/eventAction/save.json'
     };
 
@@ -403,6 +403,7 @@
 
 
     function requestAction_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        console.log(XMLHttpRequest, textStatus, errorThrown, actionType);
         alert(actionType + 'Failure');
     }
 

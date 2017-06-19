@@ -42,6 +42,8 @@ public class CodeSelectBoxTagSupport extends ParamTag {
     private String htmlTagClass = "";
     /* 전체여부 */
     private Boolean allModel = false;
+    /* 전체여부 */
+    private Boolean disabled = false;
     /* 전체 */
     private String allText = "";
 
@@ -67,6 +69,10 @@ public class CodeSelectBoxTagSupport extends ParamTag {
 
     public void setAllModel(Boolean allModel) {
         this.allModel = allModel;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     public void setAllText(String allText) {
@@ -101,6 +107,10 @@ public class CodeSelectBoxTagSupport extends ParamTag {
 
                     if (StringUtils.notNullCheck(htmlTagClass)) {
                         sb.append(String.format(" beforeSelect=\"%s\"", codeId));
+                    }
+
+                    if (disabled) {
+                        sb.append(" disabled");
                     }
 
                     sb.append(">");
