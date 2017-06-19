@@ -265,4 +265,15 @@
         <put-attribute name="body" value="/WEB-INF/views/file/detail.jsp" />
     </definition>
 
+    <!--
+        임계치 설정  관리
+        @author dhj
+    -->
+    <definition name="criticalList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/critical/list.jsp" />
+    </definition>
+    <definition name="criticalDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/critical/detail.jsp" />
+    </definition>
+
 </tiles-definitions>
