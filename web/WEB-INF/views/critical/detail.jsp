@@ -106,9 +106,9 @@
                                     <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
                                         <c:if test="${status.count >= 2}">
                                             <tr type="range_tr">
-                                                <td><input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${criticalInfo.startValue}" /></td>
+                                                <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" /></td>
                                                 <td>~</td>
-                                                <td><input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
+                                                <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
                                                 <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="levFlag" codeId="${criticalInfo.criticalLevel}" /></td>
                                                 <td><button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button></td>
                                             </tr>
