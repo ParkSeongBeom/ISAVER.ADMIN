@@ -2,17 +2,13 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.CriticalSvc;
-import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.CriticalBean;
 import com.icent.isaver.repository.bean.CriticalInfoBean;
 import com.icent.isaver.repository.bean.EventBean;
 import com.icent.isaver.repository.dao.base.CriticalDao;
-import com.icent.isaver.repository.dao.base.EventActionDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.kst.common.spring.TransactionUtil;
-import com.kst.common.util.StringUtils;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;

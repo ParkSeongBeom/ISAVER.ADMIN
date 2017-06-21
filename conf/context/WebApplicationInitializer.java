@@ -51,12 +51,6 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         if(!resultSystemBean.getaBoolean()){
             logger.error(resultSystemBean.getLogdata());
             System.exit(0);
-
-//            try {
-//                Process p = Runtime.getRuntime().exec("systemctl stop isaver_web");
-//            } catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
         }
     }
 
