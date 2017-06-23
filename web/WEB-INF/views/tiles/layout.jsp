@@ -11,7 +11,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${rootPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
     <!--[endif] -->
     <title>iSaver Admin</title>
     <%-- dynatree, dhj --%>
@@ -26,22 +26,22 @@
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
 
     <%-- dynatree, dhj --%>
-    <script src="${rootPath}/assets/js/page/menu/MenuModel.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="${rootPath}/assets/js/page/menu/MenuCtrl.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="${rootPath}/assets/js/page/menu/MenuView.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/menu/MenuModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/menu/MenuCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/menu/MenuView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
     <%-- dynatree, dhj --%>
-    <script src="${rootPath}/assets/js/page/area/AreaModel.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="${rootPath}/assets/js/page/area/AreaCtrl.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="${rootPath}/assets/js/page/area/AreaView.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/area/AreaModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/area/AreaCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+    <script src="${rootPath}/assets/js/page/area/AreaView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 
     <script type="text/javascript">

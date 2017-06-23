@@ -393,10 +393,10 @@
     </form>
 </section>
 
-<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
-<script src="${rootPath}/assets/js/page/device/DeviceModel.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${rootPath}/assets/js/page/device/DeviceCtrl.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${rootPath}/assets/js/page/device/DeviceView.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js" type="text/javascript" ></script>
+<script src="${rootPath}/assets/js/page/device/DeviceModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/device/DeviceCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/device/DeviceView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');

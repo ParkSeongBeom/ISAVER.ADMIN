@@ -1,9 +1,6 @@
 package com.icent.isaver.admin.resource;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 관리자 리소스
@@ -21,6 +18,12 @@ import java.util.Map;
  * </pre>
  */
 public class AdminResource {
+
+    /**
+     * deploy datetime
+     * @author psb
+     */
+    public final static String DEPLOY_DATETIME = String.valueOf(new Date().getTime());
 
     /**
      * 콤마
