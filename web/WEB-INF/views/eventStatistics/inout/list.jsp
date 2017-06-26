@@ -320,7 +320,7 @@
                 tableDivHtml.find("#bodyOut").append(
                     $("<span/>").text(0)
                 );
-                inSeries.push(0);
+                outSeries.push(0);
             }
         }
 
