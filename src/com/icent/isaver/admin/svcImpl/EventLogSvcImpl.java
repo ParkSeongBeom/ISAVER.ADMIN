@@ -152,7 +152,7 @@ public class EventLogSvcImpl implements EventLogSvc {
             websocketParam.put("messageType","removeAlarmEvent");
 
             InetAddress address = InetAddress.getByName(wsAddress);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -168,7 +168,7 @@ public class EventLogSvcImpl implements EventLogSvc {
                 vmsParam.put("alarmId",parameters.get("alarmIds"));
                 vmsParam.put("time",eventCancelDatetime);
 
-                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + vmsUrlSendEvent, null);
+                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + vmsUrlSendEvent, "json", null);
             } catch (IOException e) {
                 e.printStackTrace();
             }

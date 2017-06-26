@@ -5,12 +5,16 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.*;
 import com.icent.isaver.repository.dao.base.AlarmTargetDeviceConfigDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,8 +48,22 @@ import java.util.*;
 @Service
 public class DeviceSvcImpl implements DeviceSvc {
 
+    static Logger logger = LoggerFactory.getLogger(DeviceSvcImpl.class);
+
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
+
+    @Value("${ws.server.address}")
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlDeviceRequestSync}")
+    private String wsUrlDeviceRequestSync = null;
 
     @Inject
     private DeviceDao deviceDao;
@@ -212,6 +232,8 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.rollback(transactionStatus);
                 throw new IcentException("");
             }
+
+            deviceRequestSync(parameters.get("deviceId"));
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -262,6 +284,8 @@ public class DeviceSvcImpl implements DeviceSvc {
             throw new IcentException("");
         }
 
+        deviceRequestSync(parameters.get("deviceId"));
+
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
     }
@@ -308,6 +332,8 @@ public class DeviceSvcImpl implements DeviceSvc {
                 transactionManager.rollback(transactionStatus);
                 throw new IcentException("");
             }
+
+            deviceRequestSync(parameters.get("deviceId"));
         }
 
 
@@ -402,6 +428,27 @@ public class DeviceSvcImpl implements DeviceSvc {
         return modelAndView;
     }
 
+    private void deviceRequestSync(String deviceId){
+        Map parentDeviceParam = new HashMap();
+        parentDeviceParam.put("deviceId",deviceId);
+        DeviceBean parentDevice = deviceDao.findByParentDevice(parentDeviceParam);
+
+        if(parentDevice != null){
+            try {
+                Map websocketParam = new HashMap();
+                websocketParam.put("deviceId",parentDevice.getDeviceId());
+
+                InetAddress address = InetAddress.getByName(wsAddress);
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceRequestSync, "form", null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            logger.error("[deviceRequestSync] error - parent device is null");
+        }
+
+        parentDeviceParam = null;
+    }
 
     /**
      *

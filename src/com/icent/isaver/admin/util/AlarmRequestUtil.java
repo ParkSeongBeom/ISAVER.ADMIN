@@ -41,7 +41,7 @@ public class AlarmRequestUtil {
      * @return
      * @throws IOException
      */
-    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, String jsonName) throws IOException {
+    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, String contentType, String jsonName) throws IOException {
 
         CloseableHttpClient commonHttpClient = null;
         HttpPost httpPost = null;
@@ -55,17 +55,28 @@ public class AlarmRequestUtil {
         httpPost.setConfig(params);
         httpPost.addHeader("charset", "UTF-8");
 
-        if(StringUtils.notNullCheck(jsonName)){
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair(jsonName, new ObjectMapper().writeValueAsString(parameters)));
+        switch (contentType) {
+            case "json" :
+                StringEntity stringEntity = new StringEntity(new ObjectMapper().writeValueAsString(parameters));
 
-            httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
-            httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-        }else{
-            StringEntity stringEntity = new StringEntity(new ObjectMapper().writeValueAsString(parameters));
+                httpPost.addHeader("content-type", "application/json");
+                httpPost.setEntity(stringEntity);
+                break;
+            case "form" :
+                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+                if(StringUtils.notNullCheck(jsonName)){
+                    nvps.add(new BasicNameValuePair(jsonName, new ObjectMapper().writeValueAsString(parameters)));
+                }else{
+                    for(String key : parameters.keySet()){
+                        nvps.add(new BasicNameValuePair(key, parameters.get(key)));
+                    }
+                }
 
-            httpPost.addHeader("content-type", "application/json");
-            httpPost.setEntity(stringEntity);
+                httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+                httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+                break;
+            default:
+                return null;
         }
 
         RequestConfig requestConfig = RequestConfig.custom()
