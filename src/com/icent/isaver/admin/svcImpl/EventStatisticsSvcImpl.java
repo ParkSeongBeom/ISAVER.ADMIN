@@ -195,6 +195,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         inParamBean.put("areaId",parameters.get("areaId"));
         inParamBean.put("dateGubn",parameters.get("dateGubn"));
         inParamBean.put("eventIds", AdminResource.IN_EVENT_ID);
+        inParamBean.put("key","inCount");
 
         Map inResultList = eventStatisticsDao.findListInoutEventStatistics(inParamBean);
 
@@ -203,6 +204,7 @@ public class EventStatisticsSvcImpl implements EventStatisticsSvc {
         outParamBean.put("areaId",parameters.get("areaId"));
         outParamBean.put("dateGubn",parameters.get("dateGubn"));
         outParamBean.put("eventIds", AdminResource.OUT_EVENT_ID);
+        outParamBean.put("key","outCount");
 
         Map outResultList = eventStatisticsDao.findListInoutEventStatistics(outParamBean);
 
