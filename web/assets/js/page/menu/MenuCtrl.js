@@ -272,13 +272,12 @@ function MenuEvent(model) {
      * @param actionType
      */
     MenuEvent.menuTopBarSuccessHandler = function (data, dataType, actionType) {
-
         var areaTreeModel = new AreaModel();
 
         areaTreeModel.processMenuTreeData(data['areaList'], new AreaModel().getRootOrgId(), true);
 
         MenuEvent._model.setAreaList(areaTreeModel.getAreaList());
-        menuView.setTopMenuBar(data['menuBarList'], areaTreeModel);
+        menuView.setTopMenuBar(data['menuBarList']);
 
         menuCtrl.drawAllDashBoardAreaList();
     };

@@ -1,10 +1,11 @@
 
+// 사이즈별 클래스 부여
 (function () {
     if (window.CssChange) return;
     var resizeClass = null;
     CssChange = {
         DetectResolution: function () {
-            var $wrapper = $('body'); //CSS가 바뀔 최상위 Wrapper
+            var $wrapper = $('html, body'); //CSS가 바뀔 최상위 Wrapper
             var maxName = 'adaptive_max';  // 대표 클래스명
             var minName = 'adaptive_min';
             var contentAreaWidth = $(window).width();
@@ -20,7 +21,6 @@
                     $wrapper.addClass(minName).removeClass(maxName);
                 }
             }
-
         }
     };
 })(window);
@@ -29,4 +29,35 @@ $(function () {
         CssChange.DetectResolution();
     });
     CssChange.DetectResolution();
+});
+
+// header 경계선 켜기 끄기
+$(function(){
+    //Keep track of last scroll
+    var lastScroll = 0;
+    $(window).scroll(function(){
+        //Sets the current scroll position
+        var st = $(this).scrollTop();
+        //Determines up-or-down scrolling
+        if (st > lastScroll){
+            //Replace this with your function call for downward-scrolling
+            $("header").addClass("up");
+        }
+        else {
+            //Replace this with your function call for upward-scrolling
+            $("header").removeClass("up");
+        }
+        //Updates scroll position
+        lastScroll = st;
+    });
+    /*
+     $(".contents-area ").bind('mousewheel DOMMouseScroll', function(e){
+     if (e.originalEvent.wheelDelta / 120 > 0) {
+     $(this).removeClass("up");
+     }
+     else {
+
+     $(this).addClass("up");
+     }
+     });*/
 });

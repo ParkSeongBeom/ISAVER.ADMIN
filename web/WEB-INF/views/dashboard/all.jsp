@@ -178,6 +178,12 @@
         ,chartUrl  :   "${rootPath}/eventLogChart/all.json"
     };
 
+    var criticalLevel = {
+        'LEV001' : 'level01'
+        ,'LEV002' : 'level02'
+        ,'LEV003' : 'level03'
+    };
+
     var messageConfig = {
         workerFailure   :'<spring:message code="dashboard.message.workerFailure"/>'
         , craneFailure  :'<spring:message code="dashboard.message.craneFailure"/>'
@@ -217,21 +223,23 @@
      * @author psb
      * @private
      */
-    function appendEventHandler(data, dataType, actionType){
-        switch(actionType){
+    function appendEventHandler(data, messageType){
+        if(data['eventId']==null){
+            console.log("[dashboard all][appendEventHandler] eventId is null");
+            return false;
+        }
+
+        switch(findEventIdType(data['eventId'])){
             case 'worker':
-                workerRender(data);
+                workerRender(data, messageType);
                 break;
             case 'crane':
-                craneRender(data);
+                craneRender(data, messageType);
                 break;
             case 'inout':
-                inoutRender(data);
                 break;
-            case 'chart':
-                chartRender(data);
-                dashBoardHelper.saveRequestData('chart', {pageIndex : 20, minutesCount : $("select[id=chartRefreshTime]").val()});
-                break;
+            default :
+                console.log("[dashboard all][appendEventHandler] This event does not require action");
         }
     }
 
@@ -243,10 +251,10 @@
     function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
             case 'worker':
-                workerRender(data);
+                workerRender(data['eventLogWorkerList'], "refreshView");
                 break;
             case 'crane':
-                craneRender(data);
+                craneRender(data['eventLogCraneList'], "refreshView");
                 break;
             case 'inout':
                 inoutRender(data);
@@ -258,109 +266,160 @@
         }
     }
 
-    /**
-     * 작업자 상태
-     */
-    function workerRender(data){
-        var workerList = data['eventLogWorkerList'];
-        if(workerList!=null){
-            var workerEventCnt = 0;
-            for(var index =0; index < workerList.length; index++){
-                var worker = workerList[index];
-                var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
+    function refreshLevel(actionType, eventCnt){
+        var _element = $("#" + actionType + "Div");
+        if(_element==null){
+            return false;
+        }
 
-                workerEventCnt += Number(worker['eventCnt']);
-                if(Number(worker['eventCnt'])>0){
-                    if(buttonTag.find("#eventCnt").length>0){
-                        if(buttonTag.find("#eventCnt").text() != String(worker['eventCnt'])){
-                            buttonTag.find("#eventCnt").text(worker['eventCnt']);
-                        }
-                    }else{
-                        buttonTag.append(
-                            $("<span/>", {id:"eventCnt"}).text(worker['eventCnt'])
-                        )
-                    }
-
-                    modifyElementClass(buttonTag,'level03','add');
-                }else{
-                    modifyElementClass(buttonTag,'level03','remove');
-
-                    if(buttonTag.find("#eventCnt").length>0){
-                        buttonTag.find("#eventCnt").remove();
-                    }
-                }
-//                if (worker['eventCnt'] == 0) {
-//                    buttonTag.hide();
-//                } else {
-//                    buttonTag.show();
-//                }
-            }
-
-            if($("#workerDiv").find(".alra_btn").text() != String(workerEventCnt)){
-                $("#workerDiv").find(".alra_btn").text(workerEventCnt);
-            }
-
-            if(workerEventCnt>0){
-                modifyElementClass($("#workerDiv"),'level03','add');
-                $(".alra_btn[name=worker]").show();
+        for(var key in criticalLevel){
+            if(_element.find("."+criticalLevel[key]).length > 0){
+                modifyElementClass(_element,criticalLevel[key],'add');
             }else{
-                modifyElementClass($("#workerDiv"),'level03','remove');
-                $(".alra_btn[name=worker]").hide();
+                modifyElementClass(_element,criticalLevel[key],'remove');
             }
+        }
+
+        if(eventCnt>0){
+            _element.find(".alra_btn").text(eventCnt);
+            $(".alra_btn[name='"+actionType+"']").show();
+        }else{
+            $(".alra_btn[name='"+actionType+"']").hide();
         }
     }
 
     /**
-     * 크레인 관련
+     * 작업자 상태
      */
-    function craneRender(data){
-        var craneList = data['eventLogCraneList'];
-        if(craneList!=null){
-            var craneEventCnt = 0;
-            for(var index = 0;index< craneList.length; index ++){
-                var crane = craneList[index];
-                var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+    function workerRender(data, messageType){
+        if(data==null){
+            return false;
+        }
 
-                craneEventCnt += Number(crane['eventCnt']);
-                if(Number(crane['eventCnt'])>0){
-                    if(buttonTag.find("#eventCnt").length>0){
-                        if(buttonTag.find("#eventCnt").text() != String(crane['eventCnt'])){
-                            buttonTag.find("#eventCnt").text(crane['eventCnt']);
-                        }
-                    }else{
-                        buttonTag.append(
-                            $("<span/>", {id:"eventCnt"}).text(crane['eventCnt'])
-                        )
-                    }
+        var workerEventCnt = 0;
+        var _config = {
+            'refreshFlag' : true // 초기화여부
+            ,'addFlag' : true
+        };
 
-                    modifyElementClass(buttonTag,'level03','add');
-                }else{
-                    modifyElementClass(buttonTag,'level03','remove');
+        switch (messageType) {
+            case "addAlarmEvent": // 알림이벤트 등록
+                _config['refreshFlag'] = false;
+                break;
+            case "removeAlarmEvent": // 알림이벤트 해제
+                _config['refreshFlag'] = false;
+                _config['addFlag'] = false;
+                break;
+            case "refreshView" : // 초기로딩 및 리스트 교체
+                _config['refreshFlag'] = true;
+                break;
+        }
 
-                    if(buttonTag.find("#eventCnt").length>0){
-                        buttonTag.find("#eventCnt").remove();
-                    }
-                }
+        if(_config['refreshFlag']){
+            $("#workerDiv").attr("class","");
+            $("#eventLogWorkerList").find("button").attr("class","");
+            $("#eventLogWorkerList").find("button span[id='eventCnt']").remove()
+        }
 
-//                if (crane['eventCnt'] == 0) {
-//                    buttonTag.hide();
-//                } else {
-//                    buttonTag.show();
-//                }
+        for(var index in data){
+            var worker = data[index];
+            var workerInfo = worker['infos'];
+            var buttonTag = $("#eventLogWorkerList button[areaId='"+worker['areaId']+"']");
+            if(buttonTag.find("#eventCnt").length==0 && _config['addFlag']){
+                buttonTag.append(
+                    $("<span/>", {id:"eventCnt"}).text("0")
+                )
             }
 
-            if($("#craneDiv").find(".alra_btn").text() != String(craneEventCnt)){
-                $("#craneDiv").find(".alra_btn").text(craneEventCnt);
-            }
-
-            if(craneEventCnt>0){
-                modifyElementClass($("#craneDiv"),'level03','add');
-                $(".alra_btn[name=crane]").show();
+            var eventCntTag = buttonTag.find("#eventCnt");
+            var eventCnt = Number(eventCntTag.text());
+            if(_config['addFlag']){
+                eventCnt++;
+                workerEventCnt++;
             }else{
-                modifyElementClass($("#craneDiv"),'level03','remove');
-                $(".alra_btn[name=crane]").hide();
+                eventCnt--;
+                workerEventCnt--;
+            }
+            eventCntTag.text(eventCnt);
+
+            for(var i in workerInfo){
+                var _info = workerInfo[i];
+                if(_info['key']=='criticalLevel'){
+                    modifyElementClass(buttonTag,criticalLevel[_info['value']],_config['addFlag'] ? 'add' : 'remove');
+                }
+            }
+            if(eventCnt<0 && eventCntTag.length>0){
+                buttonTag.find("#eventCnt").remove();
             }
         }
+        refreshLevel('worker', workerEventCnt);
+    }
+
+    /**
+     * 크레인 상태
+     */
+    function craneRender(data, messageType){
+        if(data==null){
+            return false;
+        }
+
+        var craneEventCnt = 0;
+        var _config = {
+            'refreshFlag' : true // 초기화여부
+            ,'addFlag' : true
+        };
+
+        switch (messageType) {
+            case "addAlarmEvent": // 알림이벤트 등록
+                _config['refreshFlag'] = false;
+                break;
+            case "removeAlarmEvent": // 알림이벤트 해제
+                _config['refreshFlag'] = false;
+                _config['addFlag'] = false;
+                break;
+            case "refreshView" : // 초기로딩 및 리스트 교체
+                _config['refreshFlag'] = true;
+                break;
+        }
+
+        if(_config['refreshFlag']){
+            $("#craneDiv").attr("class","");
+            $("#eventLogCraneList").find("button").attr("class","");
+            $("#eventLogCraneList").find("button span[id='eventCnt']").remove()
+        }
+
+        for(var index in data){
+            var crane = data[index];
+            var craneInfo = crane['infos'];
+            var buttonTag = $("#eventLogCraneList button[areaId='"+crane['areaId']+"']");
+            if(buttonTag.find("#eventCnt").length==0 && _config['addFlag']){
+                buttonTag.append(
+                        $("<span/>", {id:"eventCnt"}).text("0")
+                )
+            }
+
+            var eventCntTag = buttonTag.find("#eventCnt");
+            var eventCnt = Number(eventCntTag.text());
+            if(_config['addFlag']){
+                eventCnt++;
+                craneEventCnt++;
+            }else{
+                eventCnt--;
+                craneEventCnt--;
+            }
+            eventCntTag.text(eventCnt);
+
+            for(var i in craneInfo){
+                var _info = craneInfo[i];
+                if(_info['key']=='criticalLevel'){
+                    modifyElementClass(buttonTag,criticalLevel[_info['value']],_config['addFlag'] ? 'add' : 'remove');
+                }
+            }
+            if(eventCnt<0 && eventCntTag.length>0){
+                buttonTag.find("#eventCnt").remove();
+            }
+        }
+        refreshLevel('crane', craneEventCnt);
     }
 
     /**

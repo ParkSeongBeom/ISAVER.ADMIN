@@ -4,42 +4,34 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<%--<c:set var="rootPath" value="${pageContext.servletContext.contextPath}" scope="application"/>--%>
-<%--<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${serverDatetime}" var="serverDatetime"/>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
-    <!--[endif] -->
     <title>iSaver Admin</title>
-    <%-- dynatree, dhj --%>
-    <link rel="stylesheet" type="text/css" href="${rootPath}/assets/css/dynatree/skin-vista/ui.dynatree.css" >
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/default.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
-    <%-- dynatree, dhj --%>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/default.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
 
-    <%-- dynatree, dhj --%>
     <script src="${rootPath}/assets/js/page/menu/MenuModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/menu/MenuCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/menu/MenuView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
-    <%-- dynatree, dhj --%>
     <script src="${rootPath}/assets/js/page/area/AreaModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/area/AreaCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/area/AreaView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
     <!-- util -->
-    <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
@@ -53,15 +45,16 @@
         var templateHelper = new TemplateHelper();
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
+        var _eventDatetime = new Date();
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
             ,'mainUrl':'${rootPath}/main.html'
-            ,'detailUrl':'${rootPath}/dashboard/detail.html'
+            ,'dashboardUrl':'${rootPath}/dashboard/list.html'
             ,'alarmListUrl':'${rootPath}/eventLog/alarm.json'
             ,'alarmDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
-            ,'dashBoardAllUrl':'${rootPath}/dashboard/all.html'
+            ,'dashBoardAllUrl':'${rootPath}/dashboard/list.html'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
@@ -81,17 +74,13 @@
         var alarmPlayer;
         var segmentEnd;
 
-        var evtDetectionList = ["EVT100", "EVT210"];
-        var evtDetectionCancelList = ["EVT102", "EVT211"];
+        var criticalCss = {
+            'LEV001' : 'level-caution'
+            ,'LEV002' : 'level-warning'
+            ,'LEV003' : 'level-danger'
+        };
 
         $(document).ready(function(){
-
-            /* 브라우저 종료 */
-
-//            $(window).bind("beforeunload", function() {
-//                return confirm("Do you really want to close?");
-//            });
-
             // 메뉴그리기
             menuModel.setRootUrl(rootPath);
             menuModel.setViewStatus('detail');
@@ -111,13 +100,24 @@
 
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area, .attention_popup, .personal_popup, .admin_popup").length) {
-                    alarmShowHide('list','hide');
+                if($("body").hasClass("admin_mode")){
+                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .admin_popup").length) {
+                        layerShowHide('list','hide');
+                    }
+                }else if($("body").hasClass("dashboard_mode")){
+                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .admin_popup").length) {
+                        layerShowHide('profile','hide');
+                    }
                 }
             });
 
+            // 알림해제 버튼 활성화
+            $(".check_input").click(function(){
+                alarmCancelBtnAction();
+            });
+
             // 알림센터 내부 셀렉트 박스 클릭시 이벤트
-            $("#eventType").on("change",function(){
+            $("#criticalLevel").on("change",function(){
                 alarmTypeChangeHandler();
             });
             $("#areaType").on("change",function(){
@@ -127,29 +127,27 @@
             bodyAddClass();
             printTime();
 
-//            dashBoardHelper.addRequestData('alarm', layoutUrlConfig['alarmListUrl'], null, alarmSuccessHandler, alarmFailureHandler);
-//            dashBoardHelper.startInterval();
             // 알람 리스트 불러오기
             layoutAjaxCall('alarmList');
 
             wsConnect();
             aliveSend(900000);
 
-            //스크롤바 플러그인 호출
-//            $(".nano").nanoScroller();
-
             alarmPlayer = document.getElementsByTagName("audio")[0];
             alarmPlayer.addEventListener('timeupdate', function (){
                 if (segmentEnd && alarmPlayer.currentTime >= segmentEnd) {
                     alarmPlayer.pause();
                 }
-//                    console.log(alarmPlayer.currentTime);
             }, false);
-
-            $("#eventType option[value=SCT001]").attr("value", "worker");
-            $("#eventType option[value=SCT002]").attr("value", "crane");
-            $("#eventType option[value=SCT003]").attr("value", "gas");
         });
+
+        function alarmCancelBtnAction(){
+            if($(".check_input").is(":checked")) {
+                modifyElementClass($(".dbc_open_btn"),'on','add');
+            } else {
+                modifyElementClass($(".dbc_open_btn"),'on','remove');
+            }
+        }
 
         function alarmListRefresh() {
             if($("#alarmList li").length>0){
@@ -160,10 +158,15 @@
         }
 
         function alarmTypeChangeHandler() {
-            $("#alarmList li").hide();
-            var eventType = $("#eventType option:selected").val() != "" ? "[eventType='"+$("#eventType option:selected").val()+"']" : "";
+            var criticalLevel = $("#criticalLevel option:selected").val() != "" ? "[criticalLevel='"+$("#criticalLevel option:selected").val()+"']" : "";
             var areaType = $("#areaType option:selected").val() != "" ? "[areaId='"+$("#areaType option:selected").val()+"']" : "";
-            $("#alarmList li"+eventType+areaType).show();
+
+            if(criticalLevel=="" && areaType==""){
+                $("#alarmList li").show();
+            } else{
+                $("#alarmList li"+criticalLevel+areaType).show();
+                $("#alarmList li").not(criticalLevel+areaType).hide();
+            }
         }
 
         function alarmAllCheck(_this){
@@ -178,6 +181,18 @@
 
         function printTime() {
             $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
+
+            if(_eventDatetime!=null){
+                var gap = serverDatetime.getTime() - _eventDatetime.getTime();
+                var hour = Math.floor(gap / (1000*60*60));
+                if(hour < 10) {hour = "0" + hour;}
+                var minute = Math.floor(gap / (1000*60))%60;
+                if(minute < 10) {minute = "0" + minute;}
+                var second = Math.floor(gap / (1000))%60;
+                if(second < 10) {second = "0" + second;}
+
+                $("section[alarm_detail] p[currentDatetime]").text(hour + ":" + minute + ":" + second);
+            }
 
             setTimeout(function(){
                 serverDatetime.setSeconds(serverDatetime.getSeconds()+1);
@@ -198,30 +213,6 @@
                 }).always(function() {
                 });
             }, _time);
-        }
-
-        /**
-         * open alarm cencel popup
-         * @author psb
-         */
-        function openAlarmCancelPopup(){
-            var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
-
-            if(eventLogIdList==null || eventLogIdList.length == 0){
-                layoutAlertMessage('emptyAlarmCancel');
-                return false;
-            }
-
-            $(".attention_popup").show();
-        }
-
-        /**
-         * close alarm cencel popup
-         * @author psb
-         */
-        function closeAlarmCancelPopup(){
-            $("#eventCancelDesc").val("");
-            $(".attention_popup").hide();
         }
 
         /**
@@ -251,8 +242,12 @@
          * get profile
          * @author psb
          */
-        function getProfile(){
-            layoutAjaxCall('profile',{userId:"${sessionScope.authAdminInfo.userId}"});
+        function getProfile(_this){
+            if($(_this).hasClass("on")){
+                layerShowHide('profile','hide');
+            }else{
+                layoutAjaxCall('profile',{userId:"${sessionScope.authAdminInfo.userId}"});
+            }
         }
 
         /**
@@ -286,40 +281,24 @@
         }
 
         /**
-         * open profile popup
-         * @author psb
-         */
-        function openProfile(user){
-            $("#userName").val(user['userName']);
-            $("#telephone").val(user['telephone']);
-            $("#email").val(user['email']);
-            $("#userPassword").val("");
-            $("#password_confirm").val("");
-
-            $(".personal_popup").show();
-        }
-
-        /**
-         * close profile popup
-         * @author psb
-         */
-        function closeProfile(){
-            $(".personal_popup").hide();
-        }
-
-        /**
          * search alarm detail (action)
          * @author psb
          */
-        function searchAlarmDetail(eventLogId, eventId, eventType){
-            var paramData = {
-                eventLogId  : eventLogId
-                , eventId   : eventId
-                , eventType : eventType
-            };
+        function searchAlarmDetail(_this){
+            if(!$(_this).hasClass("on")){
+                var _parent = $(_this).parent();
+                var paramData = {
+                    eventLogId  : $(_parent).attr("eventLogId")
+                    , eventId   : $(_parent).attr("eventId")
+                    , areaName   : $(_parent).find("#areaName").text()
+                    , deviceId   : $(_parent).attr("deviceId")
+                    , eventDatetime : $(_parent).attr("eventDatetime")
+                    , criticalLevel : $(_parent).attr("criticalLevel")
+                };
+                layoutAjaxCall('alarmDetail',paramData);
+            }
 
-            alarmShowHide('detail','hide');
-            layoutAjaxCall('alarmDetail',paramData);
+            layerShowHide('detail','hide');
         }
 
         /**
@@ -344,19 +323,24 @@
                     alarmDetailRender(data);
                     break;
                 case 'alarmCancel':
-                    closeAlarmCancelPopup();
+                    layerShowHide('alarmCancel','hide');
                     layoutAlertMessage('alarmCancelSuccess');
                     break;
                 case 'profile':
                     var user = data['user'];
                     if(user!=null){
-                        openProfile(user);
+                        $("#userName").val(user['userName']);
+                        $("#telephone").val(user['telephone']);
+                        $("#email").val(user['email']);
+                        $("#userPassword").val("");
+                        $("#password_confirm").val("");
+                        layerShowHide('profile','show');
                     }else{
                         layoutAlertMessage('profileFailure');
                     }
                     break;
                 case 'saveProfile':
-                    closeProfile();
+                    layerShowHide('profile','hide');
                     layoutAlertMessage('saveProfileSuccess');
                     break;
             }
@@ -401,96 +385,79 @@
          * @private
          */
         function addAlarm(eventLog, flag){
-            if(eventLog!=null){
-                var eventTypeName = null;
-                var eventId = eventLog['eventId'];
-
-                switch (eventLog['eventType']){
-                    case "worker" :
-                        eventTypeName = "<spring:message code="dashboard.message.dropDownText"/>";
-                        break;
-                    case "crane" :
-                        eventTypeName = "<spring:message code="dashboard.message.craneText"/>";
-                        break;
-                }
-
-                if(eventTypeName!=null){
-                    if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
-                        if($("#marqueeList .js-marquee-wrapper").length>0){
-                            $('.marquee').marquee('destroy');
-                        }
-
-                        // 알림센터
-                        var alarmTag = templateHelper.getTemplate("alarm01");
-                        alarmTag.on("click",function(){
-                            if($(this).hasClass("check")){
-                                $(this).find(".check_input").prop("checked",false);
-                                modifyElementClass($(this),'check','remove');
-                            }else{
-                                $(this).find(".check_input").prop("checked",true);
-                                modifyElementClass($(this),'check','add');
-                            }
-                        });
-
-                        var eventInfos = eventLog['infos'];
-                        var alarmId = "";
-                        if(eventInfos!=null){
-                            for(var i in eventInfos){
-                                if(eventInfos[i]['key']=='alarmId'){
-                                    alarmId = eventInfos[i]['value'];
-                                    break;
-                                }
-                            }
-                        }
-                        alarmTag.attr("eventType",eventLog['eventType']).attr("eventLogId",eventLog['eventLogId']).attr("areaId",eventLog['areaId']).attr("alarmId",alarmId);
-
-//                        alarmTag.find("#eventType").text(eventTypeName);
-                        alarmTag.find("#eventName").text(eventLog['eventName']);
-                        alarmTag.find("#areaName").text(eventLog['areaName']);
-                        alarmTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                        alarmTag.find(".infor_open").attr("onclick","javascript:searchAlarmDetail('"+eventLog['eventLogId']+"','"+eventLog['eventId']+"','"+eventLog['eventType']+"'); return false;");
-
-                        // 현C 요청으로 클래스 삽입
-                        // 알림센터 아이콘 노출(2016-12-23)
-                        alarmTag.find(".dbc_contents").addClass(eventLog['eventType']);
-                        $("#alarmList").prepend(alarmTag);
-
-                        // marquee
-                        var marqueeTag = templateHelper.getTemplate("marquee01");
-                        marqueeTag.attr("eventLogId",eventLog['eventLogId']).text(" " + new Date(eventLog['eventDatetime']).format("HH:mm:ss")).attr("onclick","javascript:alarmShowHide('list', 'show');");
-                        marqueeTag.prepend(
-                            $("<span/>").text(eventLog['areaName'] + " " + eventLog['eventName'])
-                        );
-                        $("#marqueeList").prepend(marqueeTag);
-
-                        if(flag==true){
-                            /* 애니메이션 */
-                            $(".issue_btn").removeClass("issue");
-                            try {
-                                setTimeout(function() {
-                                    $(".issue_btn").addClass("issue");
-                                }, 150);
-                            } catch(e) {}
-
-                            /* 싸이렌 */
-                            playSegment();
-                            var toastTag = templateHelper.getTemplate("toast");
-                            toastTag.attr("onclick","javascript:alarmShowHide('list', 'show');");
-                            toastTag.attr("eventLogId",eventLog['eventLogId']);
-                            toastTag.find("#toastEventName").text(eventTypeName);
-                            toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                            $(".toast_popup").append(toastTag);
-
-                            removeToastTag(toastTag);
-                            function removeToastTag(_tag){
-                                setTimeout(function(){
-                                    _tag.remove();
-                                },3000);
-                            }
-
-                            alarmTypeChangeHandler();
+            if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
+                var eventInfos = eventLog['infos'];
+                var alarmId = "";
+                var criticalLevel = "";
+                if(eventInfos!=null){
+                    for(var i in eventInfos){
+                        if(eventInfos[i]['key']=='criticalLevel'){
+                            criticalLevel = eventInfos[i]['value'];
+                        }else if(eventInfos[i]['key']=='alarmId'){
+                            alarmId = eventInfos[i]['value'];
                         }
                     }
+                }
+
+                if(criticalLevel==""){
+                    return false;
+                }
+
+                // 알림센터
+                var alarmTag = templateHelper.getTemplate("alarm01");
+                alarmTag.on("click",function(){
+                    if($(this).hasClass("check")){
+                        $(this).find(".check_input").prop("checked",false);
+                        modifyElementClass($(this),'check','remove');
+                    }else{
+                        $(this).find(".check_input").prop("checked",true);
+                        modifyElementClass($(this),'check','add');
+                    }
+                    alarmCancelBtnAction();
+                });
+
+                alarmTag.addClass(criticalCss[criticalLevel]);
+                alarmTag.attr("eventId",eventLog['eventId'])
+                        .attr("criticalLevel",criticalLevel)
+                        .attr("eventLogId",eventLog['eventLogId'])
+                        .attr("areaId",eventLog['areaId'])
+                        .attr("deviceId",eventLog['deviceId'])
+                        .attr("alarmId",alarmId)
+                        .attr("eventDatetime",eventLog['eventDatetime']);
+                alarmTag.find("#areaName").text(eventLog['areaName']);
+                alarmTag.find("#eventName").text(eventLog['eventName']);
+                alarmTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
+                alarmTag.find(".infor_btn").attr("onclick","javascript:searchAlarmDetail(this); event.stopPropagation();");
+                $("#alarmList").prepend(alarmTag);
+                var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
+                levelTag.text(Number(levelTag.text())+1);
+
+                if(flag==true){
+                    /* 애니메이션 */
+                    $(".issue_btn").removeClass("issue");
+                    try {
+                        setTimeout(function() {
+                            $(".issue_btn").addClass("issue");
+                        }, 150);
+                    } catch(e) {}
+
+                    /* 싸이렌 */
+                    playSegment();
+                    var toastTag = templateHelper.getTemplate("toast");
+                    toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
+                    toastTag.attr("eventLogId",eventLog['eventLogId']);
+//                    toastTag.find("#toastEventName").text(eventTypeName);
+                    toastTag.find("#toastEventDesc").text(eventLog['eventName']);
+                    $(".toast_popup").append(toastTag);
+
+                    removeToastTag(toastTag);
+                    function removeToastTag(_tag){
+                        setTimeout(function(){
+                            _tag.remove();
+                        },3000);
+                    }
+
+                    alarmTypeChangeHandler();
                 }
             }
         }
@@ -500,19 +467,26 @@
          * @author psb
          * @private
          */
-        function removeAlarm(eventLog){
-            if(eventLog!=null && eventLog['eventLogIds']!=null){
-                var eventLogIds = eventLog['eventLogIds'].split(",");
-                for(var index in eventLogIds){
-                    $("#alarmList li[eventLogId='"+eventLogIds[index]+"']").remove();
-                    if($("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").length>0){
-                        $('.marquee').marquee('destroy');
-                        $("#marqueeList button[eventLogId='"+eventLogIds[index]+"']").remove();
+        function removeAlarm(eventLogs){
+            for(var index in eventLogs){
+                var eventLog = eventLogs[index];
+                var eventInfos = eventLog['infos'];
+
+                var criticalLevel = "";
+                if(eventInfos!=null){
+                    for(var i in eventInfos){
+                        if(eventInfos[i]['key']=='criticalLevel'){
+                            criticalLevel = eventInfos[i]['value'];
+                        }
                     }
                 }
 
-                alarmListRefresh();
+                $("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
+                var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
+                levelTag.text(Number(levelTag.text())-1);
             }
+
+            alarmListRefresh();
         }
 
         /**
@@ -523,22 +497,27 @@
         function alarmDetailRender(data){
             if(data!=null && data['action']!=null){
                 var action = data['action'];
-                var eventTypeName;
 
-                switch (data['paramBean']['eventType']){
-                    case "crane" :
-                        eventTypeName = "크레인";
-                        break;
-                    case "worker" :
-                        eventTypeName = "쓰러짐";
-                        break;
+                for(var key in criticalCss){
+                    modifyElementClass($("section[alarm_detail]"),criticalCss[key],'remove');
+                }
+                $("section[alarm_detail]").addClass(criticalCss[data['paramBean']['criticalLevel']]);
+                $("section[alarm_detail] p[areaName]").text(data['paramBean']['areaName']);
+                $("section[alarm_detail] p[eventName]").text(action['eventName']);
+                $("section[alarm_detail] p[actionDesc]").text(action['actionDesc']);
+                _eventDatetime.setTime(data['paramBean']['eventDatetime']);
+
+                if(data['device']!=null && data['device']['linkUrl']!=null){
+                    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:cctvOpen('"+data['device']['linkUrl']+"'); event.stopPropagation();");
+                    $("section[alarm_detail] .dbi_cctv").show();
+                }else{
+                    $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
+                    $("section[alarm_detail] .dbi_cctv").hide();
                 }
 
-                $("#alarmEvent").text(eventTypeName + " / " + action['eventName']);
-                $("#alarmActionDesc").html(action['actionDesc']);
-
-                modifyElementClass($("#alarmList li[eventLogId='"+data['paramBean']['eventLogId']+"']"),'infor','add');
-                alarmShowHide('detail','show');
+                $("section[alarm_detail] p[eventDatetime]").text(_eventDatetime.format("MM/dd HH:mm:ss"));
+                modifyElementClass($("#alarmList li[eventLogId='"+data['paramBean']['eventLogId']+"'] .infor_btn"),'on','add');
+                layerShowHide('detail','show');
             }else{
                 alert("대응 정보가 없습니다.");
             }
@@ -547,9 +526,11 @@
         function bodyAddClass(){
             switch (subMenuId){
                 case "H00000": // 대쉬보드
+                    modifyElementClass($("html"),'dashboard_mode','add');
                     modifyElementClass($("body"),'dashboard_mode','add');
                     break;
                 default :
+                    modifyElementClass($("html"),'admin_mode','add');
                     modifyElementClass($("body"),'admin_mode','add');
                     break;
             }
@@ -558,86 +539,68 @@
         /**
          * 경보 show / hide
          */
-        function alarmShowHide(_type, _action, _status, _area){
+        function layerShowHide(_type, _action){
+            if(_action == null){
+                if($("body").hasClass("admin_mode")){
+                    if($(".db_area").hasClass("on")){
+                        layerShowHide('list','hide');
+                    }else{
+                        layerShowHide('list','show');
+                    }
+                }
+                return false;
+            }
+
             switch (_type){
                 case "list":
                     if(_action == 'show'){
                         modifyElementClass($(".db_area"),'on','add');
-                        if (_status != undefined) {
-                            switch(_status) {
-                                case "worker":
-                                    $("#eventType option[value=worker]").prop("selected", "selected");
-                                    break;
-                                case "crane":
-                                    $("#eventType option[value=crane]").prop("selected", "selected");
-                                    break;
-                            }
-                        }
-
-                        if (_area != undefined) {
-                            $("#areaType option[value="+areaId+"]").prop("selected", "selected");
-                        }
-
+                        modifyElementClass($(".body.admin_mode section.container"),'on','add');
                     }else if(_action == 'hide'){
-                        modifyElementClass($(".dbs_area"),'on','remove');
                         modifyElementClass($(".db_area"),'on','remove');
-                        modifyElementClass($("#alarmList > li"),'infor','remove');
-
-                        $("#eventType option:eq(0)").prop("selected", "selected");
-                        $("#areaType option:eq(0)").prop("selected", "selected");
-                    }else{
-                        if($(".db_area").hasClass("on")){
-                            alarmShowHide('list','hide');
-                        }else{
-                            alarmShowHide('list','show');
-                        }
+                        modifyElementClass($(".body.admin_mode section.container"),'on','remove');
+                        layerShowHide('detail','hide');
+                        layerShowHide('profile','hide');
                     }
                     break;
                 case "detail":
                     if(_action == 'show'){
-                        modifyElementClass($(".dbs_area"),'on','add');
+                        modifyElementClass($(".db_infor_box"),'on','add');
                     }else if(_action == 'hide'){
-                        modifyElementClass($(".dbs_area"),'on','remove');
-                        modifyElementClass($("#alarmList > li"),'infor','remove');
+                        modifyElementClass($(".db_infor_box"),'on','remove');
+                        modifyElementClass($(".infor_btn"),'on','remove');
+                    }
+                    break;
+                case "profile":
+                    if(_action == 'show'){
+                        modifyElementClass($(".user_btn"),'on','add');
+                        modifyElementClass($(".personal_popup"),'on','add');
+                    }else if(_action == 'hide'){
+                        modifyElementClass($(".user_btn"),'on','remove');
+                        modifyElementClass($(".personal_popup"),'on','remove');
+                    }
+                    break;
+                case "alarmCancel":
+                    if(_action == 'show'){
+                        var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+
+                        if(eventLogIdList==null || eventLogIdList.length == 0){
+                            layoutAlertMessage('emptyAlarmCancel');
+                            return false;
+                        }
+                        modifyElementClass($("div[alarm_menu]"),'open_cancel','add');
+                        modifyElementClass($(".db_cancel_set"),'on','add');
+                    }else if(_action == 'hide'){
+                        $("#eventCancelDesc").val("");
+                        modifyElementClass($("div[alarm_menu]"),'open_cancel','remove');
+                        modifyElementClass($(".db_cancel_set"),'on','remove');
                     }
                     break;
             }
         }
 
-        /**
-         * 전체화면
-         */
-        function allView(_this){
-            if($(_this).hasClass("on")){
-                modifyElementClass($("body"),'on','remove');
-                modifyElementClass($(_this),'on','remove');
-            }else{
-                modifyElementClass($("body"),'on','add');
-                modifyElementClass($(_this),'on','add');
-            }
-        }
-
-        /**
-         * 메뉴바 동작
-         */
-        function menuView(_this){
-
-//            var navPlusBtn = $(".nav_plus");
-//            var navPlusTarget = $("nav");
-
-//            navPlusBtn.on('click', function () {
-//                $(this).toggleClass("on");
-//                navPlusTarget.toggleClass("on");
-//                $("body").toggleClass("navzoom");
-//            });
-
-            if($(_this).hasClass("on")){
-                modifyElementClass($("body"),'navzoom','remove');
-                modifyElementClass($(_this),'on','remove');
-            }else{
-                modifyElementClass($("body"),'navzoom','add');
-                modifyElementClass($(_this),'on','add');
-            }
+        function cctvOpen(linkUrl){
+            window.open(linkUrl);
         }
 
         function logout(){
@@ -648,10 +611,9 @@
             location.href = layoutUrlConfig['mainUrl'];
         }
 
-        function moveDashBoardDetail(id,name){
-            var detailForm = $('<FORM>').attr('action',layoutUrlConfig['detailUrl']).attr('method','POST');
+        function moveDashBoard(id){
+            var detailForm = $('<FORM>').attr('action',layoutUrlConfig['dashboardUrl']).attr('method','POST');
             detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
-            detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaName').attr('value',name));
             document.body.appendChild(detailForm.get(0));
             detailForm.submit();
         }
@@ -686,7 +648,6 @@
             deviceListForm.appendTo(document.body);
             deviceListForm.submit();
         }
-
     </script>
 
     <!--
@@ -769,15 +730,15 @@
 
             switch (resultData['messageType']) {
                 case "addEvent": // 일반이벤트 등록
-                    refreshData = true;
+                    refreshData = false;
                     break;
                 case "addAlarmEvent": // 알림이벤트 등록
-                    addAlarm(resultData['alarmEventLog'][0], true);
-                    refreshData = true;
+                    addAlarm(resultData['eventLog'], true);
+                    refreshData = false;
                     break;
                 case "removeAlarmEvent": // 알림이벤트 해제
-                    removeAlarm(resultData['alarmEventLog']);
-                    refreshData = true;
+                    removeAlarm(resultData['eventLog']);
+                    refreshData = false;
                     break;
                 case "refreshView": // 화면갱신
                     refreshData = true;
@@ -788,7 +749,8 @@
 
             if(refreshData){
                 dashBoardHelper.getData();
-//                dashBoardHelper.appendEvent(resultData['eventLog']);
+            }else{
+                dashBoardHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
             }
         }
     </script>
@@ -799,150 +761,109 @@
     <!-- hearder Start 고통부분 -->
     <header id="header">
         <div class="header_area">
-            <h1><button onclick="javascript:moveFullDashFunc(); return false;" href="#"></button></h1>
-            <div class="ha_right_set">
-                <div class="hrs_date">
+            <h1><a href="#" onclick="javascript:moveFullDashFunc(); return false;"></a></h1>
+
+            <!-- menu Start -->
+            <menu><ul menu_main></ul></menu>
+            <!-- menu End -->
+
+            <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 Start -->
+            <div class="header_right_area">
+                <div class="datetime_set">
                     <span id="nowTime"></span>
-                    <span onclick="javascript:getProfile(); event.stopPropagation();">${sessionScope.authAdminInfo.userName}</span>
                 </div>
-                <div class="hrs_btn_set">
-                    <button class="db_btn issue_btn" onclick="javascript:alarmShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
-                    <button class="db_btn loginout_btn" href="#" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
+                <div class="header_btn_set">
+                    <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+                    <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
+                    <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
                 </div>
             </div>
+            <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 End -->
         </div>
-        <button class="db_btn zoom_btn change_btn" href="#" onclick="javascript:allView(this);" title="<spring:message code="dashboard.title.screenZoomout"/>"></button>
+        <!-- header_area 영역 End -->
     </header>
     <!-- hearder End -->
 
-    <!-- navigation 영역 Start -->
-    <nav id="nav" class="nav">
-        <button class="nav_plus" onclick="javascript:menuView(this); return false;"></button>
-        <div class="nav_area"></div>
-    </nav>
-    <!-- navigation 영역 End -->
-
-    <!-- 알림목록 영역 Start -->
+    <!-- 알림센터 영역 Start -->
     <aside class="db_area">
-        <div class="db_header">
-            <div>
-                <h3 onclick="javascript:alarmShowHide('list', 'hide'); return false;"><spring:message code="dashboard.title.alarmCenter"/></h3>
-                <button class="btn btype03 bstyle07" href="#" onclick="javascript:openAlarmCancelPopup();"><spring:message code="dashboard.title.alarmCancel"/></button>
+        <h2>
+            <!-- 임계치별 알림 카운트 -->
+            <div criticalLevelCnt>
+                <c:forEach var="critical" items="${criticalList}">
+                    <span ${critical.codeId}>0</span>
+                </c:forEach>
             </div>
-            <div>
-                <div class="check_box_set">
+        </h2>
+
+        <!-- 알림 이력 + 알림 해지 영역 -->
+        <section class="db_list_box">
+            <!-- 이력 선택 및 알림해지 버튼-->
+            <div alarm_menu>
+                <div class="checkbox_set csl_style01 db_allcheck">
                     <input type="checkbox" class="check_input" onclick="javascript:alarmAllCheck(this);"/>
-                    <label class="lablebase lb_style01"></label>
+                    <label></label>
                 </div>
-                <isaver:codeSelectBox groupCodeId="SCT" htmlTagId="eventType" allModel="true"  />
-                <%--<select id="eventType">--%>
-                    <%--<option value="">전체</option>                    --%>
-                    <%--<option value="crane"><spring:message code="dashboard.selectbox.crane"/></option>--%>
-                    <%--<option value="worker"><spring:message code="dashboard.selectbox.worker"/></option>--%>
-                    <%--&lt;%&ndash;<option value="inout"><spring:message code="dashboard.selectbox.inout"/></option>&ndash;%&gt;--%>
-                <%--</select>--%>
+                <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true"/>
                 <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
+                <button class="btn dbc_open_btn" onclick="javascript:layerShowHide('alarmCancel','show');"></button>
             </div>
-        </div>
-        <div class="db_contents nano">
-            <ul class="nano-content" id="alarmList"></ul>
-        </div>
-        <div class="db_bottom">
-            <button href="#" onclick="alarmShowHide('list', 'hide');"><spring:message code="common.button.close"/></button>
-        </div>
+
+            <!-- 알림 이력-->
+            <ul id="alarmList"></ul>
+
+            <!-- 알림해지 영역 -->
+            <div class="db_cancel_set">
+                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alarmCancel'/>"></textarea>
+                <div class="btn_set">
+                    <button class="btn" onclick="javascript:alarmCancel();"><spring:message code="common.button.save"/></button>
+                    <button class="btn close" onclick="javascript:layerShowHide('alarmCancel','hide');"><spring:message code="common.button.cancel"/></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 알림 상세 영역 -->
+        <section alarm_detail class="db_infor_box">
+            <div class="dbi_event">
+                <p areaName></p>
+                <p eventName></p>
+                <p eventDatetime></p>
+                <p currentDatetime></p>
+            </div>
+            <div class="dbi_cctv"><button></button></div>
+            <div class="dbi_copy">
+                <p actionDesc></p>
+            </div>
+        </section>
     </aside>
     <!-- 알림목록 영역 End -->
-
-    <!-- 알림상세 영역 Start -->
-    <aside class="dbs_area">
-        <div class="db_header">
-            <div><h3 onclick="javascript:alarmShowHide('detail', 'hide'); return false;"><spring:message code="dashboard.title.action"/></h3></div>
-            <div><p id="alarmEvent"></p></div>
-        </div>
-        <div class="db_contents nano">
-            <div class="nano-content text_area" id="alarmActionDesc"></div>
-        </div>
-        <div class="db_bottom">
-            <button href="#" onclick="alarmShowHide('detail', 'hide');"><spring:message code="common.button.close"/></button>
-        </div>
-    </aside>
-    <!-- 알림상세 영역 End -->
 
     <!-- 토스트 영역 Start -->
     <aside class="toast_popup on"></aside>
     <!-- 토스트 영역 End -->
 
-    <!-- 알림해지 레이어 팝업 Start -->
-    <aside class="layer_popup attention_popup">
-        <section class="layer_wrap i_type07">
-            <article class="layer_area">
-                <div class="mp_header">
-                    <h2><spring:message code="dashboard.title.alarmCancel"/></h2>
+    <!-- 개인상세 정보 팝업-->
+    <div class="personal_popup">
+        <section>
+            <h2><spring:message code="dashboard.title.profile"/></h2>
+            <form>
+                <div class="form_area">
+                    <span><spring:message code="dashboard.column.userName"/></span>
+                    <input type="text" id="userName" />
+                    <span><spring:message code="dashboard.column.password"/></span>
+                    <input type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                    <span><spring:message code="dashboard.column.passwordConfirm"/></span>
+                    <input type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                    <span><spring:message code="dashboard.column.telephone"/></span>
+                    <input type="text" id="telephone" />
+                    <span><spring:message code="dashboard.column.email"/></span>
+                    <input type="text" id="email" />
                 </div>
-                <div class="mp_contents vh_mode">
-                    <div class="mc_element">
-                        <div class="time_select_contents">
-                            <!-- 1 SET -->
-                            <div>
-                                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alarmCancel'/>"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" onclick="javascript:alarmCancel();"><spring:message code="common.button.save"/></button>
-                        <button class="btn btype01 bstyle07" onclick="javascript:closeAlarmCancelPopup();"><spring:message code="common.button.cancel"/></button>
-                    </div>
-                </div>
-            </article>
+            </form>
         </section>
-        <div class="layer_popupbg ipop_close" onclick="javascript:closeAlarmCancelPopup();"></div>
-    </aside>
-    <!-- 알림해지 레이어 팝업 End -->
-
-    <!-- 개인정보 레이어 팝업 Start -->
-    <aside class="layer_popup personal_popup">
-        <section class="layer_wrap i_type07">
-            <article class="layer_area">
-                <div class="mp_header">
-                    <h2><spring:message code="dashboard.title.profile"/></h2>
-                    <div>
-                        <button class="db_btn zoomclose_btn ipop_close" onclick="javascript:closeProfile();"></button>
-                    </div>
-                </div>
-                <div class="mp_contents vh_mode">
-                    <div class="mc_element">
-                        <div class="time_select_contents">
-                            <div>
-                                <span><spring:message code="dashboard.column.userName"/></span>
-                                <input type="text" id="userName" />
-                            </div>
-                            <div>
-                                <span><spring:message code="dashboard.column.password"/></span>
-                                <input type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
-                            </div>
-                            <div>
-                                <span><spring:message code="dashboard.column.passwordConfirm"/></span>
-                                <input type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
-                            </div>
-                            <div>
-                                <span><spring:message code="dashboard.column.telephone"/></span>
-                                <input type="text" id="telephone" />
-                            </div>
-                            <div>
-                                <span><spring:message code="dashboard.column.email"/></span>
-                                <input type="text" id="email" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lmc_btn_area mc_tline">
-                        <button class="btn btype01 bstyle07" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
-                    </div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="javascript:closeProfile();"></div>
-    </aside>
-    <!-- 개인정보 레이어 팝업 End -->
+        <div class="btn_set">
+            <button class="btn" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
+        </div>
+    </div>
 
     <audio controls style="display: none">
         <source src="${rootPath}/assets/library/sound/alarm.mp3" type="audio/mpeg">

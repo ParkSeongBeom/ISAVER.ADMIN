@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.common.util.StringUtils;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
@@ -38,6 +39,17 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     private EventDao eventDao;
 
     @Override
+    public ModelAndView findListDashBoard(Map<String, String> parameters) {
+        parameters.put("delYn","N");
+        List<AreaBean> areas = areaDao.findListArea(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("areas", areas);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findAllDashBoard(Map<String, String> parameters) {
         parameters.put("delYn","N");
         List<AreaBean> areas = areaDao.findListArea(parameters);
@@ -45,6 +57,10 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("areas", areas);
         modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("workerEventIds", StringUtils.strJoin(AdminResource.WORKER_EVENT_ID_DETAIL, ","));
+        modelAndView.addObject("craneEventIds",StringUtils.strJoin(AdminResource.CRANE_EVENT_ID_DETAIL, ","));
+        modelAndView.addObject("inoutEventIds",StringUtils.strJoin(AdminResource.INOUT_EVENT_ID, ","));
+
         return modelAndView;
     }
 

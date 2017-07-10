@@ -8,8 +8,6 @@
 <c:set value="G00040" var="menuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
-<script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js"></script>
-<script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 
 <!-- 알림 장치 맵핑 팝업-->
 <aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">

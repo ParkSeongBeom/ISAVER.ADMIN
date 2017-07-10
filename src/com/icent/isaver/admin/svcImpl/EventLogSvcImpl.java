@@ -1,7 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -90,21 +89,7 @@ public class EventLogSvcImpl implements EventLogSvc {
 
     @Override
     public ModelAndView findListEventLogForAlarm(Map<String, String> parameters) {
-        Map param = new HashMap();
-        StringBuilder builder = new StringBuilder();
-
-        for(int index=0; index< AdminResource.ALARM_EVENT.size(); index++){
-            if(index!=0){builder.append(CommonResource.COMMA_STRING);}
-            builder.append(AdminResource.ALARM_EVENT.get(index));
-        }
-        if(StringUtils.notNullCheck(parameters.get("datetime"))){
-            param.put("datetime", parameters.get("datetime"));
-        }
-        param.put("alarmEventId", builder.toString());
-        param.put("craneEventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
-        param.put("workerEventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
-
-        List<EventLogBean> events = eventLogDao.findListEventLogForAlarm(param);
+        List<EventLogBean> events = eventLogDao.findListEventLogForAlarm();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogs", events);
@@ -116,6 +101,7 @@ public class EventLogSvcImpl implements EventLogSvc {
     public ModelAndView cancelEventLog(Map<String, String> parameters) {
         String[] eventLogIds = parameters.get("eventLogIds").split(CommonResource.COMMA_STRING);
 
+        List<EventLogBean> eventLogList = new ArrayList<>();
         List<Map<String, String>> parameterList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -128,6 +114,11 @@ public class EventLogSvcImpl implements EventLogSvc {
             eventLogParamMap.put("eventCancelDesc", parameters.get("eventCancelDesc"));
             eventLogParamMap.put("eventCancelDatetime", eventCancelDatetime);
             parameterList.add(eventLogParamMap);
+
+            Map<String, String> eventLogParam = new HashMap<>();
+            eventLogParam.put("eventLogId", eventLogId);
+            EventLogBean eventLog = eventLogDao.findByEventLog(eventLogParam);
+            eventLogList.add(eventLog);
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
@@ -146,9 +137,7 @@ public class EventLogSvcImpl implements EventLogSvc {
          */
         try {
             Map websocketParam = new HashMap();
-            Map warnParam = new HashMap();
-            warnParam.put("eventLogIds", parameters.get("eventLogIds"));
-            websocketParam.put("alarmEventLog", warnParam);
+            websocketParam.put("eventLog", eventLogList);
             websocketParam.put("messageType","removeAlarmEvent");
 
             InetAddress address = InetAddress.getByName(wsAddress);

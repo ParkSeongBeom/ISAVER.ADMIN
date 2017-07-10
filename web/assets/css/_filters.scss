@@ -1,0 +1,433 @@
+@charset "utf-8";
+
+/*
+ @at-root {.class { } } 존속받지 않고 root에 위치
+ */
+
+// 폰트사이즈 지정
+@mixin font-size15 {font-size:0.9rem;}            //ex)  @include font-size15;
+@mixin font-size20 {font-size:1.25rem;}           //ex)  @include font-size20;
+@mixin font-size48 {font-size:3rem;}              //ex)  @include font-size48;
+@mixin font-size64 {font-size:4rem;}              //ex)  @include font-size64;
+@mixin font-size-navbtn {font-size:1.25rem;}      //ex)  nav 01 depth btn = 20px    @include font-size-navbtn;
+@mixin font-size-navdepthbtn {font-size:1.1rem;}  //ex)  nav 02 depth btn = 17.5px  @include font-size-navdepthbtn;
+@mixin font-size-menubtn {font-size:1.5rem;}      //ex)  메뉴 아이콘 btn = 24px  @include font-size-menubtn;
+@mixin font-size-h2 {font-size:1.8rem;}             //ex)  32px   @include font-size-h2;
+@mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
+@mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
+
+/*
+일반, 주의, 경고, 위험 색상단계 정의
+
+일반 :
+주의 : 노랑  $color-yellow-01  lever-caution
+경고 : 주황  $color-orange-01  lever-warning
+위험 : 빨강  $color-red-01     lever-danger
+*/
+
+
+// 기본 색상
+$bas-color:#4c4c4c; //rgba(76,76,76,1)     데시보드 기본 bg
+$adm-color:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
+$not-color:#0f0e13; //rgba(15,14,19,1)     알림센터 기본 bg
+
+$color-gray-01:#a9a9a9;   // rgba(169,169,169,1)  form Normal border-color
+$color-gray-02:#ddd;      // form Dim border-color
+$color-gray-03:#999;      // rgba(88,88,88,1)  주위
+$color-gray-04:#e1e1e1;   // rgba(225,225,225,1)  테이블 Hover
+$color-gray-05:#757575;   // rgba(177,177,177,1)  밝은 버튼, 테이블 th bg
+$color-gray-06:#bcbcbc;   // rgba(188,188,188,1)  테이블 border-color
+$color-gray-07:#484848;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
+$color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
+
+$color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
+$color-red-02:#be1e1e;    // rgba(190,30,30,1)
+
+$color-yellow-01:#f6b900; // rgba(246,185,0,1) 주위, 차트03
+$color-yellow-02:#ef8116; // rgba(239,129,22,1) 차트08
+
+$color-blue-01:#109dcb;   // rgba(16,157,203,1) 버튼 ON
+$color-blue-02:#259dcf;   // rgba(37,157,207,1) 차트06
+$color-blue-03:#259dcf;   // rgba(37,157,207,1) 차트09
+
+$color-purple-01:#cc3dd3; // rgba(204,61,211,1)  차트02
+$color-purple-02:#9753dc; // rgba(151,83,220,1) 차트05
+$color-purple-03:#7894c2; // rgba(120,148,194,1) 차트10
+
+$color-orange-01:#ff8400; // rgba(255,132,0,1) 경고
+$color-orange-02:#e05f2d; // rgba(224,95,45,1)
+
+$color-green-01:#01d65a;  // rgba(0,212,88,1)   차트01
+$color-green-02:#56c96e;  // rgba(86,201,110,1) 차트07
+$color-green-03:#a8d164;  // rgba(168,209,100,1) 들어옴
+
+$color-dark-01:#4c4c4c;   // rgba(76,76,76,1) 버튼기본
+$color-dark-02:#0f0e13;   // rgba(15,14,19,1)
+
+$color-white-01:#fff;     //
+$color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
+
+$hov-color:#040404; //rgba(20,20,20,1) 구분라인
+
+
+// 길이지정
+$noticecenter-width:340px;
+$device-width:100vw;
+$device-height:100vh;
+$screen-width:100%;
+$screen-height:100%;
+$nav_width:100px;
+$btnarea-height:40px;
+$headerHeight:50px; // wrap > header의 height
+$padpay:80px; //admin 공통 padding 값
+$td-height:55px;
+$tree-area-width:400px;
+
+//.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
+// display
+$display-table:table;
+$display-table-cell:table-cell;
+$display-block:block;
+$display-inline-block:inline-block;
+
+//z-index
+@mixin z-index-header {z-index:20; } //ex) 알림센터 @include z-index-header;
+@mixin z-index-notice {z-index:10; } //ex) 알림센터 @include z-index-not;
+@mixin z-index-menu   {z-index:30; } //ex) menu @include z-index-menu;
+@mixin z-index-popup  {z-index:40; } //ex) popup @include z-index-popup;
+
+// display flex 플렉스 기본
+@mixin flexbase {display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;}
+//ex) @include flexbase;
+
+@mixin flexbase-inline {display:-webkit-box; display:-moz-inline-box; display:-ms-inline-flexbox; display:-webkit-inline-flex; display:inline-flex; display:flexbox; display:box;}
+//ex) @include flexbase-inline;
+
+
+// flex width
+@mixin flex-width {flex:0 1 100%; -webkit-flex:0 1 100%;  flexbox:0 1 100%; -webkit-box-flex:1; -ms-flex: 1; }
+// ex) @include flex-width;
+@mixin flex-width-one($width) {flex:$width; -webkit-flex:$width;  flexbox:$width; -webkit-box-flex:$width; -ms-flex: $width; }
+// ex) @include flex-width-one(1);
+@mixin flex-width-option($quarter, $width) {flex:0 $quarter $width; -webkit-flex:0 $quarter $width;  flexbox:0 $quarter $width; -webkit-box-flex:$quarter; -ms-flex: 0 $quarter $width; }
+// ex) @include flex-width-option(1, 100%);
+@mixin flex-option($grow, $shrink, $basis) {flex: $grow $shrink $basis; -webkit-flex: $grow $shrink $basis;  flexbox: $grow $shrink $basis; -webkit-box-flex:$shrink; -ms-flex: $grow $shrink $basis; }
+// ex) @include flex-option(0, 1, 100%);
+
+
+//flex-direction
+@mixin flex-column {-webkit-box-orient:column; -webkit-box-direction:column; -webkit-flex-direction:column; -ms-flex-direction:column; flex-direction:column;}
+// ex) @include flex-column;
+@mixin flex-column-none {-webkit-box-orient:none; -webkit-box-direction:none; -webkit-flex-direction:none; -ms-flex-direction:none; flex-direction:none;}
+// ex) @include flex-column-none;
+@mixin flex-column-row {-webkit-box-orient:row; -webkit-box-direction:row; -webkit-flex-direction:row; -ms-flex-direction:row; flex-direction:row;}
+// ex) @include flex-column-row;
+
+
+//align-items
+@mixin flex-align-items-start   {box-align:start;   -webkit-box-align:start;   -moz-box-align:flex-start;   -webkit-align-items:flex-start;   -ms-flex-align:flex-start;   align-items:flex-start;  }
+// ex) @include flex-align-items-start;
+@mixin flex-align-items-center  {box-align:center;  -webkit-box-align:center;  -moz-box-align:center;       -webkit-align-items:center;       -ms-flex-align:center;       align-items:center;      }
+// ex) @include flex-align-items-center;
+@mixin flex-align-items-end     {box-align:end;     -webkit-box-align:end;     -moz-box-align:flex-end;     -webkit-align-items:flex-end;     -ms-flex-align:flex-end;     align-items:flex-end;    }
+// ex) @include flex-align-items-end;
+@mixin flex-align-items-stretch {box-align:stretch; -webkit-box-align:stretch; -moz-box-align:flex-stretch; -webkit-align-items:flex-stretch; -ms-flex-align:flex-stretch; align-items:flex-stretch;}
+// ex) @include flex-align-items-stretch;
+
+
+//justify-content
+@mixin flex-justify-content-center  {-webkit-box-pack:center;  -moz-box-pack:center;     -webkit-justify-content:center;        -ms-flex-pack:center;     justify-content:center;       }
+// ex) @include flex-justify-content-center;
+@mixin flex-justify-content-start   {-webkit-box-pack:start;   -moz-box-pack:flex-start; -webkit-justify-content:flex-start;    -ms-flex-pack:flex-start; justify-content:flex-start;   }
+// ex) @include flex-justify-content-start;
+@mixin flex-justify-content-end     {-webkit-box-pack:end;     -moz-box-pack:flex-end;   -webkit-justify-content:flex-end;      -ms-flex-pack:flex-end;   justify-content:flex-end;     }
+// ex) @include flex-justify-content-end;
+@mixin flex-justify-content-between {-webkit-box-pack:justify; -moz-box-pack:justify;    -webkit-justify-content:space-between; -ms-flex-pack:justify;    justify-content:space-between;}
+// ex) @include flex-justify-content-between;
+@mixin flex-justify-content-around {-webkit-box-pack:justify;  -moz-box-pack:justify;    -webkit-justify-content:space-around;  -ms-flex-pack:justify;    justify-content:space-around; }
+// ex) @include flex-justify-content-around;
+
+
+//flex-flow
+@mixin flex-row-wrap   {-webkit-flex-flow:row wrap;   -moz-flex-flow:row wrap;   -ms-flex-flow:row wrap;   flex-flow:row wrap;}
+// ex) @include flex-row-wrap;
+@mixin flex-row-nowrap {-webkit-flex-flow:row nowrap; -moz-flex-flow:row nowrap; -ms-flex-flow:row nowrap; flex-flow:row nowrap;}
+// ex) @include flex-row-nowrap;
+
+
+//align-content
+@mixin flex-align-content-start  {-webkit-align-content:flex-start; align-content:flex-start;}
+@mixin flex-align-content-center {-webkit-align-content:center;     align-content:center;    }
+@mixin flex-align-content-end    {-webkit-align-content:flex-end;   align-content:flex-end;  }
+
+//align-self
+@mixin flex-align-self-start  {-webkit-align-self:flex-start; align-self:flex-start;}
+// ex) @include flex-align-self-start;
+@mixin flex-align-self-center {-webkit-align-self:center;     align-self:center;    }
+// ex) @include flex-align-self-center;
+@mixin flex-align-self-end    {-webkit-align-self:flex-end;   align-self:flex-end;  }
+// ex) @include flex-align-self-end;
+
+@mixin flex-midddle {
+  display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;
+  box-align:center; -webkit-box-align:center; -moz-box-align:center; -webkit-align-items:center; -ms-flex-align:center; align-items:center;
+  -webkit-box-pack:center; -moz-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center;
+}
+// ex) @include flex-midddle;
+
+
+// box-sizing
+@mixin border-box  {-webkit-box-sizing:border-box;  -moz-box-sizing:border-box;  box-sizing:border-box;}
+// ex) @include border-box;
+@mixin content-box {-webkit-box-sizing:content-box; -moz-box-sizing:content-box; box-sizing:content-box;}
+// ex)  @include content-box;
+
+
+// text-overflow:ellipsis 말줄임
+@mixin text-overflow-ellipsis {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal;}
+// ex) @include text-overflow-ellipsis;
+
+// border-radius 라운딩
+@mixin border-radius($px) {-moz-border-radius:$px; -webkit-border-radius:$px; border-radius:$px; -khtml-border-radius:$px;}
+// ex) @include border-radius(200px);
+
+// box-shadow 그림자
+@mixin box-shadow($xpx,$ypx,$bpx,$rgb-r,$rgb-g,$rgb-b,$opacity) {
+  box-shadow:        $xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+}
+// ex) @include box-shadow(0px, 0px, 8px, 0, 0, 0, 0.5);
+
+@mixin box-shadow01 ($xpx,$ypx,$bpx,$zpx,$color,$opacity) {
+  box-shadow:        $xpx $ypx $bpx $zpx rgba($color,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx $zpx rgba($color,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx $zpx rgba($color,$opacity);
+}
+// ex) @include box-shadow01(0px, 0px, 8px, 0px, $지정-color, 0.5);
+
+@mixin box-shadow02 ($xpx,$ypx,$bpx,$zpx,$rgb-r,$rgb-g,$rgb-b,$opacity) {
+  box-shadow:        $xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+}
+// ex) @include box-shadow02(0px, 0px, 8px, 0px, 0, 0, 0, 0.5);
+// $xpx-x축  $ypx-y축  $zpx-그림자 넓이 $color-지정컬러 $opacity-투명값
+
+@mixin box-inset-shadow ($xpx,$ypx,$bpx,$color,$opacity) {
+  box-shadow:        inset $xpx $ypx $bpx rgba($color,$opacity);
+  -webkit-box-shadow:inset $xpx $ypx $bpx rgba($color,$opacity);
+  -moz-box-shadow:   inset $xpx $ypx $bpx rgba($color,$opacity);
+}
+// ex) @include box-inset-shadow(0px, 0px, 8px, $지정-color, 0.5);
+
+
+
+@mixin box-shadow-none {
+  box-shadow:        none !important;
+  -webkit-box-shadow:none !important;
+  -moz-box-shadow:   none !important;
+}
+// ex) @include box-shadow-none;
+
+
+// box-shadow 텍스트 그림자
+@mixin text-shadow($xpx,$ypx,$bpx,$color,$opacity) {
+  text-shadow:        $xpx $ypx $bpx rgba($color,$opacity);
+  -webkit-text-shadow:$xpx $ypx $bpx rgba($color,$opacity);
+  -moz-text-shadow:   $xpx $ypx $bpx rgba($color,$opacity);
+}
+// ex) @include text-shadow(0, 0, 8px, #000, 0.5);
+
+@mixin box-blur ($xpx) {
+  -webkit-filter: blur($xpx);
+  -moz-filter:    blur($xpx);
+  -o-filter:      blur($xpx);
+  -ms-filter:     blur($xpx);
+  filter:         blur($xpx);
+  -ms-filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius=$xpx);
+}
+// ex) @include box-blur($xpx);
+
+
+@mixin box-readient {
+  background: -moz-linear-gradient(   top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+  background: linear-gradient(  to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+}
+
+
+// rotate 회전
+@mixin rotate($deg){transform:rotate($deg); ms-transform:rotate($deg); -ms-transform:rotate($deg); -moz-transform:rotate($deg); -webkit-transform:rotate($deg); -o-transform:rotate($deg);}
+// ex) @include rotate(45deg);
+
+// rotate Y 회전
+@mixin rotate-y($deg){transform:rotateY($deg); ms-transform:rotateY($deg); -ms-transform:rotateY($deg); -moz-transform:rotatYe($deg); -webkit-transform:rotateY($deg); -o-transform:rotateY($deg);}
+// ex) @include rotate-y(45deg);
+
+
+// border
+@mixin border($px,$color){border-style:solid; border-width:$px; border-color:$color;}
+// ex) @include border(2px 0 0 4px,rgba(0,0,0,0) );
+@mixin border01($px,$color,$opacity){border-style:solid; border-width:$px; border-color:rgba($color,$opacity);}
+// ex) @include border01(2px 0 0 4px,$컬러지정,1 );
+@mixin borderwidth($px){border-style:solid; border-width:$px;}
+// ex) @include borderwidth(2px 0 0 4px);
+
+//triangle 삼각도형
+@mixin triangle {width:0; height:0; border-style:solid;}
+@mixin triangle-top($px,$color) {@include triangle; border-width:$px; border-color:transparent transparent $color transparent;} // 위
+@mixin triangle-bot($px,$color) {@include triangle; border-width:$px; border-color:$color transparent transparent transparent;} // 아래
+@mixin triangle-lef($px,$color) {@include triangle; border-width:$px; border-color:transparent $color transparent transparent;} // 왼쪽
+@mixin triangle-rig($px,$color) {@include triangle; border-width:$px; border-color:transparent transparent transparent $color;} // 오른쪽
+// ex) @include triangle-top(0 10px 10px 10px,#898989);
+
+@mixin transition($ms) {
+  transition:        all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -moz-transition:   all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -webkit-transition:all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -o-transition:     all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -ms-transition:    all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+// ex) @include transition(400ms);
+
+@mixin transition01($ms) {
+  transition:        all $ms;
+  -moz-transition:   all $ms;
+  -webkit-transition:all $ms;
+  -o-transition:     all $ms;
+  -ms-transition:    all $ms;
+}
+// ex) @include transition01(400ms);
+
+// 애니메이션
+@mixin detection {
+  -webkit-animation-duration: 300ms;
+  animation-duration:         300ms;
+  -webkit-animation-direction:alternate;
+  animation-direction:        alternate;
+  animation-fill-mode:             both;
+  -webkit-animation-fill-mode:     both;
+  -webkit-animation-timing-function:ease-in-out;
+  -webkit-animation-play-state:running;
+  -webkit-animation-iteration-count: infinite;
+}
+// ex) @include detection;
+
+
+
+// 웹킷 하이라이트 컬러 지정
+@mixin highlight-color($rgbcolor, $alpha) {-webkit-tap-highlight-color:rgba($rgbcolor, $alpha);}
+//ex) @include highlight-color(rgba(),1);
+@mixin user-select {-webkit-user-select: none; -ms-user-select:none; -moz-user-select:none;}
+//ex) @user-select bbl(0,0,0,0,0,0);
+
+
+// 구분 라인 설정
+@mixin bblbase   {content:""; position: absolute; z-index:1; top:0; right:0; background-color: $hov-color;}
+//ex) @include bblbase;
+@mixin bblwidth  {width:100%; height:1px;} // ex) @include bblwidth;
+@mixin bblheight {width:1px; height:100%;} // ex) @include bblheight;
+$bbl01:100%; $bbl02:1px;
+
+@mixin bbl($top, $right, $bottom, $left, $width, $height) {
+  content:""; position: absolute; z-index:1; background-color: $hov-color;
+  top:$top; right:$right; bottom:$bottom; left:$left; width:$width; height:$height;
+} //ex) @include bbl(0,0,0,0,0,0);
+
+
+// button base 정의 Start
+@mixin length-wh01 {width:40px;  height:40px;} // btn 작은 단위
+@mixin length-wh02 {width:100%; max-width:150px; height:40px; } // btn 박스형
+
+@mixin ibtn_font_size {font-size:1.75rem;}
+//ex) 28px @include ibtn_font_size;
+@mixin btn_font_size  {font-size:0.9rem; font-weight: bold;}
+//ex) 14.4px @include btn_font_size
+
+@mixin dim_btn {
+  &:disabled, &.dim { opacity: 0.5 !important; pointer-events: none; /*cursor: not-allowed;*/ }
+} // ex) @include dim_btn;
+
+@mixin line_btn {
+  @include border01(2px, $color-gray-01, 1);
+  background-color: transparent !important;
+  &:hover {border-color: $color-blue-01 !important; color: $color-blue-01 !important; }
+  &.on {border-color: $color-red-01; color: $color-red-01; }
+} // ex) @include line_btn;
+
+@mixin box_btn {
+  @include btn_font_size; color:$color-white-01;
+  background-color: $bas-color; height:40px;
+  &.on {background-color: $color-blue-01;}
+  &:hover {background-color: $color-blue-01 !important;}
+} // ex) @include box_btn;
+
+@mixin icon_btn {
+  @include length-wh01;
+  &:before {font-size:1.6rem; }
+  &:hover, &.on {&:before {font-weight:bold;}}
+  &:hover {&:before {color:$color-blue-01;}}
+  &.on    {&:before {color:$color-blue-01;}}
+} // ex) @include icon_btn;
+
+@mixin layout_btn {
+  @include length-wh01;
+  &:before {font-size:1.75rem; }//28px
+  &:hover, &.on {&:before {font-weight:bold;}}
+  &:hover {&:before {color:$color-blue-01;}}
+  &.on    {&:before {color:$color-blue-01;}}
+} // ex) @include icon_btn;
+// button base 정의 End
+
+
+// contents header 공통값
+@mixin common_header {
+  padding:0 15px; flex:1 0 50px; -webkit-flex:1 0 50px; flexbox:1 0 50px;
+  @include flex-align-items-center; @include flex-justify-content-between;
+} // ex) @include common_header;
+
+
+// contents 공통값
+@mixin common_contents {
+  overflow: hidden; padding:5px; flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
+} // ex) @include common_contents;
+
+// 어드민 페이지 타이틀 공통값
+@mixin sub_title_area {
+  @include flex-align-items-center; @include border01(0 0 2px 0, $color-gray-08,1 );
+  position: relative; width:100%; min-width: 100%;
+  flex:1 0 $headerHeight; -webkit-flex:1 0$headerHeight; flexbox:1 0 $headerHeight; height:$headerHeight;
+} // ex) @include sub_title_area;
+
+
+// webkit-scroll Bar
+@mixin webkit_scroll {
+  ::-webkit-scrollbar {width: 10px;height: 10px; }
+  ::-webkit-scrollbar-track {background-color:#fff;}
+  ::-webkit-scrollbar-thumb {
+    min-height: 30px; border: 2px solid #fff;
+    background-clip: content-box; background-color: rgba(94,94,94,0.6);
+  }
+  ::-webkit-scrollbar-thumb:hover {background-color: rgba(94,94,94,1);}
+} // ex) @include webkit_scroll;
+
+
+// line Bar
+@mixin line_bar{
+  &:after, &:before {content:""; position: absolute; z-index:12;}
+  &:before {background-color: rgba(0,0,0,0.8);}
+  &:after  {background-color: rgba(255,255,255,0.12);}
+}
+
+@mixin line_bar_h{@include line_bar; &:after, &:before {width:auto; height:1px;  left:5px; right:5px;} }
+@mixin line_bar_v{@include line_bar; &:after, &:before {width:1px; height:auto;  top:5px; bottom:5px;} }
+
+@mixin line_bar_top($before,$after)    { @include line_bar_h; &:before {top:$before;} &:after {top:$after;} }
+// ex) @include line_bar_top( 1px, 0);
+@mixin line_bar_bottom($before,$after) { @include line_bar_h; &:before {bottom:$before;} &:after {bottom:$after;} }
+// ex) @include line_bar_bottom(1px, 0);
+@mixin line_bar_left($before,$after)   { @include line_bar_v; &:before {left:$before;} &:after {left:$after;} }
+// ex) @include line_bar_bottom(1px, 0);
+@mixin line_bar_right($before,$after)  { @include line_bar_v; &:before {right:$before;} &:after {right:$after;} }
+// ex) @include line_bar_right(1px, 0);

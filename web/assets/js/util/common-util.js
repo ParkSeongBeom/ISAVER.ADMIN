@@ -71,6 +71,10 @@ function onlyNumberDown(_this){
 
 // 클래스 추가/삭제
 function modifyElementClass(_element, _className, _type){
+    if(_className==null){
+        return false;
+    }
+
     switch (_type){
         case "add" :
             if(!_element.hasClass(_className)){
@@ -97,4 +101,16 @@ function inputNumberCheck(object){
     if (object.value == '-'){
         object.value = object.value.slice(0, object.maxLength);
     }
+}
+
+
+function findEventIdType(eventId){
+    var eventType = "";
+    for(var key in eventIds){
+        if(eventIds[key].indexOf(eventId) > -1){
+            eventType = key;
+            break;
+        }
+    }
+    return eventType;
 }

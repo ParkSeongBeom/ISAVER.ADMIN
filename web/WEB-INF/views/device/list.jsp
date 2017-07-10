@@ -9,7 +9,6 @@
 <c:set value="D00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
-<script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 
 <!-- 장치 상세 화면 -->
 <section class="container sub_area">
@@ -393,7 +392,7 @@
     </form>
 </section>
 
-<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/tree/jquery.dynatree.js" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/device/DeviceModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/device/DeviceCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/device/DeviceView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>

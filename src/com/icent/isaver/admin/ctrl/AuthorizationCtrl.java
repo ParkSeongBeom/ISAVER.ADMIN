@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.AuthorizationSvc;
+import com.icent.isaver.admin.util.IsaverCriticalUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,8 +11,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -32,6 +31,9 @@ public class AuthorizationCtrl {
 
     @Inject
     private AuthorizationSvc authorizationSvc;
+
+    @Inject
+    private IsaverCriticalUtil isaverCriticalUtil;
 
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/index")
     public ModelAndView index(){
@@ -61,10 +63,22 @@ public class AuthorizationCtrl {
         parameters.put("userId","admin");
 
         ModelAndView modelAndView = authorizationSvc.externalLogin(request, parameters);
-        RedirectView rv = new RedirectView(request.getContextPath()+"/dashboard/all.html");
+        RedirectView rv = new RedirectView(request.getContextPath()+"/dashboard/list.html");
         rv.setExposeModelAttributes(false);
         modelAndView.setView(rv);
         return modelAndView;
+    }
+
+    /**
+     * 임계치 설정 reset
+     *
+     * @author kst
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/resetCritical")
+    public ModelAndView resetCriticalConfig() {
+        isaverCriticalUtil.reset();
+        return new ModelAndView();
     }
 
     /**

@@ -7,7 +7,6 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="D00030" var="menuId"/>
 <c:set value="D00000" var="subMenuId"/>
-<script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js"></script>
 
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->

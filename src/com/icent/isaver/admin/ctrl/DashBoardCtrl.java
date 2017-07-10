@@ -39,6 +39,20 @@ public class DashBoardCtrl {
     private DashBoardSvc dashBoardSvc;
 
     /**
+     * 대쉬보드 화면를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
+    public ModelAndView findListDashBoard(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = dashBoardSvc.findListDashBoard(parameters);
+        modelAndView.setViewName("dashboardList");
+        return modelAndView;
+    }
+
+    /**
      * 대쉬보드 전체 화면를 가져온다.
      *
      * @author dhj

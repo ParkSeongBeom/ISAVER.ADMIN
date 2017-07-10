@@ -13,6 +13,8 @@ var DashBoardHelper = (
 
         var _requestData = {};
 
+        var _callBackEventHandler = null;
+
         var _self = this;
 
         /**
@@ -70,13 +72,19 @@ var DashBoardHelper = (
                 return false;
             }
 
+            if(_appendEventHandler==null || typeof _appendEventHandler != "function"){
+                console.error('[DashBoardHelper][addRequestData] _appendEventHandler is null or type error');
+                return false;
+            }
+
             _requestData[_actionType] = {
                 'url' : _url
                 ,'data' : _data
                 ,'success' : _successHandler
                 ,'failure' : _failureHandler
-                ,'appendEvent' : _appendEventHandler
             };
+
+            _callBackEventHandler = _appendEventHandler;
         };
 
         /**
@@ -113,16 +121,20 @@ var DashBoardHelper = (
 
         /**
          * append data
+         * WS에서 이벤트 수신시 DB거치지 않고 실시간 대쉬보드 반영을 위함
          * @author psb
          */
-        this.appendEvent = function(eventLog){
-            for(var index in _requestData){
-                var _appendEventHandler = _requestData[index]['appendEvent'];
-
-                if(_appendEventHandler!=null){
-                    _appendEventHandler(eventLog);
-                }
+        this.callBackEvent = function(eventLog, messageType){
+            if(_callBackEventHandler!=null){
+                _callBackEventHandler(eventLog, messageType);
             }
+            //for(var index in _requestData){
+            //    var _appendEventHandler = _requestData[index]['appendEvent'];
+            //
+            //    if(_appendEventHandler!=null){
+            //        _appendEventHandler(eventLog, messageType, index);
+            //    }
+            //}
         };
     }
 );

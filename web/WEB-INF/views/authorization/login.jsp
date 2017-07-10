@@ -3,55 +3,59 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content = "telephone=no">
     <meta name="autocomplete" content="off" />
     <meta http-equiv="imagetoolbar" content="no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${rootPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
-    <!--[if lt IE 9] -->
-    <script src="${rootPath}/assets/js/util/html5.js"></script>
     <!--[endif] -->
-    <title>i-saver Admin</title>
+    <title>i-Saver Login</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 </head>
 <body class="login_mode">
-<form id="loginForm" method="POST">
     <div class="wrap">
-        <!-- hearder Start 고통부분 -->
+        <!-- hearder Start 공통부분 -->
         <section class="login_area">
             <article>
-                <div class="login_logo_area"><p></p></div>
-
+                <h1></h1>
                 <!-- 로그인 입력 폼 Start -->
-                <div class="login_input_area">
-                    <input type="text" name="userId" placeholder="ID" class="log_id"/>
-                    <input type="password" name="userPassword" placeholder="Password" class="log_pw"/>
-                    <p class="caps" style="display: none;">CapsLock이 켜져 있습니다!</p>
-                    <input type="checkbox" id="saveAdminIdCheck" name="id_save" />아이디 저장
-                </div>
-                <!-- 로그인 입력 폼 End -->
 
-                <button href="#" alt="로그인" class="btn_login fa" onclick="javascript:login(); return false;">로그인</button>
+                <form id="loginForm" method="POST">
+                    <div class="login_input_area">
+                        <input type="text" name="userId" placeholder="ID" class="log_id"/>
+                        <input type="password" name="userPassword" placeholder="Password" class="log_pw"/>
+                        <p class="caps">CapsLock이 켜져 있습니다!</p>
+                    </div>
+
+                    <div class="checkbox_set csl_style01">
+                        <input type="checkbox" id="saveAdminIdCheck" name="id_save" />
+                        <label></label>
+                        <span>ID 저장</span>
+                    </div>
+
+                </form>
+                <!-- 로그인 입력 폼 End -->
+                <button href="#" alt="로그인" class="btn" onclick="javascript:login(); return false;">로그인</button>
             </article>
         </section>
         <!-- section End -->
     </div>
-</form>
-<%--<script type="text/javascript" src="${rootPath}/assets/js/retina.js"></script>--%>
 <script type="text/javascript">
 
     var form = $('#loginForm');
-    var autoLoginFlag = "${autoLoginFlag}"
+    var autoLoginFlag = "${autoLoginFlag}";
 
     var urlConfig = {
         'loginUrl':'${rootPath}/login.json'
-        ,'mainUrl':'${rootPath}/dashboard/all.html'
+        ,'mainUrl':'${rootPath}/dashboard/list.html'
     };
 
     $(document).ready(function(){
@@ -73,6 +77,7 @@
             }
         });
 
+        $('.caps').hide();
         $('.log_pw').keypress(function(e) {
             e = e || window.event;
             if (this.value === '') {

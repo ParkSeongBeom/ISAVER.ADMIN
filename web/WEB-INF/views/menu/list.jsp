@@ -124,7 +124,7 @@
     </form>
 </section>
 
-<script src="${rootPath}/assets/js/common/dynatree/jquery.dynatree.js"type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/tree/jquery.dynatree.js"type="text/javascript" ></script>
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');

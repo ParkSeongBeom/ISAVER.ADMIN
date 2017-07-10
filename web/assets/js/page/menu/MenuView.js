@@ -140,187 +140,91 @@ function MenuView(model) {
      * [Draw] 상위 메뉴바 그리기
      * @param obj
      */
-    MenuView.setTopMenuBar = function (menuBarModel, areaList) {
-
-        var textSpaceSize = 9;
-        function leadingSpaces(n, digits) {
-            var space = '';
-            n = n.toString();
-
-            if (n.length < digits) {
-                for (var i = 0; i < digits - n.length; i++)
-                    space += "\u00A0";
-            }
-            return space;
-
-        }
-
-        function setSelectedMenu(_rootUlTag){
-            var selGnb = MenuView._model.getTargetMenuId();
-            var selDepth;
-            var endFlag = true;
-
-            while(endFlag){
-                for(var i in menuBarModel){
-                    var _item = menuBarModel[i];
-                    if (_item.menuId == selGnb){
-                        if(Number(_item.menuDepth)>1){
-                            selDepth = _item.menuId;
-                            selGnb = _item.parentMenuId;
-                        }else{
-                            endFlag = false;
-                        }
-                        break;
-                    }
-                }
-
-                if(selDepth==null){
-                    endFlag = false;
-                }
-            }
-
-            if(selDepth==null){
-                selDepth = 'H00000';
-            }
-
-            /* @author dhj, @since 2017.07.05 */
-            //$(_rootUlTag).find("li[name='"+selDepth+"']").addClass('on');
-            $(_rootUlTag).find("li[name='"+selGnb+"']").addClass('on');
-        }
-
-        function n(n){
-            return n > 9 ? "" + n: "0" + n;
-        }
-
-        var _listLength = menuBarModel.length;
-        var _loopLength = 0;
-        var rootUlTag = $("<ul/>").addClass("lnb");
-
-        var menuLiTag = $("<li/>").append(
-            $("<button/>").attr("href","#")
+    MenuView.setTopMenuBar = function (menuBarModel) {
+        var parentLiTag = $("<li/>").append(
+            $("<button/>", {href:"#"})
+        ).append(
+            $("<ul/>")
         );
 
-        while (_listLength != _loopLength) {
-            function getDrawTagFunc(item, loopCount) {
-                if (Number(item["menuDepth"]) == 1) {
-                    var _menuLiTag = menuLiTag.clone();
+        var childLiTag = $("<li/>").append(
+            $("<button/>", {href:"#"})
+        );
 
-                    switch (item.menuId){
-                        case "H00000": // 대쉬보드
-                            _menuLiTag.addClass("nl_dash");
-                            break;
-                        case "G00000": // 이력
-                            _menuLiTag.addClass("nl_reco");
-                            break;
-                        case "J00000": // 통계
-                            _menuLiTag.addClass("nl_stat");
-                            break;
-                        case "B00000": // 시스템관리
-                            _menuLiTag.addClass("nl_syst");
-                            break;
-                        case "A00000": // 사용자관리
-                            _menuLiTag.addClass("nl_user");
-                            break;
-                        case "F00000": // 대응관리
-                            _menuLiTag.addClass("nl_even");
-                            break;
-                        case "C00000": // 구역관리
-                            _menuLiTag.addClass("nl_watc");
-                            break;
-                        case "D00000": // 장치관리
-                            _menuLiTag.addClass("nl_devi");
-                            break;
-                        case "E00000": // 라이센스관리
-                        case "K00000": // 라이센스보기
-                            _menuLiTag.addClass("nl_lice");
-                            break;
+        // DASHBOARD 메뉴
+        var _parentLiTag = parentLiTag.clone();
+        _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
+        _parentLiTag.find("button").attr("onclick", "javascript:moveDashBoard();").text("DASHBOARD");
 
+        var areaList = MenuView._model.getAreaList();
+        if(areaList == null){
+            console.error("[MenuView.setTopMenuBar][Dashboard Menu] load error - model is null");
+        }else{
+            for(var index in areaList){
+                var _area = areaList[index];
+                if (Number(_area["menuDepth"]) == 1) {
+                    var _childLiTag = childLiTag.clone();
+                    _childLiTag.attr("name", _area.areaId);
+                    _childLiTag.find("button").attr("onclick", "javascript:moveDashBoard('"+_area['areaId']+"');").text(_area['areaName']);
+                    _parentLiTag.find("> ul").append(_childLiTag);
+                }
+            }
+        }
+        $("ul[menu_main]").append(_parentLiTag);
+
+        // ADMINISTRATION 메뉴
+        if(menuBarModel == null){
+            console.error("[MenuView.setTopMenuBar][AdminMenu] load error - model is null");
+        }else{
+            var addMenuCnt = 0;
+            var _parentLiTag = parentLiTag.clone();
+            _parentLiTag.attr("name","adminMenu").addClass("menu_admin");
+            _parentLiTag.find("button").text("ADMINISTRATION");
+
+            for(var index in menuBarModel){
+                var _menu = menuBarModel[index];
+
+                if (_menu['menuFlag'] == 'M') {
+                    var _childLiTag = childLiTag.clone();
+                    _childLiTag.attr("name", _menu.menuId);
+                    _childLiTag.find("button").text(_menu['menuName']);
+
+                    if(_menu.menuPath!="/"){
+                        _childLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
                     }
 
-                    _menuLiTag.attr("name", item.menuId);
-                    _menuLiTag.find("button").text(item['menuName']);
-                    if(item.menuPath!="/"){
-                        _menuLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
-                    }
-                    rootUlTag.append(_menuLiTag);
-                } else if (Number(item["menuDepth"]) > 1) {
-                    var _menuLiTag = menuLiTag.clone();
-                    _menuLiTag.attr("name", item.menuId);
-                    _menuLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';").text(item['menuName']);
-
-                     /**
-                     * 현병춘K 요청으로 대메뉴 클릭시 첫번째 하위메뉴의 화면 호출
-                     */
-                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul > li").length == 0){
-                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] > button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + item.menuPath + "';");
-                    }
-
-                    if($(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").length>0){
-                        $(rootUlTag).find("li[name='"+item.parentMenuId+"'] ul").append(_menuLiTag);
-                    }else{
-                        $(rootUlTag).find("li[name='"+item.parentMenuId+"']").append(
-                            $("<div/>").append(
-                                $("<ul/>").append(_menuLiTag)
-                            )
-                        )
+                    if (Number(_menu["menuDepth"]) == 1) {
+                        _childLiTag.append($("<ul/>"));
+                        _parentLiTag.find("> ul").append(_childLiTag);
+                        addMenuCnt++;
+                    } else if (Number(_menu["menuDepth"]) > 1){
+                        if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").length>0){
+                            _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").append(_childLiTag);
+                            addMenuCnt++;
+                        }else{
+                            console.info("[MenuView.setTopMenuBar][Admin Menu] parent menu is empty - (menuId : " + _menu.menuId + ", parentMenuId : " + _menu.parentMenuId + ")");
+                        }
                     }
                 }
             }
 
-            var item = menuBarModel[_loopLength];
-            try {
-                if (item != undefined) {
-                    if (item['menuFlag'] == 'M') {
-                        getDrawTagFunc(item, _loopLength);
-                    }
-                }
-            } catch (e) {
-                console.error(e);
+            if(addMenuCnt > 0){
+                $("ul[menu_main]").append(_parentLiTag);
             }
-
-            _loopLength++;
         }
 
-        if (_listLength == _loopLength) {
-            areaList = MenuView._model.getAreaList();
+        if(MenuView._model.getTargetMenuId()!=""){
+            setSelectedMenu(MenuView._model.getTargetMenuId());
+        }else{
+            $("ul[menu_main] > .menu_dashboard > button").addClass('on');
+        }
 
-            if(areaList!=null){
-                if($(rootUlTag).find("li[name='H00000'] ul").length==0){
-                    $(rootUlTag).find("li[name='H00000']").append(
-                        $("<div/>").append(
-                            $("<ul/>")
-                        )
-                    );
-                }
-
-                for(var index in areaList){
-                    var area = areaList[index];
-
-                    var _menuLiTag = menuLiTag.clone();
-                    _menuLiTag.attr("name", area['areaId']);
-                    _menuLiTag.find("button").attr("onclick", "javascript:moveDashBoardDetail('"+area['areaId']+"','"+area['areaName']+"');").text(area['areaName']);
-                    $(rootUlTag).find("li[name='H00000'] ul").append(_menuLiTag);
-
-                }
+        function setSelectedMenu(_targetMenuId){
+            var targetTag = $("li[name='"+_targetMenuId+"']");
+            if(targetTag.length > 0){
+                targetTag.find("> button").addClass("on");
+                setSelectedMenu(targetTag.parent().parent().attr("name"));
             }
-
-            if(MenuView._model.getParentMenuId()!=""){
-                setSelectedMenu(rootUlTag);
-            }
-
-            $(".nav_area").html(rootUlTag);
-
-            /* @author dhj, @since 2017.07.05 */
-            $(".nav_area .lnb").children().bind("mouseover", function() {
-
-                if ($(this).find("div").length == 0) {
-                    $(".nav_area").addClass("depthno");
-                } else {
-                    $(".nav_area").removeClass("depthno");
-                }
-
-            });
-
         }
     };
 

@@ -10,23 +10,25 @@ var TemplateHelper = (
          * 알림 리스트 template
          *********************************************************************************/
         var ALARM_CONTENT_TEMPLATE = $("<li/>").append(
-            $("<div/>", {class:"check_box_set"}).append(
+            $("<div/>", {class:"checkbox_set csl_style01"}).append(
                 $("<input/>", {type:"checkbox" ,class:"check_input"})
             ).append(
-                $("<label/>", {class:"lablebase lb_style01"})
+                $("<label/>")
             )
         ).append(
-            $("<div/>", {class:"dbc_contents"}).append(
-                $("<div/>").append(
-                    $("<p/>", {id:"areaName"})
-                ).append(
-                    $("<p/>", {id:"eventName"})
-                ).append(
-                    $("<p/>", {id:"eventDatetime"})
-                )
+            $("<div/>", {class:"infor_set issue01"}).append(
+                $("<p/>", {id:"areaName"})
+            ).append(
+                $("<p/>", {id:"eventName"})
+            ).append(
+                $("<p/>", {id:"eventDatetime"})
             )
         ).append(
-            $("<button/>", {href:"#", class:"infor_open"})
+            $("<button/>", {href:"#", class:"infor_btn"}).append(
+                $("<span/>")
+            ).append(
+                $("<span/>")
+            )
         );
 
         /********************************************************************************

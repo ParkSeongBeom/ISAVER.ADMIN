@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
@@ -38,6 +39,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Value("${ws.server.urlConnect}")
     private String wsUrlConnect = null;
+
+    @Inject
+    private IsaverCriticalUtil isaverCriticalUtil;
 
     /**
      * 인자절차가 필요없는 path</br>
@@ -105,6 +109,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
+        modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
 
         super.postHandle(request, response, handler, modelAndView);
     }

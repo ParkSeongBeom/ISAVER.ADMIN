@@ -175,6 +175,14 @@
     </definition>
 
     <!--
+        대쉬보드
+        @author psb
+    -->
+    <definition name="dashboardList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/list.jsp" />
+    </definition>
+
+    <!--
         대쉬 화면  - 전체
         @author dhj
     -->

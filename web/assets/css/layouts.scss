@@ -1,0 +1,584 @@
+@charset "utf-8";
+@import "filters" ;
+
+body.adaptive_landscape {}
+body.adaptive_mobile    {}
+body.adaptive_tablet    {}
+body.adaptive_pc        {}
+body.adaptive_ios       {}
+body.adaptive_android   {}
+body.adaptive_window    {}
+
+
+header  {}
+section {}
+article {}
+footer  {}
+nav     {}
+aside   {}
+menu    {}
+
+body {
+  width:100%; min-width:1280px;min-height:768px;
+  //@include webkit_scroll;
+
+  .wrap {width:100%;}
+
+  &.dashboard_mode {
+    overflow: hidden; position: absolute; top:0; left:0; height:100%; padding:0 20px;
+    .wrap {height:100%;}
+  }
+}
+
+
+///// ----------------- <h> START
+h1,h2,h3,h4,h5,h6 {position: relative;}
+h1 {
+  display: inline-block; min-width:130px; height:100%; border:none;
+  background-image: url(../images/logo/top_logo.svg);
+  background-position: 0 50%; background-repeat: no-repeat; background-size: 130px;
+
+  .login_area & {height:70px; background-size:170px;}
+}
+h2 {@include font-size-h2;}
+h3 {
+  display: inline-block; cursor: pointer; @include font-size-h3;
+  .main_title_area & {color:$color-blue-01;}
+  .main_title_area &::selection {background-color: transparent}
+}
+h4 {
+  display: inline-block;font-size:18px;color:#4d4d4d;
+  .main_area & {color:#fff;}
+}
+///// ----------------- <h> END
+
+
+
+///// ----------------- 이벤트 감지 level  START
+.level {
+  &-caution {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
+  &-warning {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
+  &-danger  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+}
+///// ----------------- 이벤트 감지 level  End
+
+
+////// ----------------- 로그인 영역 Start
+.login_area {
+  position: absolute; @include flex-midddle; width:100%; height:100%;
+
+  &:after, &:before {content:""; z-index:-1; position: absolute;  background-color: rgba(0,0,0,0.05); }
+  &:after  {width:100vw; height:1px; top:50%;  left:0;}
+  &:before {width:1px; height:100vh; left:50%; top:0; }
+
+  article {
+    width: 500px; padding:20px 30px 40px 30px; background-color: #fff;
+    @include box-shadow02(0px, 55px, 90px, -50px, 0, 0, 0, 0.8);
+
+    & > * {position: relative;  }
+
+    .login_input_area {
+      width:100%; height:125px; text-align: left;  margin:10px 0;
+      & > input {width:100%;height:40px;margin:0 0 10px 0;}
+      & > input.log_pw.red {border-color:red;}
+      & > input[type="checkbox"] {width:18px; height:18px;vertical-align: bottom; margin:0;}
+    }
+
+    button {float:right;}
+    .caps {color:$color-red-01; }
+  }
+
+}
+////// ----------------- 로그인 영역 End
+
+
+////// ----------------- header Start
+header {
+  @include flex-midddle; @include z-index-header;
+  position: fixed;  top:0; left:0;
+  width:100%; height:$headerHeight; padding:0 20px;
+  background-color: $color-white-02;
+
+  &:before {
+    content:"";
+    overflow: hidden; opacity: 0;
+    position: absolute; z-index:1; bottom:0; left:30px; right:30px; height:0;
+    background-color: rgba(0,0,0,0.0);
+    @include box-shadow02(0px, 18px, 24px, -17px, 0, 0, 0, 0.5);
+    @include transition01(500ms);
+  }
+  &.up:before {opacity: 1; height:50px;}
+
+  .header_area {
+    @include flexbase;
+    position: relative; width:100%; height:$headerHeight - 10px;
+
+    & > * {display: inline-block; height: 100%;}
+
+    h1 { a {width:100%; height:100%;} }
+
+    .header_right_area {
+      margin:0 0 0 auto;
+      & * {height:100%;}
+      & > * {float:left;}
+      .header_btn_set {
+        padding:0 0 0 20px;
+        button {
+          width:40px; float: left;
+          &.issue_btn.issue {
+            width:($noticecenter-width - 80px);
+            &:before {color:#fff !important;}
+
+            &:after {
+              content: ""; position: absolute; z-index:-1; left:0; top:0;
+              width:100%; height:100%; background-color:$color-red-01;
+              @include issue;
+            }
+          }
+          &.issue_btn:before     {content: "\e907";}
+          &.loginout_btn:before  {content: "\e900";}
+          &.user_btn:before      {content: "\e90e";}
+          &:before {font-size:1.6rem;}
+          &:hover, &.on {
+            background-color: $color-blue-01;
+            &:before {color:#fff !important;}
+          }
+        }
+      }
+    }
+  }
+}
+////// ----------------- header End
+
+
+//////......   menu Start
+menu {
+  overflow: hidden; display: inline-block; margin:0 0 0 50px;
+
+  @mixin mbHover  {background-color: $color-blue-01; color: $color-white-01; opacity:1;} // @include mbHover;
+  @mixin mbOn     {color: $color-blue-01; @include border01(1px,$color-blue-01,1);} // @include mbOn;
+  @mixin mbBefore {
+    &:before {
+      content:""; position:absolute; left:0; bottom:1px;
+      width:100%; height:1px; background-color: $color-blue-01;
+    }
+  } // @include mbBefore;
+
+  button {
+    overflow: hidden; text-align: left; word-break: break-all;
+    width:100%; height:40px; padding:0 10px;
+
+    &.on { @include mbOn;}
+    &:hover {@include mbHover;}
+  }
+
+  & > ul {
+    display: inline-block;
+
+    & > li {
+      float:left; margin:0 10px 0 0;
+
+      & > button {
+        @include font-size-menubtn; text-align: center; &.on {border:none;}
+      } // menu > ul > li > button
+
+      & > ul {
+        @include flexbase; @include flex-row-wrap;
+        overflow-y: auto; overflow-x: hidden; position: absolute; @include z-index-menu;
+        top:40px; left:0; width:100%; height:auto !important; max-height:0; padding:0 40px;
+        background-color:$color-white-01;
+        @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1); @include transition(400ms);
+
+        & > li {
+          @include flex-width-one(7); max-width: 220px; min-width:200px; margin: 20px;
+
+          & > button {
+            @include font-size-navbtn; @include mbBefore;
+            &.on {border:none;font-weight:bold;}
+          }
+        }
+      }// menu > ul > li > ul
+
+      &:hover {
+        & > ul {
+          max-height:calc(100vh - 200px); padding:40px 40px; z-index:81;
+          @include border01(3px,$color-blue-01,1 );
+        }
+        & > button {@include mbHover;}
+      }
+
+      &.menu_dashboard  { & > ul {@include flex-justify-content-center;} }
+      &.menu_admin { }
+
+    }// menu > ul > li
+  }// menu > ul
+}
+//////......   menu End
+
+
+///// ----------------- ASDIE START
+aside {
+  position: fixed;
+
+  // 토스트 팝업
+  &.toast_popup {z-index:54; top:60px; right:-300px; width:260px;}
+
+  // 레이어 팝업,  layer_popup 레이어 팝업 공통,  admin_popup 어드민 전용
+  &.layer_popup, &.admin_popup {
+    display: none; z-index:50; top:45px; left:$nav_width; bottom:0px; right: 0px;
+  }
+
+
+}
+///// ----------------- ASDIE END
+
+///// ----------------- NAV START
+
+///// ----------------- NAV END
+
+/////..... 사용자 보기 팝업 popup_type_01 Start
+.personal_popup {
+  @include flexbase; @include flex-column; @include z-index-popup;
+  @include transition(400ms);
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+  @include border01(3px,$color-blue-01,1 );
+  position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px); width:$noticecenter-width; padding:20px;
+  background-color: $color-white-01;
+  h2 {padding:0 0 30px 0;}
+  & > section {@include flex-option(0, 1, 100%); padding:0 0 20px 0;}
+  & > div {@include flex-option(1, 0, 40px);}
+
+  &.on {right:20px;}
+}
+/////..... 사용자 보기 팝업 popup_type_01 End
+
+
+/////..... 레이어 팝업 Start
+.layer_popup, .admin_popup {
+
+  .layer_wrap {
+    position: absolute; min-height:450px; left:50%; height:auto;
+    background-color:$adm-color;
+
+
+    @include box-shadow01(1px, 2px, 8px, 0px, #000, 0.4);
+
+    form {width:100%;}
+
+    .search_contents {
+      min-height:40px;
+      & + .mc_element {width:100%; flex:8 0; -webkit-flex:8 0; flexbox:8 0;}
+    }
+
+    .mc_element_set {
+      overflow: hidden; max-height:none; margin:0 20px 0 0;
+
+      &, & + .mc_element {flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;}
+    }
+
+
+    &.i_type01 {width:400px;margin:120px 0 0 -200px;}
+    &.i_type02, .i_type022 {width:500px; margin:120px 0 0 -250px;}
+    &.i_type02.it_style01 {margin:20px 0 0 -250px;}
+    &.i_type03 {width:700px;margin:120px 0 0 -350px;}
+    &.i_type04 {left:50px; top:50px; right:50px; bottom: 50px;}
+    &.i_type05 {top:100px; bottom:130px; width:900px; max-height:630px; margin:0 0 0 -450px; }
+    &.i_type06 {top:100px; bottom:100px; width:600px; max-height:700px; margin:0 0 0 -300px; }
+    &.i_type06 {top:100px; bottom:200px; width:600px; max-height:500px; margin:0 0 0 -300px; }
+    &.i_type07 {top:100px; bottom:200px; width:400px; max-height:500px; min-height:490px; margin:0 0 0 -200px; }
+
+    .layer_area {
+      @include flex-column; position: relative;width:100%;height:100%; padding:20px;
+
+      .layer_header   {@include sub_title_area; font-size: 24px;}
+      .layer_contents {@include common_contents; @include flex-column;}
+    }
+  }
+  .layer_popupbg
+  { position: absolute;z-index:-1;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.7); }
+
+}
+/////..... 레이어 팝업 End
+
+
+/////..... 토스트 팝업 시작
+.toast_popup {
+
+  & > div {
+    position: relative; width:100%; margin:10px 0 0 0; background-color: #e41717;
+    @include box-shadow01(0px, 0px, 1px, 0px, #000, 0.3);
+    &:first-of-type {margin:0;}
+  }
+  &.on {right:10px;}
+
+  .btn_x {
+    position: absolute; top:10px; right:10px;
+    &:hover {color:#fff;}
+    &:before {content:"\e925"; font-size:20px;}
+  }
+
+  .tp_contents {
+    width:100%; margin:30px auto 24px; padding: 0 20px 0 70px;
+    &:before {
+      content: "\e90f";
+      position: absolute; left:14px; top:50%; margin:-25px 0 0 0; font-size:48px; color:#fff;
+    }
+    span {width:100%; font-size:18px; color:#fff; letter-spacing: -1px; text-align: left;}
+    span:nth-of-type(1) {font-size:14px;}
+  }
+
+}
+/////..... 토스트 팝업 끝
+
+
+/////..... 알림센터 Start
+.db_area {
+
+  body.admin_mode & {
+    right:-($noticecenter-width * 2);
+
+    &.on {right:20px;}
+  }
+
+  @include z-index-notice;
+  top:($btnarea-height + 30px); bottom:20px; right:20px;
+  width:$noticecenter-width; background-color: $adm-color;
+
+  & > * {width:100%;}
+
+  &, h2, section, section > div {@include flexbase;}
+  &, section, .db_cancel_set {@include flex-column; @include transition(400ms);}
+
+  h2 {
+    @include flex-align-items-center; @include flex-option(1, 0, $btnarea-height);
+    @include flex-justify-content-between; margin:0 0 10px 0;
+    &:before {content:"알림센터";}
+
+    & > div {
+      span {
+        @include flex-midddle; @include border-radius(200px);
+        @include box-inset-shadow(0, 2px, 4px, #000, 0.2);
+        float:left; min-width:35px; height:35px; margin:0 0 0 5px; padding:0 10px;
+        font-size:1.4rem; color:$color-white-01; line-height: 1.4rem;
+        @include text-shadow(0, 1px, 2px, #000, 0.7);
+        &:nth-of-type(1) {background-color: $color-gray-03;  }
+        &:nth-of-type(2) {background-color: $color-orange-01;}
+        &:nth-of-type(3) {background-color: $color-red-01;   }
+      }
+    }
+  }
+
+  // 알림센터
+  section.db_list_box {
+    @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
+    @include border01( 1px,$color-gray-01,1); background-color: $adm-color;
+
+    & > div {
+      @include flex-option(1, 0, 40px);
+      background-color: $color-white-01;
+      & > div, & > select {@include border01( 0 1px 1px 0,$color-gray-01,1);}
+      & > div    {@include flex-option(1, 0, $btnarea-height);  }
+      & > select {@include flex-option(0, 1, 100%); }
+      & > button {
+        pointer-events: none; opacity: 0.5;
+        @include flex-option(1, 0, $btnarea-height);
+        &:before {content:"\e937"; font-size: 1.5rem;}
+        &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
+        &.on.active {background-color: $color-blue-01;}
+      }
+
+      // 알림해지 사유
+      &.db_cancel_set {
+        position: absolute; z-index: 1; top:$btnarea-height; bottom:0; left:100%;
+        width:100%;  padding: 20px; background-color: $color-white-01;
+        @include border01(1px 0 0 0,$color-gray-01,1);
+
+        textarea, div[contenteditable] {
+          @include flex-option(0, 1, 100%); position: relative; margin:0 0 20px 0;
+          border: none; resize: none; outline: none;
+        }
+
+
+        .btn_set {@include flex-option(1, 0, 40px);}
+
+        &.on {
+          left:0;
+          &:before {content:"알림해지"; position:absolute; top:-35px; font-size:1.3rem;}
+        }
+      }
+
+      // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
+      &.open_cancel {
+        & > div, & > select {opacity: 0; visibility: hidden}
+      }
+    }
+
+    // 알림이력
+    & > ul {
+      @include flex-option(0, 1, 100%);
+
+      overflow: auto;
+      li {
+        @include flexbase; @include flex-align-items-center;
+        position: relative; width:100%; margin:0 0 2px 0; padding:5px 0;
+        //@include border01(0 0 1px 0,$color-gray-01,1);
+        & * {color:$color-white-01;}
+        & > .checkbox_set, & > button {@include flex-option(1, 0, 40px);}
+        & > .infor_set {
+          @include flex-option(0, 1, 100%);
+          p {@include text-shadow(0, 1px, 2px, #000, 0.7);}
+          p:nth-of-type(1) {}
+          p:nth-of-type(2) {font-size:1.1rem; font-weight:bold; padding:5px 10px 5px 0;}
+          p:nth-of-type(3) {word-spacing: 2px; letter-spacing:0; font-size:0.9rem;}
+        }
+
+        & > button {
+          $spot-width:4px;
+          height:40px; margin: 0 5px;
+
+          &:before, &:after, span:before, span:after {
+            content:""; position:absolute;
+            @include border-radius(200px);
+            @include transition(400ms);
+            @include box-shadow01(0, 1px, 2px, 0px, #000, 0.5);
+          }
+
+          &:before {top:50%; left:50%; margin: -2px 0 0 -2px;}
+          &:after {top:0; left:0; width:100%; height:40px; opacity: 0;
+            @include border01(2px,$color-white-01,1 );
+          }
+
+          &:before, span:before, span:after {
+            width:$spot-width; height:$spot-width; background-color:$color-white-01;
+          }
+
+          span {
+            position: absolute; top:50%; left:0; margin:-2px 0 0 0; width:100%; height:5px;
+            @include transition(200ms);
+            &:before {left: 10px;}
+            &:after  {right:10px;}
+
+            &:nth-of-type(2) {opacity: 0;}
+          }
+
+          &.on {
+            span:nth-of-type(1) {margin:-9px 0 0 0;}
+            span:nth-of-type(2) {margin:6px 0 0 0; opacity: 1;}
+            &:after {opacity: 1;}
+          }
+        }
+
+        &:hover { & > button:after {opacity: 1;} }
+      }
+    }
+  }
+
+  // 알림상세
+  section.db_infor_box {
+    visibility: hidden; overflow: auto;
+    position: absolute; z-index:1; bottom:0; top:($btnarea-height + 10px); right:0;
+    width:($noticecenter-width / 2); padding:100px;
+    @include box-shadow02(-60px, 0, 100px, -50px, 0, 0, 0, 1);
+
+    & > * {
+
+      display: inline-block;  width:100%; margin: 0 0 40px 0;
+      & * {color:$adm-color; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+    }
+
+    .dbi {
+
+      &_event {
+        p {
+          &:nth-of-type(odd) {font-size:3rem; opacity: 0.8; line-height: 2.5rem;}
+          &:nth-of-type(2)   {font-size:3.5rem; padding:0 0 20px 0;}
+          &:last-of-type     {font-size:6rem; line-height:5.2rem;}
+        }
+      }
+
+      &_cctv {
+        button {
+          @include border01(1px,$color-white-01,1); width: 100%;
+
+          &:before, &:after {position:relative;}
+          &:before {content:"\e91c"; font-size: 4rem;}
+          &:after  {content:"CCTV 확인"; font-size: 2rem; top:-15px; padding:0 0 0 15px;}
+
+          &:hover {
+            background-color: $color-white-01;
+            &:before, &:after {color:$color-dark-01;}
+          }
+        }
+
+      }
+
+      &_copy { p {font-size:1.5rem; } }
+
+      &_contact {
+        /*
+        <div class="dbi_contact">
+            <p>
+                <span>입주자</span>
+                <span>나주인</span>
+                010-1234-5678
+            </p>
+            <p>
+                <span>현장책임</span>
+                <span>홍길동 소장</span>
+                010-1234-5678
+            </p>
+            <p>
+                <span>안전담당</span>
+                <span>이순신 안전요원</span>
+                010-9876-5432
+            </p>
+        </div>
+        */
+        p {
+          font-size:1.1rem; padding:5px 0 0 0; opacity: 1;
+          span {
+            position:relative;
+            &:first-of-type {width:90px;}
+            &:last-of-type  {width:160px;}
+          }
+        }
+      }
+
+    }
+
+    &.on {visibility: visible; width:($noticecenter-width * 2);  right:($noticecenter-width + 20px); }
+  }
+}
+/////..... 알림센터 End
+
+
+
+.m_human, .check_th tbody tr:before,
+.check_th tbody tr td:first-of-type:before
+{@include border-radius(200px);}
+
+.mp_header,
+.mc_element,
+.main_title_area,
+
+.month_btn_set,
+.infile_set,
+.infile_set > p,
+.btn_infile:before,
+.search_area,
+.select_edit,
+.table_title_area,
+.table_btn_set,
+.layer_area,
+.layer_header,
+.layer_wrap,
+.layer_contents,
+.tree_box li span, .tree_box li span a
+
+{@include flexbase;}
+
+
+
+
+
+

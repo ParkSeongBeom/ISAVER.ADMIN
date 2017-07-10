@@ -1,0 +1,221 @@
+@charset "utf-8";
+@import "filters";
+
+
+/////..... 데시보드 입력폼 스타일 시작
+.dashboard_mode {
+  article {
+    @include flexbase; @include flex-column;
+    position:absolute; top:($headerHeight + 20px);
+    left:20px; right:($noticecenter-width + 40px); bottom:20px;
+    & > * {position: relative; width:100%;}
+  }
+}
+/////..... 데시보드 입력폼 스타일 끝
+
+
+/////..... 아이콘 일반, 경고, 감지 expl 시작
+.expl {
+  position: absolute; right:0;
+  @include flex-align-self-end; padding:0 0 3px 0;
+  span {
+    position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
+    &:before {
+      content:""; position: absolute; left:0; bottom:1px; width:18px; height:18px;
+      @include border-radius(200px);  @include borderwidth(3px);
+    }
+    &:nth-of-type(1):before {border-color:$color-gray-03;}
+    &:nth-of-type(2):before {border-color:$color-orange-01;}
+    &:nth-of-type(3):before {border-color:$color-red-01;}
+  }
+}
+/////..... 아이콘 일반, 경고, 감지 expl 끝
+
+
+/////..... 구역 Start
+.watch_area {
+
+  &, & > div {@include flexbase; overflow: hidden;}
+
+  @include flex-row-wrap;
+  @include flex-option(0, 1, 100%);
+
+  padding:1px 0 0 1px;
+
+  &:before {
+    content:"";
+    z-index:-1; position: absolute; left:0; top:0; width:100%; height:100%;
+    @include border01(1px,$color-gray-01,1); background-color: $color-gray-02;
+  }
+
+  //// 각 구역
+  & > div {
+    overflow: hidden; @include flex-width-one(1);
+    min-width:25%; max-width: 50%; min-height:25%; max-height:50%;
+    @include border01(0 1px 1px 0,$color-gray-01,1);
+    background-color: $color-white-01; padding:0 20px;
+
+    &.area03 {max-height:50%; }
+    &.area04 {min-width:50%;}
+    &.area06 {min-width:33.33333%;}
+
+    @include flex-column;
+
+    & button { right:-5px; width:40px; height:40px; &:before {font-size:2rem;} }
+
+    header,article {position: relative; width:100%;}
+    header {
+      z-index: 0;
+      @include flex-option(0, 1, $areaHeaderHeight);
+      @include flex-justify-content-between;
+      background-color: transparent;
+      height:$areaHeaderHeight; padding:0;
+
+      h3 {}
+      button {
+        &.area:before   {content:"\e938";}
+        &.device:before {content:"\e935";}
+      }
+    }
+    article {
+
+      @include flex-option(0, 1, 100%);
+      top: auto; left: auto; right: auto; bottom: auto;
+
+      & > section {
+        @include flex-option(0, 1, 100%); @include flexbase;
+
+        &, & > div {position: relative;}
+      }
+
+      // 상태 아이콘 일반, 경고, 감지 정의 section Start
+      .treffic_set {
+
+        & > div {
+          @include flex-midddle;
+          @include flex-width-one(1);
+          height:100%;
+
+          $treffic_after:60px;
+          $treffic_before:($treffic_after + 20px);
+
+          &:before, &:after {
+            content:""; position: absolute; left:50%; top:50%; @include border-radius(200px);
+          }
+
+          &:before {
+            margin-top:-($treffic_before / 2); margin-left:-($treffic_before / 2);
+            width:$treffic_before; height:$treffic_before;
+            @include box-inset-shadow(0px, 2px, 3px, #000, 0.2);
+            background-color: $color-gray-02;
+          }
+
+          &:after {
+            margin-top:-($treffic_after / 2); margin-left:-($treffic_after / 2);
+            width:$treffic_after; height:$treffic_after;
+            background-color: $color-white-01; @include borderwidth(3px);
+            @include box-shadow01(0px, 6px, 2px, -4px, #000, 0.2);
+          }
+
+          &.ts {
+            &-caution, &-warning, &-danger {}
+            &-caution:after {border-color: rgba($color-gray-03,0.5);  }    // &-caution 주의
+            &-warning:after {border-color: rgba($color-orange-01,0.5);}    // &-warning 경고
+            &-danger:after  {border-color: rgba($color-red-01,0.5);   }    // &-danger  위험
+          }
+
+          p {position: relative; z-index: 10; font-size:2rem;}
+
+        }
+
+      }
+      // 상태 아이콘 일반, 경고, 감지 정의 section End
+
+
+      // 진출입 section 시작
+      .personnel_set {
+        @include flex-align-items-center;
+        & > div {
+          @include flex-width-one(1); width:100%;
+          &:nth-of-type(2) {opacity: 0.6; margin:0 5px 0 15px;}
+
+          p {
+            position: relative; float:left;
+            &:nth-of-type(1) {width:57%; font-size:2.5rem; line-height: 2.2rem; letter-spacing: -0.2rem;}
+            &:nth-of-type(2), &:nth-of-type(3) {
+              width:43%; text-align: right; line-height: 1.2rem; padding:0 0 0 27px; font-weight:bold;
+              &:before {
+                position: absolute; left:0; font-weight:normal; font-size:0.9rem; line-height: 1.1rem;
+              }
+            }
+            &:nth-of-type(2) {&:before {content:"IN"; } }
+            &:nth-of-type(3) {&:before {content:"OUT";} }
+            &:nth-of-type(4) {
+              width:100%; padding:1px 8px; margin:3px 0 0 0; text-align:center;
+              color:$color-white-01; background-color: $color-gray-07;
+              letter-spacing: normal;
+            }
+
+          }
+
+        }
+        & > button:before {content:"\e905"; }
+
+      }
+      // 진출입 section 끝
+    }
+
+    /// 임계치 적용 표시
+    &.level {
+      &-caution, &-warning, &-danger {
+        //@include issue;
+        & * {color:#fff;}
+      }
+
+      @mixin lever-Common {
+        &:after  {@include box-inset-shadow(0px, 2px, 5px, #000, 0.5); border:none;}
+        &:before {@include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5); background-color:$color-white-01;}
+      }
+
+      &-caution {
+        .ts-caution {
+          @include lever-Common;
+          &:after  {background-color:$color-gray-03;}
+        }
+      } // .level-caution 주의
+
+      &-warning {
+        .ts-warning {
+          @include lever-Common;
+          &:after {background-color:$color-orange-01;}
+        }
+      } // .level-warning 경고
+
+      &-danger  {
+        .ts-danger {
+          @include lever-Common;
+          &:after  {background-color:$color-red-01 !important;}
+        }
+      } // .level-danger  위험
+    }
+
+  }
+}
+/////..... 구역 End
+
+
+
+
+
+
+
+
+
+
+
+/////.......... 진출입 조회주기설정 시작
+/////.......... 진출입 조회주기설정 끝
+
+
+
+

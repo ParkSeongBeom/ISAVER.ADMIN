@@ -4,6 +4,7 @@ import com.icent.isaver.admin.common.PropertyManager;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.icent.isaver.admin.util.AuthorizationInterceptor;
+import com.icent.isaver.admin.util.IsaverCriticalUtil;
 import com.kst.common.util.POIExcelView;
 import com.sun.org.glassfish.gmbal.Description;
 import org.springframework.context.MessageSource;
@@ -207,5 +208,11 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     public AppContextUtil appContextUtil() {
         AppContextUtil contextUtil=new AppContextUtil();
         return contextUtil;
+    }
+
+    @Bean
+    public IsaverCriticalUtil isaverCriticalUtil() {
+        IsaverCriticalUtil criticalUtil=new IsaverCriticalUtil();
+        return criticalUtil;
     }
 }

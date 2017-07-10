@@ -4,7 +4,9 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.ActionSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.ActionBean;
+import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.ActionDao;
+import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.kst.common.spring.TransactionUtil;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -42,6 +44,9 @@ public class ActionSvcImpl implements ActionSvc {
     @Inject
     private ActionDao actionDao;
 
+    @Inject
+    private DeviceDao deviceDao;
+
     @Override
     public ModelAndView findListAction(Map<String, String> parameters) {
         List<ActionBean> areas = actionDao.findListAction(parameters);
@@ -68,9 +73,11 @@ public class ActionSvcImpl implements ActionSvc {
     @Override
     public ModelAndView findByActionFromEventId(Map<String, String> parameters) {
         ActionBean action = actionDao.findByActionFromEventId(parameters);
+        DeviceBean device = deviceDao.findByDevice(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("action", action);
+        modelAndView.addObject("device", device);
         modelAndView.addObject("paramBean", parameters);
         return modelAndView;
     }
