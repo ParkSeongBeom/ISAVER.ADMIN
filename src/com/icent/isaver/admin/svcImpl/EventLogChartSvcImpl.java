@@ -2,12 +2,10 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogChartSvc;
-import com.icent.isaver.repository.bean.EventLogCraneBean;
+import com.icent.isaver.repository.bean.EventLogBean;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
-import com.icent.isaver.repository.bean.EventLogWorkerBean;
-import com.icent.isaver.repository.dao.base.EventLogCraneDao;
+import com.icent.isaver.repository.dao.base.EventLogDao;
 import com.icent.isaver.repository.dao.base.EventLogInoutDao;
-import com.icent.isaver.repository.dao.base.EventLogWorkerDao;
 import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,10 +33,7 @@ import java.util.Map;
 public class EventLogChartSvcImpl implements EventLogChartSvc {
 
     @Inject
-    private EventLogCraneDao eventLogCraneDao;
-
-    @Inject
-    private EventLogWorkerDao eventLogWorkerDao;
+    private EventLogDao eventLogDao;
 
     @Inject
     private EventLogInoutDao eventLogInoutDao;
@@ -54,10 +49,10 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
             param.put("areaId", parameters.get("areaId"));
         }
         param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
-        List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
+        List<EventLogBean> eventLogCraneChart = eventLogDao.findChartEventLog(param);
 
         param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
-        List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
+        List<EventLogBean> eventLogWorkerChart = eventLogDao.findChartEventLog(param);
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -83,10 +78,10 @@ public class EventLogChartSvcImpl implements EventLogChartSvc {
         if (parameters.get("requestType") != null && parameters.get("areaId") != null) {
             if (parameters.get("requestType").equals("1")) {
                 param.put("eventIds", AdminResource.CRANE_EVENT_ID_DETAIL);
-                List<EventLogCraneBean> eventLogCraneChart = eventLogCraneDao.findChartEventLogCrane(param);
+                List<EventLogBean> eventLogCraneChart = eventLogDao.findChartEventLog(param);
 
                 param.put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);
-                List<EventLogWorkerBean> eventLogWorkerChart = eventLogWorkerDao.findChartEventLogWorker(param);
+                List<EventLogBean> eventLogWorkerChart = eventLogDao.findChartEventLog(param);
 
                 modelAndView.addObject("eventLogCraneChart", eventLogCraneChart);
                 modelAndView.addObject("eventLogWorkerChart", eventLogWorkerChart);

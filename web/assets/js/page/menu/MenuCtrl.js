@@ -241,15 +241,6 @@ function MenuCtrl(model) {
         });
     };
 
-    /**
-     * 대쉬보드 - 전체 - 구역 리스트 그리기
-     */
-    MenuCtrl.drawAllDashBoardAreaList = function() {
-        var menuView = new MenuView(model);
-        menuView.drawAllDashBoardAreaList();
-
-    };
-
     return MenuCtrl;
 }
 
@@ -278,8 +269,6 @@ function MenuEvent(model) {
 
         MenuEvent._model.setAreaList(areaTreeModel.getAreaList());
         menuView.setTopMenuBar(data['menuBarList']);
-
-        menuCtrl.drawAllDashBoardAreaList();
     };
 
     /**

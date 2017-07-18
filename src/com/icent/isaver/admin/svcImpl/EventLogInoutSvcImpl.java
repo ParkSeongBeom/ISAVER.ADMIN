@@ -1,11 +1,8 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogInoutSvc;
 import com.icent.isaver.repository.bean.EventLogInoutBean;
-import com.icent.isaver.repository.bean.InoutConfigurationBean;
 import com.icent.isaver.repository.dao.base.EventLogInoutDao;
-import com.icent.isaver.repository.dao.base.InoutConfigurationDao;
 import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,55 +32,20 @@ public class EventLogInoutSvcImpl implements EventLogInoutSvc {
     @Inject
     private EventLogInoutDao eventLogInoutDao;
 
-    @Inject
-    private InoutConfigurationDao inoutConfigurationDao;
-
     @Override
     public ModelAndView findListEventLogInout(Map<String, String> parameters) {
-        Map param = new HashMap();
-        param.put("userId", parameters.get("userId"));
-        param.put("eventIds", AdminResource.INOUT_EVENT_ID);
-        List<EventLogInoutBean> eventLogInoutList = eventLogInoutDao.findListEventLogInout(param);
+        List<EventLogInoutBean> eventLogInoutList = null;
+
+        if(StringUtils.notNullCheck(parameters.get("areaIds"))){
+            Map inoutConfigParam = new HashMap();
+            inoutConfigParam.put("userId", parameters.get("userId"));
+            inoutConfigParam.put("areaIds", parameters.get("areaIds").split(","));
+            eventLogInoutList = eventLogInoutDao.findListEventLogInoutForArea(inoutConfigParam);
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLogInoutList", eventLogInoutList);
         modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findByEventLogInout(Map<String, String> parameters) {
-        InoutConfigurationBean InoutConfiguration = inoutConfigurationDao.findByInoutConfigurationForArea(parameters);
-
-        Map param = new HashMap();
-        param.put("areaId", parameters.get("areaId"));
-        param.put("nowInoutStarttime",InoutConfiguration.getNowInoutStarttime());
-        param.put("nowInoutEndtime",InoutConfiguration.getNowInoutEndtime());
-        param.put("beforeInoutStarttime",InoutConfiguration.getBeforeInoutStarttime());
-        param.put("beforeInoutEndtime",InoutConfiguration.getBeforeInoutEndtime());
-        param.put("eventIds", AdminResource.INOUT_EVENT_ID);
-        EventLogInoutBean eventLogInout = eventLogInoutDao.findByEventLogInout(param);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("eventLogInout", eventLogInout);
-        modelAndView.addObject("paramBean",param);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findChartEventLogInout(Map<String, String> parameters) {
-        Map param = new HashMap();
-        param.put("minutesCount", parameters.get("minutesCount"));
-        if(StringUtils.notNullCheck(parameters.get("pageIndex"))){
-            param.put("pageIndex", parameters.get("pageIndex"));
-        }
-        if(StringUtils.notNullCheck(parameters.get("areaId"))){
-            param.put("areaId", parameters.get("areaId"));
-        }
-        param.put("eventIds", AdminResource.INOUT_EVENT_ID);
-        List<EventLogInoutBean> eventLogWorkerInout = eventLogInoutDao.findChartEventLogInout(param);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("eventLogInoutChart", eventLogWorkerInout);
         return modelAndView;
     }
 }

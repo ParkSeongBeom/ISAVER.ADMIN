@@ -12,7 +12,7 @@
 @mixin font-size-navbtn {font-size:1.25rem;}      //ex)  nav 01 depth btn = 20px    @include font-size-navbtn;
 @mixin font-size-navdepthbtn {font-size:1.1rem;}  //ex)  nav 02 depth btn = 17.5px  @include font-size-navdepthbtn;
 @mixin font-size-menubtn {font-size:1.5rem;}      //ex)  메뉴 아이콘 btn = 24px  @include font-size-menubtn;
-@mixin font-size-h2 {font-size:1.8rem;}             //ex)  32px   @include font-size-h2;
+@mixin font-size-h2 {font-size:1.8rem;}            //ex)  32px   @include font-size-h2;
 @mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
 @mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
 
@@ -37,7 +37,7 @@ $color-gray-03:#999;      // rgba(88,88,88,1)  주위
 $color-gray-04:#e1e1e1;   // rgba(225,225,225,1)  테이블 Hover
 $color-gray-05:#757575;   // rgba(177,177,177,1)  밝은 버튼, 테이블 th bg
 $color-gray-06:#bcbcbc;   // rgba(188,188,188,1)  테이블 border-color
-$color-gray-07:#484848;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
+$color-gray-07:#4c4c4c;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
 $color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
 
 $color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
@@ -71,6 +71,11 @@ $hov-color:#040404; //rgba(20,20,20,1) 구분라인
 
 
 // 길이지정
+$body-minwidth:1300px;
+$dash-margin:20px;
+$popup-margin:20px;
+$admin-margin : 50px;
+
 $noticecenter-width:340px;
 $device-width:100vw;
 $device-height:100vh;
@@ -79,9 +84,11 @@ $screen-height:100%;
 $nav_width:100px;
 $btnarea-height:40px;
 $headerHeight:50px; // wrap > header의 height
+$areaHeaderHeight:60px;
 $padpay:80px; //admin 공통 padding 값
 $td-height:55px;
 $tree-area-width:400px;
+$btnHeight:40px;
 
 //.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
 // display
@@ -91,10 +98,12 @@ $display-block:block;
 $display-inline-block:inline-block;
 
 //z-index
-@mixin z-index-header {z-index:20; } //ex) 알림센터 @include z-index-header;
+@mixin z-index-header {z-index:40; } //ex) 알림센터 @include z-index-header;
 @mixin z-index-notice {z-index:10; } //ex) 알림센터 @include z-index-not;
-@mixin z-index-menu   {z-index:30; } //ex) menu @include z-index-menu;
-@mixin z-index-popup  {z-index:40; } //ex) popup @include z-index-popup;
+@mixin z-index-menu   {z-index:20; } //ex) menu @include z-index-menu;
+@mixin z-index-popup  {z-index:30; } //ex) popup @include z-index-popup;
+@mixin z-index-toast  {z-index:50; } //ex) popup @include z-index-toast;
+
 
 // display flex 플렉스 기본
 @mixin flexbase {display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;}
@@ -157,8 +166,11 @@ $display-inline-block:inline-block;
 
 //align-content
 @mixin flex-align-content-start  {-webkit-align-content:flex-start; align-content:flex-start;}
+// ex) @include flex-align-content-start;
 @mixin flex-align-content-center {-webkit-align-content:center;     align-content:center;    }
+// ex) @include flex-align-content-center;
 @mixin flex-align-content-end    {-webkit-align-content:flex-end;   align-content:flex-end;  }
+// ex) @include flex-align-content-end;
 
 //align-self
 @mixin flex-align-self-start  {-webkit-align-self:flex-start; align-self:flex-start;}
@@ -186,6 +198,7 @@ $display-inline-block:inline-block;
 // text-overflow:ellipsis 말줄임
 @mixin text-overflow-ellipsis {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal;}
 // ex) @include text-overflow-ellipsis;
+
 
 // border-radius 라운딩
 @mixin border-radius($px) {-moz-border-radius:$px; -webkit-border-radius:$px; border-radius:$px; -khtml-border-radius:$px;}
@@ -221,15 +234,12 @@ $display-inline-block:inline-block;
 }
 // ex) @include box-inset-shadow(0px, 0px, 8px, $지정-color, 0.5);
 
-
-
 @mixin box-shadow-none {
   box-shadow:        none !important;
   -webkit-box-shadow:none !important;
   -moz-box-shadow:   none !important;
 }
 // ex) @include box-shadow-none;
-
 
 // box-shadow 텍스트 그림자
 @mixin text-shadow($xpx,$ypx,$bpx,$color,$opacity) {
@@ -249,13 +259,11 @@ $display-inline-block:inline-block;
 }
 // ex) @include box-blur($xpx);
 
-
 @mixin box-readient {
   background: -moz-linear-gradient(   top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
   background: linear-gradient(  to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
 }
-
 
 // rotate 회전
 @mixin rotate($deg){transform:rotate($deg); ms-transform:rotate($deg); -ms-transform:rotate($deg); -moz-transform:rotate($deg); -webkit-transform:rotate($deg); -o-transform:rotate($deg);}
@@ -337,8 +345,8 @@ $bbl01:100%; $bbl02:1px;
 
 
 // button base 정의 Start
-@mixin length-wh01 {width:40px;  height:40px;} // btn 작은 단위
-@mixin length-wh02 {width:100%; max-width:150px; height:40px; } // btn 박스형
+@mixin length-wh01 {width:$btnHeight;  height:$btnHeight;} // btn 작은 단위
+@mixin length-wh02 {width:100%; max-width:150px; height:$btnHeight; } // btn 박스형
 
 @mixin ibtn_font_size {font-size:1.75rem;}
 //ex) 28px @include ibtn_font_size;
@@ -393,11 +401,10 @@ $bbl01:100%; $bbl02:1px;
   overflow: hidden; padding:5px; flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
 } // ex) @include common_contents;
 
+
 // 어드민 페이지 타이틀 공통값
 @mixin sub_title_area {
-  @include flex-align-items-center; @include border01(0 0 2px 0, $color-gray-08,1 );
-  position: relative; width:100%; min-width: 100%;
-  flex:1 0 $headerHeight; -webkit-flex:1 0$headerHeight; flexbox:1 0 $headerHeight; height:$headerHeight;
+
 } // ex) @include sub_title_area;
 
 
@@ -431,3 +438,37 @@ $bbl01:100%; $bbl02:1px;
 // ex) @include line_bar_bottom(1px, 0);
 @mixin line_bar_right($before,$after)  { @include line_bar_v; &:before {right:$before;} &:after {right:$after;} }
 // ex) @include line_bar_right(1px, 0);
+
+
+// 이벤트 감지 아이콘 애니메이션
+@mixin issue {
+  animation-name: issue;
+  -webkit-animation-name: issue;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 10;
+  animation-iteration-count: 10;
+  //animation-fill-mode: both;
+  //-webkit-animation-fill-mode: both;
+
+  @-webkit-keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+  @keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+
+} // ex) @include issue;
+
+
+@mixin title_icon {
+  padding:0 0 0 15px; font-weight:bold;
+  &:before {
+    content:""; position: absolute; left:0; top:6px; bottom:4px; width:5px;
+    background-color: $color-blue-01;
+  }
+}

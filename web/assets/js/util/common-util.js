@@ -103,14 +103,21 @@ function inputNumberCheck(object){
     }
 }
 
+function isDuplicationArray(array){
+    var duplicates = array.reduce(function(acc, el, i, arr) {
+        if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el); return acc;
+    }, []);
 
-function findEventIdType(eventId){
-    var eventType = "";
-    for(var key in eventIds){
-        if(eventIds[key].indexOf(eventId) > -1){
-            eventType = key;
-            break;
-        }
+    if(duplicates.length>0){
+        return true;
+    }else{
+        return false;
     }
-    return eventType;
+}
+
+function uniqArrayList(array){
+    return array.reduce(function(a,b){
+        if (a.indexOf(b) < 0 ) a.push(b);
+        return a;
+    },[]);
 }

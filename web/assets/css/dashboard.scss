@@ -1,20 +1,48 @@
 @charset "utf-8";
 @import "filters";
 
+$margin:20px; // root article 상하좌우 마진값
+$m_lr:15px; // 감시구역 상하좌우 마진값
+
+$treffic_b:35%; // 신호등 before 크기
+$treffic_a:26%; // 신호등 after  크기
 
 /////..... 데시보드 입력폼 스타일 시작
 .dashboard_mode {
   article {
     @include flexbase; @include flex-column;
-    position:absolute; top:($headerHeight + 20px);
-    left:20px; right:($noticecenter-width + 40px); bottom:20px;
-    & > * {position: relative; width:100%;}
+    position:absolute; top:($headerHeight + $margin); left:$margin;
+    bottom:$margin; right:($noticecenter-width + $margin * 2);
+    /*padding:0 ($noticecenter-width + $margin) 0 0;*/
+
+    button {
+      min-width: 40px; height:40px; right:-5px;
+      &:before, &:after {@include transition(200ms); font-size:1.8rem;}
+      &.area:before   {content:"\e91b";}
+      &.device:before {content:"\e935"; font-size:1.6rem;}
+      &.ioset:before  {content:"\e909"; font-size:1.6rem;}
+      &.on {background-color: $adm-color;}
+      &:hover:before, &:hover:after, &.on:before {color:$color-blue-01;}
+    }
+
+    & > * {position: relative;}
+
+    & article {top: auto; left: auto; right: auto; bottom: auto; padding:0;}
+  }
+
+  .wrap > article {
+    &:before,&:after {
+      content:""; position: absolute; z-index:-1; right:0; left:0; top:$headerHeight;
+      background-color: $color-gray-01;
+    }
+    &:before {bottom:0;}
+    &:after  {height:1px;}
   }
 }
 /////..... 데시보드 입력폼 스타일 끝
 
 
-/////..... 아이콘 일반, 경고, 감지 expl 시작
+/////..... 아이콘 일반, 경고, 감지 표시 expl 시작
 .expl {
   position: absolute; right:0;
   @include flex-align-self-end; padding:0 0 3px 0;
@@ -29,193 +57,453 @@
     &:nth-of-type(3):before {border-color:$color-red-01;}
   }
 }
-/////..... 아이콘 일반, 경고, 감지 expl 끝
+/////..... 아이콘 일반, 경고, 감지 표시 expl 끝
 
 
 /////..... 구역 Start
 .watch_area {
 
-  &, & > div {@include flexbase; overflow: hidden;}
+  &, & > div {@include flexbase; position: relative;}
 
-  @include flex-row-wrap;
-  @include flex-option(0, 1, 100%);
+  @include flex-row-wrap; @include flex-option(0, 1, 100%);
+  overflow-y: auto; margin:0 1px 1px 0 ; //background-color: $color-gray-02;
 
-  padding:1px 0 0 1px;
-
-  &:before {
-    content:"";
-    z-index:-1; position: absolute; left:0; top:0; width:100%; height:100%;
-    @include border01(1px,$color-gray-01,1); background-color: $color-gray-02;
-  }
+  &:before {content:""; position:absolute; z-index: -1; width:100%; height:100%; background-color: $color-gray-02;}
 
   //// 각 구역
   & > div {
-    overflow: hidden; @include flex-width-one(1);
-    min-width:25%; max-width: 50%; min-height:25%; max-height:50%;
-    @include border01(0 1px 1px 0,$color-gray-01,1);
-    background-color: $color-white-01; padding:0 20px;
 
-    &.area03 {max-height:50%; }
-    &.area04 {min-width:50%;}
-    &.area06 {min-width:33.33333%;}
+    @include flex-width-one(1); overflow: hidden;
+    width:25%; min-width:330px; max-width:50%; min-height:25%; //max-height:50%;
+    //@include border01(0 1px 1px 0,$color-gray-01,1); background-color: $color-white-01;
+    &:before {
+      content:""; position: absolute; z-index:-1; left:0; top:0; width:100%; height:100%;
+      @include border01(1px,$color-gray-01,1); background-color: $color-white-01;
+      @include content-box;
+    }
+
+    padding:0 $m_lr;
 
     @include flex-column;
 
-    & button { right:-5px; width:40px; height:40px; &:before {font-size:2rem;} }
+    header,article {position: relative; width:100%; @include transition(200ms);}
 
-    header,article {position: relative; width:100%;}
     header {
-      z-index: 0;
-      @include flex-option(0, 1, $areaHeaderHeight);
-      @include flex-justify-content-between;
-      background-color: transparent;
-      height:$areaHeaderHeight; padding:0;
+      z-index: 0; background-color: transparent; padding:0;
 
-      h3 {}
-      button {
-        &.area:before   {content:"\e938";}
-        &.device:before {content:"\e935";}
+
+      @include flex-option(1, 0, $headerHeight);
+
+      h3 { @include text-overflow-ellipsis; cursor:pointer; font-size:1.4rem; margin: -7px auto 0 0;}
+
+      &.wid > h3:hover {
+        font-size:1.1rem; line-height: 1.3rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        height:100%; white-space: normal;
+        padding: 10px 0;
       }
     }
+
     article {
 
-      @include flex-option(0, 1, 100%);
-      top: auto; left: auto; right: auto; bottom: auto;
+      @include flex-option(0, 1, 100%); @include flex-align-items-center;
 
       & > section {
-        @include flex-option(0, 1, 100%); @include flexbase;
+
+        @include flex-option(0, 1, 100%);
 
         &, & > div {position: relative;}
       }
 
-      // 상태 아이콘 일반, 경고, 감지 정의 section Start
-      .treffic_set {
+    }
 
-        & > div {
-          @include flex-midddle;
-          @include flex-width-one(1);
-          height:100%;
-
-          $treffic_after:60px;
-          $treffic_before:($treffic_after + 20px);
-
-          &:before, &:after {
-            content:""; position: absolute; left:50%; top:50%; @include border-radius(200px);
-          }
-
-          &:before {
-            margin-top:-($treffic_before / 2); margin-left:-($treffic_before / 2);
-            width:$treffic_before; height:$treffic_before;
-            @include box-inset-shadow(0px, 2px, 3px, #000, 0.2);
-            background-color: $color-gray-02;
-          }
-
-          &:after {
-            margin-top:-($treffic_after / 2); margin-left:-($treffic_after / 2);
-            width:$treffic_after; height:$treffic_after;
-            background-color: $color-white-01; @include borderwidth(3px);
-            @include box-shadow01(0px, 6px, 2px, -4px, #000, 0.2);
-          }
-
-          &.ts {
-            &-caution, &-warning, &-danger {}
-            &-caution:after {border-color: rgba($color-gray-03,0.5);  }    // &-caution 주의
-            &-warning:after {border-color: rgba($color-orange-01,0.5);}    // &-warning 경고
-            &-danger:after  {border-color: rgba($color-red-01,0.5);   }    // &-danger  위험
-          }
-
-          p {position: relative; z-index: 10; font-size:2rem;}
-
-        }
-
-      }
-      // 상태 아이콘 일반, 경고, 감지 정의 section End
-
-
-      // 진출입 section 시작
-      .personnel_set {
-        @include flex-align-items-center;
-        & > div {
-          @include flex-width-one(1); width:100%;
-          &:nth-of-type(2) {opacity: 0.6; margin:0 5px 0 15px;}
-
-          p {
-            position: relative; float:left;
-            &:nth-of-type(1) {width:57%; font-size:2.5rem; line-height: 2.2rem; letter-spacing: -0.2rem;}
-            &:nth-of-type(2), &:nth-of-type(3) {
-              width:43%; text-align: right; line-height: 1.2rem; padding:0 0 0 27px; font-weight:bold;
-              &:before {
-                position: absolute; left:0; font-weight:normal; font-size:0.9rem; line-height: 1.1rem;
-              }
-            }
-            &:nth-of-type(2) {&:before {content:"IN"; } }
-            &:nth-of-type(3) {&:before {content:"OUT";} }
-            &:nth-of-type(4) {
-              width:100%; padding:1px 8px; margin:3px 0 0 0; text-align:center;
-              color:$color-white-01; background-color: $color-gray-07;
-              letter-spacing: normal;
-            }
-
-          }
-
-        }
-        & > button:before {content:"\e905"; }
-
-      }
-      // 진출입 section 끝
+    &.on {
+      & > article {opacity: 0;}
+      .device_popup {right:0;}
     }
 
     /// 임계치 적용 표시
     &.level {
       &-caution, &-warning, &-danger {
-        //@include issue;
-        & * {color:#fff;}
+        & *, & *:before, & *:after {color:$color-white-01; }
       }
 
-      @mixin lever-Common {
-        &:after  {@include box-inset-shadow(0px, 2px, 5px, #000, 0.5); border:none;}
-        &:before {@include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5); background-color:$color-white-01;}
+      @mixin level-Common {
+
+        &:before {
+          @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
+          background-color:$color-white-01;
+        }
+        &:after  {
+          @include box-inset-shadow(0px, 2px, 5px, #000, 0.5);
+          //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
+        }
       }
 
       &-caution {
         .ts-caution {
-          @include lever-Common;
+          @include level-Common;
           &:after  {background-color:$color-gray-03;}
         }
       } // .level-caution 주의
 
       &-warning {
         .ts-warning {
-          @include lever-Common;
+          @include level-Common;
           &:after {background-color:$color-orange-01;}
         }
       } // .level-warning 경고
 
       &-danger  {
         .ts-danger {
-          @include lever-Common;
+          @include level-Common;
           &:after  {background-color:$color-red-01 !important;}
         }
       } // .level-danger  위험
     }
 
   }
+
+  //// 구역개수에 따른 레이아웃 변동
+  &.area03 { & > div {max-height:50%;} }
+  &.area04 { & > div {min-width:50%;} }
+  &.area06 {
+    @include flex-align-content-start;
+    & > div { min-width:33.33333%; max-width: 33.33333%; min-height: 33.33333%; max-height: 33.33333%;}
+  }
+  &.area03, &.area04, &.area06 {
+    .treffic_set {max-width:420px;}
+    .personnel_set {
+      max-width: none;
+      & > div {
+        p {
+          &:nth-of-type(1) {top:-6px; width:64%; font-size:3.8rem; line-height: 3.4rem; }
+          &:nth-of-type(3) {top:-5px;}
+          &:nth-of-type(2), &:nth-of-type(3) {
+            width:36%; font-size:1.4rem; line-height: 1.7rem;
+            &:before {font-size:1.2rem; line-height: 1.9rem;}
+          }
+          &:nth-of-type(4) {font-size:1.2rem; padding:0 8px 2px 8px;}
+        }
+      }
+      button:before {content:"\e905";}
+    }
+  }
+  &.area08 {
+    & > div > article {@include flex-justify-content-center;}
+    .personnel_set {
+      @include flex-column; max-height:70%;
+    }
+  }
 }
 /////..... 구역 End
 
 
+.treffic_set, .personnel_set {width:100%; @include flex-midddle; }
 
 
+/////.....상태 아이콘 일반, 경고, 감지 정의 section Start
+.treffic_set {
+
+  /*
+  <section class="treffic_set">
+      <div class="ts-caution"><p></p></div>
+      <div class="ts-warning"><p></p></div>
+      <div class="ts-danger "><p></p></div>
+  </section>
+  */
+
+  min-height:80px; max-width:330px;
+  & > div {
+    @include flex-midddle;
+    @include flex-width-one(1);
+    height:80px; min-height: 80px;
+
+    &:before, &:after {
+      content:""; position: absolute; left:50%; top:50%; @include border-radius(200px);
+    }
+
+    &:before {
+      margin-top:-($treffic_b); margin-left:-($treffic_b); padding:$treffic_b;
+      background-color: $color-gray-02; @include box-inset-shadow(0px, 2px, 3px, #000, 0.2);
+    }
+
+    &:after {
+      /*margin-top:calc(-25% - 3px); margin-left:calc(-25% - 3px); @include borderwidth(3px);*/
+
+      margin-top:-$treffic_a; margin-left:-$treffic_a; padding:$treffic_a;
+      background-color: $color-white-01; @include box-shadow01(0px, 6px, 2px, -4px, #000, 0.2);
+    }
+
+    &.ts {
+      &-caution, &-warning, &-danger {}
+
+      /*
+      &-caution:after {border-color: rgba($color-gray-03,0.5);   }    // &-caution 주의
+      &-warning:after {border-color: rgba($color-orange-01,0.5); }    // &-warning 경고
+      &-danger:after  {border-color: rgba($color-red-01,0.5);    }    // &-danger  위험
+      */
+
+      &-caution:before {background-color: rgba($color-gray-03,0.5);   }    // &-caution 주의
+      &-warning:before {background-color: rgba($color-orange-01,0.5); }    // &-warning 경고
+      &-danger:before  {background-color: rgba($color-red-01,0.5);    }    // &-danger  위험
+    }
+
+    p {position: relative; z-index: 10; font-size:2rem; }
+
+  }
+
+}
+/////..... 상태 아이콘 일반, 경고, 감지 정의 section End
 
 
+/////..... 진출입 section Start
+.personnel_set {
+
+  /*
+  <section class="personnel_set">
+      <div>
+          <p>1234</p>
+          <p>085</p>
+          <p>1234</p>
+          <p>21:00 ~ </p>
+      </div>
+
+      <div>
+          <p>45</p>
+          <p>85</p>
+          <p>40</p>
+          <p>15:00 ~ 20:59</p>
+      </div>
+  </section>
+  */
+
+  order:1; @include flex-align-items-center; min-height:65px; max-width: 390px; margin:5px 0 10px 0;
+
+  & > div {
+
+    @include flex-width-one(1); width:100%; margin:0 5px;
+    &:nth-of-type(2) {opacity: 0.6; }
+
+    p {
+      position: relative; float:left; @include text-overflow-ellipsis;
+      &:nth-of-type(1) {width:60%; font-size:2.5rem; line-height: 2.2rem; letter-spacing: -0.2rem;}
+      &:nth-of-type(2), &:nth-of-type(3) {
+        width:40%; text-align: right; line-height: 1.2rem;  padding:0 0 0 5px; font-weight:bold;
+        &:before {
+          /*position: absolute; left:0; padding:0 1px 0 27px;*/
+          position: relative;
+          font-weight:normal; font-size:0.9rem; line-height: 1.1rem;
+          float:right; padding:0 0 0 5px;
+        }
+      }
+      &:nth-of-type(2) {&:before {content:"\e922"; right:1px;} }
+      &:nth-of-type(3) {opacity: 0.7; &:before {content:"\e923"; } }
+
+      &:nth-of-type(4) {
+        width:100%; padding:1px 8px; margin:3px 0 0 0; text-align:center;
+        color:$color-white-01; background-color: $color-gray-07;
+        letter-spacing: normal;
+      }
+    }
+
+  }
+  button:before {content:"\e905";}
+}
+/////..... 진출입 section End
 
 
+/////.......... 디바이스 보기 Popup Start
+.device_popup {
+
+  /*
+  <div class="device_popup">
+      <ul>
+          <li>연기 감지센서</li>
+          <li>유해가스 감지센서</li>
+          <li class="cctv_view">CCTV 01<button></button></li>
+          <li>일산화탄소 감지센서</li>
+          <li>진출입 감지센서</li>
+      </ul>
+  </div>
+  */
+  $dp_mlr:($m_lr - 5px);
+
+  z-index:1; position: absolute; top:$btnarea-height; right:-100%; bottom:$dp_mlr; width:100%;
+  @include transition(400ms);
+
+  & *,& *:before, & *:after {color:#3c3c3c !important;}
+
+  &:before {
+    content:"DEVIC LIST";
+    position: absolute; z-index: -1; top:0; left:$dp_mlr; right:$dp_mlr; bottom:0;
+    background-color: $adm-color; padding:7px $m_lr; font-size: 1.2rem;
+    color:$color-blue-01 !important; @include box-shadow01(0px, 25px, 35px, -10px, #000, 0.6);
+  }
+
+  ul {
+    overflow: auto; position: absolute; top:$btnarea-height; left:$m_lr; right:$m_lr; bottom:0; padding:0 $m_lr;
+
+    li {
+      @include flexbase; @include flex-align-items-center;
+      position: relative; width:100%; height:40px; font-weight:bold;
+
+      button {
+        width:90px; height:30px; margin:0 0 0 auto; padding:0 0 2px 0;
+        @include border01(1px,$color-gray-01, 1);
+        &:before {
+          content:"VIEW"; font-weight:normal; font-size:0.9rem;
+        }
+        &:hover {
+          background-color: $color-blue-01; border-color:$color-blue-01;
+          &:before {color:#fff !important;}
+        }
+      }
 
 
+      &:before {content:"\e92f"; font-size:1.2rem; padding:0 10px 0 0; }
+      &.cctv_view {
+        &:before {content:"\e91c" !important; font-size:1.4rem;}
+      }
 
-/////.......... 진출입 조회주기설정 시작
-/////.......... 진출입 조회주기설정 끝
+    }
+  }
 
+}
+/////.......... 디바이스 보기 Popup End
+
+
+/////.......... 진출입 조회주기설정 팝업 시작
+.iocount_popup {
+
+  /*
+  <div class="iocount_popup">
+      <div>
+          <div>
+              <header>
+                  <h2><span>(구역명 삽입)</span> 진출입 조회주기 설정</h2>
+                  <button class="close_btn"></button>
+              </header>
+
+              <article>
+                  <!-- 진출입 모두 보기 셋션 -->
+                  <section></section>
+                  <!-- 진출입 설정 셋션 -->
+                  <section></section>
+              </article>
+
+              <footer>
+                  <button class="btn">저장</button>
+              </footer>
+
+          </div>
+      </div>
+      <div class="bg"></div>
+  </div>
+  */
+
+  display: none;
+  position: absolute !important; @include z-index-popup;
+  top:$headerHeight; right:0;
+  bottom:0; left:0; width:auto !important;
+
+  & > div {
+    @include flex-midddle; position: relative; width:100%; height:100%;
+    &:not(.bg) {}
+
+    & > div {
+
+      display: inline-block;
+      //@include flexbase; @include flex-column;
+      overflow: auto; position: relative; z-index: 10; max-width:70%;  max-height:90%;
+      padding:20px 30px 30px 30px !important;
+
+      & > * { position: relative; width:100%;}
+
+      header {
+        background-color: transparent; padding:0;
+        h2 , h3  {@include title_icon; margin:0 auto 0 0;}
+        button:before {content:"\e91a"; font-size: 1.8rem;}
+      }
+
+      article {
+
+        @include flex-column-row; margin:30px 0 0 0;
+        & > * {
+          &:first-of-type  {width:340px; min-width:340px;  margin:0 110px 0 0;}
+          &:nth-of-type(2) {width:500px; min-width:480px;  }
+        }
+
+        section > h3 {margin:0 0 20px 0;}
+
+        .personnel_set {
+
+          @include flex-row-wrap; @include flex-justify-content-start;
+
+          & > div {
+            @include flex-option(0, 1, 47%); opacity:0.6; margin:0 0 10px 0;
+
+            & > p:nth-of-type(4) {
+              @include flexbase; @include flex-row-wrap;
+              white-space: normal; padding:4px 8px;
+              & > * {width:100%; display: inline-block; text-align: left;}
+              em   {font-size:0.8rem; order:1;} // 날짜
+              span {font-size:1rem; order:2;} // 시간
+
+            }
+
+          }
+
+          & > div:first-of-type {
+            @include flex-option(0, 1, 100%); opacity:1; margin:0 0 30px 0;
+
+            p {
+              letter-spacing: normal;
+              &:nth-of-type(1) {top:-5px; font-size:5rem; line-height: 4.6rem; letter-spacing: -0.2rem;}
+
+              &:nth-of-type(2), &:nth-of-type(3) {
+
+                font-size:2rem; line-height: 2.2rem; font-weight:bold;
+                /*padding:0 1px 0 60px;*/
+
+                &:before {font-size:1.6rem; line-height: 2.3rem;}
+
+              }
+
+              &:nth-of-type(4) {
+
+                & > * {text-align: center; }
+                em   {font-size:1rem; } // 날짜
+                span {font-size:1.5rem;} // 시간
+
+              }
+            }
+          }
+
+          & > div:nth-of-type(even) {margin-right:6%;}
+
+        }
+        .iotime_set {
+          .timepicker > input {width:100%; margin:0;}
+          li {@include flex-justify-content-end; padding:0 0 22px 0;}
+        }
+      }
+
+      footer {
+        display: inline-block; text-align: right;
+        button {right:0;}
+      }
+    }
+  }
+
+  .bg {
+    position:absolute;  left:0; top:0; width:100% !important; height:100% !important;
+    background-color: rgba($color-dark-01,0.8);
+  }
+}
+/////.......... 진출입 조회주기설정 팝업 끝
 
 
 

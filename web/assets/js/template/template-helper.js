@@ -32,41 +32,33 @@ var TemplateHelper = (
         );
 
         /********************************************************************************
-         * marquee 리스트 template
-         *********************************************************************************/
-        var MARQUEE_CONTENT_TEMPLATE = $("<button/>");
-
-        /********************************************************************************
          * 토스트 팝업 template
          *********************************************************************************/
         var TOAST_POPUP_TEMPLATE = $("<div/>").append(
-            $("<button/>", {href:"#", class:"btn_x", onclick:"javascript:$(this).parent().remove();"})
-        ).append(
             $("<button/>", {href:"#", class:"tp_contents"}).append(
-                $("<span/>", {id:"toastEventName"})
+                $("<span/>", {id:"toastAreaName"})
             ).append(
                 $("<span/>", {id:"toastEventDesc"})
             )
+        ).append(
+            $("<button/>", {href:"#", class:"btn_x", onclick:"javascript:$(this).parent().remove();"})
         );
 
         /********************************************************************************
-         * 작업자 상태, 크레인 상태 리스트 template
+         * 진출입 조회 template
          *********************************************************************************/
-        var EVENT_LIST_TEMPLATE = $("<li/>").append(
-            $("<span/>", {id:"status"})
+        var INOUT_TEMPLATE = $("<div/>").append(
+            $("<p/>", {id:"gap"})
         ).append(
-            $("<span/>", {id:"eventName"})
+            $("<p/>", {id:"in"})
         ).append(
-            $("<span/>", {id:"eventDatetime"})
-        );
-
-        /********************************************************************************
-         * 진출입 조회 주기 설정 template
-         *********************************************************************************/
-        var INOUT_SETTING_TEMPLATE = $("<li/>").append(
-            $("<span/>")
+            $("<p/>", {id:"out"})
         ).append(
-            $("<button/>", {href:"#"})
+            $("<p/>", {id:"datetime"}).append(
+                $("<em/>", {id:"dt"})
+            ).append(
+                $("<span/>", {id:"hms"})
+            )
         );
 
         /**
@@ -80,17 +72,11 @@ var TemplateHelper = (
                 case "alarm01":
                     _returnTag = ALARM_CONTENT_TEMPLATE.clone();
                     break;
-                case "marquee01":
-                    _returnTag = MARQUEE_CONTENT_TEMPLATE.clone();
-                    break;
                 case "toast":
                     _returnTag = TOAST_POPUP_TEMPLATE.clone();
                     break;
-                case "eventList":
-                    _returnTag = EVENT_LIST_TEMPLATE.clone();
-                    break;
-                case "inoutSetting":
-                    _returnTag = INOUT_SETTING_TEMPLATE.clone();
+                case "inout":
+                    _returnTag = INOUT_TEMPLATE.clone();
                     break;
             }
 

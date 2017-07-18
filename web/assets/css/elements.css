@@ -51,7 +51,7 @@ form-bg-effect :
   min-height: 65px;
   padding: 5px 0;
   border-style: solid;
-  border-width: 0 0 1px 0;
+  border-width: 1px 0;
   border-color: #bcbcbc; }
   .search_area .search_contents {
     flex: 0 1 100%;
@@ -671,13 +671,13 @@ input.datepicker + button + .in-timepicker {
         content: "OFF";
         right: -20px;
         color: #4c4c4c; }
-    .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label {
+    .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label, .checkbox_set.csl_style02 > input label, .checkbox_set.csl_style02.on:checked + label, .checkbox_set.csl_style02.on.on + label, .checkbox_set.csl_style02.on label {
       background-color: #be1e1e;
       border: none; }
-      .checkbox_set.csl_style02 > input:checked + label:before, .checkbox_set.csl_style02 > input.on + label:before {
+      .checkbox_set.csl_style02 > input:checked + label:before, .checkbox_set.csl_style02 > input.on + label:before, .checkbox_set.csl_style02 > input label:before, .checkbox_set.csl_style02.on:checked + label:before, .checkbox_set.csl_style02.on.on + label:before, .checkbox_set.csl_style02.on label:before {
         left: 50px;
         background-color: #fff; }
-      .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after {
+      .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after, .checkbox_set.csl_style02 > input label:after, .checkbox_set.csl_style02.on:checked + label:after, .checkbox_set.csl_style02.on.on + label:after, .checkbox_set.csl_style02.on label:after {
         content: "ON";
         right: 5px;
         color: #fff; }
@@ -1135,15 +1135,12 @@ ul.u_defalut {
       flexbox: 0 1 100%;
       -webkit-box-flex: 1;
       -ms-flex: 0 1 100%; }
-  ul.u_defalut.time_set_type .timepicker {
-    order: 1; }
-    ul.u_defalut.time_set_type .timepicker > * {
-      margin: 0 10px 0 0; }
-    ul.u_defalut.time_set_type .timepicker > input {
-      width: 70px; }
+  ul.u_defalut.time_set_type .timepicker > * {
+    margin: 0 10px 0 0; }
+  ul.u_defalut.time_set_type .timepicker > input {
+    width: 70px; }
   ul.u_defalut.time_set_type .checkbox_set.csl_style02 {
-    order: 2;
-    margin: 0 20px; }
+    margin: 0 20px 0 0; }
     ul.u_defalut.time_set_type .checkbox_set.csl_style02 + .timepicker input, ul.u_defalut.time_set_type .checkbox_set.csl_style02 + .timepicker select {
       pointer-events: none; }
     ul.u_defalut.time_set_type .checkbox_set.csl_style02 + .timepicker > div, ul.u_defalut.time_set_type .checkbox_set.csl_style02 + .timepicker > input {
@@ -1410,7 +1407,7 @@ ul.u_defalut {
 .menu_tree_set {
   width: 100%;
   height: 100%;
-  padding: 0 0 50px 0; }
+  padding: 50px 0; }
   .menu_tree_set ul, .menu_tree_set li {
     position: relative;
     transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -1475,7 +1472,7 @@ ul.u_defalut {
       margin: 0 0 0 20px; }
     .menu_tree_set > li:before {
       display: none; }
-  .menu_tree_set.divtree_type li {
+  .menu_tree_set li, .menu_tree_set.divtree_type li {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1489,11 +1486,11 @@ ul.u_defalut {
     -webkit-align-items: flex-start;
     -ms-flex-align: flex-start;
     align-items: flex-start; }
-  .menu_tree_set.divtree_type button, .menu_tree_set.divtree_type input {
+  .menu_tree_set button, .menu_tree_set input, .menu_tree_set.divtree_type button, .menu_tree_set.divtree_type input {
     width: 220px;
     min-width: 220px; }
-  .menu_tree_set.divtree_type button:before {
-    content: "\e919";
+  .menu_tree_set button:before, .menu_tree_set.divtree_type button:before {
+    content: "\e92b";
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1518,13 +1515,20 @@ ul.u_defalut {
     width: 40px;
     height: 40px;
     font-size: 22px; }
-  .menu_tree_set.divtree_type input[type="checkbox"]:checked + button, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button + ul li button {
+  .menu_tree_set button.on, .menu_tree_set.divtree_type button.on {
     background-color: #be1e1e;
     border-color: transparent;
     color: #fff;
     opacity: 0.4; }
-    .menu_tree_set.divtree_type input[type="checkbox"]:checked + button:before, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button + ul li button:before {
-      content: "\e91a"; }
+    .menu_tree_set button.on:before, .menu_tree_set.divtree_type button.on:before {
+      content: "\e92c"; }
+  .menu_tree_set input[type="checkbox"]:checked + button, .menu_tree_set input[type="checkbox"]:checked + button + ul li button, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button + ul li button {
+    background-color: #be1e1e;
+    border-color: transparent;
+    color: #fff;
+    opacity: 0.4; }
+    .menu_tree_set input[type="checkbox"]:checked + button:before, .menu_tree_set input[type="checkbox"]:checked + button + ul li button:before, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button:before, .menu_tree_set.divtree_type input[type="checkbox"]:checked + button + ul li button:before {
+      content: "\e92c"; }
   .menu_tree_set.view_type a, .menu_tree_set.view_type button, .menu_tree_set.libaray_type a, .menu_tree_set.libaray_type button {
     width: auto;
     min-width: 120px;
@@ -1738,24 +1742,6 @@ ul.u_defalut {
         display: none; }
     .menu_tree_set.libaray_type .ui-dynatree-disabled ul.dynatree-container {
       opacity: 0.5; }
-
-.navigation {
-  position: absolute;
-  right: 0;
-  bottom: 10px; }
-  .navigation span {
-    position: relative;
-    color: #8e8e8e;
-    padding: 0 10px; }
-    .navigation span:after {
-      content: "〉";
-      position: absolute;
-      right: -5px;
-      top: 0; }
-    .navigation span:last-child {
-      padding: 0 0 0 10px; }
-    .navigation span:last-child:after {
-      display: none; }
 
 .tabs_area {
   width: 100%;

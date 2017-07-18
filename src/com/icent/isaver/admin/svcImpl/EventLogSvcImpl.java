@@ -98,6 +98,16 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
+    public ModelAndView findListEventLogForDashboard(Map<String, String> parameters) {
+        List<EventLogBean> events = eventLogDao.findListEventLogForDashboard(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogs", events);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView cancelEventLog(Map<String, String> parameters) {
         String[] eventLogIds = parameters.get("eventLogIds").split(CommonResource.COMMA_STRING);
 

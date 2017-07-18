@@ -159,20 +159,6 @@ public class AdminResource {
     public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT210"};
 
     /**
-     * alarm eventIds
-     * @author psb
-     */
-    public final static List<String> ALARM_EVENT = new ArrayList(){{
-        add("EVT009");
-        add("EVT013");
-        add("EVT015");
-        add("EVT016");
-        add("EVT100");
-        add("EVT101");
-        add("EVT210");
-    }};
-
-    /**
      * in, out eventIds
      * @author psb
      */
@@ -192,14 +178,4 @@ public class AdminResource {
     public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222", "EVT301"};
 
     public final static String PEOPLE_COUNT_DEVICE_ID = "DEV009";
-
-    public final static String API_PATH_URL_SENDEVENT = "/alarm/eventSend.json";
-
-    /**
-     * vms
-     * @author psb
-     */
-    public final static String VMS_PORT = "8820";
-    public final static String VMS_PROJECT_NAME = "ISAVER.SOCKET";
-    public final static String VMS_PATH_URL_SENDEVENT = "/vmsapi/eventClear.json";
 }

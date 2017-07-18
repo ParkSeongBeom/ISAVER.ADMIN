@@ -21,7 +21,7 @@ form-bg-effect :
 .search_area {
   @include flex-align-items-center;
   width:100%; min-height:65px; padding:5px 0;
-  @include border01(0 0 1px 0,$color-gray-06,1);
+  @include border01(1px 0,$color-gray-06,1);
 
   .search_contents {@include flex-option(0, 1, 100%); }
   .search_btn, .table_btn_set {@include flex-option(1, 0, 160px); text-align: right; }
@@ -327,7 +327,6 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 /////...... input[type="file"] base 정의 End
 
 
-
 ///// input[type="checkbox"] checkBox label base 정의 Start
 .checkbox_set {
   position:relative; width:auto !important; height:40px !important; float: left;
@@ -384,8 +383,9 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
       &:after  {content:"OFF"; right:-20px; color:$color-dark-01;}
     }
 
-    & > input {
-      &:checked + label , &.on + label{
+    &.on + label {}
+    & > input, &.on {
+      &:checked + label , &.on + label, label {
         background-color:$color-red-01; border:none;
         &:before {left:50px; background-color:$color-white-01;}
         &:after  {content:"ON"; right:5px; color:$color-white-01;}
@@ -397,7 +397,6 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   } // 라벨 스타일 csl_style02 End
 }
 ///// input[type="checkbox"] checkBox label base 정의 End
-
 
 
 /////...... button base 정의 Start
@@ -484,7 +483,6 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 
 }
 /////...... button base 정의 End
-
 
 
 /////...... contenteditable 정의 Start
@@ -705,14 +703,14 @@ ul.u_defalut {
 
   &.time_set_type {
     .timepicker {
-      order:1;
+
       & > * {margin:0 10px 0 0;}
       & > input {width:70px;}
     }
 
     .checkbox_set.csl_style02 {
-      order:2;
-      margin:0 20px;
+
+      margin:0 20px 0 0;
       & + .timepicker {
         input, select {pointer-events: none;}
         & > div, & > input {opacity: 0.6;}
@@ -863,11 +861,10 @@ ul.u_defalut {
 
 }
 .menu_tree_set {
-
   @mixin tree-hover
   {background-color: $color-blue-01 !important; border-color:transparent !important; color:#fff !important;}
   @mixin tree-on
-  {background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e91a";} }
+  {background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
   @mixin tree-normal
   {background-color:rgba($color-white-01,0.7); border-color:$color-gray-01; color:$color-dark-01; opacity: 1;}
 
@@ -880,8 +877,7 @@ ul.u_defalut {
     &:hover {@include tree-hover;}
   }
 
-
-  width:100%; height:100%; padding:0 0 50px 0;
+  width:100%; height:100%; padding:50px 0;
   ul, li {position: relative; @include transition(400ms);}
 
   ul:before, ul:after, li:after, li:before, .dynatree-expander:before
@@ -911,23 +907,24 @@ ul.u_defalut {
     &:before {display: none;}
   }
 
-
-  &.divtree_type {
+  &, &.divtree_type {
     li {@include flexbase; @include flex-align-items-start;}
     button, input { width:220px; min-width:220px;}
 
     button:before {
-      content: "\e919";
+      content: "\e92b";
       @include flex-midddle; position: absolute; top:0; left:0;
       width:40px; height:40px; font-size:22px;
     }
 
+    button {&.on {@include tree-on;} }
+
+    // 체크가 삽입될 때
     input[type="checkbox"] {
       &:checked + button,  &:checked + button + ul li button {@include tree-on;}
     }
 
   }
-
 
   &.view_type, &.libaray_type {
     a, button {
@@ -943,7 +940,6 @@ ul.u_defalut {
     @include border-radius(200px);
     @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
   }
-
 
   &.view_type {
     overflow: auto; padding:20px;
@@ -1001,7 +997,6 @@ ul.u_defalut {
     }
   }
 
-
   &.libaray_type {
     overflow: auto; width:100%; height: 100%;  padding: 20px;
     a, li > span {@include flexbase; @include flex-align-items-center; }
@@ -1034,18 +1029,6 @@ ul.u_defalut {
   }
 }
 ///// menu_tree_set 메뉴관리권한, tree UI 정의 끝
-
-/////...... navigation 정의 시작
-.navigation {
-  position: absolute;right:0;bottom:10px;
-  span {
-    position: relative; color:#8e8e8e; padding:0 10px;
-    &:after {content: "〉"; position: absolute;right:-5px; top:0; }
-    &:last-child {padding:0 0 0 10px;}
-    &:last-child:after {display: none;}
-  }
-}
-/////...... navigation 정의 끝
 
 
 /////...... 탭 영역 정의 Start

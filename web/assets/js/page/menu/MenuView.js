@@ -154,7 +154,7 @@ function MenuView(model) {
         // DASHBOARD 메뉴
         var _parentLiTag = parentLiTag.clone();
         _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
-        _parentLiTag.find("button").attr("onclick", "javascript:moveDashBoard();").text("DASHBOARD");
+        _parentLiTag.find("button").attr("onclick", "javascript:moveDashboard();").text("DASHBOARD");
 
         var areaList = MenuView._model.getAreaList();
         if(areaList == null){
@@ -165,7 +165,7 @@ function MenuView(model) {
                 if (Number(_area["menuDepth"]) == 1) {
                     var _childLiTag = childLiTag.clone();
                     _childLiTag.attr("name", _area.areaId);
-                    _childLiTag.find("button").attr("onclick", "javascript:moveDashBoard('"+_area['areaId']+"');").text(_area['areaName']);
+                    _childLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');").text(_area['areaName']);
                     _parentLiTag.find("> ul").append(_childLiTag);
                 }
             }
@@ -262,32 +262,6 @@ function MenuView(model) {
         $("button[name='addBtn']").hide();
         $("button[name='saveBtn']").show();
         $("button[name='removeBtn']").show();
-    };
-
-    /**
-     * 대쉬보드 - 전체 - 구역 리스트 그리기
-     */
-    MenuView.drawAllDashBoardAreaList = function() {
-
-        if (menuModel.getAreaList().length == 0) {
-                return;
-        }
-
-        var areaList = menuModel.getAreaList();
-
-        for(var i = 0; i < areaList.length; i ++) {
-            var areaItem = areaList[i];
-            var buttonTag = $("<button />", {'areaId' : areaItem['areaId'], 'href' : "#" , 'onclick' : "moveDashBoardDetail('" +areaItem['areaId'] +"')"});
-
-            buttonTag.append($("<span><em>"+areaItem['areaName']+"</em></span>"));
-
-            $("#eventLogWorkerList").append(buttonTag.clone());
-//            $("#eventLogInoutList").append(buttonTag.clone());
-            $("#eventLogCraneList").append(buttonTag.clone());
-            $("#eventLogGasList").append(buttonTag.clone());
-
-        }
-
     };
 
     return MenuView;

@@ -51,34 +51,4 @@ public class DashBoardCtrl {
         modelAndView.setViewName("dashboardList");
         return modelAndView;
     }
-
-    /**
-     * 대쉬보드 전체 화면를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/all")
-    public ModelAndView findAllDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = dashBoardSvc.findAllDashBoard(parameters);
-        modelAndView.setViewName("allDashboard");
-        return modelAndView;
-    }
-
-    /**
-     * 대쉬보드 상세 화면를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
-    public ModelAndView findByDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = dashBoardSvc.findByDashBoard(parameters);
-        modelAndView.setViewName("detailDashboard");
-        return modelAndView;
-    }
 }

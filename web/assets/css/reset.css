@@ -192,9 +192,6 @@ input[type="search"]::-webkit-search-decoration
 :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
 :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
 
-
-
-
 @font-face {
     font-family: 'svgbase';
     src:  url('../fonts/svgbase.eot?2qkwbi');
@@ -219,7 +216,9 @@ span.dynatree-expander:before,
 .ui-datepicker .ui-datepicker-header > a > span:before,
 .menu_tree_set button:before,
 .menu_tree_set li ul:after,
-.dynatree-expander:after /* 다이나 트리 + 아이콘 */
+.device_popup li:before, /* 디바이스 보기 목록 아이콘 */
+.dynatree-expander:after, /* 다이나 트리 + 아이콘 */
+.personnel_set > div p:before /* 진출입 아이콘 */
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'svgbase' !important;
@@ -254,7 +253,7 @@ span.dynatree-expander:before,
 .sico_34:before {content: "\e921";}    .sico_44:before {content: "\e92b";}    .sico_54:before {content: "\e935";}
 .sico_35:before {content: "\e922";}    .sico_45:before {content: "\e92c";}    .sico_55:before {content: "\e936";}
 .sico_36:before {content: "\e923";}    .sico_46:before {content: "\e92d";}    .sico_56:before {content: "\e937";}
-.sico_37:before {content: "\e924";}    .sico_47:before {content: "\e92e";}
+.sico_37:before {content: "\e924";}    .sico_47:before {content: "\e92e";}    .sico_57:before {content: "\e938";}
 .sico_38:before {content: "\e925";}    .sico_48:before {content: "\e92f";}
 .sico_39:before {content: "\e926";}    .sico_49:before {content: "\e930";}
 .sico_40:before {content: "\e927";}    .sico_50:before {content: "\e931";}
@@ -410,28 +409,6 @@ flex-basis:  100%;
 */
 
 /*
-z-index
-메인 검색    z-index: 50;
-스크롤버튼   z-index: 100;
-aside       z-index: 200;
-레이어 팝업  z-index: 300;
-
-background-color : red              #ed5565 rgba(237,85,101,0.9);
-background-color : red = on/active  #de4353 rgba(200,56,71,0.9);
-
-배경컬러
-background-color: #1e1d23;
-
-input  line    #e1e1e1
-border popup   #e1e1e1
-border normal  #eee
-bottom button border gray #999
-bottom button border gray active #4f4f4f
-*/
-
-
-
-/*
 모바일 사이즈 단위
 width: 100vw;
 height:100vh;
@@ -486,6 +463,18 @@ body::-webkit-scrollbar-thumb {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
 }
 body:-webkit-scrollbar-corner {background: none;}
+
+툴팁 스타일
+[title]:after {
+    content:attr(title);
+    z-index: 1; position: absolute; left:-9999px; top:60px;
+    white-space:nowrap; color:red; font-size:20px;
+    opacity: 0;
+}
+[title]:hover:after{
+    opacity:1; left:5px;
+}
+
 
 background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 30%, rgba(0,0,0,0.06) 100%);
 background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.06)));

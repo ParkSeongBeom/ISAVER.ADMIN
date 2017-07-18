@@ -35,31 +35,4 @@ public class EventLogInoutCtrl {
         ModelAndView modelAndView = eventLogInoutSvc.findListEventLogInout(parameters);
         return modelAndView;
     }
-
-    /**
-     * 작업자 진출입 상세 데이터를 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
-    public ModelAndView findByEventLogInout(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = eventLogInoutSvc.findByEventLogInout(parameters);
-        return modelAndView;
-    }
-
-    /**
-     * [CHART] 작업자 진출입 데이터 로그를 가져온다.
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chartList")
-    public ModelAndView findChartEventLogInout(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = eventLogInoutSvc.findChartEventLogInout(parameters);
-        return modelAndView;
-    }
 }

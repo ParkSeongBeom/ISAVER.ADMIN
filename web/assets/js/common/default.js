@@ -31,6 +31,17 @@ $(function () {
     CssChange.DetectResolution();
 });
 
+$(function(){
+    var areaTitleWidth = $(".watch_area  header > h3");
+    areaTitleWidth.hover(function() {
+        if($(this).width() >= ($(this).parent().width() - 80) ) {
+            $(this).parent().addClass("wid");
+        } else {
+            $(this).parent().removeClass("wid");
+        }
+    });
+});
+
 // header 경계선 켜기 끄기
 $(function(){
     //Keep track of last scroll

@@ -54,7 +54,7 @@
             ,'alarmListUrl':'${rootPath}/eventLog/alarm.json'
             ,'alarmDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
-            ,'dashBoardAllUrl':'${rootPath}/dashboard/list.html'
+            ,'dashboardUrl':'${rootPath}/dashboard/list.html'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
@@ -73,11 +73,12 @@
 
         var alarmPlayer;
         var segmentEnd;
+        var refreshTimeCallBack;
 
         var criticalCss = {
-            'LEV001' : 'level-caution'
-            ,'LEV002' : 'level-warning'
-            ,'LEV003' : 'level-danger'
+            'LEV001' : 'caution'
+            ,'LEV002' : 'warning'
+            ,'LEV003' : 'danger'
         };
 
         $(document).ready(function(){
@@ -179,6 +180,12 @@
             }
         }
 
+        function setRefreshTimeCallBack(_function){
+            if(_function!=null && typeof _function == "function"){
+                refreshTimeCallBack = _function;
+            }
+        }
+
         function printTime() {
             $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
 
@@ -192,6 +199,10 @@
                 if(second < 10) {second = "0" + second;}
 
                 $("section[alarm_detail] p[currentDatetime]").text(hour + ":" + minute + ":" + second);
+            }
+
+            if(refreshTimeCallBack!=null && typeof refreshTimeCallBack == "function"){
+                refreshTimeCallBack(serverDatetime);
             }
 
             setTimeout(function(){
@@ -416,7 +427,7 @@
                     alarmCancelBtnAction();
                 });
 
-                alarmTag.addClass(criticalCss[criticalLevel]);
+                alarmTag.addClass("level-"+criticalCss[criticalLevel]);
                 alarmTag.attr("eventId",eventLog['eventId'])
                         .attr("criticalLevel",criticalLevel)
                         .attr("eventLogId",eventLog['eventLogId'])
@@ -446,7 +457,7 @@
                     var toastTag = templateHelper.getTemplate("toast");
                     toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
                     toastTag.attr("eventLogId",eventLog['eventLogId']);
-//                    toastTag.find("#toastEventName").text(eventTypeName);
+                    toastTag.find("#toastAreaName").text(eventLog['areaName']);
                     toastTag.find("#toastEventDesc").text(eventLog['eventName']);
                     $(".toast_popup").append(toastTag);
 
@@ -499,9 +510,9 @@
                 var action = data['action'];
 
                 for(var key in criticalCss){
-                    modifyElementClass($("section[alarm_detail]"),criticalCss[key],'remove');
+                    modifyElementClass($("section[alarm_detail]"),"level-"+criticalCss[key],'remove');
                 }
-                $("section[alarm_detail]").addClass(criticalCss[data['paramBean']['criticalLevel']]);
+                $("section[alarm_detail]").addClass("level-"+criticalCss[data['paramBean']['criticalLevel']]);
                 $("section[alarm_detail] p[areaName]").text(data['paramBean']['areaName']);
                 $("section[alarm_detail] p[eventName]").text(action['eventName']);
                 $("section[alarm_detail] p[actionDesc]").text(action['actionDesc']);
@@ -611,13 +622,6 @@
             location.href = layoutUrlConfig['mainUrl'];
         }
 
-        function moveDashBoard(id){
-            var detailForm = $('<FORM>').attr('action',layoutUrlConfig['dashboardUrl']).attr('method','POST');
-            detailForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',id));
-            document.body.appendChild(detailForm.get(0));
-            detailForm.submit();
-        }
-
         /**
         * 경보 소리 재생
          * @param startTime
@@ -643,10 +647,11 @@
         }
 
         /* 대쉬보드 전체 페이지 이동*/
-        function moveFullDashFunc() {
-            var deviceListForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashBoardAllUrl']);
-            deviceListForm.appendTo(document.body);
-            deviceListForm.submit();
+        function moveDashboard(areaId) {
+            var dashboardForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashboardUrl']);
+            dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',areaId));
+            dashboardForm.appendTo(document.body);
+            dashboardForm.submit();
         }
     </script>
 
@@ -726,31 +731,29 @@
         */
         function messageEventHandler(message) {
             var resultData = JSON.parse(message.data);
-            var refreshData = false;
+            var callBackFlag = false;
 
             switch (resultData['messageType']) {
-                case "addEvent": // 일반이벤트 등록
-                    refreshData = false;
+                case "refreshView": // 화면갱신
+                    callBackFlag = false;
                     break;
                 case "addAlarmEvent": // 알림이벤트 등록
                     addAlarm(resultData['eventLog'], true);
-                    refreshData = false;
+                    callBackFlag = true;
                     break;
                 case "removeAlarmEvent": // 알림이벤트 해제
                     removeAlarm(resultData['eventLog']);
-                    refreshData = false;
+                    callBackFlag = true;
                     break;
-                case "refreshView": // 화면갱신
-                    refreshData = true;
-                    break;
-                default:
+                case "addEvent": // 일반이벤트 등록
+                    callBackFlag = true;
                     break;
             }
 
-            if(refreshData){
-                dashBoardHelper.getData();
-            }else{
+            if(callBackFlag){
                 dashBoardHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
+            }else{
+                dashBoardHelper.getData();
             }
         }
     </script>
@@ -761,7 +764,7 @@
     <!-- hearder Start 고통부분 -->
     <header id="header">
         <div class="header_area">
-            <h1><a href="#" onclick="javascript:moveFullDashFunc(); return false;"></a></h1>
+            <h1><a href="#" onclick="javascript:moveDashboard(); return false;"></a></h1>
 
             <!-- menu Start -->
             <menu><ul menu_main></ul></menu>

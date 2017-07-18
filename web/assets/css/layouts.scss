@@ -19,35 +19,56 @@ aside   {}
 menu    {}
 
 body {
-  width:100%; min-width:1280px;min-height:768px;
+  width:100%; min-width:$body-minwidth; min-height:768px;
   //@include webkit_scroll;
-
   .wrap {width:100%;}
 
   &.dashboard_mode {
-    overflow: hidden; position: absolute; top:0; left:0; height:100%; padding:0 20px;
+    overflow: hidden; position: absolute; top:0; left:0; height:100%; padding:0 $dash-margin;
     .wrap {height:100%;}
   }
+
+  @media screen and (min-width: 0) and (max-width: $body-minwidth){
+
+    .wrap > header {position: absolute !important; min-width:$body-minwidth;}
+    &.dashboard_mode {
+
+      .db_area {
+        position: absolute; height:calc(100vh - 90px);
+        right:auto; left:($body-minwidth - ($noticecenter-width + $dash-margin));}
+
+    }
+
+    &.admin_mode {
+      section.container.on {padding-right:$admin-margin;}
+    }
+  }
+
 }
 
 
+
+
+
+
 ///// ----------------- <h> START
-h1,h2,h3,h4,h5,h6 {position: relative;}
+h1,h2,h3,h4,h5,h6 {position: relative; }
+h1,h3,h4 {display: inline-block; }
 h1 {
-  display: inline-block; min-width:130px; height:100%; border:none;
+  min-width:130px; height:100%; border:none;
   background-image: url(../images/logo/top_logo.svg);
   background-position: 0 50%; background-repeat: no-repeat; background-size: 130px;
 
   .login_area & {height:70px; background-size:170px;}
 }
-h2 {@include font-size-h2;}
+h2 {font-size:2rem;}
 h3 {
-  display: inline-block; cursor: pointer; @include font-size-h3;
+  font-size:1.5rem;
   .main_title_area & {color:$color-blue-01;}
   .main_title_area &::selection {background-color: transparent}
 }
 h4 {
-  display: inline-block;font-size:18px;color:#4d4d4d;
+  font-size:1.5rem;color:#4d4d4d;
   .main_area & {color:#fff;}
 }
 ///// ----------------- <h> END
@@ -94,15 +115,14 @@ h4 {
 
 ////// ----------------- header Start
 header {
-  @include flex-midddle; @include z-index-header;
-  position: fixed;  top:0; left:0;
-  width:100%; height:$headerHeight; padding:0 20px;
-  background-color: $color-white-02;
+  @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+  position: fixed; @include z-index-header; top:0; left:0; width:100%; height:$headerHeight;
+  padding:0 $dash-margin; background-color: $color-white-02;
 
   &:before {
     content:"";
-    overflow: hidden; opacity: 0;
-    position: absolute; z-index:1; bottom:0; left:30px; right:30px; height:0;
+    z-index: -1; overflow: hidden; opacity: 0;
+    position: absolute; bottom:0; left:30px; right:30px; height:0;
     background-color: rgba(0,0,0,0.0);
     @include box-shadow02(0px, 18px, 24px, -17px, 0, 0, 0, 0.5);
     @include transition01(500ms);
@@ -216,34 +236,29 @@ menu {
 //////......   menu End
 
 
-///// ----------------- ASDIE START
-aside {
-  position: fixed;
-
-  // 토스트 팝업
-  &.toast_popup {z-index:54; top:60px; right:-300px; width:260px;}
-
-  // 레이어 팝업,  layer_popup 레이어 팝업 공통,  admin_popup 어드민 전용
-  &.layer_popup, &.admin_popup {
-    display: none; z-index:50; top:45px; left:$nav_width; bottom:0px; right: 0px;
-  }
-
-
+///// ----------------- POPUP START
+// 레이어 팝업,  layer_popup 레이어 팝업 공통,  admin_popup 어드민 전용
+.layer_popup, .admin_popup {
+  display: none; position: fixed;  @include z-index-popup; top:0; left:0; bottom:0px; right: 0px;
 }
-///// ----------------- ASDIE END
+///// ----------------- POPUP END
 
-///// ----------------- NAV START
 
-///// ----------------- NAV END
+/////..... 팝업 공통 효과 START
+.personal_popup, .iocount_popup > div > div:not(.bg) {
+  background-color: $adm-color; padding:$popup-margin;
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+  @include border01(3px,$color-blue-01,1 );
+  @include transition(400ms);
+}
+/////..... 팝업 공통 효과 END
 
 /////..... 사용자 보기 팝업 popup_type_01 Start
 .personal_popup {
   @include flexbase; @include flex-column; @include z-index-popup;
-  @include transition(400ms);
-  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
-  @include border01(3px,$color-blue-01,1 );
-  position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px); width:$noticecenter-width; padding:20px;
-  background-color: $color-white-01;
+  position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px);
+  width:$noticecenter-width;
+
   h2 {padding:0 0 30px 0;}
   & > section {@include flex-option(0, 1, 100%); padding:0 0 20px 0;}
   & > div {@include flex-option(1, 0, 40px);}
@@ -303,28 +318,28 @@ aside {
 
 /////..... 토스트 팝업 시작
 .toast_popup {
+  display: none;
+  position: fixed; @include z-index-toast; top:($headerHeight - 10px); right:100px;
+  width:($noticecenter-width - 80px);
+
+  &.on {display: block;}
 
   & > div {
-    position: relative; width:100%; margin:10px 0 0 0; background-color: #e41717;
-    @include box-shadow01(0px, 0px, 1px, 0px, #000, 0.3);
-    &:first-of-type {margin:0;}
-  }
-  &.on {right:10px;}
-
-  .btn_x {
-    position: absolute; top:10px; right:10px;
-    &:hover {color:#fff;}
-    &:before {content:"\e925"; font-size:20px;}
-  }
-
-  .tp_contents {
-    width:100%; margin:30px auto 24px; padding: 0 20px 0 70px;
-    &:before {
-      content: "\e90f";
-      position: absolute; left:14px; top:50%; margin:-25px 0 0 0; font-size:48px; color:#fff;
+    position: relative; width:100%; padding:$popup-margin; margin:10px 0 0 0;
+    background-color: $color-red-01; @include box-shadow02(0px, 30px, 50px, -20px, 0, 0, 0, 1);
+    & * {color:$color-white-01; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+    .btn_x {
+      position: absolute; top:10px; right:10px;
+      &:before {content:"\e91a"; font-size:20px;}
     }
-    span {width:100%; font-size:18px; color:#fff; letter-spacing: -1px; text-align: left;}
-    span:nth-of-type(1) {font-size:14px;}
+    .tp_contents {
+      text-align: left; width:calc(100% - 10px);
+      span {
+        width:100%;
+        &:first-of-type {font-size:1.1rem; padding:0 0 5px 0;}
+        &:last-of-type  {font-size:1.3rem; font-weight:bold;}
+      }
+    }
   }
 
 }
@@ -336,13 +351,15 @@ aside {
 
   body.admin_mode & {
     right:-($noticecenter-width * 2);
-
-    &.on {right:20px;}
+    &.on {right:$dash-margin;}
   }
 
-  @include z-index-notice;
-  top:($btnarea-height + 30px); bottom:20px; right:20px;
+  position: fixed; @include z-index-notice;
+  top:($btnarea-height + 30px); bottom:$dash-margin; right:$dash-margin;
   width:$noticecenter-width; background-color: $adm-color;
+
+
+  &:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; background-color: $adm-color}
 
   & > * {width:100%;}
 
@@ -424,13 +441,7 @@ aside {
         //@include border01(0 0 1px 0,$color-gray-01,1);
         & * {color:$color-white-01;}
         & > .checkbox_set, & > button {@include flex-option(1, 0, 40px);}
-        & > .infor_set {
-          @include flex-option(0, 1, 100%);
-          p {@include text-shadow(0, 1px, 2px, #000, 0.7);}
-          p:nth-of-type(1) {}
-          p:nth-of-type(2) {font-size:1.1rem; font-weight:bold; padding:5px 10px 5px 0;}
-          p:nth-of-type(3) {word-spacing: 2px; letter-spacing:0; font-size:0.9rem;}
-        }
+
 
         & > button {
           $spot-width:4px;
@@ -475,15 +486,16 @@ aside {
 
   // 알림상세
   section.db_infor_box {
-    visibility: hidden; overflow: auto;
-    position: absolute; z-index:1; bottom:0; top:($btnarea-height + 10px); right:0;
-    width:($noticecenter-width / 2); padding:100px;
+    visibility: hidden;
+    position: absolute; z-index:1; bottom:0; top:($btnarea-height + 10px); right:20px;
+    width:($noticecenter-width / 2); padding:50px 100px;
     @include box-shadow02(-60px, 0, 100px, -50px, 0, 0, 0, 1);
 
     & > * {
-
+      position: relative;
       display: inline-block;  width:100%; margin: 0 0 40px 0;
       & * {color:$adm-color; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+      *:last-of-type {margin:0;}
     }
 
     .dbi {
@@ -509,10 +521,16 @@ aside {
             &:before, &:after {color:$color-dark-01;}
           }
         }
-
       }
 
-      &_copy { p {font-size:1.5rem; } }
+      &_copy {
+        @include flex-width-one(1);
+        textarea {
+          position: absolute; top:0; left:0; width:100%; height:100%;
+          background-color: transparent; border:none; resize: none;
+        }
+        p {font-size:1.5rem; }
+      }
 
       &_contact {
         /*
@@ -546,11 +564,43 @@ aside {
 
     }
 
-    &.on {visibility: visible; width:($noticecenter-width * 2);  right:($noticecenter-width + 20px); }
+    &.on {visibility: visible; width:($noticecenter-width * 2); right:($noticecenter-width + 20px); }
   }
+}
+//// 알림리스트
+.infor_set {
+  @include flex-option(0, 1, 100%);
+  p {@include text-shadow(0, 1px, 2px, #000, 0.7);}
+  p:nth-of-type(1) {}
+  p:nth-of-type(2) {font-size:1.1rem; font-weight:bold; padding:5px 10px 5px 0;}
+  p:nth-of-type(3) {word-spacing: 2px; letter-spacing:0; font-size:0.9rem;}
 }
 /////..... 알림센터 End
 
+
+/////...... sub_title_area 정의 시작
+.sub_title_area {
+
+  body.admin_mode & {margin: 0 0 0 0;}
+
+  @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 0 0 10px 0;
+
+  &, .navigation, .navigation span {position: relative;}
+
+  h2, h3 {@include font-size-h2; @include title_icon;}
+
+  .navigation {
+    @include flex-align-self-end; margin:0 0 0 30px; padding:0 0 3px 0;
+    span {
+      color:$color-gray-01; padding:0 15px;
+      &:before {content: "〉" !important; position: absolute;right:-5px; top:0; }
+      &:last-of-type {padding:0 0 0 10px; /*font-weight:bold; color:$color-blue-01;*/}
+      &:last-of-type:before {display: none;}
+    }
+  }
+
+}
+/////...... sub_title_area 정의 끝
 
 
 .m_human, .check_th tbody tr:before,

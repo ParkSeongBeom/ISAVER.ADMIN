@@ -36,18 +36,6 @@ public class InoutConfigurationCtrl {
     @Inject
     private InoutConfigurationSvc inoutConfigurationSvc;
 
-    /**
-     * 진출입자 조회 주기 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
-    public ModelAndView findListInoutConfiguration(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        parameters.put("userId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = inoutConfigurationSvc.findListInoutConfiguration(parameters);
-        return modelAndView;
-    }
-
     private final static String[] saveInoutConfigurationParam = new String[]{"areaId","inoutDatetimes"};
 
     /**

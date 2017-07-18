@@ -46,7 +46,7 @@ var DashBoardHelper = (
          * request data add
          * @author psb
          */
-        this.addRequestData = function(_actionType, _url, _data, _successHandler, _failureHandler, _appendEventHandler){
+        this.addRequestData = function(_actionType, _url, _data, _successHandler, _failureHandler){
             if(_actionType==null){
                 console.error('[DashBoardHelper][addRequestData] _actionType is null');
                 return false;
@@ -72,19 +72,21 @@ var DashBoardHelper = (
                 return false;
             }
 
-            if(_appendEventHandler==null || typeof _appendEventHandler != "function"){
-                console.error('[DashBoardHelper][addRequestData] _appendEventHandler is null or type error');
-                return false;
-            }
-
             _requestData[_actionType] = {
                 'url' : _url
                 ,'data' : _data
                 ,'success' : _successHandler
                 ,'failure' : _failureHandler
             };
+        };
 
-            _callBackEventHandler = _appendEventHandler;
+        this.setCallBackEventHandler = function(_eventHandler){
+            if(_eventHandler==null || typeof _eventHandler != "function"){
+                console.error('[DashBoardHelper][setCallBackEventHandler] _appendEventHandler is null or type error');
+                return false;
+            }
+
+            _callBackEventHandler = _eventHandler;
         };
 
         /**
@@ -111,11 +113,16 @@ var DashBoardHelper = (
          * get data
          * @author psb
          */
-        this.getData = function(){
-            for(var index in _requestData){
-                var _requestInfo = _requestData[index];
-
-                sendAjaxPostRequest(_requestInfo['url'],_requestInfo['data'],_requestInfo['success'],_requestInfo['failure'],index);
+        this.getData = function(_actionType){
+            if(_actionType==null){
+                for(var index in _requestData){
+                    var _requestInfo = _requestData[index];
+                    sendAjaxPostRequest(_requestInfo['url'],_requestInfo['data'],_requestInfo['success'],_requestInfo['failure'],index);
+                }
+            }else{
+                if(_requestData[_actionType]!=null){
+                    sendAjaxPostRequest(_requestData[_actionType]['url'],_requestData[_actionType]['data'],_requestData[_actionType]['success'],_requestData[_actionType]['failure'],_actionType);
+                }
             }
         };
 
@@ -128,13 +135,6 @@ var DashBoardHelper = (
             if(_callBackEventHandler!=null){
                 _callBackEventHandler(eventLog, messageType);
             }
-            //for(var index in _requestData){
-            //    var _appendEventHandler = _requestData[index]['appendEvent'];
-            //
-            //    if(_appendEventHandler!=null){
-            //        _appendEventHandler(eventLog, messageType, index);
-            //    }
-            //}
         };
     }
 );

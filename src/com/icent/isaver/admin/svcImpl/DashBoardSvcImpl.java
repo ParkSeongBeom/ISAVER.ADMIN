@@ -1,12 +1,10 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.util.StringUtils;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
-import com.icent.isaver.repository.bean.EventBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
-import com.icent.isaver.repository.dao.base.EventDao;
+import com.icent.isaver.repository.dao.base.DeviceDao;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,43 +34,23 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     private AreaDao areaDao;
 
     @Inject
-    private EventDao eventDao;
+    private DeviceDao deviceDao;
 
     @Override
     public ModelAndView findListDashBoard(Map<String, String> parameters) {
-        parameters.put("delYn","N");
-        List<AreaBean> areas = areaDao.findListArea(parameters);
+        List<AreaBean> navList = areaDao.findListAreaNav(parameters);
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areas", areas);
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findAllDashBoard(Map<String, String> parameters) {
-        parameters.put("delYn","N");
-        List<AreaBean> areas = areaDao.findListArea(parameters);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areas", areas);
-        modelAndView.addObject("paramBean",parameters);
-        modelAndView.addObject("workerEventIds", StringUtils.strJoin(AdminResource.WORKER_EVENT_ID_DETAIL, ","));
-        modelAndView.addObject("craneEventIds",StringUtils.strJoin(AdminResource.CRANE_EVENT_ID_DETAIL, ","));
-        modelAndView.addObject("inoutEventIds",StringUtils.strJoin(AdminResource.INOUT_EVENT_ID, ","));
-
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findByDashBoard(Map<String, String> parameters) {
-        List<EventBean> workerEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds", AdminResource.WORKER_EVENT_ID_DETAIL);}});
-        List<EventBean> craneEvents = eventDao.findListEventForDashBoard(new HashMap<String,Object>(){{put("eventIds",AdminResource.CRANE_EVENT_ID_DETAIL);}});
+        List<AreaBean> childAreas = areaDao.findListAreaForDashboard(parameters);
+        for(AreaBean area : childAreas){
+            Map<String, String> deviceParam = new HashMap<>();
+            deviceParam.put("areaId",area.getAreaId());
+            area.setDevices(deviceDao.findListDevice(deviceParam));
+        }
         AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("workerEvents", workerEvents);
-        modelAndView.addObject("craneEvents", craneEvents);
+        modelAndView.addObject("navList", navList);
+        modelAndView.addObject("childAreas", childAreas);
         modelAndView.addObject("area", area);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
