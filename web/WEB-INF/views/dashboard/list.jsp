@@ -261,7 +261,7 @@
 
     function refreshInoutSetting(_serverDatetime){
         var refreshFlag = false;
-        $.each($(".watch_area div[endDatetime]"),function(){
+        $.each($(".watch_area div[nowInout]"),function(){
             if(_serverDatetime.getTime() > $(this).attr("endDatetime")){
                 refreshFlag = true;
             }
@@ -563,11 +563,11 @@
                 var startDatetime = new Date(Number($(this).attr("startDatetime")));
                 var endDatetime = new Date(Number($(this).attr("endDatetime")));
                 var eventDatetime = new Date(data['eventDatetime']);
+                var updateFlag = false;
 
                 if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
                     for(var index in data['infos']){
                         var info = data['infos'][index];
-                        var updateFlag = false;
 
                         if(info['key']=="inCount"){
                             var inTag = $(this).find("[in]");
@@ -582,11 +582,11 @@
                             outTag.text(outCount);
                             updateFlag = true;
                         }
-
-                        if(updateFlag){
-                            $(this).find("[gap]").text(Number($(this).find("[in]").text())-Number($(this).find("[out]").text()));
-                        }
                     }
+                }
+
+                if(updateFlag){
+                    $(this).find("[gap]").text(Number($(this).find("[in]").text())-Number($(this).find("[out]").text()));
                 }
             });
         }
@@ -619,9 +619,11 @@
                     inoutTag.find("p[in]").text(inCount);
                     inoutTag.find("p[out]").text(outCount);
                     inoutTag.find("p[gap]").text(inCount-outCount);
+                    inoutTag.attr("startDatetime",inout['inoutStarttime']);
+                    inoutTag.attr("endDatetime",inout['inoutEndtime']);
+
                     if(_eqIndex==0){
-                        inoutTag.attr("startDatetime",inout['inoutStarttime']);
-                        inoutTag.attr("endDatetime",inout['inoutEndtime']);
+                        inoutTag.attr("nowInout","");
                         inoutTag.find("p[datetime]").text(new Date(inout['inoutStarttime']).format("HH:mm:ss") + " ~ ");
                     }else{
                         inoutTag.find("p[datetime]").text(new Date(inout['inoutStarttime']).format("HH:mm:ss") + " ~ " + new Date(inout['inoutEndtime']).format("HH:mm:ss"));
