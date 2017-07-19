@@ -307,7 +307,7 @@
                     if(inoutDateStr == inoutDatetimes[index].format("HH:mm:ss")){
                         var endTime = new Date(inoutDatetimes[Number(index)+1]);
 
-                        if(!(endTime == "Invalid Date" || isNaN(endTime))){
+                        if(!(endTime == "Invalid Date" || isNaN(endTime.getTime()))){
                             endTime.setSeconds(-1);
                             $(this).find("input[name='endTime']").val(endTime.format("HH:mm:ss"));
                             drawFlag = true;
