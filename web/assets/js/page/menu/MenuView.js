@@ -140,7 +140,7 @@ function MenuView(model) {
      * [Draw] 상위 메뉴바 그리기
      * @param obj
      */
-    MenuView.setTopMenuBar = function (menuBarModel) {
+    MenuView.setTopMenuBar = function (menuBarModel, areaList) {
         var parentLiTag = $("<li/>").append(
             $("<button/>", {href:"#"})
         ).append(
@@ -156,18 +156,18 @@ function MenuView(model) {
         _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
         _parentLiTag.find("button").attr("onclick", "javascript:moveDashboard();").text("DASHBOARD");
 
-        var areaList = MenuView._model.getAreaList();
         if(areaList == null){
             console.error("[MenuView.setTopMenuBar][Dashboard Menu] load error - model is null");
         }else{
             for(var index in areaList){
                 var _area = areaList[index];
-                if (Number(_area["menuDepth"]) == 1) {
-                    var _childLiTag = childLiTag.clone();
-                    _childLiTag.attr("name", _area.areaId);
-                    _childLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');").text(_area['areaName']);
-                    _parentLiTag.find("> ul").append(_childLiTag);
+                var _childLiTag = childLiTag.clone();
+                _childLiTag.attr("name", _area['areaId']);
+                _childLiTag.find("button").text(_area['areaName']);
+                if(_area['childAreaIds']!=null){
+                    _childLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
                 }
+                _parentLiTag.find("> ul").append(_childLiTag);
             }
         }
         $("ul[menu_main]").append(_parentLiTag);

@@ -74,13 +74,4 @@ public interface AreaSvc {
      * @return
      */
     ModelAndView removeArea(HttpServletRequest request, Map<String, String> parameters);
-
-    /**
-     * 전체 구역 트리를 반환한다.
-     * @param parameters
-     * - 없음
-     * @return
-     */
-    List<AreaBean> areaTreeDataStructure(Map<String, String> parameters);
-
 }

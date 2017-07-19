@@ -7,10 +7,7 @@ import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.*;
-import com.icent.isaver.repository.dao.base.AlarmTargetDeviceConfigDao;
-import com.icent.isaver.repository.dao.base.DeviceDao;
-import com.icent.isaver.repository.dao.base.EventDao;
-import com.icent.isaver.repository.dao.base.LicenseDao;
+import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +66,7 @@ public class DeviceSvcImpl implements DeviceSvc {
     private DeviceDao deviceDao;
 
     @Inject
-    private AreaSvc areaSvc;
+    private AreaDao areaDao;
 
     @Inject
     private EventDao eventDao;
@@ -107,18 +104,15 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-
         List<DeviceBean> deviceTreeList = this.deviceTreeDataStructure(null);
-        ModelAndView areaModelAndView = areaSvc.findAllAreaTree(parameters);
-
-        List<AreaBean> areaTreeList = (List<AreaBean>) areaModelAndView.getModel().get("areaList");
+        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
         List<EventBean> events = eventDao.findListEvent(null);
 //        Integer totalCount = deviceDao.findCountDevice(parameters);
 //        AdminHelper.setPageTotalCount(parameters, totalCount);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceTreeList);
-        modelAndView.addObject("areas", areaTreeList);
+        modelAndView.addObject("areas", areaList);
         modelAndView.addObject("events", events);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
@@ -127,14 +121,12 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Override
     public ModelAndView findTbListDevice(Map<String, String> parameters) {
         List<DeviceBean> deviceList = deviceDao.findTbListDevice(parameters);
-        ModelAndView areaModelAndView = areaSvc.findAllAreaTree(parameters);
-
-        List<AreaBean> areaTreeList = (List<AreaBean>) areaModelAndView.getModel().get("areaList");
+        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
         List<EventBean> events = eventDao.findListEvent(null);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceList);
-        modelAndView.addObject("areas", areaTreeList);
+        modelAndView.addObject("areas", areaList);
         modelAndView.addObject("events", events);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

@@ -545,7 +545,9 @@
                     break;
                 case "remove" :
                     eventCntTag.text(--eventCnt==0?"":eventCnt);
-                    modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'remove');
+                    if(eventCnt==0){
+                        modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'remove');
+                    }
                     break;
             }
         }

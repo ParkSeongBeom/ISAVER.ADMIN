@@ -53,24 +53,19 @@ public class AreaSvcImpl implements AreaSvc {
 
     @Override
     public ModelAndView findAllAreaTree(Map<String, String> parameters) {
-
-        List<AreaBean> areaTreeList = this.areaTreeDataStructure(null);
+        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areaList", areaTreeList);
+        modelAndView.addObject("areaList", areaList);
         return modelAndView;
     }
 
     @Override
     public ModelAndView findListArea(Map<String, String> parameters) {
 //        List<AreaBean> areas = areaDao.findListArea(parameters);
-//        Integer totalCount = areaDao.findCountArea(parameters);
-
-//        AdminHelper.setPageTotalCount(parameters, totalCount);
-
-        List<AreaBean> areaTreeList = this.areaTreeDataStructure(null);
+        List<AreaBean> areas = areaDao.findAllAreaTree(null);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areas", areaTreeList);
+        modelAndView.addObject("areas", areas);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -199,58 +194,6 @@ public class AreaSvcImpl implements AreaSvc {
         return modelAndView;
     }
 
-    @Override
-    public List<AreaBean> areaTreeDataStructure(Map<String, String> parameters) {
-
-        //String orgRootId = this.orgRootId;
-
-        List<AreaBean> areaTreeList = areaDao.findAllAreaTree(null);
-
-        Integer loopLength = 0;
-
-        AreaTreeModel areaTreeModel = new AreaTreeModel();
-
-        //bean.setOrgId(orgRootId);
-        //bean.setDepth(0);
-        //organizationTreeModel.setOrgBean(bean);
-        //organizationTreeList.add(0, bean);
-        areaTreeModel.setAreaList(areaTreeList);
-
-        /* 구역 깊이 별 정렬 순서에 의한 정렬 시도*/
-        while (areaTreeModel.getTreeLength() != areaTreeModel.getAreaList().size() && areaTreeModel.getAreaList().size() != loopLength) {
-
-            List<AreaBean> syncOrgList = copyAreaListFunc(areaTreeModel.getAreaList());
-            for(AreaBean areaBean:syncOrgList) {
-
-                //if (orgBean.getOrgId().equals(orgRootId)) {
-                if (areaBean.getDepth() == 1) {
-                    Integer treeLength = areaTreeModel.getTreeLength();
-                    treeLength++;
-                    areaTreeModel.setTreeLength(treeLength);
-
-                    if (areaTreeModel.getAreaModelList() == null) {
-                        areaTreeModel.setAreaModelList(new ArrayList<AreaBean>());
-                    }
-
-                    areaTreeModel.getAreaModelList().add(areaBean);
-                    areaTreeModel.getAreaList().remove(areaBean);
-
-                } else {
-                    areaTreeModel.setAreaBean(areaBean);
-                    this.getParentNode(areaTreeModel);
-                }
-
-            }
-        }
-
-        /* 구역  모델에서 루트 ROOT KEY 삭제 */
-        //organizationTreeModel.getOrgModelList().remove(bean);
-        /* 초기화 */
-        areaTreeModel.setAreaBean(null);
-
-        return areaTreeModel.getAreaModelList();
-    }
-
     /**
      *
      * @return
@@ -265,111 +208,5 @@ public class AreaSvcImpl implements AreaSvc {
         String suffix = String.format("%04d", totalCount);
         sb.append(id).append(suffix);
         return sb.toString();
-    }
-
-
-    public AreaTreeModel getParentNode(AreaTreeModel areaTreeModel) {
-
-        Integer treeLength = areaTreeModel.getTreeLength();
-
-        List<AreaBean> syncAreaList = null;
-        if (areaTreeModel.getAreaModelList() != null) {
-            syncAreaList = copyAreaListFunc(areaTreeModel.getAreaModelList());
-        } else {
-            areaTreeModel.setAreaModelList(new ArrayList<AreaBean>());
-            syncAreaList = new ArrayList<>();
-        }
-
-        for (AreaBean areaBean : syncAreaList) {
-
-            if (areaBean.getAreaId().equals(areaTreeModel.getAreaBean().getParentAreaId())) {
-
-                areaTreeModel.getAreaModelList().add(areaTreeModel.getAreaBean());
-                areaTreeModel.getAreaList().remove(areaTreeModel.getAreaBean());
-                Collections.sort(syncAreaList, new NoAscCompare());
-
-                treeLength++;
-            }
-
-        }
-
-        areaTreeModel.setTreeLength(treeLength);
-        return areaTreeModel;
-    }
-
-    /**
-     * 숫자 오름차순 정렬 : 구역 SortOrder 기준 사용
-     * @author dhj
-     */
-    public static class NoAscCompare implements Comparator<AreaBean> {
-
-        /**
-         * 오름차순(ASC)
-         */
-        @Override
-        public int compare(AreaBean arg0, AreaBean arg1) {
-            return arg0.getDepth() < arg1.getDepth() ? -1 : arg0.getDepth() > arg1.getDepth() ? 1:0;
-        }
-
-    }
-
-    public static List<AreaBean> copyAreaListFunc(List<AreaBean> orgList) {
-
-        List<AreaBean> list = new ArrayList<>();
-
-        for(AreaBean bean : orgList) {
-            list.add(bean);
-        }
-        return list;
-    }
-
-    class AreaTreeModel {
-
-        List<AreaBean> areaModelList;
-        List<AreaBean> areaList;
-        AreaBean areaBean;
-
-        Integer treeLength = 0;
-        Integer loopLength = 0;
-
-        public List<AreaBean> getAreaModelList() {
-            return areaModelList;
-        }
-
-        public void setAreaModelList(List<AreaBean> areaModelList) {
-            this.areaModelList = areaModelList;
-        }
-
-        public List<AreaBean> getAreaList() {
-            return areaList;
-        }
-
-        public void setAreaList(List<AreaBean> areaList) {
-            this.areaList = areaList;
-        }
-
-        public AreaBean getAreaBean() {
-            return areaBean;
-        }
-
-        public void setAreaBean(AreaBean areaBean) {
-            this.areaBean = areaBean;
-        }
-
-        public Integer getTreeLength() {
-            return treeLength;
-        }
-
-        public void setTreeLength(Integer treeLength) {
-            this.treeLength = treeLength;
-        }
-
-        public Integer getLoopLength() {
-            return loopLength;
-        }
-
-        public void setLoopLength(Integer loopLength) {
-            this.loopLength = loopLength;
-        }
     }
 }
