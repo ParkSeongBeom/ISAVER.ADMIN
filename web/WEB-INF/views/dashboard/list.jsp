@@ -620,6 +620,7 @@
                     inoutTag.find("p[out]").text(outCount);
                     inoutTag.find("p[gap]").text(inCount-outCount);
                     if(_eqIndex==0){
+                        inoutTag.attr("startDatetime",inout['inoutStarttime']);
                         inoutTag.attr("endDatetime",inout['inoutEndtime']);
                         inoutTag.find("p[datetime]").text(new Date(inout['inoutStarttime']).format("HH:mm:ss") + " ~ ");
                     }else{
