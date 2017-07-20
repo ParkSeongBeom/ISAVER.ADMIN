@@ -7,6 +7,11 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="E00000" var="menuId"/>
 <c:set value="E00000" var="subMenuId"/>
+<!-- viewOnly 일경우 라이센스 관리, @author psb -->
+<c:if test="${viewOnly == true}">
+    <c:set value="K00000" var="menuId"/>
+    <c:set value="E00000" var="subMenuId"/>
+</c:if>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
@@ -14,7 +19,14 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.license"/></h3>
+        <h3 class="1depth_title">
+            <c:if test="${viewOnly == false}">
+                <spring:message code="common.title.license"/>
+            </c:if>
+            <c:if test="${viewOnly == true}">
+                <spring:message code="common.title.licenseView"/>
+            </c:if>
+        </h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -25,14 +37,13 @@
     <form id="licenseForm" method="POST">
         <input type="hidden" name="pageNumber">
 
-
         <article class="search_area">
             <div class="search_contents">
                 <p class="itype_01">
                     <span>License Key</span>
-                        <span>
-                            <input type="text" name="licenseKey" value="${paramBean.licenseKey}"/>
-                        </span>
+                    <span>
+                        <input type="text" name="licenseKey" value="${paramBean.licenseKey}"/>
+                    </span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="license.column.deviceType" /></span>
@@ -40,12 +51,12 @@
                 </p>
                 <p class="itype_04">
                     <span><spring:message code="license.column.expireDate"/></span>
-                        <span class="plable04">
-                            <input type="text" name="expireStartDate" value="${paramBean.expireStartDate}">
-                            <em>~</em>
-                            <input type="text" name="expireEndDate" value="${paramBean.expireEndDate}">
+                    <span class="plable04">
+                        <input type="text" name="expireStartDate" value="${paramBean.expireStartDate}">
+                        <em>~</em>
+                        <input type="text" name="expireEndDate" value="${paramBean.expireEndDate}">
 
-                        </span>
+                    </span>
                 </p>
             </div>
             <div class="search_btn">

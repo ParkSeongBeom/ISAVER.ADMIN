@@ -190,7 +190,7 @@ function MenuView(model) {
                     _childLiTag.find("button").text(_menu['menuName']);
 
                     if(_menu.menuPath!="/"){
-                        _childLiTag.find("button").attr("onclick", "javascript:location.href = '" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
+                        _childLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
                     }
 
                     if (Number(_menu["menuDepth"]) == 1) {
@@ -199,6 +199,9 @@ function MenuView(model) {
                         addMenuCnt++;
                     } else if (Number(_menu["menuDepth"]) > 1){
                         if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").length>0){
+                            if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul > li").length==0){
+                                _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
+                            }
                             _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").append(_childLiTag);
                             addMenuCnt++;
                         }else{
