@@ -69,7 +69,7 @@ public class CriticalSvcImpl implements CriticalSvc {
 
         CriticalBean critical = criticalDao.findByCritical(parameters);
         List<CriticalInfoBean> criticalInfos = criticalDao.findListCriticalInfo(parameters);
-        List<EventBean> events = eventDao.findListNotInCriticalList();
+        List<EventBean> events = eventDao.findListNotInCriticalList(parameters);
 
         modelAndView.addObject("critical", critical);
 

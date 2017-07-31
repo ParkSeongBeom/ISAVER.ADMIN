@@ -361,7 +361,7 @@
             var range_max = $.trim($("#first_range_tr").find("input:eq(1)").val());
             var range_min = $.trim($("#first_range_tr").find("input:eq(0)").val());
 
-            if (range_max < range_min) {
+            if (Number(range_max) < Number(range_min)) {
                 alertFlag = true;
             }
 
@@ -379,7 +379,7 @@
             var range_max = $(this).find("input:eq(1)").val();
             var range_level = $(this).find("select").val();
 
-            if (range_max < range_min) {
+            if (Number(range_max) < Number(range_min)) {
                 alertFlag = true;
             }
 
@@ -408,6 +408,7 @@
 //                debugger;
             }
 
+            console.log(value, _copyArray);
             for (var ii = 0; ii < _copyArray.length; ii ++) {
 
                 var item = _copyArray[ii];
