@@ -172,9 +172,9 @@ function DeviceCtrl(model) {
             }
 
             if ($("select[name=deviceCode]").val() == "DEV010") {
-                if ($("select[name='linkUrl']").val().trim().length == 0) {
+                if ($("input[name='linkUrl']").val().trim().length == 0) {
                     alert( messageConfig['emptyLinkUrl'] );
-                    $("select[name=linkUrl]").focus();
+                    $("input[name=linkUrl]").focus();
                     return;
                 }
             }
@@ -235,9 +235,9 @@ function DeviceCtrl(model) {
             }
 
             if ($("select[name=deviceCode]").val() == "DEV010") {
-                if ($("select[name='linkUrl']").val().trim().length == 0) {
+                if ($("input[name='linkUrl']").val().trim().length == 0) {
                     alert( messageConfig['emptyLinkUrl'] );
-                    $("select[name=linkUrl]").focus();
+                    $("input[name=linkUrl]").focus();
                     return;
                 }
             }
