@@ -83,7 +83,7 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Override
     public ModelAndView findAllDeviceTree(Map<String, String> parameters) {
 
-        List<DeviceBean> deviceTreeList = this.deviceTreeDataStructure(null);
+        List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("deviceList", deviceTreeList);
         return modelAndView;
@@ -104,7 +104,7 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-        List<DeviceBean> deviceTreeList = this.deviceTreeDataStructure(null);
+        List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
         List<AreaBean> areaList = areaDao.findAllAreaTree(null);
         List<EventBean> events = eventDao.findListEvent(null);
 //        Integer totalCount = deviceDao.findCountDevice(parameters);
@@ -335,58 +335,6 @@ public class DeviceSvcImpl implements DeviceSvc {
             modelAndView.addObject("provisionDeviceId", provisionDeviceId);
         }
         return modelAndView;
-    }
-
-    @Override
-    public List<DeviceBean> deviceTreeDataStructure(Map<String, String> parameters) {
-
-        //String orgRootId = this.orgRootId;
-
-        List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
-
-        Integer loopLength = 0;
-
-        DeviceTreeModel deviceTreeModel = new DeviceTreeModel();
-
-        //bean.setOrgId(orgRootId);
-        //bean.setDepth(0);
-        //organizationTreeModel.setOrgBean(bean);
-        //organizationTreeList.add(0, bean);
-        deviceTreeModel.setDeviceList(deviceTreeList);
-
-        /* 구역 깊이 별 정렬 순서에 의한 정렬 시도*/
-        while (deviceTreeModel.getTreeLength() != deviceTreeModel.getDeviceList().size() && deviceTreeModel.getDeviceList().size() != loopLength) {
-
-            List<DeviceBean> syncOrgList = copyDeviceListFunc(deviceTreeModel.getDeviceList());
-            for(DeviceBean deviceBean:syncOrgList) {
-
-                //if (orgBean.getOrgId().equals(orgRootId)) {
-                if (deviceBean.getDepth() == 1) {
-                    Integer treeLength = deviceTreeModel.getTreeLength();
-                    treeLength++;
-                    deviceTreeModel.setTreeLength(treeLength);
-
-                    if (deviceTreeModel.getDeviceModelList() == null) {
-                        deviceTreeModel.setDeviceModelList(new ArrayList<DeviceBean>());
-                    }
-
-                    deviceTreeModel.getDeviceModelList().add(deviceBean);
-                    deviceTreeModel.getDeviceList().remove(deviceBean);
-
-                } else {
-                    deviceTreeModel.setDeviceBean(deviceBean);
-                    this.getParentNode(deviceTreeModel);
-                }
-
-            }
-        }
-
-        /* 구역  모델에서 루트 ROOT KEY 삭제 */
-        //organizationTreeModel.getOrgModelList().remove(bean);
-        /* 초기화 */
-        deviceTreeModel.setDeviceBean(null);
-
-        return deviceTreeModel.getDeviceModelList();
     }
 
     @Override

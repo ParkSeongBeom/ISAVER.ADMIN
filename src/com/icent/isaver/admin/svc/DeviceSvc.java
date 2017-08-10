@@ -99,14 +99,6 @@ public interface DeviceSvc {
     ModelAndView removeDevice(HttpServletRequest request, Map<String, String> parameters);
 
     /**
-     * 전체 장치 트리를 반환한다.
-     * @param parameters
-     * - 없음
-     * @return
-     */
-    List<DeviceBean> deviceTreeDataStructure(Map<String, String> parameters);
-
-    /**
      * 알림 장치 매핑 목록을 가져온다.
      * @param parameters
      * @return
