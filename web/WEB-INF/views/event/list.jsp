@@ -9,15 +9,16 @@
 <c:set value="B00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
-<aside class="admin_popup ap_type01 code_select_popup" style="display: none;">
-    <section class="layer_wrap i_type03">
-        <article class="layer_area">
-            <div class="layer_header">
-                대응목록
-                <button class="ipop_x" onclick="javascript:popup_cancelButton();return false;"></button>
-            </div>
-            <div class="layer_contents">
-                <article class="table_area">
+
+<div class="popupbase admin_popup code_select_popup">
+    <div>
+        <div>
+            <header>
+                <h2>대응목록</h2>
+                <button onclick="javascript:popup_cancelButton(); return false;"></button>
+            </header>
+            <article>
+                <div class="table_area">
                     <div class="table_contents">
                         <!-- 입력 테이블 Start -->
                         <table id="codeTable" class="t_defalut t_type01 t_style02">
@@ -44,17 +45,15 @@
                             </tbody>
                         </table>
                     </div>
-                </article>
-                <div class="table_title_area">
-                    <div class="table_btn_set">
-                        <button class="btn btype01 bstyle03" id="actionDetailMoveButton">자세히 보기</button>
-                    </div>
                 </div>
-            </div>
-        </article>
-    </section>
-    <div class="layer_popupbg ipop_close"></div>
-</aside>
+            </article>
+            <footer>
+                <button class="btn" id="actionDetailMoveButton">자세히 보기</button>
+            </footer>
+        </div>
+    </div>
+    <div class="bg ipop_close" onclick="popup_cancelButton();"></div>
+</div>
 
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
@@ -104,7 +103,7 @@
             <h4></h4>
             <div class="table_btn_set">
                 <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
-                <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>
+                <%--<button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>--%>
             </div>
         </div>
 

@@ -22,16 +22,16 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <aside class="admin_popup use_device_popup">
-        <section class="layer_wrap i_type05">
-            <article class="layer_area">
-                <div class="layer_header">
-                    <spring:message code="file.column.useList"/>
-                    <button class="ipop_x" onclick="closePopup();"></button>
-                </div>
-                <div class="layer_contents">
+    <div class="popupbase admin_popup use_device_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="file.column.useList"/></h2>
+                    <button onclick="javascript:closePopup();"></button>
+                </header>
+                <article>
                     <input type="hidden" name="pageNumber">
-                    <article class="search_area">
+                    <div class="search_area">
                         <div class="search_contents">
                             <!-- 일반 input 폼 공통 -->
                             <p class="itype_01">
@@ -42,11 +42,10 @@
                             </p>
                         </div>
                         <div class="search_btn">
-                            <button onclick="javascript:loadUseDevice(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                            <button onclick="javascript:loadUseDevice(); return false;" class="btn"><spring:message code="common.button.search"/></button>
                         </div>
-                    </article>
-                    <%--</form>--%>
-                    <article class="table_area">
+                    </div>
+                    <div class="table_area">
                         <div class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table id="actionList" class="t_defalut t_type01 t_style02">
@@ -59,30 +58,28 @@
                                     <col style="width: 20%;">
                                 </colgroup>
                                 <thead>
-                                    <tr>
-                                        <th class="t_center"></th>
-                                        <th><spring:message code="file.column.deviceId"/></th>
-                                        <th><spring:message code="file.column.deviceName"/></th>
-                                        <th><spring:message code="file.column.areaName"/></th>
-                                        <th><spring:message code="file.column.insertUserName"/></th>
-                                        <th><spring:message code="file.column.insertDatetime"/></th>
-                                    </tr>
+                                <tr>
+                                    <th class="t_center"></th>
+                                    <th><spring:message code="file.column.deviceId"/></th>
+                                    <th><spring:message code="file.column.deviceName"/></th>
+                                    <th><spring:message code="file.column.areaName"/></th>
+                                    <th><spring:message code="file.column.insertUserName"/></th>
+                                    <th><spring:message code="file.column.insertDatetime"/></th>
+                                </tr>
                                 </thead>
                                 <tbody id="deviceList">
                                 </tbody>
                             </table>
                         </div>
-                    </article>
-                    <div class="table_title_area">
-                        <div class="table_btn_set">
-                            <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup(); return false;"><spring:message code="common.button.cancel"/></button>
-                        </div>
                     </div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="closePopup();"></div>
-    </aside>
+                </article>
+                <footer>
+                    <button class="btn" onclick="javascript:closePopup(); return false;"><spring:message code="common.button.cancel"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closePopup();"></div>
+    </div>
 
     <form id="fileForm" method="POST">
         <input type="hidden" name="fileId" value="${file.fileId}" />
@@ -113,7 +110,7 @@
                     <tr>
                         <th><spring:message code="file.column.description"/></th>
                         <td colspan="3">
-                            <input type="text" name="description" value="${file.description}"/>
+                            <textarea name="description">${file.description}</textarea>
                         </td>
                     </tr>
                     <tr>
@@ -329,11 +326,11 @@
     }
 
     function openPopup(){
-        $(".use_device_popup").show();
+        $(".use_device_popup").fadeIn();
     }
 
     function closePopup(){
-        $(".use_device_popup").hide();
+        $(".use_device_popup").fadeOut();
     }
 
     function fileListRender(list){

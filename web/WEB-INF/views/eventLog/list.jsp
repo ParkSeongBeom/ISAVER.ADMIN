@@ -22,20 +22,22 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <aside class="admin_popup eventdetail_popup">
-        <section class="layer_wrap i_type07">
-            <article class="layer_area">
-                <div class="layer_header">
-                    <spring:message code="eventlog.column.eventCancelDesc"/>
-                    <button class="ipop_x" onclick="closeEventCancelDescPopup();"></button>
-                </div>
-                <div class="layer_contents">
-                    <div class="editable02" id="eventLogCancelDescText"></div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="closeEventCancelDescPopup();"></div>
-    </aside>
+    <div class="popupbase admin_popup eventdetail_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="eventlog.column.eventCancelDesc"/></h2>
+                    <button onclick="javascript:closeEventCancelDescPopup();"></button>
+                </header>
+                <article>
+                    <div class="search_area">
+                        <div class="editable02" id="eventLogCancelDescText"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closeEventCancelDescPopup();"></div>
+    </div>
 
     <form id="eventLogForm" method="POST">
         <input type="hidden" name="pageNumber"/>
@@ -298,7 +300,7 @@
         var eventLogCancelDescText = $(_this).text();
         if(eventLogCancelDescText!="" && eventLogCancelDescText!=null){
             $("#eventLogCancelDescText").text(eventLogCancelDescText);
-            $(".eventdetail_popup").show();
+            $(".eventdetail_popup").fadeIn();
         }
     }
 
@@ -308,6 +310,6 @@
      */
     function closeEventCancelDescPopup(){
         $("#eventLogCancelDescText").text("");
-        $(".eventdetail_popup").hide();
+        $(".eventdetail_popup").fadeOut();
     }
 </script>

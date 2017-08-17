@@ -10,14 +10,15 @@
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <!-- 알림 장치 맵핑 팝업-->
-<aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">
-    <section class="layer_wrap i_type04">
-        <article class="layer_area">
-            <div class="layer_header">
-                알림 전송 이력 상세
-            </div>
-            <div class="layer_contents">
-                <article class="table_area">
+<div class="popupbase admin_popup code_select_popup">
+    <div>
+        <div>
+            <header>
+                <h2>알림 전송 이력 상세</h2>
+                <button onclick="javascript:popup_cancelButton(); return false;"></button>
+            </header>
+            <article>
+                <div class="table_area">
                     <div class="table_contents">
                         <!-- 입력 테이블 Start -->
                         <table id="actionList" class="t_defalut t_type01 t_style02">
@@ -43,20 +44,15 @@
                             </tbody>
                         </table>
                     </div>
-                </article>
-                <div class="table_title_area">
-                    <div class="table_btn_set">
-                        <%--<button class="btn btype01 bstyle03 c_ok" name="" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;">저장</button>--%>
-                        <button class="btn btype01 bstyle03 c_cancle" name="" onclick="javascript:popup_cancelButton(); return false;">취소</button>
-                        <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
-                        <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
-                    </div>
                 </div>
-            </div>
-        </article>
-    </section>
-    <div class="layer_popupbg ipop_close"></div>
-</aside>
+            </article>
+            <footer>
+                <button class="btn" onclick="javascript:popup_cancelButton(); return false;">취소</button>
+            </footer>
+        </div>
+    </div>
+    <div class="bg ipop_close" onclick="popup_cancelButton();"></div>
+</div>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">

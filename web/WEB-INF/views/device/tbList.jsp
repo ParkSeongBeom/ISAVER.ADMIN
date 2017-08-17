@@ -20,15 +20,15 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <aside class="admin_popup device_detail_popup">
-        <section class="layer_wrap i_type04">
-            <article class="layer_area">
-                <div class="layer_header">
-                    <spring:message code="common.title.deviceDetail"/>
-                    <button class="ipop_x" onclick="closePopup();"></button>
-                </div>
-                <div class="layer_contents">
-                    <article class="search_area">
+    <div class="popupbase admin_popup device_detail_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="common.title.deviceDetail"/></h2>
+                    <button onclick="javascript:closePopup();"></button>
+                </header>
+                <article>
+                    <div class="search_area">
                         <div class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table class="t_defalut t_type02 t_style03">
@@ -151,12 +151,14 @@
                             </table>
                             <!-- 입력 테이블 End -->
                         </div>
-                    </article>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="closePopup();"></div>
-    </aside>
+                    </div>
+                    <div class="table_area">
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closePopup();"></div>
+    </div>
 
     <form id="deviceForm" method="POST">
         <article class="search_area">

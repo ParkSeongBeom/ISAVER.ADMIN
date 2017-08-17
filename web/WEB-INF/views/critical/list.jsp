@@ -9,52 +9,6 @@
 <c:set value="J00000" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
-<%--<aside class="admin_popup ap_type01 code_select_popup" style="display: none;">--%>
-    <%--<section class="layer_wrap i_type03">--%>
-        <%--<article class="layer_area">--%>
-            <%--<div class="layer_header">--%>
-                <%--대응목록--%>
-                <%--<button class="ipop_x" onclick="javascript:popup_cancelButton();return false;"></button>--%>
-            <%--</div>--%>
-            <%--<div class="layer_contents">--%>
-                <%--<article class="table_area">--%>
-                    <%--<div class="table_contents">--%>
-                        <%--<!-- 입력 테이블 Start -->--%>
-                        <%--<table id="codeTable" class="t_defalut t_type01 t_style02">--%>
-                            <%--<colgroup>--%>
-                                <%--<col style="width: 15%;">--%>
-                                <%--<col style="width: 20%;">--%>
-                                <%--<col style="width: *%;">--%>
-                            <%--</colgroup>--%>
-                            <%--<thead>--%>
-                            <%--<tr>--%>
-                                <%--<th>대응 ID</th>--%>
-                                <%--<th>대응 구분</th>--%>
-                                <%--<th>대응 방법</th>--%>
-                            <%--</tr>--%>
-                            <%--</thead>--%>
-                            <%--<tbody>--%>
-                            <%--<tr>--%>
-                                <%--<td title="" name="action_id"></td>--%>
-                                <%--<td title="" name="action_code"></td>--%>
-                                <%--<td title="">--%>
-                                    <%--<p class="editable01" name="action_desc"></p>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                            <%--</tbody>--%>
-                        <%--</table>--%>
-                    <%--</div>--%>
-                <%--</article>--%>
-                <%--<div class="table_title_area">--%>
-                    <%--<div class="table_btn_set">--%>
-                        <%--<button class="btn btype01 bstyle03" id="actionDetailMoveButton">자세히 보기</button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</article>--%>
-    <%--</section>--%>
-    <%--<div class="layer_popupbg ipop_close"></div>--%>
-<%--</aside>--%>
 
 <section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->

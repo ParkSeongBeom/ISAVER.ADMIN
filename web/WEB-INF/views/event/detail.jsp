@@ -9,45 +9,35 @@
 <c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 
-<aside class="admin_popup ipop_type01 code_select_popup" style="display: none;">
-    <section class="layer_wrap i_type04">
-        <article class="layer_area">
-            <div class="layer_header">
-                대응목록
-            </div>
-            <div class="layer_contents">
-                <%--<form id="userForm" method="POST">--%>
-                    <input type="hidden" name="pageNumber">
-                    <article class="search_area">
-                        <div class="search_contents">
-                            <!-- 일반 input 폼 공통 -->
-                            <p class="itype_01">
-                                <span>ID</span>
-                                    <span>
-                                        <input type="text" name="pop_action_id" >
-                                    </span>
-                            </p>
-                            <p class="itype_01">
-                                <span>구분</span>
-                                    <span>
-
-
-                                        <isaver:codeSelectBox groupCodeId="ACT" codeId="" htmlTagId="pop_action_code"/>
-                                        <%--<select name="pop_action_code">--%>
-                                            <%--<option value="">전체</option>--%>
-                                            <%--<option value="ACT001">크레인 충돌</option>--%>
-                                            <%--<option value="ACT002">작업자 쓰러짐</option>--%>
-                                            <%--<option value="ACT003">위험지역</option>--%>
-                                        <%--</select>--%>
-                                    </span>
-                            </p>
-                        </div>
-                        <div class="search_btn">
-                            <button onclick="javascript:actionListLoad(); return false;" class="btn bstyle01 btype01">조회</button>
-                        </div>
-                    </article>
-                <%--</form>--%>
-                <article class="table_area">
+<div class="popupbase admin_popup code_select_popup">
+    <div>
+        <div>
+            <header>
+                <h2>대응목록</h2>
+            </header>
+            <article>
+                <input type="hidden" name="pageNumber">
+                <div class="search_area">
+                    <div class="search_contents">
+                        <!-- 일반 input 폼 공통 -->
+                        <p class="itype_01">
+                            <span>ID</span>
+                            <span>
+                                <input type="text" name="pop_action_id" >
+                            </span>
+                        </p>
+                        <p class="itype_01">
+                            <span>구분</span>
+                            <span>
+                                <isaver:codeSelectBox groupCodeId="ACT" codeId="" htmlTagId="pop_action_code"/>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="search_btn">
+                        <button onclick="javascript:actionListLoad(); return false;" class="btn">조회</button>
+                    </div>
+                </div>
+                <div class="table_area">
                     <div class="table_contents">
                         <!-- 입력 테이블 Start -->
                         <table id="actionList" class="t_defalut t_type01 t_style02">
@@ -99,20 +89,16 @@
                             </tbody>
                         </table>
                     </div>
-                </article>
-                <div class="table_title_area">
-                    <div class="table_btn_set">
-                        <button class="btn btype01 bstyle03 c_ok" name="" onclick="javascript:popup_applyButton();return false;">확인</button>
-                        <button class="btn btype01 bstyle03 c_cancle" name="" onclick="javascript:popup_cancelButton(); return false;">취소</button>
-                            <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
-                            <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
-                    </div>
                 </div>
-            </div>
-        </article>
-    </section>
-    <div class="layer_popupbg ipop_close"></div>
-</aside>
+            </article>
+            <footer>
+                <button class="btn" onclick="javascript:popup_applyButton(); return false;"><spring:message code="common.button.confirm"/></button>
+                <button class="btn" onclick="javascript:popup_cancelButton(); return false;"><spring:message code="common.button.cancel"/></button>
+            </footer>
+        </div>
+    </div>
+    <div class="bg ipop_close" onclick="popup_cancelButton();"></div>
+</div>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
@@ -182,13 +168,13 @@
 
             <div class="table_title_area">
                 <div class="table_btn_set">
-                    <c:if test="${empty event}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:addEvent(); return false;"><spring:message code="common.button.add"/> </button>
-                    </c:if>
-                    <c:if test="${!empty event}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeEvent(); return false;"><spring:message code="common.button.remove"/> </button>
-                    </c:if>
+                    <%--<c:if test="${empty event}">--%>
+                        <%--<button class="btn btype01 bstyle03" onclick="javascript:addEvent(); return false;"><spring:message code="common.button.add"/> </button>--%>
+                    <%--</c:if>--%>
+                    <%--<c:if test="${!empty event}">--%>
+                        <%--<button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>--%>
+                        <%--<button class="btn btype01 bstyle03" onclick="javascript:removeEvent(); return false;"><spring:message code="common.button.remove"/> </button>--%>
+                    <%--</c:if>--%>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
                 </div>
             </div>

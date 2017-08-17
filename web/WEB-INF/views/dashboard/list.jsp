@@ -123,7 +123,7 @@
                                 <div class="device_popup">
                                     <ul>
                                         <c:forEach var="device" items="${childArea.devices}">
-                                            <li <c:if test="${device.linkUrl!=null}">class="cctv_view"</c:if>>
+                                            <li <c:if test="${device.deviceCode=='DEV010'}">class="cctv_view"</c:if>>
                                                 ${device.deviceCodeName}
                                                 <c:if test="${device.linkUrl!=null}">
                                                     <button href="#" onclick="javascript:cctvOpen('${device.linkUrl}'); event.stopPropagation();"></button>
@@ -140,7 +140,7 @@
         </c:choose>
     </section>
 
-    <div class="iocount_popup">
+    <div class="popupbase iocount_popup">
         <div>
             <div>
                 <header>

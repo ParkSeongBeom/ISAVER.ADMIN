@@ -382,7 +382,7 @@ function DeviceCtrl(model) {
      * 알림 대상 전송 IVAS->SIOC
      */
     DeviceCtrl.alarmListLoadFunc = function() {
-        openPopup('code_select_popup');
+        openPopup('list_popup');
         DeviceCtrl.alarmDeviceLoadFunc();
     };
 

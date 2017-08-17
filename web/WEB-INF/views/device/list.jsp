@@ -24,17 +24,16 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <!-- 알림 장치 맵핑 팝업-->
-    <aside class="admin_popup ipop_type01 code_select_popup">
-        <section class="layer_wrap i_type04">
-            <article class="layer_area">
-                <div class="layer_header">
-                    알림 대상 장치 목록
-                    <button class="ipop_x" onclick="closePopup('code_select_popup');"></button>
-                </div>
-                <div class="layer_contents">
-                    <%--<form id="userForm" method="POST">--%>
+    <div class="popupbase admin_popup list_popup">
+        <div>
+            <div>
+                <header>
+                    <h2>알림 대상 장치 목록</h2>
+                    <button onclick="javascript:closePopup('list_popup');"></button>
+                </header>
+                <article>
                     <input type="hidden" name="pageNumber">
-                    <article class="search_area">
+                    <div class="search_area">
                         <div class="search_contents">
                             <!-- 일반 input 폼 공통 -->
                             <p class="itype_01">
@@ -57,11 +56,10 @@
                             </p>
                         </div>
                         <div class="search_btn">
-                            <button onclick="javascript:deviceCtrl.alarmDeviceLoadFunc(); return false;" class="btn bstyle01 btype01">조회</button>
+                            <button onclick="javascript:deviceCtrl.alarmDeviceLoadFunc(); return false;" class="btn">조회</button>
                         </div>
-                    </article>
-                    <%--</form>--%>
-                    <article class="table_area">
+                    </div>
+                    <div class="table_area">
                         <div class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table id="actionList" class="t_defalut t_type01 t_style02">
@@ -87,31 +85,27 @@
                                 </tbody>
                             </table>
                         </div>
-                    </article>
-                    <div class="table_title_area">
-                        <div class="table_btn_set">
-                            <button class="btn btype01 bstyle03 c_ok" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;"><spring:message code="common.button.save"/></button>
-                            <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup('code_select_popup'); return false;"><spring:message code="common.button.cancel"/></button>
-                            <%--<button class="btn btype01 bstyle03 c_ok" onclick="javascript:alert(0); return false;" >확인</button>--%>
-                            <%--<button class="btn btype01 bstyle03 c_cancle"  onclick="javascript:alert(1); return false;">취소</button>--%>
-                        </div>
                     </div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="closePopup('code_select_popup');"></div>
-    </aside>
+                </article>
+                <footer>
+                    <button class="btn btype01 bstyle03 c_ok" onclick="javascript:deviceCtrl.appendAlarmDeviceFunc();return false;"><spring:message code="common.button.save"/></button>
+                    <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup('list_popup'); return false;"><spring:message code="common.button.cancel"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closePopup('list_popup');"></div>
+    </div>
 
-    <aside class="admin_popup file_popup">
-        <section class="layer_wrap i_type05">
-            <article class="layer_area">
-                <div class="layer_header">
-                    <spring:message code="device.column.fileList"/>
-                    <button class="ipop_x" onclick="closePopup('file_popup');"></button>
-                </div>
-                <div class="layer_contents">
+    <div class="popupbase admin_popup file_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="device.column.fileList"/></h2>
+                    <button onclick="closePopup('file_popup');"></button>
+                </header>
+                <article>
                     <input type="hidden" name="pageNumber">
-                    <article class="search_area">
+                    <div class="search_area">
                         <div class="search_contents">
                             <!-- 일반 input 폼 공통 -->
                             <p class="itype_01">
@@ -128,11 +122,10 @@
                             </p>
                         </div>
                         <div class="search_btn">
-                            <button onclick="javascript:deviceCtrl.fileLoadFunc(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                            <button onclick="javascript:deviceCtrl.fileLoadFunc(); return false;" class="btn"><spring:message code="common.button.search"/></button>
                         </div>
-                    </article>
-                    <%--</form>--%>
-                    <article class="table_area">
+                    </div>
+                    <div class="table_area">
                         <div class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table class="t_defalut t_type01 t_style02">
@@ -158,17 +151,15 @@
                                 </tbody>
                             </table>
                         </div>
-                    </article>
-                    <div class="table_title_area">
-                        <div class="table_btn_set">
-                            <button class="btn btype01 bstyle03 c_cancle" onclick="javascript:closePopup('file_popup'); return false;">닫기</button>
-                        </div>
                     </div>
-                </div>
-            </article>
-        </section>
-        <div class="layer_popupbg ipop_close" onclick="closePopup('file_popup');"></div>
-    </aside>
+                </article>
+                <footer>
+                    <button class="btn" onclick="javascript:closePopup('file_popup'); return false;">닫기</button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closePopup('file_popup');"></div>
+    </div>
 
     <!-- 트리 영역 Start -->
     <article class="table_area tree_table">
@@ -532,12 +523,12 @@
 
     /* 팝업 보이기 버튼 */
     function openPopup(className) {
-        $("."+className).show();
+        $("."+className).fadeIn();
     }
 
     /* 팝업 취소 버튼 */
     function closePopup(className) {
-        $("."+className).hide();
+        $("."+className).fadeOut();
     }
 
     /* 알림 장치 목록 조회*/

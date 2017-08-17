@@ -72,9 +72,9 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
+                    <col style="width: 10%;" />
                     <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 15%;" />
+                    <col style="width: *;" />
                 </colgroup>
                 <thead>
                 <tr>

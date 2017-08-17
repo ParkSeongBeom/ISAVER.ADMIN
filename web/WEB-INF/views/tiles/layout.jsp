@@ -856,7 +856,7 @@
     <!-- 알림목록 영역 End -->
 
     <!-- 토스트 영역 Start -->
-    <aside class="toast_popup on"></aside>
+    <div class="toast_popup on"></div>
     <!-- 토스트 영역 End -->
 
     <!-- 개인상세 정보 팝업-->
