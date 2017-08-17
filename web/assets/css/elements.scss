@@ -561,7 +561,7 @@ div.tablebase, .d_defalut {display: inline-block;}
   td {
 
     & > input, & > select, & > div[contenteditable], & > textarea , & > .infile_set,
-    & > .timepicker, & > .in-timepicker, & > .filter_set {
+    & > .timepicker, & > .in-timepicker, & > .filter_set, .itype_04 {
       float:left; width:calc(100% + 20px); width:-webkit-calc(100% + 20px); height:100%;
       border-color:transparent; margin:0 0 0 -10px;
     }
@@ -602,13 +602,12 @@ div.tablebase, .d_defalut {display: inline-block;}
 
       .lic_set, .level_set > div {@include flexbase;  @include flex-align-items-center;}
       .lic_set {
-
         input, select {width:100%;border-width:0 1px 0 1px; }
         & > input {
           &:nth-of-type(2) {border-width:0 1px 0 0;}
           &:last-of-type {border-width:0 0 0 1px;}
         }
-      }
+      } // 라이센스관리 등록에서 라이센스키 입력 부분
 
       .level_set {
         & > div {
@@ -626,9 +625,17 @@ div.tablebase, .d_defalut {display: inline-block;}
           }
 
         }
-      }
-
+      } // 임계치 관리 등록에서 임계치 범위 설정 부분
     }
+
+
+    .itype_04 {
+      @include flexbase;
+      background-color: $color-white-01;
+      input, button { border:none; height:100%; }
+      input  {order:2;}
+      button {order:1; width:50px;}
+    } //라이센스관리 등록에서 만료일 입력 부분
   }
 
   //div형 테이블

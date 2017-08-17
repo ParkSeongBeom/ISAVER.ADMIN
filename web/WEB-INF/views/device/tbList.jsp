@@ -28,7 +28,7 @@
                     <button onclick="javascript:closePopup();"></button>
                 </header>
                 <article>
-                    <div class="search_area">
+                    <div class="table_area">
                         <div class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table class="t_defalut t_type02 t_style03">

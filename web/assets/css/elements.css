@@ -980,7 +980,7 @@ div.tablebase, .d_defalut {
       border-color: #e05f2d; }
   .tablebase td, .tablebase > div > div > *, .t_defalut td, .t_defalut > div > div > *, .d_defalut td, .d_defalut > div > div > * {
     border-color: #bcbcbc; }
-  .tablebase td > input, .tablebase td > select, .tablebase td > div[contenteditable], .tablebase td > textarea, .tablebase td > .infile_set, .tablebase td > .timepicker, .tablebase td > .in-timepicker, .tablebase td > .filter_set, .t_defalut td > input, .t_defalut td > select, .t_defalut td > div[contenteditable], .t_defalut td > textarea, .t_defalut td > .infile_set, .t_defalut td > .timepicker, .t_defalut td > .in-timepicker, .t_defalut td > .filter_set, .d_defalut td > input, .d_defalut td > select, .d_defalut td > div[contenteditable], .d_defalut td > textarea, .d_defalut td > .infile_set, .d_defalut td > .timepicker, .d_defalut td > .in-timepicker, .d_defalut td > .filter_set {
+  .tablebase td > input, .tablebase td > select, .tablebase td > div[contenteditable], .tablebase td > textarea, .tablebase td > .infile_set, .tablebase td > .timepicker, .tablebase td > .in-timepicker, .tablebase td > .filter_set, .tablebase td .itype_04, .t_defalut td > input, .t_defalut td > select, .t_defalut td > div[contenteditable], .t_defalut td > textarea, .t_defalut td > .infile_set, .t_defalut td > .timepicker, .t_defalut td > .in-timepicker, .t_defalut td > .filter_set, .t_defalut td .itype_04, .d_defalut td > input, .d_defalut td > select, .d_defalut td > div[contenteditable], .d_defalut td > textarea, .d_defalut td > .infile_set, .d_defalut td > .timepicker, .d_defalut td > .in-timepicker, .d_defalut td > .filter_set, .d_defalut td .itype_04 {
     float: left;
     width: calc(100% + 20px);
     width: -webkit-calc(100% + 20px);
@@ -1067,6 +1067,23 @@ div.tablebase, .d_defalut {
             content: "삭제"; }
         .tablebase td.intable .level_set > div button.addbtn:before, .t_defalut td.intable .level_set > div button.addbtn:before, .d_defalut td.intable .level_set > div button.addbtn:before {
           content: "추가"; }
+  .tablebase td .itype_04, .t_defalut td .itype_04, .d_defalut td .itype_04 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    background-color: #fff; }
+    .tablebase td .itype_04 input, .tablebase td .itype_04 button, .t_defalut td .itype_04 input, .t_defalut td .itype_04 button, .d_defalut td .itype_04 input, .d_defalut td .itype_04 button {
+      border: none;
+      height: 100%; }
+    .tablebase td .itype_04 input, .t_defalut td .itype_04 input, .d_defalut td .itype_04 input {
+      order: 2; }
+    .tablebase td .itype_04 button, .t_defalut td .itype_04 button, .d_defalut td .itype_04 button {
+      order: 1;
+      width: 50px; }
   .tablebase > div > div, .t_defalut > div > div, .d_defalut > div > div {
     display: -webkit-box;
     display: -moz-box;

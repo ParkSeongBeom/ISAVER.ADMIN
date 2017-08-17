@@ -807,11 +807,8 @@ menu {
         -webkit-box-flex: 0;
         -ms-flex: 1 0 40px; }
       .db_area section.db_list_box > div > select {
-        flex: 0 1 100%;
-        -webkit-flex: 0 1 100%;
-        flexbox: 0 1 100%;
-        -webkit-box-flex: 1;
-        -ms-flex: 0 1 100%; }
+        /*@include flex-option(0, 1, 100%);*/
+        width: 100%; }
       .db_area section.db_list_box > div > button {
         pointer-events: none;
         opacity: 0.5;
@@ -1102,7 +1099,7 @@ menu {
   -ms-flex: 1 0 40px;
   margin: 0 0 10px 0; }
   body.admin_mode .sub_title_area {
-    margin: 0 0 0 0 !important; }
+    margin: 0 0 10px 0 !important; }
   .sub_title_area, .sub_title_area .navigation, .sub_title_area .navigation span {
     position: relative; }
   .sub_title_area h2, .sub_title_area h3 {
@@ -1148,6 +1145,8 @@ menu {
         color: #109dcb; }
         .sub_title_area .navigation span:hover:after {
           display: block; }
+    .admin_mode .sub_title_area .navigation span {
+      pointer-events: none; }
 
 .m_human, .check_th tbody tr:before,
 .check_th tbody tr td:first-of-type:before {

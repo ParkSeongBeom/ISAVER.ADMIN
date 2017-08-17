@@ -38,13 +38,15 @@
                     <tbody>
                     <tr>
                         <th class="point"><spring:message code="license.column.licenseKey"/></th>
-                        <td class="point">
-                            <input type="hidden"  name="licenseKey" />
-                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
-                            <input type="text" style="width:58px" name="licenseText" maxlength="5" />
+                        <td class="point intable">
+                            <div class="lic_set">
+                                <input type="hidden"  name="licenseKey" />
+                                <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                                <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                                <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                                <input type="text" style="width:58px" name="licenseText" maxlength="5" />~
+                                <input type="text" style="width:58px" name="licenseText" maxlength="5" />
+                            </div>
                         </td>
                         <th class="point"><spring:message code="license.column.deviceType"/></th>
                         <td class="point">

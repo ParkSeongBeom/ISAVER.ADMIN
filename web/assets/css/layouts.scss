@@ -491,7 +491,7 @@ menu {
       background-color: $color-white-01;
       & > div, & > select {@include border01( 0 1px 1px 0,$color-gray-01,1);}
       & > div    {@include flex-option(1, 0, $btnarea-height);  }
-      & > select {@include flex-option(0, 1, 100%); }
+      & > select {/*@include flex-option(0, 1, 100%);*/ width:100%;}
       & > button {
         pointer-events: none; opacity: 0.5;
         @include flex-option(1, 0, $btnarea-height);
@@ -677,7 +677,7 @@ menu {
 /////...... sub_title_area 정의 시작
 .sub_title_area {
 
-  body.admin_mode & {margin: 0 0 0 0 !important;}
+  body.admin_mode & {margin: 0 0 10px 0 !important;}
 
   @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 0 0 10px 0;
 
@@ -702,6 +702,7 @@ menu {
         &:after {display: block;}
       }
     }
+    .admin_mode & span {    pointer-events: none;}
   }
 
 }
