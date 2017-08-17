@@ -103,19 +103,11 @@
                     <tbody>
                     <tr>
                         <th class="point"><spring:message code="file.column.title"/></th>
-                        <td colspan="3" class="point">
+                        <td class="point">
                             <input type="text" name="title" value="${file.title}"/>
                         </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code="file.column.description"/></th>
-                        <td colspan="3">
-                            <textarea name="description">${file.description}</textarea>
-                        </td>
-                    </tr>
-                    <tr>
                         <th class="point"><spring:message code="file.column.fileName"/></th>
-                        <td colspan="3" class="point">
+                        <td class="point">
                             <!-- 파일 첨부 시작 -->
                             <div class="infile_set">
                                 <input type="text" readonly="readonly" title="File Route" id="file_route">
@@ -133,17 +125,21 @@
                     </tr>
                     <tr>
                         <th class="point"><spring:message code="file.column.useYn"/></th>
-                        <td colspan="3" class="point">
+                        <td class="point">
                             <span><input type="radio" name="useYn" value="Y" ${empty file || file.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
                             <span><input type="radio" name="useYn" value="N" ${file.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
                         </td>
-                    </tr>
-                    <tr>
                         <th><spring:message code="file.column.useList"/></th>
-                        <td colspan="3">
+                        <td>
                             <div class="code_list">
                                 <button onclick="javascript:openPopup(); return false;"></button>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code="file.column.description"/></th>
+                        <td colspan="3">
+                            <textarea name="description">${file.description}</textarea>
                         </td>
                     </tr>
                     <c:if test="${!empty file}">

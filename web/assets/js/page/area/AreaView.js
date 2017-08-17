@@ -259,7 +259,7 @@ function AreaView(model) {
         $("input[name='areaId']").val("");
         $("input[name='areaName']").val("").removeAttr("readonly");
         $("textarea[name='areaDesc']").val("");
-        $("input[name='sortOrder']").val(0);
+        $("input[name='sortOrder']").val('');
 
         $("button[name='addBtn']").show();
         $("button[name='saveBtn']").hide();

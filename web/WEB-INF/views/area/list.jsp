@@ -30,7 +30,8 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.treeExpandAll(); return false;"><spring:message code='area.button.viewTheFullArea'/></button>
+                <button class="btn btype01 bstyle01" id="expandShow" onclick="javascript:areaCtrl.treeExpandAll(true); return false;"><spring:message code='common.button.viewTheFull'/></button>
+                <button class="btn btype01 bstyle01" id="expandClose" style="display:none;" onclick="javascript:areaCtrl.treeExpandAll(false); return false;"><spring:message code='common.button.viewTheFullClose'/></button>
                 <button class="btn btype01 bstyle01" onclick="javascript:areaCtrl.setAddBefore(); return false;" ><spring:message code='area.button.addArea'/></button>
             </div>
         </div>
@@ -114,8 +115,8 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th class="point"><spring:message code="area.column.areaId"/></th>
-                        <td class="point">
+                        <th><spring:message code="area.column.areaId"/></th>
+                        <td>
                             <input type="text" name="areaId" placeholder="<spring:message code="area.message.requiredAreaId"/>" disabled>
                         </td>
                         <th class="point"><spring:message code="area.column.areaName"/></th>
@@ -137,8 +138,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code="area.column.sortOrder"/></th>
-                        <td class="point" colspan="3">
+                        <th><spring:message code="area.column.sortOrder"/></th>
+                        <td colspan="3">
                             <input type="number" name="sortOrder" placeholder="<spring:message code="area.message.requiredSortOrder"/>" >
                         </td>
                     </tr>

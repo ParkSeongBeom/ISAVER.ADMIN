@@ -349,11 +349,18 @@ function DeviceCtrl(model) {
     }
 
     /**
-     * 장치 트리 전체 펼치기
+     * 장치 트리 전체 펼치기/닫기
      */
-    DeviceCtrl.treeExpandAll = function () {
+    DeviceCtrl.treeExpandAll = function (flag) {
         $(this._model.getTreaDevice()).dynatree("getRoot").visit(function (node) {
-            node.expand(true);
+            node.expand(flag);
+            if(flag){
+                $("#expandClose").show();
+                $("#expandShow").hide();
+            }else{
+                $("#expandClose").hide();
+                $("#expandShow").show();
+            }
         });
     };
 

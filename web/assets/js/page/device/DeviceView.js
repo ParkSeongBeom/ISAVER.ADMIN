@@ -176,7 +176,7 @@ function DeviceView(model) {
                 if (selectedDeviceId.trim().length > 0) {
                     try {
                         setTimeout(function() {
-                            deviceCtrl.treeExpandAll();
+                            deviceCtrl.treeExpandAll(true);
                             $("span[device_id=" +selectedDeviceId+"]").parent().parent().trigger("click");
                         }, 250);
 

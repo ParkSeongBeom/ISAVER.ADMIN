@@ -98,11 +98,11 @@ function AreaCtrl(model) {
                 return;
             }
 
-            if ($("input[name='sortOrder']").val().trim().length == 0) {
-                $("input[name='sortOrder']").focus();
-                alert(messageConfig['requiredSortOrder']);
-                return;
-            }
+            //if ($("input[name='sortOrder']").val().trim().length == 0) {
+            //    $("input[name='sortOrder']").focus();
+            //    alert(messageConfig['requiredSortOrder']);
+            //    return;
+            //}
 
 
         }
@@ -233,11 +233,18 @@ function AreaCtrl(model) {
     }
 
     /**
-     * 구역 트리 전체 펼치기
+     * 구역 트리 전체 펼치기/닫기
      */
-    AreaCtrl.treeExpandAll = function () {
+    AreaCtrl.treeExpandAll = function (flag) {
         $(this._model.getTreaArea()).dynatree("getRoot").visit(function (node) {
-            node.expand(true);
+            node.expand(flag);
+            if(flag){
+                $("#expandClose").show();
+                $("#expandShow").hide();
+            }else{
+                $("#expandClose").hide();
+                $("#expandShow").show();
+            }
         });
     };
 

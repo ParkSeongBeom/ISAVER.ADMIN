@@ -235,9 +235,16 @@ function MenuCtrl(model) {
     /**
      * 메뉴 트리 전체 펼치기
      */
-    MenuCtrl.treeExpandAll = function() {
+    MenuCtrl.treeExpandAll = function(flag) {
         $(this._model.getTreaArea()).dynatree("getRoot").visit(function(node){
-            node.expand(true);
+            node.expand(flag);
+            if(flag){
+                $("#expandClose").show();
+                $("#expandShow").hide();
+            }else{
+                $("#expandClose").hide();
+                $("#expandShow").show();
+            }
         });
     };
 

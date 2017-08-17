@@ -166,7 +166,8 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.treeExpandAll(); return false;"><spring:message code='device.button.viewTheFulldevice'/></button>
+                <button class="btn btype01 bstyle01" id="expandShow" onclick="javascript:deviceCtrl.treeExpandAll(true); return false;"><spring:message code='common.button.viewTheFull'/></button>
+                <button class="btn btype01 bstyle01" id="expandClose" style="display:none;" onclick="javascript:deviceCtrl.treeExpandAll(false); return false;"><spring:message code='common.button.viewTheFullClose'/></button>
                 <button class="btn btype01 bstyle01 area_enrolment_btn" onclick="javascript:deviceCtrl.setAddBefore(); return false;" ><spring:message code='device.button.addDevice'/></button>
             </div>
         </div>
@@ -197,8 +198,8 @@
                     </colgroup>
                     <tbody>
                     <tr class="rootShow">
-                        <th class="point"><spring:message code='device.column.deviceId'/></th>
-                        <td class="point">
+                        <th><spring:message code='device.column.deviceId'/></th>
+                        <td>
                             <input type="text" name="deviceId" placeholder="<spring:message code='device.message.requiredDeviceId'/>" disabled="disabled" />
                         </td>
                         <th class="point"><spring:message code='device.column.serialNo'/></th>
@@ -216,12 +217,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code='device.column.deviceType'/></th>
-                        <td>
+                        <th class="point"><spring:message code='device.column.deviceType'/></th>
+                        <td class="point">
                             <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagName="deviceTypeCode"/>
                         </td>
-                        <th><spring:message code='device.column.deviceCode'/></th>
-                        <td>
+                        <th class="point"><spring:message code='device.column.deviceCode'/></th>
+                        <td class="point">
                             <div class="infile_set">
                                 <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
                                 <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); event.stopPropagation(); return false;"><spring:message code="device.button.ivasSetting"/></button>

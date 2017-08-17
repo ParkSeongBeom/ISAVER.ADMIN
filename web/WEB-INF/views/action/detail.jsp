@@ -35,8 +35,8 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th class="point"><spring:message code="action.column.actionId"/></th>
-                        <td class="point">
+                        <th><spring:message code="action.column.actionId"/></th>
+                        <td>
                             <input type="text" name="actionId" value="${action.actionId}" placeholder="<spring:message code="action.message.requireActionId"/>"  disabled />
                         </td>
                         <th class="point"><spring:message code="action.column.actionCode"/></th>

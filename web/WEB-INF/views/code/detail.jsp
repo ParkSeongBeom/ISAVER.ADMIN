@@ -58,8 +58,8 @@
                                 <input type="radio" name="useYn" value="Y" ${!empty code && code.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" />
                                 <input type="radio" name="useYn" value="N" ${empty code || code.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" />
                             </td>
-                            <th><spring:message code="common.column.sortOrder"/></th>
-                            <td>
+                            <th class="point"><spring:message code="common.column.sortOrder"/></th>
+                            <td class="point">
                                 <input type="number" name="sortOrder" value="${code.sortOrder}" onkeypress="isNumber(this)"/>
                             </td>
                         </tr>

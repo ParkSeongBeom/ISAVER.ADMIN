@@ -327,6 +327,7 @@
         $("#rtspPort").val(data['rtspPort']);
         $("#deviceUserId").val(data['deviceUserId']);
         $("#devicePassword").val(data['devicePassword']);
+        $("#deviceDesc").text(data['deviceDesc']);
 
         openPopup();
     }

@@ -78,7 +78,7 @@ public class AreaCtrl {
         return modelAndView;
     }
 
-    private final static String[] addAreaParam = new String[]{"areaName", "sortOrder"};
+    private final static String[] addAreaParam = new String[]{"areaName"};
 
     /**
      *  구역을 등록 한다.
@@ -100,7 +100,7 @@ public class AreaCtrl {
         return modelAndView;
     }
 
-    private final static String[] saveAreaParam = new String[]{"areaId", "areaName", "sortOrder"};
+    private final static String[] saveAreaParam = new String[]{"areaId", "areaName"};
 
     /**
      *  구역을 수정 한다.

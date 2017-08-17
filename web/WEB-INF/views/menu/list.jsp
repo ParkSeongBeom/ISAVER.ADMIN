@@ -24,7 +24,8 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.treeExpandAll(); return false;"><spring:message code='menu.button.viewTheFullMenu'/></button>
+                <button class="btn btype01 bstyle01" id="expandShow" onclick="javascript:menuCtrl.treeExpandAll(true); return false;"><spring:message code='common.button.viewTheFull'/></button>
+                <button class="btn btype01 bstyle01" id="expandClose" style="display:none;" onclick="javascript:menuCtrl.treeExpandAll(false); return false;"><spring:message code='common.button.viewTheFullClose'/></button>
                 <button class="btn btype01 bstyle01" onclick="javascript:menuCtrl.setAddBefore(); return false;" ><spring:message code='menu.button.addMenu'/></button>
             </div>
         </div>
@@ -63,8 +64,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <th><spring:message code="menu.column.parentMenuName"/></th>
-                            <td>
+                            <th class="point"><spring:message code="menu.column.parentMenuName"/></th>
+                            <td class="point">
                                 <select id="selectParentMenuId">
                                     <c:forEach items="${menuTreeList }" var="menu">
                                         <option value="${menu.menuId }">${menu.description }</option>

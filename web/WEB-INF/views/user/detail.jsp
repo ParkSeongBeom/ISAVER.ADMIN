@@ -54,8 +54,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code="user.column.role"/></th>
-                        <td>
+                        <th class="point"><spring:message code="user.column.role"/></th>
+                        <td class="point">
                             <select name="roleId">
                                 <c:forEach items="${roles}" var="role">
                                     <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
@@ -99,7 +99,9 @@
                     </c:if>
                     <c:if test="${!empty user}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveUser(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeUser(); return false;"><spring:message code="common.button.remove"/> </button>
+                        <c:if test="${user.userId != sessionScope.authAdminInfo.userId}">
+                            <button class="btn btype01 bstyle03" onclick="javascript:removeUser(); return false;"><spring:message code="common.button.remove"/> </button>
+                        </c:if>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
                 </div>
