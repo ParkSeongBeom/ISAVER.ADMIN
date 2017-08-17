@@ -6,9 +6,9 @@
 일반, 주의, 경고, 위험 색상단계 정의
 
 일반 :
-주의 : 노랑  $color-yellow-01  lever-caution
-경고 : 주황  $color-orange-01  lever-warning
-위험 : 빨강  $color-red-01     lever-danger
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
 */
 /*
 form-bg-effect :
@@ -41,6 +41,13 @@ form-bg-effect :
       padding: 0 10px 0 0; }
 
 .search_area {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
   box-align: center;
   -webkit-box-align: center;
   -moz-box-align: center;
@@ -50,9 +57,13 @@ form-bg-effect :
   width: 100%;
   min-height: 65px;
   padding: 5px 0;
+  margin: 10px 0 0 0;
   border-style: solid;
   border-width: 1px 0;
   border-color: #bcbcbc; }
+  .tabs_content > .search_area {
+    border-style: solid;
+    border-width: 0 0 1px 0; }
   .search_area .search_contents {
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
@@ -489,35 +500,44 @@ input.datepicker + button + .in-timepicker {
     -webkit-box-flex: 0;
     -ms-flex: 1 0 100px;
     height: 100%; }
-  .infile_set > span:before {
-    content: "파일찾기";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    background-color: #4c4c4c;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    box-align: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center; }
-  .infile_set > span input[type="file"] {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+  .infile_set > span {
     cursor: pointer; }
+    .infile_set > span:before {
+      content: "파일찾기";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      background-color: #4c4c4c;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+      -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+      -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+      -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+      -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
+    .infile_set > span:hover:before {
+      background-color: #109dcb; }
+    .infile_set > span input[type="file"] {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer; }
   .infile_set > p {
     padding: 0 0 0 10px;
     flex: 0 1 100%;
@@ -929,6 +949,9 @@ div.tablebase, .d_defalut {
   box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15); }
+  .tablebase tr.on td, .t_defalut tr.on td, .d_defalut tr.on td {
+    color: #fff;
+    background-color: #4c4c4c; }
   .tablebase th, .tablebase td, .tablebase > div > div > *, .t_defalut th, .t_defalut td, .t_defalut > div > div > *, .d_defalut th, .d_defalut td, .d_defalut > div > div > * {
     position: relative;
     text-align: left;
@@ -988,6 +1011,62 @@ div.tablebase, .d_defalut {
     position: relative;
     font-weight: bold;
     padding: 0 10px 0 0; }
+  .tablebase td.intable, .t_defalut td.intable, .d_defalut td.intable {
+    padding: 0; }
+    .tablebase td.intable em, .t_defalut td.intable em, .d_defalut td.intable em {
+      margin: 0 5px; }
+    .tablebase td.intable .lic_set, .tablebase td.intable .level_set, .t_defalut td.intable .lic_set, .t_defalut td.intable .level_set, .d_defalut td.intable .lic_set, .d_defalut td.intable .level_set {
+      width: 100%; }
+      .tablebase td.intable .lic_set input, .tablebase td.intable .lic_set select, .tablebase td.intable .level_set input, .tablebase td.intable .level_set select, .t_defalut td.intable .lic_set input, .t_defalut td.intable .lic_set select, .t_defalut td.intable .level_set input, .t_defalut td.intable .level_set select, .d_defalut td.intable .lic_set input, .d_defalut td.intable .lic_set select, .d_defalut td.intable .level_set input, .d_defalut td.intable .level_set select {
+        height: 55px; }
+    .tablebase td.intable .lic_set, .tablebase td.intable .level_set > div, .t_defalut td.intable .lic_set, .t_defalut td.intable .level_set > div, .d_defalut td.intable .lic_set, .d_defalut td.intable .level_set > div {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center; }
+    .tablebase td.intable .lic_set input, .tablebase td.intable .lic_set select, .t_defalut td.intable .lic_set input, .t_defalut td.intable .lic_set select, .d_defalut td.intable .lic_set input, .d_defalut td.intable .lic_set select {
+      width: 100%;
+      border-width: 0 1px 0 1px; }
+    .tablebase td.intable .lic_set > input:nth-of-type(2), .t_defalut td.intable .lic_set > input:nth-of-type(2), .d_defalut td.intable .lic_set > input:nth-of-type(2) {
+      border-width: 0 1px 0 0; }
+    .tablebase td.intable .lic_set > input:last-of-type, .t_defalut td.intable .lic_set > input:last-of-type, .d_defalut td.intable .lic_set > input:last-of-type {
+      border-width: 0 0 0 1px; }
+    .tablebase td.intable .level_set > div, .t_defalut td.intable .level_set > div, .d_defalut td.intable .level_set > div {
+      width: 100%;
+      height: 55px;
+      margin: 10px; }
+      .tablebase td.intable .level_set > div input, .tablebase td.intable .level_set > div select, .t_defalut td.intable .level_set > div input, .t_defalut td.intable .level_set > div select, .d_defalut td.intable .level_set > div input, .d_defalut td.intable .level_set > div select {
+        border-width: 1px; }
+      .tablebase td.intable .level_set > div input, .t_defalut td.intable .level_set > div input, .d_defalut td.intable .level_set > div input {
+        max-width: 220px;
+        width: 100%; }
+      .tablebase td.intable .level_set > div select, .t_defalut td.intable .level_set > div select, .d_defalut td.intable .level_set > div select {
+        max-width: 90px;
+        min-width: 90px; }
+      .tablebase td.intable .level_set > div input + select, .t_defalut td.intable .level_set > div input + select, .d_defalut td.intable .level_set > div input + select {
+        margin: 0 0 0 -1px; }
+      .tablebase td.intable .level_set > div button, .t_defalut td.intable .level_set > div button, .d_defalut td.intable .level_set > div button {
+        height: 55px;
+        min-width: 55px;
+        max-width: 55px !important;
+        margin: 0 0 0 10px !important; }
+        .tablebase td.intable .level_set > div button:before, .t_defalut td.intable .level_set > div button:before, .d_defalut td.intable .level_set > div button:before {
+          font-weight: bold; }
+        .tablebase td.intable .level_set > div button.closebtn, .t_defalut td.intable .level_set > div button.closebtn, .d_defalut td.intable .level_set > div button.closebtn {
+          background-color: #be1e1e; }
+          .tablebase td.intable .level_set > div button.closebtn:before, .t_defalut td.intable .level_set > div button.closebtn:before, .d_defalut td.intable .level_set > div button.closebtn:before {
+            content: "삭제"; }
+        .tablebase td.intable .level_set > div button.addbtn:before, .t_defalut td.intable .level_set > div button.addbtn:before, .d_defalut td.intable .level_set > div button.addbtn:before {
+          content: "추가"; }
   .tablebase > div > div, .t_defalut > div > div, .d_defalut > div > div {
     display: -webkit-box;
     display: -moz-box;
@@ -1052,7 +1131,8 @@ div.tablebase, .d_defalut {
     border-style: solid;
     border-width: 1px 0; }
   .tablebase.list_type tr:hover td, .tablebase.list_type > div > div:hover > p, .tablebase.t_type01 tr:hover td, .tablebase.t_type01 > div > div:hover > p, .t_defalut.list_type tr:hover td, .t_defalut.list_type > div > div:hover > p, .t_defalut.t_type01 tr:hover td, .t_defalut.t_type01 > div > div:hover > p, .d_defalut.list_type tr:hover td, .d_defalut.list_type > div > div:hover > p, .d_defalut.t_type01 tr:hover td, .d_defalut.t_type01 > div > div:hover > p {
-    background-color: #e1e1e1; }
+    background-color: #e1e1e1;
+    color: #3c3c3c; }
   .tablebase.write_type th, .tablebase.write_type td, .tablebase.write_type > div > div > p, .tablebase.write_type > div.d_thead > div > *, .tablebase.t_type02 th, .tablebase.t_type02 td, .tablebase.t_type02 > div > div > p, .tablebase.t_type02 > div.d_thead > div > *, .t_defalut.write_type th, .t_defalut.write_type td, .t_defalut.write_type > div > div > p, .t_defalut.write_type > div.d_thead > div > *, .t_defalut.t_type02 th, .t_defalut.t_type02 td, .t_defalut.t_type02 > div > div > p, .t_defalut.t_type02 > div.d_thead > div > *, .d_defalut.write_type th, .d_defalut.write_type td, .d_defalut.write_type > div > div > p, .d_defalut.write_type > div.d_thead > div > *, .d_defalut.t_type02 th, .d_defalut.t_type02 td, .d_defalut.t_type02 > div > div > p, .d_defalut.t_type02 > div.d_thead > div > * {
     border-style: solid;
     border-width: 0 1px 1px 0; }
@@ -1350,6 +1430,12 @@ ul.u_defalut {
           content: "\e918"; }
         .page .paging button.p_arrow:nth-last-of-type(2):before {
           content: "\e919"; }
+
+.tdindiv {
+  width: 100%;
+  height: 100%; }
+  .tdindiv input, .tdindiv select {
+    height: 55px; }
 
 .tree_area {
   display: -webkit-box;
@@ -1875,7 +1961,9 @@ ul.u_defalut {
   fill: #757575 !important; }
 
 .chart_table_area {
-  width: 100%; }
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 50px 0; }
   .chart_table_area > div {
     position: relative;
     float: left;

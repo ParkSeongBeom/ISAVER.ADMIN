@@ -218,7 +218,8 @@ span.dynatree-expander:before,
 .menu_tree_set li ul:after,
 .device_popup li:before, /* 디바이스 보기 목록 아이콘 */
 .dynatree-expander:after, /* 다이나 트리 + 아이콘 */
-.personnel_set > div p:before /* 진출입 아이콘 */
+.personnel_set > div p:before /* 진출입 아이콘 */,
+.level_set > div > button:before /* 임계치 범위 설정 버튼 */
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'svgbase' !important;

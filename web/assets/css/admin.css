@@ -6,15 +6,15 @@
 일반, 주의, 경고, 위험 색상단계 정의
 
 일반 :
-주의 : 노랑  $color-yellow-01  lever-caution
-경고 : 주황  $color-orange-01  lever-warning
-위험 : 빨강  $color-red-01     lever-danger
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
 */
 section.container {
   position: relative;
   width: 100%;
   height: 100vh;
-  padding: 80px 50px 0 50px;
+  padding: 100px 100px 0 100px;
   transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -26,7 +26,7 @@ section.container {
 .tree_table {
   position: absolute;
   z-index: 1;
-  width: 320px !important;
+  width: 350px !important;
   float: left;
   margin: 20px 0 0 0;
   padding: 20px;
@@ -37,10 +37,11 @@ section.container {
   border-width: 1px;
   border-color: #bcbcbc; }
   .tree_table ~ .form_type01 {
-    padding: 20px 0 0 380px; }
+    padding: 0 0 0 410px; }
   .tree_table .table_title_area {
     height: 40px; }
   .tree_table .tree_box {
+    overflow-x: auto;
     width: 100%;
     margin: 20px 0;
     /*
@@ -240,15 +241,15 @@ section.container {
 
 .left_table {
   float: left;
-  padding: 20px 20px 20px 0; }
+  padding: 0 20px 20px 0; }
 
 .center_table {
   float: left;
-  padding: 20px 0; }
+  padding: 0; }
 
 .right_table {
   float: right;
-  padding: 20px 0 20px 20px; }
+  padding: 0 0 20px 20px; }
 
 .table_title_area {
   position: relative;

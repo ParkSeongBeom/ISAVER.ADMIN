@@ -30,7 +30,7 @@
 
         <div class="table_contents">
             <!-- 입력 테이블 Start -->
-            <table class="t_defalut t_type01 t_style02">
+            <table groupTb class="t_defalut t_type01 t_style02">
                 <colgroup>
                     <col style="width: 18%;" />
                     <col style="width: *%;" />
@@ -47,7 +47,7 @@
                     <c:choose>
                         <c:when test="${groupCodes != null and fn:length(groupCodes) > 0}">
                             <c:forEach var="groupCode" items="${groupCodes}">
-                                <tr>
+                                <tr groupCodeId="${groupCode.groupCodeId}">
                                     <td><a href="javascript:moveGroupCodeDetail('${groupCode.groupCodeId}')">${groupCode.groupCodeId}</a></td>
                                     <td>${groupCode.groupName}</td>
                                     <td><a href="javascript:findListCode('${groupCode.groupCodeId}')"><spring:message code="code.column.codeId"/></a></td>
@@ -125,6 +125,8 @@
     var selectGroupCode = null;
 
     function findListCode(groupCodeId){
+        $("table[groupTb] tr").removeClass("on");
+        $("table[groupTb] tr[groupCodeId='"+groupCodeId+"']").addClass("on");
         selectGroupCode = groupCodeId;
         sendAjaxPostRequest(urlConfig['findListCodeUrl'],{"groupCodeId":groupCodeId},findListCode_successHandler,findListCode_errorHandler);
     }

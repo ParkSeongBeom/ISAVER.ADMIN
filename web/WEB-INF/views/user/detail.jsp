@@ -36,7 +36,7 @@
                     <tr>
                         <th class="point"><spring:message code="user.column.userId"/></th>
                         <td class="point">
-                            <input type="text" name="userId" value="${user.userId}" ${empty user ? '' : 'readonly="true"'} />
+                            <input type="text" name="userId" value="${user.userId}" maxlength="20" ${empty user ? '' : 'readonly="true"'} />
                         </td>
                         <th class="point"><spring:message code="user.column.userName"/></th>
                         <td class="point">

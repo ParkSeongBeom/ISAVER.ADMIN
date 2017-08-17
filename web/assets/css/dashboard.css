@@ -6,9 +6,9 @@
 일반, 주의, 경고, 위험 색상단계 정의
 
 일반 :
-주의 : 노랑  $color-yellow-01  lever-caution
-경고 : 주황  $color-orange-01  lever-warning
-위험 : 빨강  $color-red-01     lever-danger
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
 */
 .dashboard_mode article {
   display: -webkit-box;
@@ -148,21 +148,23 @@
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column; }
-    .watch_area > div:before {
+    .watch_area > div:before, .watch_area > div:after {
       content: "";
       position: absolute;
-      z-index: -1;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      border-style: solid;
-      border-width: 1px;
-      border-color: darkgray;
-      background-color: #fff;
       -webkit-box-sizing: content-box;
       -moz-box-sizing: content-box;
       box-sizing: content-box; }
+    .watch_area > div:before {
+      border-style: solid;
+      border-width: 1px;
+      border-color: darkgray; }
+    .watch_area > div:after {
+      z-index: -1;
+      background-color: #fff; }
     .watch_area > div header, .watch_area > div article {
       position: relative;
       width: 100%;
@@ -577,202 +579,5 @@
       .device_popup ul li.cctv_view:before {
         content: "\e91c" !important;
         font-size: 1.4rem; }
-
-.iocount_popup {
-  /*
-  <div class="iocount_popup">
-      <div>
-          <div>
-              <header>
-                  <h2><span>(구역명 삽입)</span> 진출입 조회주기 설정</h2>
-                  <button class="close_btn"></button>
-              </header>
-
-              <article>
-                  <!-- 진출입 모두 보기 셋션 -->
-                  <section></section>
-                  <!-- 진출입 설정 셋션 -->
-                  <section></section>
-              </article>
-
-              <footer>
-                  <button class="btn">저장</button>
-              </footer>
-
-          </div>
-      </div>
-      <div class="bg"></div>
-  </div>
-  */
-  display: none;
-  position: absolute !important;
-  z-index: 30;
-  top: 50px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: auto !important; }
-  .iocount_popup > div {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    display: flexbox;
-    display: box;
-    box-align: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    height: 100%; }
-    .iocount_popup > div > div {
-      display: inline-block;
-      overflow: auto;
-      position: relative;
-      z-index: 10;
-      max-width: 70%;
-      max-height: 90%;
-      padding: 20px 30px 30px 30px !important; }
-      .iocount_popup > div > div > * {
-        position: relative;
-        width: 100%; }
-      .iocount_popup > div > div header {
-        background-color: transparent;
-        padding: 0; }
-        .iocount_popup > div > div header h2, .iocount_popup > div > div header h3 {
-          padding: 0 0 0 15px;
-          font-weight: bold;
-          margin: 0 auto 0 0; }
-          .iocount_popup > div > div header h2:before, .iocount_popup > div > div header h3:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 6px;
-            bottom: 4px;
-            width: 5px;
-            background-color: #109dcb; }
-        .iocount_popup > div > div header button:before {
-          content: "\e91a";
-          font-size: 1.8rem; }
-      .iocount_popup > div > div article {
-        -webkit-box-orient: row;
-        -webkit-box-direction: row;
-        -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-        flex-direction: row;
-        margin: 30px 0 0 0; }
-        .iocount_popup > div > div article > *:first-of-type {
-          width: 340px;
-          min-width: 340px;
-          margin: 0 110px 0 0; }
-        .iocount_popup > div > div article > *:nth-of-type(2) {
-          width: 500px;
-          min-width: 480px; }
-        .iocount_popup > div > div article section > h3 {
-          margin: 0 0 20px 0; }
-        .iocount_popup > div > div article .personnel_set {
-          -webkit-flex-flow: row wrap;
-          -moz-flex-flow: row wrap;
-          -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-          -webkit-box-pack: start;
-          -moz-box-pack: flex-start;
-          -webkit-justify-content: flex-start;
-          -ms-flex-pack: flex-start;
-          justify-content: flex-start; }
-          .iocount_popup > div > div article .personnel_set > div {
-            flex: 0 1 47%;
-            -webkit-flex: 0 1 47%;
-            flexbox: 0 1 47%;
-            -webkit-box-flex: 1;
-            -ms-flex: 0 1 47%;
-            opacity: 0.6;
-            margin: 0 0 10px 0; }
-            .iocount_popup > div > div article .personnel_set > div > p:nth-of-type(4) {
-              display: -webkit-box;
-              display: -moz-box;
-              display: -ms-flexbox;
-              display: -webkit-flex;
-              display: flex;
-              display: flexbox;
-              display: box;
-              -webkit-flex-flow: row wrap;
-              -moz-flex-flow: row wrap;
-              -ms-flex-flow: row wrap;
-              flex-flow: row wrap;
-              white-space: normal;
-              padding: 4px 8px; }
-              .iocount_popup > div > div article .personnel_set > div > p:nth-of-type(4) > * {
-                width: 100%;
-                display: inline-block;
-                text-align: left; }
-              .iocount_popup > div > div article .personnel_set > div > p:nth-of-type(4) em {
-                font-size: 0.8rem;
-                order: 1; }
-              .iocount_popup > div > div article .personnel_set > div > p:nth-of-type(4) span {
-                font-size: 1rem;
-                order: 2; }
-          .iocount_popup > div > div article .personnel_set > div:first-of-type {
-            flex: 0 1 100%;
-            -webkit-flex: 0 1 100%;
-            flexbox: 0 1 100%;
-            -webkit-box-flex: 1;
-            -ms-flex: 0 1 100%;
-            opacity: 1;
-            margin: 0 0 30px 0; }
-            .iocount_popup > div > div article .personnel_set > div:first-of-type p {
-              letter-spacing: normal; }
-              .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(1) {
-                top: -5px;
-                font-size: 5rem;
-                line-height: 4.6rem;
-                letter-spacing: -0.2rem; }
-              .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(2), .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(3) {
-                font-size: 2rem;
-                line-height: 2.2rem;
-                font-weight: bold;
-                /*padding:0 1px 0 60px;*/ }
-                .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(2):before, .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(3):before {
-                  font-size: 1.6rem;
-                  line-height: 2.3rem; }
-              .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(4) > * {
-                text-align: center; }
-              .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(4) em {
-                font-size: 1rem; }
-              .iocount_popup > div > div article .personnel_set > div:first-of-type p:nth-of-type(4) span {
-                font-size: 1.5rem; }
-          .iocount_popup > div > div article .personnel_set > div:nth-of-type(even) {
-            margin-right: 6%; }
-        .iocount_popup > div > div article .iotime_set .timepicker > input {
-          width: 100%;
-          margin: 0; }
-        .iocount_popup > div > div article .iotime_set li {
-          -webkit-box-pack: end;
-          -moz-box-pack: flex-end;
-          -webkit-justify-content: flex-end;
-          -ms-flex-pack: flex-end;
-          justify-content: flex-end;
-          padding: 0 0 22px 0; }
-      .iocount_popup > div > div footer {
-        display: inline-block;
-        text-align: right; }
-        .iocount_popup > div > div footer button {
-          right: 0; }
-  .iocount_popup .bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100% !important;
-    height: 100% !important;
-    background-color: rgba(76, 76, 76, 0.8); }
 
 /*# sourceMappingURL=dashboard.css.map */

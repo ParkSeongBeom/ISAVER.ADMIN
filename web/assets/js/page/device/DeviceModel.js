@@ -494,7 +494,8 @@ function DeviceModel() {
                     var view =
                     {
                         id        : String(item.deviceId),
-                        title     : "<span style='font-weight: bold;' device_id='"+item['deviceId']+"'>"+String(item['deviceCodeName'] + "</span> (" + item['deviceId'] +")"),
+                        //title     : "<span style='font-weight: bold;' device_id='"+item['deviceId']+"'>"+String(item['deviceCodeName'] + "</span> (" + item['deviceId'] +")"),
+                        title     : item['deviceId'] +" (<span style='font-weight: bold;' device_id='"+item['deviceId']+"'>"+String(item['deviceCodeName'] + "</span>)"),
                         isFolder  : false,
                         orgSort   : Number(item.sortOrder),
                         children  : []

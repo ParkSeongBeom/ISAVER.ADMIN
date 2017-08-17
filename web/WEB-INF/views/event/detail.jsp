@@ -317,8 +317,7 @@
 
     /* 팝업 보이기 버튼 */
     function popup_openButton() {
-        var code_openTarget = $(".code_select_popup");
-        code_openTarget.css("display", "block");
+        $(".code_select_popup").fadeIn();
         actionListLoad();
     }
 
@@ -342,8 +341,7 @@
 
     /* 팝업 취소 버튼 */
     function popup_cancelButton() {
-        var code_openTarget = $(".code_select_popup");
-        code_openTarget.css("display", "none");
+        $(".code_select_popup").fadeOut();
         return false;
     }
 

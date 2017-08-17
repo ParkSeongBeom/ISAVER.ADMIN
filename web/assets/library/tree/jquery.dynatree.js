@@ -3450,32 +3450,32 @@ var _registerDnd = function() {
 }(jQuery));
 
 
-// tree libaray_type 전체 열기 닫기
-$(function () {
-    $(".libaray_type").dynatree({
-        //fx: { height: "toggle", duration: 200 }
-        //autoCollapse: true,
-    });
-
-
-    $(".btn").click(function(){
-        $(this).toggleClass("on");
-        var treeAll = $(this).hasClass("on");
-        if(treeAll){
-            $(".libaray_type").dynatree("getRoot").visit(function(node){
-                node.expand(true);
-            });
-        } else {
-            $(".libaray_type").dynatree("getRoot").visit(function(node){
-                node.expand(false);
-            });
-        }
-
-        return false;
-		/*$(".tree").dynatree("getRoot").visit(function(node){
-		 node.expand(true);
-		 });
-		 */
-    });
-
-});
+//// tree libaray_type 전체 열기 닫기
+//$(function () {
+//    $(".libaray_type").dynatree({
+//        //fx: { height: "toggle", duration: 200 }
+//        //autoCollapse: true,
+//    });
+//
+//
+//    $(".btn").click(function(){
+//        $(this).toggleClass("on");
+//        var treeAll = $(this).hasClass("on");
+//        if(treeAll){
+//            $(".libaray_type").dynatree("getRoot").visit(function(node){
+//                node.expand(true);
+//            });
+//        } else {
+//            $(".libaray_type").dynatree("getRoot").visit(function(node){
+//                node.expand(false);
+//            });
+//        }
+//
+//        return false;
+//		/*$(".tree").dynatree("getRoot").visit(function(node){
+//		 node.expand(true);
+//		 });
+//		 */
+//    });
+//
+//});

@@ -76,11 +76,10 @@ $treffic_a:26%; // 신호등 after  크기
     @include flex-width-one(1); overflow: hidden;
     width:25%; min-width:330px; max-width:50%; min-height:25%; //max-height:50%;
     //@include border01(0 1px 1px 0,$color-gray-01,1); background-color: $color-white-01;
-    &:before {
-      content:""; position: absolute; z-index:-1; left:0; top:0; width:100%; height:100%;
-      @include border01(1px,$color-gray-01,1); background-color: $color-white-01;
-      @include content-box;
-    }
+
+    &:before, &:after {content:""; position: absolute; left:0; top:0; width:100%; height:100%; @include content-box;}
+    &:before {@include border01(1px,$color-gray-01,1);}
+    &:after {z-index:-1; background-color: $color-white-01;}
 
     padding:0 $m_lr;
 
@@ -374,136 +373,6 @@ $treffic_a:26%; // 신호등 after  크기
 }
 /////.......... 디바이스 보기 Popup End
 
-
-/////.......... 진출입 조회주기설정 팝업 시작
-.iocount_popup {
-
-  /*
-  <div class="iocount_popup">
-      <div>
-          <div>
-              <header>
-                  <h2><span>(구역명 삽입)</span> 진출입 조회주기 설정</h2>
-                  <button class="close_btn"></button>
-              </header>
-
-              <article>
-                  <!-- 진출입 모두 보기 셋션 -->
-                  <section></section>
-                  <!-- 진출입 설정 셋션 -->
-                  <section></section>
-              </article>
-
-              <footer>
-                  <button class="btn">저장</button>
-              </footer>
-
-          </div>
-      </div>
-      <div class="bg"></div>
-  </div>
-  */
-
-  display: none;
-  position: absolute !important; @include z-index-popup;
-  top:$headerHeight; right:0;
-  bottom:0; left:0; width:auto !important;
-
-  & > div {
-    @include flex-midddle; position: relative; width:100%; height:100%;
-    &:not(.bg) {}
-
-    & > div {
-
-      display: inline-block;
-      //@include flexbase; @include flex-column;
-      overflow: auto; position: relative; z-index: 10; max-width:70%;  max-height:90%;
-      padding:20px 30px 30px 30px !important;
-
-      & > * { position: relative; width:100%;}
-
-      header {
-        background-color: transparent; padding:0;
-        h2 , h3  {@include title_icon; margin:0 auto 0 0;}
-        button:before {content:"\e91a"; font-size: 1.8rem;}
-      }
-
-      article {
-
-        @include flex-column-row; margin:30px 0 0 0;
-        & > * {
-          &:first-of-type  {width:340px; min-width:340px;  margin:0 110px 0 0;}
-          &:nth-of-type(2) {width:500px; min-width:480px;  }
-        }
-
-        section > h3 {margin:0 0 20px 0;}
-
-        .personnel_set {
-
-          @include flex-row-wrap; @include flex-justify-content-start;
-
-          & > div {
-            @include flex-option(0, 1, 47%); opacity:0.6; margin:0 0 10px 0;
-
-            & > p:nth-of-type(4) {
-              @include flexbase; @include flex-row-wrap;
-              white-space: normal; padding:4px 8px;
-              & > * {width:100%; display: inline-block; text-align: left;}
-              em   {font-size:0.8rem; order:1;} // 날짜
-              span {font-size:1rem; order:2;} // 시간
-
-            }
-
-          }
-
-          & > div:first-of-type {
-            @include flex-option(0, 1, 100%); opacity:1; margin:0 0 30px 0;
-
-            p {
-              letter-spacing: normal;
-              &:nth-of-type(1) {top:-5px; font-size:5rem; line-height: 4.6rem; letter-spacing: -0.2rem;}
-
-              &:nth-of-type(2), &:nth-of-type(3) {
-
-                font-size:2rem; line-height: 2.2rem; font-weight:bold;
-                /*padding:0 1px 0 60px;*/
-
-                &:before {font-size:1.6rem; line-height: 2.3rem;}
-
-              }
-
-              &:nth-of-type(4) {
-
-                & > * {text-align: center; }
-                em   {font-size:1rem; } // 날짜
-                span {font-size:1.5rem;} // 시간
-
-              }
-            }
-          }
-
-          & > div:nth-of-type(even) {margin-right:6%;}
-
-        }
-        .iotime_set {
-          .timepicker > input {width:100%; margin:0;}
-          li {@include flex-justify-content-end; padding:0 0 22px 0;}
-        }
-      }
-
-      footer {
-        display: inline-block; text-align: right;
-        button {right:0;}
-      }
-    }
-  }
-
-  .bg {
-    position:absolute;  left:0; top:0; width:100% !important; height:100% !important;
-    background-color: rgba($color-dark-01,0.8);
-  }
-}
-/////.......... 진출입 조회주기설정 팝업 끝
 
 
 

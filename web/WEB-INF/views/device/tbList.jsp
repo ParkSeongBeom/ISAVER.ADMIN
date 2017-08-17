@@ -355,10 +355,10 @@
     }
 
     function openPopup(){
-        $(".device_detail_popup").show();
+        $(".device_detail_popup").fadeIn();
     }
 
     function closePopup(){
-        $(".device_detail_popup").hide();
+        $(".device_detail_popup").fadeOut();
     }
 </script>

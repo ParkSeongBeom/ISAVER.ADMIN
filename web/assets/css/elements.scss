@@ -19,10 +19,11 @@ form-bg-effect :
 
 ////// 어드민 검색영역  Start
 .search_area {
-  @include flex-align-items-center;
-  width:100%; min-height:65px; padding:5px 0;
+  @include flexbase; @include flex-align-items-center;
+  width:100%; min-height:65px; padding:5px 0; margin:10px 0 0 0;
   @include border01(1px 0,$color-gray-06,1);
 
+  .tabs_content > & {@include borderwidth(0 0 1px 0);}
   .search_contents {@include flex-option(0, 1, 100%); }
   .search_btn, .table_btn_set {@include flex-option(1, 0, 160px); text-align: right; }
 
@@ -287,12 +288,17 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   & > input, & > select {@include flex-option(0, 1, 100%);}
   & > span, & > button {@include flex-option(1, 0, 100px); height:100%;}
   & > span  {
+    cursor:pointer;
+
     &:before {
       content:"파일찾기";
       position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $bas-color;
       @include flex-justify-content-center;
       @include flex-align-items-center;
+      @include transition(400ms);
     }
+    &:hover:before {background-color: $color-blue-01;}
+
     input[type="file"]
     {position: absolute;z-index: 1;left:0;top:0;width:100%;height:100%;opacity: 0; cursor:pointer;}
   }
@@ -528,6 +534,7 @@ div.tablebase, .d_defalut {display: inline-block;}
   background-color:rgba( $color-white-02, 0.8);
   @include borderwidth(1px 0 0 0); border-color:$color-gray-06;
   @include box-shadow01(0, 3px, 15px, 0, #000, 0.15);
+  tr.on td {color:$color-white-01; background-color:$color-dark-01;}
 
   th,td, & > div > div > * {
     position: relative; text-align: left; height:$td-height;
@@ -583,6 +590,45 @@ div.tablebase, .d_defalut {display: inline-block;}
     span {position: relative; font-weight:bold; padding: 0 10px 0 0;}
 
 
+    &.intable {
+      padding:0;
+      td input {}
+      em {margin:0 5px;}
+
+      .lic_set, .level_set {
+        width:100%;
+        input, select { height:55px; }
+      }
+
+      .lic_set, .level_set > div {@include flexbase;  @include flex-align-items-center;}
+      .lic_set {
+
+        input, select {width:100%;border-width:0 1px 0 1px; }
+        & > input {
+          &:nth-of-type(2) {border-width:0 1px 0 0;}
+          &:last-of-type {border-width:0 0 0 1px;}
+        }
+      }
+
+      .level_set {
+        & > div {
+          width:100%; height:55px; margin:10px;
+          input,select {border-width:1px;}
+          input  {max-width:220px; width:100%;}
+          select {max-width:90px; min-width:90px;}
+          input + select {margin:0 0 0 -1px;}
+          button {
+            height:55px; min-width:55px; max-width:55px !important;
+            margin:0 0 0 10px !important;
+            &:before {  font-weight:bold;}
+            &.closebtn {background-color:$color-red-01;  &:before {content:"삭제";} }
+            &.addbtn {  &:before {content:"추가";} }
+          }
+
+        }
+      }
+
+    }
   }
 
   //div형 테이블
@@ -638,7 +684,7 @@ div.tablebase, .d_defalut {display: inline-block;}
     {@include borderwidth(1px 0);}
 
     tr:hover td, & > div > div:hover > p
-    {background-color: $color-gray-04;}
+    {background-color: $color-gray-04; color:#3c3c3c;}
   }
   //읽기, 쓰기
   &.write_type, &.t_type02 {
@@ -841,7 +887,11 @@ ul.u_defalut {
 }
 /////...... Table_layout 정의 End
 
-
+// tdindiv 정의 [테이블 안에 DIV]
+.tdindiv {
+  width: 100%; height:100%;
+  input, select {height:$td-height;}
+}
 
 ///// menu_tree_set 메뉴관리권한, tree UI 정의 시작
 .tree_area  {
@@ -1168,7 +1218,7 @@ ul.u_defalut {
 
 /////......  이벤트 통계 원 차트 시작
 .chart_table_area {
-  width:100%;
+  display:inline-block; width:100%; padding: 0 0 50px 0;
 
   & > div {position: relative; float:left; margin:40px 0 0 0; }
   &.type01 {

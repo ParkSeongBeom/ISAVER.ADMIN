@@ -118,7 +118,7 @@ header {
   @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
   position: fixed; @include z-index-header; top:0; left:0; width:100%; height:$headerHeight;
   padding:0 $dash-margin; background-color: $color-white-02;
-
+  //border-bottom:2px solid rgba(0,0,0,0.1);
   &:before {
     content:"";
     z-index: -1; overflow: hidden; opacity: 0;
@@ -227,7 +227,7 @@ menu {
         & > button {@include mbHover;}
       }
 
-      &.menu_dashboard  { & > ul {@include flex-justify-content-center;} }
+      //&.menu_dashboard  { & > ul {@include flex-justify-content-center;} }
       &.menu_admin { }
 
     }// menu > ul > li
@@ -236,26 +236,170 @@ menu {
 //////......   menu End
 
 
-///// ----------------- POPUP START
-// 레이어 팝업,  layer_popup 레이어 팝업 공통,  admin_popup 어드민 전용
-.layer_popup, .admin_popup {
-  display: none; position: fixed;  @include z-index-popup; top:0; left:0; bottom:0px; right: 0px;
-}
-///// ----------------- POPUP END
-
 
 /////..... 팝업 공통 효과 START
-.personal_popup, .iocount_popup > div > div:not(.bg) {
+
+@mixin popupdiv {
   background-color: $adm-color; padding:$popup-margin;
   @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
   @include border01(3px,$color-blue-01,1 );
   @include transition(400ms);
 }
+
+.popupbase {
+
+  /*
+   <div class="iocount_popup">
+       <div>
+           <div>
+               <header>
+                   <h2><span>(구역명 삽입)</span> 진출입 조회주기 설정</h2>
+                   <button class="close_btn"></button>
+               </header>
+
+               <article>
+                   <!-- 진출입 모두 보기 셋션 -->
+                   <section></section>
+                   <!-- 진출입 설정 셋션 -->
+                   <section></section>
+               </article>
+
+               <footer>
+                   <button class="btn">저장</button>
+               </footer>
+
+           </div>
+       </div>
+       <div class="bg"></div>
+   </div>
+   */
+
+  display: none; position: fixed; @include z-index-popup;
+  right:0; bottom:0; left:0; width:auto !important;
+
+  & > div {
+    @include flex-midddle; position: relative; width:100%; height:100%;
+    & > div {
+
+      display: inline-block; overflow: auto; z-index: 10;
+      position: relative; max-width:70%; max-height:90%; min-width:40%; min-height:50%;
+
+      & > * { position: relative; width:100%;}
+      & > header {
+        background-color: transparent; padding:0;
+        h2 , h3  {@include title_icon; margin:0 auto 0 0;}
+        button:before {content:"\e91a"; font-size: 1.8rem;}
+        &:before {display: none !important;}
+      }
+      & > footer {
+        display: inline-block; text-align: right;
+        button {right:0;}
+      }
+    }
+  }
+  & > .bg {
+    display: inline-block !important; position:absolute !important;
+    left:0; top:0; width:100% !important; height:100% !important;
+    background-color: rgba($color-dark-01,0.8);
+  }
+
+  /////.......... 진출입 조회주기설정 팝업 시작
+  &.iocount_popup {
+    position: absolute !important;  top:$headerHeight;
+    & > div > div {
+      & > article {
+
+        @include flex-column-row; margin:30px 0 0 0;
+        & > * {
+          &:first-of-type  {width:340px; min-width:340px;  margin:0 110px 0 0;}
+          &:nth-of-type(2) {width:500px; min-width:480px;  }
+        }
+
+        section > h3 {margin:0 0 20px 0;}
+
+        .personnel_set {
+
+          @include flex-row-wrap; @include flex-justify-content-start;
+
+          & > div {
+            @include flex-option(0, 1, 47%); opacity:0.6; margin:0 0 10px 0;
+
+            & > p:nth-of-type(4) {
+              @include flexbase; @include flex-row-wrap;
+              white-space: normal; padding:4px 8px;
+              & > * {width:100%; display: inline-block; text-align: left;}
+              em   {font-size:0.8rem; order:1;} // 날짜
+              span {font-size:1rem; order:2;} // 시간
+
+            }
+
+          }
+
+          & > div:first-of-type {
+            @include flex-option(0, 1, 100%); opacity:1; margin:0 0 30px 0;
+
+            p {
+              letter-spacing: normal;
+              &:nth-of-type(1) {top:-5px; font-size:5rem; line-height: 4.6rem; letter-spacing: -0.2rem;}
+
+              &:nth-of-type(2), &:nth-of-type(3) {
+
+                font-size:2rem; line-height: 2.2rem; font-weight:bold;
+                /*padding:0 1px 0 60px;*/
+
+                &:before {font-size:1.6rem; line-height: 2.3rem;}
+
+              }
+
+              &:nth-of-type(4) {
+
+                & > * {text-align: center; }
+                em   {font-size:1rem; } // 날짜
+                span {font-size:1.5rem;} // 시간
+
+              }
+            }
+          }
+
+          & > div:nth-of-type(even) {margin-right:6%;}
+
+        }
+        .iotime_set {
+          .timepicker > input {width:100%; margin:0;}
+          li {@include flex-justify-content-end; padding:0 0 22px 0;}
+        }
+      }
+    }
+  }
+  /////.......... 진출입 조회주기설정 팝업 끝
+
+
+  /////..... 레이어 팝업 Start
+  &.admin_popup {
+    top:0;
+    & > div > div {
+      form {width:100%;}
+      & > article {@include common_contents; @include flex-column;}
+    }
+  }
+  /////..... 레이어 팝업 End
+
+}
+
+
+.personal_popup, .popupbase > div > div  {
+  background-color: $adm-color; padding:$popup-margin;
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+  @include border01(3px,$color-blue-01,1 );
+  @include transition(400ms);
+}
+
 /////..... 팝업 공통 효과 END
+
 
 /////..... 사용자 보기 팝업 popup_type_01 Start
 .personal_popup {
-  @include flexbase; @include flex-column; @include z-index-popup;
+  @include flexbase; @include flex-column; z-index:101;
   position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px);
   width:$noticecenter-width;
 
@@ -266,54 +410,6 @@ menu {
   &.on {right:20px;}
 }
 /////..... 사용자 보기 팝업 popup_type_01 End
-
-
-/////..... 레이어 팝업 Start
-.layer_popup, .admin_popup {
-
-  .layer_wrap {
-    position: absolute; min-height:450px; left:50%; height:auto;
-    background-color:$adm-color;
-
-
-    @include box-shadow01(1px, 2px, 8px, 0px, #000, 0.4);
-
-    form {width:100%;}
-
-    .search_contents {
-      min-height:40px;
-      & + .mc_element {width:100%; flex:8 0; -webkit-flex:8 0; flexbox:8 0;}
-    }
-
-    .mc_element_set {
-      overflow: hidden; max-height:none; margin:0 20px 0 0;
-
-      &, & + .mc_element {flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;}
-    }
-
-
-    &.i_type01 {width:400px;margin:120px 0 0 -200px;}
-    &.i_type02, .i_type022 {width:500px; margin:120px 0 0 -250px;}
-    &.i_type02.it_style01 {margin:20px 0 0 -250px;}
-    &.i_type03 {width:700px;margin:120px 0 0 -350px;}
-    &.i_type04 {left:50px; top:50px; right:50px; bottom: 50px;}
-    &.i_type05 {top:100px; bottom:130px; width:900px; max-height:630px; margin:0 0 0 -450px; }
-    &.i_type06 {top:100px; bottom:100px; width:600px; max-height:700px; margin:0 0 0 -300px; }
-    &.i_type06 {top:100px; bottom:200px; width:600px; max-height:500px; margin:0 0 0 -300px; }
-    &.i_type07 {top:100px; bottom:200px; width:400px; max-height:500px; min-height:490px; margin:0 0 0 -200px; }
-
-    .layer_area {
-      @include flex-column; position: relative;width:100%;height:100%; padding:20px;
-
-      .layer_header   {@include sub_title_area; font-size: 24px;}
-      .layer_contents {@include common_contents; @include flex-column;}
-    }
-  }
-  .layer_popupbg
-  { position: absolute;z-index:-1;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.7); }
-
-}
-/////..... 레이어 팝업 End
 
 
 /////..... 토스트 팝업 시작
@@ -581,7 +677,7 @@ menu {
 /////...... sub_title_area 정의 시작
 .sub_title_area {
 
-  body.admin_mode & {margin: 0 0 0 0;}
+  body.admin_mode & {margin: 0 0 0 0 !important;}
 
   @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 0 0 10px 0;
 
@@ -592,10 +688,19 @@ menu {
   .navigation {
     @include flex-align-self-end; margin:0 0 0 30px; padding:0 0 3px 0;
     span {
-      color:$color-gray-01; padding:0 15px;
-      &:before {content: "〉" !important; position: absolute;right:-5px; top:0; }
-      &:last-of-type {padding:0 0 0 10px; /*font-weight:bold; color:$color-blue-01;*/}
+      color:$color-gray-01; padding:0 15px; cursor:pointer;
+      &:before, &:after {position: absolute;}
+      &:before {content: "〉" !important; right:-5px; top:0; }
+      &:last-of-type { /*font-weight:bold; color:$color-blue-01;*/}
       &:last-of-type:before {display: none;}
+      &:after {
+        content:""; display: none; bottom:-5px; left:10px; right:10px; height:2px;
+        background-color: $color-blue-01;
+      }
+      &:hover {
+        color:$color-blue-01;
+        &:after {display: block;}
+      }
     }
   }
 
@@ -608,21 +713,15 @@ menu {
 {@include border-radius(200px);}
 
 .mp_header,
-.mc_element,
 .main_title_area,
 
 .month_btn_set,
 .infile_set,
 .infile_set > p,
 .btn_infile:before,
-.search_area,
 .select_edit,
 .table_title_area,
 .table_btn_set,
-.layer_area,
-.layer_header,
-.layer_wrap,
-.layer_contents,
 .tree_box li span, .tree_box li span a
 
 {@include flexbase;}

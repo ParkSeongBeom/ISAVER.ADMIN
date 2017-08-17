@@ -55,7 +55,9 @@
                     <tr>
                         <th class="point"><spring:message code="license.column.expireDate"/></th>
                         <td class="point">
-                            <input type="date" name="expireDatetime" />
+                            <p class="itype_04">
+                                <input type="text" name="expireDatetime" />
+                            </p>
                         </td>
                         <th class="point"><spring:message code="license.column.licenseCount"/></th>
                         <td class="point">
@@ -220,7 +222,7 @@
     }
 
     function getLicenseExpireDay() {
-        var expireDate = $("input[type=date][name=expireDatetime]").val();
+        var expireDate = $("input[name=expireDatetime]").val();
         return new Date(expireDate).format("yyyyMMdd");
     }
 
@@ -244,9 +246,10 @@
     }
 
     $(document).ready(function() {
+        calendarHelper.load(form.find('input[name=expireDatetime]'));
 
         try {
-            <c:if test="${!empty license}">
+            <c:if test="${license.licenseKey != null}">
                 var licenseExpireDate = setLicenseExpireDay('${license.expireDate}').format("yyyy-MM-dd");
                 $("input[name='expireDatetime']").val(licenseExpireDate);
 
@@ -261,7 +264,7 @@
                 }
             </c:if>
 
-            <c:if test="${empty license}">
+            <c:if test="${license.licenseKey == null}">
                 var licenseExpireDate = new Date().format("yyyy-MM-dd");
                 $("input[name='expireDatetime']").val(licenseExpireDate);
                 $("input[name='licenseCount']").val(0);

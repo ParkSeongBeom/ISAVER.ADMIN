@@ -102,11 +102,11 @@
             // 알림센터 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
                 if($("body").hasClass("admin_mode")){
-                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .admin_popup").length) {
+                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
                         layerShowHide('list','hide');
                     }
                 }else if($("body").hasClass("dashboard_mode")){
-                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .admin_popup").length) {
+                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
                         layerShowHide('profile','hide');
                     }
                 }
@@ -143,10 +143,11 @@
         });
 
         function alarmCancelBtnAction(){
-            if($(".check_input").is(":checked")) {
+            if($("#alarmList .check_input").is(":checked")) {
                 modifyElementClass($(".dbc_open_btn"),'on','add');
             } else {
                 modifyElementClass($(".dbc_open_btn"),'on','remove');
+                $(".db_allcheck .check_input").prop("checked",false);
             }
         }
 
@@ -442,6 +443,7 @@
                 $("#alarmList").prepend(alarmTag);
                 var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
                 levelTag.text(Number(levelTag.text())+1);
+                modifyElementClass($(".issue_btn"),"level-"+criticalCss[criticalLevel],'add');
 
                 if(flag==true){
                     /* 애니메이션 */
@@ -454,7 +456,9 @@
 
                     /* 싸이렌 */
                     playSegment();
+
                     var toastTag = templateHelper.getTemplate("toast");
+                    toastTag.addClass("level-"+criticalCss[criticalLevel]);
                     toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
                     toastTag.attr("eventLogId",eventLog['eventLogId']);
                     toastTag.find("#toastAreaName").text(eventLog['areaName']);
@@ -492,11 +496,22 @@
                     }
                 }
 
+                if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"'] .infor_btn").hasClass("on")){
+                    modifyElementClass($(".db_infor_box"),'on','remove');
+                    modifyElementClass($(".infor_btn"),'on','remove');
+                }
+
                 $("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
                 var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
-                levelTag.text(Number(levelTag.text())-1);
+                var levelCtn = Number(levelTag.text())-1;
+                levelTag.text(levelCtn);
+
+                if(levelCtn==0){
+                    modifyElementClass($(".issue_btn"),"level-"+criticalCss[criticalLevel],'remove');
+                }
             }
 
+            alarmCancelBtnAction();
             alarmListRefresh();
         }
 

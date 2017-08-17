@@ -20,9 +20,9 @@
 일반, 주의, 경고, 위험 색상단계 정의
 
 일반 :
-주의 : 노랑  $color-yellow-01  lever-caution
-경고 : 주황  $color-orange-01  lever-warning
-위험 : 빨강  $color-red-01     lever-danger
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
 */
 
 
@@ -43,7 +43,7 @@ $color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
 $color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
 $color-red-02:#be1e1e;    // rgba(190,30,30,1)
 
-$color-yellow-01:#f6b900; // rgba(246,185,0,1) 주위, 차트03
+$color-yellow-01:#f6b900; // rgba(246,185,0,1)  차트03
 $color-yellow-02:#ef8116; // rgba(239,129,22,1) 차트08
 
 $color-blue-01:#109dcb;   // rgba(16,157,203,1) 버튼 ON
@@ -67,14 +67,14 @@ $color-dark-02:#0f0e13;   // rgba(15,14,19,1)
 $color-white-01:#fff;     //
 $color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
 
-$hov-color:#040404; //rgba(20,20,20,1) 구분라인
+$hov-color:#040404;   //rgba(20,20,20,1) 구분라인
 
 
 // 길이지정
 $body-minwidth:1300px;
 $dash-margin:20px;
 $popup-margin:20px;
-$admin-margin : 50px;
+$admin-margin : 100px;
 
 $noticecenter-width:340px;
 $device-width:100vw;
@@ -99,10 +99,10 @@ $display-inline-block:inline-block;
 
 //z-index
 @mixin z-index-header {z-index:40; } //ex) 알림센터 @include z-index-header;
-@mixin z-index-notice {z-index:10; } //ex) 알림센터 @include z-index-not;
+@mixin z-index-notice {z-index:30; } //ex) 알림센터 @include z-index-not;
 @mixin z-index-menu   {z-index:20; } //ex) menu @include z-index-menu;
-@mixin z-index-popup  {z-index:30; } //ex) popup @include z-index-popup;
-@mixin z-index-toast  {z-index:50; } //ex) popup @include z-index-toast;
+@mixin z-index-popup  {z-index:50; } //ex) popup @include z-index-popup;
+@mixin z-index-toast  {z-index:60; } //ex) popup @include z-index-toast;
 
 
 // display flex 플렉스 기본
@@ -398,14 +398,10 @@ $bbl01:100%; $bbl02:1px;
 
 // contents 공통값
 @mixin common_contents {
-  overflow: hidden; padding:5px; flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
+  flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
 } // ex) @include common_contents;
 
 
-// 어드민 페이지 타이틀 공통값
-@mixin sub_title_area {
-
-} // ex) @include sub_title_area;
 
 
 // webkit-scroll Bar
