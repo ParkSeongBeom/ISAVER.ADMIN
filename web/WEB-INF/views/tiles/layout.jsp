@@ -193,11 +193,11 @@
             if(_eventDatetime!=null){
                 var gap = serverDatetime.getTime() - _eventDatetime.getTime();
                 var hour = Math.floor(gap / (1000*60*60));
-                if(hour < 10) {hour = "0" + hour;}
+                if(hour>0 && hour<10) {hour = "0" + hour;}
                 var minute = Math.floor(gap / (1000*60))%60;
-                if(minute < 10) {minute = "0" + minute;}
+                if(minute>0 && minute<10) {minute = "0" + minute;}
                 var second = Math.floor(gap / (1000))%60;
-                if(second < 10) {second = "0" + second;}
+                if(second>0 && second<10) {second = "0" + second;}
 
                 $("section[alarm_detail] p[currentDatetime]").text(hour + ":" + minute + ":" + second);
             }
