@@ -1084,6 +1084,11 @@ div.tablebase, .d_defalut {
     .tablebase td .itype_04 button, .t_defalut td .itype_04 button, .d_defalut td .itype_04 button {
       order: 1;
       width: 50px; }
+  .tablebase td span.level-caution, .tablebase td span.level-warning, .tablebase td span.level-danger, .t_defalut td span.level-caution, .t_defalut td span.level-warning, .t_defalut td span.level-danger, .d_defalut td span.level-caution, .d_defalut td span.level-warning, .d_defalut td span.level-danger {
+    float: left;
+    width: 75px;
+    height: 60%;
+    padding: 0 !important; }
   .tablebase > div > div, .t_defalut > div > div, .d_defalut > div > div {
     display: -webkit-box;
     display: -moz-box;

@@ -245,3 +245,15 @@ a.fc-more {position: relative; z-index: 2;}
 .fc-day-number{position: relative; z-index: 2;}
 .colorbox {width: 20px; height: 20px; margin: auto;}
 
+
+.eventlog_col col {
+  &:nth-of-type(1) {width:10%;}    // 1 구역명
+  &:nth-of-type(2) {width:110px;}  // 2 이벤트구분
+  &:nth-of-type(3) {width:250px;}  // 3 장치명
+  &:nth-of-type(4) {width:160px;}  // 4 이벤트발생일시
+  &:nth-of-type(5) {width:250px;}  // 5 이벤트명
+  &:nth-of-type(6) {width:100px;}  // 6 임계치레벨
+  &:nth-of-type(7) {width:120px;}  // 7 이벤트해제자
+  &:nth-of-type(8) {width:160px;}  // 8 이벤트해지일시
+  &:nth-of-type(9) {width:auto;}   // 9 이벤트해지사유
+} //이벤트 이력 관리 테이블

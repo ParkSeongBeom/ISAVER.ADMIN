@@ -628,7 +628,6 @@ div.tablebase, .d_defalut {display: inline-block;}
       } // 임계치 관리 등록에서 임계치 범위 설정 부분
     }
 
-
     .itype_04 {
       @include flexbase;
       background-color: $color-white-01;
@@ -636,6 +635,12 @@ div.tablebase, .d_defalut {display: inline-block;}
       input  {order:2;}
       button {order:1; width:50px;}
     } //라이센스관리 등록에서 만료일 입력 부분
+
+    span.level {
+      &-caution, &-warning, &-danger {
+        float:left; width:75px; height:60%; padding:0 !important;
+      }
+    }
   }
 
   //div형 테이블

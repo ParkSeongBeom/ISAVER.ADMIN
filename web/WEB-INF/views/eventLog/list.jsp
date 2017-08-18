@@ -94,14 +94,15 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
-                    <col style="width: 10%;"> <!-- 1 구역명 -->
-                    <col style="width: 8%;"> <!-- 2 이벤트유형 -->
-                    <col style="width: 10%;"> <!-- 3 장치유형 -->
-                    <col style="width: 13%;"> <!-- 4 이벤트발생일시 -->
-                    <col style="width: 15%;"> <!-- 5 이벤트명 -->
-                    <col style="width: 10%;"> <!-- 6 이벤트해제자 -->
-                    <col style="width: 13%;"> <!-- 7 이벤트해제일시 -->
-                    <col style="width: *;">  <!-- 8 이벤트해지사유-->
+                    <col> <!-- 1 구역명 -->
+                    <col> <!-- 2 이벤트구분 -->
+                    <col> <!-- 3 장치유형 -->
+                    <col> <!-- 4 이벤트발생일시 -->
+                    <col> <!-- 5 이벤트명 -->
+                    <col> <!-- 6 임계치레벨 -->
+                    <col> <!-- 7 이벤트해제자 -->
+                    <col> <!-- 8 이벤트해제일시 -->
+                    <col>  <!-- 9 이벤트해지사유-->
                 </colgroup>
                 <thead>
                 <tr>
