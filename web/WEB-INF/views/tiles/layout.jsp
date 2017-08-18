@@ -76,9 +76,9 @@
         var refreshTimeCallBack;
 
         var criticalCss = {
-            'LEV001' : 'caution'
-            ,'LEV002' : 'warning'
-            ,'LEV003' : 'danger'
+            <c:forEach var="criticalLevel" items="${criticalLevelCss}">
+                '${criticalLevel.key}' : '${criticalLevel.value}',
+            </c:forEach>
         };
 
         $(document).ready(function(){

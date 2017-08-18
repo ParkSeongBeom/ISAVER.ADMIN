@@ -145,6 +145,18 @@ public class AdminResource {
     };
 
     /**
+     * 임계치 레벨별 css정의
+     * @author psb
+     */
+    public final static Map<String, String> CRITICAL_LEVEL_CSS = new HashMap<String, String>(){
+        {
+            put("LEV001","caution"); // 주의
+            put("LEV002","warning"); // 경고
+            put("LEV003","danger"); // 위험
+        }
+    };
+
+    /**
      * worker eventIds
      * @author psb
      */

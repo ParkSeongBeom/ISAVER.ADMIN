@@ -45,7 +45,6 @@
         <article class="search_area">
             <div class="search_contents">
                 <!-- 일반 input 폼 공통 -->
-
                 <p class="itype_01">
                     <span><spring:message code="eventlog.column.areaName" /></span>
                     <span>
@@ -53,15 +52,17 @@
                         <%--<input type="text" name="areaName" value="${paramBean.areaName}"/>--%>
                     </span>
                 </p>
-
                 <p class="itype_01">
                     <span><spring:message code="eventlog.column.eventFlag" /></span>
                     <isaver:codeSelectBox groupCodeId="EVT" codeId="${paramBean.eventFlag}" htmlTagName="eventFlag" allModel="true"/>
                 </p>
-
                 <p class="itype_01">
                     <span><spring:message code="eventlog.column.deviceCode" /></span>
                     <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true"/>
+                </p>
+                <p class="itype_01">
+                    <span><spring:message code="eventlog.column.criticalLevel" /></span>
+                    <isaver:codeSelectBox groupCodeId="LEV" codeId="${paramBean.criticalLevel}" htmlTagName="criticalLevel" allModel="true"/>
                 </p>
                 <p class="itype_04">
                     <span><spring:message code="eventlog.column.eventDatetime" /></span>
@@ -109,6 +110,7 @@
                     <th><spring:message code="eventlog.column.deviceCode"/></th>
                     <th><spring:message code="eventlog.column.eventDatetime"/></th>
                     <th><spring:message code="eventlog.column.eventName"/></th>
+                    <th><spring:message code="eventlog.column.criticalLevel"/></th>
                     <th><spring:message code="eventlog.column.eventCancelUserName"/></th>
                     <th><spring:message code="eventlog.column.eventCancelDatetime"/></th>
                     <th><spring:message code="eventlog.column.eventCancelDesc"/></th>
@@ -124,6 +126,11 @@
                                 <td>${eventLog.deviceCode}</td>
                                 <td><fmt:formatDate value="${eventLog.eventDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td>${eventLog.eventName}</td>
+                                <td>
+                                    <c:if test="${eventLog.criticalLevel!=null}">
+                                        <span class="level-${criticalLevelCss[eventLog.criticalLevel]}"></span>
+                                    </c:if>
+                                </td>
                                 <td>${eventLog.eventCancelUserName}</td>
                                 <td><fmt:formatDate value="${eventLog.eventCancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td class="eventdetail_btn" onclick="javascript:openEventCancelDescPopup(this);">${eventLog.eventCancelDesc}</td>
