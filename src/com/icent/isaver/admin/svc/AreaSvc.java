@@ -1,10 +1,8 @@
 package com.icent.isaver.admin.svc;
 
-import com.icent.isaver.repository.bean.AreaBean;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**

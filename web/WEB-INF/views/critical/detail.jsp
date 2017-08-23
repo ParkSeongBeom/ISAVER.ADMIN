@@ -6,8 +6,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="MN000000-A000-0000-0000-000000000000" var="subMenuId"/>
-<c:set value="MN000000-A000-0000-0000-000000000005" var="menuId"/>
+<c:set value="J00011" var="menuId"/>
+<c:set value="J00010" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
@@ -26,7 +26,7 @@
         <c:if test="${!empty critical}">
             <input type="hidden" name="eventId" value="${critical.eventId}" />
         </c:if>
-        <input type="hidden" name="criticalInfo" value="${criticalInfo}" />
+        <input type="hidden" name="criticalInfo" />
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
@@ -86,38 +86,52 @@
                     <tr>
                         <th><spring:message code="critical.column.criticalRangeSetup"/></th>
                         <td colspan="3">
-                            <table class="t_defalut t_type02 t_style03" id="range_tb">
-                                <tr id="first_range_tr">
-                                    <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfos[0].startValue}" /></td>
-                                    <td>~</td>
-                                    <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfos[0].endValue}" /></td>
-                                    <c:if test="${critical.rangeYn == 'Y'}">
-                                        <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="levFlag" codeId="${criticalInfos[0].criticalLevel}" /></td>
-                                    </c:if>
-                                    <c:if test="${critical.rangeYn == 'N'}">
-                                        <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="levFlag" codeId="${range_lv}" /></td>
-                                    </c:if>
-                                    <c:if test="${empty critical}">
-                                        <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="levFlag" /></td>
-                                    </c:if>
-                                    <td></td>
-                                </tr>
-                                <c:if test="${critical.rangeYn == 'Y'}">
-                                    <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
-                                        <c:if test="${status.count >= 2}">
-                                            <tr type="range_tr">
-                                                <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" /></td>
+                            <table class="t_defalut t_type02 t_style03" id="rangeTb">
+                                <c:choose>
+                                    <c:when test="${criticalInfos != null and fn:length(criticalInfos) > 0}">
+                                        <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
+                                            <tr>
+                                                <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" /></td>
                                                 <td>~</td>
-                                                <td><input type="text" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
-                                                <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="levFlag" codeId="${criticalInfo.criticalLevel}" /></td>
-                                                <td><button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button></td>
+                                                <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
+                                                <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" codeId="${criticalInfo.criticalLevel}" /></td>
+                                                <td>
+                                                    <select name="alramId">
+                                                        <option value=""><spring:message code="common.column.selectNo"/></option>
+                                                        <c:forEach var="alram" items="${alramList}">
+                                                            <option value="${alram.alramId}" <c:if test="${alram.alramId==criticalInfo.alramId}">selected="selected"</c:if>>${alram.alramName}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <c:if test="${status.count > 1}">
+                                                        <button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button>
+                                                    </c:if>
+                                                </td>
                                             </tr>
-                                        </c:if>
-                                    </c:forEach>
-                                </c:if>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr>
+                                            <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
+                                            <td>~</td>
+                                            <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
+                                            <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
+                                            <td>
+                                                <select name="alramId">
+                                                    <option value=""><spring:message code="common.column.selectNo"/></option>
+                                                    <c:forEach var="alram" items="${alramList}">
+                                                        <option value="${alram.alramId}">${alram.alramName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
                                 <tr id="addBtn">
-                                    <td class="point" colspan="5">
-                                        <button class="btn btype01 bstyle03" onclick="javascript:addRangeLayer(); return false;">추가</button>
+                                    <td class="point" colspan="6">
+                                        <button class="btn btype01 bstyle03" onclick="javascript:addRangeLayer(); return false;"><spring:message code="common.button.addRow"/></button>
                                     </td>
                                 </tr>
                             </table>
@@ -145,13 +159,13 @@
             <div class="table_title_area">
                 <div class="table_btn_set">
                     <c:if test="${empty critical}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:addEvent(); return false;"><spring:message code="common.button.add"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:addCritical(); return false;"><spring:message code="common.button.add"/></button>
                     </c:if>
                     <c:if test="${!empty critical}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeEvent(); return false;"><spring:message code="common.button.remove"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:saveCritical(); return false;"><spring:message code="common.button.save"/></button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeCritical(); return false;"><spring:message code="common.button.remove"/></button>
                     </c:if>
-                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
+                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/></button>
                 </div>
             </div>
         </article>
@@ -159,7 +173,23 @@
     </form>
 </section>
 <div style="display: none">
-    <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="selectLevFlag" htmlTagName="levFlag"/>
+    <table>
+        <tr id="rangeTbTag">
+            <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
+            <td>~</td>
+            <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
+            <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
+            <td>
+                <select name="alramId">
+                    <option value=""><spring:message code="common.column.selectNo"/></option>
+                    <c:forEach var="alram" items="${alramList}">
+                        <option value="${alram.alramId}">${alram.alramName}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td><button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button></td>
+        </tr>
+    </table>
 </div>
 
 <script type="text/javascript">
@@ -185,87 +215,135 @@
         ,'saveComplete':'<spring:message code="critical.message.saveComplete"/>'
         ,'removeComplete':'<spring:message code="critical.message.removeComplete"/>'
         ,'requireCriticalName':'<spring:message code="critical.message.requireCriticalName"/>'
+        ,'requireCriticalRange':'<spring:message code="critical.message.requireCriticalRange"/>'
     };
 
-    function validate(type){
-//        if(form.find('input[name=eventId]').val().length == 0){
-//            alertMessage('requireCodeId');
-//            return false;
-//        }
+    $(document).ready(function() {
+        $("select[name=rangeYn]").on("change", function(){
+            changeRangeYn();
+        });
+        changeRangeYn();
+    });
 
-        switch(type){
-            case 1:
-                if(form.find('input[name=criticalName]').val().length == 0){
-                    alertMessage('requireCriticalName');
-                    return false;
-                }
-                if ($("select[name=rangeYn]").val() == "Y") {
-                    var criticalInfo = addCriticalInfo();
+    function changeRangeYn(){
+        if($("select[name=rangeYn]").val()=="Y"){
+            $("#addBtn").show();
+            $("#rangeTb tr input").attr('disabled', false);
+        }else if($("select[name=rangeYn]").val()=="N"){
+            $("#rangeTb tr").not(":eq(0), #addBtn").remove();
+            $("#addBtn").hide();
+            $("#rangeTb tr input").attr('disabled', true).val(0);
+        }
+    }
 
-                    if (criticalInfo.length == 0) {
-                        return false;
-                    } else {
-                        $("input[name=criticalInfo]").val(criticalInfo.join());
-                    }
+    /**
+     * 임계치범위 설정 레이어 추가
+     */
+    function addRangeLayer() {
+        $("#addBtn").before($("#rangeTbTag").clone());
+    }
 
-                } else {
-                    $("input[name=criticalInfo]").val($("#first_range_tr").find("select").val());
-                }
-                break;
-            case 2:
-                break;
+    /**
+     * 임계치범위 설정 레이어 제거
+     */
+    function removeRangeLayer(_this) {
+        $(_this).parent().parent().remove();
+    }
+
+    function validate(){
+        if(form.find('input[name=criticalName]').val().length == 0){
+            alertMessage('requireCriticalName');
+            return false;
         }
 
+        var criticalInfo = addCriticalInfo();
+        if(criticalInfo.length==0){
+            alertMessage('requireCriticalRange');
+            return false;
+        }else{
+            $("input[name=criticalInfo]").val(criticalInfo.join());
+        }
         return true;
     }
 
-    function addEvent(){
+    function addCriticalInfo(){
+        var criticalInfo = [];
+        var checkDatas = [];
+        var alertFlag = false;
+
+        $.each($("#rangeTb tr").not("#addBtn"),function(){
+            var startValue = $.trim($(this).find("input[name='startValue']").val());
+            var endValue = $.trim($(this).find("input[name='endValue']").val());
+            var criticalLevel = $(this).find("select[name='criticalLevel']").val();
+            var alramId = $(this).find("select[name='alramId']").val();
+
+            if (Number(endValue) < Number(startValue)) {
+                alertFlag = true;
+            }
+
+            if (startValue == "" || endValue == "") {
+                alertFlag = true;
+            }
+
+            if (alertFlag == false) {
+                criticalInfo.push(startValue + "|" + endValue + "|" + criticalLevel + "|" + alramId);
+                checkDatas.push({start : Number(startValue),end : Number(endValue) });
+            }
+        });
+
+        checkDatas.sort(function (a, b) {
+            return a.start < b.start ? -1 : a.start > b.start ? 1 : 0;
+        });
+
+        for(var index in checkDatas){
+            if(index>0){
+                if(checkDatas[index]['start'] <= checkDatas[index-1]['end']){
+                    alertFlag = true;
+                }
+            }
+        }
+
+        if (alertFlag) {
+            criticalInfo = [];
+        }
+        return criticalInfo;
+    }
+
+    function addCritical(){
         if(!confirm(messageConfig['addConfirm'])){
             return false;
         }
 
-        if(validate(1)){
+        if(validate()){
             callAjax('add', form.serialize());
         }
     }
 
-    function saveEvent(){
+    function saveCritical(){
         if(!confirm(messageConfig['saveConfirm'])){
             return false;
         }
-        if(validate(1)){
-
+        if(validate()){
             callAjax('save', form.serialize());
         }
     }
 
-    function removeEvent(){
+    function removeCritical(){
         if(!confirm(messageConfig['removeConfirm'])){
             return false;
         }
 
-        if(validate(2)){
-            callAjax('remove', form.serialize());
-        }
+        callAjax('remove', form.serialize());
     }
 
     function callAjax(actionType, data){
-        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,requestEvent_successHandler,requestEvent_errorHandler,actionType);
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,successHandler,errorHandler,actionType);
     }
 
-    function requestEvent_successHandler(data, dataType, actionType){
-
+    function successHandler(data, dataType, actionType){
         switch(actionType){
-            case 'save':
-                alertMessage(actionType + 'Complete');
-                break;
             case 'add':
-                if (data['existFlag'] == "true") {
-                    alertMessage('eventAddExistFail');
-                } else {
-                    alertMessage(actionType + 'Complete');
-                }
-                break;
+            case 'save':
             case 'remove':
                 alertMessage(actionType + 'Complete');
                 break;
@@ -273,7 +351,7 @@
         cancel();
     }
 
-    function requestEvent_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+    function errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
         alertMessage(actionType + 'Failure');
     }
 
@@ -286,191 +364,4 @@
         listForm.appendTo(document.body);
         listForm.submit();
     }
-
-    function requestAction_successHandler(data, dataType, actionType){
-        switch(actionType){
-            case 'actionList':
-                makeActionListFunc(data['actions']);
-                break;
-        }
-    }
-
-    function makeCriticalListFunc(ranges) {
-        if (ranges == null && ranges.length == 0) {
-            return;
-        }
-
-    }
-
-
-    function requestAction_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        alert(actionType + 'Failure');
-    }
-
-    var html_item_btn = "<tr id='addBtn'>" +
-            "<td class='point' colspan='5'>" +
-            "<button class='btn btype01 bstyle03' onclick='javascript:addRangeLayer(); return false;'>추가</button>" +
-            "</td>" +
-            "</tr>";
-
-    /**
-     * range 레이어 추가
-     */
-    function addRangeLayer() {
-        var html_item= "<tr type='range_tr'>"+
-                "<td><input type='text' oninput=\"this.value=this.value.replace(/[^-\.0-9]/g);\" /></td>" +
-                "<td>~</td>" +
-                "<td><input type='text' oninput=\"this.value=this.value.replace(/[^-\.0-9]/g);\" /></td>" +
-                "<td><select>"+ $("#selectLevFlag").html() +"</select></td>" +
-                "<td><button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button></td>" +
-        "</tr>";
-
-        $("#addBtn").remove();
-        $("#range_tb").append(html_item).append(html_item_btn);
-    }
-
-    function removeRangeLayer(_this) {
-        $(_this).parent().parent().remove();
-    }
-
-    /**
-     *
-     */
-    function useNoRangeTr() {
-        $("#first_range_tr").find("input").val("");
-        $("#addBtn").remove();
-        $("#first_range_tr input").attr('disabled', true);
-        $("tr[type=range_tr]").remove();
-    }
-
-    function useYesRangeTr() {
-        $("#first_range_tr input").attr('disabled', false);
-        $("#range_tb").append(html_item_btn);
-    }
-
-    function addCriticalInfo() {
-
-        var criticalInfoDatas = [];
-        var checkDatas = [];
-
-        var alertFlag = false;
-
-        if ($.trim($("#first_range_tr").find("input:eq(0)").val()).length == 0 || $.trim($("#first_range_tr").find("input:eq(1)").val()).length == 0) {
-            alertFlag = true;
-        } else {
-            var range_max = $.trim($("#first_range_tr").find("input:eq(1)").val());
-            var range_min = $.trim($("#first_range_tr").find("input:eq(0)").val());
-
-            if (Number(range_max) < Number(range_min)) {
-                alertFlag = true;
-            }
-
-            criticalInfoDatas.push(
-                    $("#first_range_tr").find("input:eq(0)").val() + "|" +
-                    $("#first_range_tr").find("input:eq(1)").val() +  "|" +
-                    $("#first_range_tr").find("select").val()
-            );
-
-            checkDatas.push({max : Number(range_max),min : Number(range_min) });
-        }
-
-        $("tr[type=range_tr]").each(function( index ) {
-            var range_min = $(this).find("input:eq(0)").val();
-            var range_max = $(this).find("input:eq(1)").val();
-            var range_level = $(this).find("select").val();
-
-            if (Number(range_max) < Number(range_min)) {
-                alertFlag = true;
-            }
-
-            if ($.trim($(this).find("input:eq(0)").val()).length == 0 || $.trim($(this).find("input:eq(1)").val()).length == 0) {
-                alertFlag = true;
-            }
-
-            if (alertFlag == false) {
-                criticalInfoDatas.push(range_min + "|" + range_max +  "|" + range_level);
-                checkDatas.push({max : Number(range_max),min : Number(range_min) });
-            }
-
-        });
-
-
-//        function removeFunc(from, to) {
-//            var rest = this.slice((to || from) + 1 || this.length);
-//            this.length = from < 0 ? this.length + from : from;
-//            return this.push.apply(this, rest);
-//        };
-
-        function _checkFunc(value, _copyArray) {
-            var result = false;
-
-            if (value == 100) {
-//                debugger;
-            }
-
-            console.log(value, _copyArray);
-            for (var ii = 0; ii < _copyArray.length; ii ++) {
-
-                var item = _copyArray[ii];
-
-                if (item != undefined) {
-                    var _min = Number(item.min);
-                    var _max = Number(item.max);
-
-                    if (_max >= value && value >= _min) {
-                        result = true;
-                        break;
-                    }
-                }
-
-            }
-            return result;
-        }
-
-        for (var i = 0; i < checkDatas.length; i ++) {
-            var item = checkDatas[i];
-            var _min = Number(item.min);
-
-            var _copyArray = checkDatas.slice(0);
-
-            delete _copyArray[i];
-
-            if (i > 0) {
-
-                alertFlag = _checkFunc(_min, _copyArray);
-                break;
-//                console.log(i + "[" + _min + "]" + " _min=> " + _checkFunc(_min, _copyArray));
-            }
-
-        }
-
-        if (alertFlag) {
-            criticalInfoDatas = [];
-            alert("임계치 범위 설정을 다시 한번 확인해 주세요.");
-        }
-
-        return criticalInfoDatas;
-
-    }
-
-    $(document).ready(function() {
-
-        <c:if test="${critical.rangeYn == 'N'}"> useNoRangeTr();</c:if>
-
-        $("select[name=rangeYn]").change(function() {
-            if($(this).val() == "Y") {
-                useYesRangeTr();
-            }
-
-            if($(this).val() == "N") {
-                useNoRangeTr();
-            }
-        });
-
-    })
-    Array.prototype.remove = function(from, to) {
-        var rest = this.slice((to || from) + 1 || this.length);
-        this.length = from < 0 ? this.length + from : from;
-        return this.push.apply(this, rest);
-    };
 </script>

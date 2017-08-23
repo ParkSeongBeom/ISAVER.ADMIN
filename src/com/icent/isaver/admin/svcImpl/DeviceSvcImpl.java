@@ -2,7 +2,6 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
-import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;

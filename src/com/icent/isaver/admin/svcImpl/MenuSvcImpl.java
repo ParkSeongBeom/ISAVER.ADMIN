@@ -1,12 +1,10 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
-import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.MenuBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
-import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.MenuDao;
 import com.icent.isaver.repository.dao.base.RoleMenuDao;
 import com.kst.common.spring.TransactionUtil;
