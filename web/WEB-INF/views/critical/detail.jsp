@@ -173,8 +173,8 @@
     </form>
 </section>
 <div style="display: none">
-    <table>
-        <tr id="rangeTbTag">
+    <table id="rangeTbTag">
+        <tr>
             <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
             <td>~</td>
             <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
@@ -240,7 +240,7 @@
      * 임계치범위 설정 레이어 추가
      */
     function addRangeLayer() {
-        $("#addBtn").before($("#rangeTbTag").clone());
+        $("#addBtn").before($("#rangeTbTag tr").clone());
     }
 
     /**
@@ -323,6 +323,7 @@
         if(!confirm(messageConfig['saveConfirm'])){
             return false;
         }
+
         if(validate()){
             callAjax('save', form.serialize());
         }

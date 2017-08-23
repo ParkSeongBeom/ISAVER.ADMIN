@@ -162,8 +162,8 @@
 </section>
 
 <div style="display: none">
-    <table>
-        <tr id="addSettingTag">
+    <table id="addSettingTag">
+        <tr>
             <td>
                 <select name="deviceId">
                     <c:forEach var="device" items="${devices}">
@@ -244,7 +244,7 @@
      * 음성 설정 레이어 추가
      */
     function addSettingLayer() {
-        $("#addBtn").before($("#addSettingTag").clone());
+        $("#addBtn").before($("#addSettingTag tr").clone());
         changeAlramType();
     }
 
