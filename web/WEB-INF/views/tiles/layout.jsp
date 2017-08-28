@@ -642,7 +642,7 @@
 
         function setAlramAudio(sourceUrl){
             if(sourceUrl==null){
-                sourceUrl = alramDefaultSource
+                sourceUrl = alramDefaultSource;
             }
 
             $("#alramSource").attr("src",sourceUrl);
@@ -768,6 +768,11 @@
                     callBackFlag = false;
                     break;
                 case "addAlarmEvent": // 알림이벤트 등록
+                    if(resultData['dashboardAlramFileUrl']!=null){
+                        setAlramAudio(resultData['dashboardAlramFileUrl']);
+                    }else{
+                        setAlramAudio();
+                    }
                     addAlarm(resultData['eventLog'], true);
                     callBackFlag = true;
                     break;
