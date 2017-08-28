@@ -88,6 +88,15 @@ public class AdminResource {
     public final static String[] ADMIN_LOG_TYPE = new String[]{"1","0"};
 
     /**
+     * admin log type</br>
+     * - login : 1</br>
+     * - logout : 0</br>
+     *
+     * @author psb
+     */
+    public final static String[] ALRAM_TARGET_TYPE = new String[]{"dashboard","device"};
+
+    /**
      * 그룹코드 타입 정의
      * - S : SYSTEM
      * - C : CUSTOM

@@ -138,7 +138,7 @@ public class CriticalSvcImpl implements CriticalSvc {
 
         List<CriticalInfoBean> criticalInfoList = new ArrayList<>();
 
-        if (!criticalInfo.equals("") && criticalInfo != null && rangeYn.equals("Y")) {
+        if (!criticalInfo.equals("") && criticalInfo != null) {
             String[] criticalInfos = criticalInfo.split(",");
 
             for (String info : criticalInfos) {

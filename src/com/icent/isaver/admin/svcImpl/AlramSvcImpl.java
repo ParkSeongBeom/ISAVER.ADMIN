@@ -76,14 +76,21 @@ public class AlramSvcImpl implements AlramSvc {
     @Override
     public ModelAndView findByAlram(Map<String, String> parameters) {
         AlramBean alram = alramDao.findByAlram(parameters);
-        List<AlramInfoBean> alramInfos = alramInfoDao.findListAlramInfo(parameters);
+
+        Map<String, String> alramInfoParam = new HashMap<>();
+        alramInfoParam.put("alramId",parameters.get("alramId"));
+        alramInfoParam.put("targetType",AdminResource.ALRAM_TARGET_TYPE[0]);
+        List<AlramInfoBean> dashboardAlramInfos = alramInfoDao.findListAlramInfo(alramInfoParam);
+        alramInfoParam.put("targetType",AdminResource.ALRAM_TARGET_TYPE[1]);
+        List<AlramInfoBean> deviceAlramInfos = alramInfoDao.findListAlramInfo(alramInfoParam);
 
         List<DeviceBean> devices = deviceDao.findListDevice(null);
         List<FileBean> files = fileDao.findListFile(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("alram", alram);
-        modelAndView.addObject("alramInfos", alramInfos);
+        modelAndView.addObject("dashboardAlramInfos", dashboardAlramInfos);
+        modelAndView.addObject("deviceAlramInfos", deviceAlramInfos);
         modelAndView.addObject("devices", devices);
         modelAndView.addObject("files", files);
         modelAndView.addObject("paramBean",parameters);
@@ -102,21 +109,21 @@ public class AlramSvcImpl implements AlramSvc {
 
             for (String info : alramInfos) {
                 String[] infos = info.split("\\|");
-                Map<String, String> alramInfoMap = new HashMap<>();
-                alramInfoMap.put("alramId", alramId);
-                alramInfoMap.put("deviceId", infos[0]);
-                alramInfoMap.put("alramType", infos[1]);
-                if(infos.length == 3){
-                    switch (infos[1]){
-                        case "ARM001" :
-                            alramInfoMap.put("ttsText", infos[2]);
-                            break;
-                        case "ARM002" :
-                            alramInfoMap.put("fileId", infos[2]);
-                            break;
+                String alramInfoId = StringUtils.getGUID32();
+
+                for(String item : infos){
+                    String[] datas = item.split(":");
+                    Map<String, String> alramInfoMap = new HashMap<>();
+                    alramInfoMap.put("alramInfoId", alramInfoId);
+                    alramInfoMap.put("alramId", alramId);
+                    alramInfoMap.put("key", datas[0]);
+                    if(datas.length==2){
+                        alramInfoMap.put("value", datas[1]);
+                    }else{
+                        alramInfoMap.put("value", "");
                     }
+                    alramInfoList.add(alramInfoMap);
                 }
-                alramInfoList.add(alramInfoMap);
             }
         }else{
             alramInfoList = null;
@@ -146,21 +153,22 @@ public class AlramSvcImpl implements AlramSvc {
 
             for (String info : alramInfos) {
                 String[] infos = info.split("\\|");
-                Map<String, String> alramInfoMap = new HashMap<>();
-                alramInfoMap.put("alramId", parameters.get("alramId"));
-                alramInfoMap.put("deviceId", infos[0]);
-                alramInfoMap.put("alramType", infos[1]);
-                if(infos.length == 3){
-                    switch (infos[1]){
-                        case "ARM001" :
-                            alramInfoMap.put("ttsText", infos[2]);
-                            break;
-                        case "ARM002" :
-                            alramInfoMap.put("fileId", infos[2]);
-                            break;
+                String alramInfoId = StringUtils.getGUID32();
+
+                for(String item : infos){
+                    String[] datas = item.split(":");
+
+                    Map<String, String> alramInfoMap = new HashMap<>();
+                    alramInfoMap.put("alramInfoId", alramInfoId);
+                    alramInfoMap.put("alramId", parameters.get("alramId"));
+                    alramInfoMap.put("key", datas[0]);
+                    if(datas.length==2){
+                        alramInfoMap.put("value", datas[1]);
+                    }else{
+                        alramInfoMap.put("value", "");
                     }
+                    alramInfoList.add(alramInfoMap);
                 }
-                alramInfoList.add(alramInfoMap);
             }
         }else{
             alramInfoList = null;

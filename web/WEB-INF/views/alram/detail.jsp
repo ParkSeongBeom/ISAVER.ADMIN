@@ -30,7 +30,7 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table changeTb class="t_defalut t_type02 t_style03">
                     <colgroup>
                         <col style="width:16%">  <!-- 01 -->
                         <col style="width:34%">  <!-- 02 -->
@@ -63,30 +63,112 @@
                             <input type="text" name="alramMessage" value="${alram.alramMessage}"/>
                         </td>
                     </tr>
+                    <tr dashboard>
+                        <c:choose>
+                            <c:when test="${dashboardAlramInfos != null and fn:length(dashboardAlramInfos) > 0}">
+                                <th><spring:message code="alram.column.alramDashboardSetting"/></th>
+                                <td>
+                                    <select name="dashboardUseYn">
+                                        <option value="Y" selected="selected"><spring:message code="common.column.useYes"/></option>
+                                        <option value="N"><spring:message code="common.column.useNo"/></option>
+                                    </select>
+                                </td>
+                                <c:forEach var="info" items="${dashboardAlramInfos[0].datas}">
+                                    <c:choose>
+                                        <c:when test="${info.key=='alramType'}">
+                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" codeId="${info.value}" /></td>
+                                        </c:when>
+                                        <c:when test="${info.key=='fileId'}">
+                                            <td>
+                                                <input type="text" style="display: none;" name="ttsText"/>
+                                                <select name="fileId">
+                                                    <c:forEach var="file" items="${files}">
+                                                        <option value="${file.fileId}" <c:if test="${file.fileId == info.value}">selected="selected"</c:if>>${file.title}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${info.key=='ttsText'}">
+                                            <td>
+                                                <input type="text" name="ttsText" value="${info.value}"/>
+                                                <select name="fileId" style="display: none;">
+                                                    <c:forEach var="file" items="${files}">
+                                                        <option value="${file.fileId}">${file.title}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <th><spring:message code="alram.column.alramDashboardSetting"/></th>
+                                <td>
+                                    <select name="dashboardUseYn">
+                                        <option value="Y"><spring:message code="common.column.useYes"/></option>
+                                        <option value="N" selected="selected"><spring:message code="common.column.useNo"/></option>
+                                    </select>
+                                </td>
+                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" disabled="true"/></td>
+                                <td>
+                                    <input type="text" name="ttsText" disabled="disabled"/>
+                                    <select name="fileId" disabled="disabled">
+                                        <c:forEach var="file" items="${files}">
+                                            <option value="${file.fileId}">${file.title}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
                     <tr>
-                        <th><spring:message code="alram.title.alramSoundSetting"/></th>
+                        <th><spring:message code="alram.column.alramDeviceSetting"/></th>
                         <td colspan="3">
-                            <table class="t_defalut t_type02 t_style03" id="settingTb">
+                            <table class="t_defalut t_type02 t_style03">
                                 <c:choose>
-                                    <c:when test="${alramInfos != null and fn:length(alramInfos) > 0}">
-                                        <c:forEach var="alramInfo" items="${alramInfos}" varStatus="status">
-                                            <tr>
-                                                <td>
-                                                    <select name="deviceId">
-                                                        <c:forEach var="device" items="${devices}">
-                                                            <option value="${device.deviceId}" <c:if test="${device.deviceId == alramInfo.deviceId}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" codeId="${alramInfo.alramType}" /></td>
-                                                <td>
-                                                    <input type="text" name="ttsText" value="${alramInfo.ttsText}"/>
-                                                    <select name="fileId">
-                                                        <c:forEach var="file" items="${files}">
-                                                            <option value="${file.fileId}" <c:if test="${file.fileId == alramInfo.fileId}">selected="selected"</c:if>>${file.title}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
+                                    <c:when test="${deviceAlramInfos != null and fn:length(deviceAlramInfos) > 0}">
+                                        <c:forEach var="deviceAlramInfo" items="${deviceAlramInfos}" varStatus="status">
+                                            <tr device>
+                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                    <c:if test="${info.key=='deviceId'}">
+                                                        <td>
+                                                            <select name="deviceId">
+                                                                <c:forEach var="device" items="${devices}">
+                                                                    <option value="${device.deviceId}" <c:if test="${device.deviceId == info.value}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                    <c:if test="${info.key=='alramType'}">
+                                                        <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" codeId="${info.value}" /></td>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                    <c:if test="${info.key=='ttsText'}">
+                                                        <td>
+                                                            <input type="text" name="ttsText" value="${info.value}"/>
+                                                            <select name="fileId" style="display: none;">
+                                                                <c:forEach var="file" items="${files}">
+                                                                    <option value="${file.fileId}">${file.title}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                    <c:if test="${info.key=='fileId'}">
+                                                        <td>
+                                                            <input type="text" style="display: none;" name="ttsText"/>
+                                                            <select name="fileId">
+                                                                <c:forEach var="file" items="${files}">
+                                                                    <option value="${file.fileId}" <c:if test="${file.fileId == info.value}">selected="selected"</c:if>>${file.title}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                    </c:if>
+                                                </c:forEach>
                                                 <td>
                                                     <c:if test="${status.count > 1}">
                                                         <button class='btn btype01 bstyle03' onclick='javascript:removeSettingLayer(this); return false;'>X</button>
@@ -96,7 +178,7 @@
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
-                                        <tr>
+                                        <tr device>
                                             <td>
                                                 <select name="deviceId">
                                                     <c:forEach var="device" items="${devices}">
@@ -163,7 +245,7 @@
 
 <div style="display: none">
     <table id="addSettingTag">
-        <tr>
+        <tr device>
             <td>
                 <select name="deviceId">
                     <c:forEach var="device" items="${devices}">
@@ -213,16 +295,29 @@
     };
 
     $(document).ready(function() {
-        $("#settingTb").on("change", function(){
+        $("table[changeTb]").on("change", function(){
             if(event.target.name=="alramType"){
                 changeAlramType();
             }
         });
+
+        $("select[name='dashboardUseYn']").on("change", function(){
+            if(this.value=='Y'){
+                $("tr[dashboard] select[name='alramType']").prop("disabled",false);
+                $("tr[dashboard] input[name='ttsText']").prop("disabled",false);
+                $("tr[dashboard] select[name='fileId']").prop("disabled",false);
+            }else{
+                $("tr[dashboard] select[name='alramType']").prop("disabled",true);
+                $("tr[dashboard] input[name='ttsText']").prop("disabled",true);
+                $("tr[dashboard] select[name='fileId']").prop("disabled",true);
+            }
+        });
+
         changeAlramType();
     });
 
     function changeAlramType(){
-        $.each($("#settingTb tr"),function(){
+        $.each($("table[changeTb] tr"),function(){
             var ttsTextTag = $(this).find("input[name='ttsText']");
             var fildIdTag = $(this).find("select[name='fileId']");
 
@@ -273,22 +368,43 @@
     function addAlramInfo(){
         var alramInfo = [];
 
-        $.each($("#settingTb tr").not("#addBtn"),function(){
-            var alramType = $(this).find("select[name='alramType']").val();
-            var alramValue = "";
+        if($("select[name='dashboardUseYn']").val()=='Y'){
+            var addText = "";
 
-            switch (alramType){
+            addText += "targetType:dashboard";
+            addText += "|alramType:" + $("tr[dashboard] select[name='alramType']").val();
+
+            switch ($("tr[dashboard] select[name='alramType']").val()){
                 case "ARM001" :
-                    alramValue = $(this).find("input[name='ttsText']").val();
+                    addText += "|ttsText:" + $("tr[dashboard] input[name='ttsText']").val();
                     break;
                 case "ARM002" :
-                    alramValue = $(this).find("select[name='fileId']").val();
+                    addText += "|fileId:" + $("tr[dashboard] select[name='fileId']").val();
                     break;
                 default :
                     break;
             }
+            alramInfo.push(addText);
+        }
 
-            alramInfo.push($(this).find("select[name='deviceId']").val() + "|" + alramType + "|" + alramValue);
+        $.each($("table[changeTb] tr[device]"),function(){
+            var addText = "";
+
+            addText += "targetType:device";
+            addText +=  "|deviceId:" + $(this).find("select[name='deviceId']").val();
+            addText +=  "|alramType:" + $(this).find("select[name='alramType']").val();
+
+            switch ($(this).find("select[name='alramType']").val()){
+                case "ARM001" :
+                    addText += "|ttsText:" + $(this).find("input[name='ttsText']").val()
+                    break;
+                case "ARM002" :
+                    addText += "|fileId:" + $(this).find("select[name='fileId']").val();
+                    break;
+                default :
+                    break;
+            }
+            alramInfo.push(addText);
         });
 
         return alramInfo;

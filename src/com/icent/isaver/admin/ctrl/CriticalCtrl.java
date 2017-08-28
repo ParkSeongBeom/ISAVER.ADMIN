@@ -75,7 +75,6 @@ public class CriticalCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addCritical(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
         if(MapUtils.nullCheckMap(parameters, addCriticalParam)){
             throw new IcentException("");
         }

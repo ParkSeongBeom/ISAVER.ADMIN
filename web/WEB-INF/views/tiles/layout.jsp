@@ -71,7 +71,8 @@
             , notEqualPassword    :'<spring:message code="dashboard.message.notEqualPassword"/>'
         };
 
-        var alarmPlayer;
+        var alramPlayer;
+        var alramDefaultSource = '${rootPath}/assets/library/sound/alarm.mp3';
         var segmentEnd;
         var refreshTimeCallBack;
 
@@ -134,12 +135,13 @@
             wsConnect();
             aliveSend(900000);
 
-            alarmPlayer = document.getElementsByTagName("audio")[0];
-            alarmPlayer.addEventListener('timeupdate', function (){
-                if (segmentEnd && alarmPlayer.currentTime >= segmentEnd) {
-                    alarmPlayer.pause();
+            alramPlayer = document.getElementsByTagName("audio")[0];
+            alramPlayer.addEventListener('timeupdate', function (){
+                if (segmentEnd && alramPlayer.currentTime >= segmentEnd) {
+                    alramPlayer.pause();
                 }
             }, false);
+            setAlramAudio();
         });
 
         function alarmCancelBtnAction(){
@@ -455,6 +457,7 @@
                     } catch(e) {}
 
                     /* 싸이렌 */
+//                    setAlramAudio();
                     playSegment();
 
                     var toastTag = templateHelper.getTemplate("toast");
@@ -637,6 +640,18 @@
             location.href = layoutUrlConfig['mainUrl'];
         }
 
+        function setAlramAudio(sourceUrl){
+            if(sourceUrl==null){
+                sourceUrl = alramDefaultSource
+            }
+
+            $("#alramSource").attr("src",sourceUrl);
+
+            if(alramPlayer!=null){
+                alramPlayer.load();
+            }
+        }
+
         /**
         * 경보 소리 재생
          * @param startTime
@@ -651,13 +666,13 @@
                 endTime = 5;
             }
 
-            if (alarmPlayer.duration > 0 && !alarmPlayer.paused) {
+            if (alramPlayer.duration > 0 && !alramPlayer.paused) {
                 //Its playing...do your job
             } else {
                 //Not playing...maybe paused, stopped or never played.
                 segmentEnd = endTime;
-                alarmPlayer.currentTime = startTime;
-                alarmPlayer.play();
+                alramPlayer.currentTime = startTime;
+                alramPlayer.play();
             }
         }
 
@@ -884,7 +899,7 @@
     </div>
 
     <audio controls style="display: none">
-        <source src="${rootPath}/assets/library/sound/alarm.mp3" type="audio/mpeg">
+        <source id="alramSource" type="audio/mpeg">
     </audio>
 
     <tiles:insertAttribute name="body" />
