@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="B00061" var="menuId"/>
-<c:set value="B00000" var="subMenuId"/>
+<c:set value="B00060" var="subMenuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->

@@ -5,8 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
+<c:set value="E00010" var="menuId"/>
 <c:set value="E00000" var="subMenuId"/>
-<c:set value="E00001" var="menuId"/>
 <%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->

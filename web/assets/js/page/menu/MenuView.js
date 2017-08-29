@@ -227,6 +227,8 @@ function MenuView(model) {
             if(targetTag.length > 0){
                 targetTag.find("> button").addClass("on");
                 setSelectedMenu(targetTag.parent().parent().attr("name"));
+            }else{
+                setSelectedMenu(MenuView._model.getParentMenuId());
             }
         }
     };

@@ -3,8 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00022" var="menuId"/>
-<c:set value="B00000" var="subMenuId"/>
+<c:set value="B00021" var="menuId"/>
+<c:set value="B00020" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
