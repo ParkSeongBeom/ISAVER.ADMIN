@@ -15,7 +15,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.alram"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.alarm"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -23,9 +23,9 @@
     </article>
 
     <!-- 2depth 타이틀 영역 End -->
-    <form id="alramForm" method="POST">
-        <input type="hidden" name="alramInfo" />
-        <input type="hidden" name="alramId" value="${alram.alramId}" />
+    <form id="alarmForm" method="POST">
+        <input type="hidden" name="alarmInfo" />
+        <input type="hidden" name="alarmId" value="${alarm.alarmId}" />
 
         <article class="table_area">
             <div class="table_contents">
@@ -39,44 +39,44 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th><spring:message code="alram.column.alramId"/></th>
+                        <th><spring:message code="alarm.column.alarmId"/></th>
                         <td>
-                            <input type="text" value="${alram.alramId}" disabled="disabled"/>
+                            <input type="text" value="${alarm.alarmId}" disabled="disabled"/>
                         </td>
                         <th class="point"><spring:message code="common.column.useYn"/></th>
                         <td class="point">
                             <select name="useYn">
-                                <option value="Y" <c:if test="${alram.useYn == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
-                                <option value="N" <c:if test="${alram.useYn == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
+                                <option value="Y" <c:if test="${alarm.useYn == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
+                                <option value="N" <c:if test="${alarm.useYn == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code="alram.column.alramName"/></th>
+                        <th class="point"><spring:message code="alarm.column.alarmName"/></th>
                         <td class="point" colspan="3">
-                            <input type="text" name="alramName" value="${alram.alramName}"/>
+                            <input type="text" name="alarmName" value="${alarm.alarmName}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th><spring:message code="alram.column.alramMessage"/></th>
+                        <th><spring:message code="alarm.column.alarmMessage"/></th>
                         <td colspan="3">
-                            <input type="text" name="alramMessage" value="${alram.alramMessage}"/>
+                            <input type="text" name="alarmMessage" value="${alarm.alarmMessage}"/>
                         </td>
                     </tr>
                     <tr dashboard>
                         <c:choose>
-                            <c:when test="${dashboardAlramInfos != null and fn:length(dashboardAlramInfos) > 0}">
-                                <th><spring:message code="alram.column.alramDashboardSetting"/></th>
+                            <c:when test="${dashboardAlarmInfos != null and fn:length(dashboardAlarmInfos) > 0}">
+                                <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
                                 <td>
                                     <select name="dashboardUseYn">
                                         <option value="Y" selected="selected"><spring:message code="common.column.useYes"/></option>
                                         <option value="N"><spring:message code="common.column.useNo"/></option>
                                     </select>
                                 </td>
-                                <c:forEach var="info" items="${dashboardAlramInfos[0].datas}">
+                                <c:forEach var="info" items="${dashboardAlarmInfos[0].datas}">
                                     <c:choose>
-                                        <c:when test="${info.key=='alramType'}">
-                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" codeId="${info.value}" /></td>
+                                        <c:when test="${info.key=='alarmType'}">
+                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" codeId="${info.value}" /></td>
                                         </c:when>
                                         <c:when test="${info.key=='fileId'}">
                                             <td>
@@ -102,14 +102,14 @@
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <th><spring:message code="alram.column.alramDashboardSetting"/></th>
+                                <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
                                 <td>
                                     <select name="dashboardUseYn">
                                         <option value="Y"><spring:message code="common.column.useYes"/></option>
                                         <option value="N" selected="selected"><spring:message code="common.column.useNo"/></option>
                                     </select>
                                 </td>
-                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" disabled="true"/></td>
+                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" disabled="true"/></td>
                                 <td>
                                     <input type="text" name="ttsText" disabled="disabled"/>
                                     <select name="fileId" disabled="disabled">
@@ -122,14 +122,14 @@
                         </c:choose>
                     </tr>
                     <tr>
-                        <th><spring:message code="alram.column.alramDeviceSetting"/></th>
+                        <th><spring:message code="alarm.column.alarmDeviceSetting"/></th>
                         <td colspan="3">
                             <table class="t_defalut t_type02 t_style03">
                                 <c:choose>
-                                    <c:when test="${deviceAlramInfos != null and fn:length(deviceAlramInfos) > 0}">
-                                        <c:forEach var="deviceAlramInfo" items="${deviceAlramInfos}" varStatus="status">
+                                    <c:when test="${deviceAlarmInfos != null and fn:length(deviceAlarmInfos) > 0}">
+                                        <c:forEach var="deviceAlarmInfo" items="${deviceAlarmInfos}" varStatus="status">
                                             <tr device>
-                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                <c:forEach var="info" items="${deviceAlarmInfo.datas}">
                                                     <c:if test="${info.key=='deviceId'}">
                                                         <td>
                                                             <select name="deviceId">
@@ -140,12 +140,12 @@
                                                         </td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
-                                                    <c:if test="${info.key=='alramType'}">
-                                                        <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" codeId="${info.value}" /></td>
+                                                <c:forEach var="info" items="${deviceAlarmInfo.datas}">
+                                                    <c:if test="${info.key=='alarmType'}">
+                                                        <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" codeId="${info.value}" /></td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                <c:forEach var="info" items="${deviceAlarmInfo.datas}">
                                                     <c:if test="${info.key=='ttsText'}">
                                                         <td>
                                                             <input type="text" name="ttsText" value="${info.value}"/>
@@ -157,7 +157,7 @@
                                                         </td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <c:forEach var="info" items="${deviceAlramInfo.datas}">
+                                                <c:forEach var="info" items="${deviceAlarmInfo.datas}">
                                                     <c:if test="${info.key=='fileId'}">
                                                         <td>
                                                             <input type="text" style="display: none;" name="ttsText"/>
@@ -186,7 +186,7 @@
                                                     </c:forEach>
                                                 </select>
                                             </td>
-                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" /></td>
+                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" /></td>
                                             <td>
                                                 <input type="text" name="ttsText" />
                                                 <select name="fileId">
@@ -207,18 +207,18 @@
                             </table>
                         </td>
                     </tr>
-                    <c:if test="${!empty alram}">
+                    <c:if test="${!empty alarm}">
                         <tr>
                             <th><spring:message code="common.column.insertUser"/></th>
-                            <td>${alram.insertUserName}</td>
+                            <td>${alarm.insertUserName}</td>
                             <th><spring:message code="common.column.insertDatetime"/></th>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alram.insertDatetime}" /></td>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alarm.insertDatetime}" /></td>
                         </tr>
                         <tr>
                             <th><spring:message code="common.column.updateUser"/></th>
-                            <td>${alram.updateUserName}</td>
+                            <td>${alarm.updateUserName}</td>
                             <th><spring:message code="common.column.updateDatetime"/></th>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alram.updateDatetime}" /></td>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alarm.updateDatetime}" /></td>
                         </tr>
                     </c:if>
                     </tbody>
@@ -228,12 +228,12 @@
 
             <div class="table_title_area">
                 <div class="table_btn_set">
-                    <c:if test="${empty alram}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:addAlram(); return false;"><spring:message code="common.button.add"/></button>
+                    <c:if test="${empty alarm}">
+                        <button class="btn btype01 bstyle03" onclick="javascript:addAlarm(); return false;"><spring:message code="common.button.add"/></button>
                     </c:if>
-                    <c:if test="${!empty alram}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:saveAlram(); return false;"><spring:message code="common.button.save"/></button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeAlram(); return false;"><spring:message code="common.button.remove"/></button>
+                    <c:if test="${!empty alarm}">
+                        <button class="btn btype01 bstyle03" onclick="javascript:saveAlarm(); return false;"><spring:message code="common.button.save"/></button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeAlarm(); return false;"><spring:message code="common.button.remove"/></button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/></button>
                 </div>
@@ -253,7 +253,7 @@
                     </c:forEach>
                 </select>
             </td>
-            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alramType" /></td>
+            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" /></td>
             <td>
                 <input type="text" name="ttsText" />
                 <select name="fileId">
@@ -272,13 +272,13 @@
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
-    var form = $('#alramForm');
+    var form = $('#alarmForm');
 
     var urlConfig = {
-        'addUrl':'${rootPath}/alram/add.json'
-        ,'saveUrl':'${rootPath}/alram/save.json'
-        ,'removeUrl':'${rootPath}/alram/remove.json'
-        ,'listUrl':'${rootPath}/alram/list.html'
+        'addUrl':'${rootPath}/alarm/add.json'
+        ,'saveUrl':'${rootPath}/alarm/save.json'
+        ,'removeUrl':'${rootPath}/alarm/remove.json'
+        ,'listUrl':'${rootPath}/alarm/list.html'
     };
 
     var messageConfig = {
@@ -291,37 +291,37 @@
         ,'addComplete':'<spring:message code="common.message.addComplete"/>'
         ,'saveComplete':'<spring:message code="common.message.saveComplete"/>'
         ,'removeComplete':'<spring:message code="common.message.removeComplete"/>'
-        ,'emptyAlramName':'<spring:message code="alram.message.emptyAlramName"/>'
+        ,'emptyAlarmName':'<spring:message code="alarm.message.emptyAlarmName"/>'
     };
 
     $(document).ready(function() {
         $("table[changeTb]").on("change", function(){
-            if(event.target.name=="alramType"){
-                changeAlramType();
+            if(event.target.name=="alarmType"){
+                changeAlarmType();
             }
         });
 
         $("select[name='dashboardUseYn']").on("change", function(){
             if(this.value=='Y'){
-                $("tr[dashboard] select[name='alramType']").prop("disabled",false);
+                $("tr[dashboard] select[name='alarmType']").prop("disabled",false);
                 $("tr[dashboard] input[name='ttsText']").prop("disabled",false);
                 $("tr[dashboard] select[name='fileId']").prop("disabled",false);
             }else{
-                $("tr[dashboard] select[name='alramType']").prop("disabled",true);
+                $("tr[dashboard] select[name='alarmType']").prop("disabled",true);
                 $("tr[dashboard] input[name='ttsText']").prop("disabled",true);
                 $("tr[dashboard] select[name='fileId']").prop("disabled",true);
             }
         });
 
-        changeAlramType();
+        changeAlarmType();
     });
 
-    function changeAlramType(){
+    function changeAlarmType(){
         $.each($("table[changeTb] tr"),function(){
             var ttsTextTag = $(this).find("input[name='ttsText']");
             var fildIdTag = $(this).find("select[name='fileId']");
 
-            switch ($(this).find("select[name='alramType']").val()){
+            switch ($(this).find("select[name='alarmType']").val()){
                 case "ARM002" :
                     ttsTextTag.hide();
                     fildIdTag.show();
@@ -340,7 +340,7 @@
      */
     function addSettingLayer() {
         $("#addBtn").before($("#addSettingTag tr").clone());
-        changeAlramType();
+        changeAlarmType();
     }
 
     /**
@@ -351,30 +351,30 @@
     }
 
     function validate(){
-        if(form.find('input[name=alramName]').val().length == 0){
-            alertMessage('emptyAlramName');
+        if(form.find('input[name=alarmName]').val().length == 0){
+            alertMessage('emptyAlarmName');
             return false;
         }
 
-        var alramInfo = addAlramInfo();
-        if(alramInfo.length==0){
+        var alarmInfo = addAlarmInfo();
+        if(alarmInfo.length==0){
             return false;
         }else{
-            $("input[name=alramInfo]").val(alramInfo.join());
+            $("input[name=alarmInfo]").val(alarmInfo.join());
         }
         return true;
     }
 
-    function addAlramInfo(){
-        var alramInfo = [];
+    function addAlarmInfo(){
+        var alarmInfo = [];
 
         if($("select[name='dashboardUseYn']").val()=='Y'){
             var addText = "";
 
             addText += "targetType:dashboard";
-            addText += "|alramType:" + $("tr[dashboard] select[name='alramType']").val();
+            addText += "|alarmType:" + $("tr[dashboard] select[name='alarmType']").val();
 
-            switch ($("tr[dashboard] select[name='alramType']").val()){
+            switch ($("tr[dashboard] select[name='alarmType']").val()){
                 case "ARM001" :
                     addText += "|ttsText:" + $("tr[dashboard] input[name='ttsText']").val();
                     break;
@@ -384,7 +384,7 @@
                 default :
                     break;
             }
-            alramInfo.push(addText);
+            alarmInfo.push(addText);
         }
 
         $.each($("table[changeTb] tr[device]"),function(){
@@ -392,9 +392,9 @@
 
             addText += "targetType:device";
             addText +=  "|deviceId:" + $(this).find("select[name='deviceId']").val();
-            addText +=  "|alramType:" + $(this).find("select[name='alramType']").val();
+            addText +=  "|alarmType:" + $(this).find("select[name='alarmType']").val();
 
-            switch ($(this).find("select[name='alramType']").val()){
+            switch ($(this).find("select[name='alarmType']").val()){
                 case "ARM001" :
                     addText += "|ttsText:" + $(this).find("input[name='ttsText']").val()
                     break;
@@ -404,13 +404,13 @@
                 default :
                     break;
             }
-            alramInfo.push(addText);
+            alarmInfo.push(addText);
         });
 
-        return alramInfo;
+        return alarmInfo;
     }
 
-    function addAlram(){
+    function addAlarm(){
         if(!confirm(messageConfig['addConfirm'])){
             return false;
         }
@@ -420,7 +420,7 @@
         }
     }
 
-    function saveAlram(){
+    function saveAlarm(){
         if(!confirm(messageConfig['saveConfirm'])){
             return false;
         }
@@ -430,7 +430,7 @@
         }
     }
 
-    function removeAlram(){
+    function removeAlarm(){
         if(!confirm(messageConfig['removeConfirm'])){
             return false;
         }

@@ -4,11 +4,11 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.CriticalSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.repository.bean.AlramBean;
+import com.icent.isaver.repository.bean.AlarmBean;
 import com.icent.isaver.repository.bean.CriticalBean;
 import com.icent.isaver.repository.bean.CriticalInfoBean;
 import com.icent.isaver.repository.bean.EventBean;
-import com.icent.isaver.repository.dao.base.AlramDao;
+import com.icent.isaver.repository.dao.base.AlarmDao;
 import com.icent.isaver.repository.dao.base.CriticalDao;
 import com.icent.isaver.repository.dao.base.CriticalInfoDao;
 import com.icent.isaver.repository.dao.base.EventDao;
@@ -58,7 +58,7 @@ public class CriticalSvcImpl implements CriticalSvc {
     private EventDao eventDao;
 
     @Inject
-    private AlramDao alramDao;
+    private AlarmDao alarmDao;
 
     @Override
     public ModelAndView findListCritical(Map<String, String> parameters) {
@@ -79,11 +79,11 @@ public class CriticalSvcImpl implements CriticalSvc {
         List<CriticalInfoBean> criticalInfos = criticalInfoDao.findListCriticalInfo(parameters);
 
         List<EventBean> events = eventDao.findListNotInCriticalList(parameters);
-        List<AlramBean> alramList = alramDao.findListAlram(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
+        List<AlarmBean> alarmList = alarmDao.findListAlarm(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("critical", critical);
-        modelAndView.addObject("alramList", alramList);
+        modelAndView.addObject("alarmList", alarmList);
         modelAndView.addObject("criticalInfos", criticalInfos);
         modelAndView.addObject("events", events);
 
@@ -108,7 +108,7 @@ public class CriticalSvcImpl implements CriticalSvc {
                 criticalInfoBean.setEndValue(Float.parseFloat(infos[1]));
                 criticalInfoBean.setCriticalLevel(infos[2]);
                 if(infos.length == 4){
-                    criticalInfoBean.setAlramId(infos[3]);
+                    criticalInfoBean.setAlarmId(infos[3]);
                 }
                 criticalInfoList.add(criticalInfoBean);
             }
@@ -149,7 +149,7 @@ public class CriticalSvcImpl implements CriticalSvc {
                 criticalInfoBean.setEndValue(Float.parseFloat(infos[1]));
                 criticalInfoBean.setCriticalLevel(infos[2]);
                 if(infos.length == 4){
-                    criticalInfoBean.setAlramId(infos[3]);
+                    criticalInfoBean.setAlarmId(infos[3]);
                 }
                 criticalInfoList.add(criticalInfoBean);
             }

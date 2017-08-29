@@ -71,8 +71,8 @@
             , notEqualPassword    :'<spring:message code="dashboard.message.notEqualPassword"/>'
         };
 
-        var alramPlayer;
-        var alramDefaultSource = '${rootPath}/assets/library/sound/alarm.mp3';
+        var alarmPlayer;
+        var alarmDefaultSource = '${rootPath}/assets/library/sound/alarm.mp3';
         var segmentEnd;
         var refreshTimeCallBack;
 
@@ -135,13 +135,13 @@
             wsConnect();
             aliveSend(900000);
 
-            alramPlayer = document.getElementsByTagName("audio")[0];
-            alramPlayer.addEventListener('timeupdate', function (){
-                if (segmentEnd && alramPlayer.currentTime >= segmentEnd) {
-                    alramPlayer.pause();
+            alarmPlayer = document.getElementsByTagName("audio")[0];
+            alarmPlayer.addEventListener('timeupdate', function (){
+                if (segmentEnd && alarmPlayer.currentTime >= segmentEnd) {
+                    alarmPlayer.pause();
                 }
             }, false);
-            setAlramAudio();
+            setAlarmAudio();
         });
 
         function alarmCancelBtnAction(){
@@ -385,7 +385,7 @@
         function alarmListRender(data){
             if(data!=null && data['eventLogs']!=null){
                 for(var index in data['eventLogs']){
-                    addAlarm(data['eventLogs'][index], false);
+                    addAlarmEvent(data['eventLogs'][index], false);
                 }
 
                 alarmListRefresh();
@@ -398,7 +398,7 @@
          * @author psb
          * @private
          */
-        function addAlarm(eventLog, flag){
+        function addAlarmEvent(eventLog, flag){
             if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
                 var eventInfos = eventLog['infos'];
                 var alarmId = "";
@@ -457,7 +457,7 @@
                     } catch(e) {}
 
                     /* 싸이렌 */
-//                    setAlramAudio();
+//                    setAlarmAudio();
                     playSegment();
 
                     var toastTag = templateHelper.getTemplate("toast");
@@ -485,7 +485,7 @@
          * @author psb
          * @private
          */
-        function removeAlarm(eventLogs){
+        function removeAlarmEvent(eventLogs){
             for(var index in eventLogs){
                 var eventLog = eventLogs[index];
                 var eventInfos = eventLog['infos'];
@@ -640,15 +640,15 @@
             location.href = layoutUrlConfig['mainUrl'];
         }
 
-        function setAlramAudio(sourceUrl){
+        function setAlarmAudio(sourceUrl){
             if(sourceUrl==null){
-                sourceUrl = alramDefaultSource;
+                sourceUrl = alarmDefaultSource;
             }
 
-            $("#alramSource").attr("src",sourceUrl);
+            $("#alarmSource").attr("src",sourceUrl);
 
-            if(alramPlayer!=null){
-                alramPlayer.load();
+            if(alarmPlayer!=null){
+                alarmPlayer.load();
             }
         }
 
@@ -666,13 +666,13 @@
                 endTime = 5;
             }
 
-            if (alramPlayer.duration > 0 && !alramPlayer.paused) {
+            if (alarmPlayer.duration > 0 && !alarmPlayer.paused) {
                 //Its playing...do your job
             } else {
                 //Not playing...maybe paused, stopped or never played.
                 segmentEnd = endTime;
-                alramPlayer.currentTime = startTime;
-                alramPlayer.play();
+                alarmPlayer.currentTime = startTime;
+                alarmPlayer.play();
             }
         }
 
@@ -768,16 +768,16 @@
                     callBackFlag = false;
                     break;
                 case "addAlarmEvent": // 알림이벤트 등록
-                    if(resultData['dashboardAlramFileUrl']!=null){
-                        setAlramAudio(resultData['dashboardAlramFileUrl']);
+                    if(resultData['dashboardAlarmFileUrl']!=null){
+                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
                     }else{
-                        setAlramAudio();
+                        setAlarmAudio();
                     }
-                    addAlarm(resultData['eventLog'], true);
+                    addAlarmEvent(resultData['eventLog'], true);
                     callBackFlag = true;
                     break;
                 case "removeAlarmEvent": // 알림이벤트 해제
-                    removeAlarm(resultData['eventLog']);
+                    removeAlarmEvent(resultData['eventLog']);
                     callBackFlag = true;
                     break;
                 case "addEvent": // 일반이벤트 등록
@@ -904,7 +904,7 @@
     </div>
 
     <audio controls style="display: none">
-        <source id="alramSource" type="audio/mpeg">
+        <source id="alarmSource" type="audio/mpeg">
     </audio>
 
     <tiles:insertAttribute name="body" />

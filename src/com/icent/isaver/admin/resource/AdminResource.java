@@ -94,7 +94,7 @@ public class AdminResource {
      *
      * @author psb
      */
-    public final static String[] ALRAM_TARGET_TYPE = new String[]{"dashboard","device"};
+    public final static String[] ALARM_TARGET_TYPE = new String[]{"dashboard","device"};
 
     /**
      * 그룹코드 타입 정의

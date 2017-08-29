@@ -14,7 +14,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.alram"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.alarm"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -22,19 +22,19 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <form id="alramForm" method="POST">
+    <form id="alarmForm" method="POST">
         <article class="search_area">
             <div class="search_contents">
                 <p class="itype_01">
-                    <span><spring:message code='alram.column.alramId'/></span>
+                    <span><spring:message code='alarm.column.alarmId'/></span>
                     <span>
-                        <input type="text" name="alramId" value="${paramBean.alramId}"/>
+                        <input type="text" name="alarmId" value="${paramBean.alarmId}"/>
                     </span>
                 </p>
                 <p class="itype_01">
-                    <span><spring:message code='alram.column.alramName'/></span>
+                    <span><spring:message code='alarm.column.alarmName'/></span>
                     <span>
-                        <input type="text" name="alramName" value="${paramBean.alramName}"/>
+                        <input type="text" name="alarmName" value="${paramBean.alarmName}"/>
                     </span>
                 </p>
                 <p class="itype_01">
@@ -74,29 +74,29 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><spring:message code="alram.column.alramId"/></th>
-                    <th><spring:message code="alram.column.alramName"/></th>
+                    <th><spring:message code="alarm.column.alarmId"/></th>
+                    <th><spring:message code="alarm.column.alarmName"/></th>
                     <th><spring:message code="common.column.useYn"/></th>
                     <th><spring:message code="common.column.insertDatetime"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
-                    <c:when test="${alramList != null and fn:length(alramList) > 0}">
-                        <c:forEach var="alram" items="${alramList}">
-                            <tr onclick="moveDetail(String('${alram.alramId}'));">
-                                <td>${alram.alramId}</td>
-                                <td>${alram.alramName}</td>
+                    <c:when test="${alarmList != null and fn:length(alarmList) > 0}">
+                        <c:forEach var="alarm" items="${alarmList}">
+                            <tr onclick="moveDetail(String('${alarm.alarmId}'));">
+                                <td>${alarm.alarmId}</td>
+                                <td>${alarm.alarmName}</td>
                                 <td>
-                                    <c:if test="${alram.useYn=='Y'}">
+                                    <c:if test="${alarm.useYn=='Y'}">
                                         <spring:message code="common.column.useYes"/>
                                     </c:if>
-                                    <c:if test="${alram.useYn=='N'}">
+                                    <c:if test="${alarm.useYn=='N'}">
                                         <spring:message code="common.column.useNo"/>
                                     </c:if>
                                 </td>
                                 <td>
-                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alram.insertDatetime}" />
+                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${alarm.insertDatetime}" />
                                 </td>
                             </tr>
                         </c:forEach>
@@ -119,11 +119,11 @@
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
-    var form = $('#alramForm');
+    var form = $('#alarmForm');
 
     var urlConfig = {
-        'listUrl':'${rootPath}/alram/list.html'
-        ,'detailUrl':'${rootPath}/alram/detail.json'
+        'listUrl':'${rootPath}/alarm/list.html'
+        ,'detailUrl':'${rootPath}/alarm/detail.json'
     };
 
     var pageConfig = {
@@ -165,7 +165,7 @@
 
     function moveDetail(id){
         var detailForm = $('<FORM>').attr('action',urlConfig['detailUrl']).attr('method','POST');
-        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','alramId').attr('value',id));
+        detailForm.append($('<INPUT>').attr('type','hidden').attr('name','alarmId').attr('value',id));
         document.body.appendChild(detailForm.get(0));
         detailForm.submit();
     }

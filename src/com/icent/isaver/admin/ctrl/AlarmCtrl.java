@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
-import com.icent.isaver.admin.svc.AlramSvc;
+import com.icent.isaver.admin.svc.AlarmSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,11 +30,11 @@ import java.util.Map;
  * </pre>
  */
 @Controller
-@RequestMapping(value="/alram/*")
-public class AlramCtrl {
+@RequestMapping(value="/alarm/*")
+public class AlarmCtrl {
 
     @Inject
-    private AlramSvc alramSvc;
+    private AlarmSvc alarmSvc;
 
     @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
@@ -45,10 +45,10 @@ public class AlramCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
-    public ModelAndView findListAlram(@RequestParam Map<String, String> parameters) {
+    public ModelAndView findListAlarm(@RequestParam Map<String, String> parameters) {
         AdminHelper.setPageParam(parameters,defaultPageSize);
-        ModelAndView modelAndView = alramSvc.findListAlram(parameters);
-        modelAndView.setViewName("alramList");
+        ModelAndView modelAndView = alarmSvc.findListAlarm(parameters);
+        modelAndView.setViewName("alarmList");
         return modelAndView;
     }
 
@@ -58,13 +58,13 @@ public class AlramCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/detail")
-    public ModelAndView findByAlram(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = alramSvc.findByAlram(parameters);
-        modelAndView.setViewName("alramDetail");
+    public ModelAndView findByAlarm(@RequestParam Map<String, String> parameters) {
+        ModelAndView modelAndView = alarmSvc.findByAlarm(parameters);
+        modelAndView.setViewName("alarmDetail");
         return modelAndView;
     }
 
-    private final static String[] addAlramParam = new String[]{"alramInfo","alramName","useYn"};
+    private final static String[] addAlarmParam = new String[]{"alarmInfo","alarmName","useYn"};
 
     /**
      * 임계치알림을 등록한다.
@@ -75,17 +75,17 @@ public class AlramCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST}, value="/add")
-    public ModelAndView addAlram(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        if(MapUtils.nullCheckMap(parameters, addAlramParam)){
+    public ModelAndView addAlarm(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        if(MapUtils.nullCheckMap(parameters, addAlarmParam)){
             throw new IcentException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = alramSvc.addAlram(request, parameters);
+        ModelAndView modelAndView = alarmSvc.addAlarm(request, parameters);
         return modelAndView;
     }
 
-    private final static String[] saveAlramParam = new String[]{"alramId","alramName","useYn","alramInfo"};
+    private final static String[] saveAlarmParam = new String[]{"alarmId","alarmName","useYn","alarmInfo"};
 
     /**
      * 임계치알림을 수정한다.
@@ -96,17 +96,17 @@ public class AlramCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST}, value="/save")
-    public ModelAndView saveAlram(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        if(MapUtils.nullCheckMap(parameters, saveAlramParam)){
+    public ModelAndView saveAlarm(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        if(MapUtils.nullCheckMap(parameters, saveAlarmParam)){
             throw new IcentException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = alramSvc.saveAlram(request, parameters);
+        ModelAndView modelAndView = alarmSvc.saveAlarm(request, parameters);
         return modelAndView;
     }
 
-    private final static String[] removeAlramParam = new String[]{"alramId"};
+    private final static String[] removeAlarmParam = new String[]{"alarmId"};
 
     /**
      * 임계치알림을 삭제한다.
@@ -117,12 +117,12 @@ public class AlramCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
-    public ModelAndView removeAlram(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        if(MapUtils.nullCheckMap(parameters, removeAlramParam)){
+    public ModelAndView removeAlarm(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        if(MapUtils.nullCheckMap(parameters, removeAlarmParam)){
             throw new IcentException("");
         }
 
-        ModelAndView modelAndView = alramSvc.removeAlram(request, parameters);
+        ModelAndView modelAndView = alarmSvc.removeAlarm(request, parameters);
         return modelAndView;
     }
 }

@@ -96,10 +96,10 @@
                                                 <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
                                                 <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" codeId="${criticalInfo.criticalLevel}" /></td>
                                                 <td>
-                                                    <select name="alramId">
+                                                    <select name="alarmId">
                                                         <option value=""><spring:message code="common.column.selectNo"/></option>
-                                                        <c:forEach var="alram" items="${alramList}">
-                                                            <option value="${alram.alramId}" <c:if test="${alram.alramId==criticalInfo.alramId}">selected="selected"</c:if>>${alram.alramName}</option>
+                                                        <c:forEach var="alarm" items="${alarmList}">
+                                                            <option value="${alarm.alarmId}" <c:if test="${alarm.alarmId==criticalInfo.alarmId}">selected="selected"</c:if>>${alarm.alarmName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </td>
@@ -118,10 +118,10 @@
                                             <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
                                             <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
                                             <td>
-                                                <select name="alramId">
+                                                <select name="alarmId">
                                                     <option value=""><spring:message code="common.column.selectNo"/></option>
-                                                    <c:forEach var="alram" items="${alramList}">
-                                                        <option value="${alram.alramId}">${alram.alramName}</option>
+                                                    <c:forEach var="alarm" items="${alarmList}">
+                                                        <option value="${alarm.alarmId}">${alarm.alarmName}</option>
                                                     </c:forEach>
                                                 </select>
                                             </td>
@@ -180,10 +180,10 @@
             <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
             <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
             <td>
-                <select name="alramId">
+                <select name="alarmId">
                     <option value=""><spring:message code="common.column.selectNo"/></option>
-                    <c:forEach var="alram" items="${alramList}">
-                        <option value="${alram.alramId}">${alram.alramName}</option>
+                    <c:forEach var="alarm" items="${alarmList}">
+                        <option value="${alarm.alarmId}">${alarm.alarmName}</option>
                     </c:forEach>
                 </select>
             </td>
@@ -275,7 +275,7 @@
             var startValue = $.trim($(this).find("input[name='startValue']").val());
             var endValue = $.trim($(this).find("input[name='endValue']").val());
             var criticalLevel = $(this).find("select[name='criticalLevel']").val();
-            var alramId = $(this).find("select[name='alramId']").val();
+            var alarmId = $(this).find("select[name='alarmId']").val();
 
             if (Number(endValue) < Number(startValue)) {
                 alertFlag = true;
@@ -286,7 +286,7 @@
             }
 
             if (alertFlag == false) {
-                criticalInfo.push(startValue + "|" + endValue + "|" + criticalLevel + "|" + alramId);
+                criticalInfo.push(startValue + "|" + endValue + "|" + criticalLevel + "|" + alarmId);
                 checkDatas.push({start : Number(startValue),end : Number(endValue) });
             }
         });

@@ -288,10 +288,10 @@
         임계치 알림 설정 관리
         @author psb
     -->
-    <definition name="alramList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alram/list.jsp" />
+    <definition name="alarmList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/alarm/list.jsp" />
     </definition>
-    <definition name="alramDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alram/detail.jsp" />
+    <definition name="alarmDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/alarm/detail.jsp" />
     </definition>
 </tiles-definitions>

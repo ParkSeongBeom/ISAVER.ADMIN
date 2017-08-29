@@ -2,14 +2,14 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
-import com.icent.isaver.admin.svc.AlramSvc;
+import com.icent.isaver.admin.svc.AlarmSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.repository.bean.AlramBean;
-import com.icent.isaver.repository.bean.AlramInfoBean;
+import com.icent.isaver.repository.bean.AlarmBean;
+import com.icent.isaver.repository.bean.AlarmInfoBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.bean.FileBean;
-import com.icent.isaver.repository.dao.base.AlramDao;
-import com.icent.isaver.repository.dao.base.AlramInfoDao;
+import com.icent.isaver.repository.dao.base.AlarmDao;
+import com.icent.isaver.repository.dao.base.AlarmInfoDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.FileDao;
 import com.kst.common.spring.TransactionUtil;
@@ -43,13 +43,13 @@ import java.util.Map;
  * </pre>
  */
 @Service
-public class AlramSvcImpl implements AlramSvc {
+public class AlarmSvcImpl implements AlarmSvc {
 
     @Inject
-    private AlramDao alramDao;
+    private AlarmDao alarmDao;
 
     @Inject
-    private AlramInfoDao alramInfoDao;
+    private AlarmInfoDao alarmInfoDao;
 
     @Inject
     private DeviceDao deviceDao;
@@ -61,36 +61,36 @@ public class AlramSvcImpl implements AlramSvc {
     private DataSourceTransactionManager transactionManager;
 
     @Override
-    public ModelAndView findListAlram(Map<String, String> parameters) {
-        List<AlramBean> alramList = alramDao.findListAlram(parameters);
-        Integer totalCount = alramDao.findCountAlram(parameters);
+    public ModelAndView findListAlarm(Map<String, String> parameters) {
+        List<AlarmBean> alarmList = alarmDao.findListAlarm(parameters);
+        Integer totalCount = alarmDao.findCountAlarm(parameters);
 
         AdminHelper.setPageTotalCount(parameters, totalCount);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("alramList", alramList);
+        modelAndView.addObject("alarmList", alarmList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView findByAlram(Map<String, String> parameters) {
-        AlramBean alram = alramDao.findByAlram(parameters);
+    public ModelAndView findByAlarm(Map<String, String> parameters) {
+        AlarmBean alarm = alarmDao.findByAlarm(parameters);
 
-        Map<String, String> alramInfoParam = new HashMap<>();
-        alramInfoParam.put("alramId",parameters.get("alramId"));
-        alramInfoParam.put("targetType",AdminResource.ALRAM_TARGET_TYPE[0]);
-        List<AlramInfoBean> dashboardAlramInfos = alramInfoDao.findListAlramInfo(alramInfoParam);
-        alramInfoParam.put("targetType",AdminResource.ALRAM_TARGET_TYPE[1]);
-        List<AlramInfoBean> deviceAlramInfos = alramInfoDao.findListAlramInfo(alramInfoParam);
+        Map<String, String> alarmInfoParam = new HashMap<>();
+        alarmInfoParam.put("alarmId",parameters.get("alarmId"));
+        alarmInfoParam.put("targetType",AdminResource.ALARM_TARGET_TYPE[0]);
+        List<AlarmInfoBean> dashboardAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
+        alarmInfoParam.put("targetType",AdminResource.ALARM_TARGET_TYPE[1]);
+        List<AlarmInfoBean> deviceAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
 
         List<DeviceBean> devices = deviceDao.findListDevice(null);
         List<FileBean> files = fileDao.findListFile(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("alram", alram);
-        modelAndView.addObject("dashboardAlramInfos", dashboardAlramInfos);
-        modelAndView.addObject("deviceAlramInfos", deviceAlramInfos);
+        modelAndView.addObject("alarm", alarm);
+        modelAndView.addObject("dashboardAlarmInfos", dashboardAlarmInfos);
+        modelAndView.addObject("deviceAlarmInfos", deviceAlarmInfos);
         modelAndView.addObject("devices", devices);
         modelAndView.addObject("files", files);
         modelAndView.addObject("paramBean",parameters);
@@ -98,42 +98,42 @@ public class AlramSvcImpl implements AlramSvc {
     }
 
     @Override
-    public ModelAndView addAlram(HttpServletRequest request, Map<String, String> parameters) {
-        List<Map<String, String>> alramInfoList = new ArrayList<>();
-        String alramId = StringUtils.getGUID32();
-        String alramInfo = parameters.get("alramInfo");
-        parameters.put("alramId",alramId);
+    public ModelAndView addAlarm(HttpServletRequest request, Map<String, String> parameters) {
+        List<Map<String, String>> alarmInfoList = new ArrayList<>();
+        String alarmId = StringUtils.getGUID32();
+        String alarmInfo = parameters.get("alarmInfo");
+        parameters.put("alarmId",alarmId);
 
-        if (!alramInfo.equals("") && alramInfo != null) {
-            String[] alramInfos = alramInfo.split(",");
+        if (!alarmInfo.equals("") && alarmInfo != null) {
+            String[] alarmInfos = alarmInfo.split(",");
 
-            for (String info : alramInfos) {
+            for (String info : alarmInfos) {
                 String[] infos = info.split("\\|");
-                String alramInfoId = StringUtils.getGUID32();
+                String alarmInfoId = StringUtils.getGUID32();
 
                 for(String item : infos){
                     String[] datas = item.split(":");
-                    Map<String, String> alramInfoMap = new HashMap<>();
-                    alramInfoMap.put("alramInfoId", alramInfoId);
-                    alramInfoMap.put("alramId", alramId);
-                    alramInfoMap.put("key", datas[0]);
+                    Map<String, String> alarmInfoMap = new HashMap<>();
+                    alarmInfoMap.put("alarmInfoId", alarmInfoId);
+                    alarmInfoMap.put("alarmId", alarmId);
+                    alarmInfoMap.put("key", datas[0]);
                     if(datas.length==2){
-                        alramInfoMap.put("value", datas[1]);
+                        alarmInfoMap.put("value", datas[1]);
                     }else{
-                        alramInfoMap.put("value", "");
+                        alarmInfoMap.put("value", "");
                     }
-                    alramInfoList.add(alramInfoMap);
+                    alarmInfoList.add(alarmInfoMap);
                 }
             }
         }else{
-            alramInfoList = null;
+            alarmInfoList = null;
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            alramDao.addAlram(parameters);
-            if(alramInfoList!=null){
-                alramInfoDao.addAlramInfo(alramInfoList);
+            alarmDao.addAlarm(parameters);
+            if(alarmInfoList!=null){
+                alarmInfoDao.addAlarmInfo(alarmInfoList);
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -144,42 +144,42 @@ public class AlramSvcImpl implements AlramSvc {
     }
 
     @Override
-    public ModelAndView saveAlram(HttpServletRequest request, Map<String, String> parameters) {
-        List<Map<String, String>> alramInfoList = new ArrayList<>();
-        String alramInfo = parameters.get("alramInfo");
+    public ModelAndView saveAlarm(HttpServletRequest request, Map<String, String> parameters) {
+        List<Map<String, String>> alarmInfoList = new ArrayList<>();
+        String alarmInfo = parameters.get("alarmInfo");
 
-        if (!alramInfo.equals("") && alramInfo != null) {
-            String[] alramInfos = alramInfo.split(",");
+        if (!alarmInfo.equals("") && alarmInfo != null) {
+            String[] alarmInfos = alarmInfo.split(",");
 
-            for (String info : alramInfos) {
+            for (String info : alarmInfos) {
                 String[] infos = info.split("\\|");
-                String alramInfoId = StringUtils.getGUID32();
+                String alarmInfoId = StringUtils.getGUID32();
 
                 for(String item : infos){
                     String[] datas = item.split(":");
 
-                    Map<String, String> alramInfoMap = new HashMap<>();
-                    alramInfoMap.put("alramInfoId", alramInfoId);
-                    alramInfoMap.put("alramId", parameters.get("alramId"));
-                    alramInfoMap.put("key", datas[0]);
+                    Map<String, String> alarmInfoMap = new HashMap<>();
+                    alarmInfoMap.put("alarmInfoId", alarmInfoId);
+                    alarmInfoMap.put("alarmId", parameters.get("alarmId"));
+                    alarmInfoMap.put("key", datas[0]);
                     if(datas.length==2){
-                        alramInfoMap.put("value", datas[1]);
+                        alarmInfoMap.put("value", datas[1]);
                     }else{
-                        alramInfoMap.put("value", "");
+                        alarmInfoMap.put("value", "");
                     }
-                    alramInfoList.add(alramInfoMap);
+                    alarmInfoList.add(alarmInfoMap);
                 }
             }
         }else{
-            alramInfoList = null;
+            alarmInfoList = null;
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            alramInfoDao.removeAlramInfo(parameters);
-            alramDao.saveAlram(parameters);
-            if(alramInfoList!=null){
-                alramInfoDao.addAlramInfo(alramInfoList);
+            alarmInfoDao.removeAlarmInfo(parameters);
+            alarmDao.saveAlarm(parameters);
+            if(alarmInfoList!=null){
+                alarmInfoDao.addAlarmInfo(alarmInfoList);
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
@@ -190,11 +190,11 @@ public class AlramSvcImpl implements AlramSvc {
     }
 
     @Override
-    public ModelAndView removeAlram(HttpServletRequest request, Map<String, String> parameters) {
+    public ModelAndView removeAlarm(HttpServletRequest request, Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            alramInfoDao.removeAlramInfo(parameters);
-            alramDao.removeAlram(parameters);
+            alarmInfoDao.removeAlarmInfo(parameters);
+            alarmDao.removeAlarm(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
