@@ -217,7 +217,9 @@ function MenuView(model) {
         }
 
         if(MenuView._model.getTargetMenuId()!=""){
-            setSelectedMenu(MenuView._model.getTargetMenuId());
+            if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
+                setSelectedMenu(MenuView._model.getParentMenuId());
+            }
         }else{
             $("ul[menu_main] > .menu_dashboard > button").addClass('on');
         }
@@ -226,10 +228,12 @@ function MenuView(model) {
             var targetTag = $("li[name='"+_targetMenuId+"']");
             if(targetTag.length > 0){
                 targetTag.find("> button").addClass("on");
-                setSelectedMenu(targetTag.parent().parent().attr("name"));
-            }else{
-                setSelectedMenu(MenuView._model.getParentMenuId());
+                if(_targetMenuId!="dashboardMenu" && _targetMenuId!="adminMenu"){
+                    setSelectedMenu(targetTag.parent().parent().attr("name"));
+                }
+                return true;
             }
+            return false;
         }
     };
 
