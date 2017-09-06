@@ -32,43 +32,8 @@ function DeviceView(model) {
         serialNo: function (data) {
             $(formName + " [name='serialNo']").val(data.serialNo);
         },
-        ipAddress: function (data) {
-            $(formName + " [name='ipAddress']").val(data.ipAddress);
-        },
-        domain: function (data) {
-            $(formName + " [name='domain']").val(data.domain);
-        },
-        hostType: function (data) {
-            if(data.hostType!='' && data.hostType!=null){
-                $(formName + " [name='hostType']").val(data.hostType).prop("selected", true);
-            }
-        },
         linkUrl: function (data) {
             $(formName + " [name='linkUrl']").val(data.linkUrl);
-        },
-        webPort: function (data) {
-            $(formName + " [name='webPort']").val(data.webPort);
-        },
-        rtspPort: function (data) {
-            $(formName + " [name='rtspPort']").val(data.rtspPort);
-        },
-        fileId: function (data) {
-            $(formName + " [name='fileId']").val(data.fileId);
-        },
-        fileName: function (data) {
-            $(formName + " [name='fileName']").val(data.fileName);
-        },
-        eventId: function (data) {
-            $(formName + " [name='eventId']").val(data.eventId).prop("selected", true);
-        },
-        cameraManufacturer: function (data) {
-            $(formName + " [name='cameraManufacturer']").val(data.cameraManufacturer).prop("selected", true);
-        },
-        deviceUserId: function (data) {
-            $(formName + " [name='deviceUserId']").val(data.deviceUserId);
-        },
-        devicePassword: function (data) {
-            $(formName + " [name='devicePassword']").val(data.devicePassword);
         },
         deviceDesc: function (data) {
             $(formName + " [name='deviceDesc']").val(data.deviceDesc);
@@ -84,21 +49,6 @@ function DeviceView(model) {
                 $(formName + " [name='provisionFlag']").val("Y");
             } else {
                 $(formName + " [name='provisionFlag']").val("N");
-            }
-        },
-        deviceAliveFlag: function (data) {
-            if (data['deviceAliveFlag'] == 'Y') {
-                $(formName + " [name='deviceAliveFlag']").val("Y");
-            } else {
-                $(formName + " [name='deviceAliveFlag']").val("N");
-            }
-        },
-        deviceAliveCheckType: function (data) {
-
-            if (data.deviceAliveCheckType !=null || data.deviceAliveCheckType == "") {
-                $("select[name=deviceAliveCheckType] option").eq(0).prop("checked", true);
-            } else {
-                $(formName + " [name='deviceAliveCheckType']").val(data.deviceAliveCheckType);
             }
         },
         deviceStat: function (data) {
@@ -277,8 +227,6 @@ function DeviceView(model) {
         $(formName + " select[name='parentDeviceId']").val(DeviceView._model.getDeviceId());
         $(formName + " select[name='parentDeviceId']").find("option[value=" +DeviceView._model.getDeviceId()+"]").attr('disabled', false);
 
-        $(formName + " .ipAddressShowHide").hide();
-        $(formName + " .ipCamShowHide").hide();
         $(formName + " tr[name='showHideTag']").hide();
         $(formName + " button[name='saveBtn']").hide();
         $(formName + " button[name='removeBtn']").hide();
@@ -296,20 +244,6 @@ function DeviceView(model) {
         $(formName + " select[name='deviceCode'] option").eq(0).prop("selected", true);
         $(formName + " select[name='parentDeviceId'] option").eq(0).prop("selected", true);
         $(formName + " select[name='areaId'] option").eq(0).prop("selected", true);
-        $(formName + " select[name='hostType'] option").eq(0).prop("selected", true);
-
-        $(formName + " select[name=eventId]").val("");
-        $(formName + " input[name=fileName]").val("");
-        $(formName + " input[name=fileId]").val("");
-        $(formName + " select[name=cameraManufacturer]").val("");
-
-        $(formName + " input[name=ipAddress]").val("");
-        $(formName + " input[name=domain]").val("");
-        $(formName + " input[name=webPort]").val("");
-        $(formName + " input[name=rtspPort]").val("");
-
-        $(formName + " input[name=deviceUserId]").val("");
-        $(formName + " input[name=devicePassword").val("");
 
         $(formName + " textarea[name='deviceDesc']").val("");
         $(formName + " input[name=linkUrl]").val("");
@@ -381,56 +315,6 @@ function DeviceView(model) {
 
             itemObject.attr("device_id", deviceId );
             $("#actionList > tbody").append(itemObject);
-        }
-    };
-
-    /**
-     * 파일 설정 목록 그리기
-     * @param files
-     */
-    DeviceView.makeFileListFunc = function(files) {
-        $("#fileList").empty();
-
-        if (files == null && files.length == 0) {
-            $("#fileList").append(emptyListTag.clone());
-            return;
-        }
-
-        for (var i=0; i< files.length; i++) {
-            var file = files[i];
-            var selYn = false;
-
-            if(file['fileId']==$("input[name='fileId']").val()){
-                selYn = true;
-            }
-
-            $("#fileList").append(
-                $("<tr/>").append(
-                    $("<td/>", {class:'t_center'}).append(
-                        $("<input/>", {type:'checkbox', class:'checkbox', name:'fileCheckbox', fileId:file['fileId'], fileName:file['logicalFileName'], checked:selYn}).on("click",function(){
-                            if($(this).is(":checked")){
-                                $("input[name='fileCheckbox']").prop("checked",false);
-                                $(this).prop("checked",true);
-                                $("input[name='fileId']").val($(this).attr("fileId"));
-                                $("input[name='fileName']").val($(this).attr("fileName"));
-                            }else{
-                                $("input[name='fileId']").val("");
-                                $("input[name='fileName']").val("");
-                            }
-                        })
-                    )
-                ).append(
-                    $("<td/>").text(file['title'])
-                ).append(
-                    $("<td/>").text(file['logicalFileName'])
-                ).append(
-                    $("<td/>").text(file['description'])
-                ).append(
-                    $("<td/>").text(file['insertUserName'])
-                ).append(
-                    $("<td/>").text(new Date(file['insertDatetime']).format("yyyy-mm-dd HH:mm:ss"))
-                )
-            );
         }
     };
 

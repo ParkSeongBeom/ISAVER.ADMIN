@@ -45,20 +45,8 @@ function DeviceModel() {
         ,pageCount: 0
         ,rootName: "HOME"
         ,deviceTreeList: []
-        ,modifyDeviceIpList: ['DEV002','DEV009']
         /* 알림 전송 소스 장치 목록 */
         ,alarmSettingDeviceList : ['DEV002', 'DEV005']
-    };
-
-    /**
-     * IP 수정 디바이스 권한 체크
-     * @param orgdepth
-     */
-    DeviceModel.checkModifyDeviceIpList = function (deviceId) {
-        if(this.model.modifyDeviceIpList.indexOf(deviceId) > -1){
-            return true;
-        }
-        return false;
     };
 
     /**
@@ -394,11 +382,10 @@ function DeviceModel() {
      * 전체 장치 목록을 정의
      * @param menuName
      */
-    DeviceModel.getDeviceDetail = function (deviceId, serialNo, ipAddress) {
+    DeviceModel.getDeviceDetail = function (deviceId, serialNo) {
 
         var _deviceIdExistFlag = false;
         var _serialNoExistFlag = false;
-        var _ipAddressExistFlag = false;
 
         if (this.model.deviceTreeList != null) {
             for (var i =0; i < this.model.deviceTreeList.length; i++) {
@@ -415,20 +402,10 @@ function DeviceModel() {
                     }
 
                 }
-
-                if (ipAddress != undefined) {
-                    if (ipAddress.trim().length > 0 ) {
-                        if (device['ipAddress'] == ipAddress) {
-                            if (device['deviceId'] != deviceId) {
-                                _ipAddressExistFlag = true;
-                            }
-                        }
-                    }
-                }
             }
         }
 
-        return {'deviceIdExistFlag' : _deviceIdExistFlag, 'serialNoExistFlag': _serialNoExistFlag, 'ipAddressExistFlag': _ipAddressExistFlag};
+        return {'deviceIdExistFlag' : _deviceIdExistFlag, 'serialNoExistFlag': _serialNoExistFlag};
     };
 
     /**

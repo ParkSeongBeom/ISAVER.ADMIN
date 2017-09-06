@@ -89,14 +89,6 @@ public class DeviceSvcImpl implements DeviceSvc {
     }
 
     @Override
-    public ModelAndView findListDeviceForFile(Map<String, String> parameters) {
-        List<DeviceBean> deviceList = deviceDao.findListDeviceForFile(parameters);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("deviceList", deviceList);
-        return modelAndView;
-    }
-
-    @Override
     public ModelAndView findListDeviceArea(Map<String, String> parameters) {
         return null;
     }
@@ -105,14 +97,10 @@ public class DeviceSvcImpl implements DeviceSvc {
     public ModelAndView findListDevice(Map<String, String> parameters) {
         List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
         List<AreaBean> areaList = areaDao.findAllAreaTree(null);
-        List<EventBean> events = eventDao.findListEvent(null);
-//        Integer totalCount = deviceDao.findCountDevice(parameters);
-//        AdminHelper.setPageTotalCount(parameters, totalCount);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceTreeList);
         modelAndView.addObject("areas", areaList);
-        modelAndView.addObject("events", events);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -121,12 +109,10 @@ public class DeviceSvcImpl implements DeviceSvc {
     public ModelAndView findTbListDevice(Map<String, String> parameters) {
         List<DeviceBean> deviceList = deviceDao.findTbListDevice(parameters);
         List<AreaBean> areaList = areaDao.findAllAreaTree(null);
-        List<EventBean> events = eventDao.findListEvent(null);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceList);
         modelAndView.addObject("areas", areaList);
-        modelAndView.addObject("events", events);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

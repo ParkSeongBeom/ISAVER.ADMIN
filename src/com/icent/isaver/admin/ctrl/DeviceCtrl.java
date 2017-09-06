@@ -45,20 +45,6 @@ public class DeviceCtrl {
     }
 
     /**
-     * 파일 사용 장치 목록을 가져온다.
-     *
-     * @author psb
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/fileList")
-    public ModelAndView findListDeviceForFile(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = deviceSvc.findListDeviceForFile(parameters);
-        return modelAndView;
-    }
-
-    /**
      * 장치 목록을 가져온다.
      *
      * @author dhj

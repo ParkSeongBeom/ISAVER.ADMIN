@@ -96,71 +96,6 @@
         <div class="bg ipop_close" onclick="closePopup('list_popup');"></div>
     </div>
 
-    <div class="popupbase admin_popup file_popup">
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="device.column.fileList"/></h2>
-                    <button onclick="closePopup('file_popup');"></button>
-                </header>
-                <article>
-                    <input type="hidden" name="pageNumber">
-                    <div class="search_area">
-                        <div class="search_contents">
-                            <!-- 일반 input 폼 공통 -->
-                            <p class="itype_01">
-                                <span><spring:message code="device.column.title"/></span>
-                                <span>
-                                    <input type="text" id="fileTitle" />
-                                </span>
-                            </p>
-                            <p class="itype_01">
-                                <span><spring:message code="device.column.fileName"/></span>
-                                <span>
-                                    <input type="text" id="fileName" />
-                                </span>
-                            </p>
-                        </div>
-                        <div class="search_btn">
-                            <button onclick="javascript:deviceCtrl.fileLoadFunc(); return false;" class="btn"><spring:message code="common.button.search"/></button>
-                        </div>
-                    </div>
-                    <div class="table_area">
-                        <div class="table_contents">
-                            <!-- 입력 테이블 Start -->
-                            <table class="t_defalut t_type01 t_style02">
-                                <colgroup>
-                                    <col style="width: 5%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: *%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: 10%;">
-                                    <col style="width: 20%;">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th class="t_center"></th>
-                                    <th><spring:message code="device.column.title"/></th>
-                                    <th><spring:message code="device.column.fileName"/></th>
-                                    <th><spring:message code="device.column.description"/></th>
-                                    <th><spring:message code="device.column.insertUserName"/></th>
-                                    <th><spring:message code="device.column.insertDatetime"/></th>
-                                </tr>
-                                </thead>
-                                <tbody id="fileList">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </article>
-                <footer>
-                    <button class="btn" onclick="javascript:closePopup('file_popup'); return false;">닫기</button>
-                </footer>
-            </div>
-        </div>
-        <div class="bg ipop_close" onclick="closePopup('file_popup');"></div>
-    </div>
-
     <!-- 트리 영역 Start -->
     <article class="table_area tree_table">
         <div class="table_title_area">
@@ -225,7 +160,7 @@
                         <td class="point">
                             <div class="infile_set">
                                 <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
-                                <button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); event.stopPropagation(); return false;"><spring:message code="device.button.ivasSetting"/></button>
+                                <%--<button id="ipCameraSetting" class="btn btype01 bstyle01" onclick="javascript:deviceCtrl.alarmListLoadFunc(); event.stopPropagation(); return false;"><spring:message code="device.button.ivasSetting"/></button>--%>
                             </div>
                         </td>
                     </tr>
@@ -262,76 +197,6 @@
                         <th><spring:message code='area.column.linkUrl'/></th>
                         <td colspan="3">
                             <input type="text" name="linkUrl" maxlength="200"/>
-                        </td>
-                    </tr>
-                    <tr class="ipCamShowHide">
-                        <th class="point"><spring:message code='device.column.eventName'/></th>
-                        <td class="point">
-                            <select name="eventId">
-                                <option value="">이벤트를 선택하세요.</option>
-                                <c:forEach items="${events}" var="event">
-                                    <option value="${event.eventId}">[${event.eventId}]${event.eventName}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                        <th><spring:message code='device.column.fileName'/></th>
-                        <td>
-                            <div class="infile_set">
-                                <input type="text" name="fileName" readonly="readonly"/>
-                                <input type="hidden" name="fileId"/>
-                                <span class="btn_infile btype03 bstyle04" onclick="javascript:deviceCtrl.fileListLoadFunc(); return false;"></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="ipCamShowHide">
-                        <th class="point"><spring:message code='device.column.cameraManufacturer'/></th>
-                        <td class="point" colspan="3">
-                            <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="cameraManufacturer" allModel="true" allText="카메라 제조사를 선택하세요."/>
-                        </td>
-                    </tr>
-                    <tr class="ipAddressShowHide">
-                        <th><spring:message code='device.column.hostType'/></th>
-                        <td>
-                            <isaver:codeSelectBox groupCodeId="H01" codeId="" htmlTagName="hostType"/>
-                        </td>
-                        <td ipAddress colspan="2">
-                            <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />"/>
-                        </td>
-                        <td domain colspan="2">
-                            <input type="text" name="domain" maxlength="100" placeholder="<spring:message code='device.message.requiredDomain' />"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code='device.column.webPort'/></th>
-                        <td>
-                            <input type="text" name="webPort" maxlength="20" />
-                        </td>
-                        <th><spring:message code='device.column.rtspPort'/></th>
-                        <td>
-                            <input type="text" name="rtspPort" maxlength="20" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code='device.column.deviceUserId'/></th>
-                        <td>
-                            <input type="text" name="deviceUserId" maxlength="20" />
-                        </td>
-                        <th><spring:message code='device.column.devicePassword'/></th>
-                        <td>
-                            <input type="text" name="devicePassword" maxlength="50" />
-                        </td>
-                    </tr>
-                    <tr name="showHideTag">
-                        <th class=""><spring:message code='device.column.deviceStatusCheckFlag'/></th>
-                        <td class="">
-                            <select name="deviceAliveFlag" >
-                                <option value="Y"><spring:message code='common.message.Y'/></option>
-                                <option value="N"><spring:message code='common.message.N'/></option>
-                            </select>
-                        </td>
-                        <th class=""><spring:message code='device.column.deviceStatusCheckType'/></th>
-                        <td class="">
-                            <isaver:codeSelectBox groupCodeId="DAL" codeId="${action.actionCode}" htmlTagId="deviceAliveCheckType" htmlTagName="deviceAliveCheckType" allModel="true"  />
                         </td>
                     </tr>
                     <tr name="showHideTag">
@@ -409,7 +274,6 @@
         ,   requiredDeviceId            :"<spring:message code='device.message.requiredDeviceId'/>"
         ,   requiredAreaId            :"<spring:message code='device.message.requiredAreaId'/>"
         ,   requiredSerialNo          :"<spring:message code='device.message.requiredSerialNo'/>"
-        ,   requiredIpAddress          :"<spring:message code='device.message.requiredIpAddress'/>"
         ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
         ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
         ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"
@@ -417,11 +281,7 @@
         ,   menuNotDeleted            :"<spring:message code='menu.message.menuNotDeleted'/>"
         ,   existsDeviceId            :"<spring:message code='device.message.existsDeviceId'/>"
         ,   existsSerialNo            :"<spring:message code='device.message.existsSerialNo'/>"
-        ,   existsIpAddress           :"<spring:message code='device.message.existsIpAddress'/>"
-        ,   regexpIpAddress : "<spring:message code='device.message.regexpIpAddress'/>"
         ,   provisionExistError : "<spring:message code='device.message.provisionExistError'/>"
-        ,   emptyEventId              :"<spring:message code='device.message.emptyEventId'/>"
-        ,   emptyCameraManufacturer   :"<spring:message code='device.message.emptyCameraManufacturer'/>"
         ,   emptyLinkUrl           :"<spring:message code='device.message.emptyLinkUrl'/>"
     };
 
@@ -435,62 +295,6 @@
          */
         deviceCtrl.findMenuTree();
         deviceCtrl.setAddBefore();
-
-        $("select[name=hostType]").change(function() {
-            $(this).prop("disabled",false);
-
-            if($(this).val()=="H01001"){
-                $("#deviceForm input[name='ipAddress']").prop("disabled",false);
-                $("#deviceForm input[name='domain']").prop("disabled",true);
-                $("#deviceForm tr td[ipAddress]").show();
-                $("#deviceForm tr td[domain]").hide();
-            }else{
-                $("#deviceForm input[name='domain']").prop("disabled",false);
-                $("#deviceForm input[name='ipAddress']").prop("disabled",true);
-                $("#deviceForm tr td[ipAddress]").hide();
-                $("#deviceForm tr td[domain]").show();
-            }
-        });
-
-        $("select[name=deviceCode]").change(function() {
-            var id  = $(this).val();
-            $("select[name=deviceCode]").val(id);
-
-            if (id == "DEV002") {
-                $(".ipCamShowHide").show();
-            } else {
-                $(".ipCamShowHide").hide();
-            }
-
-            switch (deviceModel.getViewStatus()) {
-                case "menuTree":
-                case "add":
-                    if(deviceModel.checkModifyDeviceIpList(id)){
-                        $(".ipAddressShowHide").show();
-                        $("select[name=hostType]").trigger("change");
-                    }else{
-                        $("#deviceForm select[name='hostType']").prop("disabled",true);
-                        $("#deviceForm input[name='ipAddress']").prop("disabled",true);
-                        $("#deviceForm input[name='domain']").prop("disabled",true);
-                        $(".ipAddressShowHide").hide();
-                    }
-                    break;
-                case "detail":
-                    $("select[name=hostType]").trigger("change");
-                    if(!deviceModel.checkModifyDeviceIpList(id)){
-                        $("#deviceForm select[name='hostType']").prop("disabled",true);
-                        $("#deviceForm input[name='ipAddress']").prop("disabled",true);
-                        $("#deviceForm input[name='domain']").prop("disabled",true);
-                    }
-
-                    if (id == "DEV002") {
-                        $("#ipCameraSetting").show();
-                    } else {
-                        $("#ipCameraSetting").hide();
-                    }
-                    break;
-            }
-        });
     });
 
     var deviceModel = new DeviceModel();

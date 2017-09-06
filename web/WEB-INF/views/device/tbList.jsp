@@ -92,56 +92,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><spring:message code='device.column.eventName'/></th>
-                                    <td>
-                                        <select id="eventId" disabled>
-                                            <option value=""><spring:message code="device.message.emptyData"/></option>
-                                            <c:forEach items="${events}" var="event">
-                                                <option value="${event.eventId}">[${event.eventId}]${event.eventName}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                    <th><spring:message code='device.column.fileName'/></th>
-                                    <td>
-                                        <input type="text" id="fileName" disabled="disabled"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><spring:message code='device.column.cameraManufacturer'/></th>
-                                    <td colspan="3">
-                                        <isaver:codeSelectBox groupCodeId="CA1" htmlTagId="cameraManufacturer" allModel="true" allText="없음" disabled="true"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><spring:message code='device.column.hostType'/></th>
-                                    <td>
-                                        <isaver:codeSelectBox groupCodeId="H01" htmlTagId="hostType" disabled="true"/>
-                                    </td>
-                                    <td colspan="3">
-                                        <input type="text" id="ipAddress" disabled="disabled"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><spring:message code='device.column.webPort'/></th>
-                                    <td>
-                                        <input type="text" id="webPort" disabled="disabled"/>
-                                    </td>
-                                    <th><spring:message code='device.column.rtspPort'/></th>
-                                    <td>
-                                        <input type="text" id="rtspPort" disabled="disabled"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><spring:message code='device.column.deviceUserId'/></th>
-                                    <td>
-                                        <input type="text" id="deviceUserId" disabled="disabled"/>
-                                    </td>
-                                    <th><spring:message code='device.column.devicePassword'/></th>
-                                    <td>
-                                        <input type="text" id="devicePassword" disabled="disabled"/>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th><spring:message code='device.column.deviceDesc'/></th>
                                     <td colspan="3">
                                         <textarea id="deviceDesc" class="textboard" disabled="disabled"></textarea>
@@ -319,15 +269,6 @@
         $("#parentDeviceId").val(data['parentDeviceId']);
         $("#areaId").val(data['areaId']);
         $("#linkUrl").val(data['linkUrl']);
-        $("#eventId").val(data['eventId']);
-        $("#fileName").val(data['fileName']);
-        $("#cameraManufacturer").val(data['cameraManufacturer']);
-        $("#hostType").val(data['hostType']);
-        $("#ipAddress").val(data['ipAddress']);
-        $("#webPort").val(data['webPort']);
-        $("#rtspPort").val(data['rtspPort']);
-        $("#deviceUserId").val(data['deviceUserId']);
-        $("#devicePassword").val(data['devicePassword']);
         $("#deviceDesc").text(data['deviceDesc']);
 
         openPopup();

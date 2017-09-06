@@ -760,8 +760,14 @@
         * @param message
         */
         function messageEventHandler(message) {
-            var resultData = JSON.parse(message.data);
+            var resultData;
             var callBackFlag = false;
+
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                return false;
+            }
 
             switch (resultData['messageType']) {
                 case "refreshView": // 화면갱신

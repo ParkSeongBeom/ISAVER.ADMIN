@@ -22,65 +22,6 @@
     </article>
     <!-- 2depth 타이틀 영역 End -->
 
-    <div class="popupbase admin_popup use_device_popup">
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="file.column.useList"/></h2>
-                    <button onclick="javascript:closePopup();"></button>
-                </header>
-                <article>
-                    <input type="hidden" name="pageNumber">
-                    <div class="search_area">
-                        <div class="search_contents">
-                            <!-- 일반 input 폼 공통 -->
-                            <p class="itype_01">
-                                <span><spring:message code="file.column.deviceId"/></span>
-                                <span>
-                                    <input type="text" id="searchDeviceId" />
-                                </span>
-                            </p>
-                        </div>
-                        <div class="search_btn">
-                            <button onclick="javascript:loadUseDevice(); return false;" class="btn"><spring:message code="common.button.search"/></button>
-                        </div>
-                    </div>
-                    <div class="table_area">
-                        <div class="table_contents">
-                            <!-- 입력 테이블 Start -->
-                            <table id="actionList" class="t_defalut t_type01 t_style02">
-                                <colgroup>
-                                    <col style="width: 5%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: *%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: 10%;">
-                                    <col style="width: 20%;">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th class="t_center"></th>
-                                    <th><spring:message code="file.column.deviceId"/></th>
-                                    <th><spring:message code="file.column.deviceName"/></th>
-                                    <th><spring:message code="file.column.areaName"/></th>
-                                    <th><spring:message code="file.column.insertUserName"/></th>
-                                    <th><spring:message code="file.column.insertDatetime"/></th>
-                                </tr>
-                                </thead>
-                                <tbody id="deviceList">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </article>
-                <footer>
-                    <button class="btn" onclick="javascript:closePopup(); return false;"><spring:message code="common.button.cancel"/></button>
-                </footer>
-            </div>
-        </div>
-        <div class="bg ipop_close" onclick="closePopup();"></div>
-    </div>
-
     <form id="fileForm" method="POST">
         <input type="hidden" name="fileId" value="${file.fileId}" />
         <input type="hidden" name="selDevices" />
@@ -106,8 +47,15 @@
                         <td class="point">
                             <input type="text" name="title" value="${file.title}"/>
                         </td>
-                        <th class="point"><spring:message code="file.column.fileName"/></th>
+                        <th class="point"><spring:message code="file.column.useYn"/></th>
                         <td class="point">
+                            <span><input type="radio" name="useYn" value="Y" ${empty file || file.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
+                            <span><input type="radio" name="useYn" value="N" ${file.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="point"><spring:message code="file.column.fileName"/></th>
+                        <td class="point" colspan="3">
                             <!-- 파일 첨부 시작 -->
                             <div class="infile_set">
                                 <input type="text" readonly="readonly" title="File Route" id="file_route">
@@ -121,19 +69,6 @@
                                 </c:if>
                             </div>
                             <!-- 파일 첨부 끝  -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="point"><spring:message code="file.column.useYn"/></th>
-                        <td class="point">
-                            <span><input type="radio" name="useYn" value="Y" ${empty file || file.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
-                            <span><input type="radio" name="useYn" value="N" ${file.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
-                        </td>
-                        <th><spring:message code="file.column.useList"/></th>
-                        <td>
-                            <div class="code_list">
-                                <button onclick="javascript:openPopup(); return false;"></button>
-                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -193,7 +128,6 @@
         ,'saveUrl':'${rootPath}/file/save.json'
         ,'removeUrl':'${rootPath}/file/remove.json'
         ,'listUrl':'${rootPath}/file/list.html'
-        ,'fileListUrl':'${rootPath}/device/fileList.json'
     };
 
     var messageConfig = {
@@ -222,19 +156,7 @@
             }
             $("input[name='logicalFileName']").val(fileName);
         });
-
-        loadUseDevice();
     });
-
-    function loadUseDevice(){
-        var data = {
-            'fileId' : '${file.fileId}'
-            ,'deviceId' : $("#searchDeviceId").val()
-            ,'delYn' : "N"
-        };
-
-        callAjax('fileList', data);
-    }
 
     function validate(){
         if(form.find('input[name=title]').val().length == 0){
@@ -295,9 +217,6 @@
 
     function requestCode_successHandler(data, dataType, actionType){
         switch(actionType){
-            case 'fileList':
-                fileListRender(data['deviceList']);
-                break;
             case 'save':
             case 'add':
             case 'remove':
@@ -319,75 +238,5 @@
         var listForm = $('<FORM>').attr('method','POST').attr('action',urlConfig['listUrl']);
         listForm.appendTo(document.body);
         listForm.submit();
-    }
-
-    function openPopup(){
-        $(".use_device_popup").fadeIn();
-    }
-
-    function closePopup(){
-        $(".use_device_popup").fadeOut();
-    }
-
-    function fileListRender(list){
-        $("#deviceList").empty();
-
-        if(list!=null){
-            for(var index in list){
-                var device = list[index];
-                var checkYn = false;
-
-                if(device['useFileYn']=='Y' && deviceInfo['selDeviceList'].indexOf(device['deviceId']) == -1){
-                    deviceInfo['selDeviceList'].push(device['deviceId']);
-                    checkYn = true;
-                }
-
-                if(deviceInfo['addDeviceList'].indexOf(device['deviceId']) > -1){
-                    checkYn = true;
-                }
-
-                if(deviceInfo['removeDeviceList'].indexOf(device['deviceId']) > -1){
-                    checkYn = false;
-                }
-
-                $("#deviceList").append(
-                    $("<tr/>").append(
-                        $("<td/>", {class:'t_center'}).append(
-                            $("<input/>", {type:'checkbox', class:'checkbox', deviceId:device['deviceId'], name:'deviceCheckbox', checked:checkYn}).on("click",function(){
-                                if($(this).is(":checked")){
-                                    if(deviceInfo['selDeviceList'].indexOf($(this).attr("deviceId")) == -1){
-                                        deviceInfo['addDeviceList'].push($(this).attr("deviceId"));
-                                    }
-
-                                    if(deviceInfo['removeDeviceList'].indexOf($(this).attr("deviceId")) > -1){
-                                        deviceInfo['removeDeviceList'].splice(deviceInfo['removeDeviceList'].indexOf($(this).attr("deviceId")),1);
-                                    }
-                                }else{
-                                    if(deviceInfo['selDeviceList'].indexOf($(this).attr("deviceId")) > -1){
-                                        deviceInfo['removeDeviceList'].push($(this).attr("deviceId"));
-                                    }
-
-                                    if(deviceInfo['addDeviceList'].indexOf($(this).attr("deviceId")) > -1){
-                                        deviceInfo['addDeviceList'].splice(deviceInfo['addDeviceList'].indexOf($(this).attr("deviceId")),1);
-                                    }
-                                }
-                            })
-                        )
-                    ).append(
-                        $("<td/>").text(device['deviceId'])
-                    ).append(
-                        $("<td/>").text(device['deviceCodeName'])
-                    ).append(
-                        $("<td/>").text(device['areaName'])
-                    ).append(
-                        $("<td/>").text(device['insertUserName'])
-                    ).append(
-                        $("<td/>").text(new Date(device['insertDatetime']).format("yyyy-mm-dd HH:mm:ss"))
-                    )
-                );
-            }
-        }else{
-            $("#deviceList").append(emptyListTag.clone());
-        }
     }
 </script>
