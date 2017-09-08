@@ -32,6 +32,9 @@ function DeviceView(model) {
         serialNo: function (data) {
             $(formName + " [name='serialNo']").val(data.serialNo);
         },
+        ipAddress: function (data) {
+            $(formName + " [name='ipAddress']").val(data.ipAddress);
+        },
         linkUrl: function (data) {
             $(formName + " [name='linkUrl']").val(data.linkUrl);
         },
@@ -244,6 +247,7 @@ function DeviceView(model) {
         $(formName + " select[name='deviceCode'] option").eq(0).prop("selected", true);
         $(formName + " select[name='parentDeviceId'] option").eq(0).prop("selected", true);
         $(formName + " select[name='areaId'] option").eq(0).prop("selected", true);
+        $(formName + " input[name=ipAddress]").val("");
 
         $(formName + " textarea[name='deviceDesc']").val("");
         $(formName + " input[name=linkUrl]").val("");

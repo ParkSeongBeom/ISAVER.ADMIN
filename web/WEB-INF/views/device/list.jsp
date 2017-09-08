@@ -194,6 +194,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <th><spring:message code='device.column.ipAddress'/></th>
+                        <td colspan="3">
+                            <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><spring:message code='area.column.linkUrl'/></th>
                         <td colspan="3">
                             <input type="text" name="linkUrl" maxlength="200"/>

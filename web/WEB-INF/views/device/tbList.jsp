@@ -86,6 +86,12 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th><spring:message code='device.column.ipAddress'/></th>
+                                    <td colspan="3">
+                                        <input type="text" name="ipAddress" maxlength="20" disabled="disabled"/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th><spring:message code='area.column.linkUrl'/></th>
                                     <td colspan="3">
                                         <input type="text" id="linkUrl" disabled="disabled"/>
@@ -268,6 +274,7 @@
         $("#deviceCode").val(data['deviceCode']);
         $("#parentDeviceId").val(data['parentDeviceId']);
         $("#areaId").val(data['areaId']);
+        $("#ipAddress").val(data['ipAddress']);
         $("#linkUrl").val(data['linkUrl']);
         $("#deviceDesc").text(data['deviceDesc']);
 
