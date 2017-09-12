@@ -295,11 +295,11 @@
             if($(this).find("input[type='checkbox']").is(":checked")){
                 var numberTags = $(this).find("input[type='number']");
                 var hour = Number(numberTags.eq(0).val());
-                if(hour>0 && hour<10) {hour = "0" + hour;}
+                if(hour>=0 && hour<10) {hour = "0" + hour;}
                 var minute = Number(numberTags.eq(1).val());
-                if(minute>0 && minute<10) {minute = "0" + minute;}
+                if(minute>=0 && minute<10) {minute = "0" + minute;}
                 var second = Number(numberTags.eq(2).val());
-                if(second>0 && second<10) {second = "0" + second;}
+                if(second>=0 && second<10) {second = "0" + second;}
                 var inoutDateStr = hour + ":" + minute + ":" + second;
                 var drawFlag = false;
 
@@ -384,11 +384,11 @@
             if($(this).find("input[type='checkbox']").is(":checked")){
                 var numberTags = $(this).find("input[type='number']");
                 var hour = Number(numberTags.eq(0).val());
-                if(hour>0 && hour<10) {hour = "0" + hour;}
+                if(hour>=0 && hour<10) {hour = "0" + hour;}
                 var minute = Number(numberTags.eq(1).val());
-                if(minute>0 && minute<10) {minute = "0" + minute;}
+                if(minute>=0 && minute<10) {minute = "0" + minute;}
                 var second = Number(numberTags.eq(2).val());
-                if(second>0 && second<10) {second = "0" + second;}
+                if(second>=0 && second<10) {second = "0" + second;}
                 var inoutDateStr = hour + ":" + minute + ":" + second;
 
                 inoutDatetimes.push(inoutDateStr+"|"+$(this).find("input[name='endTime']").val());
