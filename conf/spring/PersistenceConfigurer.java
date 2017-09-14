@@ -1,10 +1,14 @@
 package spring;
 
+import com.icent.dhj.util.FindSystemUtil;
+import com.icent.dhj.util.ResultSystemBean;
 import com.icent.isaver.admin.common.PropertyManager;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +18,8 @@ import javax.sql.DataSource;
 
 @Configuration
 public class PersistenceConfigurer {
+
+    static Logger logger = LoggerFactory.getLogger(PersistenceConfigurer.class);
 
     @Inject
     private PropertyManager propertyManager;
@@ -45,5 +51,18 @@ public class PersistenceConfigurer {
         dataSource.setMaxIdle(maxConnect);
         dataSource.setMaxWaitMillis(wait);
         return dataSource;
+    }
+
+    @Bean
+    public FindSystemUtil findSystemUtil() {
+        // H/W 라이선스 체크
+        FindSystemUtil findSystemUtil = new FindSystemUtil();
+        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
+
+        if(!resultSystemBean.getaBoolean()){
+            logger.error(resultSystemBean.getLogdata());
+            System.exit(0);
+        }
+        return findSystemUtil;
     }
 }
