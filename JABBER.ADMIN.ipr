@@ -21,7 +21,7 @@
       </root>
     </artifact>
     <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war">
-      <output-path>$PROJECT_DIR$/../../../../0.deploy/1.ISAVER/ISAVER.ADMIN/admin_v1.7</output-path>
+      <output-path>$PROJECT_DIR$/../../../../BIN</output-path>
       <root id="archive" name="ISAVER.ADMIN.war">
         <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
         <element id="directory" name="WEB-INF">
@@ -55,7 +55,7 @@
     </annotationProcessing>
   </component>
   <component name="CopyrightManager" default="" />
-  <component name="DataSourceManagerImpl" format="xml" hash="2223130983">
+  <component name="DataSourceManagerImpl" format="xml" hash="1335262122">
     <data-source source="LOCAL" name="[DEV] 172.16.110.199" read-only="true" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
       <driver-ref>postgresql</driver-ref>
       <auto-commit>false</auto-commit>
@@ -111,6 +111,9 @@
     <type id="web" />
   </component>
   <component name="IdProvider" IDEtalkID="ED1C32727349ACBDEE13624834BC2F28" />
+  <component name="PDMPlugin">
+    <option name="skipTestSources" value="false" />
+  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -285,14 +288,8 @@
     </option>
   </component>
   <component name="dataSourceStorageLocal">
-    <data-source name="[DEV] 172.16.110.199" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
-      <user-name>isaveruser</user-name>
-      <user-password>dfc3dfd9dfcbdfdcdfcfdfd8dfdfdfd9dfcfdfd8</user-password>
-    </data-source>
-    <data-source name="[OPT] 172.16.110.198" uuid="c3c27a8d-c7af-4cd2-9ea1-63054df39e69">
-      <user-name>isaveruser</user-name>
-      <user-password>dfc3dfd9dfcbdfdcdfcfdfd8dfdfdfd9dfcfdfd8</user-password>
-    </data-source>
+    <data-source name="[DEV] 172.16.110.199" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd" />
+    <data-source name="[OPT] 172.16.110.198" uuid="c3c27a8d-c7af-4cd2-9ea1-63054df39e69" />
   </component>
   <component name="libraryTable">
     <library name="lib">
