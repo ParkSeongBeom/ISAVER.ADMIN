@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.MenuBean;
@@ -64,10 +65,12 @@ public class MenuSvcImpl implements MenuSvc {
     public ModelAndView findAllMenuTopBar(Map<String, String> parameters) {
         List<MenuBean> menuBarList = menuDao.findAllMenuTopBar(parameters);
         List<AreaBean> areaList = areaDao.findListAreaForMenuTopBar();
+        List<MenuBean> statisticsMenuList = menuDao.findListStatisticsMenuTopBar(new HashMap<String, String>(){{put("menuId", AdminResource.STATISTICS_ROOT_MENU_ID);}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("menuBarList", menuBarList);
         modelAndView.addObject("areaList", areaList);
+        modelAndView.addObject("statisticsMenuList", statisticsMenuList);
         return modelAndView;
     }
 

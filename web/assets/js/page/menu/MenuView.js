@@ -140,7 +140,7 @@ function MenuView(model) {
      * [Draw] 상위 메뉴바 그리기
      * @param obj
      */
-    MenuView.setTopMenuBar = function (menuBarModel, areaList) {
+    MenuView.setTopMenuBar = function (menuBarModel, areaList, statisticsMenuList) {
         var parentLiTag = $("<li/>").append(
             $("<button/>", {href:"#"})
         ).append(
@@ -152,13 +152,13 @@ function MenuView(model) {
         );
 
         // DASHBOARD 메뉴
-        var _parentLiTag = parentLiTag.clone();
-        _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
-        _parentLiTag.find("button").attr("onclick", "javascript:moveDashboard();").text("DASHBOARD");
-
         if(areaList == null){
             console.error("[MenuView.setTopMenuBar][Dashboard Menu] load error - model is null");
         }else{
+            var _parentLiTag = parentLiTag.clone();
+            _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
+            _parentLiTag.find("button").attr("onclick", "javascript:moveDashboard();").text("DASHBOARD");
+
             for(var index in areaList){
                 var _area = areaList[index];
                 var _childLiTag = childLiTag.clone();
@@ -169,8 +169,52 @@ function MenuView(model) {
                 }
                 _parentLiTag.find("> ul").append(_childLiTag);
             }
+            $("ul[menu_main]").append(_parentLiTag);
         }
-        $("ul[menu_main]").append(_parentLiTag);
+
+        // 통계 메뉴
+        if(statisticsMenuList == null){
+            console.error("[MenuView.setTopMenuBar][Statistics Menu] load error - model is null");
+        }else{
+            var addMenuCnt = 0;
+            var _parentLiTag = parentLiTag.clone();
+            _parentLiTag.attr("name","statisticsMenu").addClass("menu_statistics");
+            _parentLiTag.find("button").text("STATISTICS");
+
+            for(var index in statisticsMenuList){
+                var _menu = statisticsMenuList[index];
+
+                if (_menu['menuFlag'] == 'M') {
+                    var _childLiTag = childLiTag.clone();
+                    _childLiTag.attr("name", _menu.menuId);
+                    _childLiTag.find("button").text(_menu['menuName']);
+
+                    if(_menu.menuPath!="/"){
+                        _childLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
+                    }
+
+                    if (Number(_menu["menuDepth"]) == 1) {
+                        _childLiTag.append($("<ul/>"));
+                        _parentLiTag.find("> ul").append(_childLiTag);
+                        addMenuCnt++;
+                    } else if (Number(_menu["menuDepth"]) > 1){
+                        if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").length>0){
+                            if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul > li").length==0){
+                                _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
+                            }
+                            _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").append(_childLiTag);
+                            addMenuCnt++;
+                        }else{
+                            console.info("[MenuView.setTopMenuBar][Statistics Menu] parent menu is empty - (menuId : " + _menu.menuId + ", parentMenuId : " + _menu.parentMenuId + ")");
+                        }
+                    }
+                }
+            }
+
+            if(addMenuCnt > 0){
+                $("ul[menu_main]").append(_parentLiTag);
+            }
+        }
 
         // ADMINISTRATION 메뉴
         if(menuBarModel == null){

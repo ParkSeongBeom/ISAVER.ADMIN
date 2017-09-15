@@ -88,6 +88,12 @@ public class AdminResource {
     public final static String[] ADMIN_LOG_TYPE = new String[]{"1","0"};
 
     /**
+     * 통계메뉴 Root ID
+     * @author psb
+     */
+    public final static String STATISTICS_ROOT_MENU_ID = "G00000";
+
+    /**
      * admin log type</br>
      * - login : 1</br>
      * - logout : 0</br>
