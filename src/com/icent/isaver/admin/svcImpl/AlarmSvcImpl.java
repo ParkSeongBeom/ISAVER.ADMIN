@@ -79,9 +79,10 @@ public class AlarmSvcImpl implements AlarmSvc {
 
         Map<String, String> alarmInfoParam = new HashMap<>();
         alarmInfoParam.put("alarmId",parameters.get("alarmId"));
-        alarmInfoParam.put("targetType",AdminResource.ALARM_TARGET_TYPE[0]);
+        alarmInfoParam.put("dashboardTargetId",AdminResource.ALARM_TARGET_ID);
+        alarmInfoParam.put("dashboardYn",AdminResource.YES);
         List<AlarmInfoBean> dashboardAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
-        alarmInfoParam.put("targetType",AdminResource.ALARM_TARGET_TYPE[1]);
+        alarmInfoParam.put("dashboardYn",AdminResource.NO);
         List<AlarmInfoBean> deviceAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
 
         List<DeviceBean> devices = deviceDao.findListDevice(null);
@@ -110,12 +111,14 @@ public class AlarmSvcImpl implements AlarmSvc {
             for (String info : alarmInfos) {
                 String[] infos = info.split("\\|");
                 String alarmInfoId = StringUtils.getGUID32();
+                String targetId = infos[0];
 
-                for(String item : infos){
-                    String[] datas = item.split(":");
+                for(int i=1; i<infos.length; i++){
+                    String[] datas = infos[i].split(":");
                     Map<String, String> alarmInfoMap = new HashMap<>();
                     alarmInfoMap.put("alarmInfoId", alarmInfoId);
                     alarmInfoMap.put("alarmId", alarmId);
+                    alarmInfoMap.put("targetId", targetId);
                     alarmInfoMap.put("key", datas[0]);
                     if(datas.length==2){
                         alarmInfoMap.put("value", datas[1]);
@@ -154,13 +157,14 @@ public class AlarmSvcImpl implements AlarmSvc {
             for (String info : alarmInfos) {
                 String[] infos = info.split("\\|");
                 String alarmInfoId = StringUtils.getGUID32();
+                String targetId = infos[0];
 
-                for(String item : infos){
-                    String[] datas = item.split(":");
-
+                for(int i=1; i<infos.length; i++){
+                    String[] datas = infos[i].split(":");
                     Map<String, String> alarmInfoMap = new HashMap<>();
                     alarmInfoMap.put("alarmInfoId", alarmInfoId);
                     alarmInfoMap.put("alarmId", parameters.get("alarmId"));
+                    alarmInfoMap.put("targetId", targetId);
                     alarmInfoMap.put("key", datas[0]);
                     if(datas.length==2){
                         alarmInfoMap.put("value", datas[1]);
