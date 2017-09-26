@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
     <title>iSaver Admin</title>
+
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
@@ -36,6 +37,16 @@
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 
+    <!-- mqtt - stomp -->
+    <script src="${rootPath}/assets/js/util/sockjs-0.3.4.min.js?version=${version}" charset="UTF-8"></script>
+    <script src="http://172.16.121.13:15670/web-stomp-examples/stomp.js?version=${version}" charset="UTF-8"></script>
+    <script type="text/javascript">
+        /** 웹소켓 연결 **/
+        var wsUseFlag  = false;
+        /** Stomp 연결 **/
+        var stompUseFlag  = true;
+    </script>
+
     <script type="text/javascript">
         var rootPath = '${rootPath}';
         var calendarHelper = new CalendarHelper(rootPath);
@@ -46,6 +57,8 @@
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
         var _eventDatetime = new Date();
+
+
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -132,8 +145,14 @@
             // 알람 리스트 불러오기
             layoutAjaxCall('alarmList');
 
-            wsConnect();
-            aliveSend(900000);
+            if (wsUseFlag) {
+                wsConnect();
+                aliveSend(900000);
+            }
+
+            if (stompUseFlag) {
+                stompConnectFunc();
+            }
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
             alarmPlayer.addEventListener('timeupdate', function (){
@@ -683,6 +702,7 @@
             dashboardForm.appendTo(document.body);
             dashboardForm.submit();
         }
+
     </script>
 
     <!--
@@ -694,7 +714,6 @@
         var ws;
         var reConnectFlag = true;
         var webSocketUrl = "${webSocketUrl}";
-
         /**
          * 웹소켓 접속 연결
          * @author dhj
@@ -763,10 +782,21 @@
             var resultData;
             var callBackFlag = false;
 
-            try{
-                resultData = JSON.parse(message.data);
-            }catch(e){
-                return false;
+            if(wsUseFlag) {
+                try{
+                    resultData = JSON.parse(message.data);
+                }catch(e){
+                    return false;
+                }
+            }
+
+            if (stompUseFlag) {
+                try{
+                    alert(message);
+                    resultData = JSON.parse(message);
+                }catch(e){
+                    return false;
+                }
             }
 
             switch (resultData['messageType']) {
@@ -797,6 +827,66 @@
                 dashBoardHelper.getData();
             }
         }
+    </script>
+
+    <!--
+        mqtt - stomp
+        @authro dhj
+        @date 2017.09.26
+    -->
+    <script type="text/javascript" charset="UTF-8">
+
+//        var _ws = new WebSocket('ws://172.16.121.13:15674/ws');
+//        var mClient = Stomp.over(_ws);
+
+        var _sockJs = new SockJS('http://172.16.121.13:15674/stomp');
+        var mClient = Stomp.over(_sockJs);
+
+        var _topic_name = "/topic/isaver.web.dashboard.event";
+        mClient.heartbeat.outgoing = 0;
+        mClient.heartbeat.incoming = 0;
+
+        /**
+         * MQTT - STOMP 접속 연결 및 이벤트 연결 리스너
+         * @author dhj
+         */
+        function stompConnectFunc() {
+
+            var on_error =  function(e) {
+//                alert('error');
+//                $('#console').append($("<code>").text(e.body+"<br />"));
+                alert("[stomp error] : " + e.body);
+            };
+
+            function on_message(m) {
+                alert("[stomp message] : " + m.body);
+//                $('#console').append($("<code>").text(m.body+"<br />"));
+            }
+
+            var on_connect = function(x) {
+                id = mClient.subscribe(_topic_name, function(m) {
+                    // reply by sending the reversed text to the temp queue defined in the "reply-to" header
+//                        var reversedText = m.body.split("").reverse().join("");
+//                    console.log(m.body);
+
+                    var resultData = null;
+
+                    try {
+                        resultData = JSON.parse(m.body);
+                    } catch(e) {
+                        console.error("[error][stomp error] " + e);
+                    }
+
+                    messageEventHandler(m.body);
+//                    resultText(m.body);
+//                    resultDataFunc(m.body);
+//                        client.send(m.headers['reply-to'], {"content-type":"application/json"}, reversedText);
+                });
+            };
+            mClient.connect('icent', 'dkdltpsxm', on_connect, on_error, '/');
+
+        }
+
     </script>
 </head>
 <body>
