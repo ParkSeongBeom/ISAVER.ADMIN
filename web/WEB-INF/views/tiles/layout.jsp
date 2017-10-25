@@ -792,7 +792,6 @@
 
             if (stompUseFlag) {
                 try{
-                    alert(message);
                     resultData = JSON.parse(message);
                 }catch(e){
                     return false;
@@ -841,52 +840,66 @@
 
         var _sockJs = new SockJS('http://172.16.121.13:15674/stomp');
         var mClient = Stomp.over(_sockJs);
-
         var _topic_name = "/topic/isaver.web.dashboard.event";
+
+        var initDashBoardFlag = false;
+
         mClient.heartbeat.outgoing = 0;
         mClient.heartbeat.incoming = 0;
 
-        /**
-         * MQTT - STOMP 접속 연결 및 이벤트 연결 리스너
-         * @author dhj
-         */
-        function stompConnectFunc() {
+        mClient.debug = function(el_name, send) {
 
-            var on_error =  function(e) {
-//                alert('error');
-//                $('#console').append($("<code>").text(e.body+"<br />"));
-                alert("[stomp error] : " + e.body);
-            };
+//            debugger;
+//            var p = send;
+//            p = (p === undefined) ? '' : JSON.stringify(p);
+//            console.log(el_name + " | " + p);
 
-            function on_message(m) {
-                alert("[stomp message] : " + m.body);
-//                $('#console').append($("<code>").text(m.body+"<br />"));
+            if (this.connected == false && mClient.ws.readyState == 1 && !initDashBoardFlag) {
+                dashBoardHelper.getData();
+                initDashBoardFlag = true;
             }
 
-            var on_connect = function(x) {
-                id = mClient.subscribe(_topic_name, function(m) {
-                    // reply by sending the reversed text to the temp queue defined in the "reply-to" header
-//                        var reversedText = m.body.split("").reverse().join("");
-//                    console.log(m.body);
+        };
 
-                    var resultData = null;
 
-                    try {
-                        resultData = JSON.parse(m.body);
-                    } catch(e) {
-                        console.error("[error][stomp error] " + e);
-                    }
+        var on_error =  function(e) {
+        //                alert('error');
+        //                $('#console').append($("<code>").text(e.body+"<br />"));
+            alert("[stomp error] : " + e.body);
+            if (mClient.connected == false) {
+                stompConnectFunc();
+            }
+        };
 
-                    messageEventHandler(m.body);
-//                    resultText(m.body);
-//                    resultDataFunc(m.body);
-//                        client.send(m.headers['reply-to'], {"content-type":"application/json"}, reversedText);
-                });
-            };
+        var on_connect = function(x) {
+            id = mClient.subscribe(_topic_name, function(m) {
+                // reply by sending the reversed text to the temp queue defined in the "reply-to" header
+        //                        var reversedText = m.body.split("").reverse().join("");
+        //                    console.log(m.body);
+
+                var resultData = null;
+
+                try {
+                    resultData = JSON.parse(m.body);
+                } catch(e) {
+                    console.error("[error][stomp error] " + e);
+                }
+
+                messageEventHandler(m.body);
+        //                    resultText(m.body);
+        //                    resultDataFunc(m.body);
+        //                        client.send(m.headers['reply-to'], {"content-type":"application/json"}, reversedText);
+            });
+        };
+
+        /**
+         * MQTT - STOMP 접속 연결 및 이벤트 연결
+         * @author dhj
+         */
+
+        function stompConnectFunc() {
             mClient.connect('icent', 'dkdltpsxm', on_connect, on_error, '/');
-
         }
-
     </script>
 </head>
 <body>
