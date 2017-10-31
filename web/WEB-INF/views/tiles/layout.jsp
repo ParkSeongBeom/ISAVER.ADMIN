@@ -194,11 +194,11 @@
 
         function alarmAllCheck(_this){
             if($(_this).is(":checked")){
-                $("#alarmList li").addClass("check");
-                $("#alarmList .check_input").prop("checked",true);
+                $("#alarmList li:visible").addClass("check");
+                $("#alarmList li:visible .check_input").prop("checked",true);
             }else{
-                $("#alarmList li").removeClass("check");
-                $("#alarmList .check_input").prop("checked",false);
+                $("#alarmList li:visible").removeClass("check");
+                $("#alarmList li:visible .check_input").prop("checked",false);
             }
         }
 
