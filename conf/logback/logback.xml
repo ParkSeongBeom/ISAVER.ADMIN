@@ -14,7 +14,7 @@
     <appender name="projectAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logDirPath}/${project_name}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logDirPath}/${project}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${logDirPath}/${project_name}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
