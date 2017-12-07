@@ -53,6 +53,7 @@ public class UsersCtrl {
     public ModelAndView findListUser(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
+        parameters.put("roleId", AdminHelper.getAdminInfo(request).getRoleId());
 
         ModelAndView modelAndView = usersSvc.findListUser(parameters);
         modelAndView.setViewName("userList");
@@ -70,6 +71,7 @@ public class UsersCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        parameters.put("roleId", AdminHelper.getAdminInfo(request).getRoleId());
         ModelAndView modelAndView = usersSvc.findByUser(parameters);
         modelAndView.setViewName("userDetail");
 

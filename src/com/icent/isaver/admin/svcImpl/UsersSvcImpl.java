@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.repository.bean.RoleBean;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.RoleDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
@@ -57,7 +58,7 @@ public class UsersSvcImpl implements UsersSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("users",users);
         modelAndView.addObject("paramBean",parameters);
-        modelAndView.addObject("roles",roleDao.findListRole(null));
+        modelAndView.addObject("roles",checkRole(roleDao.findListRole(null), parameters.get("roleId")));
         return modelAndView;
     }
 
@@ -67,7 +68,7 @@ public class UsersSvcImpl implements UsersSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user",user);
-        modelAndView.addObject("roles",roleDao.findListRole(null));
+        modelAndView.addObject("roles",checkRole(roleDao.findListRole(null), parameters.get("roleId")));
         return modelAndView;
     }
 
@@ -140,5 +141,22 @@ public class UsersSvcImpl implements UsersSvc {
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
+    }
+
+    private List<RoleBean> checkRole(List<RoleBean> roleBeans, String roleId){
+        if(!roleId.equals("ROL000")){
+            int index = -1;
+            for(int i=0; i<roleBeans.size(); i++){
+                RoleBean role = roleBeans.get(i);
+                if(role.getRoleId().equals("ROL000")){
+                    index = i;
+                }
+            }
+            if(index > -1){
+                roleBeans.remove(index);
+            }
+        }
+
+        return roleBeans;
     }
 }
