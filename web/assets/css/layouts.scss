@@ -18,52 +18,45 @@ nav     {}
 aside   {}
 menu    {}
 
+
 body {
   width:100%; min-width:$body-minwidth; min-height:768px;
   //@include webkit_scroll;
   .wrap {width:100%;}
 
-  &.dashboard_mode {
-    overflow: hidden; position: absolute; top:0; left:0; height:100%; padding:0 $dash-margin;
-    .wrap {height:100%;}
-  }
-
-  @media screen and (min-width: 0) and (max-width: $body-minwidth){
-
-    .wrap > header {position: absolute !important; min-width:$body-minwidth;}
+  @media screen and (min-width: 0) and (max-width: $body-minwidth) {
+    .wrap > header { position: absolute; }
     &.dashboard_mode {
-
+      overflow: auto !important;
+      /*
       .db_area {
         position: absolute; height:calc(100vh - 90px);
-        right:auto; left:($body-minwidth - ($noticecenter-width + $dash-margin));}
-
+        right:auto; left:($body-minwidth - ($noticecenter-width + $dash-margin));
+      }
+      */
     }
-
     &.admin_mode {
       section.container.on {padding-right:$admin-margin;}
     }
   }
-
 }
 
 
-
-
-
-
 ///// ----------------- <h> START
-h1,h2,h3,h4,h5,h6 {position: relative; }
+h1,h2,h3,h4,h5,h6 {position: relative; letter-spacing: 0;}
 h1,h3,h4 {display: inline-block; }
 h1 {
-  min-width:130px; height:100%; border:none;
-  background-image: url(../images/logo/top_logo.svg);
-  background-position: 0 50%; background-repeat: no-repeat; background-size: 130px;
+  min-width: 250px; height:100%; border:none;
+  background-image: url(../images/logo/icent_isaver.svg);
+  background-size: 100% 32px; background-repeat: no-repeat;
+  background-position:0 50%;
 
   .login_area & {height:70px; background-size:170px;}
 }
 h2 {font-size:2rem;}
 h3 {
   font-size:1.5rem;
+  .main_title_area {@include flexbase;}
   .main_title_area & {color:$color-blue-01;}
   .main_title_area &::selection {background-color: transparent}
 }
@@ -73,16 +66,33 @@ h4 {
 }
 ///// ----------------- <h> END
 
+/* 감시별 아이콘
+.ico-safeeye:before    {content:"\e941";}
+.ico-blinker:before    {content:"\e944";}
+.ico-tracker:before    {content:"\e943";}
+.ico-detector:before   {content:"\e940";}
+.ico-pool:before       {content:"\e942";}
+.ico-health:before     {content:"\e93f";}
+.ico-nhr:before        {content:"\e945";}
 
+.ico-invasion:before {content:"\e93e";} // 침입
+.ico-exhibit:before  {content:"\e93c";} // 전시물보호
+ */
 
-///// ----------------- 이벤트 감지 level  START
-.level {
-  &-caution {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
-  &-warning {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
-  &-danger  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+.ico {
+  &-safeeye:before  {content:"\e941";}
+  &-blinker:before  {content:"\e944";}
+  &-tracker:before  {content:"\e943";}
+  &-detector:before {content:"\e940";}
+  &-pool:before     {content:"\e942";}
+  &-health:before   {content:"\e93f";}
+  &-nhr:before      {content:"\e945";}
+  &-invasion:before {content:"\e93e";} // 침입
+  &-exhibit:before  {content:"\e93c";} // 전시물보소
+  &-speaker:before  {content:"\e93a";}
+  &-wlight:before   {content:"\e93b";}
+  &-mobile:before   {content:"\e939";}
 }
-///// ----------------- 이벤트 감지 level  End
-
 
 ////// ----------------- 로그인 영역 Start
 .login_area {
@@ -116,7 +126,8 @@ h4 {
 ////// ----------------- header Start
 header {
   @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-  position: fixed; @include z-index-header; top:0; left:0; width:100%; height:$headerHeight;
+  position: fixed; @include z-index-header; top:0; left:0;
+  width:100%; min-width:$body-minwidth; height:$headerHeight;
   padding:0 $dash-margin; background-color: $color-white-02;
   //border-bottom:2px solid rgba(0,0,0,0.1);
   &:before {
@@ -145,22 +156,17 @@ header {
         padding:0 0 0 20px;
         button {
           width:40px; float: left;
-          &.issue_btn.issue {
-            width:($noticecenter-width - 80px);
-            &:before {color:#fff !important;}
 
-            &:after {
-              content: ""; position: absolute; z-index:-1; left:0; top:0;
-              width:100%; height:100%; background-color:$color-red-01;
-              @include issue;
-            }
-          }
           &.issue_btn:before     {content: "\e907";}
           &.loginout_btn:before  {content: "\e900";}
           &.user_btn:before      {content: "\e90e";}
           &:before {font-size:1.6rem;}
           &:hover, &.on {
             background-color: $color-blue-01;
+            &:before {color:#fff !important;}
+          }
+          &.issue_btn.issue {
+            width:($noticecenter-width - 80px); background-color:$color-red-01; @include issue;
             &:before {color:#fff !important;}
           }
         }
@@ -173,7 +179,7 @@ header {
 
 //////......   menu Start
 menu {
-  overflow: hidden; display: inline-block; margin:0 0 0 50px;
+  overflow: hidden; display: inline-block; margin:0 0 0 25px;
 
   @mixin mbHover  {background-color: $color-blue-01; color: $color-white-01; opacity:1;} // @include mbHover;
   @mixin mbOn     {color: $color-blue-01; @include border01(1px,$color-blue-01,1);} // @include mbOn;
@@ -199,7 +205,8 @@ menu {
       float:left; margin:0 10px 0 0;
 
       & > button {
-        @include font-size-menubtn; text-align: center; &.on {border:none;}
+        @include font-size-menubtn; text-align: center; text-transform:uppercase;
+        &.on {border:none;}
       } // menu > ul > li > button
 
       & > ul {
@@ -236,11 +243,12 @@ menu {
 //////......   menu End
 
 
-
 /////..... 팝업 공통 효과 START
 
-@mixin popupdiv {
-  background-color: $adm-color; padding:$popup-margin;
+.tpopupbase, .personal_popup, .popupbase > div > div  {
+  & *:not(button) {color:#3c3c3c !important;}
+  &, header {background-color: $adm-color; }
+  padding:$popup-margin;
   @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
   @include border01(3px,$color-blue-01,1 );
   @include transition(400ms);
@@ -286,13 +294,13 @@ menu {
 
       & > * { position: relative; width:100%;}
       & > header {
-        background-color: transparent; padding:0;
+        min-width:0; background-color: transparent; padding:0;
         h2 , h3  {@include title_icon; margin:0 auto 0 0;}
         button:before {content:"\e91a"; font-size: 1.8rem;}
         &:before {display: none !important;}
       }
       & > footer {
-        display: inline-block; text-align: right;
+        display: inline-block; text-align: right; margin:40px 0 0 0;
         button {right:0;}
       }
     }
@@ -311,7 +319,7 @@ menu {
 
         @include flex-column-row; margin:30px 0 0 0;
         & > * {
-          &:first-of-type  {width:340px; min-width:340px;  margin:0 110px 0 0;}
+          &:first-of-type  {width:350px; min-width:350px;  margin:0 90px 0 0;}
           &:nth-of-type(2) {width:500px; min-width:480px;  }
         }
 
@@ -366,7 +374,10 @@ menu {
         }
         .iotime_set {
           .timepicker > input {width:100%; margin:0;}
-          li {@include flex-justify-content-end; padding:0 0 22px 0;}
+          li {
+            @include flex-justify-content-end;
+            &:last-of-type {padding:0;}
+          }
         }
       }
     }
@@ -385,20 +396,11 @@ menu {
   /////..... 레이어 팝업 End
 
 }
-
-
-.personal_popup, .popupbase > div > div  {
-  background-color: $adm-color; padding:$popup-margin;
-  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
-  @include border01(3px,$color-blue-01,1 );
-  @include transition(400ms);
-}
-
 /////..... 팝업 공통 효과 END
 
 
 /////..... 사용자 보기 팝업 popup_type_01 Start
-.personal_popup {
+.tpopupbase , .personal_popup{
   @include flexbase; @include flex-column; z-index:101;
   position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px);
   width:$noticecenter-width;
@@ -450,10 +452,14 @@ menu {
     &.on {right:$dash-margin;}
   }
 
+
+
   position: fixed; @include z-index-notice;
-  top:($btnarea-height + 30px); bottom:$dash-margin; right:$dash-margin;
+  top:($btnarea-height + 30px); bottom:$dash-margin; right:$dash-margin;  /*right:-($noticecenter-width * 2);*/
   width:$noticecenter-width; background-color: $adm-color;
 
+
+  &.on {right:$dash-margin;}
 
   &:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; background-color: $adm-color}
 
@@ -663,6 +669,7 @@ menu {
     &.on {visibility: visible; width:($noticecenter-width * 2); right:($noticecenter-width + 20px); }
   }
 }
+
 //// 알림리스트
 .infor_set {
   @include flex-option(0, 1, 100%);
@@ -709,23 +716,22 @@ menu {
 /////...... sub_title_area 정의 끝
 
 
-.m_human, .check_th tbody tr:before,
-.check_th tbody tr td:first-of-type:before
-{@include border-radius(200px);}
 
-.mp_header,
-.main_title_area,
+body.adaptive_mobile {
 
-.month_btn_set,
-.infile_set,
-.infile_set > p,
-.btn_infile:before,
-.select_edit,
-.table_title_area,
-.table_btn_set,
-.tree_box li span, .tree_box li span a
+  menu, .datetime_set {display: none;}
+  &, header { min-width:0 !important;}
 
-{@include flexbase;}
+  &.dashboard_mode {
+    .wrap > article { min-width:0 !important;  right:$margin;}
+    button.issue_btn.issue {width: 40px !important;}
+  }
+
+}
+
+
+
+
 
 
 

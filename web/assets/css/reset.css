@@ -9,7 +9,7 @@
     font-style:normal; font-weight:normal; letter-spacing:-0.06rem;
     -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
     /*-webkit-user-select: none; -ms-user-select: none;  -moz-user-select: none;*/
-    outline: none;
+    outline: none; cursor: default;
 }
 *, *:after, *:before {-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 
@@ -131,7 +131,7 @@ input, select {vertical-align: middle;}
 /*input + span {margin:0 10px 0 0;}*/
 
 input, textarea, select, div[contenteditable]
-{color:#3c3c3c; padding:7px 10px; border-style:solid; border-width:1px; border-color:#a9a9a9; }
+{color:#3c3c3c !important; padding:7px 10px; border-style:solid; border-width:1px; border-color:#a9a9a9; }
 input, textarea, select {height:40px; padding:7px 10px;}
 
 input:focus, select:focus, select option, textarea:focus, div[contenteditable]:focus
@@ -154,14 +154,13 @@ select,input[type="date"] {
 input[type="date"]::-webkit-calendar-picker-indicator {opacity: 0;}
 input[type="date"]::-webkit-inner-spin-button {height: 100%;}
 input[type="date"]::-webkit-clear-button {position: relative; font-size: 30px; right: 5px; margin-right: 5px;}
-select {padding:0 30px 0 10px; }
+select {padding:0 30px 0 10px; cursor: pointer; }
 input[type="date"] {padding:0 10px;}
 
 
 /*
 _::-webkit-full-page-media,
 _:future, :root input, textarea, select {letter-spacing:-0.1rem;}
-
 input {pointer-events: none;}
 */
 
@@ -203,8 +202,7 @@ input[type="search"]::-webkit-search-decoration
     font-style: normal;
 }
 
-.svgbase:before, button:before, button:after, label:before, a:before,
-
+/*.svgbase:before, button:before, button:after, label:before, a:before,
 .sett_btn:before, .refl_btn:before, .mc_bico:before, .dbc_contents:before,
 .toast_popup:before, .tp_contents:before,
 .change_btn:before, .mp_header:before,
@@ -214,12 +212,16 @@ input[type="search"]::-webkit-search-decoration
 .personnel > div > div > em:before,
 span.dynatree-expander:before,
 .ui-datepicker .ui-datepicker-header > a > span:before,
-.menu_tree_set button:before,
 .menu_tree_set li ul:after,
-.device_popup li:before, /* 디바이스 보기 목록 아이콘 */
-.dynatree-expander:after, /* 다이나 트리 + 아이콘 */
-.personnel_set > div p:before /* 진출입 아이콘 */,
-.level_set > div > button:before /* 임계치 범위 설정 버튼 */
+.device_popup li:before, !* 디바이스 보기 목록 아이콘 *!
+.dynatree-expander:after, !* 다이나 트리 + 아이콘 *!
+.personnel_set > div p:before, !* 진출입 아이콘 *!
+.personnel_set > div p:after,
+.in_sensor span:before,
+.blinker_set p:after, !* 진출입 화살표 아이콘 *!
+.safeeye_set .s_lbox:before, !* safeeye 아이콘 *!
+section:before,*/
+*:before, *:after
 {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'svgbase' !important;
@@ -255,10 +257,29 @@ span.dynatree-expander:before,
 .sico_35:before {content: "\e922";}    .sico_45:before {content: "\e92c";}    .sico_55:before {content: "\e936";}
 .sico_36:before {content: "\e923";}    .sico_46:before {content: "\e92d";}    .sico_56:before {content: "\e937";}
 .sico_37:before {content: "\e924";}    .sico_47:before {content: "\e92e";}    .sico_57:before {content: "\e938";}
-.sico_38:before {content: "\e925";}    .sico_48:before {content: "\e92f";}
-.sico_39:before {content: "\e926";}    .sico_49:before {content: "\e930";}
-.sico_40:before {content: "\e927";}    .sico_50:before {content: "\e931";}
+.sico_38:before {content: "\e925";}    .sico_48:before {content: "\e92f";}    .sico_58:before {content: "\e939";}
+.sico_39:before {content: "\e926";}    .sico_49:before {content: "\e930";}    .sico_59:before {content: "\e93a";}
+.sico_40:before {content: "\e927";}    .sico_50:before {content: "\e931";}    .sico_60:before {content: "\e93b";}
 
+
+.sico_61:before {content: "\e93c";}    .sico_71:before {content: "\e946";}    .sico_82:before {content: "\e954";}
+.sico_62:before {content: "\e93d";}    .sico_72:before {content: "\e947";}    .sico_83:before {content: "\e955";}
+.sico_63:before {content: "\e93e";}    .sico_73:before {content: "\e948";}    .sico_84:before {content: "\e956";}
+.sico_64:before {content: "\e93f";}    .sico_74:before {content: "\e949";}    .sico_85:before {content: "\e957";}
+.sico_65:before {content: "\e940";}    .sico_75:before {content: "\e94a";}    .sico_86:before {content: "\e958";}
+.sico_66:before {content: "\e941";}    .sico_76:before {content: "\e94b";}    .sico_87:before {content: "\e959";}
+.sico_67:before {content: "\e942";}    .sico_78:before {content: "\e950";}    .sico_88:before {content: "\e95a";}
+.sico_68:before {content: "\e943";}    .sico_79:before {content: "\e951";}    .sico_89:before {content: "\e95b";}
+.sico_69:before {content: "\e944";}    .sico_80:before {content: "\e952";}    .sico_90:before {content: "\e95c";}
+.sico_70:before {content: "\e945";}    .sico_81:before {content: "\e953";}    .sico_91:before {content: "\e95d";}
+
+
+.sico_92:before {content: "\e95e";}
+.sico_93:before {content: "\e95f";}
+.sico_94:before {content: "\e960";}
+.sico_95:before {content: "\e961";}
+.sico_96:before {content: "\e962";}
+.sico_97:before {content: "\e963";}
 
 
 .flexbase {

@@ -66,9 +66,9 @@ form-bg-effect :
 ////// btn_set 정의 End
 
 
-
 ////// 시,분, 초 선택 폼 Start
 .select_edit {
+  @include flexbase;
   position: relative; height:40px;
   & > div {
     position: relative; height:100%; margin:0 2px; @include flex-option(0, 1, 100%);
@@ -102,6 +102,8 @@ form-bg-effect :
    &.co_blue:before {background-color: rgba(41,161,247,0.4);} !*6  *!
    */
 
+  .mp_header {@include flexbase;}
+  .check_th tbody tr:before, .check_th tbody tr td:first-of-type:before {@include border-radius(200px);}
   .check_th tbody tr.top00 td:first-of-type:before {background-color: #ccc;}
   .check_th tbody tr.top01 td:first-of-type:before,
   .chart_label > span:nth-of-type(1):before,
@@ -158,6 +160,10 @@ form-bg-effect :
 
 
 //////...... 달력 datepicker Start
+
+
+
+
 input.datepicker {width:100px;}
 // datepicker Start
 button.ui-datepicker-trigger {
@@ -174,6 +180,8 @@ button.ui-datepicker-trigger {
   width:320px; padding:10px; background-color:$color-white-01;
   @include border01(1px,$color-gray-01,1);
   @include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
+
+  table {width: 100%;  font-size: .9em; border-collapse: collapse;}
 
   //.ui-datepicker-header start
   .ui-datepicker-header {
@@ -199,7 +207,10 @@ button.ui-datepicker-trigger {
     .ui-datepicker-title {
       @include flex-midddle;
       position: absolute; top:0; left:40px; right:40px; height:40px; cursor: pointer;
-      & > select  {font-size:1.6rem; line-height: 1.8rem; width:110px;}
+      & > select  {
+        font-size:1.6rem; line-height: 1.8rem; width:110px;
+        &:first-of-type {border-right-width:0;}
+      }
       &, & > span {font-size:2rem;}
     } // .ui-datepicker-header 타이틀 End
 
@@ -272,6 +283,7 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 
 /////...... input[type="file"] base 정의 Start
 .infile_set {
+  &, & > p {@include flexbase;}
   /*
   <div class="infile_set">
       <input type="text" readonly="readonly" title="File Route" id="file_route">
@@ -283,13 +295,12 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
       </p>
   </div>
   */
-  width:auto;height:30px;
+  width:auto; height:40px;
   & > * {position: relative; height: 100%;}
   & > input, & > select {@include flex-option(0, 1, 100%);}
   & > span, & > button {@include flex-option(1, 0, 100px); height:100%;}
   & > span  {
     cursor:pointer;
-
     &:before {
       content:"파일찾기";
       position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $bas-color;
@@ -310,24 +321,25 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
       &:hover {color:#f37949;}
     }
   }
-
-
 }
+
 .infile_sets {
   /*
   <div class="infile_set">
      <input type="text" disabled >
      <input type="file" onchange="this.previousElementSibling.value=this.value">
      <button></button>
- </div>
-   */
+  </div>
+  */
   position:relative; height:40px; float: left;
   & * {float: left;}
   & > input[type="text"] {width:calc(100% - 40px); width:-webkit-calc(100% - 40px);}
   & > input[type="file"] {position: absolute; z-index:1; top:0; left:0; width:100%; height:100%; opacity: 0; cursor:pointer;}
   & > input[type="file"]:hover + button:before {color:$color-blue-01; font-weight:bold;}
   & > button {
+    @include icon_btn;
     @include border01(1px 1px 1px 0, $color-gray-01, 1);
+    &:before {content: "\e927";}
   }
 }
 /////...... input[type="file"] base 정의 End
@@ -401,6 +413,8 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 
 
   } // 라벨 스타일 csl_style02 End
+
+
 }
 ///// input[type="checkbox"] checkBox label base 정의 End
 
@@ -503,8 +517,6 @@ div[contenteditable] {}
 .table_set, .table_contents {position: relative; }
 .table_set {display: inline-block;}
 .table_contents {width:100%; }
-
-
 
 /*
 .tablebase : table, div 모두 허용
@@ -905,6 +917,7 @@ ul.u_defalut {
   input, select {height:$td-height;}
 }
 
+
 ///// menu_tree_set 메뉴관리권한, tree UI 정의 시작
 .tree_area  {
   @include flexbase; @include flex-column; @include flex-align-items-start;
@@ -1141,19 +1154,20 @@ ul.u_defalut {
   & {
     .ct-line, .ct-series .ct-point {stroke-linecap: square;}
     .ct-line  { stroke-width: 1px !important; }
-    .ct-point { stroke-width: 3px !important; }
+    .ct-point { stroke-width: 7px !important; }
+    .ct-bar {opacity: 0.7;  }
   }
 
   &-a {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-green-01 !important; stroke: $color-green-01 !important;}
-    .ct-line, .ct-point {stroke: $color-green-01 !important;}
+    {fill: $color-blue-01 !important; stroke: $color-blue-01 !important;}
+    .ct-line, .ct-point {stroke: $color-blue-01 !important;}
   } // 1 #01d65a // rgba(0,212,88,1) 작업자상태, 차트01
 
   &-b {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-purple-01 !important; stroke: $color-purple-01 !important;}
-    .ct-line, .ct-point {stroke: $color-purple-01 !important;}
+    {fill: $color-green-03 !important; stroke: $color-green-03 !important;}
+    .ct-line, .ct-point {stroke: $color-green-03 !important;}
   }  // 2 #cc3dd3; // rgba(204,61,211,1) 크레인상태, 차트02
 
   &-c {
@@ -1210,8 +1224,9 @@ ul.u_defalut {
 
 ///// 데시보드 라인 차트 시작
 .ct-chart-line {
-  overflow: hidden; position: relative; margin:10px 0 0 0;
+  overflow: hidden; position: relative;
   & > g:nth-of-type(2) {position: absolute; left:0; top:0; bottom:0;  right:0;}
+  & > * {width:100%;}
 }
 .ct-grids, .ct-grids * {color:#fff !important;}
 .ct-grid {
@@ -1222,9 +1237,45 @@ ul.u_defalut {
   &.ct-horizontal {opacity: 0.4 !important;}
 }
 .ct-label {
-  font-size: 13px !important;
+  font-size: 0.85rem !important;
   color:$color-gray-05 !important; fill:$color-gray-05 !important;
+  &.ct-vertical.ct-start {width:auto !important;}
+  &.ct-horizontal.ct-end {
+    position: relative; left: -50% !important;
+    -webkit-box-align:   flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align:      flex-start;
+    align-items:         flex-start;
+    -webkit-box-pack:        center !important;
+    -webkit-justify-content: center !important;
+    -ms-flex-pack:           center !important;
+    justify-content:         center !important;
+    text-align:              center !important;
+    text-anchor:              start;
+  }
 }
+
+
+/////..... 통계 툴팁 시작
+.chartist-tooltip {
+  @include flex-midddle-important;
+  height:40px !important; min-width:40px !important;
+  background-color: $color-dark-01 !important;
+  color: #fff !important;
+
+  -moz-border-radius:    200px !important;
+  -webkit-border-radius: 200px !important;
+  border-radius:         200px !important;
+  -khtml-border-radius:  200px !important;
+
+  &:before {
+    margin: -2px 0 0 -5px  !important;
+    border-style:solid !important;
+    border-width: 10px 5px 0 5px !important;
+    border-color:#333240 transparent transparent transparent !important;
+  }
+}
+/////..... 통계 툴팁 끝
 ///// 데시보드 라인 차트 끝
 
 
@@ -1261,6 +1312,7 @@ ul.u_defalut {
 
 /////...... 날짜 선택 버튼 셋 정의 Start
 .month_btn_set {
+  @include flexbase;
   width:auto; @include flex-align-items-center;
   p { text-align:center; font-size:30px; padding:0 20px;}
   button {

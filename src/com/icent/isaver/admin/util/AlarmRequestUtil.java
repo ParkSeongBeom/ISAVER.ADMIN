@@ -98,6 +98,7 @@ public class AlarmRequestUtil {
             stringBuilder.append(output);
         }
 
+        logger.info(requestHttpUrl + "/" + contentType + "/" + jsonName);
         logger.info(stringBuilder.toString());
 
         if (httpEntity != null) {

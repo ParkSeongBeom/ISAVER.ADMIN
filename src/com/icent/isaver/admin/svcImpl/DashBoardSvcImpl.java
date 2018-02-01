@@ -44,6 +44,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
             Map<String, String> deviceParam = new HashMap<>();
             deviceParam.put("areaId",area.getAreaId());
             area.setDevices(deviceDao.findListDevice(deviceParam));
+            area.setAreas(areaDao.findListAreaForDashboard(deviceParam));
         }
         AreaBean area = areaDao.findByArea(parameters);
 

@@ -42,7 +42,7 @@ public class CodeSelectBoxTagSupport extends ParamTag {
     private String htmlTagClass = "";
     /* 전체여부 */
     private Boolean allModel = false;
-    /* 전체여부 */
+    /* 비활성여부 */
     private Boolean disabled = false;
     /* 전체 */
     private String allText = "";

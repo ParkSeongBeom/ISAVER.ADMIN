@@ -186,16 +186,18 @@ Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
 
     var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+    var weekName_01 = ["일", "월", "화", "수", "목", "금", "토"];
     var weekName_02 = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
     var d = this;
 
-    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+    return f.replace(/(yyyy|yy|MM|dd|es|E|hh|mm|ss|a\/p)/gi, function($1) {
         switch ($1) {
             case "yyyy": return d.getFullYear();
             case "yy": return (d.getFullYear() % 1000).zf(2);
             case "MM": return (d.getMonth() + 1).zf(2);
             case "dd": return d.getDate().zf(2);
             case "e": return weekName[d.getDay()];
+            case "es": return weekName_01[d.getDay()];
             case "E": return weekName_02[d.getDay()];
             case "HH": return d.getHours().zf(2);
             case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
@@ -223,5 +225,5 @@ Date.prototype.getWeekOfMonth = function(exact) {
         , week = index + Math.floor(offsetDate / 7)
         ;
     if (exact || week < 2 + index) return week;
-    return week === weeksInMonth ? index + 5 : week;
+    return week === weeksInMonth ? index + weeksInMonth - 1 : week;
 };

@@ -36,21 +36,54 @@ section.container {
   border-style: solid;
   border-width: 1px;
   border-color: #bcbcbc; }
+  .dashboard_mode .tree_table, .iocount_popup .tree_table {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    margin: 0 0 0 0;
+    padding: 20px 20px 0 20px; }
+    .dashboard_mode .tree_table .table_btn_set > button, .iocount_popup .tree_table .table_btn_set > button {
+      max-width: none;
+      right: auto; }
+    .dashboard_mode .tree_table .table_contents, .iocount_popup .tree_table .table_contents {
+      overflow: auto;
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%; }
+      .dashboard_mode .tree_table .table_contents .tree_box, .iocount_popup .tree_table .table_contents .tree_box {
+        overflow-x: initial; }
   .tree_table ~ .form_type01 {
     padding: 0 0 0 410px; }
   .tree_table .table_title_area {
-    height: 40px; }
+    height: 40px;
+    flex: 1 0 40px;
+    -webkit-flex: 1 0 40px;
+    flexbox: 1 0 40px;
+    -webkit-box-flex: 0;
+    -ms-flex: 1 0 40px; }
   .tree_table .tree_box {
     overflow-x: auto;
     width: 100%;
     margin: 20px 0;
     /*
-        & > ul > li > ul > li {
-          &:after  {width:1px; bottom:-18px; top:-5px; left:-$tree-bwidth;}
-          &:before {top:17px;  width:$tree-bwidth; height:1px; left:-$tree-bwidth;}
-          &:last-of-type:after {display: none;}
-        }
-        */
+    & > ul > li > ul > li {
+      &:after  {width:1px; bottom:-18px; top:-5px; left:-$tree-bwidth;}
+      &:before {top:17px;  width:$tree-bwidth; height:1px; left:-$tree-bwidth;}
+      &:last-of-type:after {display: none;}
+    }
+    */
     /*& > ul > li > ul > li > ul li {
       &:after, &:before {left:-($tree-bwidth - 2px); }
       &:after {width:1px; height:100%; top:-16px;}
@@ -73,6 +106,13 @@ section.container {
         .tree_table .tree_box ul li > span {
           height: 40px; }
           .tree_table .tree_box ul li > span, .tree_table .tree_box ul li > span > a {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: flexbox;
+            display: box;
             box-align: center;
             -webkit-box-align: center;
             -moz-box-align: center;
@@ -151,19 +191,19 @@ section.container {
       background-color: #bcbcbc; }
     .tree_table .tree_box > ul > li ul {
       padding: 0 0 0 36px; }
-    .tree_table .tree_box > ul > li > ul {
-      padding: 0; }
-    .tree_table .tree_box > ul > li > ul li:before, .tree_table .tree_box > ul > li > ul li:after {
+    .tree_table .tree_box > ul > li > ul li:before, .tree_table .tree_box > ul > li > ul li:after, .tree_table .tree_box > ul li:before, .tree_table .tree_box > ul li:after {
       width: 1px;
       left: 13px; }
-    .tree_table .tree_box > ul > li > ul li ul li:before {
+    .tree_table .tree_box > ul > li > ul li ul li:before, .tree_table .tree_box > ul li ul li:before {
       top: -5px;
       height: 20px; }
-    .tree_table .tree_box > ul > li > ul li:after {
+    .tree_table .tree_box > ul > li > ul li:after, .tree_table .tree_box > ul li:after {
       bottom: -10px;
       top: 10px; }
-    .tree_table .tree_box > ul > li > ul li:last-of-type:after {
+    .tree_table .tree_box > ul > li > ul li:last-of-type:after, .tree_table .tree_box > ul li:last-of-type:after {
       display: none; }
+    .tree_table .tree_box .dynatree-lastsib > ul > li:before {
+      display: none !important; }
 
 .tr_table {
   /*padding: 20px 0 0 320px;*/ }
@@ -207,23 +247,6 @@ section.container {
       content: "\e91a";
       padding: 0 10px; }
 
-.chartist-tooltip {
-  min-width: 0  !important;
-  width: 40px !important;
-  height: 40px !important;
-  padding: 12px 0 0 0 !important;
-  background-color: #333240 !important;
-  color: #fff !important;
-  -moz-border-radius: 200px !important;
-  -webkit-border-radius: 200px !important;
-  border-radius: 200px !important;
-  -khtml-border-radius: 200px !important; }
-  .chartist-tooltip:before {
-    margin: -2px 0 0 -5px  !important;
-    border-style: solid !important;
-    border-width: 10px 5px 0 5px !important;
-    border-color: #333240 transparent transparent transparent !important; }
-
 .left_table, .right_table {
   width: 50% !important; }
 
@@ -260,6 +283,13 @@ section.container {
   -webkit-box-flex: 0;
   -ms-flex: 1 0 65px;
   height: 65px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
   box-align: center;
   -webkit-box-align: center;
   -moz-box-align: center;
@@ -275,10 +305,18 @@ section.container {
     border: none; }
 
 .table_btn_set {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
   flex: 1;
   -webkit-flex: 1;
   flexbox: 1;
-  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   -webkit-box-pack: end;
   -moz-box-pack: flex-end;
   -webkit-justify-content: flex-end;
@@ -289,7 +327,8 @@ section.container {
   -moz-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
-  align-items: center; }
+  align-items: center;
+  position: relative; }
   .table_btn_set > select {
     width: 120px; }
   .table_btn_set > p {

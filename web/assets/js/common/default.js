@@ -6,19 +6,24 @@
     CssChange = {
         DetectResolution: function () {
             var $wrapper = $('html, body'); //CSS가 바뀔 최상위 Wrapper
-            var maxName = 'adaptive_max';  // 대표 클래스명
-            var minName = 'adaptive_min';
+            //var maxName = 'adaptive_max';  // 대표 클래스명
+            //var minName = 'adaptive_min';
+            var webclassName =    'adaptive_pc';
+            var mobileclassName = 'adaptive_mobile';  // mobile 사이즈 일때 클래스 부여
+            var tabletclassName = 'adaptive_tablet';  // tablet 사이즈 일때 클래스 부여
             var contentAreaWidth = $(window).width();
-            if (resizeClass && resizeClass.start <= contentAreaWidth && resizeClass.end > contentAreaWidth) {
+
+            if (resizeClass && resizeClass.start <= contentAreaWidth && resizeClass.end > contentAreaWidth  ) {
                 $wrapper.removeClass().addClass(resizeClass.className);
             } else {
-                // 해상도별 클래스 셋팅 class='res1300'
-                if (contentAreaWidth > 1679) {
-                    $wrapper.addClass(maxName).removeClass(minName);
+                if (contentAreaWidth < 719) {
+                    $wrapper.removeClass(tabletclassName).removeClass(webclassName).addClass(mobileclassName);
                 }
-                // 웹 최소 사이즈일때 class='res1025'
-                else if (contentAreaWidth < 1680) {
-                    $wrapper.addClass(minName).removeClass(maxName);
+                else if (contentAreaWidth > 720 && contentAreaWidth < 1025 ) {
+                    $wrapper.removeClass(mobileclassName).removeClass(webclassName).addClass(tabletclassName);
+                }
+                else if (contentAreaWidth > 1026 ) {
+                    $wrapper.removeClass(mobileclassName).removeClass(tabletclassName).addClass(webclassName);
                 }
             }
         }
@@ -31,8 +36,9 @@ $(function () {
     CssChange.DetectResolution();
 });
 
+// 구역명 길때 마우스 hover 시 보여주기
 $(function(){
-    var areaTitleWidth = $(".watch_area  header > h3");
+    var areaTitleWidth = $(".watch_area header > h3");
     areaTitleWidth.hover(function() {
         if($(this).width() >= ($(this).parent().width() - 80) ) {
             $(this).parent().addClass("wid");
@@ -52,23 +58,16 @@ $(function(){
         //Determines up-or-down scrolling
         if (st > lastScroll){
             //Replace this with your function call for downward-scrolling
-            $("header").addClass("up");
+            $(".wrap > header").addClass("up");
         }
         else {
             //Replace this with your function call for upward-scrolling
-            $("header").removeClass("up");
+            $(".wrap > header").removeClass("up");
         }
         //Updates scroll position
         lastScroll = st;
     });
-    /*
-     $(".contents-area ").bind('mousewheel DOMMouseScroll', function(e){
-     if (e.originalEvent.wheelDelta / 120 > 0) {
-     $(this).removeClass("up");
-     }
-     else {
-
-     $(this).addClass("up");
-     }
-     });*/
 });
+
+//th에 체크박스가 있는 경우
+if($("th input").hasClass("checkbox")){$("th input").parent('th').addClass("notbefore");}

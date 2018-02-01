@@ -1,51 +1,225 @@
 @charset "utf-8";
 @import "filters";
 
-$margin:20px; // root article 상하좌우 마진값
-$m_lr:15px; // 감시구역 상하좌우 마진값
 
-$treffic_b:35%; // 신호등 before 크기
-$treffic_a:26%; // 신호등 after  크기
+
+$bs_hsize:1.5rem; // 진출입 구역명
+$bs_bsize:7.2rem; // 진출입 현재 잔존
+$bs_psize:2.7rem; // 진출입 인, 아웃
+$bs_lsize:15rem; // 진출입 인, 아웃
+
+$bs_hsize_s:($bs_hsize - 0.3rem); // 진출입 구역명 작은글씨
+$bs_bsize_s:($bs_bsize - 2rem); // 진출입 목록 큰글씨
+$bs_psize_s:($bs_psize - 0.8rem); // 진출입 목록 작은글씨
+
+$bs_hsize_ss:($bs_hsize - 0.4rem); // 진출입 구역명 작은글씨
+$bs_bsize_ss:($bs_bsize - 3.7rem);  // 진출입 목록 큰글씨
+$bs_psize_ss:($bs_psize - 1.4rem);  // 진출입 목록 작은글씨
+
+$se_fsize:1.5rem; // safeeye 리스트
+$se_bsize:12rem;  // safeeye 이벤트 아이콘
+
+$ks_bsize:16rem;
+$ks_ssize:($ks_bsize / 4.5);
 
 /////..... 데시보드 입력폼 스타일 시작
-.dashboard_mode {
+body.dashboard_mode {
+  overflow: hidden; position: absolute; top:0; left:0; right:0;
+  height:100%; min-height:0; padding:0 $dash-margin;
+  .wrap {height:100%;}
   article {
     @include flexbase; @include flex-column;
-    position:absolute; top:($headerHeight + $margin); left:$margin;
-    bottom:$margin; right:($noticecenter-width + $margin * 2);
-    /*padding:0 ($noticecenter-width + $margin) 0 0;*/
-
     button {
       min-width: 40px; height:40px; right:-5px;
       &:before, &:after {@include transition(200ms); font-size:1.8rem;}
       &.area:before   {content:"\e91b";}
       &.device:before {content:"\e935"; font-size:1.6rem;}
-      &.ioset:before  {content:"\e909"; font-size:1.6rem;}
+      &.ioset:before, &.date_select:before  {content:"\e909"; font-size:2rem;}
+      &.chart_select:before {content:"\e908"; font-size:1.7rem;}
       &.on {background-color: $adm-color;}
       &:hover:before, &:hover:after, &.on:before {color:$color-blue-01;}
     }
 
-    & > * {position: relative;}
-
-    & article {top: auto; left: auto; right: auto; bottom: auto; padding:0;}
+    & > * {position: relative; }
   }
 
   .wrap > article {
+    position:absolute; top:($headerHeight + $margin); left:$margin;
+    bottom:$margin; right:($noticecenter-width + $margin * 2);
+    min-width:800px;
     &:before,&:after {
       content:""; position: absolute; z-index:-1; right:0; left:0; top:$headerHeight;
-      background-color: $color-gray-01;
+      //background-color: $color-gray-01;
     }
     &:before {bottom:0;}
     &:after  {height:1px;}
+
+    & > section {
+      @include flex-option(0, 1, 100%);
+      &, & > div {@include flexbase; position: relative;}
+      & > div {
+        @include flex-column; overflow: hidden;
+        header,article {position: relative; width:100%; @include transition(200ms);}
+        header {
+          z-index: 0; background-color: transparent; padding:0; min-width:0;
+          @include flex-option(1, 0, $headerHeight);
+          @include flex-justify-content-start;
+
+          h3 {
+            @include text-overflow-ellipsis;
+            letter-spacing: -0.1rem; font-size:1.3rem; margin: -3px auto 0 0; padding:0 5px 0 0;
+          }
+
+          &.wid > h3:hover {
+            font-size:1.1rem; line-height: 1.3rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height:100%; white-space: normal;
+            padding: 10px 0;
+          }
+
+          ///// ----------------- 설치센서   START
+          .in_sensor {
+            @include flexbase; @include flex-align-items-center;
+            position: relative; right:-5px; height:30px; margin:0 0 0 auto;
+            @include border-radius(200px); background-color: rgba(0,0,0,0.3);
+            color:$color-white-01;
+
+            & > div {
+              width:100%; max-width:110px; @include text-overflow-ellipsis; padding:0 10px;
+              span:before {font-size:1.2rem; }
+            }
+
+          }
+          ///// ----------------- 설치센서   End
+
+        }
+        article {
+          @include flex-option(0, 1, 100%); @include flex-align-items-center;
+          .m_marqueebox {
+            @include flex-option(1, 0, auto); @include flex-justify-content-start;
+            overflow: hidden; position: relative; padding:8px 0; line-height:1.1rem;
+            &:before {
+              content:"\e946"; position: relative; z-index: 1; left:0;
+              width:30px; height:100%; font-size:1.2rem; padding:0 6px 0 0;
+            }
+            p {
+              display: inline-block; position: absolute; left:100%;
+              white-space:nowrap; word-wrap:normal;
+              span {padding:0 15px 0 0; &:before {content:"ㆍ";} }
+            }
+          }
+        }
+      }
+    }
+
   }
+
+  &.taekwon_mode {
+    .sub_title_area {
+      padding:0 5px;
+
+      .navigation {margin: 0 0 0 27px;}
+
+      h3 {
+        width:240px;
+        background-image: url(../images/logo/gnb_logo.png);
+        background-size: 230px; background-position: 10px 0;
+        background-repeat: no-repeat;
+      }
+    }
+    .wrap > article {
+      right:$margin;
+      & > section {
+        border:none;
+        &:before {display: none;}
+        &:nth-of-type(1) {}
+        &:nth-of-type(2) { @include flex-option(1, 0, 33%);}
+
+        & > div {
+          padding:0 $m_lr ($m_lr - 5px) $m_lr;
+          &:before, &:after {left:$m_slr; top:0; right:$m_slr; bottom:($m_slr * 2); }
+          article {
+            @include flex-option(0, 1, 100%); @include flex-align-items-center;
+            .s_rbox {right:-($m_lr - 6px); }
+          }
+        }
+      }
+    }
+    .db_area {
+      right:-($noticecenter-width * 2);
+      &.on {right:$dash-margin;}
+    }
+  }
+
+  &.dark_mode {
+    h1 {background-image: url(../images/logo/icent_isaver_w.svg); }
+    &, & *:not(select) {color:$color-white-02; }
+
+    &, .db_area, .db_area:before, .db_list_box, .wrap > header  {background-color: $color-gray-08;}
+    .db_list_box {border-color: $color-gray-09;}
+
+    .wrap {
+      & > article > section {
+        &:before {background-color: transparent;}
+        &, & > div:before {border-color:$color-gray-09;}
+      }
+      menu > ul > li > ul {background-color: $color-gray-09;}
+    }
+
+    .db_allcheck label:before {color:#3c3c3c;}
+
+    .kblinker_set > * {@include text-shadow(1px, 2px, 10px, #000, 0.5);}
+
+    .popupbase > .bg {background-color: rgba($color-dark-01,0.0);}
+
+    .watch_area > div {
+      &:after {background-color: transparent;}
+      &.level {
+        &-caution, &-warning, &-danger {
+
+          background-color:transparent;
+          .kblinker_set * {
+            &, &:after, &:before {color:$color-white-01;}
+            &:after {background-color:$color-white-01;}
+          }
+
+          &.type-list {
+            &, &:before {background-color: transparent !important;}
+            .m_marqueebox {
+              &:before {background-color: $color-gray-08 !important;}
+            }
+          }
+
+
+
+        }
+        &-caution:before {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
+        &-warning:before {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
+        &-danger:before  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+      }
+    }
+
+    .nhr_set li {
+
+      &:after {background-color: $color-gray-08; border-color:$color-gray-09;}
+      &.on {&:after {border-color:$color-gray-01;} }
+    }
+
+  }
+
 }
 /////..... 데시보드 입력폼 스타일 끝
 
 
 /////..... 아이콘 일반, 경고, 감지 표시 expl 시작
+.date_select, .chart_select {
+  overflow: hidden; width: 40px;
+  & * {opacity: 0; position: absolute; bottom:0; left:0; height:100%; color:#3c3c3c !important;}
+}
 .expl {
-  position: absolute; right:0;
-  @include flex-align-self-end; padding:0 0 3px 0;
+  margin: 0 0 0 auto; padding:0 0 3px 0;  @include flex-align-self-end;
   span {
     position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
     &:before {
@@ -56,6 +230,18 @@ $treffic_a:26%; // 신호등 after  크기
     &:nth-of-type(2):before {border-color:$color-orange-01;}
     &:nth-of-type(3):before {border-color:$color-red-01;}
   }
+
+  &.inout {
+    /*position: relative; right:auto; padding:0 20px 0 0;
+    @include flex-align-self-center;*/
+    span {
+      &:nth-of-type(1):before {border-color:$color-blue-01;}
+      &:nth-of-type(2):before {border-color:$color-green-03;}
+    }
+
+    & + * {margin:0 5px 0 0;}
+  }
+
 }
 /////..... 아이콘 일반, 경고, 감지 표시 expl 끝
 
@@ -63,57 +249,57 @@ $treffic_a:26%; // 신호등 after  크기
 /////..... 구역 Start
 .watch_area {
 
-  &, & > div {@include flexbase; position: relative;}
-
-  @include flex-row-wrap; @include flex-option(0, 1, 100%);
-  overflow-y: auto; margin:0 1px 1px 0 ; //background-color: $color-gray-02;
-
+  @include flex-row-wrap;
+  overflow-y: auto; margin:0 1px 1px 0 ;
+  @include border01(1px 0 0 1px,$color-gray-01,1);
   &:before {content:""; position:absolute; z-index: -1; width:100%; height:100%; background-color: $color-gray-02;}
+
+  // .watch_area > div > article > * + * {}
 
   //// 각 구역
   & > div {
 
-    @include flex-width-one(1); overflow: hidden;
-    width:25%; min-width:330px; max-width:50%; min-height:25%; //max-height:50%;
-    //@include border01(0 1px 1px 0,$color-gray-01,1); background-color: $color-white-01;
+    width:25%; /*min-width:350px; max-width:50%; */min-height:25%; padding:0 $m_lr;
 
-    &:before, &:after {content:""; position: absolute; left:0; top:0; width:100%; height:100%; @include content-box;}
+    &:before, &:after {content:""; position: absolute; left:-1px; top:-1px; right:0; bottom:0; }
     &:before {@include border01(1px,$color-gray-01,1);}
     &:after {z-index:-1; background-color: $color-white-01;}
 
-    padding:0 $m_lr;
-
-    @include flex-column;
-
-    header,article {position: relative; width:100%; @include transition(200ms);}
-
-    header {
-      z-index: 0; background-color: transparent; padding:0;
-
-
-      @include flex-option(1, 0, $headerHeight);
-
-      h3 { @include text-overflow-ellipsis; cursor:pointer; font-size:1.4rem; margin: -7px auto 0 0;}
-
-      &.wid > h3:hover {
-        font-size:1.1rem; line-height: 1.3rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        height:100%; white-space: normal;
-        padding: 10px 0;
-      }
-    }
-
     article {
+      & > * {
 
-      @include flex-option(0, 1, 100%); @include flex-align-items-center;
-
-      & > section {
-
-        @include flex-option(0, 1, 100%);
+        @include flex-midddle;  @include flex-option(0, 1, 100%); width:100%;
 
         &, & > div {position: relative;}
+
+        & > * {
+          &.s_rbox {
+            @include flexbase;
+            height:100%; min-width:150px; padding: 0 $m_lr 0 0;
+            &.marquee_box {
+              overflow: hidden;
+              & > * { max-height:none !important;}
+            }
+            &.marquee_h:hover {overflow: auto;}
+
+            & > * {
+              position: absolute; left:0;
+              li {@include flexbase; @include flex-align-items-center; position: relative; }
+            }
+          }
+        }
+
+        &.safeeye_set, &.personnel_set {
+          & > .s_lbox {@include flex-width-one(2);}
+          & > .s_rbox {
+            @include flex-align-items-center; @include flex-width-one(1); right:(-$m_lr + 1px);
+            overflow-y: auto; overflow-x: hidden !important; margin:0 0 0 20px;
+            & > * {
+              right:$m_lr; max-height:100%;
+              li {margin:0 0 15px 0; padding:0 8px; &:last-of-type {margin:0;} }
+            }
+          }
+        }
       }
 
     }
@@ -123,89 +309,230 @@ $treffic_a:26%; // 신호등 after  크기
       .device_popup {right:0;}
     }
 
-    /// 임계치 적용 표시
-    &.level {
-      &-caution, &-warning, &-danger {
-        & *, & *:before, & *:after {color:$color-white-01; }
-      }
-
-      @mixin level-Common {
-
-        &:before {
-          @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
-          background-color:$color-white-01;
-        }
-        &:after  {
-          @include box-inset-shadow(0px, 2px, 5px, #000, 0.5);
-          //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
-        }
-      }
-
-      &-caution {
-        .ts-caution {
-          @include level-Common;
-          &:after  {background-color:$color-gray-03;}
-        }
-      } // .level-caution 주의
-
-      &-warning {
-        .ts-warning {
-          @include level-Common;
-          &:after {background-color:$color-orange-01;}
-        }
-      } // .level-warning 경고
-
-      &-danger  {
-        .ts-danger {
-          @include level-Common;
-          &:after  {background-color:$color-red-01 !important;}
-        }
-      } // .level-danger  위험
-    }
-
   }
+
+  /*
+  // 가로 4개일때
+  @media screen and (min-width: 0) and (max-width: 1580px) {
+    & > div { width:33.3333% !important; max-width: 33.3333% !important;}
+  }
+  // 가로 3개일때
+  @media screen and (min-width: 0) and (max-width: $body-minwidth) {
+    & > div { width:50% !important; max-width: 50% !important;}
+  }
+  */
 
   //// 구역개수에 따른 레이아웃 변동
-  &.area03 { & > div {max-height:50%;} }
-  &.area04 { & > div {min-width:50%;} }
-  &.area06 {
-    @include flex-align-content-start;
-    & > div { min-width:33.33333%; max-width: 33.33333%; min-height: 33.33333%; max-height: 33.33333%;}
+  &.area01 {
+    & > div { @include flex-width-one(1); min-width:50% !important; }
+    .kblinker_set > * {
+      font-size:($ks_bsize + 1rem); line-height:($ks_bsize - 3rem); letter-spacing: -1rem;
+
+      &:before {padding-left:15px;}
+      &:after  {left: 6px;}
+    }
+    .nhr_set {
+      .s_lbox {
+        @include flex-width-one(2);
+        margin:50px 0;
+        .chart_select_set {position: relative; top:0;}
+      }
+      .s_rbox {
+        @include flex-width-one(1);
+        li {width:20%;}
+      }
+    }
   }
-  &.area03, &.area04, &.area06 {
-    .treffic_set {max-width:420px;}
-    .personnel_set {
-      max-width: none;
+
+  &.area02 {
+    & > div {min-width:50% !important; height:50%;}
+  }
+  &.area04 {
+
+    & > div {
+      min-width:50% !important; max-width:50%;
+      // article > * > .s_lbox {padding:0 50px;} 태권도
+    }
+    .s_lbox.blinker_set > div { min-width:320px;}
+    .kblinker_set > * {
+      font-size:($ks_bsize / 2); line-height:($ks_bsize / 2.3);
+      &:before {font-size:($ks_ssize / 1.5); padding-left:6px; }
+      &:after  {left: 0; width:94%;}
+    }
+    .nhr_set .s_rbox li {width:33.333%; }
+  }
+
+  &.area01, &.area04 {.nhr_set .s_rbox ul {@include flex-justify-content-start;} }
+
+  &.area08, &.area00 {
+    & > div {max-width:25%;}
+    @media screen and (min-width: 0) and (max-width: 1800px) {
+      & > div {max-width:none; }
+    }
+    .blinker_set {
+      h3 {font-size:$bs_hsize_ss; letter-spacing: -0.1rem;}
+
       & > div {
-        p {
-          &:nth-of-type(1) {top:-6px; width:64%; font-size:3.8rem; line-height: 3.4rem; }
-          &:nth-of-type(3) {top:-5px;}
-          &:nth-of-type(2), &:nth-of-type(3) {
-            width:36%; font-size:1.4rem; line-height: 1.7rem;
-            &:before {font-size:1.2rem; line-height: 1.9rem;}
-          }
-          &:nth-of-type(4) {font-size:1.2rem; padding:0 8px 2px 8px;}
+        & > p {font-size:$bs_bsize_ss; line-height:($bs_bsize_ss - 1rem); letter-spacing: -0.2rem;}
+        & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
+      }
+
+      &.s_lbox { h3 + div:before { font-size:($se_bsize / 2.5); line-height:3.5rem;} }
+    }
+
+    .kblinker_set > * {
+      font-size:($ks_bsize / 4); line-height:($ks_bsize / 4.5);
+      &:before {font-size:($ks_ssize / 2.5); padding: 0 0 6px 4px; }
+      &:after  {left: 0; width:94%;}
+    }
+  }
+
+  &.area08 {
+
+    .safeeye_set > .s_lbox{
+      &:before {font-size:($se_bsize - 3rem);}
+      &:after {$loding-size:160px; width:$loding-size; height:$loding-size;}
+    }
+  }
+
+  &.area00 {
+    .safeeye_set {
+      & > .s_rbox {min-width:120px; max-width:120px;}
+      & > .s_lbox{
+        &:before {font-size:($se_bsize - 4.5rem);}
+        &:after {$loding-size:130px; width:$loding-size; height:$loding-size;}
+      }
+      li {
+        font-size:($se_fsize - 0.3rem);
+        &:before {
+          font-size:($se_fsize + 0.2rem); padding:5px;
         }
       }
-      button:before {content:"\e905";}
+    }
+    .nhr_set .s_rbox {margin:0;}
+  }
+
+  &.area06, &.area09 {
+    & > div {width:33.33333%; max-width: 33.33333%;}
+    .blinker_set {
+      h3 {font-size:$bs_hsize_s; letter-spacing: -0.1rem;}
+
+      & > div {
+        & > p {font-size:$bs_bsize_s; line-height:($bs_bsize_s - 1rem); letter-spacing: -0.2rem;}
+        & > div > p { font-size:$bs_psize_s; line-height:($bs_psize_s + 0.4rem);}
+      }
+
+      &.s_lbox { h3 + div:before { font-size:($se_bsize / 1.7); line-height:6rem; } }
+    }
+    .safeeye_set {
+      & > .s_lbox{
+        &:before {font-size:($se_bsize - 3rem); }
+        &:after {$loding-size:180px; width:$loding-size; height:$loding-size;}
+      }
+    }
+    .kblinker_set > * {
+      font-size:($ks_bsize / 3); line-height:($ks_bsize / 3.7);
+      &:before {font-size:($ks_ssize / 2); padding: 0 0 5px 6px; }
+      &:after  {left: 0; width:94%;}
     }
   }
-  &.area08 {
-    & > div > article {@include flex-justify-content-center;}
-    .personnel_set {
-      @include flex-column; max-height:70%;
-    }
+
+  &.area09,&.area12 { & > div {min-height:33.3333%; max-height:33.3333%;} }
+
+  &.area04, &.area06, &.area08 { & > div { height:50%;} }
+
+  &.area16 {
+    & > div {height:25%; min-height:180px;}
+    .chart_box  {max-height:120px;}
+    .m_marqueebox {display: none;}
   }
 }
 /////..... 구역 End
 
 
-.treffic_set, .personnel_set {width:100%; @include flex-midddle; }
+/////..... 임계치 적용 표시 Start
+.level {
+  &-caution {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
+  &-warning {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
+  &-danger  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+
+  &-caution, &-warning, &-danger {
+    & *, & *:before, & *:after {color:$color-white-01; }
+
+    // NHR 센서의 경우
+    &.type-list {
+      & *, & *:before, & *:after {color:inherit; }
+      &, &:before {background-color: transparent !important;}
+      .m_marqueebox {
+        & * , &:before {color:$color-red-01 !important; }
+        &:before {background-color: $color-white-01 !important;}
+      }
+      .safeeye_set .s_lbox {color:$color-red-01;  @include issue;}
+    }
+
+    .m_marqueebox {
+      & > p {@include marquee;}
+      & * , &:before {color:$color-white-01 !important; }
+    }  //각구역 마키
+
+    .ts {
+      &-caution, &-warning, &-danger {}
+      &-caution {}
+      &-warning {}
+      &-danger  {}
+    }
+
+  }
+
+  @mixin level-Common {
+
+    &:before {
+      @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
+      background-color:$color-white-01;
+    }
+    &:after  {
+      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5);
+      //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
+    }
+    p {color:$color-white-01 !important;}
+  }
+
+  &-caution {
+    .treffic_set .ts-caution {@include level-Common;}
+    .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
+  } // .level-caution 주의
+
+  &-warning {
+    .treffic_set .ts-warning {@include level-Common;}
+    .treffic_set .ts-warning:after, .m_marqueebox:before {background-color:$color-orange-01;}
+  } // .level-warning 경고
+
+  &-danger  {
+    .treffic_set .ts-danger {@include level-Common;}
+    .treffic_set .ts-danger:after, .m_marqueebox:before {background-color:$color-red-01;}
+  } // .level-danger  위험
+}
+/////..... 임계치 적용 표시 End
 
 
-/////.....상태 아이콘 일반, 경고, 감지 정의 section Start
+/////..... 차트 영역 Start
+.chart_area {
+  &, & > * {width:100%;}
+  .chart_box {height:100%; margin:10px 0; }
+  .date_select {
+    z-index: 1; position: absolute; top:0; right:0; width:auto;
+    select {background-color: $color-gray-09;}
+  }
+}
+/////..... 차트 영역 End
+
+
+/////.....신호등 상태 아이콘 일반, 경고, 감지 정의 section Start
 .treffic_set {
-
+  $treffic_b:10%; // 신호등 before 크기
+  $treffic_s:20%;
+  $treffic_c:40%;
+  $treffic_w:32%;
   /*
   <section class="treffic_set">
       <div class="ts-caution"><p></p></div>
@@ -214,53 +541,45 @@ $treffic_a:26%; // 신호등 after  크기
   </section>
   */
 
-  min-height:80px; max-width:330px;
-  & > div {
-    @include flex-midddle;
-    @include flex-width-one(1);
-    height:80px; min-height: 80px;
+  width:100%; max-width:500px;
+  &, & > div, & > div p {@include flex-midddle;}
 
-    &:before, &:after {
-      content:""; position: absolute; left:50%; top:50%; @include border-radius(200px);
-    }
+  & > div {
+    @include flex-option(0, 1, $treffic_w); padding:($treffic_w / 2) 0; position: relative;
+    opacity: 1; cursor: pointer;
+    &:before, &:after {content:""; position: absolute; @include border-radius(200px); @include transition(400ms);}
 
     &:before {
-      margin-top:-($treffic_b); margin-left:-($treffic_b); padding:$treffic_b;
-      background-color: $color-gray-02; @include box-inset-shadow(0px, 2px, 3px, #000, 0.2);
+      top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
+      background-color: $color-gray-02; @include box-shadow01(0px, 10px, 10px, -8px, #000, 0.2);
     }
-
     &:after {
-      /*margin-top:calc(-25% - 3px); margin-left:calc(-25% - 3px); @include borderwidth(3px);*/
-
-      margin-top:-$treffic_a; margin-left:-$treffic_a; padding:$treffic_a;
+      top:($treffic_b * 2); right:($treffic_b * 2); bottom:($treffic_b * 2); left:($treffic_b * 2);
       background-color: $color-white-01; @include box-shadow01(0px, 6px, 2px, -4px, #000, 0.2);
     }
 
     &.ts {
-      &-caution, &-warning, &-danger {}
-
-      /*
-      &-caution:after {border-color: rgba($color-gray-03,0.5);   }    // &-caution 주의
-      &-warning:after {border-color: rgba($color-orange-01,0.5); }    // &-warning 경고
-      &-danger:after  {border-color: rgba($color-red-01,0.5);    }    // &-danger  위험
-      */
-
       &-caution:before {background-color: rgba($color-gray-03,0.5);   }    // &-caution 주의
       &-warning:before {background-color: rgba($color-orange-01,0.5); }    // &-warning 경고
       &-danger:before  {background-color: rgba($color-red-01,0.5);    }    // &-danger  위험
     }
 
-    p {position: relative; z-index: 10; font-size:2rem; }
+    p {position: absolute; z-index: 10; top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
+      font-size:2rem; line-height: 2.2rem; color:$color-gray-08 !important;
+    }
 
+    /*@media screen and (-webkit-min-device-pixel-ratio:0) {
+      p {top:($treffic_b * 1.5); }
+    }*/
   }
 
+
 }
-/////..... 상태 아이콘 일반, 경고, 감지 정의 section End
+/////.....  신호등 상태 아이콘 일반, 경고, 감지 정의 section End
 
 
 /////..... 진출입 section Start
 .personnel_set {
-
   /*
   <section class="personnel_set">
       <div>
@@ -278,45 +597,262 @@ $treffic_a:26%; // 신호등 after  크기
       </div>
   </section>
   */
+  min-height:65px;
 
-  order:1; @include flex-align-items-center; min-height:65px; max-width: 390px; margin:5px 0 10px 0;
+  .kblinker_set {
+    @include flexbase; @include flex-justify-content-around; width:100%;
+    & > * {
+      @include flexbase;  @include flex-column-reverse; //display: inline-block;
+      position: relative; font-size:($ks_bsize);  font-weight:bold;
+      color:$color-gray-07;
 
-  & > div {
 
-    @include flex-width-one(1); width:100%; margin:0 5px;
-    &:nth-of-type(2) {opacity: 0.6; }
-
-    p {
-      position: relative; float:left; @include text-overflow-ellipsis;
-      &:nth-of-type(1) {width:60%; font-size:2.5rem; line-height: 2.2rem; letter-spacing: -0.2rem;}
-      &:nth-of-type(2), &:nth-of-type(3) {
-        width:40%; text-align: right; line-height: 1.2rem;  padding:0 0 0 5px; font-weight:bold;
-        &:before {
-          /*position: absolute; left:0; padding:0 1px 0 27px;*/
-          position: relative;
-          font-weight:normal; font-size:0.9rem; line-height: 1.1rem;
-          float:right; padding:0 0 0 5px;
-        }
+      &:before, &:after {position: relative; display: inline-block; }
+      &:before {
+        order:2; font-size:($ks_bsize / 3); letter-spacing: 0; padding: 0 0 15px 10px;
       }
-      &:nth-of-type(2) {&:before {content:"\e922"; right:1px;} }
-      &:nth-of-type(3) {opacity: 0.7; &:before {content:"\e923"; } }
-
-      &:nth-of-type(4) {
-        width:100%; padding:1px 8px; margin:3px 0 0 0; text-align:center;
-        color:$color-white-01; background-color: $color-gray-07;
-        letter-spacing: normal;
+      &:after {
+        content:"";
+        /*position: absolute; top:66px; left:20px; right:15px;*/
+        order:1; position: relative; width:95%; height:2px; margin:auto;
       }
+      &.in  {
+        &:before {content:"IN"; }
+        &:after {background-color: $color-blue-01;}
+        color:$color-blue-01;
+      }
+      &.out {
+        &:before {content:"OUT";}
+        &:after {background-color: $color-green-03;}
+        color:$color-green-03;
+      }
+
+    }
+  }
+
+  .blinker_set {
+    /*
+    <h3>구역명 삽입</h3>
+    <div>
+      <p>40</p>
+      <div>
+        <p>85</p>
+        <p>45</p>
+      </div>
+    </div>
+    */
+
+    h3 {
+      float:left; width:100%; padding:0 0 2px 0;
+      font-size:$bs_hsize; letter-spacing: -0.3rem;
+      @include text-overflow-ellipsis;
+      @include border01(0 0 1px 0,#000,1 );
     }
 
+    &.s_lbox {
+      h3 { display: none;}
+
+      h3 + div {
+        @include flex-row-wrap;
+        &::before {
+          content:"\e944"; font-size:$se_bsize;
+          text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
+        }
+      }
+
+    }
+
+    & > div {
+      @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+      width:100%;
+      & > p {font-size:$bs_bsize; line-height:($bs_bsize - 1rem); letter-spacing: -0.2rem;}
+      & > div {
+        padding:5px 0 0 5px; font-weight:bold; text-align:right;
+        & > p {
+          position: relative; font-size:$bs_psize; line-height:($bs_psize + 0.4rem); font-weight:bold;
+          &:after {position: relative; top:2px; font-weight:normal; padding:0 0 0 10%;}
+          &:nth-of-type(1) {&:after {content:"\e922"; right:1px;} }
+          &:nth-of-type(2) {&:after {content:"\e923"; } opacity: 0.7;}
+        }
+      }
+    }
   }
-  button:before {content:"\e905";}
+
+  & > .blinker_set {max-width:70%;}
+
+  .s_rbox {
+    opacity: 0.6;
+    .blinker_set {
+
+      h3 {font-size: 1rem; letter-spacing: -0.1rem; }
+      & > div {
+        & > p {font-size:2.6rem; line-height:2.8rem; }
+        & > div > p {
+          font-size: 1rem; line-height:1.2rem;
+          &:after {top:1px;}
+          &:nth-of-type(2) {top:-4px;}
+        }
+      }
+    }
+  }
+
+  li {@include flex-row-wrap;}
+
+  & + .chart_area {@include flex-option(1, 0, 35%);}
 }
 /////..... 진출입 section End
+//.marquee_h ul { @include marquee_h; cursor:pointer;}
 
+
+/////..... safeeye section Start
+.safeeye_set {
+  .s_lbox {
+    @include flex-midddle; text-align: center;
+    &:before, &:after {position: absolute; font-size:$se_bsize; @include border-radius(200px);}
+    &:before {z-index: 1;}
+
+    /* 감시 효과 - 일반
+    &:after {
+      content:""; width:$loding-size; height:$loding-size; color:rgba(0,0,0,0);  @include loding;
+      @include border(0 2px 2px 2px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
+    }
+    */
+  }
+
+  li {
+    //@include flex-justify-content-between;
+    position: relative; font-size:$se_fsize; opacity: 0.7;
+    &:before {
+      font-size:($se_fsize + 0.7rem); color:$color-white-01 !important; padding:8px; margin:0 20px 0 0;
+      background-color: rgba(0,0,0,0.4); @include border-radius(200px);
+    }
+    &:after  {content:"OFF"; font-weight:bold; color:$color-gray-03;}
+
+    &.on {
+      opacity: 1;
+      &:before {background-color:$color-red-01;}
+      &:after  {content:"ON"; letter-spacing: 0.08rem; color:$color-red-01; }
+    }
+  }
+
+}
+/////..... safeeye section End
+
+
+/////..... NHR section Start
+
+.nhr_set {
+  $nh_lhe:52px;
+  $nh_lhe_s:($nh_lhe - 12px);
+
+  @include flex-column;
+  & > * {@include flex-option(0, 1, 100%); width:100%;}
+  .s_lbox {
+    // order:2;
+
+    @include flexbase; @include flex-column; overflow: hidden;
+
+    &:hover .chart_select_set {top:10px;}
+
+    .chart_select_set {
+      position: absolute; z-index:1; top:-50px; right:0; height:40px; text-align: right;
+        @include transition(400ms);
+      button {@include line_btn02; border-width:1px; width:40px; height:40px; right:0; background-color: $color-white-01;}
+    }
+    .chart_box {position: relative; width:100%; height:100%;}
+  }
+  .s_rbox {
+    //order: 1; margin: 0 0 20px 0;
+    margin: 20px 0 0 0;
+    right:0; @include flex-align-items-start;
+    @include border01(0 0 1px 0,$color-gray-09,1 );
+    ul {
+      @include flexbase; @include flex-row-wrap; @include flex-justify-content-between;
+      @include flex-align-items-start; @include flex-align-content-start;
+      overflow: auto; z-index:1; right:0; height:100%; @include transition(400ms);
+
+      //&:hover {height:200%; background-color: rgba($color-gray-08, 0.9);}
+    }
+
+    li {
+      @include flex-row-wrap; overflow: hidden; opacity: 0.7;
+
+      position: relative; z-index: 1; width:50%; height:55px;
+      line-height:1rem; letter-spacing: -0.1rem; padding:4px 30px 9px 55px;
+
+      &, &:before, &:after {@include transition01(200ms);}
+      & * {cursor:pointer;}
+      &:before, &:after {content:""; position: absolute;}
+      &:after {
+        z-index: -1; top:0; left:0; width:calc(100% - 5px); height:calc(100% - 5px);
+        @include border01(1px,$color-gray-01,1 ); background-color: $color-white-01;
+      }
+      &:before {
+        display: none; z-index: 1; content:"\e901"; right:10px; font-weight:bold; font-size:1.2rem;
+      }
+
+      &.on {
+        opacity: 1;
+        &:after {}
+        &:before {display: block;}
+      }
+
+      &.ts {
+        &-caution, &-warning, &-danger {
+          color:$color-white-01; opacity: 1;
+          &:after {border:none !important;}
+          &:before {
+            //@include border(0 2px 2px 2px, $color-white-01 $color-white-01 $color-white-01 transparent);
+          }
+        }
+
+        &-caution { &:after, &:before {background-color: rgba($color-gray-03,1) !important;  } }    // &-caution 주의
+        &-warning { &:after, &:before {background-color: rgba($color-orange-01,1) !important;} }    // &-warning 경고
+        &-danger  { &:after, &:before {background-color: rgba($color-red-01,1) !important;   } }    // &-danger  위험
+      }
+
+      span {
+        //@include flex-option(0, 1, 100%);
+        &:nth-of-type(1) {
+          @include flex-option(0, 1, 100%); font-size:0.9rem; @include text-overflow-ellipsis;
+
+          &:before {
+            @include flex-midddle; position: absolute; font-size:2rem; height:50px; top:0; left:10px;
+          }
+          &.co2:before, &.co:before {font-size:2.4rem;}
+          &.gate:before {content:"\e92f";} // 게이트 웨이 센서
+          &.temp:before {content:"\e949";} // 온도
+          &.humi:before {content:"\e947";} // 습도
+          &.co2:before  {content:"\e955";} // CO2
+          &.co:before   {content:"\e956";} // CO
+          &.plug:before {content:"\e933";} // 스마트 플러그
+          &.smok:before {content:"\e963";} // 연기
+          &.gas:before  {content:"\e910";} // 가스
+        }
+        &:nth-of-type(2) {
+          font-weight:bold; font-size:1.4rem; padding:6px 0;
+          /*@include flex-option(1, 0, 60px); text-align: right; min-width:55px; */
+        }
+
+        /*
+        &:after {display: inline-block; text-align: right; min-width:25px; font-size:0.7rem;}
+        &.unit {
+          &-per:after {content:"％";}
+          &-tem:after {content:"℃";}
+          &-ppm:after {content:"ppm";}
+          &-kwh:after {content:"kWh";}
+        }
+        */
+      }
+    }
+  }
+
+
+}
+/////..... NHR section End
 
 /////.......... 디바이스 보기 Popup Start
 .device_popup {
-
   /*
   <div class="device_popup">
       <ul>
@@ -372,7 +908,3 @@ $treffic_a:26%; // 신호등 after  크기
 
 }
 /////.......... 디바이스 보기 Popup End
-
-
-
-

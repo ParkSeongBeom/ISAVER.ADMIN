@@ -13,6 +13,9 @@
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js"type="text/javascript" ></script>
 
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-helper.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-resource.js"></script>
+
 <article>
     <div class="sub_title_area">
         <h3>
@@ -43,348 +46,8 @@
         </div>
     </div>
 
-    <c:set var="areaCntClass" value=""/>
-    <c:choose>
-        <c:when test="${fn:length(childAreas)==1}">
-            <c:set var="areaCntClass" value="area01"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)==2}">
-            <c:set var="areaCntClass" value="area02"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=3 and fn:length(childAreas)<=4}">
-            <c:set var="areaCntClass" value="area04"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=5 and fn:length(childAreas)<=6}">
-            <c:set var="areaCntClass" value="area06"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=7 and fn:length(childAreas)<=8}">
-            <c:set var="areaCntClass" value="area08"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)==9}">
-            <c:set var="areaCntClass" value="area09"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=10 and fn:length(childAreas)<=12}">
-            <c:set var="areaCntClass" value="area00"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=13}">
-            <c:set var="areaCntClass" value="area16"/>
-        </c:when>
-    </c:choose>
-
     <!-- 구역이 9개 이하 일때 구역레이아웃 변경 design.js "구역 개수에 따른 레이아웃 변경"-->
-    <section class="watch_area ${areaCntClass}">
-        <c:choose>
-            <c:when test="${childAreas != null and fn:length(childAreas) > 0}">
-                <!--
-                Template Code 분기
-                TMP001 : 신호등 (default)
-                TMP002 : 감시구역 침입
-                TMP003 : 전시물 보호
-                TMP004 : 진출입
-                TMP005 : NHR
-                -->
-                <c:forEach var="childArea" items="${childAreas}">
-                    <c:if test="${childArea.templateCode=='TMP001'}">
-                        <!-- 신호등 -->
-                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <c:set var="inSensorYn" value="0"/>
-                                    <c:set var="safeeye" value="0"/>
-                                    <c:set var="blinker" value="0"/>
-                                    <c:set var="nhr" value="0"/>
-                                    <!-- 하위 구역에 설치된 센서 아이콘 삽입 -->
-                                    <c:forEach var="device" items="${childArea.devices}">
-                                        <!--
-                                            Template Code 분기
-                                            safeeye : DEV001, DEv002, DEv003, DEv004
-                                            blinker : DEV009
-                                            nhr : DEV900, DEV901, DEV902, DEV903, DEV904, DEV905, DEV906
-                                        -->
-                                        <c:choose>
-                                            <c:when test="${device.deviceCode=='DEV001'
-                                                            or device.deviceCode=='DEV002'
-                                                            or device.deviceCode=='DEV003'
-                                                            or device.deviceCode=='DEV004'}">
-                                                <c:if test="${safeeye==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="safeeye" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                            <c:when test="${device.deviceCode=='DEV900'
-                                                            or device.deviceCode=='DEV901'
-                                                            or device.deviceCode=='DEV902'
-                                                            or device.deviceCode=='DEV903'
-                                                            or device.deviceCode=='DEV904'
-                                                            or device.deviceCode=='DEV905'
-                                                            or device.deviceCode=='DEV906'}">
-                                                <c:if test="${nhr==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="nhr" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                            <c:when test="${device.deviceCode=='DEV009'}">
-                                                <c:if test="${blinker==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="blinker" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                        </c:choose>
-                                    </c:forEach>
-                                    <c:if test="${inSensorYn==1}">
-                                        <div class="in_sensor">
-                                            <div>
-                                                <c:if test="${safeeye==1}">
-                                                    <span class="ico-safeeye"></span>
-                                                </c:if>
-                                                <c:if test="${nhr==1}">
-                                                    <span class="ico-nhr"></span>
-                                                </c:if>
-                                                <c:if test="${blinker==1}">
-                                                    <span class="ico-blinker"></span>
-                                                </c:if>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:if>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="treffic_set">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${childArea.templateCode=='TMP002'}">
-                        <!-- 감시구역 침입 -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="treffic_set" style="display: none;">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
-                                </section>
-                                <section class="safeeye_set">
-                                    <div class="s_lbox ico-invasion"></div>
-                                    <div class="s_rbox">
-                                        <ul>
-                                            <li class="ico-speaker"></li>
-                                            <li class="ico-wlight"></li>
-                                            <li class="ico-mobile"></li>
-                                        </ul>
-                                    </div>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${childArea.templateCode=='TMP003'}">
-                        <!-- 전시물 보호 -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="treffic_set" style="display: none;">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
-                                </section>
-                                <section class="safeeye_set">
-                                    <div class="s_lbox ico-exhibit fittext"></div>
-                                    <div class="s_rbox">
-                                        <ul>
-                                            <li class="ico-speaker"></li>
-                                            <li class="ico-wlight"></li>
-                                            <li class="ico-mobile"></li>
-                                        </ul>
-                                    </div>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${childArea.templateCode=='TMP004'}">
-                        <!-- 진출입 -->
-                        <div class="type-list">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}','${childArea.areaName}'); return false;"></button>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="personnel_set">
-                                    <!--
-                                     s_lbox : 왼쪽 컨텐츠 삽입 영역
-                                     s_rbox : 오른쪽 컨텐츠 리스트 삽입영역
-                                    -->
-                                    <!-- 대표 지정 진출입 -->
-                                    <div class="s_lbox blinker_set ">
-                                        <h3></h3>
-                                        <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}">
-                                            <p gap>0</p>
-                                            <div>
-                                                <p in>0</p>
-                                                <p out>0</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <c:choose>
-                                        <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
-                                            <div class="s_rbox ">
-                                                <!-- 스크롤 영역 시작 -->
-                                                <ul data-duplicated='true' data-direction='up'>
-                                                    <c:forEach var="area" items="${childArea.areas}">
-                                                        <li class="blinker_set">
-                                                            <h3>${area.areaName}</h3>
-                                                            <div templateCode="${childArea.templateCode}" inoutArea areaId="${area.areaId}">
-                                                                <p gap>0</p>
-                                                                <div>
-                                                                    <p in>0</p>
-                                                                    <p out>0</p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                                <!-- 스크롤 영역 끝 -->
-                                            </div>
-                                        </c:when>
-                                    </c:choose>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${childArea.templateCode=='TMP005'}">
-                        <!-- NHR -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="nhr_set">
-                                    <div class="s_lbox">
-                                        <div class="chart_select_set" dateSelType>
-                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">일</button>
-                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">주</button>
-                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">월</button>
-                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">년</button>
-                                        </div>
-                                        <div class="chart_box chart01" chartAreaId="${childArea.areaId}">
-                                        </div>
-                                    </div>
-                                    <c:choose>
-                                        <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
-                                            <div class="s_rbox">
-                                                <!--
-                                                .unit-per = 퍼센트
-                                                .unit-tem = 온도
-                                                .unit-ppm = ppm
-                                                .unit-kwh = 킬로와트
-                                                 -->
-                                                <ul nhrDeviceList data-duplicated='true' data-direction='up'>
-                                                    <c:forEach var="device" items="${childArea.devices}">
-                                                        <c:set var="deviceClass" value=""/>
-                                                        <c:choose>
-                                                            <c:when test="${device.deviceCode=='DEV900'}">
-                                                                <c:set var="deviceClass" value="gate"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV901'}">
-                                                                <c:set var="deviceClass" value="temp"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV902'}">
-                                                                <c:set var="deviceClass" value="co2"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV903'}">
-                                                                <c:set var="deviceClass" value="gas"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV904'}">
-                                                                <c:set var="deviceClass" value="smok"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV905'}">
-                                                                <c:set var="deviceClass" value="co"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV906'}">
-                                                                <c:set var="deviceClass" value="plug"/>
-                                                            </c:when>
-                                                        </c:choose>
-
-                                                        <li deviceId="${device.deviceId}">
-                                                            <section class="treffic_set" style="display: none;">
-                                                                <c:forEach var="critical" items="${criticalList}">
-                                                                    <div criticalLevel="${critical.codeId}"><p></p></div>
-                                                                </c:forEach>
-                                                            </section>
-                                                            <span class="${deviceClass}">${device.deviceCodeName}</span>
-                                                            <span evtValue>
-                                                                <c:if test="${device.evtValue!=null}">
-                                                                    <fmt:formatNumber value="${device.evtValue}" type="pattern" pattern="0.00" />
-                                                                </c:if>
-                                                                <c:if test="${device.evtValue==null}">
-                                                                    -
-                                                                </c:if>
-                                                            </span>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </c:when>
-                                    </c:choose>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-                </c:forEach>
-            </c:when>
-        </c:choose>
-    </section>
+    <section class="watch_area"></section>
 
     <div class="popupbase iocount_popup">
         <div>
@@ -469,8 +132,8 @@
     var targetMenuId = String('${paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
     var areaId = String('${paramBean.areaId}');
+    var dashboardHelper = new DashboardHelper();
     var chartList = {};
-    var renderDatetime = new Date();
 
     /*
      url defind
@@ -490,15 +153,46 @@
         , inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutDetailFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
-        , inoutConfigEmptyArea : '<spring:message code="dashboard.message.inoutConfigEmptyArea"/>'
         , saveInoutConfigurationComplete : '<spring:message code="dashboard.message.saveInoutConfigurationComplete"/>'
         , saveInoutConfigurationFailure : '<spring:message code="dashboard.message.saveInoutConfigurationFailure"/>'
     };
 
     $(document).ready(function(){
-        for(var key in criticalCss){
-            modifyElementClass($(".treffic_set div[criticalLevel='"+key+"']"),"ts-"+criticalCss[key],'add');
-        }
+        dashboardHelper.initialize($(".watch_area"),{
+            <c:forEach var="childArea" items="${childAreas}">
+            '${childArea.areaId}' : {
+                'areaName' : '${childArea.areaName}'
+                ,'templateCode' : '${childArea.templateCode}'
+                ,'childAreaIds' : '${childArea.childAreaIds}'
+                ,'devices' : [
+                    <c:forEach var="device" items="${childArea.devices}">
+                    {
+                        'deviceId' : '${device.deviceId}'
+                        ,'deviceCode' : '${device.deviceCode}'
+                        ,'deviceCodeName' : '${device.deviceCodeName}'
+                    },
+                    </c:forEach>
+                ]
+                ,'areas' : [
+                    <c:forEach var="area" items="${childArea.areas}">
+                    {
+                        'areaId' : '${area.areaId}'
+                        ,'templateCode' : '${area.templateCode}'
+                    },
+                    </c:forEach>
+                ]
+            },
+            </c:forEach>
+        },new DashboardResource());
+        dashboardHelper.setTrefficTemplate(
+            $("<section/>", {class:"treffic_set"})
+            <c:forEach var="critical" items="${criticalList}">
+                .append(
+                    $("<div/>",{criticalLevel:"${critical.codeId}", class:"ts-"+criticalCss['${critical.codeId}']}).append($("<p>"))
+                )
+            </c:forEach>
+        );
+        dashboardHelper.areaRender();
 
         // 조회주기 체크 제어
         $(".iotime_set .checkbox_set > input[type='checkbox']").click(function(){
@@ -525,14 +219,6 @@
     });
 
     function initChartList(){
-        $(".watch_area li[deviceId]").on("click",function(){
-            if(!$(this).hasClass("on")){
-                $(this).parent().find("li").removeClass("on");
-                $(this).addClass("on");
-                findListChart($(this).parent().parent().parent().parent().parent().attr("areaId"), $(this).attr("deviceId"));
-            }
-        });
-
         $(".watch_area div[chartAreaId]").each(function(){
            chartList[$(this).attr("chartAreaId")] = new Chartist.Line(this, {
                labels: [],
@@ -567,7 +253,7 @@
             $(_this).parent().find("button").removeClass("on");
             $(_this).addClass("on");
 
-            findListChart(_areaId, $(".watch_area div[areaId='"+_areaId+"'] li[deviceId].on").attr("deviceId"));
+            updateChart(_areaId, $(".watch_area div[areaId='"+_areaId+"'] li[deviceId].on").attr("deviceId"));
         }
     }
 
@@ -585,18 +271,6 @@
 
         if(refreshFlag){
             requestHelper.getData('inoutList');
-        }
-
-
-        if(renderDatetime.format("yyyyMMdd")!=_serverDatetime.format("yyyyMMdd")){
-            $.each($(".watch_area li[deviceId]"),function(){
-                $(this).find("span[evtValue]").text("-");
-                if($(this).hasClass("on")){
-                    findListChart($(this).parent().parent().parent().parent().parent().attr("areaId"), $(this).attr("deviceId"));
-                }
-            });
-
-            renderDatetime = new Date(_serverDatetime);
         }
     }
 
@@ -706,7 +380,7 @@
 
         if(areaId==null){
             console.error("[saveInoutConfiguration] areaId is null");
-            alertMessage('inoutConfigEmptyArea');
+            alertMessage();
             return false;
         }
 
@@ -904,7 +578,6 @@
             }
         }else{
             appendEvent(data, renderConfig);
-            inoutAppender(data);
         }
 
         function appendEvent(_data, _config){
@@ -965,11 +638,7 @@
                     break;
             }
 
-            var _eventDate = new Date();
-            _eventDate.setTime(_data['eventDatetime']);
-            if(_eventDate>renderDatetime){
-                nhrAppender(_data);
-            }
+            nhrAppender(_data);
         }
     }
 
@@ -1014,90 +683,32 @@
      * NHR 이벤트 발생시
      */
     function nhrAppender(data){
-        // 배재호SB 요청으로 스마트플래그 이벤트는 (A)만 입력받음
-        if(data['eventId']=='EVT308' || data['eventId']=='EVT310' || data['eventId']=='EVT312' || data['eventId']=='EVT313'){
-            return false;
-        }
-
         var nhrDeviceTag = $(".watch_area div[areaId='"+data['areaId']+"'] li[deviceId='"+data['deviceId']+"']");
         if(nhrDeviceTag.length > 0) {
             var updateFlag = false;
-            var eventValue;
             for(var index in data['infos']){
                 var info = data['infos'][index];
 
                 if(info['key']=="value"){
-                    eventValue = info['value'];
-                    try{
-                        nhrDeviceTag.find("span[evtValue]").text(Number(eventValue).toFixed(2));
-                    }catch(e){
-                        nhrDeviceTag.find("span[evtValue]").text(eventValue);
-                        console.error("[nhrAppender] parse error - "+ e.message);
-                    }
+                    nhrDeviceTag.find("span[evtValue]").text(info['value']);
                     updateFlag = true;
                 }
             }
 
             if(nhrDeviceTag.hasClass("on") && updateFlag){
-                updateChart(data['areaId'], data['deviceId'], eventValue, data['eventDatetime']);
+                updateChart(data['areaId'], data['deviceId']);
             }
         }
     }
 
-    function updateChart(_areaId, _deviceId, _eventValue, _eventDatetime){
-        if($(".watch_area li[deviceId='"+_deviceId+"']").hasClass("on")){
-            if(chartList[_areaId]==null) {
-                console.error("[updateChart] chartList is null - areaId : " + _areaId);
-                return false;
-            }
-
-            var _eventDate = new Date();
-            _eventDate.setTime(_eventDatetime);
-            var _eventDateStr;
-            switch ($("div[areaId='"+_areaId+"'] div[dateSelType] button.on").attr("value")){
-                case 'day':
-                    _eventDateStr = _eventDate.format("HH");
-                    break;
-                case 'week':
-                    _eventDateStr = _eventDate.format("es");
-                    break;
-                case 'month':
-                    _eventDateStr = _eventDate.getWeekOfMonth()+"주";
-                    break;
-                case 'year':
-                    _eventDateStr = _eventDate.format("MM");
-                    break;
-            }
-
-            var _labels = chartList[_areaId].data.labels;
-            var seriesIndex = null;
-            for(var i=0; i<_labels.length; i++){
-                if(_labels[i]==_eventDateStr){
-                    seriesIndex = i;
-                    break;
-                }
-            }
-
-            if(seriesIndex!=null){
-                try{
-                    if(chartList[_areaId].data.series[0][i] < _eventValue){
-                        chartList[_areaId].data.series[0][i] = _eventValue;
-                        chartList[_areaId].update();
-                    }
-                }catch(e){
-                    console.error("[updateChart] series index error - "+e);
-                }
-            }
-        }
-    }
-
-    function findListChart(_chartAreaId, _deviceId){
+    function updateChart(_chartAreaId, _deviceId){
         var dateSelType = $("div[areaId='"+_chartAreaId+"'] div[dateSelType] button.on").attr("value");
         var truncType;
-
+        var truncValue = 1;
         switch (dateSelType){
             case 'day':
                 truncType = 'hour';
+                truncValue = 4;
                 break;
             case 'week':
                 truncType = 'day';
@@ -1109,7 +720,7 @@
                 truncType = 'month';
                 break;
         }
-        callAjax('chart',{areaId:_chartAreaId, deviceId:_deviceId, truncType: truncType, dateType: dateSelType});
+        callAjax('chart',{areaId:_chartAreaId, deviceId:_deviceId, dateType: dateSelType, truncType: truncType, truncValue:truncValue});
     }
 
     /**
@@ -1126,7 +737,7 @@
             var inout = data[index];
             if(_targetAreaId==null || _targetAreaId!=inout['areaId']){
                 _targetAreaId = inout['areaId'];
-                var inoutTag = $(".watch_area div[areaId='"+inout['areaId']+"']");
+                var inoutTag = $(".watch_area div[inoutArea][areaId='"+inout['areaId']+"']");
                 if(inoutTag.length > 0){
                     var inCount = inout['inCount']!=null?inout['inCount']:0;
                     var outCount = inout['outCount']!=null?inout['outCount']:0;
@@ -1236,9 +847,8 @@
      @author psb
      */
     function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        if(XMLHttpRequest['status']!="0"){
-            alertMessage(actionType + 'Failure');
-        }
+//        console.error(messageConfig[actionType + 'Failure']);
+        alertMessage(actionType + 'Failure');
     }
 
     /*

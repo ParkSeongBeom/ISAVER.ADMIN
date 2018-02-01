@@ -116,6 +116,9 @@ public class AreaSvcImpl implements AreaSvc {
 
         try {
             areaDao.saveArea(parameters);
+            if(StringUtils.notNullCheck(parameters.get("allTemplate"))){
+                areaDao.saveAreaTemplate(parameters );
+            }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

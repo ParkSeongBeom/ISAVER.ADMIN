@@ -139,8 +139,13 @@
                     </tr>
                     <tr>
                         <th><spring:message code="area.column.sortOrder"/></th>
-                        <td colspan="3">
+                        <td>
                             <input type="number" name="sortOrder" placeholder="<spring:message code="area.message.requiredSortOrder"/>" >
+                        </td>
+                        <th class="point"><spring:message code="area.column.templateCode"/></th>
+                        <td class="point">
+                            <span><isaver:codeSelectBox groupCodeId="TMP" codeId="" htmlTagName="templateCode"/></span>
+                            <span style="display: none;" allTemplate><input type="checkbox" name="allTemplate"/><spring:message code="area.column.allTemplate"/></span>
                         </td>
                     </tr>
                     <tr>

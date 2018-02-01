@@ -32,6 +32,15 @@ public interface EventLogSvc {
     ModelAndView findListEventLog(Map<String, String> parameters);
 
     /**
+     * 이벤트 로그 차트를 가져온다.
+     *
+     * @author dhj
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListEventLogChart(Map<String, String> parameters);
+
+    /**
      * 이벤트 로그 상세을 가져온다.
      *
      * @author dhj
@@ -72,5 +81,5 @@ public interface EventLogSvc {
      * @param parameters
      * @return
      */
-    ModelAndView findListEventLogForExcel(HttpServletRequest request,  HttpServletResponse response, Map<String, String> parameters);
+    ModelAndView findListEventLogForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters);
 }

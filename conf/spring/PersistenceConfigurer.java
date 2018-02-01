@@ -4,12 +4,8 @@ import com.icent.dhj.util.FindSystemUtil;
 import com.icent.dhj.util.ResultSystemBean;
 import com.icent.isaver.admin.common.PropertyManager;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

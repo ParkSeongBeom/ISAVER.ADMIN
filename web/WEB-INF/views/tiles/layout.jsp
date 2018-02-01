@@ -11,7 +11,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
     <title>iSaver Admin</title>
-
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
@@ -33,32 +32,20 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/dashBoard-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/request-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
-
-    <!-- mqtt - stomp -->
-    <script src="${rootPath}/assets/js/util/sockjs-0.3.4.min.js?version=${version}" charset="UTF-8"></script>
-    <script src="http://172.16.121.13:15670/web-stomp-examples/stomp.js?version=${version}" charset="UTF-8"></script>
-    <script type="text/javascript">
-        /** 웹소켓 연결 **/
-        var wsUseFlag  = false;
-        /** Stomp 연결 **/
-        var stompUseFlag  = true;
-    </script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
         var calendarHelper = new CalendarHelper(rootPath);
         var menuModel = new MenuModel();
         var menuCtrl = null;
-        var dashBoardHelper = new DashBoardHelper();
+        var requestHelper = new RequestHelper();
         var templateHelper = new TemplateHelper();
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
         var _eventDatetime = new Date();
-
-
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -67,7 +54,6 @@
             ,'alarmListUrl':'${rootPath}/eventLog/alarm.json'
             ,'alarmDetailUrl':'${rootPath}/action/eventDetail.json'
             ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
-            ,'dashboardUrl':'${rootPath}/dashboard/list.html'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
@@ -145,14 +131,8 @@
             // 알람 리스트 불러오기
             layoutAjaxCall('alarmList');
 
-            if (wsUseFlag) {
-                wsConnect();
-                aliveSend(900000);
-            }
-
-            if (stompUseFlag) {
-                stompConnectFunc();
-            }
+            wsConnect();
+            aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
             alarmPlayer.addEventListener('timeupdate', function (){
@@ -385,7 +365,9 @@
          * @private
          */
         function layoutFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-            layoutAlertMessage(actionType + 'Failure');
+            if(XMLHttpRequest['status']!="0"){
+                layoutAlertMessage(actionType + 'Failure');
+            }
         }
 
         /*
@@ -422,12 +404,15 @@
                 var eventInfos = eventLog['infos'];
                 var alarmId = "";
                 var criticalLevel = "";
+                var eventValue = null;
                 if(eventInfos!=null){
                     for(var i in eventInfos){
                         if(eventInfos[i]['key']=='criticalLevel'){
                             criticalLevel = eventInfos[i]['value'];
                         }else if(eventInfos[i]['key']=='alarmId'){
                             alarmId = eventInfos[i]['value'];
+                        }else if(eventInfos[i]['key']=='value'){
+                            eventValue = eventInfos[i]['value'];
                         }
                     }
                 }
@@ -458,7 +443,7 @@
                         .attr("alarmId",alarmId)
                         .attr("eventDatetime",eventLog['eventDatetime']);
                 alarmTag.find("#areaName").text(eventLog['areaName']);
-                alarmTag.find("#eventName").text(eventLog['eventName']);
+                alarmTag.find("#eventName").text(eventLog['eventName'] + (eventValue!=null?'('+eventValue+')':''));
                 alarmTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
                 alarmTag.find(".infor_btn").attr("onclick","javascript:searchAlarmDetail(this); event.stopPropagation();");
                 $("#alarmList").prepend(alarmTag);
@@ -478,6 +463,16 @@
                     /* 싸이렌 */
 //                    setAlarmAudio();
                     playSegment();
+//                    var eventDatetime = new Date(eventLog['eventDatetime']);
+//                    var startDt = new Date();
+//                    startDt.setHours(8);
+//                    startDt.setMinutes(30);
+//                    var endDt = new Date();
+//                    endDt.setHours(9);
+//                    endDt.setMinutes(30);
+//                    if(eventDatetime>=startDt && eventDatetime<=endDt){
+//                        playSegment();
+//                    }
 
                     var toastTag = templateHelper.getTemplate("toast");
                     toastTag.addClass("level-"+criticalCss[criticalLevel]);
@@ -702,7 +697,6 @@
             dashboardForm.appendTo(document.body);
             dashboardForm.submit();
         }
-
     </script>
 
     <!--
@@ -714,13 +708,14 @@
         var ws;
         var reConnectFlag = true;
         var webSocketUrl = "${webSocketUrl}";
+
         /**
          * 웹소켓 접속 연결
          * @author dhj
          */
         function wsConnect() {
             setTimeout(function() {
-                dashBoardHelper.getData();
+                requestHelper.getData();
 
                 if(webSocketUrl=="" || webSocketUrl==null){
                     console.error('[wsConnect]websocket url is null');
@@ -782,20 +777,11 @@
             var resultData;
             var callBackFlag = false;
 
-            if(wsUseFlag) {
-                try{
-                    resultData = JSON.parse(message.data);
-                }catch(e){
-                    return false;
-                }
-            }
-
-            if (stompUseFlag) {
-                try{
-                    resultData = JSON.parse(message);
-                }catch(e){
-                    return false;
-                }
+            console.log(message);
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                return false;
             }
 
             switch (resultData['messageType']) {
@@ -821,84 +807,10 @@
             }
 
             if(callBackFlag){
-                dashBoardHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
+                requestHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
             }else{
-                dashBoardHelper.getData();
+                requestHelper.getData();
             }
-        }
-    </script>
-
-    <!--
-        mqtt - stomp
-        @authro dhj
-        @date 2017.09.26
-    -->
-    <script type="text/javascript" charset="UTF-8">
-
-//        var _ws = new WebSocket('ws://172.16.121.13:15674/ws');
-//        var mClient = Stomp.over(_ws);
-
-        var _sockJs = new SockJS('http://172.16.121.13:15674/stomp');
-        var mClient = Stomp.over(_sockJs);
-        var _topic_name = "/topic/isaver.web.dashboard.event";
-
-        var initDashBoardFlag = false;
-
-        mClient.heartbeat.outgoing = 0;
-        mClient.heartbeat.incoming = 0;
-
-        mClient.debug = function(el_name, send) {
-
-//            debugger;
-//            var p = send;
-//            p = (p === undefined) ? '' : JSON.stringify(p);
-//            console.log(el_name + " | " + p);
-
-            if (this.connected == false && mClient.ws.readyState == 1 && !initDashBoardFlag) {
-                dashBoardHelper.getData();
-                initDashBoardFlag = true;
-            }
-
-        };
-
-
-        var on_error =  function(e) {
-        //                alert('error');
-        //                $('#console').append($("<code>").text(e.body+"<br />"));
-            alert("[stomp error] : " + e.body);
-            if (mClient.connected == false) {
-                stompConnectFunc();
-            }
-        };
-
-        var on_connect = function(x) {
-            id = mClient.subscribe(_topic_name, function(m) {
-                // reply by sending the reversed text to the temp queue defined in the "reply-to" header
-        //                        var reversedText = m.body.split("").reverse().join("");
-        //                    console.log(m.body);
-
-                var resultData = null;
-
-                try {
-                    resultData = JSON.parse(m.body);
-                } catch(e) {
-                    console.error("[error][stomp error] " + e);
-                }
-
-                messageEventHandler(m.body);
-        //                    resultText(m.body);
-        //                    resultDataFunc(m.body);
-        //                        client.send(m.headers['reply-to'], {"content-type":"application/json"}, reversedText);
-            });
-        };
-
-        /**
-         * MQTT - STOMP 접속 연결 및 이벤트 연결
-         * @author dhj
-         */
-
-        function stompConnectFunc() {
-            mClient.connect('icent', 'dkdltpsxm', on_connect, on_error, '/');
         }
     </script>
 </head>

@@ -136,6 +136,13 @@ form-bg-effect :
       margin: 0; }
 
 .select_edit {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
   position: relative;
   height: 40px; }
   .select_edit > div {
@@ -188,6 +195,19 @@ form-bg-effect :
       -webkit-border-radius: 20px;
       border-radius: 20px;
       -khtml-border-radius: 20px; }
+  * .mp_header {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box; }
+  * .check_th tbody tr:before, * .check_th tbody tr td:first-of-type:before {
+    -moz-border-radius: 200px;
+    -webkit-border-radius: 200px;
+    border-radius: 200px;
+    -khtml-border-radius: 200px; }
   * .check_th tbody tr.top00 td:first-of-type:before {
     background-color: #ccc; }
   * .check_th tbody tr.top01 td:first-of-type:before,
@@ -266,6 +286,10 @@ button.ui-datepicker-trigger {
   box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7);
   -webkit-box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7); }
+  .ui-datepicker table {
+    width: 100%;
+    font-size: .9em;
+    border-collapse: collapse; }
   .ui-datepicker .ui-datepicker-header {
     position: relative;
     height: 40px;
@@ -340,6 +364,8 @@ button.ui-datepicker-trigger {
         font-size: 1.6rem;
         line-height: 1.8rem;
         width: 110px; }
+        .ui-datepicker .ui-datepicker-header .ui-datepicker-title > select:first-of-type {
+          border-right-width: 0; }
       .ui-datepicker .ui-datepicker-header .ui-datepicker-title, .ui-datepicker .ui-datepicker-header .ui-datepicker-title > span {
         font-size: 2rem; }
   .ui-datepicker .ui-datepicker-calendar thead {
@@ -483,7 +509,15 @@ input.datepicker + button + .in-timepicker {
   </div>
   */
   width: auto;
-  height: 30px; }
+  height: 40px; }
+  .infile_set, .infile_set > p {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box; }
   .infile_set > * {
     position: relative;
     height: 100%; }
@@ -563,12 +597,12 @@ input.datepicker + button + .in-timepicker {
         color: #f37949; }
 
 .infile_sets {
- /*
- <div class="infile_set">
-    <input type="text" disabled >
-    <input type="file" onchange="this.previousElementSibling.value=this.value">
-    <button></button>
-</div>
+  /*
+  <div class="infile_set">
+     <input type="text" disabled >
+     <input type="file" onchange="this.previousElementSibling.value=this.value">
+     <button></button>
+  </div>
   */
   position: relative;
   height: 40px;
@@ -591,9 +625,21 @@ input.datepicker + button + .in-timepicker {
     color: #109dcb;
     font-weight: bold; }
   .infile_sets > button {
+    width: 40px;
+    height: 40px;
     border-style: solid;
     border-width: 1px 1px 1px 0;
     border-color: darkgray; }
+    .infile_sets > button:before {
+      font-size: 1.6rem; }
+    .infile_sets > button:hover:before, .infile_sets > button.on:before {
+      font-weight: bold; }
+    .infile_sets > button:hover:before {
+      color: #109dcb; }
+    .infile_sets > button.on:before {
+      color: #109dcb; }
+    .infile_sets > button:before {
+      content: "\e927"; }
 
 .checkbox_set {
   position: relative;
@@ -1904,17 +1950,19 @@ ul.u_defalut {
   .ct-series .ct-line {
     stroke-width: 1px !important; }
   .ct-series .ct-point {
-    stroke-width: 3px !important; }
+    stroke-width: 7px !important; }
+  .ct-series .ct-bar {
+    opacity: 0.7; }
   .ct-series-a .ct-area, .ct-series-a .ct-slice-pie, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
-    fill: #01d65a !important;
-    stroke: #01d65a !important; }
+    fill: #109dcb !important;
+    stroke: #109dcb !important; }
   .ct-series-a .ct-line, .ct-series-a .ct-point {
-    stroke: #01d65a !important; }
+    stroke: #109dcb !important; }
   .ct-series-b .ct-area, .ct-series-b .ct-slice-pie, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
-    fill: #cc3dd3 !important;
-    stroke: #cc3dd3 !important; }
+    fill: #a8d164 !important;
+    stroke: #a8d164 !important; }
   .ct-series-b .ct-line, .ct-series-b .ct-point {
-    stroke: #cc3dd3 !important; }
+    stroke: #a8d164 !important; }
   .ct-series-c .ct-area, .ct-series-c .ct-slice-pie, .ct-series-c .ct-bar, .ct-series-c .ct-slice-donut {
     fill: #f6b900 !important;
     stroke: #f6b900 !important; }
@@ -1958,14 +2006,15 @@ ul.u_defalut {
 
 .ct-chart-line {
   overflow: hidden;
-  position: relative;
-  margin: 10px 0 0 0; }
+  position: relative; }
   .ct-chart-line > g:nth-of-type(2) {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     right: 0; }
+  .ct-chart-line > * {
+    width: 100%; }
 
 .ct-grids, .ct-grids * {
   color: #fff !important; }
@@ -1978,9 +2027,57 @@ ul.u_defalut {
     opacity: 0.4 !important; }
 
 .ct-label {
-  font-size: 13px !important;
+  font-size: 0.85rem !important;
   color: #757575 !important;
   fill: #757575 !important; }
+  .ct-label.ct-vertical.ct-start {
+    width: auto !important; }
+  .ct-label.ct-horizontal.ct-end {
+    position: relative;
+    left: -50% !important;
+    -webkit-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-box-pack: center !important;
+    -webkit-justify-content: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    text-anchor: start; }
+
+.chartist-tooltip {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  display: flexbox !important;
+  display: box !important;
+  box-align: center !important;
+  -webkit-box-align: center !important;
+  -moz-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  -webkit-box-pack: center !important;
+  -moz-box-pack: center !important;
+  -webkit-justify-content: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  background-color: #4c4c4c !important;
+  color: #fff !important;
+  -moz-border-radius: 200px !important;
+  -webkit-border-radius: 200px !important;
+  border-radius: 200px !important;
+  -khtml-border-radius: 200px !important; }
+  .chartist-tooltip:before {
+    margin: -2px 0 0 -5px  !important;
+    border-style: solid !important;
+    border-width: 10px 5px 0 5px !important;
+    border-color: #333240 transparent transparent transparent !important; }
 
 .chart_table_area {
   display: inline-block;
@@ -2028,6 +2125,13 @@ ul.u_defalut {
     width: 100%; }
 
 .month_btn_set {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
   width: auto;
   box-align: center;
   -webkit-box-align: center;

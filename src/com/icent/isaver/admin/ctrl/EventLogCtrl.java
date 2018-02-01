@@ -114,4 +114,17 @@ public class EventLogCtrl {
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
+
+    /**
+     * 알림 해제한다
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/chart")
+    public ModelAndView findListEventLogChart(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogChart(parameters);
+        return modelAndView;
+    }
 }
