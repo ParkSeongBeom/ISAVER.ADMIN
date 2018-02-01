@@ -103,7 +103,7 @@
                         </tr>
                         <tr>
                             <th><spring:message code="common.column.updateUser"/></th>
-                            <td name="updateUser"></td>
+                            <td name="updateUserId"></td>
                             <th><spring:message code="common.column.updateDatetime"/></th>
                             <td name="updateDatetime"></td>
                         </tr>

@@ -79,7 +79,7 @@
                             <button class="btn btype01 bstyle03" onclick="javascript:removeRole(); return false;"><spring:message code="common.button.remove"/> </button>
                         </c:otherwise>
                     </c:choose>
-                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
+                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
             </div>
         </article>
@@ -185,7 +185,6 @@
         alertMessage(actionType + 'Complete');
         switch(actionType){
             case ACTION.SAVE:
-                break;
             case ACTION.ADD:
             case ACTION.REMOVE:
                 cancel();

@@ -185,13 +185,13 @@
                                 </section>
                                 <section class="safeeye_set">
                                     <div class="s_lbox ico-invasion"></div>
-                                    <div class="s_rbox">
-                                        <ul>
-                                            <li class="ico-speaker"></li>
-                                            <li class="ico-wlight"></li>
-                                            <li class="ico-mobile"></li>
-                                        </ul>
-                                    </div>
+                                    <%--<div class="s_rbox">--%>
+                                        <%--<ul>--%>
+                                            <%--<li class="ico-speaker"></li>--%>
+                                            <%--<li class="ico-wlight"></li>--%>
+                                            <%--<li class="ico-mobile"></li>--%>
+                                        <%--</ul>--%>
+                                    <%--</div>--%>
                                 </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
@@ -219,13 +219,13 @@
                                 </section>
                                 <section class="safeeye_set">
                                     <div class="s_lbox ico-exhibit fittext"></div>
-                                    <div class="s_rbox">
-                                        <ul>
-                                            <li class="ico-speaker"></li>
-                                            <li class="ico-wlight"></li>
-                                            <li class="ico-mobile"></li>
-                                        </ul>
-                                    </div>
+                                    <%--<div class="s_rbox">--%>
+                                        <%--<ul>--%>
+                                            <%--<li class="ico-speaker"></li>--%>
+                                            <%--<li class="ico-wlight"></li>--%>
+                                            <%--<li class="ico-mobile"></li>--%>
+                                        <%--</ul>--%>
+                                    <%--</div>--%>
                                 </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->

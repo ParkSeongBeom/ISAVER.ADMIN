@@ -91,7 +91,7 @@
                         <button class="btn btype01 bstyle03" onclick="javascript:saveCode(); return false;"><spring:message code="common.button.save"/> </button>
                         <button class="btn btype01 bstyle03" onclick="javascript:removeCode(); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
-                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
+                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
             </div>
         </article>
@@ -191,7 +191,6 @@
         alertMessage(actionType + 'Complete');
         switch(actionType){
             case 'save':
-                break;
             case 'add':
             case 'remove':
                 cancel();

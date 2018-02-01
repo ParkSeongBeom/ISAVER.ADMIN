@@ -132,19 +132,19 @@
                         </td>
                         <th class="point"><spring:message code="event.column.eventName"/></th>
                         <td class="point">
-                            <input type="text" name="eventName" value="${event.eventName}" placeholder="<spring:message code="event.message.requireEventName"/>" />
+                            <input type="text" name="eventName" value="${event.eventName}" readonly="readonly" placeholder="<spring:message code="event.message.requireEventName"/>" />
                         </td>
                     </tr>
                     <tr>
                         <th class="point"><spring:message code="event.column.eventFlag"/></th>
                         <td class="point" colspan="3">
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagId="selectEventFlag" htmlTagName="eventFlag"/>
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagId="selectEventFlag" htmlTagName="eventFlag" disabled="true"/>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code="event.column.eventDesc"/></th>
                         <td colspan="3">
-                            <textarea name="eventDesc" class="textboard">${event.eventDesc}</textarea>
+                            <textarea name="eventDesc" class="textboard" readonly="readonly">${event.eventDesc}</textarea>
                         </td>
                     </tr>
                     <c:if test="${!empty event}">

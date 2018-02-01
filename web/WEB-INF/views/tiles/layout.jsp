@@ -34,6 +34,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/request-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 
     <script type="text/javascript">
@@ -46,6 +47,7 @@
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
         var _eventDatetime = new Date();
+        var webSocketHelper = new WebSocketHelper();
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -131,7 +133,8 @@
             // 알람 리스트 불러오기
             layoutAjaxCall('alarmList');
 
-            wsConnect();
+            webSocketHelper.addWebSocketList("layout", "${webSocketUrl}", null, notificationMessageEventHandler);
+            webSocketHelper.wsConnect("layout");
             aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
@@ -142,6 +145,49 @@
             }, false);
             setAlarmAudio();
         });
+
+        /**
+         * 웹소켓 메세지 리스너
+         * @param message
+         */
+        function notificationMessageEventHandler(message) {
+            var resultData;
+            var callBackFlag = false;
+
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                return false;
+            }
+
+            switch (resultData['messageType']) {
+                case "refreshView": // 화면갱신
+                    callBackFlag = false;
+                    break;
+                case "addAlarmEvent": // 알림이벤트 등록
+                    if(resultData['dashboardAlarmFileUrl']!=null){
+                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
+                    }else{
+                        setAlarmAudio();
+                    }
+                    addAlarmEvent(resultData['eventLog'], true);
+                    callBackFlag = true;
+                    break;
+                case "removeAlarmEvent": // 알림이벤트 해제
+                    removeAlarmEvent(resultData['eventLog']);
+                    callBackFlag = true;
+                    break;
+                case "addEvent": // 일반이벤트 등록
+                    callBackFlag = true;
+                    break;
+            }
+
+            if(callBackFlag){
+                requestHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
+            }else{
+                requestHelper.getData();
+            }
+        }
 
         function alarmCancelBtnAction(){
             if($("#alarmList .check_input").is(":checked")) {
@@ -696,121 +742,6 @@
             dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',areaId));
             dashboardForm.appendTo(document.body);
             dashboardForm.submit();
-        }
-    </script>
-
-    <!--
-        웝소켓
-        @authro dhj
-        @date 2016.12.12
-    -->
-    <script type="text/javascript">
-        var ws;
-        var reConnectFlag = true;
-        var webSocketUrl = "${webSocketUrl}";
-
-        /**
-         * 웹소켓 접속 연결
-         * @author dhj
-         */
-        function wsConnect() {
-            setTimeout(function() {
-                requestHelper.getData();
-
-                if(webSocketUrl=="" || webSocketUrl==null){
-                    console.error('[wsConnect]websocket url is null');
-                    return false;
-                }
-
-                ws = new WebSocket(webSocketUrl);
-                ws.onopen = function () {
-                    console.log('websocket opened');
-                };
-
-                ws.onmessage = messageEventHandler;
-
-                ws.onclose = function (event) {
-                    console.log(event);
-                    console.log('websocket closed');
-
-                    if (reConnectFlag) {
-                        setTimeout(function() {
-                            wsConnect();
-                        }, 5000);
-                    }
-                };
-            }, 250);
-
-        }
-
-        /**
-        * 웹소켓 메세지 전송
-        * @param _text
-         * @author dhj
-         */
-        function wsSendMsg(_text) {
-            if (ws) {
-                if (_text != null && _text != "") {
-                    ws.send(_text);
-                }
-            } else {
-                console.log("ws disConnect!");
-            }
-        }
-
-        /**
-        * 웹소켓 접속 종료
-         * @author dhj
-         */
-        function wsDisconnect() {
-            if (ws) {
-                ws.close();
-                ws = null;
-            }
-        }
-
-        /**
-        * 웹소켓 메세지 리스너
-        * @param message
-        */
-        function messageEventHandler(message) {
-            var resultData;
-            var callBackFlag = false;
-
-            console.log(message);
-            try{
-                resultData = JSON.parse(message.data);
-            }catch(e){
-                return false;
-            }
-
-            switch (resultData['messageType']) {
-                case "refreshView": // 화면갱신
-                    callBackFlag = false;
-                    break;
-                case "addAlarmEvent": // 알림이벤트 등록
-                    if(resultData['dashboardAlarmFileUrl']!=null){
-                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
-                    }else{
-                        setAlarmAudio();
-                    }
-                    addAlarmEvent(resultData['eventLog'], true);
-                    callBackFlag = true;
-                    break;
-                case "removeAlarmEvent": // 알림이벤트 해제
-                    removeAlarmEvent(resultData['eventLog']);
-                    callBackFlag = true;
-                    break;
-                case "addEvent": // 일반이벤트 등록
-                    callBackFlag = true;
-                    break;
-            }
-
-            if(callBackFlag){
-                requestHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
-            }else{
-                requestHelper.getData();
-            }
         }
     </script>
 </head>
