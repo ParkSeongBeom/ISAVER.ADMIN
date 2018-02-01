@@ -2,6 +2,7 @@
 <!-- @author dhj -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
@@ -41,11 +42,16 @@
                         <td class="point intable">
                             <div class="lic_set">
                                 <input type="hidden"  name="licenseKey" />
-                                <input type="text" name="licenseText" maxlength="5" />~
-                                <input type="text" name="licenseText" maxlength="5" />~
-                                <input type="text" name="licenseText" maxlength="5" />~
-                                <input type="text" name="licenseText" maxlength="5" />~
-                                <input type="text" name="licenseText" maxlength="5" />
+                                <c:set var="licenseKey1" value="${fn:substring(license.licenseKey, 0, 5)}" />
+                                <c:set var="licenseKey2" value="${fn:substring(license.licenseKey, 5,10)}" />
+                                <c:set var="licenseKey3" value="${fn:substring(license.licenseKey, 10, 15)}" />
+                                <c:set var="licenseKey4" value="${fn:substring(license.licenseKey, 15, 20)}" />
+                                <c:set var="licenseKey5" value="${fn:substring(license.licenseKey, 20, 25)}" />
+                                <input type="text" name="licenseText" maxlength="5" value="${licenseKey1}"/>~
+                                <input type="text" name="licenseText" maxlength="5" value="${licenseKey2}"/>~
+                                <input type="text" name="licenseText" maxlength="5" value="${licenseKey3}"/>~
+                                <input type="text" name="licenseText" maxlength="5" value="${licenseKey4}"/>~
+                                <input type="text" name="licenseText" maxlength="5" value="${licenseKey5}"/>
                             </div>
                         </td>
                         <th class="point"><spring:message code="license.column.deviceType"/></th>
@@ -173,10 +179,6 @@
     }
 
     function removeLicense(){
-        if(!confirm(messageConfig['removeConfirm'])){
-            return false;
-        }
-
         if(validate(2)){
             callAjax('remove', form.serialize());
         }

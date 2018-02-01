@@ -3,7 +3,9 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.repository.bean.ActionBean;
 import com.icent.isaver.repository.bean.EventBean;
+import com.icent.isaver.repository.dao.base.ActionDao;
 import com.icent.isaver.repository.dao.base.EventActionDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.kst.common.spring.TransactionUtil;
@@ -47,6 +49,9 @@ public class EventSvcImpl implements EventSvc {
     @Inject
     private EventActionDao eventActionDao;
 
+    @Inject
+    private ActionDao actionDao;
+
     @Override
     public ModelAndView findListEvent(Map<String, String> parameters) {
         List<EventBean> events = eventDao.findListEvent(parameters);
@@ -62,11 +67,12 @@ public class EventSvcImpl implements EventSvc {
 
     @Override
     public ModelAndView findByEvent(Map<String, String> parameters) {
-
         ModelAndView modelAndView = new ModelAndView();
 
         EventBean event = eventDao.findByEvent(parameters);
+        List<ActionBean> actions = actionDao.findListAction(null);
         modelAndView.addObject("event", event);
+        modelAndView.addObject("actions", actions);
         return modelAndView;
     }
 

@@ -104,7 +104,6 @@
                             <c:set var="licenseKey3" value="${fn:substring(license.licenseKey, 10, 15)}" />
                             <c:set var="licenseKey4" value="${fn:substring(license.licenseKey, 15, 20)}" />
                             <c:set var="licenseKey5" value="${fn:substring(license.licenseKey, 20, 25)}" />
-                            <c:set var="licenseKey5" value="${fn:substring(license.licenseKey, 20, 25)}" />
                             <c:set var="expireDate_yyyy" value="${fn:substring(license.expireDate, 0, 4)}" />
                             <c:set var="expireDate_MM" value="${fn:substring(license.expireDate, 4, 6)}" />
                             <c:set var="expireDate_dd" value="${fn:substring(license.expireDate, 6, 8)}" />

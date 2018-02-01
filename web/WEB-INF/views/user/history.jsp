@@ -56,6 +56,7 @@
             <h4></h4>
             <div class="table_btn_set">
                 <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
+                <button class="btn btype01 bstyle03" onclick="javascript:excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/> </button>
                 <%--<button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>--%>
             </div>
         </div>
@@ -128,6 +129,7 @@
 
     var urlConfig = {
         'listUrl':'${rootPath}/loginHistory/list.html'
+        ,'excelUrl':'${rootPath}/loginHistory/excel.html'
     };
 
     var pageConfig = {
@@ -152,6 +154,12 @@
      */
     function search(){
         form.attr('action',urlConfig['listUrl']);
+        form.submit();
+    }
+
+    /* Excel File Download*/
+    function excelFileDownloadFunc() {
+        form.attr('action',urlConfig['excelUrl']);
         form.submit();
     }
 

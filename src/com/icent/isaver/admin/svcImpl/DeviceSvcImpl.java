@@ -186,6 +186,9 @@ public class DeviceSvcImpl implements DeviceSvc {
 
         DeviceLicenceBean deviceLicenceBean = getVerificationDeviceLicense(parameters);
 
+        // 라이선스 사용안함 (2018.02.01 psb)
+        deviceLicenceBean.setResultFlag(true);
+
         if (deviceLicenceBean.getResultFlag()) {
             TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 

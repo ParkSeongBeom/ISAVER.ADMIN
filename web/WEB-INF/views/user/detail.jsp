@@ -57,8 +57,9 @@
                         <th class="point"><spring:message code="user.column.role"/></th>
                         <td class="point">
                             <select name="roleId">
+                                <option value="">선택</option>
                                 <c:forEach items="${roles}" var="role">
-                                    <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                    <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''} ${role.delYn == 'Y' ? 'disabled' : ''}>${role.roleName}</option>
                                 </c:forEach>
                             </select>
                         </td>
@@ -147,6 +148,8 @@
         ,'requireUserName':'<spring:message code="user.message.requireUserName"/>'
         ,'requirePassword':'<spring:message code="user.message.requirePassword"/>'
         ,'existUserId':'<spring:message code="user.message.existUserId"/>'
+        ,'requireRoleId':'<spring:message code="user.message.requireRoleId"/>'
+        ,'notUsedRoleId':'<spring:message code="user.message.notUsedRoleId"/>'
     };
 
     /*
@@ -174,6 +177,15 @@
             alertMessage('notEqualsPassword');
             return false;
         }
+
+        if(form.find('select[name=roleId]').val().trim().length == 0){
+            alertMessage('requireRoleId');
+            return false;
+        }else if(form.find('select[name=roleId] option:selected').is(":disabled")){
+            alertMessage('notUsedRoleId');
+            return false;
+        }
+
         return true;
     }
 

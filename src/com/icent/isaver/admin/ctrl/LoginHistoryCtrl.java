@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -47,6 +49,14 @@ public class LoginHistoryCtrl {
         AdminHelper.setPageParam(parameters,defaultPageSize);
         ModelAndView modelAndView = loginHistorySvc.findListLoginHistory(parameters);
         modelAndView.setViewName("loginHistoryList");
+        return modelAndView;
+    }
+
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
+    public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = loginHistorySvc.findListLoginHistoryForExcel(request, response, parameters);
+        modelAndView.setViewName("excelDownloadView");
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 }
