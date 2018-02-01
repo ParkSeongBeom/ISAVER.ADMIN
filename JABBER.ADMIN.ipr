@@ -21,7 +21,7 @@
       </root>
     </artifact>
     <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war">
-      <output-path>$PROJECT_DIR$/../../../../BIN</output-path>
+      <output-path>$PROJECT_DIR$/../../../../0.deploy/1.ISAVER/ISAVER.ADMIN/admin_v1.7_truck</output-path>
       <root id="archive" name="ISAVER.ADMIN.war">
         <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
         <element id="directory" name="WEB-INF">
@@ -55,7 +55,7 @@
     </annotationProcessing>
   </component>
   <component name="CopyrightManager" default="" />
-  <component name="DataSourceManagerImpl" format="xml" hash="1335262122">
+  <component name="DataSourceManagerImpl" format="xml" hash="2223130983">
     <data-source source="LOCAL" name="[DEV] 172.16.110.199" read-only="true" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
       <driver-ref>postgresql</driver-ref>
       <auto-commit>false</auto-commit>
@@ -79,9 +79,14 @@
     <file url="file://$PROJECT_DIR$/conf/context/ServletContext.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/conf/context/WebApplicationInitializer.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/conf/spring/BeanConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/BeanConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/ExceptionResolver.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/ExceptionResolver.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/MybatisConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/MybatisConfigurer.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/PersistenceConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/PersistenceConfigurer.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/conf/spring/WebConfigurer.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/conf/spring/WebConfigurer.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ApplicationContextManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/bean/Result.java" charset="UTF-8" />
@@ -100,6 +105,7 @@
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/StringUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/TransactionUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/ResultState.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/IsaverCriticalUtil.java" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/IsaverCriticalUtil.java" charset="x-windows-949" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
@@ -252,11 +258,10 @@
             <SvnBranchConfiguration>
               <option name="branchUrls">
                 <list>
-                  <option value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.1.0" />
                   <option value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN/branches" />
                 </list>
               </option>
-              <option name="trunkUrl" value="http://172.16.100.209/svn/ICENT_JABBER/JABBER.ADMIN/branches/v1.2.0" />
+              <option name="trunkUrl" value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN/branches/v1.7.1" />
             </SvnBranchConfiguration>
           </value>
         </entry>
@@ -350,7 +355,7 @@
         <root url="jar://$PROJECT_DIR$/lib/logback/slf4j-log4j12-1.7.7.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.943.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/ISAVER.UTIL.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/ISAVER.UTIL_v1.0.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
