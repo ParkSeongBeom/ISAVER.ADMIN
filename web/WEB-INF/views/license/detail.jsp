@@ -94,7 +94,7 @@
                         <button class="btn btype01 bstyle03" onclick="javascript:saveLicense(); return false;"><spring:message code="common.button.save"/> </button>
                         <button class="btn btype01 bstyle03" onclick="javascript:removeLicense(); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
-                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/> </button>
+                    <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
             </div>
         </article>

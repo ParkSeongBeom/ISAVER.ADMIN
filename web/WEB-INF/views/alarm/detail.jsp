@@ -300,7 +300,7 @@
                         <button class="btn" onclick="javascript:saveAlarm(); return false;"><spring:message code="common.button.save"/></button>
                         <button class="btn" onclick="javascript:removeAlarm(); return false;"><spring:message code="common.button.remove"/></button>
                     </c:if>
-                    <button class="btn" onclick="javascript:cancel(); return false;"><spring:message code="common.button.cancel"/></button>
+                    <button class="btn" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/></button>
                 </div>
             </div>
         </article>
