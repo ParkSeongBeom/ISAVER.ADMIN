@@ -7,14 +7,15 @@
 <c:set value="B00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" />
 
-<section class="container">
+<!-- section Start / 메인 "main_area", 서브 "sub_area"-->
+<section class="container sub_area">
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title">메뉴 권한 관리</h3>
+        <h3 class="1depth_title"><spring:message code="common.title.rolemenu"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
-            <span>Dashboard 〉 시스템 관리 〉메뉴 권한 관리</span>
+            <span><isaver:menu menuId="${menuId}" /></span>
         </div>
     </article>
     <!-- 2depth 타이틀 영역 End -->
@@ -28,7 +29,9 @@
                     <p class="itype_01">
                         <select id="roleId" class="w200" onchange="javascript:search(this);">
                             <c:forEach items="${roles}" var="role">
-                                <option value="${role.roleId}" ${paramBean.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                <c:if test="${role.delYn=='N'}">
+                                    <option value="${role.roleId}" ${paramBean.roleId == role.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                </c:if>
                             </c:forEach>
                         </select>
                     </p>
@@ -38,58 +41,7 @@
                 </div>
             </article>
         </form>
-        <ul class="menu_tree_set">
-            <li style="display: none;">
-                <button>All</button>
-                <ul>
-                    <li><button>DashBoard</button></li> <!-- 01 depth  -->
-                    <li>
-                        <button>통계현황</button>
-                        <ul> <!-- 02 depth  -->
-                            <li><button>이벤트 이력관리</button></li>
-                            <li>
-                                <button>로그인 이력관리</button>
-                                <ul> <!-- 03 depth  -->
-                                    <li><button>ex 03</button></li>
-                                    <li>
-                                        <button>ex 03</button>
-                                        <ul> <!-- 04 depth  -->
-                                            <li>
-                                                <button>ex 04</button>
-                                                <ul> <!-- 05 depth  -->
-                                                    <li><button>ex 05</button></li>
-                                                    <li><button>ex 05</button></li>
-                                                    <li><button>ex 05</button></li>
-                                                </ul>
-                                            </li>
-                                            <li><button>ex 04</button></li>
-                                            <li><button>ex 04</button></li>
-                                        </ul>
-                                    </li>
-                                    <li><button>ex 03</button></li>
-                                </ul>
-                            </li>
-                            <li><button>ex 02</button></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <button>시스템 관리</button>
-                        <ul> <!-- 02 depth  -->
-                            <li><button>코드 관리</button></li>
-                            <li><button>메뉴 관리</button></li>
-                            <li><button>권한 관리</button></li>
-                            <li><button>메뉴권한 관리</button></li>
-                            <li><button>이벤트 관리</button></li>
-                        </ul>
-                    </li><!-- 01 depth  -->
-                    <li><button>사용자 관리</button></li><!-- 01 depth  -->
-                    <li><button>대응 관리</button></li><!-- 01 depth  -->
-                    <li><button>구역 관리</button></li><!-- 01 depth  -->
-                    <li><button>장치 관리</button></li><!-- 01 depth  -->
-                    <li><button>라이센스 관리</button></li><!-- 01 depth  -->
-                </ul>
-            </li> <!-- 01 depth  -->
-        </ul>
+        <ul class="menu_tree_set"></ul>
     </article>
 </section>
 
@@ -109,7 +61,6 @@
     };
 
     $(document).ready(function(){
-
         menuLoadFunc();
     });
 

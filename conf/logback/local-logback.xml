@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <property name="project_name" value="jabber_admin" />
+    <property name="project_name" value="isaver_admin" />
     <property name="logDirPath" value="/Users/icent/Documents/BIN/logs/" />
 
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">

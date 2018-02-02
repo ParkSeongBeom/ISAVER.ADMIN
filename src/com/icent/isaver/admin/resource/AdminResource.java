@@ -91,7 +91,7 @@ public class AdminResource {
      * 통계메뉴 Root ID
      * @author psb
      */
-    public final static String STATISTICS_ROOT_MENU_ID = "G00000";
+    public final static String STATISTICS_ROOT_MENU_ID = "200000";
 
     /**
      * admin log type</br>

@@ -7,12 +7,12 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="E00000" var="menuId"/>
 <c:set value="E00000" var="subMenuId"/>
-<!-- viewOnly 일경우 라이센스 관리, @author psb -->
+<!-- viewOnly 일경우 라이센스 보기, @author psb -->
 <c:if test="${viewOnly == true}">
     <c:set value="K00000" var="menuId"/>
-    <c:set value="E00000" var="subMenuId"/>
+    <c:set value="K00000" var="subMenuId"/>
 </c:if>
-<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<%--<isaver:pageRoleCheck menuId="${menuId}" />--%>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <section class="container sub_area">

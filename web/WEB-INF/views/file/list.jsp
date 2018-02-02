@@ -1,13 +1,13 @@
-<!-- 파일 목록, @author psb -->
+<!-- 알림파일관리 목록, @author psb -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00060" var="menuId"/>
-<c:set value="B00000" var="subMenuId"/>
-<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<c:set value="L00010" var="menuId"/>
+<c:set value="L00000" var="subMenuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->

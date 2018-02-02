@@ -171,7 +171,6 @@
             $('input:hidden[name=parentMenuId]').val($("select[id=selectParentMenuId]").val());
         });
 
-        console.log("3");
         menuCtrl.findMenuTree();
     });
 </script>

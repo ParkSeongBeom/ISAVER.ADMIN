@@ -140,141 +140,80 @@ function MenuView(model) {
      * [Draw] 상위 메뉴바 그리기
      * @param obj
      */
-    MenuView.setTopMenuBar = function (menuBarModel, areaList, statisticsMenuList) {
-        var parentLiTag = $("<li/>").append(
+    MenuView.setTopMenuBar = function (menuBarModel, areaList) {
+        if(menuBarModel==null){
+            console.error("[MenuView.setTopMenuBar]load error - menu model is null");
+            return false;
+        }
+
+        var mainMenuTag = $("<ul/>",{menu_main:''});
+        var childMenuLiTag = $("<li/>").append(
             $("<button/>", {href:"#"})
         ).append(
             $("<ul/>")
         );
 
-        var childLiTag = $("<li/>").append(
-            $("<button/>", {href:"#"})
-        );
+        for(var index in menuBarModel){
+            var _menu = menuBarModel[index];
+            if(_menu['menuDepth']==0){
+                var _childMenuLiTag = childMenuLiTag.clone();
+                _childMenuLiTag.attr("name",_menu['menuId']);
+                _childMenuLiTag.find("button").text(_menu['menuName']);
 
-        // DASHBOARD 메뉴
-        if(areaList == null){
-            console.error("[MenuView.setTopMenuBar][Dashboard Menu] load error - model is null");
-        }else{
-            var _parentLiTag = parentLiTag.clone();
-            _parentLiTag.attr("name","dashboardMenu").addClass("menu_dashboard");
-            _parentLiTag.find("button").attr("onclick", "javascript:moveDashboard();").text("DASHBOARD");
-
-            for(var index in areaList){
-                var _area = areaList[index];
-                var _childLiTag = childLiTag.clone();
-                _childLiTag.attr("name", _area['areaId']);
-                _childLiTag.find("button").text(_area['areaName']);
-                if(_area['childAreaIds']!=null){
-                    _childLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+                switch (_menu['menuId']){
+                    case "000000" : // ADMINISRATION
+                        break;
+                    case "100000" : // DASHBOARD
+                        _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard();");
+                        break;
+                    case "200000" : // STATISTICS
+                        break;
                 }
-                _parentLiTag.find("> ul").append(_childLiTag);
-            }
-            $("ul[menu_main]").append(_parentLiTag);
-        }
-
-        // 통계 메뉴
-        if(statisticsMenuList == null){
-            console.error("[MenuView.setTopMenuBar][Statistics Menu] load error - model is null");
-        }else{
-            var addMenuCnt = 0;
-            var _parentLiTag = parentLiTag.clone();
-            _parentLiTag.attr("name","statisticsMenu").addClass("menu_statistics");
-            _parentLiTag.find("button").text("STATISTICS");
-
-            for(var index in statisticsMenuList){
-                var _menu = statisticsMenuList[index];
-
+                mainMenuTag.append(_childMenuLiTag);
+            }else{
                 if (_menu['menuFlag'] == 'M') {
-                    var _childLiTag = childLiTag.clone();
-                    _childLiTag.attr("name", _menu.menuId);
-                    _childLiTag.find("button").text(_menu['menuName']);
+                    var _childMenuLiTag = childMenuLiTag.clone();
+                    _childMenuLiTag.attr("name", _menu['menuId']);
+                    _childMenuLiTag.find("button").text(_menu['menuName']);
 
-                    if(_menu.menuPath!="/"){
-                        _childLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
+                    if(_menu['menuPath']!="/"){
+                        _childMenuLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
                     }
 
-                    if (Number(_menu["menuDepth"]) == 1) {
-                        _childLiTag.append($("<ul/>"));
-                        _parentLiTag.find("> ul").append(_childLiTag);
-                        addMenuCnt++;
-                    } else if (Number(_menu["menuDepth"]) > 1){
-                        if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").length>0){
-                            if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul > li").length==0){
-                                _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
-                            }
-                            _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").append(_childLiTag);
-                            addMenuCnt++;
-                        }else{
-                            console.info("[MenuView.setTopMenuBar][Statistics Menu] parent menu is empty - (menuId : " + _menu.menuId + ", parentMenuId : " + _menu.parentMenuId + ")");
-                        }
+                    if(mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul > li").length==0){
+                        mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
                     }
+                    mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
                 }
-            }
-
-            if(addMenuCnt > 0){
-                $("ul[menu_main]").append(_parentLiTag);
             }
         }
 
-        // ADMINISTRATION 메뉴
-        if(menuBarModel == null){
-            console.error("[MenuView.setTopMenuBar][AdminMenu] load error - model is null");
-        }else{
-            var addMenuCnt = 0;
-            var _parentLiTag = parentLiTag.clone();
-            _parentLiTag.attr("name","adminMenu").addClass("menu_admin");
-            _parentLiTag.find("button").text("ADMINISTRATION");
-
-            for(var index in menuBarModel){
-                var _menu = menuBarModel[index];
-
-                if (_menu['menuFlag'] == 'M') {
-                    var _childLiTag = childLiTag.clone();
-                    _childLiTag.attr("name", _menu.menuId);
-                    _childLiTag.find("button").text(_menu['menuName']);
-
-                    if(_menu.menuPath!="/"){
-                        _childLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
-                    }
-
-                    if (Number(_menu["menuDepth"]) == 1) {
-                        _childLiTag.append($("<ul/>"));
-                        _parentLiTag.find("> ul").append(_childLiTag);
-                        addMenuCnt++;
-                    } else if (Number(_menu["menuDepth"]) > 1){
-                        if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").length>0){
-                            if(_parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul > li").length==0){
-                                _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu.menuPath + "';");
-                            }
-                            _parentLiTag.find("li[name='"+_menu.parentMenuId+"'] > ul").append(_childLiTag);
-                            addMenuCnt++;
-                        }else{
-                            console.info("[MenuView.setTopMenuBar][Admin Menu] parent menu is empty - (menuId : " + _menu.menuId + ", parentMenuId : " + _menu.parentMenuId + ")");
-                        }
-                    }
-                }
+        for(var index in areaList){
+            var _area = areaList[index];
+            var _childMenuLiTag = childMenuLiTag.clone();
+            _childMenuLiTag.attr("name", _area['areaId']);
+            _childMenuLiTag.find("button").text(_area['areaName']);
+            if(_area['childAreaIds']!=null){
+                _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
             }
-
-            if(addMenuCnt > 0){
-                $("ul[menu_main]").append(_parentLiTag);
-            }
+            mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
         }
+
+        $("#topMenu").append(mainMenuTag);
 
         if(MenuView._model.getTargetMenuId()!=""){
             if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
                 setSelectedMenu(MenuView._model.getParentMenuId());
             }
         }else{
-            $("ul[menu_main] > .menu_dashboard > button").addClass('on');
+            $("#topMenu ul[menu_main] > .menu_dashboard > button").addClass('on');
         }
 
         function setSelectedMenu(_targetMenuId){
             var targetTag = $("li[name='"+_targetMenuId+"']");
             if(targetTag.length > 0){
                 targetTag.find("> button").addClass("on");
-                if(_targetMenuId!="dashboardMenu" && _targetMenuId!="adminMenu"){
-                    setSelectedMenu(targetTag.parent().parent().attr("name"));
-                }
+                setSelectedMenu(targetTag.parent().parent().attr("name"));
                 return true;
             }
             return false;

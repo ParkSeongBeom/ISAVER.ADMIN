@@ -221,120 +221,50 @@ function MenuModel() {
     /**
      * 메뉴 트리 가공
      */
-    MenuModel.processMenuTreeData = function (_list, _rootId) {
+    MenuModel.processMenuTreeData = function (_list) {
         if(_list==null){
             return false;
         }
 
-        //최종적인 트리 데이터
-        var _treeModel = [];
-
-        //전체 데이터 길이
-        var _listLength = _list.length;
-
-        //트리 크기
-        var _treeLength = 0;
-
-        //반복 횟수
-        var _loopLength = 0;
-
-        if (!Array.indexOf) {
-            Array.prototype.indexOf = function (obj, start) {
-                for (var i = (start || 0); i < this.length; i++) {
-                    if (this[i] == obj) {
-                        return i;
-                    }
-                }
-            }
-        }
+        var _returnModel = [];
 
         //재귀 호출
         function getParentNode(_children, item) {
-
             //전체 리스트를 탐색
             for (var i = 0, child; child = _children[i]; i++) {
                 //부모를 찾았으면,
-                if (String(child.id) === String(item.parentMenuId)) {
-                    var view =
-                    {
-                        id        : String(item.menuId),
-                        title     : String(item.menuName) + " (" + String(item.menuFlag) + ")",
-                        isFolder  : false,
-                        sortOrder : Number(item.sortOrder),
-                        children  : []
-
-                    };
-
+                if (String(child.id) === String(item['parentMenuId'])) {
                     //현재 요소를 추가하고
-                    child.children.push(view);
-
-                    //트리 크기를 반영하고,
-                    _treeLength++;
-
-                    //데이터상에서는 삭제
-                    _list.splice(_list.indexOf(item), 1);
-
-                    //현재 트리 계층을 정렬
-                    child.children.sort(function (a, b) {
-                        return a.sortOrder < b.sortOrder ? -1 : a.sortOrder > b.sortOrder ? 1 : 0;
+                    child.children.push({
+                        id        : String(item['menuId']),
+                        title     : String(item['menuName']) + " (" + String(item['menuFlag']) + ")",
+                        isFolder  : false,
+                        sortOrder : Number(item['sortOrder']),
+                        children  : []
                     });
-
                 } else {
-
                     if (child.children.length) {
                         arguments.callee(child.children, item);
                     }
                 }
-
             }
         }
 
-        //트리 변환 여부 + 무한 루프 방지
-        while (_treeLength != _listLength && _listLength != _loopLength++) {
-
-            //전체 리스트를 탐색
-            for (var i = 0, item; item = _list[i]; i++) {
-                //최상위 객체면,
-                if (item.menuId === _rootId) {
-
-                    var view =
-                    {
-                        id:         String(item.menuId),
-                        title:      String(item.menuName) + " (" + String(item.menuFlag) + ")",
-                        isFolder:   true,
-                        children:   []
-                    };
-
-                    //현재 요소를 추가하고,
-                    _treeModel.push(view);
-
-                    //트리 크기를 반영하고,
-                    _treeLength++;
-
-                    //데이터상에서는 삭제
-                    _list.splice(i, 1);
-                    //현재 트리 계층을 정렬
-                    _treeModel.sort(function (a, b) {
-                        return a.sortOrder < b.sortOrder ? -1 : a.sortOrder > b.sortOrder ? 1 : 0;
-                    });
-
-                    break;
-                }
-
-                //하위 객체면,
-                else {
-                    //
-                    getParentNode(_treeModel, item);
-                }
+        for(var index in _list){
+            var item = _list[index];
+            if (item['menuDepth'] == 0) {
+                _returnModel.push({
+                    id:         String(item['menuId']),
+                    title:      String(item['menuName']) + " (" + String(item['menuFlag']) + ")",
+                    isFolder:   true,
+                    children:   []
+                });
+            } else {
+                getParentNode(_returnModel, item);
             }
         }
-
-//        console.debug("_listLength : " + _listLength);
-//        console.debug("_treeLength : " + _treeLength);
-//        console.debug("_loopLength : " + _loopLength);
-
-        return _treeModel;
-    }
+        return _returnModel;
+    };
 
     return MenuModel;
 }

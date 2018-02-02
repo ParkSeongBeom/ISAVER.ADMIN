@@ -21,6 +21,7 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <form id="roleForm" method="POST">
+        <input type="hidden" id="userCnt" value="${userCnt}" />
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
@@ -108,6 +109,7 @@
 
     var messageConfig = {
         'addConfirm':'<spring:message code="role.message.addConfirm"/>'
+        ,'saveNotiConfirm':'<spring:message code="role.message.saveNotiConfirm"/>'
         ,'saveConfirm':'<spring:message code="role.message.saveConfirm"/>'
         ,'removeConfirm':'<spring:message code="role.message.removeConfirm"/>'
         ,'addFailure':'<spring:message code="role.message.addFailure"/>'
@@ -155,6 +157,17 @@
     }
 
     function saveRole(){
+        var userCnt = Number($("#userCnt").val());
+        if(userCnt == 0){
+            if(!confirm(messageConfig['saveConfirm'])){
+                return false;
+            }
+        }else{
+            if(!confirm(messageConfig['saveNotiConfirm'])){
+                return false;
+            }
+        }
+
         if(!confirm(messageConfig['saveConfirm'])){
             return false;
         }

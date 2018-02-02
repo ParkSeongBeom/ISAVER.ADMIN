@@ -4,8 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set value="H00000" var="menuId"/>
-<c:set value="H00000" var="subMenuId"/>
+<c:set value="100000" var="menuId"/>
+<c:set value="100000" var="subMenuId"/>
 
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
@@ -78,10 +78,10 @@
                 <!--
                 Template Code 분기
                 TMP001 : 신호등 (default)
-                TMP002 : 감시구역 침입
-                TMP003 : 전시물 보호
-                TMP004 : 진출입
-                TMP005 : NHR
+                TMP002 : Safe-Eye
+                TMP003 : Blinker
+                TMP004 : Detector
+                TMP005 : Guard
                 -->
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
@@ -202,40 +202,6 @@
                     </c:if>
 
                     <c:if test="${childArea.templateCode=='TMP003'}">
-                        <!-- 전시물 보호 -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
-                            <header>
-                                <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.childAreaIds!=null}">
-                                    <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
-                                </c:if>
-                            </header>
-                            <article>
-                                <section class="treffic_set" style="display: none;">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
-                                </section>
-                                <section class="safeeye_set">
-                                    <div class="s_lbox ico-exhibit fittext"></div>
-                                    <%--<div class="s_rbox">--%>
-                                        <%--<ul>--%>
-                                            <%--<li class="ico-speaker"></li>--%>
-                                            <%--<li class="ico-wlight"></li>--%>
-                                            <%--<li class="ico-mobile"></li>--%>
-                                        <%--</ul>--%>
-                                    <%--</div>--%>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
-                            </article>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${childArea.templateCode=='TMP004'}">
                         <!-- 진출입 -->
                         <div class="type-list">
                             <header>
@@ -294,7 +260,7 @@
                         </div>
                     </c:if>
 
-                    <c:if test="${childArea.templateCode=='TMP005'}">
+                    <c:if test="${childArea.templateCode=='TMP004'}">
                         <!-- NHR -->
                         <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>

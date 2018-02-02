@@ -8,8 +8,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="F00010" var="menuId"/>
 <c:set value="F00000" var="subMenuId"/>
-
-<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <section class="container sub_area">

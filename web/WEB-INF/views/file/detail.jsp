@@ -1,13 +1,13 @@
-<!-- 라이센스 상세 -->
+<!-- 알림파일관리 상세 -->
 <!-- @author dhj -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="B00061" var="menuId"/>
-<c:set value="B00060" var="subMenuId"/>
-<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<c:set value="L00011" var="menuId"/>
+<c:set value="L00010" var="subMenuId"/>
+<isaver:pageRoleCheck menuId="${menuId}" />
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">

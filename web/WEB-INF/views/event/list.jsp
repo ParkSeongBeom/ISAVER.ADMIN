@@ -7,7 +7,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="B00030" var="menuId"/>
 <c:set value="B00000" var="subMenuId"/>
-<%--<jabber:pageRoleCheck menuId="${menuId}" />--%>
+<isaver:pageRoleCheck menuId="${menuId}" />
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <div class="popupbase admin_popup code_select_popup">

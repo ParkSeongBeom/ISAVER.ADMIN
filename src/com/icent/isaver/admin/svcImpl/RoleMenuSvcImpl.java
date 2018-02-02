@@ -60,15 +60,13 @@ public class RoleMenuSvcImpl implements RoleMenuSvc {
 
         List<RoleMenuBean> unregiMenuList = roleMenuDao.findUnregiRoleMenu(parameters);
         List<RoleMenuBean> regiMenuList = roleMenuDao.findRegiRoleMenu(parameters);
-        List<MenuBean> menuTreeList = menuDao.findAllMenuTree(parameters);
-
+        List<MenuBean> menuTreeList = menuDao.findRoleMenuTree(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("roles",roleDao.findListRole(null));
         modelAndView.addObject("unregiMenuList",unregiMenuList);
         modelAndView.addObject("regiMenuList",regiMenuList);
         modelAndView.addObject("paramBean",parameters);
-
         modelAndView.addObject("menuTreeList", menuTreeList);
 
         return modelAndView;

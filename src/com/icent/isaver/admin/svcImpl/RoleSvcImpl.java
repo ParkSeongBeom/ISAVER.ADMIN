@@ -69,12 +69,15 @@ public class RoleSvcImpl implements RoleSvc {
     @Override
     public ModelAndView findByRole(Map<String, String> parameters) {
         RoleBean role = null;
+        Integer userCnt = 0;
         if(StringUtils.notNullCheck(parameters.get("roleId")) ){
             role = roleDao.findByRole(parameters);
+            userCnt = usersDao.findByUserRoleCount(parameters);
         }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("role",role);
+        modelAndView.addObject("userCnt",userCnt);
 
         return modelAndView;
     }

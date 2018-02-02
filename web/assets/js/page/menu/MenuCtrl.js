@@ -270,7 +270,7 @@ function MenuEvent(model) {
      * @param actionType
      */
     MenuEvent.menuTopBarSuccessHandler = function (data, dataType, actionType) {
-        menuView.setTopMenuBar(data['menuBarList'], data['areaList'], data['statisticsMenuList']);
+        menuView.setTopMenuBar(data['menuBarList'], data['areaList']);
     };
 
     /**
@@ -288,7 +288,8 @@ function MenuEvent(model) {
      * [SUCCESS][RES] 트리 메뉴 불러오기 성공 시 이벤트
      */
     MenuEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
-        var menuTreeModel = MenuEvent._model.processMenuTreeData(data['menuTreeList'], MenuEvent._model.getRootMenuId());
+        var menuTreeModel = MenuEvent._model.processMenuTreeData(data['menuTreeList']);
+        console.log(menuTreeModel);
         menuView.setMenuTree(menuTreeModel);
     };
 

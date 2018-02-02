@@ -614,7 +614,7 @@
 
         function bodyAddClass(){
             switch (subMenuId){
-                case "H00000": // 대쉬보드
+                case "100000": // 대쉬보드
                     modifyElementClass($("html"),'dashboard_mode','add');
                     modifyElementClass($("body"),'dashboard_mode','add');
                     break;
@@ -754,7 +754,7 @@
             <h1><a href="#" onclick="javascript:moveDashboard(); return false;"></a></h1>
 
             <!-- menu Start -->
-            <menu><ul menu_main></ul></menu>
+            <menu id="topMenu"></menu>
             <!-- menu End -->
 
             <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 Start -->

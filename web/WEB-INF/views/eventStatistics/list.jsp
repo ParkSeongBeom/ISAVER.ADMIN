@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="G00020" var="menuId"/>
-<c:set value="G00000" var="subMenuId"/>
+<c:set value="2B0000" var="menuId"/>
+<c:set value="200000" var="subMenuId"/>
 <%--<isaver:pageRoleCheck menuId="${menuId}" />--%>
 
 <script type="text/javascript" src="${rootPath}/assets/library/excelexport/jquery.techbytarun.excelexportjs.js"></script>
