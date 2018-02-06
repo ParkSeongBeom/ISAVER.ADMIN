@@ -124,12 +124,12 @@
 
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 devicelist_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                     <tr class="rootShow">

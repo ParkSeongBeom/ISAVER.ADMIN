@@ -310,6 +310,8 @@ body.dashboard_mode {
     background-color: #ff8400 !important; }
   body.dashboard_mode.dark_mode .watch_area > div.level-danger:before {
     background-color: #be1e1e !important; }
+  body.dashboard_mode.dark_mode .chart_select_set button {
+    color: #4c4c4c; }
   body.dashboard_mode.dark_mode .nhr_set li:after {
     background-color: #2d2d2d;
     border-color: #111; }
@@ -655,117 +657,6 @@ body.dashboard_mode {
   .watch_area.area16 .m_marqueebox {
     display: none; }
 
-.level-caution {
-  background-color: #999999 !important; }
-.level-warning {
-  background-color: #ff8400 !important; }
-.level-danger {
-  background-color: #be1e1e !important; }
-.level-caution *, .level-caution *:before, .level-caution *:after, .level-warning *, .level-warning *:before, .level-warning *:after, .level-danger *, .level-danger *:before, .level-danger *:after {
-  color: #fff; }
-.level-caution.type-list *, .level-caution.type-list *:before, .level-caution.type-list *:after, .level-warning.type-list *, .level-warning.type-list *:before, .level-warning.type-list *:after, .level-danger.type-list *, .level-danger.type-list *:before, .level-danger.type-list *:after {
-  color: inherit; }
-.level-caution.type-list, .level-caution.type-list:before, .level-warning.type-list, .level-warning.type-list:before, .level-danger.type-list, .level-danger.type-list:before {
-  background-color: transparent !important; }
-.level-caution.type-list .m_marqueebox *, .level-caution.type-list .m_marqueebox:before, .level-warning.type-list .m_marqueebox *, .level-warning.type-list .m_marqueebox:before, .level-danger.type-list .m_marqueebox *, .level-danger.type-list .m_marqueebox:before {
-  color: #be1e1e !important; }
-.level-caution.type-list .m_marqueebox:before, .level-warning.type-list .m_marqueebox:before, .level-danger.type-list .m_marqueebox:before {
-  background-color: #fff !important; }
-.level-caution.type-list .safeeye_set .s_lbox, .level-warning.type-list .safeeye_set .s_lbox, .level-danger.type-list .safeeye_set .s_lbox {
-  color: #be1e1e;
-  animation-name: issue;
-  -webkit-animation-name: issue;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-iteration-count: 10;
-  animation-iteration-count: 10; }
-@-webkit-keyframes issue {
-  0% {
-    opacity: 1; }
-  50% {
-    opacity: 0.2; }
-  100% {
-    opacity: 1; } }
-@keyframes issue {
-  0% {
-    opacity: 1; }
-  50% {
-    opacity: 0.2; }
-  100% {
-    opacity: 1; } }
-.level-caution .m_marqueebox > p, .level-warning .m_marqueebox > p, .level-danger .m_marqueebox > p {
-  animation-name: marquee;
-  -webkit-animation-name: marquee;
-  /*  animation-delay:         2s;
-    -webkit-animation-delay: 2s;*/
-  animation-duration: 15s;
-  -webkit-animation-duration: 15s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards; }
-@-webkit-keyframes marquee {
-  0% {
-    left: 100%;
-    opacity: 1; }
-  99% {
-    opacity: 1; }
-  100% {
-    left: -120%;
-    opacity: 0; } }
-@keyframes marquee {
-  0% {
-    left: 100%;
-    opacity: 1; }
-  99% {
-    opacity: 1; }
-  100% {
-    left: -120%;
-    opacity: 0; } }
-.level-caution .m_marqueebox *, .level-caution .m_marqueebox:before, .level-warning .m_marqueebox *, .level-warning .m_marqueebox:before, .level-danger .m_marqueebox *, .level-danger .m_marqueebox:before {
-  color: #fff !important; }
-.level-caution .treffic_set .ts-caution:before {
-  box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  background-color: #fff; }
-.level-caution .treffic_set .ts-caution:after {
-  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
-.level-caution .treffic_set .ts-caution p {
-  color: #fff !important; }
-.level-caution .ts-caution:after, .level-caution .m_marqueebox:before {
-  background-color: #999; }
-.level-warning .treffic_set .ts-warning:before {
-  box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  background-color: #fff; }
-.level-warning .treffic_set .ts-warning:after {
-  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
-.level-warning .treffic_set .ts-warning p {
-  color: #fff !important; }
-.level-warning .treffic_set .ts-warning:after, .level-warning .m_marqueebox:before {
-  background-color: #ff8400; }
-.level-danger .treffic_set .ts-danger:before {
-  box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
-  background-color: #fff; }
-.level-danger .treffic_set .ts-danger:after {
-  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
-.level-danger .treffic_set .ts-danger p {
-  color: #fff !important; }
-.level-danger .treffic_set .ts-danger:after, .level-danger .m_marqueebox:before {
-  background-color: #be1e1e; }
-
 .chart_area, .chart_area > * {
   width: 100%; }
 .chart_area .chart_box {
@@ -1095,6 +986,8 @@ body.dashboard_mode {
     -khtml-border-radius: 200px; }
   .safeeye_set .s_lbox:before {
     z-index: 1; }
+.safeeye_set .s_rbox {
+  display: none !important; }
 .safeeye_set li {
   position: relative;
   font-size: 1.5rem;
@@ -1174,7 +1067,8 @@ body.dashboard_mode {
         right: 0;
         background-color: #fff; }
         .nhr_set .s_lbox .chart_select_set button:hover {
-          border-color: #109dcb !important; }
+          border-color: #109dcb !important;
+          color: #109dcb; }
         .nhr_set .s_lbox .chart_select_set button.on {
           border-color: #109dcb;
           color: #fff;

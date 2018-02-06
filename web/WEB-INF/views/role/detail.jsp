@@ -25,12 +25,12 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 roledetail_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                         <tr>
@@ -46,8 +46,11 @@
                         <tr>
                             <th class="point"><spring:message code="common.column.useYn"/></th>
                             <td class="point" colspan="3">
-                                <span><input type="radio" name="delYn" value="N" ${!empty role && role.delYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
-                                <span><input type="radio" name="delYn" value="Y" ${empty role || role.delYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
+                                <div class="checkbox_set csl_style03">
+                                    <input type="hidden" name="delYn" value="${!empty role && role.delYn == 'Y' ? 'Y' : 'N'}"/>
+                                    <input type="checkbox" ${!empty role && role.delYn == 'N' ? 'checked' : ''} onchange="setCheckBoxYn(this,'delYn',true)"/>
+                                    <label></label>
+                                </div>
                             </td>
                         </tr>
                         <c:if test="${!empty role}">
@@ -110,6 +113,7 @@
     var messageConfig = {
         'addConfirm':'<spring:message code="role.message.addConfirm"/>'
         ,'saveNotiConfirm':'<spring:message code="role.message.saveNotiConfirm"/>'
+        ,'removeNotiConfirm':'<spring:message code="role.message.removeNotiConfirm"/>'
         ,'saveConfirm':'<spring:message code="role.message.saveConfirm"/>'
         ,'removeConfirm':'<spring:message code="role.message.removeConfirm"/>'
         ,'addFailure':'<spring:message code="role.message.addFailure"/>'
@@ -163,13 +167,9 @@
                 return false;
             }
         }else{
-            if(!confirm(messageConfig['saveNotiConfirm'])){
+            if($("input[name='delYn']").val()=="Y" && !confirm(messageConfig['saveNotiConfirm'])){
                 return false;
             }
-        }
-
-        if(!confirm(messageConfig['saveConfirm'])){
-            return false;
         }
 
         if(validate(2)) {
@@ -178,8 +178,15 @@
     }
 
     function removeRole(){
-        if(!confirm(messageConfig['removeConfirm'])){
-            return false;
+        var userCnt = Number($("#userCnt").val());
+        if(userCnt == 0){
+            if(!confirm(messageConfig['removeConfirm'])){
+                return false;
+            }
+        }else{
+            if(!confirm(messageConfig['removeNotiConfirm'])){
+                return false;
+            }
         }
 
         if(validate(3)) {

@@ -76,7 +76,7 @@ $hov-color:#040404;   //rgba(20,20,20,1) 구분라인
 $body-minwidth:1400px;
 $dash-margin:20px;
 $popup-margin:20px;
-$admin-margin : 100px;
+$admin-margin : 150px;
 
 $noticecenter-width:340px;
 $device-width:100vw;
@@ -92,6 +92,7 @@ $td-height:55px;
 $tree-area-width:400px;
 $btnHeight:40px;
 $loding-size:220px;
+$thwidth:200px;
 
 $margin:20px; // root article 상하좌우 마진값
 $m_lr:15px; // 감시구역 상하좌우 마진값
@@ -416,7 +417,7 @@ $bbl01:100%; $bbl02:1px;
 @mixin line_btn02 {
   @include border01(1px, $color-gray-01, 1);
   background-color: transparent;
-  &:hover {border-color: $color-blue-01 !important;  }
+  &:hover {border-color: $color-blue-01 !important;  color: $color-blue-01;}
   &.on {border-color: $color-blue-01; color: $color-white-01; background-color: $color-blue-01 !important;}
 } // ex) @include line_btn02;
 

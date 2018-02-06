@@ -30,12 +30,12 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 criticaldetail_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                     <tr>
@@ -62,10 +62,11 @@
                     <tr>
                         <th class="point"><spring:message code="common.column.useYn"/></th>
                         <td class="point" colspan="3">
-                            <select name="useYn">
-                                <option value="Y" <c:if test="${critical.useYn == 'Y'}">selected</c:if>><spring:message code="common.column.useYes"/></option>
-                                <option value="N" <c:if test="${critical.useYn == 'N'}">selected</c:if>><spring:message code="common.column.useNo"/></option>
-                            </select>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="useYn" value="${!empty critical && critical.useYn == 'Y' ? 'Y' : 'N'}"/>
+                                <input type="checkbox" ${!empty critical && critical.useYn == 'Y' ? 'checked' : ''} onchange="setCheckBoxYn(this,'useYn')"/>
+                                <label></label>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -77,64 +78,71 @@
                     <tr>
                         <th class="point"><spring:message code="critical.column.criticalRangeUseYn"/></th>
                         <td class="point" colspan="3">
-                            <select name="rangeYn">
-                                <option value="Y" <c:if test="${critical.rangeYn == 'Y'}">selected</c:if>><spring:message code="common.column.useYes"/></option>
-                                <option value="N" <c:if test="${critical.rangeYn == 'N'}">selected</c:if>><spring:message code="common.column.useNo"/></option>
-                            </select>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="rangeYn" value="${!empty critical && critical.rangeYn == 'Y' ? 'Y' : 'N'}"/>
+                                <input type="checkbox" id="rangeYn" ${!empty critical && critical.rangeYn == 'Y' ? 'checked' : ''}/>
+                                <label></label>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code="critical.column.criticalRangeSetup"/></th>
-                        <td colspan="3">
-                            <table class="t_defalut t_type02 t_style03" id="rangeTb">
-                                <c:choose>
-                                    <c:when test="${criticalInfos != null and fn:length(criticalInfos) > 0}">
-                                        <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
-                                            <tr>
-                                                <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" /></td>
-                                                <td>~</td>
-                                                <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" /></td>
-                                                <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" codeId="${criticalInfo.criticalLevel}" /></td>
-                                                <td>
-                                                    <select name="alarmId">
-                                                        <option value=""><spring:message code="common.column.selectNo"/></option>
-                                                        <c:forEach var="alarm" items="${alarmList}">
-                                                            <option value="${alarm.alarmId}" <c:if test="${alarm.alarmId==criticalInfo.alarmId}">selected="selected"</c:if>>${alarm.alarmName}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <c:if test="${status.count > 1}">
-                                                        <button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button>
-                                                    </c:if>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <tr>
-                                            <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
-                                            <td>~</td>
-                                            <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
-                                            <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
-                                            <td>
-                                                <select name="alarmId">
-                                                    <option value=""><spring:message code="common.column.selectNo"/></option>
-                                                    <c:forEach var="alarm" items="${alarmList}">
-                                                        <option value="${alarm.alarmId}">${alarm.alarmName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </c:otherwise>
-                                </c:choose>
-                                <tr id="addBtn">
-                                    <td class="point" colspan="6">
-                                        <button class="btn btype01 bstyle03" onclick="javascript:addRangeLayer(); return false;"><spring:message code="common.button.addRow"/></button>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td colspan="3" class="intd" id="rangeTb">
+                            <!-- 타이틀 영역 -->
+                            <div class="except01">
+                                <p>최소범위 수치 입력</p>
+                                <span>~</span>
+                                <p>최대범위 수치 입력</p>
+                                <p>임계치 선택</p>
+                                <p>알림파일 선택</p>
+                                <div>삭제ㆍ추가</div>
+                            </div>
+
+                            <c:choose>
+                                <c:when test="${criticalInfos != null and fn:length(criticalInfos) > 0}">
+                                    <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
+                                        <!-- 임계치 범위 설정 사용 추가 항목 -->
+                                        <div>
+                                            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" placeholder="최소범위 수치 입력" />
+                                            <span>~</span>
+                                            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" placeholder="최대범위 수치 입력" />
+                                            <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" codeId="${criticalInfo.criticalLevel}" />
+                                            <select name="alarmId">
+                                                <option value=""><spring:message code="common.column.selectNo"/></option>
+                                                <c:forEach var="alarm" items="${alarmList}">
+                                                    <option value="${alarm.alarmId}" <c:if test="${alarm.alarmId==criticalInfo.alarmId}">selected="selected"</c:if>>${alarm.alarmName}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <!-- 임계치 범위 미사용 시 버튼 삭제 -->
+                                            <div>
+                                                <c:if test="${status.count > 1}">
+                                                    <button class='btn ico-minus' onclick='javascript:removeRangeLayer(this); return false;'></button>
+                                                </c:if>
+                                                <button class='btn ico-plus' onclick="javascript:addRangeLayer(this); return false;"></button>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- 임계치 범위 설정 사용 추가 항목 -->
+                                    <div>
+                                        <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최소범위 수치 입력" />
+                                        <span>~</span>
+                                        <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최대범위 수치 입력" />
+                                        <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" />
+                                        <select name="alarmId">
+                                            <option value=""><spring:message code="common.column.selectNo"/></option>
+                                            <c:forEach var="alarm" items="${alarmList}">
+                                                <option value="${alarm.alarmId}">${alarm.alarmName}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <!-- 임계치 범위 미사용 시 버튼 삭제 -->
+                                        <div>
+                                            <button class='btn ico-plus' onclick="javascript:addRangeLayer(this); return false;"></button>
+                                        </div>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                     <c:if test="${!empty critical}">
@@ -173,23 +181,26 @@
     </form>
 </section>
 <div style="display: none">
-    <table id="rangeTbTag">
-        <tr>
-            <td><input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
-            <td>~</td>
-            <td><input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" /></td>
-            <td><isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" /></td>
-            <td>
-                <select name="alarmId">
-                    <option value=""><spring:message code="common.column.selectNo"/></option>
-                    <c:forEach var="alarm" items="${alarmList}">
-                        <option value="${alarm.alarmId}">${alarm.alarmName}</option>
-                    </c:forEach>
-                </select>
-            </td>
-            <td><button class='btn btype01 bstyle03' onclick='javascript:removeRangeLayer(this); return false;'>X</button></td>
-        </tr>
-    </table>
+    <!-- 임계치 범위 설정 사용 추가 항목 -->
+    <div id="rangeTbTag">
+        <div>
+            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최소범위 수치 입력" />
+            <span>~</span>
+            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최대범위 수치 입력" />
+            <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" />
+            <select name="alarmId">
+                <option value=""><spring:message code="common.column.selectNo"/></option>
+                <c:forEach var="alarm" items="${alarmList}">
+                    <option value="${alarm.alarmId}">${alarm.alarmName}</option>
+                </c:forEach>
+            </select>
+            <!-- 임계치 범위 미사용 시 버튼 삭제 -->
+            <div>
+                <button class='btn ico-minus' onclick='javascript:removeRangeLayer(this); return false;'></button>
+                <button class='btn ico-plus' onclick="javascript:addRangeLayer(this); return false;"></button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -219,28 +230,29 @@
     };
 
     $(document).ready(function() {
-        $("select[name=rangeYn]").on("change", function(){
+        $("#rangeYn").on("change", function(){
+            setCheckBoxYn(this,'rangeYn');
             changeRangeYn();
         });
         changeRangeYn();
     });
 
     function changeRangeYn(){
-        if($("select[name=rangeYn]").val()=="Y"){
-            $("#addBtn").show();
-            $("#rangeTb tr input").attr('disabled', false);
-        }else if($("select[name=rangeYn]").val()=="N"){
-            $("#rangeTb tr").not(":eq(0), #addBtn").remove();
-            $("#addBtn").hide();
-            $("#rangeTb tr input").attr('disabled', true).val(0);
+        if($("input[name=rangeYn]").val()=="Y"){
+            $(".ico-plus").show();
+            $("#rangeTb div input").attr('disabled', false);
+        }else if($("input[name=rangeYn]").val()=="N"){
+            $("#rangeTb > div").not(".except01, :eq(1)").remove();
+            $(".ico-plus").hide();
+            $("#rangeTb div input").attr('disabled', true).val(0);
         }
     }
 
     /**
      * 임계치범위 설정 레이어 추가
      */
-    function addRangeLayer() {
-        $("#addBtn").before($("#rangeTbTag tr").clone());
+    function addRangeLayer(_this) {
+        $(_this).parent().parent().after($("#rangeTbTag > div").clone());
     }
 
     /**
@@ -271,7 +283,7 @@
         var checkDatas = [];
         var alertFlag = false;
 
-        $.each($("#rangeTb tr").not("#addBtn"),function(){
+        $.each($("#rangeTb > div").not(".except01"),function(){
             var startValue = $.trim($(this).find("input[name='startValue']").val());
             var endValue = $.trim($(this).find("input[name='endValue']").val());
             var criticalLevel = $(this).find("select[name='criticalLevel']").val();

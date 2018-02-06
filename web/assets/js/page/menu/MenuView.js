@@ -24,13 +24,15 @@ function MenuView(model) {
             $(formName + " [name='menuPath']").val(data.menuPath);
         },
         useYn: function (data) {
-            $("input:radio[name='useYn']").removeAttr("checked");
-            $(formName + " input[name=useYn]").checked =false;
-            $(formName + " input[name=useYn]:input[value='"+data.useYn+"']").prop("checked", true).button("refresh");
+            if(data.useYn=="Y"){
+                $(formName + " #useYnCheckBox").prop("checked", true);
+            }else{
+                $(formName + " #useYnCheckBox").prop("checked", false);
+            }
+            $("input[name='useYn']").val(data.useYn);
         },
         menuFlag: function (data) {
-            $(formName + " input[name=menuFlag]").checked =false;
-            $(formName + " input[name=menuFlag]:input[value='"+data.menuFlag+"']").prop("checked", true).button("refresh");
+            $(formName + " select[name=menuFlag]").val(data.menuFlag);
         },
         sortOrder: function (data) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);

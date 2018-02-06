@@ -499,26 +499,15 @@
 
                 if(flag==true){
                     /* 애니메이션 */
-                    $(".issue_btn").removeClass("issue");
+                    $(".issue_btn").removeClass("on");
                     try {
                         setTimeout(function() {
-                            $(".issue_btn").addClass("issue");
+                            $(".issue_btn").addClass("on");
                         }, 150);
                     } catch(e) {}
 
                     /* 싸이렌 */
-//                    setAlarmAudio();
                     playSegment();
-//                    var eventDatetime = new Date(eventLog['eventDatetime']);
-//                    var startDt = new Date();
-//                    startDt.setHours(8);
-//                    startDt.setMinutes(30);
-//                    var endDt = new Date();
-//                    endDt.setHours(9);
-//                    endDt.setMinutes(30);
-//                    if(eventDatetime>=startDt && eventDatetime<=endDt){
-//                        playSegment();
-//                    }
 
                     var toastTag = templateHelper.getTemplate("toast");
                     toastTag.addClass("level-"+criticalCss[criticalLevel]);

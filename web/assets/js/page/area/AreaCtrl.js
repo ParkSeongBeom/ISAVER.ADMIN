@@ -141,30 +141,22 @@ function AreaCtrl(model) {
         this._model.setViewStatus(AreaModel().model.ACTION.SAVE);
 
         if (this.commonVaild(true)) {
-
             var areaName = $("input[name=areaName]").val();
             if(confirm('[' + areaName + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
                 this.saveArea();
             }
-
         }
-
     };
 
     /**
      * 구역 삭제 전 유효성 검증
      */
     AreaCtrl.removeAreaVaild = function () {
-
         if (this.commonVaild()) {
-
             var areaName = document.forms[AreaCtrl._model.getFormName()]['areaName'].value;
-
             if (!confirm("[ " + areaName + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
-
             AreaCtrl.removeArea();
         }
-
     };
 
     /**
@@ -194,6 +186,11 @@ function AreaCtrl(model) {
         var requestUrl = this._model.getRequestUrl();
         var formName = "#" + AreaCtrl._model.getFormName();
 
+        if($(formName + " #allTemplate").is(":checked")){
+            $(formName + " [name='allTemplate']").val("checked");
+        }else{
+            $(formName + " [name='allTemplate']").val("");
+        }
 
         $(formName + " [name='areaId']").removeAttr("disabled");
 

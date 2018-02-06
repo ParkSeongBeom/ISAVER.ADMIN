@@ -122,6 +122,15 @@ function uniqArrayList(array){
     },[]);
 }
 
+
+function setCheckBoxYn(_this, targetElementId, reverse) {
+    if($(_this).is(":checked")){
+        $("input[name='"+targetElementId+"'").val(reverse==null?"Y":"N");
+    }else{
+        $("input[name='"+targetElementId+"'").val(reverse==null?"N":"Y");
+    }
+}
+
 function minMaxFunc(value, min, max) {
     if(parseInt(value) < min || isNaN(value))
         return 0;

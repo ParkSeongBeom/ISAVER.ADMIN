@@ -24,12 +24,12 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 codedetail_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>    <!-- 04 -->
                     </colgroup>
                     <tbody>
                         <tr>
@@ -55,8 +55,11 @@
                         <tr>
                             <th class="point"><spring:message code="common.column.useYn"/></th>
                             <td class="point">
-                                <input type="radio" name="useYn" value="Y" ${!empty code && code.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" />
-                                <input type="radio" name="useYn" value="N" ${empty code || code.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" />
+                                <div class="checkbox_set csl_style03">
+                                    <input type="hidden" name="useYn" value="${!empty code && code.useYn == 'Y' ? 'Y' : 'N'}"/>
+                                    <input type="checkbox" ${!empty code && code.useYn == 'Y' ? 'checked' : ''} onchange="setCheckBoxYn(this,'useYn')"/>
+                                    <label></label>
+                                </div>
                             </td>
                             <th class="point"><spring:message code="common.column.sortOrder"/></th>
                             <td class="point">

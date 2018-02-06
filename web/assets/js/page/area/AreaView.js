@@ -209,7 +209,7 @@ function AreaView(model) {
         $("table tbody tr").eq(3).show();
         $("table tbody tr").eq(4).show();
         $("table tbody tr").eq(5).show();
-        $("span[allTemplate]").show();
+        $("div[allTemplate]").show();
 
         if (AreaView._model.getAreaId() == AreaView._model.getRootOrgId()) {
 
@@ -232,7 +232,7 @@ function AreaView(model) {
             $("button[name='addBtn']").hide();
             $("button[name='saveBtn']").hide();
             $("button[name='removeBtn']").hide();
-            $("span[allTemplate]").hide();
+            $("div[allTemplate]").hide();
             $("#allTemplate").prop("checked",false);
 
             $(".search_area").show();
@@ -271,7 +271,7 @@ function AreaView(model) {
         $("button[name='saveBtn']").hide();
         $("button[name='removeBtn']").hide();
         $("button[name='orgUserAddBtn']").hide();
-        $("span[allTemplate]").hide();
+        $("div[allTemplate]").hide();
         $("#allTemplate").prop("checked",false);
         $("button[name='orgUserRemoveBtn']").hide();
 

@@ -92,6 +92,9 @@ h4 {
   &-speaker:before  {content:"\e93a";}
   &-wlight:before   {content:"\e93b";}
   &-mobile:before   {content:"\e939";}
+  &-close:before    {content:"\e91a";}
+  &-plus:before     {content:"\e92b";}
+  &-minus:before    {content:"\e92c";}
 }
 
 ////// ----------------- 로그인 영역 Start
@@ -165,10 +168,22 @@ header {
             background-color: $color-blue-01;
             &:before {color:#fff !important;}
           }
-          &.issue_btn.issue {
-            width:($noticecenter-width - 80px); background-color:$color-red-01; @include issue;
-            &:before {color:#fff !important;}
+
+          &.level-caution, &.level-warning, &.level-danger {
+            &.issue_btn {
+              width:($noticecenter-width - 80px); /*background-color:$color-red-01;*/
+              &:before {color:#fff !important;}
+              &.on {@include issue;}
+            }
           }
+          /*
+          &.issue_btn.issue {
+            width:($noticecenter-width - 80px); !*background-color:$color-red-01;*!
+            &:before {color:#fff !important;}
+            &.on {@include issue;}
+          }
+          */
+
         }
       }
     }
@@ -246,7 +261,7 @@ menu {
 /////..... 팝업 공통 효과 START
 
 .tpopupbase, .personal_popup, .popupbase > div > div  {
-  & *:not(button) {color:#3c3c3c !important;}
+  & *:not(button) {color:#3c3c3c;}
   &, header {background-color: $adm-color; }
   padding:$popup-margin;
   @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
@@ -714,6 +729,73 @@ menu {
 
 }
 /////...... sub_title_area 정의 끝
+
+
+/////..... 임계치 적용 표시 Start
+.level {
+  &-caution {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
+  &-warning {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
+  &-danger  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+
+  &-caution, &-warning, &-danger {
+    & *, & *:before, & *:after {color:$color-white-01; }
+
+
+
+    // NHR 센서의 경우
+    &.type-list {
+      & *, & *:before, & *:after {color:inherit; }
+      &, &:before {background-color: transparent !important;}
+      .m_marqueebox {
+        & * , &:before {color:$color-red-01 !important; }
+        &:before {background-color: $color-white-01 !important;}
+      }
+      .safeeye_set .s_lbox {color:$color-red-01;  @include issue;}
+    }
+
+    .m_marqueebox {
+      & > p {@include marquee;}
+      & * , &:before {color:$color-white-01 !important; }
+    }  //각구역 마키
+
+    .ts {
+      &-caution, &-warning, &-danger {}
+      &-caution {}
+      &-warning {}
+      &-danger  {}
+    }
+
+  }
+
+  @mixin level-Common {
+
+    &:before {
+      @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
+      background-color:$color-white-01;
+    }
+    &:after  {
+      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5);
+      //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
+    }
+    p {color:$color-white-01 !important;}
+  }
+
+  &-caution {
+    .treffic_set .ts-caution {@include level-Common;}
+    .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
+  } // .level-caution 주의
+
+  &-warning {
+    .treffic_set .ts-warning {@include level-Common;}
+    .treffic_set .ts-warning:after, .m_marqueebox:before {background-color:$color-orange-01;}
+  } // .level-warning 경고
+
+  &-danger  {
+    .treffic_set .ts-danger {@include level-Common;}
+    .treffic_set .ts-danger:after, .m_marqueebox:before {background-color:$color-red-01;}
+  } // .level-danger  위험
+}
+/////..... 임계치 적용 표시 End
 
 
 

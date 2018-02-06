@@ -34,12 +34,12 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 filedetail_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:40%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                     <tr>
@@ -49,8 +49,11 @@
                         </td>
                         <th class="point"><spring:message code="file.column.useYn"/></th>
                         <td class="point">
-                            <span><input type="radio" name="useYn" value="Y" ${empty file || file.useYn == 'Y' ? 'checked' : ''}/><spring:message code="common.column.useYes" /></span>
-                            <span><input type="radio" name="useYn" value="N" ${file.useYn == 'N' ? 'checked' : ''}/><spring:message code="common.column.useNo" /></span>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="useYn" value="${!empty file && file.useYn == 'Y' ? 'Y' : 'N'}"/>
+                                <input type="checkbox" ${!empty file && file.useYn == 'Y' ? 'checked' : ''} onchange="setCheckBoxYn(this,'useYn')"/>
+                                <label></label>
+                            </div>
                         </td>
                     </tr>
                     <tr>

@@ -64,12 +64,12 @@
 
             <div class="table_contents area_enrolment">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 arealist_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                     <tr>
@@ -142,9 +142,16 @@
                             <input type="number" name="sortOrder" placeholder="<spring:message code="area.message.requiredSortOrder"/>" >
                         </td>
                         <th class="point"><spring:message code="area.column.templateCode"/></th>
-                        <td class="point">
-                            <span><isaver:codeSelectBox groupCodeId="TMP" codeId="" htmlTagName="templateCode"/></span>
-                            <span style="display: none;" allTemplate><input type="checkbox" name="allTemplate"/><spring:message code="area.column.allTemplate"/></span>
+                        <td class="point intd type01">
+                            <div>
+                                <isaver:codeSelectBox groupCodeId="TMP" codeId="" htmlTagName="templateCode"/>
+                                <div class="checkbox_set csl_style03" allTemplate style="display: none;">
+                                    <input type="hidden" name="allTemplate"/>
+                                    <span><spring:message code="area.column.allTemplate"/></span>
+                                    <input type="checkbox" id="allTemplate"/>
+                                    <label></label>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>

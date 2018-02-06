@@ -45,12 +45,12 @@
 
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table class="t_defalut t_type02 t_style03">
+                <table class="t_defalut t_type02 menulist_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>    <!-- 04 -->
                     </colgroup>
                     <tbody>
                         <tr>
@@ -86,13 +86,18 @@
                         <tr>
                             <th class="point"><spring:message code="menu.column.useFlag"/></th>
                             <td class="point">
-                                <span><input type="radio" name="useYn" value="Y" /><spring:message code="common.column.useYes" /></span>
-                                <span><input type="radio" name="useYn" value="N" /><spring:message code="common.column.useNo" /></span>
+                                <div class="checkbox_set csl_style03">
+                                    <input type="hidden" name="useYn" value="Y"/>
+                                    <input type="checkbox" id="useYnCheckBox" checked onchange="setCheckBoxYn(this,'useYn')"/>
+                                    <label></label>
+                                </div>
                             </td>
                             <th class="point"><spring:message code="menu.column.menuFlag"/></th>
                             <td class="point">
-                                <span><input type="radio" name="menuFlag" value="M" />M</span>
-                                <span><input type="radio" name="menuFlag" value="P" />P</span>
+                                <select name="menuFlag" class="bold">
+                                    <option>M</option>
+                                    <option>P</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
