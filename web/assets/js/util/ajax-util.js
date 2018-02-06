@@ -44,6 +44,8 @@ function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType
     ajaxRequest(reqUrl,'GET',data,successCallback,errorCallback,actionType);
 }
 
+var isRun = false;
+
 /**
  * 비동기 요청 Biz
  *
@@ -56,11 +58,17 @@ function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType
  * @param actionType
  */
 function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType){
+
+    if(isRun == true) {
+        return;
+    }
+
     if(reqUrl == null){
         return;
     }
 
     if(successCallback == null || typeof successCallback != 'function'){
+
         successCallback = ajaxDefaultSucCallback;
     }
 
@@ -76,9 +84,11 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         contentsType: 'application/json',
         data: data,
         success : function(data, dataType){
+            isRun  = false;
             successCallback(data, dataType, actionType);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
+            isRun  = false;
             errorCallback(XMLHttpRequest, textStatus, errorThrown, actionType);
         }
     });

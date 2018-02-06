@@ -64,11 +64,14 @@
             <div class="table_title_area">
                 <div class="table_btn_set">
                     <c:if test="${empty groupCode}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:addGroupCode(); return false;"><spring:message code="common.button.add"/> </button>
+                        <%--<button id="add_btn" class="btn btype01 bstyle03" onclick="javascript:addGroupCode(); return false;"><spring:message code="common.button.add"/> </button>--%>
+                        <button id="add_btn" class="btn btype01 bstyle03"><spring:message code="common.button.add"/> </button>
                     </c:if>
                     <c:if test="${!empty groupCode}">
-                        <button class="btn btype01 bstyle03" onclick="javascript:saveGroupCode(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeGroupCode(); return false;"><spring:message code="common.button.remove"/> </button>
+                        <%--<button class="btn btype01 bstyle03" onclick="javascript:saveGroupCode(); return false;"><spring:message code="common.button.save"/> </button>--%>
+                        <button  id="save_btn" class="btn btype01 bstyle03"><spring:message code="common.button.save"/> </button>
+                        <%--<button  id="remove_btn" class="btn btype01 bstyle03" onclick="javascript:removeGroupCode(); return false;"><spring:message code="common.button.remove"/> </button>--%>
+                        <button  id="remove_btn" class="btn btype01 bstyle03"><spring:message code="common.button.remove"/> </button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
@@ -133,8 +136,14 @@
             return false;
         }
 
+
         if(validate(1)){
-            callAjax('add', form.serialize());
+
+            if (addBtnObj['checkVar'] == 0) {
+                addBtnObj['checkVar'] = 1;
+                callAjax('add', form.serialize());
+            }
+
         }
     }
 
@@ -144,7 +153,12 @@
         }
 
         if(validate(1)){
-            callAjax('save', form.serialize());
+
+            if (saveBtnObj['checkVar'] == 0) {
+                saveBtnObj['checkVar'] = 1;
+                callAjax('save', form.serialize());
+            }
+
         }
     }
 
@@ -154,7 +168,11 @@
         }
 
         if(validate(2)){
-            callAjax('remove', form.serialize());
+            if (removeBtnObj['checkVar'] == 0) {
+                removeBtnObj['checkVar'] = 1;
+                callAjax('remove', form.serialize());
+            }
+
         }
     }
 
@@ -163,18 +181,26 @@
     }
 
     function requestCode_successHandler(data, dataType, actionType){
+
         alertMessage(actionType + 'Complete');
+
         switch(actionType){
             case 'save':
+                saveBtnObj['checkVar'] = 0;
                 break;
             case 'add':
+                addBtnObj['checkVar'] = 0;
+                break;
             case 'remove':
+                removeBtnObj['checkVar'] = 0;
                 cancel();
                 break;
         }
     }
 
     function requestCode_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+
+        addBtnObj['checkVar'] = saveBtnObj['checkVar'] = removeBtnObj['checkVar'] = 0;
         alertMessage(actionType + 'Failure');
     }
 
@@ -187,4 +213,61 @@
         listForm.appendTo(document.body);
         listForm.submit();
     }
+
+    /** 등록 버튼**/
+    var addBtnObj = {
+        checkVar : 0
+        /** HTML 엘리먼트 ID **/
+        , element_id : "add_btn"
+        /** javascript 실행 함수 명 **/
+        , executeFunctionName : "addGroupCode"
+        /** 중복 클릭 시 메세지 명 **/
+        , msgText : '<spring:message code="common.message.userDoubleClick"/>'
+        /** 중복 클릭 시 메세지  출력 타임 아웃(ms) **/
+        , timeoutCnt : 1000
+    };
+
+    /** 저장 버튼**/
+    var saveBtnObj = {
+        checkVar : 0
+        /** HTML 엘리먼트 ID **/
+        , element_id : "save_btn"
+        /** javascript 실행 함수 명 **/
+        , executeFunctionName : "saveGroupCode"
+        /** 중복 클릭 시 메세지 명 **/
+        , msgText : '<spring:message code="common.message.userDoubleClick"/>'
+        /** 중복 클릭 시 메세지  출력 타임 아웃(ms) **/
+        , timeoutCnt : 1000
+    };
+
+    /** 삭제 버튼**/
+    var removeBtnObj = {
+        checkVar : 0
+        /** HTML 엘리먼트 ID **/
+        , element_id : "remove_btn"
+        /** javascript 실행 함수 명 **/
+        , executeFunctionName : "removeGroupCode"
+        /** 중복 클릭 시 메세지 명 **/
+        , msgText : '<spring:message code="common.message.userDoubleClick"/>'
+        /** 중복 클릭 시 메세지  출력 타임 아웃(ms) **/
+        , timeoutCnt : 1000
+    };
+
+    /**
+     * HTML 버튼 이벤트 추가
+     * @author dhj
+     */
+    function eventAddListener() {
+        /** 등록 **/
+        createDoubleClickEventListener(addBtnObj);
+        /** 수정 **/
+        createDoubleClickEventListener(saveBtnObj);
+        /** 삭제 **/
+        createDoubleClickEventListener(removeBtnObj);
+    }
+
+    $(document).ready(function() {
+        /** HTML 태그 이벤트 추가, @author dhj **/
+        eventAddListener();
+    });
 </script>

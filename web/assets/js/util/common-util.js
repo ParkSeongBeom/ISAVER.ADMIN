@@ -129,3 +129,33 @@ function minMaxFunc(value, min, max) {
         return max;
     else return value;
 }
+
+
+/**
+ * 더블 클릭 중복 실행 방지
+ * @param _obj
+ *@author dhj
+ */
+function createDoubleClickEventListener(_obj) {
+
+    try {
+
+        $("#" + _obj['element_id'] ).click(function() {
+            //console.log(_obj['element_id'] + "checkVar : " + _obj['checkVar']);
+
+            if (_obj['checkVar'] == 0) {
+                window[String(_obj['executeFunctionName'])]();
+            } else {
+                setTimeout(function() {
+                    alert(_obj['msgText']);
+                }, _obj['timeoutCnt']);
+            }
+
+            //console.log(_obj['element_id'] + "_btnCheckCount : " + _obj['timeoutCnt']);
+        });
+
+    } catch(e) {
+        console.log("[error][createDoubleClickEventListener]" + e.message);
+    }
+
+}
