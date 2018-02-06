@@ -7,40 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/area/AreaCtrl.js" afterPath="$PROJECT_DIR$/web/assets/js/page/area/AreaCtrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/area/AreaView.js" afterPath="$PROJECT_DIR$/web/assets/js/page/area/AreaView.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JABBER.ADMIN.iws" afterPath="$PROJECT_DIR$/JABBER.ADMIN.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js" afterPath="$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/_filters.scss" afterPath="$PROJECT_DIR$/web/assets/css/_filters.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css.map" afterPath="$PROJECT_DIR$/web/assets/css/admin.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css" afterPath="$PROJECT_DIR$/web/assets/css/admin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.scss" afterPath="$PROJECT_DIR$/web/assets/css/admin.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/util/common-util.js" afterPath="$PROJECT_DIR$/web/assets/js/util/common-util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.css.map" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.css" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.scss" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/action/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/action/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/code/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/code/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/critical/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/critical/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/eventAction/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/eventAction/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/groupcode/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/groupcode/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/license/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/license/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/role/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/role/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.css.map" afterPath="$PROJECT_DIR$/web/assets/css/elements.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.css" afterPath="$PROJECT_DIR$/web/assets/css/elements.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.scss" afterPath="$PROJECT_DIR$/web/assets/css/elements.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.css.map" afterPath="$PROJECT_DIR$/web/assets/css/layouts.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.css" afterPath="$PROJECT_DIR$/web/assets/css/layouts.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.scss" afterPath="$PROJECT_DIR$/web/assets/css/layouts.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/menu/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/menu/list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/reset.css" afterPath="$PROJECT_DIR$/web/assets/css/reset.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/message/role_ko.properties" afterPath="$PROJECT_DIR$/conf/properties/message/role_ko.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/device/tbList.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/device/tbList.jsp" />
     </list>
     <list id="9fefa557-46a4-4575-bc0f-405aa1bcf661" name="config" comment="" />
     <ignored path="JABBER.ADMIN.iws" />
@@ -138,8 +105,8 @@
       <file leaf-file-name="list.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5100671">
-              <caret line="151" column="51" selection-start-line="151" selection-start-column="51" selection-end-line="151" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.76510066">
+              <caret line="159" column="79" selection-start-line="159" selection-start-column="79" selection-end-line="159" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -2342,13 +2309,7 @@
       <workItem from="1517447316885" duration="1193000" />
       <workItem from="1517448589698" duration="12080000" />
       <workItem from="1517532074612" duration="16341000" />
-      <workItem from="1517902514546" duration="5404000" />
-    </task>
-    <task id="LOCAL-00236">
-      <created>1497835800100</created>
-      <option name="number" value="00236" />
-      <option name="project" value="LOCAL" />
-      <updated>1497835800100</updated>
+      <workItem from="1517902514546" duration="5453000" />
     </task>
     <task id="LOCAL-00237">
       <created>1498009415162</created>
@@ -2638,11 +2599,17 @@
       <option name="project" value="LOCAL" />
       <updated>1517560041136</updated>
     </task>
-    <option name="localTasksCounter" value="285" />
+    <task id="LOCAL-00285">
+      <created>1517908000103</created>
+      <option name="number" value="00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1517908000105</updated>
+    </task>
+    <option name="localTasksCounter" value="286" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2650623000" />
+    <option name="totallyTimeSpent" value="2650672000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -3170,8 +3137,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5100671">
-          <caret line="151" column="51" selection-start-line="151" selection-start-column="51" selection-end-line="151" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.76510066">
+          <caret line="159" column="79" selection-start-line="159" selection-start-column="79" selection-end-line="159" selection-end-column="79" />
           <folding />
         </state>
       </provider>
