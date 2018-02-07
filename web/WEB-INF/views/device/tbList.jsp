@@ -154,15 +154,15 @@
                     <span><spring:message code="device.column.deviceStat" /></span>
                     <span>
                         <select name="deviceStat">
-                            <option value="">전체</option>
-                            <option value="Y" <c:if test="${paramBean.deviceStat == 'Y'}">selected="selected"</c:if>>사용</option>
-                            <option value="N" <c:if test="${paramBean.deviceStat == 'N'}">selected="selected"</c:if>>미사용</option>
+                            <option value=""><spring:message code="common.column.useAll"/></option>
+                            <option value="Y" <c:if test="${paramBean.deviceStat == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
+                            <option value="N" <c:if test="${paramBean.deviceStat == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
                         </select>
                     </span>
                 </p>
             </div>
             <div class="search_btn">
-                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;">조회</button>
+                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;"><spring:message code="common.column.search"/></button>
             </div>
         </article>
     </form>

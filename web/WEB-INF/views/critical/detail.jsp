@@ -90,12 +90,12 @@
                         <td colspan="3" class="intd" id="rangeTb">
                             <!-- 타이틀 영역 -->
                             <div class="except01">
-                                <p>최소범위 수치 입력</p>
+                                <p><spring:message code="critical.column.enterMinRangeVal"/></p>
                                 <span>~</span>
-                                <p>최대범위 수치 입력</p>
-                                <p>임계치 선택</p>
-                                <p>알림파일 선택</p>
-                                <div>삭제ㆍ추가</div>
+                                <p><spring:message code="critical.column.enterMaxRangeVal"/></p>
+                                <p><spring:message code="critical.column.thresholdSelection"/></p>
+                                <p><spring:message code="critical.column.selectNotificationFile"/></p>
+                                <div><spring:message code="critical.column.deleteAdd"/></div>
                             </div>
 
                             <c:choose>
@@ -103,9 +103,9 @@
                                     <c:forEach var="criticalInfo" items="${criticalInfos}" varStatus="status">
                                         <!-- 임계치 범위 설정 사용 추가 항목 -->
                                         <div>
-                                            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" placeholder="최소범위 수치 입력" />
+                                            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.startValue}" placeholder="<spring:message code="critical.column.enterMinRangeVal"/>" />
                                             <span>~</span>
-                                            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" placeholder="최대범위 수치 입력" />
+                                            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" value="${criticalInfo.endValue}" placeholder="<spring:message code="critical.column.enterMaxRangeVal"/>" />
                                             <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" codeId="${criticalInfo.criticalLevel}" />
                                             <select name="alarmId">
                                                 <option value=""><spring:message code="common.column.selectNo"/></option>
@@ -126,9 +126,9 @@
                                 <c:otherwise>
                                     <!-- 임계치 범위 설정 사용 추가 항목 -->
                                     <div>
-                                        <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최소범위 수치 입력" />
+                                        <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="<spring:message code="critical.column.enterMinRangeVal"/>" />
                                         <span>~</span>
-                                        <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최대범위 수치 입력" />
+                                        <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="<spring:message code="critical.column.enterMaxRangeVal"/>" />
                                         <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" />
                                         <select name="alarmId">
                                             <option value=""><spring:message code="common.column.selectNo"/></option>
@@ -184,9 +184,9 @@
     <!-- 임계치 범위 설정 사용 추가 항목 -->
     <div id="rangeTbTag">
         <div>
-            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최소범위 수치 입력" />
+            <input type="text" name="startValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="<spring:message code="critical.column.enterMinRangeVal"/>" />
             <span>~</span>
-            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="최대범위 수치 입력" />
+            <input type="text" name="endValue" oninput="this.value=this.value.replace(/[^-\.0-9]/g,'');" placeholder="<spring:message code="critical.column.enterMaxRangeVal"/>" />
             <isaver:codeSelectBox groupCodeId="LEV" htmlTagName="criticalLevel" />
             <select name="alarmId">
                 <option value=""><spring:message code="common.column.selectNo"/></option>

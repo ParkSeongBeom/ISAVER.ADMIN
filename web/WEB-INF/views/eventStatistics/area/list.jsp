@@ -60,9 +60,9 @@
             $("<table/>",{class:'t_defalut t_type01 t_style02 check_th'}).append(
                 $("<thead/>").append(
                     $("<tr/>").append(
-                        $("<th/>").text("구역명")
+                        $("<th/>").text("<spring:message code="statistics.message.areaName"/>")
                     ).append(
-                        $("<th/>").text("건수")
+                        $("<th/>").text("<spring:message code="common.message.number02"/>")
                     )
                 )
             ).append(

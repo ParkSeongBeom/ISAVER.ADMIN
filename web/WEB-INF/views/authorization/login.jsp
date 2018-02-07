@@ -33,7 +33,7 @@
                     <div class="login_input_area">
                         <input type="text" name="userId" placeholder="ID" class="log_id"/>
                         <input type="password" name="userPassword" placeholder="Password" class="log_pw"/>
-                        <p class="caps">CapsLock이 켜져 있습니다!</p>
+                        <p class="caps"><spring:message code="login.message.capsLockPress"/></p>
                     </div>
 
                     <div class="checkbox_set csl_style01">
@@ -45,7 +45,7 @@
                 </form>
                 <!-- 로그인 입력 폼 End -->
                 <%--<button href="#" alt="로그인" class="btn" onclick="javascript:login(); return false;">로그인</button>--%>
-                <button id="login_btn" href="#" alt="로그인" class="btn">로그인</button>
+                <button id="login_btn" href="#" alt="로그인" class="btn"><spring:message code="login.button.login"/></button>
             </article>
         </section>
         <!-- section End -->

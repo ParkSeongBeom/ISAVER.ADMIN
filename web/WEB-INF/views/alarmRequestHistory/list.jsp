@@ -14,7 +14,7 @@
     <div>
         <div>
             <header>
-                <h2>알림 전송 이력 상세</h2>
+                <h2><spring:message code="common.title.alarmRequestHistory"/></h2>
                 <button onclick="javascript:popup_cancelButton(); return false;"></button>
             </header>
             <article>

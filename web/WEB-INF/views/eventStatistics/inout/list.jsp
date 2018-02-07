@@ -22,10 +22,10 @@
             <span><spring:message code="statistics.column.datetime"/></span>
             <span>
                 <select id="inoutDateGubn">
-                    <option value="day">일간</option>
-                    <option value="week">주간</option>
-                    <option value="month">월간</option>
-                    <option value="year">년간</option>
+                    <option value="day"><spring:message code="statistics.selectbox.daily"/></option>
+                    <option value="week"><spring:message code="statistics.selectbox.weekly"/></option>
+                    <option value="month"><spring:message code="statistics.selectbox.monthly"/></option>
+                    <option value="year"><spring:message code="statistics.selectbox.year"/></option>
                 </select>
             </span>
         </p>

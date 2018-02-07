@@ -37,7 +37,7 @@
                     </p>
                 </div>
                 <div class="table_btn_set">
-                    <button class="btn btype01 bstyle03" href="#" onclick="javascript:saveRoleMenu();">저장</button>
+                    <button class="btn btype01 bstyle03" href="#" onclick="javascript:saveRoleMenu();"><spring:message code="common.button.save"/></button>
                 </div>
             </article>
         </form>

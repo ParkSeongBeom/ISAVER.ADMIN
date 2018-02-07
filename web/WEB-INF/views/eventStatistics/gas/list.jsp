@@ -22,8 +22,8 @@
             <span><spring:message code="statistics.column.gubn"/></span>
             <span>
                 <select id="gasChartGubn">
-                    <option value="state">상태 변화 추이</option>
-                    <option value="cnt">알림 발생 건수</option>
+                    <option value="state"><spring:message code="statistics.selectbox.stateChangeTrend"/></option>
+                    <option value="cnt"><spring:message code="statistics.selectbox.numberOfNotifications"/></option>
                 </select>
             </span>
         </p>
@@ -31,10 +31,10 @@
             <span><spring:message code="statistics.column.datetime"/></span>
             <span>
                 <select id="gasDateGubn">
-                    <option value="day">일간</option>
-                    <option value="week" disabled="disabled">주간</option>
-                    <option value="month" disabled="disabled">월간</option>
-                    <option value="year" disabled="disabled">년간</option>
+                    <option value="day"><spring:message code="statistics.selectbox.daily"/></option>
+                    <option value="week" disabled="disabled"><spring:message code="statistics.selectbox.weekly"/></option>
+                    <option value="month" disabled="disabled"><spring:message code="statistics.selectbox.monthly"/></option>
+                    <option value="year" disabled="disabled"><spring:message code="statistics.selectbox.year"/></option>
                 </select>
             </span>
         </p>

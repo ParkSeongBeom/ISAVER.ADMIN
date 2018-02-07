@@ -56,8 +56,8 @@ public class PersistenceConfigurer {
         ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
 
         if(!resultSystemBean.getaBoolean()){
-            logger.error(resultSystemBean.getLogdata());
-            System.exit(0);
+//            logger.error(resultSystemBean.getLogdata());
+//            System.exit(0);
         }
         return findSystemUtil;
     }

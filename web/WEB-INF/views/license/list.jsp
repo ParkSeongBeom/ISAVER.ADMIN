@@ -60,7 +60,7 @@
                 </p>
             </div>
             <div class="search_btn">
-                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;">조회</button>
+                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;"><spring:message code="common.button.search"/></button>
             </div>
         </article>
     </form>
@@ -69,7 +69,7 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
+                <p><span><spring:message code="common.message.total"/><em>${paramBean.totalCount}</em><spring:message code="common.message.number01"/></span></p>
                 <c:if test="${viewOnly == false}">
                     <button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/></button>
                 </c:if>

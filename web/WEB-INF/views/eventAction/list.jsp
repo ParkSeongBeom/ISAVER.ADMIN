@@ -29,9 +29,9 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>대응 ID</th>
-                                <th>대응 구분</th>
-                                <th>대응 방법</th>
+                                <th><spring:message code="event.column.eventActionId"/></th>
+                                <th><spring:message code="event.column.eventActionDivision"/></th>
+                                <th><spring:message code="event.column.eventActionType"/></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,7 +48,7 @@
                 </div>
             </article>
             <footer>
-                <button class="btn" id="actionDetailMoveButton">자세히 보기</button>
+                <button class="btn" id="actionDetailMoveButton"><spring:message code="event.button.learnMore"/></button>
             </footer>
         </div>
     </div>
@@ -98,7 +98,7 @@
         <div class="table_title_area">
             <h4></h4>
             <div class="table_btn_set">
-                <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
+                <p><span><spring:message code="common.message.total"/><em>${paramBean.totalCount}</em><spring:message code="common.message.number01"/></span></p>
                 <%--<button class="btn btype01 bstyle03" onclick="javascript:moveDetail(); return false;"><spring:message code="common.button.add"/> </button>--%>
             </div>
         </div>

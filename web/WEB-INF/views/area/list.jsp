@@ -204,8 +204,8 @@
                 <!-- 테이블 공통 페이징 Start -->
                 <div id="pageContainer" class="page">
                     <p class="paging">
-                        <button class="p_arrow pll" onclick="alert(&quot;현재 첫번째 페이지 입니다.&quot;); return false;">《</button>
-                        <button class="p_arrow pl" onclick="javascript:alert(&quot;현재 첫번째 페이지 입니다.&quot;); return false;">〈</button>
+                        <button class="p_arrow pll" onclick="alert(&quot;<spring:message code="area.message.firstPage"/>&quot;); return false;">《</button>
+                        <button class="p_arrow pl" onclick="javascript:alert(&quot;<spring:message code="area.message.firstPage"/>&quot;); return false;">〈</button>
                         <button class="page_select ">1</button><button class="" onclick="javascript:goPage(2); return false;">2</button>
                         <button class="" onclick="javascript:goPage(3); return false;">3</button>
                         <button class="p_arrow pl" onclick="javascript:goPage(11); return false;">〉</button><button class="p_arrow pll" onclick="javascript:goPage(1006); return false;">》</button>
