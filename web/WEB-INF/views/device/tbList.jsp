@@ -162,7 +162,7 @@
                 </p>
             </div>
             <div class="search_btn">
-                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;"><spring:message code="common.column.search"/></button>
+                <button class="btn bstyle01 btype01" onclick="javascript:search(); return false;"><spring:message code="common.button.search"/></button>
             </div>
         </article>
     </form>
