@@ -85,14 +85,16 @@ public class AlarmSvcImpl implements AlarmSvc {
         alarmInfoParam.put("dashboardYn",AdminResource.NO);
         List<AlarmInfoBean> deviceAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
 
-        List<DeviceBean> devices = deviceDao.findListDevice(null);
+        List<DeviceBean> targetDevices = deviceDao.findListDevice(new HashMap<String,String>(){{put("deviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("target"));}});
+        List<DeviceBean> alarmDevices = deviceDao.findListDevice(new HashMap<String,String>(){{put("deviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("alarm"));}});
         List<FileBean> files = fileDao.findListFile(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("alarm", alarm);
         modelAndView.addObject("dashboardAlarmInfos", dashboardAlarmInfos);
         modelAndView.addObject("deviceAlarmInfos", deviceAlarmInfos);
-        modelAndView.addObject("devices", devices);
+        modelAndView.addObject("targetDevices", targetDevices);
+        modelAndView.addObject("alarmDevices", alarmDevices);
         modelAndView.addObject("files", files);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

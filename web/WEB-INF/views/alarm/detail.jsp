@@ -161,7 +161,7 @@
                                                 <c:if test="${index.count == 1}">
                                                     <option value="" <c:if test="${deviceAlarmInfo.targetId==null}">selected="selected"</c:if>><spring:message code="common.selectbox.all"/></option>
                                                 </c:if>
-                                                <c:forEach var="device" items="${devices}">
+                                                <c:forEach var="device" items="${targetDevices}">
                                                     <option value="${device.deviceId}" <c:if test="${device.deviceId == deviceAlarmInfo.targetId}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
                                                 </c:forEach>
                                             </select>
@@ -182,7 +182,7 @@
                                                     <c:forEach var="info" items="${infos.datas}">
                                                         <c:if test="${info.key=='alarmDeviceId'}">
                                                             <select name="deviceId">
-                                                                <c:forEach var="device" items="${devices}">
+                                                                <c:forEach var="device" items="${alarmDevices}">
                                                                     <option value="${device.deviceId}" <c:if test="${device.deviceId == info.value}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
                                                                 </c:forEach>
                                                             </select>
@@ -238,7 +238,7 @@
                                     <td>
                                         <select name="targetDeviceId">
                                             <option value=""><spring:message code="common.selectbox.all"/></option>
-                                            <c:forEach var="device" items="${devices}">
+                                            <c:forEach var="device" items="${targetDevices}">
                                                 <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
                                             </c:forEach>
                                         </select>
@@ -256,7 +256,7 @@
                                         </div>
                                         <div device>
                                             <select name="deviceId">
-                                                <c:forEach var="device" items="${devices}">
+                                                <c:forEach var="device" items="${alarmDevices}">
                                                     <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
                                                 </c:forEach>
                                             </select>
@@ -309,7 +309,7 @@
                     <th><spring:message code="alarm.column.targetDevice"/></th>
                     <td>
                         <select name="targetDeviceId">
-                            <c:forEach var="device" items="${devices}">
+                            <c:forEach var="device" items="${targetDevices}">
                                 <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
                             </c:forEach>
                         </select>
@@ -327,7 +327,7 @@
                         </div>
                         <div device>
                             <select name="deviceId">
-                                <c:forEach var="device" items="${devices}">
+                                <c:forEach var="device" items="${alarmDevices}">
                                     <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
                                 </c:forEach>
                             </select>

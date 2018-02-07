@@ -137,6 +137,17 @@ public class AdminResource {
     };
 
     /**
+     * 장치유형 코드정의
+     * @author psb
+     */
+    public final static Map<String, String> DEVICE_TYPE_CODE = new HashMap<String, String>(){
+        {
+            put("alarm","D00001"); // 경보장치
+            put("target","D00002"); // 감지장치
+        }
+    };
+
+    /**
      * 장치동기화 요청구분 코드정의
      * @author psb
      */
