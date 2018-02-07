@@ -48,7 +48,7 @@
                 </div>
             </article>
             <footer>
-                <button class="btn" id="actionDetailMoveButton">자세히 보기</button>
+                <button class="btn" id="actionDetailMoveButton"><spring:message code="device.button.learnMore"/></button>
             </footer>
         </div>
     </div>

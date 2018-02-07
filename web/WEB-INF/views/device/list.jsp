@@ -28,7 +28,7 @@
         <div>
             <div>
                 <header>
-                    <h2>알림 대상 장치 목록</h2>
+                    <h2><spring:message code="device.column.notificationDeviceList"/></h2>
                     <button onclick="javascript:closePopup('list_popup');"></button>
                 </header>
                 <article>

@@ -390,26 +390,26 @@
                                     </div>
                                     <div class="timepicker">
                                         <div class="hour">
-                                            <input type="number" name="format" value="00" pattern="00" placeholder="시" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 23)">
+                                            <input type="number" name="format" value="00" pattern="00" placeholder="<spring:message code="common.column.hour"/>" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 23)">
                                             <select onchange="this.previousElementSibling.value=this.value">
                                                 <c:forEach begin="0" end="23" varStatus="loop">
-                                                    <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>시</option>
+                                                    <option value="<fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index}" pattern="00" type="Number"/><spring:message code="common.column.hour"/></option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="minute">
-                                            <input type="number" name="format" value="00" pattern="00" placeholder="분" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
+                                            <input type="number" name="format" value="00" pattern="00" placeholder="<spring:message code="common.column.minute"/>" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                             <select onchange="this.previousElementSibling.value=this.value">
                                                 <c:forEach begin="0" end="5" varStatus="loop">
-                                                    <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>분</option>
+                                                    <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/><spring:message code="common.column.minute"/></option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="second">
-                                            <input type="number" name="format" value="00" pattern="00" placeholder="초" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
+                                            <input type="number" name="format" value="00" pattern="00" placeholder="<spring:message code="common.column.second"/>" maxlength="2" onkeyup="this.value = minMaxFunc(this.value, 0, 59)">
                                             <select onchange="this.previousElementSibling.value=this.value">
                                                 <c:forEach begin="0" end="5" varStatus="loop">
-                                                    <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>초</option>
+                                                    <option value="<fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/>"><fmt:formatNumber value="${loop.index*10}" pattern="00" type="Number"/><spring:message code="common.column.second"/></option>
                                                 </c:forEach>
                                             </select>
                                         </div>

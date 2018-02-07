@@ -141,7 +141,7 @@
                     <span><spring:message code='device.column.areaName'/></span>
                     <span>
                         <select name="areaId">
-                            <option value="">전체</option>
+                            <option value=""><spring:message code='common.column.useAll'/></option>
                             <c:forEach items="${areas}" var="areas">
                                 <c:if test="${areas.delYn == 'N'}">
                                     <option value="${areas.areaId}" <c:if test="${paramBean.areaId == areas.areaId}">selected="selected"</c:if>>${areas.path}</option>

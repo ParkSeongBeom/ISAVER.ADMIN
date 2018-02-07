@@ -70,6 +70,30 @@
         'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
     };
 
+    var alarmLevelMessage = [
+        /** '산소 결핍' **/
+        "<spring:message code="statistics.message.level00"/>"
+        /** '산소 경고' **/
+        , "<spring:message code="statistics.message.level01"/>"
+        /** '일산화탄소 과다' **/
+        , "<spring:message code="statistics.message.level02"/>"
+        /** '일산화탄소 경고' **/
+        , "<spring:message code="statistics.message.level03"/>"
+        /** 황하수소 과다 **/
+        , "<spring:message code="statistics.message.level04"/>"
+        /** '황하수소 경고' **/
+        , "<spring:message code="statistics.message.level05"/>"
+    ];
+
+    var gasLevelText = [
+        /** 산소(%) **/
+        "<spring:message code="statistics.column.oxygen"/>"
+        /** 일산화탄소(ppm) **/
+        , "<spring:message code="statistics.column.carbonMonoxide"/>"
+        /** 황하수소(ppm) **/
+        , "<spring:message code="statistics.column.hydrogenSulfide"/>"
+    ];
+
     var gasSearchParam = {
         'searchDatetime' : null
         ,'areaId' : ''
@@ -275,16 +299,16 @@
             var datetimeText;
             switch (gasSearchParam['dateGubn']){
                 case 'day':
-                    datetimeText = new Date(dateLists[index]).format("HH") + "시";
+                    datetimeText = new Date(dateLists[index]).format("HH") + "<spring:message code="common.column.hour"/>";
                     break;
                 case 'week':
                     datetimeText = new Date(dateLists[index]).format("e");
                     break;
                 case 'month':
-                    datetimeText = new Date(dateLists[index]).format("dd") + "일";
+                    datetimeText = new Date(dateLists[index]).format("dd") + "<spring:message code="common.column.day"/>";
                     break;
                 case 'year':
-                    datetimeText = new Date(dateLists[index]).format("MM") + "월";
+                    datetimeText = new Date(dateLists[index]).format("MM") + "<spring:message code="common.column.month"/>";
                     break;
             }
 
@@ -296,20 +320,26 @@
 
         if(gasSearchParam['chartGubn']=="state"){
             chartDivHtml.find(".chart_label").append(
-                $("<span/>").text('산소(%)')
+                 /** '산소(%)' **/
+                $("<span/>").text(gasLevelText[0])
             ).append(
-                $("<span/>").text('일산화탄소(ppm)')
+                 /** '일산화탄소(ppm)' **/
+                $("<span/>").text(gasLevelText[1])
             ).append(
-                $("<span/>").text('황하수소(ppm)')
+                 /** '황하수소(ppm)' **/
+                $("<span/>").text(gasLevelText[2])
             );
 
 
             tableDivHtml.find(".theadDiv").append(
-                $("<span/>").text('산소(%)')
+                 /** '산소(%)' **/
+                $("<span/>").text(gasLevelText[0])
             ).append(
-                $("<span/>").text('일산화탄소(ppm)')
+                 /** '일산화탄소(ppm)' **/
+                $("<span/>").text(gasLevelText[1])
             ).append(
-                $("<span/>").text('황하수소(ppm)')
+                 /** '황하수소(ppm)' **/
+                $("<span/>").text(gasLevelText[2])
             );
 
             tableDivHtml.find(".d_tbody").append(
@@ -341,32 +371,45 @@
             gasSearchParam['chartData']['series'].push(carbonMonoxideSeries);
             gasSearchParam['chartData']['series'].push(hydrogenSulfideSeries);
         }else{
+
             chartDivHtml.find(".chart_label").append(
-                $("<span/>").text('산소 결핍')
+                    /** '산소 결핍' **/
+                $("<span/>").text(alarmLevelMessage[0])
             ).append(
-                $("<span/>").text('산소 경고')
+                    /** '산소 경고' **/
+                $("<span/>").text(alarmLevelMessage[1])
             ).append(
-                $("<span/>").text('일산화탄소 과다')
+                    /** '일산화탄소 과다' **/
+                $("<span/>").text(alarmLevelMessage[2])
             ).append(
-                $("<span/>").text('일산화탄소 경고')
+                    /** '일산화탄소 경고' **/
+                $("<span/>").text(alarmLevelMessage[3])
             ).append(
-                $("<span/>").text('황하수소 과다')
+                    /** 황하수소 과다 **/
+                $("<span/>").text(alarmLevelMessage[4])
             ).append(
-                $("<span/>").text('황하수소 경고')
+                    /** '황하수소 경고' **/
+                $("<span/>").text(alarmLevelMessage[5])
             );
 
             tableDivHtml.find(".theadDiv").append(
-                $("<span/>").text('산소 결핍')
+                    /** '산소 결핍' **/
+                    $("<span/>").text(alarmLevelMessage[0])
             ).append(
-                $("<span/>").text('산소 경고')
+                    /** '산소 경고' **/
+                    $("<span/>").text(alarmLevelMessage[1])
             ).append(
-                $("<span/>").text('일산화탄소 과다')
+                    /** '일산화탄소 과다' **/
+                    $("<span/>").text(alarmLevelMessage[2])
             ).append(
-                $("<span/>").text('일산화탄소 경고')
+                    /** '일산화탄소 경고' **/
+                    $("<span/>").text(alarmLevelMessage[3])
             ).append(
-                $("<span/>").text('황하수소 과다')
+                    /** 황하수소 과다 **/
+                    $("<span/>").text(alarmLevelMessage[4])
             ).append(
-                $("<span/>").text('황하수소 경고')
+                    /** '황하수소 경고' **/
+                    $("<span/>").text(alarmLevelMessage[5])
             );
 
             tableDivHtml.find(".d_tbody").append(
