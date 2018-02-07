@@ -844,3 +844,202 @@ body.dashboard_mode {
 
 }
 /////.......... 디바이스 보기 Popup End
+
+
+
+/////.......................................... Guard Start
+main {
+  @include flexbase; @include flex-option(0, 1, 100%); width:100%;
+  background-color: $bas-color;
+  & > * {position: relative; height:100%; }
+
+  .copybox {
+    display: none;
+    & > * {font-size:1rem;}
+    p { span {padding:0 0 0 10px;}}
+    em {letter-spacing: 0;}
+  }
+}
+
+/////...... button base 정의 Start
+.btnbase {@include btnbase;}
+.dim {pointer-events: none; opacity: 0.5;}
+.icon {
+  &-login:before   {content:"\e900";} // 로그인
+  &-admin:before   {content:"\e909";} // 관리자
+  &-user:before    {content:"\e90e";} // 사용자
+  &-update:before  {content:"\e961";} // 업데이트
+  &-confirm:before {content:"\e941";} // 확인
+  &-cancle:before  {content:"\e937";} // 알림해지
+  &-more:before    {content:"\e95c";} // 더보기
+  &-zoom:before    {content:"\e925";} // 더보기
+  &-area:before    {content:"\e91b";} // 장소
+  &-tof:before     {content:"\e962";} // TOF 센서
+  &-ptz:before     {content:"\e95a";} // PTZ 카메라
+  &-light:before   {content:"\e93b";} // 경광등
+  &-speak:before   {content:"\e93a";} // 스피커
+  &-chart:before   {content:"\e908";} // 차트
+  &-four:before    {content:"\e938";} // 4분할
+}
+/////...... button base 정의 End
+
+
+.map   {@include flex-option(0, 1, 100%);}
+.video {@include flex-option(1, 0, $video-width);}
+
+.map {
+  overflow: hidden;   min-width:900px;
+  //@include border01(1px,$color-gray-01,1);
+  background-position: 50%; background-repeat: no-repeat; background-size: cover;
+
+
+  &.map_01 {background-image: url(../images/map/map01.png);}
+  &.map_02 {background-image: url(../images/map/map02.png);}
+  &.map_03 {background-image: url(../images/map/map03.png);}
+  &.map_04 {background-image: url(../images/map/map04.png);}
+  &.map_05 {background-image: url(../images/map/map05.png);}
+  &.map_icent {background-image: url(../images/map/icent.png);}
+
+  & > * {position: absolute; }
+
+  &.level-danger {
+    header > div {
+      background-color: rgba($color-red-01, 0.7); @include arealist;
+      h3 {background-color: transparent;}
+      .copybox {display: block;}
+    }
+  }
+
+  header {
+    z-index:10; top:0; left:0; height:60px; min-width:auto; padding:0; background-color:transparent;
+    @include flex-align-items-start;
+    //@include border01(0 0 1px 0,$color-gray-01,1); background-color: rgba(0,0,0,0.7);
+    .guaedarea {@include btnbase; position: absolute; z-index: 10; top:0; right:0;}
+
+    & > div {display: inline-block; color:$color-white-01;}
+    h3 {height:60px; font-size:2rem; line-height:4rem; padding:0 20px; background-color: rgba(0,0,0,0.5);}
+    .copybox {
+      padding:0 20px 20px 20px;
+      & * {font-size:2rem; line-height: 2.2rem;}
+    }
+
+  }
+
+  .watch {
+
+    /*
+   <article class="watch">
+
+        <div><!-- 구글맴 -->
+
+            <div class="device"><!-- level-danger level-warning level-caution 감시디바이스-->
+                <div class="icon-tof"></div>
+                <div class="icon-ptz"></div>
+            </div>
+
+        </div>
+
+    </article>
+    */
+
+    $watchpadding:115px;
+    $devicewidth:30px;
+
+    @mixin pOn {
+      &:before {color:$color-yellow-01 !important;}
+      &:after {
+        content:""; position: absolute; width:120%; height:120%; @include border01(2px,$color-yellow-01,1);
+        @include issue03;
+      }
+    } // @include pOn;
+    @include flexbase;
+    z-index:8; width:100%; height:100%;
+
+
+    &, & *, & *:before, & *:after {position: absolute;  @include transition(400ms); /*@include border-radius(200px);*/}
+
+
+    & > div {
+      width:100%; height:100%;
+      //background-position: 50%; background-repeat: no-repeat; background-size: cover;
+      //background-image: url(../images/map/icent.png);
+      //&:before {content:""; position: absolute; z-index: 1; width:100%; height:100%; background-color: rgba(0,0,0,0.5);}
+    }
+
+    // zone-
+    .device {
+      @include flexbase; position: absolute; background-color: transparent;
+      //top:50%; left:50%;
+      &, & *, & *:before, & *:after {cursor: pointer; }
+    }
+
+
+    .device > div, .tracking {
+      @include flex-midddle; position: relative; background-color: transparent;
+      z-index: 2; font-size:1.9rem; width:$devicewidth; height:$devicewidth;
+      &,&:before, &:after { @include border-radius(200px); color:$color-white-01;}
+    }
+    .tracking:before {content:"\e91b"; }
+
+
+    .device {
+      /////..... 임계치 적용 표시 Start
+      &.level {
+        &-danger  > div {@include pOn;}
+      }
+      /////..... 임계치 적용 표시 End
+    }
+
+    .tracking {
+      /////..... 임계치 적용 표시 Start
+      &.level {
+        &-danger {@include pOn;}
+      }
+      /////..... 임계치 적용 표시 End
+    }
+
+  }
+
+}
+
+.video {
+  @include flexbase; @include flex-column; margin:0 0 0 0;
+  //@include border01(1px 1px 1px 0,$color-gray-01,1);
+  & > div {
+    position: relative; width:100%;
+
+    /*
+    @include flex-midddle;
+    &:before, &:after {position: absolute; font-size:2.2rem; color:$color-white-01; opacity: 1; z-index: 10;}
+     &:before {@include flex-midddle; top:0; right:0; width:50px; height:50px; background-color: rgba(0,0,0,0.4);}
+     &:after  {content:"\e92b";}*/
+
+    background-position: 50%; background-repeat: no-repeat; background-size: cover;
+  }
+
+  .tof {
+
+    height:40%;
+    @include border01(0 0 1px 0,$color-gray-01,1);
+    background-image: url(../../assets/images/video/tofview.png);
+    background-position: 50%; background-repeat: no-repeat; background-size: cover;
+
+
+  }
+  .ptz {
+    //&:before {content:"\e95a";}
+    height:60%;
+
+    & > div {overflow: hidden; width:100%; height:50%;}
+
+    &.on {@include video;}
+    button {
+      @include btnbase; position: absolute; top:0; right:0; opacity: 0.5;
+      &.on {opacity: 1;}
+    }
+
+
+  }
+}
+
+/////.......................................... Guard End

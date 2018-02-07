@@ -152,6 +152,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         messageSource.setDefaultEncoding(CommonResource.CHARSET_UTF8);
         messageSource.setBasenames(
             "classpath:properties/message/common"
+            ,"classpath:properties/message/login"
             ,"classpath:properties/message/user"
             ,"classpath:properties/message/menu"
             ,"classpath:properties/message/role"

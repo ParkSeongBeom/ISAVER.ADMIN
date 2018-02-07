@@ -182,7 +182,7 @@ function MenuView(model) {
                         _childMenuLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
                     }
 
-                    if(mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul > li").length==0){
+                    if(mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul > li").length==0 && _menu['menuPath']!="/"){
                         mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
                     }
                     mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
@@ -203,12 +203,8 @@ function MenuView(model) {
 
         $("#topMenu").append(mainMenuTag);
 
-        if(MenuView._model.getTargetMenuId()!=""){
-            if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
-                setSelectedMenu(MenuView._model.getParentMenuId());
-            }
-        }else{
-            $("#topMenu ul[menu_main] > .menu_dashboard > button").addClass('on');
+        if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
+            setSelectedMenu(MenuView._model.getParentMenuId());
         }
 
         function setSelectedMenu(_targetMenuId){

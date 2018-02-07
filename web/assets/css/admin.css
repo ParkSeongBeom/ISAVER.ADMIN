@@ -142,9 +142,6 @@ div.tablebase, .d_defalut {
   width: 100%;
   margin: 0 0 20px 0;
   background-color: rgba(245, 245, 245, 0.8);
-  border-style: solid;
-  border-width: 1px 0 0 0;
-  border-color: #bcbcbc;
   box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.15); }
@@ -472,33 +469,37 @@ div.tablebase, .d_defalut {
   .tablebase.list_type tr:hover td, .tablebase.list_type > div > div:hover > p, .tablebase.t_type01 tr:hover td, .tablebase.t_type01 > div > div:hover > p, .t_defalut.list_type tr:hover td, .t_defalut.list_type > div > div:hover > p, .t_defalut.t_type01 tr:hover td, .t_defalut.t_type01 > div > div:hover > p, .d_defalut.list_type tr:hover td, .d_defalut.list_type > div > div:hover > p, .d_defalut.t_type01 tr:hover td, .d_defalut.t_type01 > div > div:hover > p {
     background-color: #e1e1e1;
     color: #3c3c3c; }
-  .tablebase.write_type colgroup col:nth-of-type(odd), .tablebase.t_type02 colgroup col:nth-of-type(odd), .t_defalut.write_type colgroup col:nth-of-type(odd), .t_defalut.t_type02 colgroup col:nth-of-type(odd), .d_defalut.write_type colgroup col:nth-of-type(odd), .d_defalut.t_type02 colgroup col:nth-of-type(odd) {
-    width: 180px !important;
-    min-width: 180px !important; }
-  .tablebase.write_type colgroup col:nth-of-type(even), .tablebase.t_type02 colgroup col:nth-of-type(even), .t_defalut.write_type colgroup col:nth-of-type(even), .t_defalut.t_type02 colgroup col:nth-of-type(even), .d_defalut.write_type colgroup col:nth-of-type(even), .d_defalut.t_type02 colgroup col:nth-of-type(even) {
-    width: 50%; }
-  .tablebase.write_type th, .tablebase.write_type td, .tablebase.write_type > div > div > p, .tablebase.write_type > div.d_thead > div > *, .tablebase.t_type02 th, .tablebase.t_type02 td, .tablebase.t_type02 > div > div > p, .tablebase.t_type02 > div.d_thead > div > *, .t_defalut.write_type th, .t_defalut.write_type td, .t_defalut.write_type > div > div > p, .t_defalut.write_type > div.d_thead > div > *, .t_defalut.t_type02 th, .t_defalut.t_type02 td, .t_defalut.t_type02 > div > div > p, .t_defalut.t_type02 > div.d_thead > div > *, .d_defalut.write_type th, .d_defalut.write_type td, .d_defalut.write_type > div > div > p, .d_defalut.write_type > div.d_thead > div > *, .d_defalut.t_type02 th, .d_defalut.t_type02 td, .d_defalut.t_type02 > div > div > p, .d_defalut.t_type02 > div.d_thead > div > * {
+  .tablebase.write_type, .tablebase.t_type02, .t_defalut.write_type, .t_defalut.t_type02, .d_defalut.write_type, .d_defalut.t_type02 {
     border-style: solid;
-    border-width: 0 1px 1px 0; }
-  .tablebase.write_type th, .tablebase.t_type02 th, .t_defalut.write_type th, .t_defalut.t_type02 th, .d_defalut.write_type th, .d_defalut.t_type02 th {
-    width: 180px !important;
-    min-width: 180px !important; }
-  .tablebase.write_type td > select, .tablebase.write_type td > input, .tablebase.write_type td > textarea, .tablebase.t_type02 td > select, .tablebase.t_type02 td > input, .tablebase.t_type02 td > textarea, .t_defalut.write_type td > select, .t_defalut.write_type td > input, .t_defalut.write_type td > textarea, .t_defalut.t_type02 td > select, .t_defalut.t_type02 td > input, .t_defalut.t_type02 td > textarea, .d_defalut.write_type td > select, .d_defalut.write_type td > input, .d_defalut.write_type td > textarea, .d_defalut.t_type02 td > select, .d_defalut.t_type02 td > input, .d_defalut.t_type02 td > textarea {
-    /*position: absolute; width:100%; height:100%; left:0; top:0;*/ }
-  .tablebase.write_type select, .tablebase.t_type02 select, .t_defalut.write_type select, .t_defalut.t_type02 select, .d_defalut.write_type select, .d_defalut.t_type02 select {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: normal; }
+    border-width: 1px 0 0 0;
+    border-color: #bcbcbc; }
+    .tablebase.write_type colgroup col:nth-of-type(odd), .tablebase.t_type02 colgroup col:nth-of-type(odd), .t_defalut.write_type colgroup col:nth-of-type(odd), .t_defalut.t_type02 colgroup col:nth-of-type(odd), .d_defalut.write_type colgroup col:nth-of-type(odd), .d_defalut.t_type02 colgroup col:nth-of-type(odd) {
+      width: 180px !important;
+      min-width: 180px !important; }
+    .tablebase.write_type colgroup col:nth-of-type(even), .tablebase.t_type02 colgroup col:nth-of-type(even), .t_defalut.write_type colgroup col:nth-of-type(even), .t_defalut.t_type02 colgroup col:nth-of-type(even), .d_defalut.write_type colgroup col:nth-of-type(even), .d_defalut.t_type02 colgroup col:nth-of-type(even) {
+      width: 50%; }
+    .tablebase.write_type th, .tablebase.write_type td, .tablebase.write_type > div > div > p, .tablebase.write_type > div.d_thead > div > *, .tablebase.t_type02 th, .tablebase.t_type02 td, .tablebase.t_type02 > div > div > p, .tablebase.t_type02 > div.d_thead > div > *, .t_defalut.write_type th, .t_defalut.write_type td, .t_defalut.write_type > div > div > p, .t_defalut.write_type > div.d_thead > div > *, .t_defalut.t_type02 th, .t_defalut.t_type02 td, .t_defalut.t_type02 > div > div > p, .t_defalut.t_type02 > div.d_thead > div > *, .d_defalut.write_type th, .d_defalut.write_type td, .d_defalut.write_type > div > div > p, .d_defalut.write_type > div.d_thead > div > *, .d_defalut.t_type02 th, .d_defalut.t_type02 td, .d_defalut.t_type02 > div > div > p, .d_defalut.t_type02 > div.d_thead > div > * {
+      border-style: solid;
+      border-width: 0 1px 1px 0; }
+    .tablebase.write_type th, .tablebase.t_type02 th, .t_defalut.write_type th, .t_defalut.t_type02 th, .d_defalut.write_type th, .d_defalut.t_type02 th {
+      width: 180px !important;
+      min-width: 180px !important; }
+    .tablebase.write_type td > select, .tablebase.write_type td > input, .tablebase.write_type td > textarea, .tablebase.t_type02 td > select, .tablebase.t_type02 td > input, .tablebase.t_type02 td > textarea, .t_defalut.write_type td > select, .t_defalut.write_type td > input, .t_defalut.write_type td > textarea, .t_defalut.t_type02 td > select, .t_defalut.t_type02 td > input, .t_defalut.t_type02 td > textarea, .d_defalut.write_type td > select, .d_defalut.write_type td > input, .d_defalut.write_type td > textarea, .d_defalut.t_type02 td > select, .d_defalut.t_type02 td > input, .d_defalut.t_type02 td > textarea {
+      /*position: absolute; width:100%; height:100%; left:0; top:0;*/ }
+    .tablebase.write_type select, .tablebase.t_type02 select, .t_defalut.write_type select, .t_defalut.t_type02 select, .d_defalut.write_type select, .d_defalut.t_type02 select {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: normal; }
 
 div.d_defalut > div > div > * {
-  min-width: 90px; }
+  min-width: 40px; }
 div.d_defalut.d_type01 > div {
   float: left; }
 div.d_defalut.d_type01 .d_thead {
   position: relative;
   z-index: 2;
-  width: 200px; }
+  width: 150px; }
   div.d_defalut.d_type01 .d_thead > div {
     -webkit-flex-flow: row wrap;
     -moz-flex-flow: row wrap;
@@ -521,7 +522,7 @@ div.d_defalut.d_type01 .d_tbody {
   position: absolute;
   z-index: 1;
   width: 100%;
-  padding: 0 0 0 200px; }
+  padding: 0 0 0 150px; }
   div.d_defalut.d_type01 .d_tbody > div:first-of-type > * {
     color: #fff;
     background-color: #757575;
@@ -1840,11 +1841,11 @@ a.fc-more {
   .alarmset_col td:nth-of-type(2) {
     width: 50%; }
   .alarmset_col colgroup col:nth-of-type(1) {
-    width: 200px; }
+    width: 180px; }
   .alarmset_col colgroup col:nth-of-type(2) {
     width: auto; }
   .alarmset_col colgroup col:nth-of-type(3) {
-    width: 200px; }
+    width: 180px; }
   .alarmset_col colgroup col:nth-of-type(4) {
     width: 50%; }
   .alarmset_col .intd .select:first-of-type {

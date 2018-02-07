@@ -30,12 +30,12 @@
         <article class="table_area">
             <div class="table_contents">
                 <!-- 입력 테이블 Start -->
-                <table changeTb class="t_defalut t_type02 t_style03">
+                <table changeTb class="t_defalut t_type02 alarmdetail_col">
                     <colgroup>
-                        <col style="width:16%">  <!-- 01 -->
-                        <col style="width:34%">  <!-- 02 -->
-                        <col style="width:16%">  <!-- 03 -->
-                        <col style="width:*">    <!-- 04 -->
+                        <col>  <!-- 01 -->
+                        <col>  <!-- 02 -->
+                        <col>  <!-- 03 -->
+                        <col>  <!-- 04 -->
                     </colgroup>
                     <tbody>
                     <tr>
@@ -45,10 +45,11 @@
                         </td>
                         <th class="point"><spring:message code="common.column.useYn"/></th>
                         <td class="point">
-                            <select name="useYn">
-                                <option value="Y" <c:if test="${alarm.useYn == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
-                                <option value="N" <c:if test="${alarm.useYn == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
-                            </select>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="useYn" value="${!empty alarm && alarm.useYn == 'Y' ? 'Y' : 'N'}"/>
+                                <input type="checkbox" ${!empty alarm && alarm.useYn == 'Y' ? 'checked' : ''} onchange="setCheckBoxYn(this,'useYn')"/>
+                                <label></label>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -68,10 +69,11 @@
                             <c:when test="${dashboardAlarmInfos != null and fn:length(dashboardAlarmInfos) > 0}">
                                 <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
                                 <td>
-                                    <select name="dashboardUseYn">
-                                        <option value="Y" selected="selected"><spring:message code="common.column.useYes"/></option>
-                                        <option value="N"><spring:message code="common.column.useNo"/></option>
-                                    </select>
+                                    <div class="checkbox_set csl_style03">
+                                        <input type="hidden" name="dashboardUseYn" value="Y"/>
+                                        <input type="checkbox" checked name="dashboardUseYnCheckBox" onchange="setCheckBoxYn(this,'dashboardUseYn')"/>
+                                        <label></label>
+                                    </div>
                                 </td>
                                 <c:forEach var="info" items="${dashboardAlarmInfos[0].infos[0].datas}">
                                     <c:choose>
@@ -104,10 +106,11 @@
                             <c:otherwise>
                                 <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
                                 <td>
-                                    <select name="dashboardUseYn">
-                                        <option value="Y"><spring:message code="common.column.useYes"/></option>
-                                        <option value="N" selected="selected"><spring:message code="common.column.useNo"/></option>
-                                    </select>
+                                    <div class="checkbox_set csl_style03">
+                                        <input type="hidden" name="dashboardUseYn" value="N"/>
+                                        <input type="checkbox" name="dashboardUseYnCheckBox" onchange="setCheckBoxYn(this,'dashboardUseYn')"/>
+                                        <label></label>
+                                    </div>
                                 </td>
                                 <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" disabled="true"/></td>
                                 <td>
@@ -144,17 +147,12 @@
             <div class="table_title_area">
                 <h4><spring:message code="alarm.column.alarmDeviceSetting"/></h4>
             </div>
-            <div class="table_contents">
-                <c:choose>
-                    <c:when test="${deviceAlarmInfos != null and fn:length(deviceAlarmInfos) > 0}">
-                        <c:forEach var="deviceAlarmInfo" items="${deviceAlarmInfos}" varStatus="index">
+            <c:choose>
+                <c:when test="${deviceAlarmInfos != null and fn:length(deviceAlarmInfos) > 0}">
+                    <c:forEach var="deviceAlarmInfo" items="${deviceAlarmInfos}" varStatus="index">
+                        <div <c:if test="${index.count > 1}">appendDiv</c:if> class="table_contents">
                             <!-- 입력 테이블 Start -->
-                            <table changeTb mainTb alarmTargetTb class="t_defalut">
-                                <colgroup>
-                                    <col style="width:16%">  <!-- 01 -->
-                                    <col style="width:*">    <!-- 02 -->
-                                    <col style="width:5%">   <!-- 03 -->
-                                </colgroup>
+                            <table changeTb <c:if test="${index.count==0}">mainTb</c:if> alarmTargetTb class="t_defalut t_type02 alarmset_col">
                                 <tbody>
                                     <tr>
                                         <th><spring:message code="alarm.column.targetDevice"/></th>
@@ -168,79 +166,72 @@
                                                 </c:forEach>
                                             </select>
                                         </td>
-                                        <td>
-                                            <c:if test="${index.count > 1}">
-                                                <button class='btn' onclick='javascript:removeSettingLayer("targetDevice",this); return false;'>X</button>
-                                            </c:if>
-                                        </td>
                                     </tr>
                                     <tr>
                                         <th><spring:message code="alarm.column.alarmDevice"/></th>
-                                        <td colspan="2">
-                                            <table <c:if test="${index.count > 1}">appendTb</c:if> class="t_defalut">
-                                                <c:forEach var="infos" items="${deviceAlarmInfo.infos}" varStatus="status">
-                                                    <tr device>
-                                                        <c:forEach var="info" items="${infos.datas}">
-                                                            <c:if test="${info.key=='alarmDeviceId'}">
-                                                                <td>
-                                                                    <select name="deviceId">
-                                                                        <c:forEach var="device" items="${devices}">
-                                                                            <option value="${device.deviceId}" <c:if test="${device.deviceId == info.value}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${info.key=='alarmType'}">
-                                                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" codeId="${info.value}" /></td>
-                                                            </c:if>
-                                                            <c:if test="${info.key=='ttsText'}">
-                                                                <td>
-                                                                    <input type="text" name="ttsText" value="${info.value}"/>
-                                                                    <select name="fileId" style="display: none;">
-                                                                        <c:forEach var="file" items="${files}">
-                                                                            <option value="${file.fileId}">${file.title}</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${info.key=='fileId'}">
-                                                                <td>
-                                                                    <input type="text" style="display: none;" name="ttsText"/>
-                                                                    <select name="fileId">
-                                                                        <c:forEach var="file" items="${files}">
-                                                                            <option value="${file.fileId}" <c:if test="${file.fileId == info.value}">selected="selected"</c:if>>${file.title}</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        <td>
-                                                            <c:if test="${status.count > 1}">
-                                                                <button class='btn' onclick='javascript:removeSettingLayer("alarmDevice",this); return false;'>X</button>
-                                                            </c:if>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                                <tr>
-                                                    <td colspan="4">
-                                                        <button class="btn" onclick="javascript:addSettingLayer('alarmDevice', this); return false;"><spring:message code="common.button.addRow"/></button>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <td class="intd">
+                                            <!-- 타이틀 영역 -->
+                                            <div class="except01">
+                                                <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
+                                                <p><spring:message code="alarm.column.selectAlarmType"/></p>
+                                                <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                                                <div><spring:message code="alarm.column.removeOrAdd"/></div>
+                                            </div>
+                                            <c:forEach var="infos" items="${deviceAlarmInfo.infos}" varStatus="status">
+                                                <div device>
+                                                    <c:forEach var="info" items="${infos.datas}">
+                                                        <c:if test="${info.key=='alarmDeviceId'}">
+                                                            <select name="deviceId">
+                                                                <c:forEach var="device" items="${devices}">
+                                                                    <option value="${device.deviceId}" <c:if test="${device.deviceId == info.value}">selected="selected"</c:if>>${device.deviceId} (${device.deviceCodeName})</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:if>
+                                                        <c:if test="${info.key=='alarmType'}">
+                                                            <isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" codeId="${info.value}" />
+                                                        </c:if>
+                                                        <c:if test="${info.key=='ttsText'}">
+                                                            <input type="text" name="ttsText" value="${info.value}"/>
+                                                            <select name="fileId" style="display: none;">
+                                                                <c:forEach var="file" items="${files}">
+                                                                    <option value="${file.fileId}">${file.title}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:if>
+                                                        <c:if test="${info.key=='fileId'}">
+                                                            <input type="text" style="display: none;" name="ttsText"/>
+                                                            <select name="fileId">
+                                                                <c:forEach var="file" items="${files}">
+                                                                    <option value="${file.fileId}" <c:if test="${file.fileId == info.value}">selected="selected"</c:if>>${file.title}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <div>
+                                                        <c:if test="${status.count > 1}">
+                                                            <button class='btn ico-minus' onclick='javascript:removeSettingLayer("alarmDevice",this); return false;'></button>
+                                                        </c:if>
+                                                        <button class='btn ico-plus' onclick="javascript:addSettingLayer('alarmDevice', this); return false;"></button>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
+                            <div class="table_btn_set type02">
+                                <c:if test="${index.count > 1}">
+                                    <button class='btn ico-minus' onclick='javascript:removeSettingLayer("targetDevice",this); return false;'></button>
+                                </c:if>
+                                <button class='btn ico-plus' onclick="javascript:addSettingLayer('targetDevice', this); return false;"></button>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <div class="table_contents">
                         <!-- 입력 테이블 Start -->
-                        <table changeTb mainTb alarmTargetTb class="t_defalut">
-                            <colgroup>
-                                <col style="width:16%">  <!-- 01 -->
-                                <col style="width:*">    <!-- 02 -->
-                                <col style="width:5%">   <!-- 03 -->
-                            </colgroup>
+                        <table changeTb mainTb alarmTargetTb class="t_defalut t_type02 alarmset_col">
                             <tbody>
                                 <tr>
                                     <th><spring:message code="alarm.column.targetDevice"/></th>
@@ -255,41 +246,41 @@
                                 </tr>
                                 <tr>
                                     <th><spring:message code="alarm.column.alarmDevice"/></th>
-                                    <td>
-                                        <table class="t_defalut">
-                                            <tr device>
-                                                <td>
-                                                    <select name="deviceId">
-                                                        <c:forEach var="device" items="${devices}">
-                                                            <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType"/></td>
-                                                <td>
-                                                    <input type="text" name="ttsText"/>
-                                                    <select name="fileId" style="display: none;">
-                                                        <c:forEach var="file" items="${files}">
-                                                            <option value="${file.fileId}">${file.title}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <button class="btn" onclick="javascript:addSettingLayer('alarmDevice', this); return false;"><spring:message code="common.button.addRow"/></button>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <td class="intd">
+                                        <!-- 타이틀 영역 -->
+                                        <div class="except01">
+                                            <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
+                                            <p><spring:message code="alarm.column.selectAlarmType"/></p>
+                                            <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                                            <div><spring:message code="alarm.column.removeOrAdd"/></div>
+                                        </div>
+                                        <div device>
+                                            <select name="deviceId">
+                                                <c:forEach var="device" items="${devices}">
+                                                    <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
+                                                </c:forEach>
+                                            </select>
+                                            <isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType"/>
+                                            <input type="text" name="ttsText"/>
+                                            <select name="fileId" style="display: none;">
+                                                <c:forEach var="file" items="${files}">
+                                                    <option value="${file.fileId}">${file.title}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <div>
+                                                <button class='btn ico-plus' onclick="javascript:addSettingLayer('alarmDevice', this); return false;"></button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </c:otherwise>
-                </c:choose>
-                <button class="btn" id="targetDeviceAddBtn" onclick="javascript:addSettingLayer('targetDevice', this); return false;"><spring:message code="common.button.addRow"/></button>
-            </div>
+                        <div class="table_btn_set type02">
+                            <button name="targetDeviceAddBtn" class='btn ico-plus' onclick="javascript:addSettingLayer('targetDevice', this); return false;"></button>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
 
             <div class="table_title_area">
                 <div class="table_btn_set">
@@ -310,13 +301,10 @@
 
 <div style="display: none">
     <div id="addSettingTag">
-        <table changeTb class="t_defalut">
-            <colgroup>
-                <col style="width:16%">  <!-- 01 -->
-                <col style="width:*">    <!-- 02 -->
-                <col style="width:5%">   <!-- 03 -->
-            </colgroup>
-            <tbody>
+        <div class="table_contents">
+            <!-- 입력 테이블 Start -->
+            <table changeTb class="t_defalut t_type02 alarmset_col">
+                <tbody>
                 <tr>
                     <th><spring:message code="alarm.column.targetDevice"/></th>
                     <td>
@@ -326,43 +314,43 @@
                             </c:forEach>
                         </select>
                     </td>
-                    <td>
-                        <button class='btn' onclick='javascript:removeSettingLayer("targetDevice",this); return false;'>X</button>
-                    </td>
                 </tr>
                 <tr>
                     <th><spring:message code="alarm.column.alarmDevice"/></th>
-                    <td colspan="2">
-                        <table class="t_defalut t_type02 t_style03">
-                            <tr device>
-                                <td>
-                                    <select name="deviceId">
-                                        <c:forEach var="device" items="${devices}">
-                                            <option value="${device.deviceId}" >${device.deviceId} (${device.deviceCodeName})</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" /></td>
-                                <td>
-                                    <input type="text" name="ttsText" />
-                                    <select name="fileId">
-                                        <c:forEach var="file" items="${files}">
-                                            <option value="${file.fileId}">${file.title}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <button class="btn" onclick="javascript:addSettingLayer('alarmDevice', this); return false;"><spring:message code="common.button.addRow"/></button>
-                                </td>
-                            </tr>
-                        </table>
+                    <td class="intd">
+                        <!-- 타이틀 영역 -->
+                        <div class="except01">
+                            <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
+                            <p><spring:message code="alarm.column.selectAlarmType"/></p>
+                            <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                            <div><spring:message code="alarm.column.removeOrAdd"/></div>
+                        </div>
+                        <div device>
+                            <select name="deviceId">
+                                <c:forEach var="device" items="${devices}">
+                                    <option value="${device.deviceId}">${device.deviceId} (${device.deviceCodeName})</option>
+                                </c:forEach>
+                            </select>
+                            <isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType"/>
+                            <input type="text" name="ttsText"/>
+                            <select name="fileId" style="display: none;">
+                                <c:forEach var="file" items="${files}">
+                                    <option value="${file.fileId}">${file.title}</option>
+                                </c:forEach>
+                            </select>
+                            <div>
+                                <button class='btn ico-plus' onclick="javascript:addSettingLayer('alarmDevice', this); return false;"></button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+            <div class="table_btn_set type02">
+                <button class='btn ico-minus' onclick="javascript:removeSettingLayer('targetDevice', this); return false;"></button>
+                <button name="targetDeviceAddBtn" class='btn ico-plus' onclick="javascript:addSettingLayer('targetDevice', this); return false;"></button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -403,8 +391,8 @@
             changeTargetDeviceType();
         });
 
-        $("select[name='dashboardUseYn']").on("change", function(){
-            if(this.value=='Y'){
+        $("input[name='dashboardUseYnCheckBox']").on("change", function(){
+            if($(this).is(":checked")){
                 $("tr[dashboard] select[name='alarmType']").prop("disabled",false);
                 $("tr[dashboard] input[name='ttsText']").prop("disabled",false);
                 $("tr[dashboard] select[name='fileId']").prop("disabled",false);
@@ -421,10 +409,10 @@
 
     function changeTargetDeviceType(){
         if($("table[mainTb] select[name='targetDeviceId']").val()==''){
-            $("table[appendTb]").remove();
-            $("#targetDeviceAddBtn").hide();
+            $("div[appendDiv]").remove();
+            $("button[name='targetDeviceAddBtn']").hide();
         }else{
-            $("#targetDeviceAddBtn").show();
+            $("button[name='targetDeviceAddBtn']").show();
         }
     }
 
@@ -455,15 +443,15 @@
      */
     function addSettingLayer(_type, _this) {
         if(_type=="targetDevice"){
-            var tbTag = $("#addSettingTag > table").clone();
-            tbTag.attr("appendTb","").attr("alarmTargetTb","");
-            $(_this).before(tbTag);
+            var tbTag = $("#addSettingTag > div").clone();
+            tbTag.attr("appendDiv","").attr("alarmTargetTb","");
+            $(_this).parent().parent().after(tbTag);
         }else if(_type=="alarmDevice"){
-            var deviceTag = $("#addSettingTag tr[device]").clone();
-            deviceTag.find("td:last-child").append(
-                $("<button/>",{class:'btn', onclick:'javascript:removeSettingLayer("alarmDevice",this); return false;'}).text("X")
+            var deviceTag = $("#addSettingTag div[device]").clone();
+            deviceTag.find("div:last-child").prepend(
+                $("<button/>",{class:'btn ico-minus', onclick:'javascript:removeSettingLayer("alarmDevice",this); return false;'})
             );
-            $(_this).parent().parent().before(deviceTag);
+            $(_this).parent().parent().after(deviceTag);
         }
         changeAlarmType();
     }
@@ -476,7 +464,7 @@
      */
     function removeSettingLayer(_type, _this) {
         if(_type=="targetDevice"){
-            $(_this).parent().parent().parent().parent().remove();
+            $(_this).parent().parent().remove();
         }else if(_type=="alarmDevice"){
             $(_this).parent().parent().remove();
         }
@@ -505,7 +493,7 @@
     function addAlarmInfo(){
         var alarmInfo = [];
 
-        if($("select[name='dashboardUseYn']").val()=='Y'){
+        if($("input[name='dashboardUseYn']").val()=='Y'){
             var addText = "";
 
             addText += "DASHBOARD";
@@ -527,7 +515,7 @@
         $.each($("table[alarmTargetTb]"),function(){
             var targetDeviceId = $(this).find("select[name='targetDeviceId']").val();
 
-            $.each($(this).find("tr[device]"),function(){
+            $.each($(this).find("div[device]"),function(){
                 var addText = "";
                 addText += targetDeviceId;
                 addText +=  "|alarmDeviceId:" + $(this).find("select[name='deviceId']").val();

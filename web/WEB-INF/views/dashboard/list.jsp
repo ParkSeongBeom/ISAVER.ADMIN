@@ -432,7 +432,7 @@
 </article>
 
 <script type="text/javascript">
-    var targetMenuId = String('${paramBean.areaId}');
+    var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
     var areaId = String('${paramBean.areaId}');
     var chartList = {};

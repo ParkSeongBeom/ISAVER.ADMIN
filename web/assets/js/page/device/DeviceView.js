@@ -48,20 +48,20 @@ function DeviceView(model) {
             $(formName + " [name='sortOrder']").val(data.sortOrder);
         },
         provisionFlag: function (data) {
-            if (data['provisionFlag'] == 'Y') {
-                $(formName + " [name='provisionFlag']").val("Y");
-            } else {
-                $(formName + " [name='provisionFlag']").val("N");
+            if(data.provisionFlag=="Y"){
+                $(formName + " #provisionFlagCheckBox").prop("checked", true);
+            }else{
+                $(formName + " #provisionFlagCheckBox").prop("checked", false);
             }
+            $("input[name='provisionFlag']").val(data.provisionFlag);
         },
         deviceStat: function (data) {
-
-            if (data['deviceStat'] == 'Y') {
-                $("input:radio[name='deviceStat']:radio[value='Y']").prop("checked",true);
-            } else {
-                $("input:radio[name='deviceStat']:radio[value='N']").prop("checked",true);
+            if(data.deviceStat=="Y"){
+                $(formName + " #deviceStatCheckBox").prop("checked", true);
+            }else{
+                $(formName + " #deviceStatCheckBox").prop("checked", false);
             }
-
+            $("input[name='deviceStat']").val(data.deviceStat);
         },
         insertUserName: function (data) {
             $(formName + " td[name='insertUserName']").text(data.insertUserName);

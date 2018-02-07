@@ -122,7 +122,6 @@ function uniqArrayList(array){
     },[]);
 }
 
-
 function setCheckBoxYn(_this, targetElementId, reverse) {
     if($(_this).is(":checked")){
         $("input[name='"+targetElementId+"'").val(reverse==null?"Y":"N");
@@ -139,32 +138,13 @@ function minMaxFunc(value, min, max) {
     else return value;
 }
 
-
-/**
- * 더블 클릭 중복 실행 방지
- * @param _obj
- *@author dhj
- */
-function createDoubleClickEventListener(_obj) {
-
-    try {
-
-        $("#" + _obj['element_id'] ).click(function() {
-            //console.log(_obj['element_id'] + "checkVar : " + _obj['checkVar']);
-
-            if (_obj['checkVar'] == 0) {
-                window[String(_obj['executeFunctionName'])]();
-            } else {
-                setTimeout(function() {
-                    alert(_obj['msgText']);
-                }, _obj['timeoutCnt']);
-            }
-
-            //console.log(_obj['element_id'] + "_btnCheckCount : " + _obj['timeoutCnt']);
-        });
-
-    } catch(e) {
-        console.log("[error][createDoubleClickEventListener]" + e.message);
+function addAsynchronousScript(_src){
+    var script= document.createElement('script');
+    try{
+        script.type= 'text/javascript';
+        script.src= _src;
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }catch(e){
+        console.error("[addAsynchronousScript]" + e);
     }
-
 }

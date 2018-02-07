@@ -199,15 +199,19 @@
                     <tr name="showHideTag">
                         <th class="point"><spring:message code='device.column.provisionFlag'/></th>
                         <td class="point">
-                            <select name="provisionFlag" >
-                                <option value="Y"><spring:message code='common.message.Y'/></option>
-                                <option value="N"><spring:message code='common.message.N'/></option>
-                            </select>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="provisionFlag" value="Y"/>
+                                <input type="checkbox" id="provisionFlagCheckBox" checked onchange="setCheckBoxYn(this,'provisionFlag')"/>
+                                <label></label>
+                            </div>
                         </td>
                         <th class=""><spring:message code='device.column.deviceStat'/></th>
                         <td class="">
-                            <input name="deviceStat" type="radio" value="Y"  disabled><spring:message code='device.button.statusOn'/>
-                            <input name="deviceStat" type="radio" value="N" disabled><spring:message code='device.button.statusOff'/>
+                            <div class="checkbox_set csl_style02 disabled">
+                                <input type="hidden" name="deviceStat" value="Y"/>
+                                <input type="checkbox" id="deviceStatCheckBox" checked onchange="setCheckBoxYn(this,'deviceStat')"/>
+                                <label></label>
+                            </div>
                         </td>
                     </tr>
                     <tr class="rootShow">

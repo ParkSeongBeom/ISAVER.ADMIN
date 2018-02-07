@@ -17,9 +17,10 @@
     <title>i-Saver Login</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.iframe-post-form.js"></script>
 </head>
 <body class="login_mode">
     <div class="wrap">
@@ -44,8 +45,7 @@
 
                 </form>
                 <!-- 로그인 입력 폼 End -->
-                <%--<button href="#" alt="로그인" class="btn" onclick="javascript:login(); return false;">로그인</button>--%>
-                <button id="login_btn" href="#" alt="로그인" class="btn"><spring:message code="login.button.login"/></button>
+                <button href="#" alt="로그인" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>
             </article>
         </section>
         <!-- section End -->
@@ -60,10 +60,17 @@
         ,'mainUrl':'${rootPath}/dashboard/list.html'
     };
 
-    $(document).ready(function(){
-        /** HTML 태그 이벤트 추가, @author dhj **/
-        eventAddListener();
+    var commonMessageConfig = {
+        'inProgress':'<spring:message code="common.message.inProgress"/>'
+    };
 
+    var messageConfig = {
+        'requiredAdminId':'<spring:message code="common.message.requestId"/>'
+        ,'requiredPassword':'<spring:message code="common.message.requiredPassword"/>'
+        ,'loginFailure':'<spring:message code="common.message.loginFailure"/>'
+    };
+
+    $(document).ready(function(){
         if(autoLoginFlag=="true"){
             location.href=urlConfig['mainUrl'];
         }
@@ -127,68 +134,28 @@
     }
 
     function login(){
-
         if(validate()){
-
-            console.log("login");
             setCookieAdminId();
 
             var userInfo = {
                 'userId' : $("input[name=userId]").val(),
                 'userPassword' : md5($("input[name=userPassword]").val())
             };
-
-
-            if (checkLoginObj['checkVar'] == 0) {
-                checkLoginObj['checkVar'] = 1;
-                sendAjaxPostRequest(urlConfig['loginUrl'], userInfo,login_successHandler,login_failureHandler);
-            }
-
+            sendAjaxPostRequest(urlConfig['loginUrl'], userInfo,login_successHandler,login_failureHandler);
         }
-
-        return false;
     }
 
     function login_successHandler(data, dataType, actionType){
-        checkLoginObj['checkVar'] = 0;
         location.href=urlConfig['mainUrl'];
     }
 
     function login_failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        checkLoginObj['checkVar'] = 0;
         alertMessage('loginFailure');
     }
 
-
-    var messageConfig = {
-        'requiredAdminId':'<spring:message code="common.message.requestId"/>'
-        ,'requiredPassword':'<spring:message code="common.message.requiredPassword"/>'
-        ,'loginFailure':'<spring:message code="common.message.loginFailure"/>'
-    };
     function alertMessage(type){
         alert(messageConfig[type]);
     }
-
-    var checkLoginObj = {
-        checkVar : 0
-        /** HTML 엘리먼트 ID **/
-        , element_id : "login_btn"
-        /** javascript 실행 함수 명 **/
-        , executeFunctionName : "login"
-        /** 중복 클릭 시 메세지 명 **/
-        , msgText : '<spring:message code="common.message.userDoubleClick"/>'
-        /** 중복 클릭 시 메세지  출력 타임 아웃(ms) **/
-        , timeoutCnt : 1000
-    };
-
-    /**
-    * HTML 버튼 이벤트 추가
-     * @author dhj
-     */
-    function eventAddListener() {
-        createDoubleClickEventListener(checkLoginObj);
-    }
-
 
 </script>
 </body>

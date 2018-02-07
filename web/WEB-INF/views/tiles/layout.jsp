@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="admin_mode">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +29,9 @@
 
     <!-- util -->
     <script type="text/javascript" src="${rootPath}/assets/js/util/consolelog-helper.js?version=${version}"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.iframe-post-form.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/request-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
@@ -58,6 +59,10 @@
             ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
+        };
+
+        var commonMessageConfig = {
+            'inProgress':'<spring:message code="common.message.inProgress"/>'
         };
 
         var layoutMessageConfig = {
@@ -604,12 +609,10 @@
         function bodyAddClass(){
             switch (subMenuId){
                 case "100000": // 대쉬보드
+                    modifyElementClass($("html"),'admin_mode','remove');
+                    modifyElementClass($("body"),'admin_mode','remove');
                     modifyElementClass($("html"),'dashboard_mode','add');
                     modifyElementClass($("body"),'dashboard_mode','add');
-                    break;
-                default :
-                    modifyElementClass($("html"),'admin_mode','add');
-                    modifyElementClass($("body"),'admin_mode','add');
                     break;
             }
         }
@@ -734,7 +737,7 @@
         }
     </script>
 </head>
-<body>
+<body class="admin_mode">
 <!-- wrap Start -->
 <div class="wrap">
     <!-- hearder Start 고통부분 -->

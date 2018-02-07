@@ -6,15 +6,40 @@
  * @author kst
  * @since 2013. 11. 01
  */
-var elmScript = document.createElement('script');
-try {
-    elmScript.src = rootPath + '/assets/js/common/jquery.iframe-post-form.js';
-    elmScript.type = 'text/javascript';
-    document.getElementsByTagName('head')[0].appendChild( elmScript );
-} catch(e) {
-//    console.error("[ajax-util.js]" + e);
+var requestArr = [];
+
+function checkExcuteArray(reqUrl,method){
+    var resultFlag = false;
+
+    for(var index in requestArr){
+        var req = requestArr[index];
+        if(req['url']==reqUrl && req['method']==method){
+            resultFlag = true;
+        }
+    }
+    return resultFlag;
 }
 
+function addExcuteArray(reqUrl,method){
+    requestArr.push({
+        'url' : reqUrl
+        ,'method' : method
+    });
+}
+
+function removeExcuteArray(reqUrl,method){
+    var removeIndex = null;
+
+    for(var index in requestArr){
+        var req = requestArr[index];
+        if(req['url']==reqUrl && req['method']==method){
+            removeIndex = index;
+        }
+    }
+    if(removeIndex!=null){
+        requestArr.splice(removeIndex,1)
+    }
+}
 
 /**
  * 비동기 POST 요청
@@ -44,8 +69,6 @@ function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType
     ajaxRequest(reqUrl,'GET',data,successCallback,errorCallback,actionType);
 }
 
-var isRun = false;
-
 /**
  * 비동기 요청 Biz
  *
@@ -58,17 +81,19 @@ var isRun = false;
  * @param actionType
  */
 function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType){
-
-    if(isRun == true) {
-        return;
-    }
-
     if(reqUrl == null){
         return;
     }
 
-    if(successCallback == null || typeof successCallback != 'function'){
+    if(checkExcuteArray(reqUrl,method)){
+        console.error("[ajaxRequest] exist excute url - " + reqUrl + ", method - " + method);
+        alert(commonMessageConfig['inProgress']);
+        return false;
+    }else{
+        addExcuteArray(reqUrl,method);
+    }
 
+    if(successCallback == null || typeof successCallback != 'function'){
         successCallback = ajaxDefaultSucCallback;
     }
 
@@ -84,11 +109,11 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         contentsType: 'application/json',
         data: data,
         success : function(data, dataType){
-            isRun  = false;
+            removeExcuteArray(reqUrl,method);
             successCallback(data, dataType, actionType);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
-            isRun  = false;
+            removeExcuteArray(reqUrl,method);
             errorCallback(XMLHttpRequest, textStatus, errorThrown, actionType);
         }
     });
