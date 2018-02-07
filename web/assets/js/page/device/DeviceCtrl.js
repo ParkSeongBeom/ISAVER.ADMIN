@@ -474,16 +474,16 @@ function DeviceEvent(model) {
             if (data['resultFlag'] == false) {
                 switch(data['licenseMsg']) {
                     case "NOT_EXIST":
-                        alert("라이센스 정보가 존재하지 않습니다.");
+                        alert(alertMessageList[0]);
                         break;
                     case "DAY_OVER":
-                        alert("라이센스 유효기간이 경과 했습니다.");
+                        alert(alertMessageList[1]);
                         break;
                     case "QUANTITY_SHORTAGE":
-                        alert("라이센스 수량이 부족합니다.");
+                        alert(alertMessageList[2]);
                         break;
                     default:
-                        alert("관리자에게 문의해 주세요.");
+                        alert(alertMessageList[3]);
                         break;
                 }
             } else {

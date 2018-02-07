@@ -246,6 +246,16 @@
     </form>
 </section>
 
+<script type="text/javascript" charset="UTF-8">
+
+
+    var alertMessageList = [
+        "<spring:message code="menu.message.alarm01"/>"
+        , "<spring:message code="menu.message.alarm02"/>"
+        , "<spring:message code="menu.message.alarm03"/>"
+        , "<spring:message code="menu.message.alarm04"/>"];
+</script>
+
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/device/DeviceModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/page/device/DeviceCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
@@ -255,7 +265,6 @@
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
     var selectedDeviceId = String("${paramBean.deviceId}");
-
     var messageConfig = {
         menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
@@ -281,6 +290,7 @@
         ,   provisionExistError : "<spring:message code='device.message.provisionExistError'/>"
         ,   emptyLinkUrl           :"<spring:message code='device.message.emptyLinkUrl'/>"
     };
+
 
     var emptyListTag = $("<tr/>").append(
         $("<td/>", {colspan:"6"}).text('<spring:message code="common.message.emptyData"/>')
