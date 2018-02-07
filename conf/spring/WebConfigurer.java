@@ -172,6 +172,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/file"
             ,"classpath:properties/message/critical"
             ,"classpath:properties/message/alarm"
+            ,"classpath:properties/message/login"
         );
         return messageSource;
     }
