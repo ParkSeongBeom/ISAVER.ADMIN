@@ -474,16 +474,16 @@ function DeviceEvent(model) {
             if (data['resultFlag'] == false) {
                 switch(data['licenseMsg']) {
                     case "NOT_EXIST":
-                        alert(alertMessageList[0]);
+                        alert(DeviceEvent._model.getAlertMessageList()[0]);
                         break;
                     case "DAY_OVER":
-                        alert(alertMessageList[1]);
+                        alert(DeviceEvent._model.getAlertMessageList()[1]);
                         break;
                     case "QUANTITY_SHORTAGE":
-                        alert(alertMessageList[2]);
+                        alert(DeviceEvent._model.getAlertMessageList()[2]);
                         break;
                     default:
-                        alert(alertMessageList[3]);
+                        alert(DeviceEvent._model.getAlertMessageList()[3]);
                         break;
                 }
             } else {

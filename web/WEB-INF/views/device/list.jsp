@@ -247,8 +247,6 @@
 </section>
 
 <script type="text/javascript" charset="UTF-8">
-
-
     var alertMessageList = [
         "<spring:message code="menu.message.alarm01"/>"
         , "<spring:message code="menu.message.alarm02"/>"
@@ -262,6 +260,7 @@
 <script src="${rootPath}/assets/js/page/device/DeviceView.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <script type="text/javascript">
+
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
     var selectedDeviceId = String("${paramBean.deviceId}");
@@ -308,7 +307,7 @@
     deviceModel.setRootUrl(String('${rootPath}'));
     deviceModel.setPageRowNumber(10);
     deviceModel.setPageIndex(0);
-
+    deviceModel.setAlertMessageList(alertMessageList);
     var deviceCtrl = new DeviceCtrl(deviceModel);
 
 

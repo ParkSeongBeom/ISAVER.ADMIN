@@ -47,6 +47,7 @@ function DeviceModel() {
         ,deviceTreeList: []
         /* 알림 전송 소스 장치 목록 */
         ,alarmSettingDeviceList : ['DEV002', 'DEV005']
+        ,alertMessageList : []
     };
 
     /**
@@ -312,6 +313,14 @@ function DeviceModel() {
      */
     DeviceModel.setDeviceTreeList = function (deviceTreeList) {
         this.model.deviceTreeList = deviceTreeList;
+    };
+
+    DeviceModel.getAlertMessageList = function () {
+        return this.model.alertMessageList;
+    };
+
+    DeviceModel.setAlertMessageList = function(alertMessageList) {
+        this.model.alertMessageList = alertMessageList;
     };
 
     /**
