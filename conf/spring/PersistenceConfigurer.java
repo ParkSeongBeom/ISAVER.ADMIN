@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 public class PersistenceConfigurer {
@@ -53,12 +54,16 @@ public class PersistenceConfigurer {
     public FindSystemUtil findSystemUtil() {
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
-        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
 
-        if(!resultSystemBean.getaBoolean()){
-//            logger.error(resultSystemBean.getLogdata());
-//            System.exit(0);
+        if (System.getProperty("web.execute.mode") == null) {
+            ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
+            if(!resultSystemBean.getaBoolean()){
+                logger.error(resultSystemBean.getLogdata());
+                System.exit(0);
+            }
+
         }
+
         return findSystemUtil;
     }
 }
