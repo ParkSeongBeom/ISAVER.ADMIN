@@ -246,12 +246,8 @@
     </form>
 </section>
 
-<script type="text/javascript" charset="UTF-8">
-    var alertMessageList = [
-        "<spring:message code="menu.message.alarm01"/>"
-        , "<spring:message code="menu.message.alarm02"/>"
-        , "<spring:message code="menu.message.alarm03"/>"
-        , "<spring:message code="menu.message.alarm04"/>"];
+
+
 </script>
 
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js" type="text/javascript" ></script>
@@ -290,6 +286,11 @@
         ,   emptyLinkUrl           :"<spring:message code='device.message.emptyLinkUrl'/>"
     };
 
+    var alertMessageList = [
+        "<spring:message code="menu.message.alarm01"/>"
+        , "<spring:message code="menu.message.alarm02"/>"
+        , "<spring:message code="menu.message.alarm03"/>"
+        , "<spring:message code="menu.message.alarm04"/>"];
 
     var emptyListTag = $("<tr/>").append(
         $("<td/>", {colspan:"6"}).text('<spring:message code="common.message.emptyData"/>')
