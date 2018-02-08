@@ -112,8 +112,8 @@
 
     var messageConfig = {
         'addConfirm':'<spring:message code="role.message.addConfirm"/>'
-        ,'saveNotiConfirm':'<spring:message code="role.message.saveNotiConfirm"/>'
-        ,'removeNotiConfirm':'<spring:message code="role.message.removeNotiConfirm"/>'
+        ,'saveExistRoleUser':'<spring:message code="role.message.saveExistRoleUser"/>'
+        ,'removeExistRoleUser':'<spring:message code="role.message.removeExistRoleUser"/>'
         ,'saveConfirm':'<spring:message code="role.message.saveConfirm"/>'
         ,'removeConfirm':'<spring:message code="role.message.removeConfirm"/>'
         ,'addFailure':'<spring:message code="role.message.addFailure"/>'
@@ -161,15 +161,14 @@
     }
 
     function saveRole(){
+        if(!confirm(messageConfig['saveConfirm'])){
+            return false;
+        }
+
         var userCnt = Number($("#userCnt").val());
-        if(userCnt == 0){
-            if(!confirm(messageConfig['saveConfirm'])){
-                return false;
-            }
-        }else{
-            if($("input[name='delYn']").val()=="Y" && !confirm(messageConfig['saveNotiConfirm'])){
-                return false;
-            }
+        if(userCnt > 0 && $("input[name='delYn']").val()=="Y"){
+            alertMessage('saveExistRoleUser');
+            return false;
         }
 
         if(validate(2)) {
@@ -178,15 +177,14 @@
     }
 
     function removeRole(){
+        if(!confirm(messageConfig['removeConfirm'])){
+            return false;
+        }
+
         var userCnt = Number($("#userCnt").val());
-        if(userCnt == 0){
-            if(!confirm(messageConfig['removeConfirm'])){
-                return false;
-            }
-        }else{
-            if(!confirm(messageConfig['removeNotiConfirm'])){
-                return false;
-            }
+        if(userCnt > 0){
+            alertMessage('removeExistRoleUser');
+            return false;
         }
 
         if(validate(3)) {
