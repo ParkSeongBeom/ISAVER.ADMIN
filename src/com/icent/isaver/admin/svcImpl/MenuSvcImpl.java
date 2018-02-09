@@ -63,8 +63,10 @@ public class MenuSvcImpl implements MenuSvc {
 
     @Override
     public ModelAndView findAllMenuTopBar(Map<String, String> parameters) {
-        parameters.put("statisticsMenuId",AdminResource.STATISTICS_ROOT_MENU_ID);
-        List<MenuBean> menuBarList = menuDao.findAllMenuTopBar(parameters);
+        Map paramBean = new HashMap();
+        paramBean.put("id",parameters.get("id"));
+        paramBean.put("statisticsMenuIds",AdminResource.STATISTICS_PARENT_MENU_ID);
+        List<MenuBean> menuBarList = menuDao.findAllMenuTopBar(paramBean);
         List<AreaBean> areaList = areaDao.findListAreaForMenuTopBar();
 
         ModelAndView modelAndView = new ModelAndView();

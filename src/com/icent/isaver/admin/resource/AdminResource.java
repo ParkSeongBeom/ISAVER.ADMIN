@@ -88,12 +88,6 @@ public class AdminResource {
     public final static String[] ADMIN_LOG_TYPE = new String[]{"1","0"};
 
     /**
-     * 통계메뉴 Root ID
-     * @author psb
-     */
-    public final static String STATISTICS_ROOT_MENU_ID = "200000";
-
-    /**
      * admin log type</br>
      * - login : 1</br>
      * - logout : 0</br>
@@ -216,6 +210,13 @@ public class AdminResource {
      * @author psb
      */
     public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222", "EVT301"};
+
+    /**
+     * 통계메뉴 상위 ID
+     * @author psb
+     */
+    public final static String[] STATISTICS_PARENT_MENU_ID = new String[]{"200000", "2A0000","2B0000"};
+
 
     public final static String PEOPLE_COUNT_DEVICE_ID = "DEV009";
 }
