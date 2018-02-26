@@ -50,15 +50,6 @@ public interface EventLogSvc {
     ModelAndView findByEventLog(Map<String, String> parameters);
 
     /**
-     * 알림센터 데이터를 가져온다.
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    ModelAndView findListEventLogForAlarm(Map<String, String> parameters);
-
-    /**
      * 대쉬보드 데이터를 가져온다.
      *
      * @author dhj
@@ -66,15 +57,6 @@ public interface EventLogSvc {
      * @return
      */
     ModelAndView findListEventLogForDashboard(Map<String, String> parameters);
-
-    /**
-     * 알림 해제한다
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    ModelAndView cancelEventLog(Map<String, String> parameters);
 
     /**
      *

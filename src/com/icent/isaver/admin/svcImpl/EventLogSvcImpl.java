@@ -98,16 +98,6 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
-    public ModelAndView findListEventLogForAlarm(Map<String, String> parameters) {
-        List<EventLogBean> events = eventLogDao.findListEventLogForAlarm();
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("eventLogs", events);
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    @Override
     public ModelAndView findListEventLogForDashboard(Map<String, String> parameters) {
         List<EventLogBean> events = eventLogDao.findListEventLogForDashboard(parameters);
 
@@ -118,82 +108,11 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
-    public ModelAndView cancelEventLog(Map<String, String> parameters) {
-        String[] eventLogIds = parameters.get("eventLogIds").split(CommonResource.COMMA_STRING);
-
-        List<EventLogBean> eventLogList = new ArrayList<>();
-        List<Map<String, String>> parameterList = new ArrayList<>();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String eventCancelDatetime = sdf.format(new Date());
-
-        for (String eventLogId : eventLogIds) {
-            Map<String, String> eventLogParamMap = new HashMap<>();
-            eventLogParamMap.put("eventLogId", eventLogId);
-            eventLogParamMap.put("eventCancelUserId", parameters.get("eventCancelUserId"));
-            eventLogParamMap.put("eventCancelDesc", parameters.get("eventCancelDesc"));
-            eventLogParamMap.put("eventCancelDatetime", eventCancelDatetime);
-            parameterList.add(eventLogParamMap);
-
-            Map<String, String> eventLogParam = new HashMap<>();
-            eventLogParam.put("eventLogId", eventLogId);
-            EventLogBean eventLog = eventLogDao.findByEventLog(eventLogParam);
-            eventLogList.add(eventLog);
-        }
-
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-        try{
-            eventLogDao.cancelEventLog(parameterList);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
-        }
-
-        /**
-         * = 웹소켓 서버로 알림 전송
-         * @author psb
-         * @date 2016.12.15
-         */
-        try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("eventLog", eventLogList);
-            websocketParam.put("messageType","removeAlarmEvent");
-
-            InetAddress address = InetAddress.getByName(wsAddress);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /**
-         * VMS에 이벤트 해제 데이터 전송 (Restful)
-         * @author psb
-         * @date 2017.05.19
-         */
-        if (StringUtils.notNullCheck(parameters.get("alarmIds")) && vmsLogSend.equals(CommonResource.YES)) {
-            try {
-                Map<String, String> vmsParam = new HashMap();
-                vmsParam.put("alarmId",parameters.get("alarmIds"));
-                vmsParam.put("time",eventCancelDatetime);
-
-                AlarmRequestUtil.sendAlarmRequestFunc(vmsParam, "http://" + vmsAddress + ":" + vmsPort + vmsUrlSendEvent, "json", null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    @Override
     public ModelAndView findListEventLogForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
-        List<EventLogBean> events = eventLogDao.findListEventLogForExcel(parameters);
+        List<EventLogBean> events = eventLogDao.findListEventLog(parameters);
 
-        String[] heads = new String[]{"구역","이벤트유형","장치유형","이벤트발생일시","이벤트명","이벤트해제자","이벤트해제일시"};
-        String[] columns = new String[]{"areaName","eventFlag","deviceCode","eventDatetimeStr","eventName","eventCancelUserName","eventCancelDatetimeStr"};
+        String[] heads = new String[]{"구역명","장치명","이벤트명","이벤트발생일시"};
+        String[] columns = new String[]{"areaName","deviceName","eventName","eventDatetimeStr"};
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 

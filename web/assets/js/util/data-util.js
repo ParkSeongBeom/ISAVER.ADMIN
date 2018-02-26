@@ -185,9 +185,9 @@ String.prototype.checkDatetimePattern = function(datetimeSeparate, dateSeparate,
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
 
-    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-    var weekName_01 = ["일", "월", "화", "수", "목", "금", "토"];
-    var weekName_02 = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+    var weekName_01 = ["일", "월", "화", "수", "목", "금", "토", "일"];
+    var weekName_02 = ["SUN","MON","TUE","WED","THU","FRI","SAT", "SUN"];
     var d = this;
 
     return f.replace(/(yyyy|yy|MM|dd|es|E|hh|mm|ss|a\/p)/gi, function($1) {

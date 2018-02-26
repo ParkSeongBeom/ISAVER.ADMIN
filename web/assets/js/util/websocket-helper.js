@@ -9,6 +9,10 @@ var WebSocketHelper = (
     function(){
         var webSocketList = {};
         var CONNECT_STATUS = ["connect","disconnect"];
+        var SEND_MESSAGE_RETRY = {
+            'cnt' : 5
+            , 'delay' : 500
+        };
         var messageEventHandler;
 
         var _self = this;
@@ -107,16 +111,31 @@ var WebSocketHelper = (
          * @param _target
          * @param _text
          */
-        this.sendMessage = function(_target, _text){
+        this.sendMessage = function(_target, _text, _count){
             if(_target==null || webSocketList[_target]==null){
                 console.error("[WebSocketHelper][sendMessage] target is null or not in webSocketList");
                 return false;
             }
 
-            if(typeof _text=="object"){
-                _text = JSON.stringify(_text);
+            if(_self.isConnect(_target)){
+                if(typeof _text=="object"){
+                    _text = JSON.stringify(_text);
+                }
+                webSocketList[_target]['ws'].send(_text);
+            }else{
+                console.error('[WebSocketHelper][sendMessage] websocket is disconnect - retry');
+                if(_count == null){
+                    _count = SEND_MESSAGE_RETRY['cnt'];
+                }
+
+                if(_count > 0){
+                    setTimeout(function(){
+                        _self.sendMessage(_target, _text, _count - 1);
+                    },SEND_MESSAGE_RETRY['deley']);
+                }else{
+                    console.error('[WebSocketHelper][sendMessage] failure - retry count over',_target, _text);
+                }
             }
-            webSocketList[_target]['ws'].send(_text);
         };
 
         /**

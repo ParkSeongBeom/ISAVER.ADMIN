@@ -36,6 +36,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/request-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/notification-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
 
     <script type="text/javascript">
@@ -49,14 +50,12 @@
         serverDatetime.setTime(${serverDatetime});
         var _eventDatetime = new Date();
         var webSocketHelper = new WebSocketHelper();
+        var notificationHelper = new NotificationHelper(rootPath);
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
             ,'mainUrl':'${rootPath}/main.html'
             ,'dashboardUrl':'${rootPath}/dashboard/list.html'
-            ,'alarmListUrl':'${rootPath}/eventLog/alarm.json'
-            ,'alarmDetailUrl':'${rootPath}/action/eventDetail.json'
-            ,'alarmCancelUrl':'${rootPath}/eventLog/cancel.json'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
@@ -66,15 +65,17 @@
         };
 
         var layoutMessageConfig = {
-            alarmCancelSuccess    :'<spring:message code="dashboard.message.alarmCancelSuccess"/>'
-            , alarmDetailFailure  :'<spring:message code="dashboard.message.alarmDetailFailure"/>'
-            , alarmCancelFailure  :'<spring:message code="dashboard.message.alarmCancelFailure"/>'
-            , emptyAlarmCancel    :'<spring:message code="dashboard.message.emptyAlarmCancel"/>'
-            , emptyAlarmCancelDesc:'<spring:message code="dashboard.message.emptyAlarmCancelDesc"/>'
+            notificationDetailFailure  :'<spring:message code="dashboard.message.notificationDetailFailure"/>'
             , profileFailure      :'<spring:message code="dashboard.message.profileFailure"/>'
             , emptyUserName       :'<spring:message code="dashboard.message.emptyUserName"/>'
             , saveProfileSuccess  :'<spring:message code="dashboard.message.saveProfileSuccess"/>'
             , notEqualPassword    :'<spring:message code="dashboard.message.notEqualPassword"/>'
+            , emptyAction  :'<spring:message code="dashboard.message.emptyAction"/>'
+            , emptyNotification    :'<spring:message code="dashboard.message.emptyNotification"/>'
+            , cancelNotificationFailure    :'<spring:message code="dashboard.message.cancelNotificationFailure"/>'
+            , confirmNotificationSuccess  :'<spring:message code="dashboard.message.confirmNotificationSuccess"/>'
+            , confirmNotificationFailure    :'<spring:message code="dashboard.message.confirmNotificationFailure"/>'
+            , cancelNotificationSuccess  :'<spring:message code="dashboard.message.cancelNotificationSuccess"/>'
         };
 
         var alarmPlayer;
@@ -101,12 +102,7 @@
                 console.error(e);
             }
 
-            // 타이틀에 텍스트 맵핑
-            $.each($("table.t_type01 > tbody > tr > td"),function(){
-                $(this).attr("title",$(this).text().trim());
-            });
-
-            // 알림센터 외부 클릭시 팝업 닫기
+            // 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
                 if($("body").hasClass("admin_mode")){
                     if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
@@ -119,27 +115,28 @@
                 }
             });
 
-            // 알림해제 버튼 활성화
-            $(".check_input").click(function(){
-                alarmCancelBtnAction();
+            // 타이틀에 텍스트 맵핑
+            $.each($("table.t_type01 > tbody > tr > td"),function(){
+                $(this).attr("title",$(this).text().trim());
             });
 
-            // 알림센터 내부 셀렉트 박스 클릭시 이벤트
-            $("#criticalLevel").on("change",function(){
-                alarmTypeChangeHandler();
-            });
-            $("#areaType").on("change",function(){
-                alarmTypeChangeHandler();
-            });
+            if(subMenuId == "100000"){
+                modifyElementClass($("html"),'admin_mode','remove');
+                modifyElementClass($("body"),'admin_mode','remove');
+                modifyElementClass($("html"),'dashboard_mode','add');
+                modifyElementClass($("body"),'dashboard_mode','add');
+                modifyElementClass($("body"),'dark_mode','add');
+            }
 
-            bodyAddClass();
             printTime();
 
-            // 알람 리스트 불러오기
-            layoutAjaxCall('alarmList');
+            notificationHelper.setMessageConfig(layoutMessageConfig);
+            notificationHelper.setElement($("#notificationList"));
+            notificationHelper.createEventListener();
+            notificationHelper.getNotificationList();
 
-            webSocketHelper.addWebSocketList("layout", "${webSocketUrl}", null, notificationMessageEventHandler);
-            webSocketHelper.wsConnect("layout");
+            webSocketHelper.addWebSocketList("notification", "${webSocketUrl}", null, notificationMessageEventHandler);
+            webSocketHelper.wsConnect("notification");
             aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
@@ -157,8 +154,6 @@
          */
         function notificationMessageEventHandler(message) {
             var resultData;
-            var callBackFlag = false;
-
             try{
                 resultData = JSON.parse(message.data);
             }catch(e){
@@ -167,69 +162,26 @@
 
             switch (resultData['messageType']) {
                 case "refreshView": // 화면갱신
-                    callBackFlag = false;
+                    requestHelper.getData();
                     break;
-                case "addAlarmEvent": // 알림이벤트 등록
+                case "addNotification": // 알림센터 이벤트 등록
                     if(resultData['dashboardAlarmFileUrl']!=null){
                         setAlarmAudio(resultData['dashboardAlarmFileUrl']);
                     }else{
                         setAlarmAudio();
                     }
-                    addAlarmEvent(resultData['eventLog'], true);
-                    callBackFlag = true;
+                    notificationHelper.addNotification(resultData['notification'], true);
+                    requestHelper.callBackEvent(resultData['messageType'], null, resultData['notification'], null);
                     break;
-                case "removeAlarmEvent": // 알림이벤트 해제
-                    removeAlarmEvent(resultData['eventLog']);
-                    callBackFlag = true;
+                case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
+                    notificationHelper.updateNotificationList(resultData['notification']);
+                    break;
+                case "cancelDetection": // 감지 해제
+                    requestHelper.callBackEvent(resultData['messageType'], resultData['eventLog'], resultData['notification'], resultData['cancelList']);
                     break;
                 case "addEvent": // 일반이벤트 등록
-                    callBackFlag = true;
+                    requestHelper.callBackEvent(resultData['messageType'], resultData['eventLog'], null, null);
                     break;
-            }
-
-            if(callBackFlag){
-                requestHelper.callBackEvent(resultData['eventLog'], resultData['messageType']);
-            }else{
-                requestHelper.getData();
-            }
-        }
-
-        function alarmCancelBtnAction(){
-            if($("#alarmList .check_input").is(":checked")) {
-                modifyElementClass($(".dbc_open_btn"),'on','add');
-            } else {
-                modifyElementClass($(".dbc_open_btn"),'on','remove');
-                $(".db_allcheck .check_input").prop("checked",false);
-            }
-        }
-
-        function alarmListRefresh() {
-            if($("#alarmList li").length>0){
-                modifyElementClass($(".issue_btn"),'issue','add');
-            }else{
-                modifyElementClass($(".issue_btn"),'issue','remove');
-            }
-        }
-
-        function alarmTypeChangeHandler() {
-            var criticalLevel = $("#criticalLevel option:selected").val() != "" ? "[criticalLevel='"+$("#criticalLevel option:selected").val()+"']" : "";
-            var areaType = $("#areaType option:selected").val() != "" ? "[areaId='"+$("#areaType option:selected").val()+"']" : "";
-
-            if(criticalLevel=="" && areaType==""){
-                $("#alarmList li").show();
-            } else{
-                $("#alarmList li"+criticalLevel+areaType).show();
-                $("#alarmList li").not(criticalLevel+areaType).hide();
-            }
-        }
-
-        function alarmAllCheck(_this){
-            if($(_this).is(":checked")){
-                $("#alarmList li:visible").addClass("check");
-                $("#alarmList li:visible .check_input").prop("checked",true);
-            }else{
-                $("#alarmList li:visible").removeClass("check");
-                $("#alarmList li:visible .check_input").prop("checked",false);
             }
         }
 
@@ -280,29 +232,6 @@
         }
 
         /**
-         * alarm cencel
-         * @author psb
-         */
-        function alarmCancel(){
-            var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
-            var alarmIdList = $("#alarmList li.check").map(function(){return $(this).attr("alarmId")}).get();
-            var eventCancelDesc = $("#eventCancelDesc").val();
-
-            if(eventCancelDesc==null || eventLogIdList.length == 0){
-                layoutAlertMessage('emptyAlarmCancelDesc');
-                return false;
-            }
-
-            var param = {
-                'eventLogIds' : eventLogIdList.join(",")
-                ,'alarmIds' : alarmIdList.join(",")
-                ,'eventCancelDesc' : eventCancelDesc
-            };
-
-            layoutAjaxCall('alarmCancel',param);
-        }
-
-        /**
          * get profile
          * @author psb
          */
@@ -324,7 +253,7 @@
             var password_confirm = $("#password_confirm").val().trim();
 
             if(userName==null || userName==""){
-                layoutAlertMessage('alarmCancelSuccess');
+                layoutAlertMessage('emptyUserName');
                 return false;
             }
 
@@ -345,27 +274,6 @@
         }
 
         /**
-         * search alarm detail (action)
-         * @author psb
-         */
-        function searchAlarmDetail(_this){
-            if(!$(_this).hasClass("on")){
-                var _parent = $(_this).parent();
-                var paramData = {
-                    eventLogId  : $(_parent).attr("eventLogId")
-                    , eventId   : $(_parent).attr("eventId")
-                    , areaName   : $(_parent).find("#areaName").text()
-                    , deviceId   : $(_parent).attr("deviceId")
-                    , eventDatetime : $(_parent).attr("eventDatetime")
-                    , criticalLevel : $(_parent).attr("criticalLevel")
-                };
-                layoutAjaxCall('alarmDetail',paramData);
-            }
-
-            layerShowHide('detail','hide');
-        }
-
-        /**
          * ajax call
          * @author psb
          */
@@ -380,16 +288,6 @@
          */
         function layoutSuccessHandler(data, dataType, actionType){
             switch(actionType){
-                case 'alarmList':
-                    alarmListRender(data);
-                    break;
-                case 'alarmDetail':
-                    alarmDetailRender(data);
-                    break;
-                case 'alarmCancel':
-                    layerShowHide('alarmCancel','hide');
-                    layoutAlertMessage('alarmCancelSuccess');
-                    break;
                 case 'profile':
                     var user = data['user'];
                     if(user!=null){
@@ -427,194 +325,6 @@
          */
         function layoutAlertMessage(type){
             alert(layoutMessageConfig[type]);
-        }
-
-        /**
-         * Alarm List Render
-         * @author psb
-         * @private
-         */
-        function alarmListRender(data){
-            if(data!=null && data['eventLogs']!=null){
-                for(var index in data['eventLogs']){
-                    addAlarmEvent(data['eventLogs'][index], false);
-                }
-
-                alarmListRefresh();
-                alarmTypeChangeHandler();
-            }
-        }
-
-        /**
-         * Add Alarm
-         * @author psb
-         * @private
-         */
-        function addAlarmEvent(eventLog, flag){
-            if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").length==0){
-                var eventInfos = eventLog['infos'];
-                var alarmId = "";
-                var criticalLevel = "";
-                var eventValue = null;
-                if(eventInfos!=null){
-                    for(var i in eventInfos){
-                        if(eventInfos[i]['key']=='criticalLevel'){
-                            criticalLevel = eventInfos[i]['value'];
-                        }else if(eventInfos[i]['key']=='alarmId'){
-                            alarmId = eventInfos[i]['value'];
-                        }else if(eventInfos[i]['key']=='value'){
-                            eventValue = eventInfos[i]['value'];
-                        }
-                    }
-                }
-
-                if(criticalLevel==""){
-                    return false;
-                }
-
-                // 알림센터
-                var alarmTag = templateHelper.getTemplate("alarm01");
-                alarmTag.on("click",function(){
-                    if($(this).hasClass("check")){
-                        $(this).find(".check_input").prop("checked",false);
-                        modifyElementClass($(this),'check','remove');
-                    }else{
-                        $(this).find(".check_input").prop("checked",true);
-                        modifyElementClass($(this),'check','add');
-                    }
-                    alarmCancelBtnAction();
-                });
-
-                alarmTag.addClass("level-"+criticalCss[criticalLevel]);
-                alarmTag.attr("eventId",eventLog['eventId'])
-                        .attr("criticalLevel",criticalLevel)
-                        .attr("eventLogId",eventLog['eventLogId'])
-                        .attr("areaId",eventLog['areaId'])
-                        .attr("deviceId",eventLog['deviceId'])
-                        .attr("alarmId",alarmId)
-                        .attr("eventDatetime",eventLog['eventDatetime']);
-                alarmTag.find("#areaName").text(eventLog['areaName']);
-                alarmTag.find("#eventName").text(eventLog['eventName'] + (eventValue!=null?'('+eventValue+')':''));
-                alarmTag.find("#eventDatetime").text(new Date(eventLog['eventDatetime']).format("MM/dd HH:mm:ss"));
-                alarmTag.find(".infor_btn").attr("onclick","javascript:searchAlarmDetail(this); event.stopPropagation();");
-                $("#alarmList").prepend(alarmTag);
-                var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
-                levelTag.text(Number(levelTag.text())+1);
-                modifyElementClass($(".issue_btn"),"level-"+criticalCss[criticalLevel],'add');
-
-                if(flag==true){
-                    /* 애니메이션 */
-                    $(".issue_btn").removeClass("on");
-                    try {
-                        setTimeout(function() {
-                            $(".issue_btn").addClass("on");
-                        }, 150);
-                    } catch(e) {}
-
-                    /* 싸이렌 */
-                    playSegment();
-
-                    var toastTag = templateHelper.getTemplate("toast");
-                    toastTag.addClass("level-"+criticalCss[criticalLevel]);
-                    toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
-                    toastTag.attr("eventLogId",eventLog['eventLogId']);
-                    toastTag.find("#toastAreaName").text(eventLog['areaName']);
-                    toastTag.find("#toastEventDesc").text(eventLog['eventName']);
-                    $(".toast_popup").append(toastTag);
-
-                    removeToastTag(toastTag);
-                    function removeToastTag(_tag){
-                        setTimeout(function(){
-                            _tag.remove();
-                        },3000);
-                    }
-
-                    alarmTypeChangeHandler();
-                }
-            }
-        }
-
-        /**
-         * Remove Alarm
-         * @author psb
-         * @private
-         */
-        function removeAlarmEvent(eventLogs){
-            for(var index in eventLogs){
-                var eventLog = eventLogs[index];
-                var eventInfos = eventLog['infos'];
-
-                var criticalLevel = "";
-                if(eventInfos!=null){
-                    for(var i in eventInfos){
-                        if(eventInfos[i]['key']=='criticalLevel'){
-                            criticalLevel = eventInfos[i]['value'];
-                        }
-                    }
-                }
-
-                if($("#alarmList li[eventLogId='"+eventLog['eventLogId']+"'] .infor_btn").hasClass("on")){
-                    modifyElementClass($(".db_infor_box"),'on','remove');
-                    modifyElementClass($(".infor_btn"),'on','remove');
-                }
-
-                $("#alarmList li[eventLogId='"+eventLog['eventLogId']+"']").remove();
-                var levelTag = $("div[criticalLevelCnt] span["+criticalLevel+"]");
-                var levelCtn = Number(levelTag.text())-1;
-                levelTag.text(levelCtn);
-
-                if(levelCtn==0){
-                    modifyElementClass($(".issue_btn"),"level-"+criticalCss[criticalLevel],'remove');
-                }
-            }
-
-            alarmCancelBtnAction();
-            alarmListRefresh();
-        }
-
-        /**
-         * Alarm Detail Render
-         * @author psb
-         * @private
-         */
-        function alarmDetailRender(data){
-            if(data!=null && data['action']!=null){
-                var action = data['action'];
-
-                for(var key in criticalCss){
-                    modifyElementClass($("section[alarm_detail]"),"level-"+criticalCss[key],'remove');
-                }
-                $("section[alarm_detail]").addClass("level-"+criticalCss[data['paramBean']['criticalLevel']]);
-                $("section[alarm_detail] p[areaName]").text(data['paramBean']['areaName']);
-                $("section[alarm_detail] p[eventName]").text(action['eventName']);
-                $("section[alarm_detail] p[actionDesc]").text(action['actionDesc']);
-                _eventDatetime.setTime(data['paramBean']['eventDatetime']);
-
-                if(data['device']!=null && data['device']['linkUrl']!=null){
-                    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:cctvOpen('"+data['device']['linkUrl']+"'); event.stopPropagation();");
-                    $("section[alarm_detail] .dbi_cctv").show();
-                }else{
-                    $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
-                    $("section[alarm_detail] .dbi_cctv").hide();
-                }
-
-                $("section[alarm_detail] p[eventDatetime]").text(_eventDatetime.format("MM/dd HH:mm:ss"));
-                modifyElementClass($("#alarmList li[eventLogId='"+data['paramBean']['eventLogId']+"'] .infor_btn"),'on','add');
-                layerShowHide('detail','show');
-            }else{
-                alert("대응 정보가 없습니다.");
-            }
-        }
-
-        function bodyAddClass(){
-            switch (subMenuId){
-                case "100000": // 대쉬보드
-                    modifyElementClass($("html"),'admin_mode','remove');
-                    modifyElementClass($("body"),'admin_mode','remove');
-                    modifyElementClass($("html"),'dashboard_mode','add');
-                    modifyElementClass($("body"),'dashboard_mode','add');
-                    break;
-            }
         }
 
         /**
@@ -661,18 +371,18 @@
                         modifyElementClass($(".personal_popup"),'on','remove');
                     }
                     break;
-                case "alarmCancel":
+                case "notificationCancel":
                     if(_action == 'show'){
-                        var eventLogIdList = $("#alarmList li.check").map(function(){return $(this).attr("eventLogId")}).get();
+                        var notificationIdList = $("#notificationList li.check").map(function(){return $(this).attr("notificationId")}).get();
 
-                        if(eventLogIdList==null || eventLogIdList.length == 0){
-                            layoutAlertMessage('emptyAlarmCancel');
+                        if(notificationIdList==null || notificationIdList.length == 0){
+                            layoutAlertMessage('emptyNotification');
                             return false;
                         }
                         modifyElementClass($("div[alarm_menu]"),'open_cancel','add');
                         modifyElementClass($(".db_cancel_set"),'on','add');
                     }else if(_action == 'hide'){
-                        $("#eventCancelDesc").val("");
+                        $("#cancelDesc").val("");
                         modifyElementClass($("div[alarm_menu]"),'open_cancel','remove');
                         modifyElementClass($(".db_cancel_set"),'on','remove');
                     }
@@ -769,6 +479,7 @@
     <!-- 알림센터 영역 Start -->
     <aside class="db_area">
         <h2>
+            <span><spring:message code="dashboard.title.alarmCenter"/></span>
             <!-- 임계치별 알림 카운트 -->
             <div criticalLevelCnt>
                 <c:forEach var="critical" items="${criticalList}">
@@ -780,25 +491,30 @@
         <!-- 알림 이력 + 알림 해지 영역 -->
         <section class="db_list_box">
             <!-- 이력 선택 및 알림해지 버튼-->
-            <div alarm_menu>
+            <div class="db_filter_set" alarm_menu>
                 <div class="checkbox_set csl_style01 db_allcheck">
-                    <input type="checkbox" class="check_input" onclick="javascript:alarmAllCheck(this);"/>
+                    <input type="checkbox" class="check_input" onclick="javascript:notificationHelper.notificationAllCheck(this);"/>
                     <label></label>
                 </div>
                 <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true"/>
                 <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
-                <button class="btn dbc_open_btn" onclick="javascript:layerShowHide('alarmCancel','show');"></button>
+                <button class="btn dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');"></button>
             </div>
 
             <!-- 알림 이력-->
-            <ul id="alarmList"></ul>
+            <ul id="notificationList"></ul>
 
             <!-- 알림해지 영역 -->
             <div class="db_cancel_set">
-                <textarea id="eventCancelDesc" placeholder="<spring:message code='dashboard.placeholder.alarmCancel'/>"></textarea>
+                <div class="db_filter_set">
+                    <h3><spring:message code='dashboard.title.alarmAction'/></h3>
+                    <button class="btn dbc_close_btn" onclick="javascript:layerShowHide('notificationCancel','hide');"></button>
+                </div>
+
+                <textarea id="cancelDesc" placeholder="<spring:message code='dashboard.placeholder.notificationAction'/>"></textarea>
                 <div class="btn_set">
-                    <button class="btn" onclick="javascript:alarmCancel();"><spring:message code="common.button.save"/></button>
-                    <button class="btn close" onclick="javascript:layerShowHide('alarmCancel','hide');"><spring:message code="common.button.cancel"/></button>
+                    <button class="btn" onclick="javascript:notificationHelper.saveNotification('cancel');"><spring:message code="dashboard.button.notificationCancel"/></button>
+                    <button class="btn" onclick="javascript:notificationHelper.saveNotification('confirm');"><spring:message code="dashboard.button.notificationConfirm"/></button>
                 </div>
             </div>
         </section>

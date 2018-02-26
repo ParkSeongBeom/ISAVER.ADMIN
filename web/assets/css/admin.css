@@ -10,18 +10,96 @@
 경고 : 주황  $color-orange-01  level-warning
 위험 : 빨강  $color-red-01     level-danger
 */
+body.chart_mode section.container {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  position: absolute;
+  padding: 0;
+  width: auto;
+  height: auto;
+  top: 100px;
+  right: 150px;
+  bottom: 50px;
+  left: 150px; }
+  body.chart_mode section.container .sub_title_area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: 40px; }
+  body.chart_mode section.container .tree_table, body.chart_mode section.container .chart_table_area, body.chart_mode section.container .depthtabs_set {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative; }
+  body.chart_mode section.container .tree_table {
+    min-width: 350px;
+    max-width: 350px;
+    margin: 60px 0 0 0;
+    padding: 0; }
+    body.chart_mode section.container .tree_table > div.table_title_area {
+      padding-top: 10px; }
+    body.chart_mode section.container .tree_table > div.table_contents {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
+      margin: 0 0 10px 0;
+      overflow: auto; }
+    body.chart_mode section.container .tree_table > div > div {
+      padding: 0 20px; }
+      body.chart_mode section.container .tree_table > div > div.tree_box {
+        max-height: none; }
+  body.chart_mode section.container .chart_table_area {
+    padding: 0 0 0 60px;
+    margin: 50px 0 0 0; }
+    body.chart_mode section.container .chart_table_area .depthtabs_set, body.chart_mode section.container .chart_table_area .depthtabs_set > div {
+      position: relative;
+      height: 100%; }
+    body.chart_mode section.container .chart_table_area .depthtabs_set > div {
+      position: relative;
+      height: 100%; }
+    body.chart_mode section.container .chart_table_area .depthtabs_set .chart_box, body.chart_mode section.container .chart_table_area .depthtabs_set .chart_label {
+      position: absolute;
+      width: 100%;
+      left: 0; }
+    body.chart_mode section.container .chart_table_area .depthtabs_set .chart_box {
+      top: 0;
+      bottom: 60px; }
+    body.chart_mode section.container .chart_table_area .depthtabs_set .chart_label {
+      bottom: 0;
+      height: 20px; }
+  body.chart_mode section.container .table_title_area {
+    max-height: 65px;
+    min-height: 65px; }
+
 section.container {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 100px 150px 100px 150px;
+  padding: 100px 150px 50px 150px;
   transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
   section.container.on {
-    padding-right: 380px; }
+    padding-right: 340px; }
 
 .search_area {
   display: -webkit-box;
@@ -62,39 +140,67 @@ section.container {
     text-align: right; }
   .tr_table .search_area {
     border-width: 1px 0 0 0; }
-  .search_area .search_contents > * {
-    float: left;
-    position: relative;
-    padding: 0 20px 0 0;
-    margin: 5px 0;
-    letter-spacing: -1px; }
-    .search_area .search_contents > *, .search_area .search_contents > * > * {
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      display: flexbox;
-      display: box;
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center; }
-    .search_area .search_contents > * > *:not(select) {
-      height: 100%; }
-    .search_area .search_contents > * > span > em {
-      padding: 0 3px; }
-    .search_area .search_contents > * > span:first-child {
-      padding: 0 10px 0 0; }
-    .search_area .search_contents > * > span > input {
-      max-width: 170px; }
-    .search_area .search_contents > * > span > input.hasDatepicker {
-      width: 110px; }
-    .search_area .search_contents > * > span > input.hasDatepicker ~ select {
-      width: 80px;
-      border-left-width: 0; }
+
+.search_contents > * {
+  float: left;
+  position: relative;
+  padding: 0 20px 0 0;
+  margin: 5px 0;
+  letter-spacing: -1px; }
+  .search_contents > *, .search_contents > * > * {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; }
+  .search_contents > * > *:not(select) {
+    height: 100%; }
+  .search_contents > * > span > em {
+    padding: 0 3px; }
+  .search_contents > * > span:first-child {
+    padding: 0 10px 0 0; }
+  .search_contents > * > span > input {
+    max-width: 170px; }
+  .search_contents > * > span > input.hasDatepicker {
+    width: 110px; }
+  .search_contents > * > span > input.hasDatepicker ~ select {
+    width: 80px;
+    border-left-width: 0; }
+
+.tree_box .search_contents > * {
+  display: inline-block;
+  width: 100%;
+  padding: 0; }
+  .tree_box .search_contents > * > * {
+    padding: 0 0 5px 0 !important; }
+    .tree_box .search_contents > * > *, .tree_box .search_contents > * > * > * {
+      width: 100%; }
+    .tree_box .search_contents > * > * em {
+      width: auto; }
+    .tree_box .search_contents > * > * button {
+      max-width: 40px;
+      min-width: 40px;
+      margin: 0 !important; }
+      .tree_box .search_contents > * > * button.add:before {
+        content: "\e92b"; }
+      .tree_box .search_contents > * > * button.del {
+        background-color: #be1e1e; }
+        .tree_box .search_contents > * > * button.del:before {
+          content: "\e92c"; }
+    .tree_box .search_contents > * > * input.hasDatepicker {
+      width: 100%;
+      max-width: none; }
+      .tree_box .search_contents > * > * input.hasDatepicker + button + select {
+        max-width: 80px;
+        min-width: 80px; }
 
 .table_area {
   width: 100%; }
@@ -264,9 +370,9 @@ div.tablebase, .d_defalut {
           .tablebase td.intable .level_set > div button.closebtn, .t_defalut td.intable .level_set > div button.closebtn, .d_defalut td.intable .level_set > div button.closebtn {
             background-color: #be1e1e; }
             .tablebase td.intable .level_set > div button.closebtn:before, .t_defalut td.intable .level_set > div button.closebtn:before, .d_defalut td.intable .level_set > div button.closebtn:before {
-              content: "삭제"; }
+              content: "Del"; }
           .tablebase td.intable .level_set > div button.addbtn:before, .t_defalut td.intable .level_set > div button.addbtn:before, .d_defalut td.intable .level_set > div button.addbtn:before {
-            content: "추가"; }
+            content: "Add"; }
     .tablebase td.intd, .t_defalut td.intd, .d_defalut td.intd {
       padding: 0 !important; }
       .tablebase td.intd > div, .t_defalut td.intd > div, .d_defalut td.intd > div {
@@ -493,7 +599,7 @@ div.tablebase, .d_defalut {
       word-wrap: normal; }
 
 div.d_defalut > div > div > * {
-  min-width: 40px; }
+  min-width: 30px; }
 div.d_defalut.d_type01 > div {
   float: left; }
 div.d_defalut.d_type01 .d_thead {
@@ -657,10 +763,10 @@ ul.u_defalut {
     width: 90px;
     font-weight: bold; }
     .pasing > p:before {
-      content: "총";
+      content: "All";
       left: 10px; }
     .pasing > p:after {
-      content: "건";
+      content: "N";
       right: 10px; }
   .pasing > .page_count {
     width: 100px; }
@@ -1206,7 +1312,7 @@ ul.u_defalut {
       .tabs_area .tabs li button:hover, .tabs_area .tabs li.tabs_on button {
         color: #fff;
         border: none;
-        background-color: #4c4c4c; }
+        background-color: #3c3c3c; }
   .tabs_area .tabs_contents_area {
     display: inline-block;
     width: 100%;
@@ -1261,14 +1367,14 @@ ul.u_defalut {
   .infile_set > span {
     cursor: pointer; }
     .infile_set > span:before {
-      content: "파일찾기";
+      content: "FILE";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       color: #fff;
-      background-color: #4c4c4c;
+      background-color: #3c3c3c;
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -1414,8 +1520,10 @@ ul.u_defalut {
       -ms-flex: 0 1 100%; }
       .dashboard_mode .tree_table .table_contents .tree_box, .iocount_popup .tree_table .table_contents .tree_box {
         overflow-x: initial; }
-  .tree_table ~ .form_type01 {
+  .tree_table ~ .form_type01, .tree_table + article {
     padding: 0 0 0 410px; }
+  .tree_table + article {
+    padding-top: 10px; }
   .tree_table .table_title_area {
     height: 40px;
     flex: 1 0 40px;
@@ -1423,7 +1531,10 @@ ul.u_defalut {
     flexbox: 1 0 40px;
     -webkit-box-flex: 0;
     -ms-flex: 1 0 40px; }
+    .tree_table .table_title_area .table_btn_set button {
+      max-width: none; }
   .tree_table .tree_box {
+    max-height: 650px;
     overflow-x: auto;
     width: 100%;
     margin: 20px 0;
@@ -1579,7 +1690,7 @@ ul.u_defalut {
     .code_list > button, .code_list > button:before, .code_list > div > button, .code_list > div > button:before {
       font-weight: bold; }
   .code_list > button {
-    background-color: #4c4c4c;
+    background-color: #3c3c3c;
     color: #fff;
     padding: 0 20px; }
     .code_list > button:before {
@@ -1589,7 +1700,7 @@ ul.u_defalut {
   .code_list > div {
     border-style: solid;
     border-width: 1px;
-    border-color: #4c4c4c; }
+    border-color: #3c3c3c; }
     .code_list > div > button:nth-of-type(1) {
       padding: 0 0 0 10px;
       line-height: 11px; }
@@ -1783,6 +1894,53 @@ a.fc-more {
   width: 20px;
   height: 20px;
   margin: auto; }
+
+.chart_table_area {
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 50px 0; }
+  .chart_table_area > div {
+    position: relative;
+    float: left;
+    margin: 40px 0 0 0; }
+    .chart_table_area > div.table_title_area {
+      margin: 0; }
+  .chart_table_area.type01 > div {
+    min-width: 50%;
+    height: 320px; }
+    .chart_table_area.type01 > div > div {
+      float: left;
+      position: relative;
+      height: 100%; }
+      .chart_table_area.type01 > div > div:first-of-type {
+        width: -webkit-calc(100% - 380px);
+        width: calc(100% - 380px);
+        padding: 50px 0 0 0; }
+      .chart_table_area.type01 > div > div:last-of-type {
+        width: 380px; }
+  .chart_table_area.type01 table {
+    height: 275px; }
+    .chart_table_area.type01 table tbody {
+      overflow-y: scroll;
+      position: absolute;
+      top: 56px;
+      bottom: 1px;
+      width: 100%; }
+    .chart_table_area.type01 table th:first-of-type, .chart_table_area.type01 table td:first-of-type {
+      width: 100%; }
+    .chart_table_area.type01 table th:last-of-type, .chart_table_area.type01 table td:last-of-type {
+      width: 80px;
+      min-width: 80px; }
+    .chart_table_area.type01 table td:first-of-type:before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      margin: 0 10px 0 0; }
+    .chart_table_area.type01 table td:last-of-type {
+      padding: 0 4px 0 22px; }
+  .chart_table_area.type02 > div {
+    width: 100%; }
 
 .eventlog_col col:nth-of-type(1) {
   width: 10%; }

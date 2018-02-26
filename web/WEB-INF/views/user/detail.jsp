@@ -57,7 +57,7 @@
                         <th class="point"><spring:message code="user.column.role"/></th>
                         <td class="point">
                             <select name="roleId">
-                                <option value="">선택</option>
+                                <option value=""><spring:message code="common.selectbox.select"/></option>
                                 <c:forEach items="${roles}" var="role">
                                     <option value="${role.roleId}" ${user.roleId == role.roleId ? 'selected' : ''} ${role.delYn == 'Y' ? 'disabled' : ''}>${role.roleName}</option>
                                 </c:forEach>

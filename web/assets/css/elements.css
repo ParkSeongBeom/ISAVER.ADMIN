@@ -501,7 +501,7 @@ input.datepicker + button + .in-timepicker {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #4c4c4c;
+    background-color: #3c3c3c;
     height: 40px; }
     * button.btn.on, * a.btn.on, * input[type="button"].btn.on, * .btn.on, * .cbtn.on {
       background-color: #109dcb; }
@@ -531,11 +531,11 @@ input.datepicker + button + .in-timepicker {
     /*cursor: not-allowed;*/ }
   * .btn {
     width: 100%;
-    max-width: 150px;
+    max-width: 160px;
     height: 40px; }
   * .lbtn {
     width: 100%;
-    max-width: 150px;
+    max-width: 160px;
     height: 40px; }
   * .lcbtn {
     width: 40px;
@@ -549,10 +549,10 @@ input.datepicker + button + .in-timepicker {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #4c4c4c;
+    background-color: #3c3c3c;
     height: 40px;
     width: 100%;
-    max-width: 150px;
+    max-width: 160px;
     height: 40px; }
     * .list_select_box > button.on,
     * .filter_area > button.on,
@@ -566,7 +566,7 @@ input.datepicker + button + .in-timepicker {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #4c4c4c;
+    background-color: #3c3c3c;
     height: 40px; }
     * .tree_area > header > button.on {
       background-color: #109dcb; }
@@ -739,7 +739,7 @@ input.datepicker + button + .in-timepicker {
   * .check_th tbody tr.top09 td:first-of-type:before,
   * .chart_label > span:nth-of-type(9):before,
   * .mp_header > div > .ch_name:nth-of-type(9):before {
-    background-color: #259dcf; }
+    background-color: #49dbff; }
   * .check_th tbody tr.top10 td:first-of-type:before,
   * .chart_label > span:nth-of-type(10):before,
   * .mp_header > div > .ch_name:nth-of-type(10):before {
@@ -803,10 +803,10 @@ input.datepicker + button + .in-timepicker {
   .ct-series-h .ct-line, .ct-series-h .ct-point {
     stroke: #ef8116 !important; }
   .ct-series-i .ct-area, .ct-series-i .ct-slice-pie, .ct-series-i .ct-bar, .ct-series-i .ct-slice-donut {
-    fill: #259dcf !important;
-    stroke: #259dcf !important; }
+    fill: #49dbff !important;
+    stroke: #49dbff !important; }
   .ct-series-i .ct-line, .ct-series-i .ct-point {
-    stroke: #259dcf !important; }
+    stroke: #49dbff !important; }
   .ct-series-j .ct-area, .ct-series-j .ct-slice-pie, .ct-series-j .ct-bar, .ct-series-j .ct-slice-donut {
     fill: #7894c2 !important;
     stroke: #7894c2 !important; }
@@ -887,51 +887,6 @@ input.datepicker + button + .in-timepicker {
     border-style: solid !important;
     border-width: 10px 5px 0 5px !important;
     border-color: #333240 transparent transparent transparent !important; }
-
-.chart_table_area {
-  display: inline-block;
-  width: 100%;
-  padding: 0 0 50px 0; }
-  .chart_table_area > div {
-    position: relative;
-    float: left;
-    margin: 40px 0 0 0; }
-  .chart_table_area.type01 > div {
-    min-width: 50%;
-    height: 320px; }
-    .chart_table_area.type01 > div > div {
-      float: left;
-      position: relative;
-      height: 100%; }
-      .chart_table_area.type01 > div > div:first-of-type {
-        width: -webkit-calc(100% - 380px);
-        width: calc(100% - 380px);
-        padding: 50px 0 0 0; }
-      .chart_table_area.type01 > div > div:last-of-type {
-        width: 380px; }
-  .chart_table_area.type01 table {
-    height: 275px; }
-    .chart_table_area.type01 table tbody {
-      overflow-y: scroll;
-      position: absolute;
-      top: 56px;
-      bottom: 1px;
-      width: 100%; }
-    .chart_table_area.type01 table th:first-of-type, .chart_table_area.type01 table td:first-of-type {
-      width: 100%; }
-    .chart_table_area.type01 table th:last-of-type, .chart_table_area.type01 table td:last-of-type {
-      width: 80px;
-      min-width: 80px; }
-    .chart_table_area.type01 table td:first-of-type:before {
-      content: "";
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      margin: 0 10px 0 0; }
-    .chart_table_area.type01 table td:last-of-type {
-      padding: 0 4px 0 22px; }
-  .chart_table_area.type02 > div {
-    width: 100%; }
 
 .month_btn_set {
   display: -webkit-box;

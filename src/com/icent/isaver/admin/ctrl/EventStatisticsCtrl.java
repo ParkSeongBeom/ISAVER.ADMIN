@@ -40,92 +40,41 @@ public class EventStatisticsCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
     public ModelAndView findListEventStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = eventStatisticsSvc.findListEventStatistics(parameters);
         modelAndView.setViewName("eventStatistics");
         return modelAndView;
     }
 
     /**
-     * 구역별 이벤트 통계 목록을 가져온다.
+     * 이벤트 통계 화면을 가져온다.
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/area")
-    public ModelAndView findListAreaEventStatistics(@RequestParam Map<String, String> parameters) {
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/search")
+    public ModelAndView findListEventStatisticsSearch(@RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = new ModelAndView();
 
         if(StringUtils.notNullCheck(parameters.get("mode"))){
-            modelAndView = eventStatisticsSvc.findListAreaEventStatistics(parameters);
-        }else{
-            modelAndView.setViewName("areaEventStatistics");
-        }
-        return modelAndView;
-    }
-
-    /**
-     * 작업자 이벤트 통계 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/worker")
-    public ModelAndView findListWorkerEventStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if(StringUtils.notNullCheck(parameters.get("mode"))){
-            modelAndView = eventStatisticsSvc.findListWorkerEventStatistics(parameters);
-        }else{
-            modelAndView.setViewName("workerEventStatistics");
-        }
-        return modelAndView;
-    }
-
-    /**
-     * 크레인 이벤트 통계 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/crane")
-    public ModelAndView findListCraneEventStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if(StringUtils.notNullCheck(parameters.get("mode"))){
-            modelAndView = eventStatisticsSvc.findListCraneEventStatistics(parameters);
-        }else{
-            modelAndView.setViewName("craneEventStatistics");
-        }
-        return modelAndView;
-    }
-
-    /**
-     * 유해가스 이벤트 통계 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/gas")
-    public ModelAndView findListGasEventStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if(StringUtils.notNullCheck(parameters.get("mode"))){
-            modelAndView = eventStatisticsSvc.findListGasEventStatistics(parameters);
-        }else{
-            modelAndView.setViewName("gasEventStatistics");
-        }
-        return modelAndView;
-    }
-
-    /**
-     * 진출입자 이벤트 통계 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/inout")
-    public ModelAndView findListInoutEventStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if(StringUtils.notNullCheck(parameters.get("mode"))){
-            modelAndView = eventStatisticsSvc.findListInoutEventStatistics(parameters);
-        }else{
-            modelAndView.setViewName("inoutEventStatistics");
+            switch (parameters.get("mode")){
+                case "hour" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsHour(parameters);
+                    break;
+                case "day" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsDay(parameters);
+                    break;
+                case "dow" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsDow(parameters);
+                    break;
+                case "week" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsWeek(parameters);
+                    break;
+                case "month" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsMonth(parameters);
+                    break;
+                case "year" :
+                    modelAndView = eventStatisticsSvc.findListEventStatisticsYear(parameters);
+                    break;
+            }
         }
         return modelAndView;
     }

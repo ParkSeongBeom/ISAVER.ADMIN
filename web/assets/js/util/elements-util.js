@@ -33,6 +33,5 @@ function setHourDataToSelect(select, value, desc){
         }else{
             select.find('option:first').attr('selected',true);
         }
-
     }
 }

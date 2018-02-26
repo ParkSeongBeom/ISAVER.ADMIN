@@ -53,7 +53,7 @@
                         <th><spring:message code="action.column.actionId"/></th>
                         <td colspan="3">
                             <select name="actionId">
-                                <option value="">선택안함</option>
+                                <option value=""><spring:message code="common.selectbox.notSelect"/></option>
                                 <c:forEach var="action" items="${actions}">
                                     <option value="${action.actionId}" actionDesc="${action.actionDesc}" ${event.actionId==action.actionId?'selected':''}>${action.actionId} - ${action.actionCode}</option>
                                 </c:forEach>

@@ -9,7 +9,7 @@ var TemplateHelper = (
         /********************************************************************************
          * 알림 리스트 template
          *********************************************************************************/
-        var ALARM_CONTENT_TEMPLATE = $("<li/>").append(
+        var NOTIFICATION_CONTENT_TEMPLATE = $("<li/>").append(
             $("<div/>", {class:"checkbox_set csl_style01"}).append(
                 $("<input/>", {type:"checkbox" ,class:"check_input"})
             ).append(
@@ -61,6 +61,15 @@ var TemplateHelper = (
             )
         );
 
+        /********************************************************************************
+         * 이벤트 통계 이벤트 추가 template
+         *********************************************************************************/
+        var STATISTICS_EVENT_TEMPLATE = $("<span/>").append(
+            $("<input/>", {type:"text", name:"eventId", disabled:"disabled"})
+        ).append(
+            $("<button/>", {href:"#", class:"btn del", onclick:"javascript:$(this).parent().remove();"})
+        );
+
         /**
          * get template (동적생성 Tag)
          * @author psb
@@ -69,14 +78,17 @@ var TemplateHelper = (
             var _returnTag = null;
 
             switch (target) {
-                case "alarm01":
-                    _returnTag = ALARM_CONTENT_TEMPLATE.clone();
+                case "notification":
+                    _returnTag = NOTIFICATION_CONTENT_TEMPLATE.clone();
                     break;
                 case "toast":
                     _returnTag = TOAST_POPUP_TEMPLATE.clone();
                     break;
                 case "inout":
                     _returnTag = INOUT_TEMPLATE.clone();
+                    break;
+                case "statisticsEvent":
+                    _returnTag = STATISTICS_EVENT_TEMPLATE.clone();
                     break;
             }
 

@@ -164,7 +164,7 @@ header {
           &.loginout_btn:before  {content: "\e900";}
           &.user_btn:before      {content: "\e90e";}
           &:before {font-size:1.6rem;}
-          &:hover, &.on {
+          &:hover, &.on:not(.issue_btn) {
             background-color: $color-blue-01;
             &:before {color:#fff !important;}
           }
@@ -486,13 +486,13 @@ menu {
   h2 {
     @include flex-align-items-center; @include flex-option(1, 0, $btnarea-height);
     @include flex-justify-content-between; margin:0 0 10px 0;
-    &:before {content:"알림센터";}
+
 
     & > div {
       span {
         @include flex-midddle; @include border-radius(200px);
         @include box-inset-shadow(0, 2px, 4px, #000, 0.2);
-        float:left; min-width:35px; height:35px; margin:0 0 0 5px; padding:0 10px;
+        float:left; min-width:40px; height:40px; margin:0 0 0 5px; padding:0 10px;
         font-size:1.4rem; color:$color-white-01; line-height: 1.4rem;
         @include text-shadow(0, 1px, 2px, #000, 0.7);
         &:nth-of-type(1) {background-color: $color-gray-03;  }
@@ -507,44 +507,54 @@ menu {
     @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
     @include border01( 1px,$color-gray-01,1); background-color: $adm-color;
 
-    & > div {
-      @include flex-option(1, 0, 40px);
-      background-color: $color-white-01;
-      & > div, & > select {@include border01( 0 1px 1px 0,$color-gray-01,1);}
-      & > div    {@include flex-option(1, 0, $btnarea-height);  }
-      & > select {/*@include flex-option(0, 1, 100%);*/ width:100%;}
-      & > button {
-        pointer-events: none; opacity: 0.5;
-        @include flex-option(1, 0, $btnarea-height);
-        &:before {content:"\e937"; font-size: 1.5rem;}
-        &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
+    .db_filter_set {
+      @include flexbase; @include flex-option(1, 0, 41px); max-height:41px;
+      @include border01( 0 0 1px 0,$color-gray-01,1); background-color: $color-white-01;
+
+      & > * {
+        @include flex-option(0, 1, 100%); width:100%;
+        @include border01( 0 1px 0 0,$color-gray-01,1);
+      }
+
+      .checkbox_set, button {
+        @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
+      }
+      button {
+
+        @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
+        margin-left: auto; border:none !important;
+        &:before {font-size: 1.5rem;}
         &.on.active {background-color: $color-blue-01;}
-      }
 
-      // 알림해지 사유
-      &.db_cancel_set {
-        position: absolute; z-index: 1; top:$btnarea-height; bottom:0; left:100%;
-        width:100%;  padding: 20px; background-color: $color-white-01;
-        @include border01(1px 0 0 0,$color-gray-01,1);
-
-        textarea, div[contenteditable] {
-          @include flex-option(0, 1, 100%); position: relative; margin:0 0 20px 0;
-          border: none; resize: none; outline: none;
+        &.dbc_open_btn{
+          pointer-events: none; opacity: 0.5;
+          &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
+          &:before {content:"\e937"; }
         }
+        &.dbc_close_btn:before {content:"\e91a";}
+      }
+      h3 {@include flexbase; @include flex-align-items-center; padding:10px;}
+    }
+
+    // 알림해지 사유
+    .db_cancel_set {
+      position: absolute; z-index: 1; top:0; bottom:0; left:100%;
+      width:100%;  background-color: $color-white-01;
 
 
-        .btn_set {@include flex-option(1, 0, 40px);}
-
-        &.on {
-          left:0;
-          &:before {content:"알림해지"; position:absolute; top:-35px; font-size:1.3rem;}
-        }
+      textarea, div[contenteditable] {
+        @include flex-option(0, 1, 100%); position: relative;
+        border: none; resize: none; outline: none;
       }
 
-      // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
-      &.open_cancel {
-        & > div, & > select {opacity: 0; visibility: hidden}
-      }
+      .btn_set {@include flex-option(1, 0, 40px); margin:10px;}
+
+      &.on {left:0;}
+    }
+
+    // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
+    .open_cancel {
+      & > div, & > select {opacity: 0; visibility: hidden}
     }
 
     // 알림이력
@@ -631,7 +641,7 @@ menu {
 
           &:before, &:after {position:relative;}
           &:before {content:"\e91c"; font-size: 4rem;}
-          &:after  {content:"CCTV 확인"; font-size: 2rem; top:-15px; padding:0 0 0 15px;}
+          &:after  {content:"CCTV VIEW"; font-size: 2rem; top:-15px; padding:0 0 0 15px;}
 
           &:hover {
             background-color: $color-white-01;
@@ -692,6 +702,11 @@ menu {
   p:nth-of-type(1) {}
   p:nth-of-type(2) {font-size:1.1rem; font-weight:bold; padding:5px 10px 5px 0;}
   p:nth-of-type(3) {word-spacing: 2px; letter-spacing:0; font-size:0.9rem;}
+  p:nth-of-type(4) {
+    padding:5px 0 0 0; margin:5px 0 0 0; @include border01(1px 0 0 0,$color-gray-09,0.3 );
+    &, & ~ p {letter-spacing:0;}
+
+  }
 }
 /////..... 알림센터 End
 
@@ -732,25 +747,35 @@ menu {
 
 
 /////..... 임계치 적용 표시 Start
+.confirm {background-color: rgba($color-blue-02,1) !important;}
 .level {
-  &-caution {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
-  &-warning {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
-  &-danger  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+  &-caution {background-color: rgba($color-gray-03,1);}   // .level-caution 주의
+  &-warning {background-color: rgba($color-orange-01,1);} // .level-warning 경고
+  &-danger  {background-color: rgba($color-red-01,1);}    // .level-danger  위험
 
   &-caution, &-warning, &-danger {
     & *, & *:before, & *:after {color:$color-white-01; }
 
 
-
-    // NHR 센서의 경우
-    &.type-list {
+    &.type-list, .watch_area > div {
       & *, & *:before, & *:after {color:inherit; }
       &, &:before {background-color: transparent !important;}
+
+      /*
+
+      &.level {
+        &-caution:before {@include border01(2px,$color-gray-03,1 );} // .level-caution 주의
+        &-warning:before {@include border01(2px,$color-orange-01,1 );} // .level-warning 경고
+        &-danger:before  {@include border01(2px,$color-red-01,1 );} // .level-danger  위험
+      }
+      */
+
+
       .m_marqueebox {
         & * , &:before {color:$color-red-01 !important; }
         &:before {background-color: $color-white-01 !important;}
       }
-      .safeeye_set .s_lbox {color:$color-red-01;  @include issue;}
+      .safeeye_set .s_lbox {color:$color-red-01; &:after { @include issue05;} }
     }
 
     .m_marqueebox {
@@ -759,7 +784,8 @@ menu {
     }  //각구역 마키
 
     .ts {
-      &-caution, &-warning, &-danger {}
+      &-caution, &-warning, &-danger {
+}
       &-caution {}
       &-warning {}
       &-danger  {}
@@ -781,17 +807,26 @@ menu {
   }
 
   &-caution {
-    .treffic_set .ts-caution {@include level-Common;}
+    .treffic_set .ts-caution {
+      &:before { @include border01(2px,$color-gray-03,0.4 ); }
+      @include level-Common; & > p:before {@include border01(2px,$color-gray-03,1 ); @include issue06; }
+    }
     .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
   } // .level-caution 주의
 
   &-warning {
-    .treffic_set .ts-warning {@include level-Common;}
+    .treffic_set .ts-warning {
+      &:before { @include border01(2px,$color-orange-01,0.4 ); }
+      @include level-Common; & > p:before {@include border01(2px,$color-orange-01,1 ); @include issue06;}
+    }
     .treffic_set .ts-warning:after, .m_marqueebox:before {background-color:$color-orange-01;}
   } // .level-warning 경고
 
   &-danger  {
-    .treffic_set .ts-danger {@include level-Common;}
+    .treffic_set .ts-danger {
+      &:before { @include border01(2px,$color-red-01,0.4 ); }
+      @include level-Common; & > p:before {@include border01(2px,$color-red-01,1 ); @include issue06;}
+    }
     .treffic_set .ts-danger:after, .m_marqueebox:before {background-color:$color-red-01;}
   } // .level-danger  위험
 }

@@ -1,11 +1,59 @@
 @charset "utf-8";
 @import "filters";
 
+body.admin_mode {
+
+}
+
+body.chart_mode {
+
+
+  section.container {
+    @include flexbase;
+    position: absolute; padding:0; width:auto; height:auto;
+    top:($headerHeight + 50px); right:$admin-margin; bottom:50px; left:$admin-margin;
+
+    .sub_title_area {position: absolute; top:0; left:0; width:100%; max-height:40px;}
+    .tree_table, .chart_table_area, .depthtabs_set {
+      @include flexbase; @include flex-column; position: relative;
+    }
+
+    .tree_table {
+      min-width:$tree-table-width; max-width:$tree-table-width; margin:60px 0 0 0; padding:0;
+      & > div {
+        &.table_title_area {padding-top: 10px;}
+        &.table_contents {@include flex-option(0, 1, 100%);  margin: 0 0 10px 0; overflow: auto;}
+        & > div {
+          padding:0 20px;
+          &.tree_box {max-height:none; }
+        }
+      }
+    }
+    .chart_table_area {
+
+      padding:0 0 0 60px; margin:50px 0 0 0;
+
+      .depthtabs_set {
+
+        &, & > div {position: relative; height:100%;}
+        & > div {position: relative; height:100%;}
+
+        .chart_box, .chart_label {position: absolute; width:100%; left:0;}
+        .chart_box   {top:0; bottom:60px;}
+        .chart_label {bottom:0; height:20px;}
+      }
+    }
+
+    .table_title_area { max-height:65px; min-height: 65px;}
+
+  }
+  //.sub_title_area {position: absolute; }
+}
 
 ///// ----------------- container START
 section.container {
   position: relative; width:100%; height:100%;
-  padding:($headerHeight + 50px) $admin-margin 100px $admin-margin;
+  padding:($headerHeight + 50px) $admin-margin 50px $admin-margin;
   @include transition(400ms);
   &.on { padding-right:(40px + $noticecenter-width); }
 }
@@ -24,17 +72,39 @@ section.container {
 
   .tr_table & {border-width:1px 0 0 0;}
 
-  .search_contents > * {
-    float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
-    &, & > * {@include flexbase;  @include flex-align-items-center;}
-    & > *:not(select) { height: 100%;  }
-    & > span > em  {padding:0 3px;}
-    & > span:first-child {padding:0 10px 0 0;}
-    & > span > input {max-width:170px;}
-    & > span > input.hasDatepicker {width:110px;}
-    & > span > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
-  }
 }
+.search_contents > * {
+  float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
+  &, & > * {@include flexbase;  @include flex-align-items-center;}
+  & > *:not(select) { height: 100%;  }
+  & > span > em  {padding:0 3px;}
+  & > span:first-child {padding:0 10px 0 0;}
+  & > span > input {max-width:170px;}
+  & > span > input.hasDatepicker {width:110px;}
+  & > span > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
+}
+
+.tree_box .search_contents > * {
+  display: inline-block; width:100%; padding:0;
+  & > * {
+    padding:0 0 5px 0 !important;
+    &, & > * {width:100%;}
+    em {width:auto;}
+    button {
+      max-width:40px; min-width:40px; margin:0 !important;
+      &.add {&:before {content:"\e92b"};}
+      &.del {
+        background-color: $color-red-01;
+        &:before {content:"\e92c"};}
+    }
+    input.hasDatepicker {
+      width:100%; max-width: none;
+      & + button + select {max-width: 80px; min-width:80px;}
+    }
+  }
+
+}
+
 ////// 어드민 검색영역  End
 
 
@@ -164,8 +234,8 @@ div.tablebase, .d_defalut {display: inline-block;}
             height:55px; min-width:55px; max-width:55px !important;
             margin:0 0 0 10px !important;
             &:before {  font-weight:bold;}
-            &.closebtn {background-color:$color-red-01;  &:before {content:"삭제";} }
-            &.addbtn {  &:before {content:"추가";} }
+            &.closebtn {background-color:$color-red-01;  &:before {content:"Del";} }
+            &.addbtn {  &:before {content:"Add";} }
           }
 
         }
@@ -329,7 +399,7 @@ div.tablebase, .d_defalut {display: inline-block;}
 
 // div 테이블 base 정의 Start
 div.d_defalut {
-  & > div > div > * {min-width:40px;}
+  & > div > div > * {min-width:30px;}
   // 이벤트 통계 좌우 스크롤 테이블 타입
   &.d_type01 {
     & > div {float:left;}
@@ -434,8 +504,8 @@ ul.u_defalut {
   }
   & > p {
     width:90px; font-weight:bold;
-    &:before {content:"총"; left:10px;}
-    &:after  {content:"건"; right:10px;}
+    &:before {content:"All"; left:10px;}
+    &:after  {content:"N"; right:10px;}
   }
 
   & > .page_count {
@@ -770,7 +840,7 @@ ul.u_defalut {
   & > span  {
     cursor:pointer;
     &:before {
-      content:"파일찾기";
+      content:"FILE";
       position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $bas-color;
       @include flex-midddle;
       @include transition(400ms);
@@ -816,7 +886,7 @@ ul.u_defalut {
 /////..... 트리 테이블 시작
 .tree_table  {
 
-  $tree-table-width:350px;
+
 
   position: absolute; z-index: 1; width:$tree-table-width !important; float: left;
   margin:20px 0 0 0;  padding:20px; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
@@ -832,12 +902,16 @@ ul.u_defalut {
     }
   }
 
-  & ~ .form_type01  {padding: 0 0 0 ($tree-table-width + 60px);}
+  & ~ .form_type01, & + article  {padding: 0 0 0 ($tree-table-width + 60px);}
+  & + article  {padding-top: 10px;}
 
-  .table_title_area {height:40px; @include flex-option(1, 0, 40px);}
+  .table_title_area {
+    height:40px; @include flex-option(1, 0, 40px);
+    .table_btn_set button {max-width: none;}
+  }
 
   .tree_box {
-    $tree-bwidth:26px;
+    $tree-bwidth:26px; max-height:650px;
     overflow-x: auto; width:100%; margin:20px 0;
 
     ul {
@@ -1026,6 +1100,45 @@ textarea.noboder_type01 {border:none; min-height:150px; background-color: transp
 a.fc-more {position: relative; z-index: 2;}
 .fc-day-number{position: relative; z-index: 2;}
 .colorbox {width: 20px; height: 20px; margin: auto;}
+
+
+
+
+/////......  이벤트 통계 원 차트 시작
+.chart_table_area {
+  display:inline-block; width:100%; padding: 0 0 50px 0;
+
+  & > div {
+    position: relative; float:left; margin:40px 0 0 0;
+    &.table_title_area {margin:0;}
+  }
+  &.type01 {
+    & > div {
+      min-width:50%; height:320px;
+      & > div {
+        float: left; position: relative; height:100%;
+
+        &:first-of-type {
+          width:-webkit-calc(100% - 380px);width:calc(100% - 380px); padding:50px 0 0 0;
+        } // 차트
+        &:last-of-type  {width:380px;} // 테이블
+      }
+    }
+    table {
+      height: $td-height * 5;
+      tbody { overflow-y: scroll; position: absolute; top:$td-height + 1px; bottom:1px; width:100%;}
+      th, td { &:first-of-type {width:100%;}  &:last-of-type {width:80px;min-width:80px;} }
+      td:first-of-type:before
+      {content:""; display: inline-block; width: 14px; height: 14px; margin: 0 10px 0 0; }
+      td:last-of-type {padding:0 4px 0 22px;}
+    }
+  }
+  &.type02 > div {width:100%;}
+
+
+}
+/////......  이벤트 통계 원 차트 끝
+
 
 
 .eventlog_col col {

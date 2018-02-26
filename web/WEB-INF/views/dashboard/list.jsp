@@ -711,10 +711,10 @@
      * @author psb
      * @private
      */
-    function appendEventHandler(data, messageType){
+    function appendEventHandler(messageType, eventLog, notification, cancelList){
         switch (messageType) {
             case "addEvent" : // 일반 이벤트
-                switch ($(".watch_area div[areaId='"+data['areaId']+"']").attr("templateCode")){
+                switch ($(".watch_area div[areaId='"+eventLog['areaId']+"']").attr("templateCode")){
                     case "TMP001": // 신호등
                         break;
                     case "TMP002": // 감시구역 침입
@@ -732,7 +732,7 @@
             case "addAlarmEvent": // 알림이벤트 등록
             case "removeAlarmEvent": // 알림이벤트 해제
             case "refreshView" : // 초기로딩 및 리스트 교체
-                eventLogRender(data, messageType);
+                eventLogRender(eventLog, messageType);
                 break;
         }
     }

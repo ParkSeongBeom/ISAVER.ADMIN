@@ -131,9 +131,9 @@ var RequestHelper = (
          * WS에서 이벤트 수신시 DB거치지 않고 실시간 대쉬보드 반영을 위함
          * @author psb
          */
-        this.callBackEvent = function(eventLog, messageType){
+        this.callBackEvent = function(messageType, eventLog, notification, cancelList){
             if(_callBackEventHandler!=null){
-                _callBackEventHandler(eventLog, messageType);
+                _callBackEventHandler(messageType, eventLog, notification, cancelList);
             }
         };
     }

@@ -167,6 +167,14 @@
     </definition>
 
     <!--
+        알림센터 이력 관리
+        @author psb
+    -->
+    <definition name="notificationList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/notification/list.jsp" />
+    </definition>
+
+    <!--
         사용자 로그인 이력 관리
         @author psb
     -->
@@ -207,36 +215,6 @@
     </definition>
 
     <!--
-        이벤트 통계 - 구역별
-        @author psb
-     -->
-    <definition name="areaEventStatistics" template="/WEB-INF/views/eventStatistics/area/list.jsp" />
-
-    <!--
-        이벤트 통계 - 작업자
-        @author psb
-     -->
-    <definition name="workerEventStatistics" template="/WEB-INF/views/eventStatistics/worker/list.jsp" />
-
-    <!--
-        이벤트 통계 - 크레인
-        @author psb
-     -->
-    <definition name="craneEventStatistics" template="/WEB-INF/views/eventStatistics/crane/list.jsp" />
-
-    <!--
-        이벤트 통계 - 유해가스
-        @author psb
-     -->
-    <definition name="gasEventStatistics" template="/WEB-INF/views/eventStatistics/gas/list.jsp" />
-
-    <!--
-        이벤트 통계 - 진출입자
-        @author psb
-     -->
-    <definition name="inoutEventStatistics" template="/WEB-INF/views/eventStatistics/inout/list.jsp" />
-
-    <!--
         알림 전송 이력  관리 목록
         @author dhj
     -->
@@ -274,8 +252,8 @@
     </definition>
 
     <!--
-        임계치 설정  관리
-        @author dhj
+        임계치 설정 관리
+        @author psb
     -->
     <definition name="criticalList" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/critical/list.jsp" />

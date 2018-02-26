@@ -17,52 +17,58 @@ import java.util.Map;
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
  *  2016. 8. 4.     psb           최초 생성
+ *  2018. 2. 21.     psb           통계 메뉴 정리
+ *  2018. 2. 23.     psb           통계 테이블 변경으로 인한
  * </pre>
  */
 public interface EventStatisticsSvc {
 
     /**
-     * 구역별 이벤트 통계 목록을 가져온다.
-     *
+     * 이벤트 통계 목록을 가져온다.
      * @author psb
-     * @param parameters
-     * @return
+     * @return the list
      */
-    public ModelAndView findListAreaEventStatistics(Map<String, String> parameters);
+    public ModelAndView findListEventStatistics(Map<String, String> parameters);
 
     /**
-     * 작업자 이벤트 통계 목록을 가져온다.
-     *
+     * 시간별 이벤트 통계 목록을 가져온다.
      * @author psb
-     * @param parameters
-     * @return
+     * @return the list
      */
-    public ModelAndView findListWorkerEventStatistics(Map<String, String> parameters);
+    public ModelAndView findListEventStatisticsHour(Map<String, String> parameters);
 
     /**
-     * 크레인 이벤트 통계 목록을 가져온다.
-     *
+     * 일별 이벤트 통계 목록을 가져온다.
      * @author psb
-     * @param parameters
-     * @return
+     * @return the list
      */
-    public ModelAndView findListCraneEventStatistics(Map<String, String> parameters);
+    public ModelAndView findListEventStatisticsDay(Map<String, String> parameters);
 
     /**
-     * 유해가스 이벤트 통계 목록을 가져온다.
-     *
+     * 요일별 이벤트 통계 목록을 가져온다.
      * @author psb
-     * @param parameters
-     * @return
+     * @return the list
      */
-    public ModelAndView findListGasEventStatistics(Map<String, String> parameters);
+    public ModelAndView findListEventStatisticsDow(Map<String, String> parameters);
 
     /**
-     * 진출입자 이벤트 통계 목록을 가져온다.
-     *
+     * 주별 이벤트 통계 목록을 가져온다.
      * @author psb
-     * @param parameters
-     * @return
+     * @return the list
      */
-    public ModelAndView findListInoutEventStatistics(Map<String, String> parameters);
+    public ModelAndView findListEventStatisticsWeek(Map<String, String> parameters);
+
+    /**
+     * 월별 이벤트 통계 목록을 가져온다.
+     * @author psb
+     * @return the list
+     */
+    public ModelAndView findListEventStatisticsMonth(Map<String, String> parameters);
+
+    /**
+     * 년별 이벤트 통계 목록을 가져온다.
+     * @author psb
+     * @return the list
+     */
+    public ModelAndView findListEventStatisticsYear(Map<String, String> parameters);
 }

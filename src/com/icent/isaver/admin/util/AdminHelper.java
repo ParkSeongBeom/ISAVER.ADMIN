@@ -203,6 +203,25 @@ public class AdminHelper {
     }
 
     /**
+     * 세션에서 로그인한 관리자의 이름을 가져온다.
+     *
+     * @author kst
+     * @param request
+     * @return
+     */
+    public static String getAdminNameFromSession(HttpServletRequest request){
+        String adminName = null;
+        try{
+            UsersBean usersBean = getAdminInfo(request);
+            adminName = usersBean.getUserName();
+        }catch(Exception e){
+
+        }
+
+        return adminName;
+    }
+
+    /**
      * 일자별 검색이 필요한 페이지 초기 진입시 날짜 기본값 셋팅</br>
      * - FindBean에 맞춰짐.
      *

@@ -584,37 +584,6 @@ div[contenteditable] {}
 ///// 데시보드 라인 차트 끝
 
 
-/////......  이벤트 통계 원 차트 시작
-.chart_table_area {
-  display:inline-block; width:100%; padding: 0 0 50px 0;
-
-  & > div {position: relative; float:left; margin:40px 0 0 0; }
-  &.type01 {
-    & > div {
-      min-width:50%; height:320px;
-      & > div {
-        float: left; position: relative; height:100%;
-
-        &:first-of-type {
-          width:-webkit-calc(100% - 380px);width:calc(100% - 380px); padding:50px 0 0 0;
-        } // 차트
-        &:last-of-type  {width:380px;} // 테이블
-      }
-    }
-    table {
-      height: $td-height * 5;
-      tbody { overflow-y: scroll; position: absolute; top:$td-height + 1px; bottom:1px; width:100%;}
-      th, td { &:first-of-type {width:100%;}  &:last-of-type {width:80px;min-width:80px;} }
-      td:first-of-type:before
-      {content:""; display: inline-block; width: 14px; height: 14px; margin: 0 10px 0 0; }
-      td:last-of-type {padding:0 4px 0 22px;}
-    }
-  }
-  &.type02 > div {width:100%;}
-}
-/////......  이벤트 통계 원 차트 끝
-
-
 /////...... 날짜 선택 버튼 셋 정의 Start
 .month_btn_set {
   @include flexbase;

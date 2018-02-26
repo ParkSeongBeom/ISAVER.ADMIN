@@ -57,6 +57,7 @@ body.dashboard_mode {
     & > section {
       @include flex-option(0, 1, 100%);
       &, & > div {@include flexbase; position: relative;}
+
       & > div {
         @include flex-column; overflow: hidden;
         header,article {position: relative; width:100%; @include transition(200ms);}
@@ -155,10 +156,34 @@ body.dashboard_mode {
 
   &.dark_mode {
     h1 {background-image: url(../images/logo/icent_isaver_w.svg); }
-    &, & *:not(select) {color:$color-white-02; }
+    &, & *:not(personal_popup, popupbase)  {color:$color-white-02; }
 
-    &, .db_area, .db_area:before, .db_list_box, .wrap > header  {background-color: $color-gray-08;}
-    .db_list_box {border-color: $color-gray-09;}
+    &, .db_area, .db_area:before, .db_list_box, .wrap > header, .db_filter_set h3 {@include screenbg;}
+
+    .db_list_box {
+      border-color: $color-gray-09;
+      textarea {
+        color:$color-white-02;
+        background-color: transparent;
+        &::-webkit-input-placeholder     {color:rgba(255,255,255, 0.4);}
+        &::-moz-placeholder              {color:rgba(255,255,255, 0.4);}
+        &:-ms-input-placeholder          {color:rgba(255,255,255, 0.4);}
+        &:-moz-placeholder               {color:rgba(255,255,255, 0.4);}
+      }
+
+      select {@include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02; }
+
+    }
+    .db_cancel_set {background-color: $color-gray-09;}
+    .db_filter_set {
+      h3 {border:none;}
+      &, & * {border-color:$color-gray-09;}
+      .checkbox_set {
+        @include screenbg;
+        label:before {}
+      }
+    }
+
 
     .wrap {
       & > article > section {
@@ -168,7 +193,7 @@ body.dashboard_mode {
       menu > ul > li > ul {background-color: $color-gray-09;}
     }
 
-    .db_allcheck label:before {color:#3c3c3c;}
+
 
     .kblinker_set > * {@include text-shadow(1px, 2px, 10px, #000, 0.5);}
 
@@ -188,7 +213,7 @@ body.dashboard_mode {
           &.type-list {
             &, &:before {background-color: transparent !important;}
             .m_marqueebox {
-              &:before {background-color: $color-gray-08 !important;}
+              &:before {background-color: $bas-color !important;}
             }
           }
 
@@ -203,7 +228,7 @@ body.dashboard_mode {
     .nhr_set li {
 
       &:after {background-color: $color-gray-08; border-color:$color-gray-09;}
-      &.on {&:after {border-color:$color-gray-01;} }
+      &.on {&:after {border-color:$color-gray-06;} }
     }
 
   }
@@ -266,48 +291,15 @@ body.dashboard_mode {
 
     article {
       & > * {
-
         @include flex-midddle;  @include flex-option(0, 1, 100%); width:100%;
-
         &, & > div {position: relative;}
-
-        & > * {
-          &.s_rbox {
-            @include flexbase;
-            height:100%; min-width:150px; padding: 0 $m_lr 0 0;
-            &.marquee_box {
-              overflow: hidden;
-              & > * { max-height:none !important;}
-            }
-            &.marquee_h:hover {overflow: auto;}
-
-            & > * {
-              position: absolute; left:0;
-              li {@include flexbase; @include flex-align-items-center; position: relative; }
-            }
-          }
-        }
-
-        &.safeeye_set, &.personnel_set {
-          & > .s_lbox {@include flex-width-one(2);}
-          & > .s_rbox {
-            @include flex-align-items-center; @include flex-width-one(1); right:(-$m_lr + 1px);
-            overflow-y: auto; overflow-x: hidden !important; margin:0 0 0 20px;
-            & > * {
-              right:$m_lr; max-height:100%;
-              li {margin:0 0 15px 0; padding:0 8px; &:last-of-type {margin:0;} }
-            }
-          }
-        }
+        & > * {@include flexbase;}
       }
-
     }
-
     &.on {
       & > article {opacity: 0;}
       .device_popup {right:0;}
     }
-
   }
 
   /*
@@ -346,6 +338,7 @@ body.dashboard_mode {
   &.area02 {
     & > div {min-width:50% !important; height:50%;}
   }
+
   &.area04 {
 
     & > div {
@@ -390,7 +383,7 @@ body.dashboard_mode {
 
     .safeeye_set > .s_lbox{
       &:before {font-size:($se_bsize - 3rem);}
-      &:after {$loding-size:160px; width:$loding-size; height:$loding-size;}
+      //&:after {$loding-size:160px; width:$loding-size; height:$loding-size;}
     }
   }
 
@@ -426,7 +419,7 @@ body.dashboard_mode {
     .safeeye_set {
       & > .s_lbox{
         &:before {font-size:($se_bsize - 3rem); }
-        &:after {$loding-size:180px; width:$loding-size; height:$loding-size;}
+        //&:after {$loding-size:180px; width:$loding-size; height:$loding-size;}
       }
     }
     .kblinker_set > * {
@@ -449,6 +442,29 @@ body.dashboard_mode {
 /////..... 구역 End
 
 
+/////..... .watch_area > div > article > * >  좌 / 우
+.s_lbox {@include flex-width-one(2);}
+.s_rbox {
+  @include flex-align-items-center; @include flex-width-one(1);
+  overflow-y: auto; overflow-x: hidden !important;
+  right:(-$m_lr + 1px); height:100%; min-width:150px; padding: 0 $m_lr 0 0; margin:0 0 0 20px;
+
+  & > * {
+    position: absolute; left:0; right:$m_lr; max-height:100%;
+    li {
+      @include flexbase; @include flex-align-items-center; position: relative;
+      margin:0 0 15px 0; padding:0 8px;
+      &:last-of-type {margin:0;}
+    }
+  }
+
+  &.marquee_box {
+    overflow: hidden;
+    & > * { max-height:none !important;}
+  }
+  &.marquee_h:hover {overflow: auto;}
+}
+/////..... .watch_area > div > article > * >
 
 
 /////..... 차트 영역 Start
@@ -488,6 +504,7 @@ body.dashboard_mode {
     &:before {
       top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
       background-color: $color-gray-02; @include box-shadow01(0px, 10px, 10px, -8px, #000, 0.2);
+
     }
     &:after {
       top:($treffic_b * 2); right:($treffic_b * 2); bottom:($treffic_b * 2); left:($treffic_b * 2);
@@ -495,13 +512,19 @@ body.dashboard_mode {
     }
 
     &.ts {
-      &-caution:before {background-color: rgba($color-gray-03,0.5);   }    // &-caution 주의
-      &-warning:before {background-color: rgba($color-orange-01,0.5); }    // &-warning 경고
-      &-danger:before  {background-color: rgba($color-red-01,0.5);    }    // &-danger  위험
+      &-caution:before {background-color: rgba($color-gray-03,0.5);   border-color:rgba($color-gray-03,  0.4);}    // &-caution 주의
+      &-warning:before {background-color: rgba($color-orange-01,0.5); border-color:rgba($color-orange-01,0.4);}    // &-warning 경고
+      &-danger:before  {background-color: rgba($color-red-01,0.5);    border-color:rgba($color-red-01,   0.4);}    // &-danger  위험
+
+
     }
 
     p {position: absolute; z-index: 10; top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
       font-size:2rem; line-height: 2.2rem; color:$color-gray-08 !important;
+      &:before {
+        content:""; position: absolute; padding:47%;
+        @include border-radius(200px);
+      }
     }
 
     /*@media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -585,19 +608,6 @@ body.dashboard_mode {
       @include border01(0 0 1px 0,#000,1 );
     }
 
-    &.s_lbox {
-      h3 { display: none;}
-
-      h3 + div {
-        @include flex-row-wrap;
-        &::before {
-          content:"\e944"; font-size:$se_bsize;
-          text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
-        }
-      }
-
-    }
-
     & > div {
       @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
       width:100%;
@@ -611,6 +621,19 @@ body.dashboard_mode {
           &:nth-of-type(2) {&:after {content:"\e923"; } opacity: 0.7;}
         }
       }
+    }
+
+    &.s_lbox {
+      h3 { display: none;}
+
+      h3 + div {
+        @include flex-row-wrap;
+        &::before {
+          content:"\e944"; font-size:$se_bsize;
+          text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
+        }
+      }
+
     }
   }
 
@@ -643,16 +666,11 @@ body.dashboard_mode {
 /////..... safeeye section Start
 .safeeye_set {
   .s_lbox {
-    @include flex-midddle; text-align: center;
+    @include flex-midddle;
     &:before, &:after {position: absolute; font-size:$se_bsize; @include border-radius(200px);}
     &:before {z-index: 1;}
+    &:after {content:""; @include border01(3px,$color-red-01,1 ); padding:10%; }
 
-    /* 감시 효과 - 일반
-    &:after {
-      content:""; width:$loding-size; height:$loding-size; color:rgba(0,0,0,0);  @include loding;
-      @include border(0 2px 2px 2px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
-    }
-    */
   }
   .s_rbox {display: none !important;}
   li {
@@ -686,7 +704,7 @@ body.dashboard_mode {
   .s_lbox {
     // order:2;
 
-    @include flexbase; @include flex-column; overflow: hidden;
+    overflow: hidden;
 
     &:hover .chart_select_set {top:10px;}
 
@@ -697,21 +715,21 @@ body.dashboard_mode {
     }
     .chart_box {position: relative; width:100%; height:100%;}
   }
+
   .s_rbox {
     //order: 1; margin: 0 0 20px 0;
     margin: 20px 0 0 0;
     right:0; @include flex-align-items-start;
-    @include border01(0 0 1px 0,$color-gray-09,1 );
+    @include border01(0 0 1px 0,$color-gray-06,1 );
     ul {
       @include flexbase; @include flex-row-wrap; @include flex-justify-content-between;
       @include flex-align-items-start; @include flex-align-content-start;
       overflow: auto; z-index:1; right:0; height:100%; @include transition(400ms);
-
       //&:hover {height:200%; background-color: rgba($color-gray-08, 0.9);}
     }
 
     li {
-      @include flex-row-wrap; overflow: hidden; opacity: 0.7;
+      @include flex-row-wrap; overflow: hidden; opacity: 0.7; margin:0;
 
       position: relative; z-index: 1; width:50%; height:55px;
       line-height:1rem; letter-spacing: -0.1rem; padding:4px 30px 9px 55px;
@@ -782,10 +800,95 @@ body.dashboard_mode {
       }
     }
   }
-
-
 }
 /////..... NHR section End
+
+
+/////..... Guard section Start
+.guard_set {
+  $watchpadding:115px;
+  $devicewidth:30px;
+
+
+  .s_lbox, .s_rbox {height:100%; background-color: $bas-color;}
+  .s_lbox {
+    overflow: hidden;
+
+    .device > div, .icon-tof, .icon-ptz, .tracking {
+      @include flexbase;
+      &, &:before, &:after {
+        @include flex-midddle; position: absolute; z-index: 2;  width:$devicewidth; height:$devicewidth;
+        background-color: transparent !important; font-size:1.9rem; color:$color-white-01;
+        @include border-radius(200px);
+        @include transition(400ms); cursor: pointer;
+      }
+    }
+    .tracking:before {content:"\e91b"; font-size:0.6rem; color:$color-blue-03 !important;}
+
+    .icon-tof, .icon-ptz { &:before {@include text-shadow(0, 3px, 8px, #000, 1);} }
+
+
+    .icon-tof {top:10%; left:10%;}
+    .icon-ptz {top:20%; left:20%;}
+    .tracking {top:40%; left:40%;}
+
+
+    .icon-tof, .icon-ptz, .device > div, .tracking {
+      /////..... 임계치 적용 표시 Start
+      &.level {
+        &-caution,&-warning,&-danger {@include pOn;}
+        &-caution:after {@include border01(2px,$color-gray-05,1);  }
+        &-warning:after {@include border01(2px,$color-yellow-01,1);}
+        &-danger:after  {@include border01(2px,$color-red-01,1);   }
+      }
+      /////..... 임계치 적용 표시 End
+    }
+
+
+  }
+  .s_rbox {
+    right:0;
+    &, & * {margin:0; padding:0;}
+    & > ul {
+      @include flexbase; @include flex-column; width:100%; height: 100%;
+      li {
+        overflow: hidden; position: relative; width:100%; height:50%; min-height:25%;
+        background-position: 50%; background-repeat: no-repeat; background-size: cover;
+        & * {widtH:100%; }
+      }
+    }
+  }
+}
+.gm-style-pbc {opacity: 1 !important;}
+
+
+/////.......................................... Guard End
+
+
+
+/////...... button base 정의 Start
+.btnbase {@include btnbase;}
+.dim {pointer-events: none; opacity: 0.5;}
+.icon {
+  &-login:before   {content:"\e900";} // 로그인
+  &-admin:before   {content:"\e909";} // 관리자
+  &-user:before    {content:"\e90e";} // 사용자
+  &-update:before  {content:"\e961";} // 업데이트
+  &-confirm:before {content:"\e941";} // 확인
+  &-cancle:before  {content:"\e937";} // 알림해지
+  &-more:before    {content:"\e95c";} // 더보기
+  &-zoom:before    {content:"\e925";} // 더보기
+  &-area:before    {content:"\e91b";} // 장소
+  &-tof:before     {content:"\e962";} // TOF 센서
+  &-ptz:before     {content:"\e95a";} // PTZ 카메라
+  &-light:before   {content:"\e93b";} // 경광등
+  &-speak:before   {content:"\e93a";} // 스피커
+  &-chart:before   {content:"\e908";} // 차트
+  &-four:before    {content:"\e938";} // 4분할
+}
+/////...... button base 정의 End
+
+
 
 /////.......... 디바이스 보기 Popup Start
 .device_popup {
@@ -845,201 +948,3 @@ body.dashboard_mode {
 }
 /////.......... 디바이스 보기 Popup End
 
-
-
-/////.......................................... Guard Start
-main {
-  @include flexbase; @include flex-option(0, 1, 100%); width:100%;
-  background-color: $bas-color;
-  & > * {position: relative; height:100%; }
-
-  .copybox {
-    display: none;
-    & > * {font-size:1rem;}
-    p { span {padding:0 0 0 10px;}}
-    em {letter-spacing: 0;}
-  }
-}
-
-/////...... button base 정의 Start
-.btnbase {@include btnbase;}
-.dim {pointer-events: none; opacity: 0.5;}
-.icon {
-  &-login:before   {content:"\e900";} // 로그인
-  &-admin:before   {content:"\e909";} // 관리자
-  &-user:before    {content:"\e90e";} // 사용자
-  &-update:before  {content:"\e961";} // 업데이트
-  &-confirm:before {content:"\e941";} // 확인
-  &-cancle:before  {content:"\e937";} // 알림해지
-  &-more:before    {content:"\e95c";} // 더보기
-  &-zoom:before    {content:"\e925";} // 더보기
-  &-area:before    {content:"\e91b";} // 장소
-  &-tof:before     {content:"\e962";} // TOF 센서
-  &-ptz:before     {content:"\e95a";} // PTZ 카메라
-  &-light:before   {content:"\e93b";} // 경광등
-  &-speak:before   {content:"\e93a";} // 스피커
-  &-chart:before   {content:"\e908";} // 차트
-  &-four:before    {content:"\e938";} // 4분할
-}
-/////...... button base 정의 End
-
-
-.map   {@include flex-option(0, 1, 100%);}
-.video {@include flex-option(1, 0, $video-width);}
-
-.map {
-  overflow: hidden;   min-width:900px;
-  //@include border01(1px,$color-gray-01,1);
-  background-position: 50%; background-repeat: no-repeat; background-size: cover;
-
-
-  &.map_01 {background-image: url(../images/map/map01.png);}
-  &.map_02 {background-image: url(../images/map/map02.png);}
-  &.map_03 {background-image: url(../images/map/map03.png);}
-  &.map_04 {background-image: url(../images/map/map04.png);}
-  &.map_05 {background-image: url(../images/map/map05.png);}
-  &.map_icent {background-image: url(../images/map/icent.png);}
-
-  & > * {position: absolute; }
-
-  &.level-danger {
-    header > div {
-      background-color: rgba($color-red-01, 0.7); @include arealist;
-      h3 {background-color: transparent;}
-      .copybox {display: block;}
-    }
-  }
-
-  header {
-    z-index:10; top:0; left:0; height:60px; min-width:auto; padding:0; background-color:transparent;
-    @include flex-align-items-start;
-    //@include border01(0 0 1px 0,$color-gray-01,1); background-color: rgba(0,0,0,0.7);
-    .guaedarea {@include btnbase; position: absolute; z-index: 10; top:0; right:0;}
-
-    & > div {display: inline-block; color:$color-white-01;}
-    h3 {height:60px; font-size:2rem; line-height:4rem; padding:0 20px; background-color: rgba(0,0,0,0.5);}
-    .copybox {
-      padding:0 20px 20px 20px;
-      & * {font-size:2rem; line-height: 2.2rem;}
-    }
-
-  }
-
-  .watch {
-
-    /*
-   <article class="watch">
-
-        <div><!-- 구글맴 -->
-
-            <div class="device"><!-- level-danger level-warning level-caution 감시디바이스-->
-                <div class="icon-tof"></div>
-                <div class="icon-ptz"></div>
-            </div>
-
-        </div>
-
-    </article>
-    */
-
-    $watchpadding:115px;
-    $devicewidth:30px;
-
-    @mixin pOn {
-      &:before {color:$color-yellow-01 !important;}
-      &:after {
-        content:""; position: absolute; width:120%; height:120%; @include border01(2px,$color-yellow-01,1);
-        @include issue03;
-      }
-    } // @include pOn;
-    @include flexbase;
-    z-index:8; width:100%; height:100%;
-
-
-    &, & *, & *:before, & *:after {position: absolute;  @include transition(400ms); /*@include border-radius(200px);*/}
-
-
-    & > div {
-      width:100%; height:100%;
-      //background-position: 50%; background-repeat: no-repeat; background-size: cover;
-      //background-image: url(../images/map/icent.png);
-      //&:before {content:""; position: absolute; z-index: 1; width:100%; height:100%; background-color: rgba(0,0,0,0.5);}
-    }
-
-    // zone-
-    .device {
-      @include flexbase; position: absolute; background-color: transparent;
-      //top:50%; left:50%;
-      &, & *, & *:before, & *:after {cursor: pointer; }
-    }
-
-
-    .device > div, .tracking {
-      @include flex-midddle; position: relative; background-color: transparent;
-      z-index: 2; font-size:1.9rem; width:$devicewidth; height:$devicewidth;
-      &,&:before, &:after { @include border-radius(200px); color:$color-white-01;}
-    }
-    .tracking:before {content:"\e91b"; }
-
-
-    .device {
-      /////..... 임계치 적용 표시 Start
-      &.level {
-        &-danger  > div {@include pOn;}
-      }
-      /////..... 임계치 적용 표시 End
-    }
-
-    .tracking {
-      /////..... 임계치 적용 표시 Start
-      &.level {
-        &-danger {@include pOn;}
-      }
-      /////..... 임계치 적용 표시 End
-    }
-
-  }
-
-}
-
-.video {
-  @include flexbase; @include flex-column; margin:0 0 0 0;
-  //@include border01(1px 1px 1px 0,$color-gray-01,1);
-  & > div {
-    position: relative; width:100%;
-
-    /*
-    @include flex-midddle;
-    &:before, &:after {position: absolute; font-size:2.2rem; color:$color-white-01; opacity: 1; z-index: 10;}
-     &:before {@include flex-midddle; top:0; right:0; width:50px; height:50px; background-color: rgba(0,0,0,0.4);}
-     &:after  {content:"\e92b";}*/
-
-    background-position: 50%; background-repeat: no-repeat; background-size: cover;
-  }
-
-  .tof {
-
-    height:40%;
-    @include border01(0 0 1px 0,$color-gray-01,1);
-    background-image: url(../../assets/images/video/tofview.png);
-    background-position: 50%; background-repeat: no-repeat; background-size: cover;
-
-
-  }
-  .ptz {
-    //&:before {content:"\e95a";}
-    height:60%;
-
-    & > div {overflow: hidden; width:100%; height:50%;}
-
-    &.on {@include video;}
-    button {
-      @include btnbase; position: absolute; top:0; right:0; opacity: 0.5;
-      &.on {opacity: 1;}
-    }
-
-
-  }
-}
-
-/////.......................................... Guard End

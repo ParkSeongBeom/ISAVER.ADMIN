@@ -46,8 +46,12 @@
                     </tr>
                     <tr>
                         <th class="point"><spring:message code="event.column.eventFlag"/></th>
-                        <td class="point" colspan="3">
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagId="selectEventFlag" htmlTagName="eventFlag" disabled="true"/>
+                        <td class="point">
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagName="eventFlag" disabled="true"/>
+                        </td>
+                        <th class="point"><spring:message code="event.column.statisticsCode"/></th>
+                        <td class="point">
+                            <isaver:codeSelectBox groupCodeId="STS" codeId="${event.statisticsCode}" htmlTagName="statisticsCode" disabled="true"/>
                         </td>
                     </tr>
                     <tr>

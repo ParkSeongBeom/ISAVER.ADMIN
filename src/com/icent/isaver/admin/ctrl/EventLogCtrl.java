@@ -1,9 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +39,6 @@ public class EventLogCtrl {
 
         ModelAndView modelAndView = eventLogSvc.findListEventLog(parameters);
         modelAndView.setViewName("eventLogList");
-        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
@@ -62,19 +59,6 @@ public class EventLogCtrl {
     }
 
     /**
-     * 알림센터 데이터를 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alarm")
-    public ModelAndView findListEventLogForAlarm(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = eventLogSvc.findListEventLogForAlarm(parameters);
-        return modelAndView;
-    }
-
-    /**
      * 대쉬보드 데이터를 가져온다.
      *
      * @author psb
@@ -87,36 +71,15 @@ public class EventLogCtrl {
         return modelAndView;
     }
 
-    private final static String[] cancelEventLogParam = new String[]{"eventLogIds"};
-
-    /**
-     * 알림 해제한다
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/cancel")
-    public ModelAndView cancelEventLog(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        if(MapUtils.nullCheckMap(parameters, cancelEventLogParam)){
-            throw new IcentException("");
-        }
-
-        parameters.put("eventCancelUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = eventLogSvc.cancelEventLog(parameters);
-        return modelAndView;
-    }
-
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
     public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogSvc.findListEventLogForExcel(request, response, parameters);
         modelAndView.setViewName("excelDownloadView");
-        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
     /**
-     * 알림 해제한다
+     * 이벤트 로그 차트를 가져온다.
      *
      * @author psb
      * @param parameters

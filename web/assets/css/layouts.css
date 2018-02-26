@@ -276,12 +276,12 @@ header {
             content: "\e90e"; }
           header .header_area .header_right_area .header_btn_set button:before {
             font-size: 1.6rem; }
-          header .header_area .header_right_area .header_btn_set button:hover, header .header_area .header_right_area .header_btn_set button.on {
+          header .header_area .header_right_area .header_btn_set button:hover, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn) {
             background-color: #109dcb; }
-            header .header_area .header_right_area .header_btn_set button:hover:before, header .header_area .header_right_area .header_btn_set button.on:before {
+            header .header_area .header_right_area .header_btn_set button:hover:before, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn):before {
               color: #fff !important; }
           header .header_area .header_right_area .header_btn_set button.level-caution.issue_btn, header .header_area .header_right_area .header_btn_set button.level-warning.issue_btn, header .header_area .header_right_area .header_btn_set button.level-danger.issue_btn {
-            width: 260px;
+            width: 220px;
             /*background-color:$color-red-01;*/ }
             header .header_area .header_right_area .header_btn_set button.level-caution.issue_btn:before, header .header_area .header_right_area .header_btn_set button.level-warning.issue_btn:before, header .header_area .header_right_area .header_btn_set button.level-danger.issue_btn:before {
               color: #fff !important; }
@@ -655,8 +655,8 @@ menu {
   z-index: 101;
   position: fixed;
   top: 40px;
-  right: -440px;
-  width: 340px; }
+  right: -400px;
+  width: 300px; }
   .tpopupbase h2, .personal_popup h2 {
     padding: 0 0 30px 0; }
   .tpopupbase > section, .personal_popup > section {
@@ -681,7 +681,7 @@ menu {
   z-index: 40;
   top: 40px;
   right: 100px;
-  width: 260px; }
+  width: 220px; }
   .toast_popup.on {
     display: block; }
   .toast_popup > div {
@@ -724,10 +724,10 @@ menu {
   bottom: 20px;
   right: 20px;
   /*right:-($noticecenter-width * 2);*/
-  width: 340px;
+  width: 300px;
   background-color: #f5f5f5; }
   body.admin_mode .db_area {
-    right: -680px; }
+    right: -600px; }
     body.admin_mode .db_area.on {
       right: 20px; }
   .db_area.on {
@@ -779,8 +779,6 @@ menu {
     -ms-flex-pack: justify;
     justify-content: space-between;
     margin: 0 0 10px 0; }
-    .db_area h2:before {
-      content: "알림센터"; }
     .db_area h2 > div span {
       display: -webkit-box;
       display: -moz-box;
@@ -808,8 +806,8 @@ menu {
       -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
       float: left;
-      min-width: 35px;
-      height: 35px;
+      min-width: 40px;
+      height: 40px;
       margin: 0 0 0 5px;
       padding: 0 10px;
       font-size: 1.4rem;
@@ -837,82 +835,110 @@ menu {
     border-width: 1px;
     border-color: darkgray;
     background-color: #f5f5f5; }
-    .db_area section.db_list_box > div {
-      flex: 1 0 40px;
-      -webkit-flex: 1 0 40px;
-      flexbox: 1 0 40px;
+    .db_area section.db_list_box .db_filter_set {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      flex: 1 0 41px;
+      -webkit-flex: 1 0 41px;
+      flexbox: 1 0 41px;
       -webkit-box-flex: 0;
-      -ms-flex: 1 0 40px;
+      -ms-flex: 1 0 41px;
+      max-height: 41px;
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-color: darkgray;
       background-color: #fff; }
-      .db_area section.db_list_box > div > div, .db_area section.db_list_box > div > select {
-        border-style: solid;
-        border-width: 0 1px 1px 0;
-        border-color: darkgray; }
-      .db_area section.db_list_box > div > div {
-        flex: 1 0 40px;
-        -webkit-flex: 1 0 40px;
-        flexbox: 1 0 40px;
-        -webkit-box-flex: 0;
-        -ms-flex: 1 0 40px; }
-      .db_area section.db_list_box > div > select {
-        /*@include flex-option(0, 1, 100%);*/
-        width: 100%; }
-      .db_area section.db_list_box > div > button {
-        pointer-events: none;
-        opacity: 0.5;
-        flex: 1 0 40px;
-        -webkit-flex: 1 0 40px;
-        flexbox: 1 0 40px;
-        -webkit-box-flex: 0;
-        -ms-flex: 1 0 40px; }
-        .db_area section.db_list_box > div > button:before {
-          content: "\e937";
-          font-size: 1.5rem; }
-        .db_area section.db_list_box > div > button.on {
-          pointer-events: auto;
-          opacity: 1;
-          background-color: #4c4c4c; }
-        .db_area section.db_list_box > div > button.on.active {
-          background-color: #109dcb; }
-      .db_area section.db_list_box > div.db_cancel_set {
-        position: absolute;
-        z-index: 1;
-        top: 40px;
-        bottom: 0;
-        left: 100%;
+      .db_area section.db_list_box .db_filter_set > * {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
         width: 100%;
-        padding: 20px;
-        background-color: #fff;
         border-style: solid;
-        border-width: 1px 0 0 0;
+        border-width: 0 1px 0 0;
         border-color: darkgray; }
-        .db_area section.db_list_box > div.db_cancel_set textarea, .db_area section.db_list_box > div.db_cancel_set div[contenteditable] {
-          flex: 0 1 100%;
-          -webkit-flex: 0 1 100%;
-          flexbox: 0 1 100%;
-          -webkit-box-flex: 1;
-          -ms-flex: 0 1 100%;
-          position: relative;
-          margin: 0 0 20px 0;
-          border: none;
-          resize: none;
-          outline: none; }
-        .db_area section.db_list_box > div.db_cancel_set .btn_set {
-          flex: 1 0 40px;
-          -webkit-flex: 1 0 40px;
-          flexbox: 1 0 40px;
-          -webkit-box-flex: 0;
-          -ms-flex: 1 0 40px; }
-        .db_area section.db_list_box > div.db_cancel_set.on {
-          left: 0; }
-          .db_area section.db_list_box > div.db_cancel_set.on:before {
-            content: "알림해지";
-            position: absolute;
-            top: -35px;
-            font-size: 1.3rem; }
-      .db_area section.db_list_box > div.open_cancel > div, .db_area section.db_list_box > div.open_cancel > select {
-        opacity: 0;
-        visibility: hidden; }
+      .db_area section.db_list_box .db_filter_set .checkbox_set, .db_area section.db_list_box .db_filter_set button {
+        flex: 1 0 40px;
+        -webkit-flex: 1 0 40px;
+        flexbox: 1 0 40px;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 40px;
+        max-width: 40px; }
+      .db_area section.db_list_box .db_filter_set button {
+        flex: 1 0 40px;
+        -webkit-flex: 1 0 40px;
+        flexbox: 1 0 40px;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 40px;
+        max-width: 40px;
+        margin-left: auto;
+        border: none !important; }
+        .db_area section.db_list_box .db_filter_set button:before {
+          font-size: 1.5rem; }
+        .db_area section.db_list_box .db_filter_set button.on.active {
+          background-color: #109dcb; }
+        .db_area section.db_list_box .db_filter_set button.dbc_open_btn {
+          pointer-events: none;
+          opacity: 0.5; }
+          .db_area section.db_list_box .db_filter_set button.dbc_open_btn.on {
+            pointer-events: auto;
+            opacity: 1;
+            background-color: #3c3c3c; }
+          .db_area section.db_list_box .db_filter_set button.dbc_open_btn:before {
+            content: "\e937"; }
+        .db_area section.db_list_box .db_filter_set button.dbc_close_btn:before {
+          content: "\e91a"; }
+      .db_area section.db_list_box .db_filter_set h3 {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 10px; }
+    .db_area section.db_list_box .db_cancel_set {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      width: 100%;
+      background-color: #fff; }
+      .db_area section.db_list_box .db_cancel_set textarea, .db_area section.db_list_box .db_cancel_set div[contenteditable] {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
+        position: relative;
+        border: none;
+        resize: none;
+        outline: none; }
+      .db_area section.db_list_box .db_cancel_set .btn_set {
+        flex: 1 0 40px;
+        -webkit-flex: 1 0 40px;
+        flexbox: 1 0 40px;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 40px;
+        margin: 10px; }
+      .db_area section.db_list_box .db_cancel_set.on {
+        left: 0; }
+    .db_area section.db_list_box .open_cancel > div, .db_area section.db_list_box .open_cancel > select {
+      opacity: 0;
+      visibility: hidden; }
     .db_area section.db_list_box > ul {
       flex: 0 1 100%;
       -webkit-flex: 0 1 100%;
@@ -1015,7 +1041,7 @@ menu {
     bottom: 0;
     top: 50px;
     right: 20px;
-    width: 170px;
+    width: 150px;
     padding: 50px 100px;
     box-shadow: -60px 0 100px -50px black;
     -webkit-box-shadow: -60px 0 100px -50px black;
@@ -1053,7 +1079,7 @@ menu {
         content: "\e91c";
         font-size: 4rem; }
       .db_area section.db_infor_box .dbi_cctv button:after {
-        content: "CCTV 확인";
+        content: "CCTV VIEW";
         font-size: 2rem;
         top: -15px;
         padding: 0 0 0 15px; }
@@ -1110,8 +1136,8 @@ menu {
             width: 160px; }
     .db_area section.db_infor_box.on {
       visibility: visible;
-      width: 680px;
-      right: 360px; }
+      width: 600px;
+      right: 320px; }
 
 .infor_set {
   flex: 0 1 100%;
@@ -1131,6 +1157,14 @@ menu {
     word-spacing: 2px;
     letter-spacing: 0;
     font-size: 0.9rem; }
+  .infor_set p:nth-of-type(4) {
+    padding: 5px 0 0 0;
+    margin: 5px 0 0 0;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    border-color: rgba(17, 17, 17, 0.3); }
+    .infor_set p:nth-of-type(4), .infor_set p:nth-of-type(4) ~ p {
+      letter-spacing: 0; }
 
 .sub_title_area {
   display: -webkit-box;
@@ -1196,44 +1230,65 @@ menu {
     .admin_mode .sub_title_area .navigation span {
       pointer-events: none; }
 
+.confirm {
+  background-color: #259dcf !important; }
+
 .level-caution {
-  background-color: #999999 !important; }
+  background-color: #999999; }
 .level-warning {
-  background-color: #ff8400 !important; }
+  background-color: #ff8400; }
 .level-danger {
-  background-color: #be1e1e !important; }
+  background-color: #be1e1e; }
 .level-caution *, .level-caution *:before, .level-caution *:after, .level-warning *, .level-warning *:before, .level-warning *:after, .level-danger *, .level-danger *:before, .level-danger *:after {
   color: #fff; }
-.level-caution.type-list *, .level-caution.type-list *:before, .level-caution.type-list *:after, .level-warning.type-list *, .level-warning.type-list *:before, .level-warning.type-list *:after, .level-danger.type-list *, .level-danger.type-list *:before, .level-danger.type-list *:after {
-  color: inherit; }
-.level-caution.type-list, .level-caution.type-list:before, .level-warning.type-list, .level-warning.type-list:before, .level-danger.type-list, .level-danger.type-list:before {
-  background-color: transparent !important; }
-.level-caution.type-list .m_marqueebox *, .level-caution.type-list .m_marqueebox:before, .level-warning.type-list .m_marqueebox *, .level-warning.type-list .m_marqueebox:before, .level-danger.type-list .m_marqueebox *, .level-danger.type-list .m_marqueebox:before {
-  color: #be1e1e !important; }
-.level-caution.type-list .m_marqueebox:before, .level-warning.type-list .m_marqueebox:before, .level-danger.type-list .m_marqueebox:before {
-  background-color: #fff !important; }
-.level-caution.type-list .safeeye_set .s_lbox, .level-warning.type-list .safeeye_set .s_lbox, .level-danger.type-list .safeeye_set .s_lbox {
-  color: #be1e1e;
-  animation-name: issue;
-  -webkit-animation-name: issue;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-iteration-count: 10;
-  animation-iteration-count: 10; }
-@-webkit-keyframes issue {
+.level-caution.type-list, .level-caution .watch_area > div, .level-warning.type-list, .level-warning .watch_area > div, .level-danger.type-list, .level-danger .watch_area > div {
+      /*
+
+      &.level {
+        &-caution:before {@include border01(2px,$color-gray-03,1 );} // .level-caution 주의
+        &-warning:before {@include border01(2px,$color-orange-01,1 );} // .level-warning 경고
+        &-danger:before  {@include border01(2px,$color-red-01,1 );} // .level-danger  위험
+      }
+      */ }
+  .level-caution.type-list *, .level-caution.type-list *:before, .level-caution.type-list *:after, .level-caution .watch_area > div *, .level-caution .watch_area > div *:before, .level-caution .watch_area > div *:after, .level-warning.type-list *, .level-warning.type-list *:before, .level-warning.type-list *:after, .level-warning .watch_area > div *, .level-warning .watch_area > div *:before, .level-warning .watch_area > div *:after, .level-danger.type-list *, .level-danger.type-list *:before, .level-danger.type-list *:after, .level-danger .watch_area > div *, .level-danger .watch_area > div *:before, .level-danger .watch_area > div *:after {
+    color: inherit; }
+  .level-caution.type-list, .level-caution.type-list:before, .level-caution .watch_area > div, .level-caution .watch_area > div:before, .level-warning.type-list, .level-warning.type-list:before, .level-warning .watch_area > div, .level-warning .watch_area > div:before, .level-danger.type-list, .level-danger.type-list:before, .level-danger .watch_area > div, .level-danger .watch_area > div:before {
+    background-color: transparent !important; }
+  .level-caution.type-list .m_marqueebox *, .level-caution.type-list .m_marqueebox:before, .level-caution .watch_area > div .m_marqueebox *, .level-caution .watch_area > div .m_marqueebox:before, .level-warning.type-list .m_marqueebox *, .level-warning.type-list .m_marqueebox:before, .level-warning .watch_area > div .m_marqueebox *, .level-warning .watch_area > div .m_marqueebox:before, .level-danger.type-list .m_marqueebox *, .level-danger.type-list .m_marqueebox:before, .level-danger .watch_area > div .m_marqueebox *, .level-danger .watch_area > div .m_marqueebox:before {
+    color: #be1e1e !important; }
+  .level-caution.type-list .m_marqueebox:before, .level-caution .watch_area > div .m_marqueebox:before, .level-warning.type-list .m_marqueebox:before, .level-warning .watch_area > div .m_marqueebox:before, .level-danger.type-list .m_marqueebox:before, .level-danger .watch_area > div .m_marqueebox:before {
+    background-color: #fff !important; }
+  .level-caution.type-list .safeeye_set .s_lbox, .level-caution .watch_area > div .safeeye_set .s_lbox, .level-warning.type-list .safeeye_set .s_lbox, .level-warning .watch_area > div .safeeye_set .s_lbox, .level-danger.type-list .safeeye_set .s_lbox, .level-danger .watch_area > div .safeeye_set .s_lbox {
+    color: #be1e1e; }
+    .level-caution.type-list .safeeye_set .s_lbox:after, .level-caution .watch_area > div .safeeye_set .s_lbox:after, .level-warning.type-list .safeeye_set .s_lbox:after, .level-warning .watch_area > div .safeeye_set .s_lbox:after, .level-danger.type-list .safeeye_set .s_lbox:after, .level-danger .watch_area > div .safeeye_set .s_lbox:after {
+      animation-name: issue05;
+      -webkit-animation-name: issue05;
+      -webkit-animation-duration: 0.5s;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      -webkit-animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -webkit-animation-duration: 0.8s;
+      animation-duration: 0.8s; }
+@-webkit-keyframes issue05 {
   0% {
+    opacity: 0; }
+  10% {
     opacity: 1; }
-  50% {
-    opacity: 0.2; }
   100% {
-    opacity: 1; } }
-@keyframes issue {
+    opacity: 0;
+    padding: 20%; } }
+@keyframes issue04 {
   0% {
+    opacity: 0; }
+  10% {
     opacity: 1; }
-  50% {
-    opacity: 0.2; }
   100% {
-    opacity: 1; } }
+    opacity: 0;
+    padding: 20%; } }
 .level-caution .m_marqueebox > p, .level-warning .m_marqueebox > p, .level-danger .m_marqueebox > p {
   animation-name: marquee;
   -webkit-animation-name: marquee;
@@ -1268,6 +1323,10 @@ menu {
 .level-caution .m_marqueebox *, .level-caution .m_marqueebox:before, .level-warning .m_marqueebox *, .level-warning .m_marqueebox:before, .level-danger .m_marqueebox *, .level-danger .m_marqueebox:before {
   color: #fff !important; }
 .level-caution .treffic_set .ts-caution:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(153, 153, 153, 0.4); }
+.level-caution .treffic_set .ts-caution:before {
   box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
@@ -1278,8 +1337,44 @@ menu {
   -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
 .level-caution .treffic_set .ts-caution p {
   color: #fff !important; }
+.level-caution .treffic_set .ts-caution > p:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #999999;
+  animation-name: issue06;
+  -webkit-animation-name: issue06;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s; }
+@-webkit-keyframes issue06 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
+@keyframes issue04 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
 .level-caution .ts-caution:after, .level-caution .m_marqueebox:before {
   background-color: #999; }
+.level-warning .treffic_set .ts-warning:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(255, 132, 0, 0.4); }
 .level-warning .treffic_set .ts-warning:before {
   box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
@@ -1291,8 +1386,44 @@ menu {
   -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
 .level-warning .treffic_set .ts-warning p {
   color: #fff !important; }
+.level-warning .treffic_set .ts-warning > p:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ff8400;
+  animation-name: issue06;
+  -webkit-animation-name: issue06;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s; }
+@-webkit-keyframes issue06 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
+@keyframes issue04 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
 .level-warning .treffic_set .ts-warning:after, .level-warning .m_marqueebox:before {
   background-color: #ff8400; }
+.level-danger .treffic_set .ts-danger:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(190, 30, 30, 0.4); }
 .level-danger .treffic_set .ts-danger:before {
   box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 14px 8px -8px rgba(0, 0, 0, 0.5);
@@ -1304,6 +1435,38 @@ menu {
   -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
 .level-danger .treffic_set .ts-danger p {
   color: #fff !important; }
+.level-danger .treffic_set .ts-danger > p:before {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #be1e1e;
+  animation-name: issue06;
+  -webkit-animation-name: issue06;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s; }
+@-webkit-keyframes issue06 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
+@keyframes issue04 {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    padding: 70%; } }
 .level-danger .treffic_set .ts-danger:after, .level-danger .m_marqueebox:before {
   background-color: #be1e1e; }
 

@@ -8,25 +8,27 @@
 var GoogleMapHelper = (
     function(_rootPath){
         var rootPath;
-        var MARKER_TYPE = [
-            'device'
-            , 'fence'
-            , 'object'
-        ];
-        var defaultLat = {lat : 37.495460,lng : 127.030969};
+        var MARKER_TYPE = ['device', 'fence', 'object'];
+        var testLat = {lat : 37.495460,lng : 127.030969};
         var map;
         var marker = {
             'device' : {},
             'fence' : {},
             'object' : {}
         };
-        var targetClass = {
-            'device' : ".device",
-            'object' : ".tracking"
-        };
-        var content = {
-            'device' : "<div class='device'><div class='icon-tof'></div><div class='icon-ptz'></div></div>",
-            'object' : "<div class='tracking'></div>"
+        var options = {
+            "device" : {
+                'content' : "<div class='device'><div class='icon-tof'></div><div class='icon-ptz'></div></div>"
+                ,"targetClass" : ".device"
+            },
+            "fence" : {
+                "fillColor" : ["#f6b900", "#FF0000"]
+                ,"strokeColor" : ["#f6b900", "#FF0000"]
+            },
+            "object" : {
+                'content' : "<div class='tracking'></div>"
+                ,"targetClass" : ".tracking"
+            }
         };
 
         var _self = this;
@@ -47,25 +49,40 @@ var GoogleMapHelper = (
          * @param _canvas
          * @returns
          */
-        this.setMap = function(_canvas, _lat){
+        this.setMap = function(_canvas, _lat, _tilesLoadFunction){
             if(_canvas==null){
                 console.error("[GoogleMapHelper][_initialize] canvas is null");
                 return false;
             }
 
-            if(_lat==null){
-                _lat = defaultLat;
+            if(_lat==null || _lat==""){
+                _lat = testLat;
             }
 
             map = new google.maps.Map(_canvas, {
                 center: new google.maps.LatLng(_lat['lat'], _lat['lng']),
-                zoom: 25, // 지도 zoom단계
-                mapTypeId: "satellite",
+                zoom: 20, // 지도 zoom단계
+                /**
+                 * roadmap : 기본 도로 지도 뷰를 표시합니다. 기본 지도 유형입니다.
+                 * satellite : Google 어스 위성 이미지를 표시합니다.
+                 * hybrid : 일반 뷰와 위성 뷰를 섞어서 표시합니다.
+                 * terrain : 지형 정보를 기반으로 실제 지도를 표시합니다.
+                 */
+                mapTypeId: "roadmap",
                 zoomControl: true,
-                mapTypeControl : false,
+                mapTypeControl : true,
+                mapTypeControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_BOTTOM
+                },
                 streetViewControl : false,
                 scaleControl : false,
                 fullscreenControl : false
+            });
+
+            map.addListener('tilesloaded', function() {
+                if(typeof _tilesLoadFunction=="function"){
+                    _tilesLoadFunction();
+                }
             });
         };
 
@@ -79,11 +96,11 @@ var GoogleMapHelper = (
          */
         this.addMarker = function(_type, _id, _lat){
             if(_id==null || _lat==null){
-                console.error("[GoogleMapHelper][setMarker] parameter not enough");
+                console.error("[GoogleMapHelper][addMarker] parameter not enough");
                 return false;
             }
             if(marker[_type]!=null && marker[_type][_id]!=null){
-                console.warn("[GoogleMapHelper][setMarker] marker is exist - [" + _type + "][" + _id + "]");
+                console.warn("[GoogleMapHelper][addMarker] marker is exist - [" + _type + "][" + _id + "]");
                 return false;
             }
 
@@ -94,7 +111,7 @@ var GoogleMapHelper = (
                             position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
                             title : _id,
                             map: map,
-                            content : content[_type],
+                            content : options[_type]["content"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
                         marker[_type][_id]['objects'] = [];
@@ -104,39 +121,40 @@ var GoogleMapHelper = (
                             position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
                             title : _id,
                             map: map,
-                            content : content[_type],
+                            content : options[_type]["content"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
                         break;
                     case MARKER_TYPE[1] : // Fence
+                        _lat = validateLat(_lat);
                         marker[_type][_id] = new google.maps.Polygon({
-                            paths: validateLat(_lat),
-                            strokeColor: '#FF0000',
+                            paths: _lat,
+                            strokeColor: options["fence"]["fillColor"][0],
                             strokeOpacity: 0.8,
                             strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35
+                            fillColor: options["fence"]["fillColor"][0],
+                            fillOpacity: 0.35,
+                            text:_id
                         });
+                        marker[_type][_id]['objects'] = [];
                         marker[_type][_id].setMap(map);
 
-                        //function action(_color, _cnt){
-                        //    _color = _color == "#FF0000" ? "#000000" : "#FF0000";
-                        //    marker[MARKER_TYPE[1]][_deviceId].strokeColor = _color;
-                        //    marker[MARKER_TYPE[1]][_deviceId].fillColor = _color;
-                        //    marker[MARKER_TYPE[1]][_deviceId].setVisible(false);
-                        //    marker[MARKER_TYPE[1]][_deviceId].setVisible(true);
-                        //    //if(){
-                        //    //
-                        //    //}
-                        //    setTimeout(function(){
-                        //        action(_color);
-                        //    },1000);
-                        //}
-                        //action();
+                        var bounds = new google.maps.LatLngBounds();
+                        for (var i=0; i< _lat.length; i++) {
+                            bounds.extend(_lat[i]);
+                        }
+                        var myLatlng = bounds.getCenter();
+                        var mapLabel = new MapLabel({
+                            text: _id,
+                            position: myLatlng,
+                            map: map,
+                            fontSize: 11
+                        });
                         break;
                 }
+                console.log("[GoogleMapHelper][addMarker] complete - [" + _type + "][" + _id + "]");
             }catch(e){
-                console.error("[GoogleMapHelper][setMarker] error - " + e.message);
+                console.error("[GoogleMapHelper][addMarker] error- [" + _type + "][" + _id + "] - " + e.message);
             }
         };
 
@@ -159,7 +177,7 @@ var GoogleMapHelper = (
                         if(!(_lat instanceof google.maps.LatLng)){
                             _lat = new google.maps.LatLng(_lat['lat'], _lat['lng']);
                         }
-                        marker[_type][_id].animateTo(_lat, {easing: "swing", duration: 1000});
+                        marker[_type][_id].animateTo(_lat, {easing: "swing", duration: 1});
                     }else{
                         _self.addMarker(_type, _id, _lat);
                     }
@@ -194,16 +212,15 @@ var GoogleMapHelper = (
          * get marker
          * @author psb
          */
-        this.setAnimate = function(_deviceId, _objectId, _action, _className){
+        this.setAnimate = function(_deviceId, _fenceId, _objectId, _action, _className){
             var deviceMarker = _self.getMarker("device", _deviceId);
             if(deviceMarker!=null && deviceMarker['objects'] instanceof Array){
-                var markerDiv = $(deviceMarker.markerWrapper_).find(targetClass["device"]);
                 switch (_action){
                     case "add" :
                         if(deviceMarker['objects'].length == 0 || deviceMarker['objects'].indexOf(_objectId)==-1){
                             deviceMarker['objects'].push(_objectId);
                         }
-                        markerDiv.addClass(_className);
+                        $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).addClass(_className);
                         break;
                     case "remove" :
                         var index = deviceMarker['objects'].indexOf(_objectId);
@@ -211,23 +228,45 @@ var GoogleMapHelper = (
                             deviceMarker['objects'].splice(index,1);
                         }
                         if(deviceMarker['objects'].length == 0) {
-                            markerDiv.removeClass(_className);
+                            $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).removeClass(_className);
                         }
                         break;
                 }
             }else{
-                console.error("[GoogleMapHelper][setAnimate] not found device marker ior child object - " + _deviceId);
+                console.error("[GoogleMapHelper][setAnimate] not found device marker or child object - " + _deviceId);
+            }
+
+            var fenceMarker = _self.getMarker("fence", _fenceId);
+            if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
+                switch (_action){
+                    case "add" :
+                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(_objectId)==-1){
+                            fenceMarker['objects'].push(_objectId);
+                        }
+                        break;
+                    case "remove" :
+                        if(fenceMarker['objects'].indexOf(_objectId)!=-1){
+                            fenceMarker['objects'].splice(index,1);
+                        }
+                        break;
+                }
+
+                marker[MARKER_TYPE[1]][_fenceId].strokeColor = fenceMarker['objects'].length==0?options["fence"]["strokeColor"][0]:options["fence"]["strokeColor"][1];
+                marker[MARKER_TYPE[1]][_fenceId].fillColor = fenceMarker['objects'].length==0?options["fence"]["fillColor"][0]:options["fence"]["fillColor"][1];
+                marker[MARKER_TYPE[1]][_fenceId].setVisible(false);
+                marker[MARKER_TYPE[1]][_fenceId].setVisible(true);
+            }else{
+                console.error("[GoogleMapHelper][setAnimate] not found fence marker or child object - " + _fenceId);
             }
 
             var objectMarker = _self.getMarker("object", _objectId);
             if(objectMarker!=null){
-                var markerDiv = $(objectMarker.markerWrapper_).find(targetClass["object"]);
                 switch (_action){
                     case "add" :
-                        markerDiv.addClass(_className);
+                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).addClass(_className);
                         break;
                     case "remove" :
-                        markerDiv.removeClass(_className);
+                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).removeClass(_className);
                         break;
                 }
             }else{
