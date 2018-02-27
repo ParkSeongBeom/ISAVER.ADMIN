@@ -106,7 +106,7 @@ h4 {
   &:before {width:1px; height:100vh; left:50%; top:0; }
 
   article {
-    width: 500px; padding:20px 30px 40px 30px; background-color: #fff;
+    position: relative; width: 500px; padding:20px 30px 40px 30px; background-color: #fff;
     @include box-shadow02(0px, 55px, 90px, -50px, 0, 0, 0, 0.8);
 
     & > * {position: relative;  }
@@ -124,6 +124,8 @@ h4 {
 
 }
 ////// ----------------- 로그인 영역 End
+
+
 
 
 ////// ----------------- header Start
@@ -156,9 +158,11 @@ header {
       & * {height:100%;}
       & > * {float:left;}
       .header_btn_set {
-        padding:0 0 0 20px;
+        @include flexbase; width:$noticecenter-width; margin:0 0 0 20px;
+
+        & > * {position: relative;}
         button {
-          width:40px; float: left;
+          width:40px; min-width:40px; float: left;
 
           &.issue_btn:before     {content: "\e907";}
           &.loginout_btn:before  {content: "\e900";}
@@ -190,6 +194,14 @@ header {
   }
 }
 ////// ----------------- header End
+
+
+////// ---------------- language Start
+.language {
+  width:90px; min-width:90px; border:none !important; background-color: transparent; letter-spacing: 0;
+  .login_area & { float: right; height: 70px;}
+}
+////// ---------------- language End
 
 
 //////......   menu Start

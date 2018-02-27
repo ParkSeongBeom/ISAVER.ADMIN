@@ -182,7 +182,8 @@ section.container {
   .tree_box .search_contents > * > * {
     padding: 0 0 5px 0 !important; }
     .tree_box .search_contents > * > *, .tree_box .search_contents > * > * > * {
-      width: 100%; }
+      width: 100% !important;
+      max-width: none; }
     .tree_box .search_contents > * > * em {
       width: auto; }
     .tree_box .search_contents > * > * button {
@@ -195,12 +196,9 @@ section.container {
         background-color: #be1e1e; }
         .tree_box .search_contents > * > * button.del:before {
           content: "\e92c"; }
-    .tree_box .search_contents > * > * input.hasDatepicker {
-      width: 100%;
-      max-width: none; }
-      .tree_box .search_contents > * > * input.hasDatepicker + button + select {
-        max-width: 80px;
-        min-width: 80px; }
+    .tree_box .search_contents > * > * input.hasDatepicker + button + select {
+      max-width: 80px;
+      min-width: 80px; }
 
 .table_area {
   width: 100%; }
@@ -1986,7 +1984,7 @@ a.fc-more {
   position: absolute;
   right: 0;
   top: 0;
-  width: 50px;
+  /*width:50px;*/
   height: 100%; }
   .eventdetail_btn:hover:before {
     color: #109dcb; }

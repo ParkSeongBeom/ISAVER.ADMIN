@@ -1,3 +1,6 @@
+// URL Parameter 제거
+history.replaceState({}, null, location.pathname);
+
 /**
  * 일반적인 유틸 모음</br>
  * - 해당 function에 대한 기능 간략히 주척 필히.

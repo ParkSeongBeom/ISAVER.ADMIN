@@ -272,6 +272,34 @@ body.dashboard_mode {
       right: 20px; }
   body.dashboard_mode.dark_mode h1 {
     background-image: url(../images/logo/icent_isaver_w.svg); }
+  body.dashboard_mode.dark_mode .language {
+    background-color: #3c3c3c;
+    color: #f5f5f5;
+  /*
+
+  &:after {
+    content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
+    background-image: url(../images/bg/bg_spot.svg); opacity: 0.5;
+  }
+  */
+    background-image: url(../images/ico/select_allow_w.svg);
+    color: #f5f5f5; }
+    body.dashboard_mode.dark_mode .language ::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    body.dashboard_mode.dark_mode .language ::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    body.dashboard_mode.dark_mode .language :-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    body.dashboard_mode.dark_mode .language :-moz-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    body.dashboard_mode.dark_mode .language input, body.dashboard_mode.dark_mode .language textarea, body.dashboard_mode.dark_mode .language select, body.dashboard_mode.dark_mode .language div[contenteditable] {
+      color: #fff !important;
+      border-style: solid;
+      border-width: 1px;
+      border-color: darkgray;
+      background-color: #999; }
+    body.dashboard_mode.dark_mode .language select, body.dashboard_mode.dark_mode .language input[type="date"] {
+      background-image: url(../images/ico/select_allow_w.svg) !important; }
   body.dashboard_mode.dark_mode, body.dashboard_mode.dark_mode *:not(personal_popup, popupbase) {
     color: #f5f5f5; }
   body.dashboard_mode.dark_mode, body.dashboard_mode.dark_mode .db_area, body.dashboard_mode.dark_mode .db_area:before, body.dashboard_mode.dark_mode .db_list_box, body.dashboard_mode.dark_mode .wrap > header, body.dashboard_mode.dark_mode .db_filter_set h3 {
@@ -303,7 +331,7 @@ body.dashboard_mode {
   body.dashboard_mode.dark_mode .db_list_box {
     border-color: #111; }
     body.dashboard_mode.dark_mode .db_list_box textarea {
-      color: #fff;
+      color: #f5f5f5;
       background-color: transparent; }
       body.dashboard_mode.dark_mode .db_list_box textarea::-webkit-input-placeholder {
         color: rgba(255, 255, 255, 0.4); }

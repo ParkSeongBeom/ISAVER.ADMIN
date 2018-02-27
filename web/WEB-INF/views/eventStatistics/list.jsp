@@ -423,7 +423,6 @@
      @author psb
      */
     function chartRender(data){
-        console.log(data);
         new Chartist.Bar('.chartDiv', data, {
             height: 400,
             seriesBarDistance: 10,

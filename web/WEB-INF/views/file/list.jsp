@@ -76,10 +76,10 @@
                         <th><spring:message code="file.column.fileName"/></th>
                         <th><spring:message code="file.column.fileSize"/></th>
                         <th><spring:message code="file.column.useYn"/></th>
-                        <th><spring:message code="file.column.insertUserName"/></th>
-                        <th><spring:message code="file.column.insertDatetime"/></th>
-                        <th><spring:message code="file.column.updateUserName"/></th>
-                        <th><spring:message code="file.column.updateDatetime"/></th>
+                        <th><spring:message code="common.column.insertUser"/></th>
+                        <th><spring:message code="common.column.insertDatetime"/></th>
+                        <th><spring:message code="common.column.updateUser"/></th>
+                        <th><spring:message code="common.column.updateDatetime"/></th>
                     </tr>
                 </thead>
                 <tbody>

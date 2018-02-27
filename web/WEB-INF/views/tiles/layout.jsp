@@ -468,6 +468,11 @@
                     <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
                     <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
                     <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
+                    <!-- 다국어 지원 추가 -->
+                    <select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">
+                        <option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>
+                        <option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>
+                    </select>
                 </div>
             </div>
             <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 End -->

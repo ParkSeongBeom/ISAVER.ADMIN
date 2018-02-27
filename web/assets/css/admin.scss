@@ -88,7 +88,7 @@ section.container {
   display: inline-block; width:100%; padding:0;
   & > * {
     padding:0 0 5px 0 !important;
-    &, & > * {width:100%;}
+    &, & > * {width:100% !important; max-width: none;}
     em {width:auto;}
     button {
       max-width:40px; min-width:40px; margin:0 !important;
@@ -98,7 +98,6 @@ section.container {
         &:before {content:"\e92c"};}
     }
     input.hasDatepicker {
-      width:100%; max-width: none;
       & + button + select {max-width: 80px; min-width:80px;}
     }
   }
@@ -1168,7 +1167,7 @@ a.fc-more {position: relative; z-index: 2;}
 
 .eventdetail {padding-right:50px !important;}
 .eventdetail_btn {
-  @include flex-midddle; position: absolute; right:0; top:0; width:50px; height:100%;
+  @include flex-midddle; position: absolute; right:0; top:0; /*width:50px;*/ height:100%;
   &:hover:before {color:$color-blue-01;}
   &:before{content:"\e925"; font-size:1.5rem;}
 }

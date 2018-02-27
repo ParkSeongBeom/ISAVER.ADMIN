@@ -29,6 +29,11 @@
             <article>
                 <h1></h1>
                 <!-- 로그인 입력 폼 Start -->
+                <!-- 다국어 지원 추가 -->
+                <select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">
+                    <option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>
+                    <option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>
+                </select>
 
                 <form id="loginForm" method="POST">
                     <div class="login_input_area">
@@ -40,12 +45,12 @@
                     <div class="checkbox_set csl_style01">
                         <input type="checkbox" id="saveAdminIdCheck" name="id_save" />
                         <label></label>
-                        <span>ID 저장</span>
+                        <span><spring:message code="login.column.saveId"/></span>
                     </div>
 
                 </form>
                 <!-- 로그인 입력 폼 End -->
-                <button href="#" alt="로그인" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>
+                <button href="#" alt="Login" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>
             </article>
         </section>
         <!-- section End -->
