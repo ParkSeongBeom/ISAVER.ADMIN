@@ -64,7 +64,13 @@ var DashboardHelper = (
                     break;
                 case "addNotification": // 알림이벤트 등록
                     if(data['notification']['areaId']!=null && guardList[data['notification']['areaId']]!=null){
-                        guardList[data['notification']['areaId']]['googleMap'].setAnimate(data['notification']['deviceId'],data['notification']['fenceId'],data['notification']['objectId'],"add","level-"+criticalCss[data['notification']['criticalLevel']]);
+                        guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                            data['notification']['deviceId']
+                            ,data['notification']['fenceId']
+                            ,data['notification']['objectId']
+                            ,"add"
+                            ,"level-"+criticalCss[data['notification']['criticalLevel']]
+                        );
                     }
                     notificationUpdate(messageType, data['notification']);
                     break;
@@ -74,7 +80,13 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            guardList[data['notification']['areaId']]['googleMap'].setAnimate(data['notification']['deviceId'],data['notification']['fenceId'],data['notification']['objectId'],"remove","level-"+criticalCss[data['cancel'][index]['criticalLevel']]);
+                            guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                                data['notification']['deviceId']
+                                ,data['notification']['fenceId']
+                                ,data['notification']['objectId']
+                                ,"remove"
+                                ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
+                            );
                         }
                     }
                     break;
