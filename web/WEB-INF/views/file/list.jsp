@@ -7,7 +7,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="L00010" var="menuId"/>
 <c:set value="L00000" var="subMenuId"/>
-<isaver:pageRoleCheck menuId="${menuId}" />
+<isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->

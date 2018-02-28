@@ -58,19 +58,6 @@ public class EventLogCtrl {
         return modelAndView;
     }
 
-    /**
-     * 대쉬보드 데이터를 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/dashboard")
-    public ModelAndView findListEventLogForDashboard(@RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = eventLogSvc.findListEventLogForDashboard(parameters);
-        return modelAndView;
-    }
-
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
     public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogSvc.findListEventLogForExcel(request, response, parameters);

@@ -146,7 +146,7 @@ header {
   &.up:before {opacity: 1; height:50px;}
 
   .header_area {
-    @include flexbase;
+    @include flexbase; @include flex-justify-content-end;
     position: relative; width:100%; height:$headerHeight - 10px;
 
     & > * {display: inline-block; height: 100%;}
@@ -158,7 +158,7 @@ header {
       & * {height:100%;}
       & > * {float:left;}
       .header_btn_set {
-        @include flexbase; width:$noticecenter-width; margin:0 0 0 20px;
+        @include flexbase; @include flex-justify-content-end; width:$noticecenter-width; margin:0 0 0 20px;
 
         & > * {position: relative;}
         button {
@@ -244,8 +244,9 @@ menu {
         @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1); @include transition(400ms);
 
         & > li {
-          @include flex-width-one(7); max-width: 220px; min-width:200px; margin: 20px;
+          max-width: 20%; min-width:20%; margin: 0 0 30px 0;
 
+          & > * {width:calc(100% - 60px); margin:0 30px;}
           & > button {
             @include font-size-navbtn; @include mbBefore;
             &.on {border:none;font-weight:bold;}

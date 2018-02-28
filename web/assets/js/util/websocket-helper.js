@@ -10,8 +10,8 @@ var WebSocketHelper = (
         var webSocketList = {};
         var CONNECT_STATUS = ["connect","disconnect"];
         var SEND_MESSAGE_RETRY = {
-            'cnt' : 5
-            , 'delay' : 500
+            'cnt' : 10
+            , 'delay' : 1000
         };
         var messageEventHandler;
 
@@ -77,14 +77,16 @@ var WebSocketHelper = (
          * @author psb
          * @param _target
          */
-        this.wsConnect = function(_target){
+        this.wsConnect = function(_target, getDataFlag){
             if(_target==null || webSocketList[_target]==null){
                 console.error("[WebSocketHelper][wsConnect] target is null or not in webSocketList");
                 return false;
             }
 
             setTimeout(function() {
-                requestHelper.getData();
+                if(getDataFlag){
+                    requestHelper.getData();
+                }
 
                 webSocketList[_target]['ws'] = new WebSocket(webSocketList[_target]['url']);
                 webSocketList[_target]['ws'].onopen = function () {
@@ -98,7 +100,7 @@ var WebSocketHelper = (
 
                     if (webSocketList[_target]['options']['reConnectFlag']) {
                         setTimeout(function() {
-                            _self.wsConnect(_target);
+                            _self.wsConnect(_target, false);
                         }, webSocketList[_target]['options']['reConnectDelay']);
                     }
                 };
@@ -123,10 +125,10 @@ var WebSocketHelper = (
                 }
                 webSocketList[_target]['ws'].send(_text);
             }else{
-                console.error('[WebSocketHelper][sendMessage] websocket is disconnect - retry');
                 if(_count == null){
                     _count = SEND_MESSAGE_RETRY['cnt'];
                 }
+                console.error('[WebSocketHelper][sendMessage] websocket is disconnect - retry '+ (SEND_MESSAGE_RETRY['cnt']-_count));
 
                 if(_count > 0){
                     setTimeout(function(){

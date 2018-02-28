@@ -6,7 +6,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="J00000" var="subMenuId"/>
 <c:set value="J00030" var="menuId"/>
-<isaver:pageRoleCheck menuId="${menuId}" />
+<isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <!-- 알림 장치 맵핑 팝업-->

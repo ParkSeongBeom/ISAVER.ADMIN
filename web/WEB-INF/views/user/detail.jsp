@@ -6,7 +6,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="A00011" var="menuId"/>
 <c:set value="A00010" var="subMenuId"/>
-<isaver:pageRoleCheck menuId="${menuId}" />
+<isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">

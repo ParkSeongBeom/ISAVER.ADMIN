@@ -79,7 +79,7 @@ public class NotificationCtrl {
         return modelAndView;
     }
 
-    private final static String[] cancelEventLogParam = new String[]{"notificationIds","actionType"};
+    private final static String[] cancelEventLogParam = new String[]{"paramData","actionType"};
 
     /**
      * 알림센터를 저장한다. (해제, 확인)

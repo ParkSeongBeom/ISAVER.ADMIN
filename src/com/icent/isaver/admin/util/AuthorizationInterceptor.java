@@ -42,6 +42,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${ws.server.urlConnect}")
     private String wsUrlConnect = null;
 
+    @Value("${ws.server.deviceUrlConnect}")
+    private String wsDeviceUrlConnect = null;
+
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
 
@@ -109,6 +112,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
         InetAddress address = InetAddress.getByName(wsAddress);
         modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlConnect);
+        modelAndView.addObject("deviceWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsDeviceUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());

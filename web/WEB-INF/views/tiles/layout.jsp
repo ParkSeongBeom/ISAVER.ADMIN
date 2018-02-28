@@ -136,7 +136,7 @@
             notificationHelper.getNotificationList();
 
             webSocketHelper.addWebSocketList("notification", "${webSocketUrl}", null, notificationMessageEventHandler);
-            webSocketHelper.wsConnect("notification");
+            webSocketHelper.wsConnect("notification", true);
             aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
@@ -162,7 +162,7 @@
 
             switch (resultData['messageType']) {
                 case "refreshView": // 화면갱신
-                    requestHelper.getData();
+                    requestHelper.getData("inoutList");
                     break;
                 case "addNotification": // 알림센터 이벤트 등록
                     if(resultData['dashboardAlarmFileUrl']!=null){
@@ -174,7 +174,7 @@
                     requestHelper.callBackEvent(resultData['messageType'], null, resultData['notification'], null);
                     break;
                 case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
-                    notificationHelper.updateNotificationList(resultData['notification']);
+                    notificationHelper.updateNotificationList(resultData['notification'], requestHelper.callBackEvent);
                     break;
                 case "cancelDetection": // 감지 해제
                     requestHelper.callBackEvent(resultData['messageType'], resultData['eventLog'], resultData['notification'], resultData['cancelList']);

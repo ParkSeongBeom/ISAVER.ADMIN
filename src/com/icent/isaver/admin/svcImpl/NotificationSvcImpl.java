@@ -85,21 +85,23 @@ public class NotificationSvcImpl implements NotificationSvc {
 
     @Override
     public ModelAndView saveNotification(Map<String, String> parameters) {
-        String[] notificationIds = parameters.get("notificationIds").split(CommonResource.COMMA_STRING);
+        String[] paramData = parameters.get("paramData").split(CommonResource.COMMA_STRING);
 
         List<Map<String, String>> parameterList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-        for (String notificationId : notificationIds) {
-            Map<String, String> notificationParamMap = new HashMap<>();
-            notificationParamMap.put("notificationId", notificationId);
-            notificationParamMap.put("actionType", parameters.get("actionType"));
-            notificationParamMap.put("updateUserId", parameters.get("updateUserId"));
-            notificationParamMap.put("updateUserName", parameters.get("updateUserName"));
-            notificationParamMap.put("updateDatetime", sdf.format(new Date()));
-            notificationParamMap.put("cancelDesc", parameters.get("cancelDesc"));
-            parameterList.add(notificationParamMap);
+        for (String data : paramData) {
+            Map<String, String> notiMap = new HashMap<>();
+            notiMap.put("notificationId", data.split("\\|")[0]);
+            notiMap.put("areaId", data.split("\\|")[1]);
+            notiMap.put("criticalLevel", data.split("\\|")[2]);
+            notiMap.put("actionType", parameters.get("actionType"));
+            notiMap.put("updateUserId", parameters.get("updateUserId"));
+            notiMap.put("updateUserName", parameters.get("updateUserName"));
+            notiMap.put("updateDatetime", sdf.format(new Date()));
+            notiMap.put("cancelDesc", parameters.get("cancelDesc"));
+            parameterList.add(notiMap);
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);

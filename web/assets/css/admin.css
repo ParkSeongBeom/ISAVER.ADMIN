@@ -72,18 +72,27 @@ body.chart_mode section.container {
       position: relative;
       height: 100%; }
     body.chart_mode section.container .chart_table_area .depthtabs_set > div {
-      position: relative;
-      height: 100%; }
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column; }
     body.chart_mode section.container .chart_table_area .depthtabs_set .chart_box, body.chart_mode section.container .chart_table_area .depthtabs_set .chart_label {
-      position: absolute;
-      width: 100%;
-      left: 0; }
+      width: 100%; }
     body.chart_mode section.container .chart_table_area .depthtabs_set .chart_box {
-      top: 0;
-      bottom: 60px; }
+      overflow-y: auto;
+      height: 100%; }
     body.chart_mode section.container .chart_table_area .depthtabs_set .chart_label {
-      bottom: 0;
-      height: 20px; }
+      min-height: 20px;
+      max-height: 20px;
+      margin: 20px 0 0 0; }
   body.chart_mode section.container .table_title_area {
     max-height: 65px;
     min-height: 65px; }
@@ -422,12 +431,12 @@ div.tablebase, .d_defalut {
           max-width: 18px;
           max-height: 18px; }
         .tablebase td.intd > div > div, .t_defalut td.intd > div > div, .d_defalut td.intd > div > div {
-          flex: 1 0 110px;
-          -webkit-flex: 1 0 110px;
-          flexbox: 1 0 110px;
+          flex: 1 0 130px;
+          -webkit-flex: 1 0 130px;
+          flexbox: 1 0 130px;
           -webkit-box-flex: 0;
-          -ms-flex: 1 0 110px;
-          max-width: 110px;
+          -ms-flex: 1 0 130px;
+          max-width: 130px;
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
@@ -987,7 +996,8 @@ ul.u_defalut {
     -webkit-box-shadow: 0px 10px 8px -10px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0px 10px 8px -10px rgba(0, 0, 0, 0.4);
     min-height: 40px;
-    padding: 5px 10px 5px 40px; }
+    padding: 5px 10px 5px 40px;
+    line-height: 1rem; }
     .menu_tree_set button:hover {
       background-color: #109dcb !important;
       border-color: transparent !important;
@@ -1586,8 +1596,8 @@ ul.u_defalut {
             margin: 0 10px 0 0; }
           .tree_table .tree_box ul li > span > a span {
             font-weight: bold; }
-          .tree_table .tree_box ul li > span > a:hover, .tree_table .tree_box ul li > span > a:focus {
-            color: #be1e1e;
+          .tree_table .tree_box ul li > span > a:hover, .tree_table .tree_box ul li > span > a:hover > *, .tree_table .tree_box ul li > span > a:focus, .tree_table .tree_box ul li > span > a:focus > * {
+            color: #be1e1e !important;
             background-color: transparent; }
           .tree_table .tree_box ul li > span span.dynatree-expander, .tree_table .tree_box ul li > span span.dynatree-connector {
             position: relative;
@@ -1939,6 +1949,37 @@ a.fc-more {
       padding: 0 4px 0 22px; }
   .chart_table_area.type02 > div {
     width: 100%; }
+
+.ment {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important; }
+  .ment > div {
+    font-size: 1.3rem; }
+    .ment > div:before {
+      content: "\e925";
+      font-size: 5rem;
+      display: block;
+      text-align: center;
+      padding: 0 0 30px 0; }
 
 .eventlog_col col:nth-of-type(1) {
   width: 10%; }

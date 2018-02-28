@@ -11,6 +11,7 @@ var GoogleMapHelper = (
         var MARKER_TYPE = ['device', 'fence', 'object'];
         var testLat = {lat : 37.495460,lng : 127.030969};
         var map;
+        var imageUrl = "/assets/library/guard/images/map/kinmap.jpg";
         var marker = {
             'device' : {},
             'fence' : {},
@@ -41,6 +42,7 @@ var GoogleMapHelper = (
          */
         var _initialize = function(_rootPath){
             rootPath = _rootPath;
+            imageUrl = rootPath + imageUrl;
         };
 
         /**
@@ -55,11 +57,15 @@ var GoogleMapHelper = (
                 return false;
             }
 
+            if(typeof _lat!="object"){
+                _lat = eval("("+_lat+")");
+            }
+
             if(_lat==null || _lat==""){
                 _lat = testLat;
             }
 
-            map = new google.maps.Map(_canvas, {
+            map = new google.maps.Map(_canvas.get(0), {
                 center: new google.maps.LatLng(_lat['lat'], _lat['lng']),
                 zoom: 20, // 지도 zoom단계
                 /**
@@ -69,8 +75,9 @@ var GoogleMapHelper = (
                  * terrain : 지형 정보를 기반으로 실제 지도를 표시합니다.
                  */
                 mapTypeId: "roadmap",
-                zoomControl: true,
-                mapTypeControl : true,
+                draggable: false,
+                zoomControl: false,
+                mapTypeControl : false,
                 mapTypeControlOptions: {
                     position: google.maps.ControlPosition.LEFT_BOTTOM
                 },
@@ -84,6 +91,18 @@ var GoogleMapHelper = (
                     _tilesLoadFunction();
                 }
             });
+        };
+
+        this.setImage = function(){
+            var historicalOverlay = new google.maps.GroundOverlay(
+                imageUrl,
+                {
+                    north: 37.496060,
+                    south: 37.494960,
+                    east: 127.031969,
+                    west: 127.029969
+                });
+            historicalOverlay.setMap(map);
         };
 
         this.getMap = function(){

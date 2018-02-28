@@ -32,8 +32,14 @@ public class RoleCheckTagSupport extends ParamTag {
     // 메뉴 ID
     private String menuId = "";
 
+    private String locale = "";
+
     public void setMenuId(String menuId) {
         this.menuId = menuId;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public int doEndTag() {
@@ -60,7 +66,11 @@ public class RoleCheckTagSupport extends ParamTag {
             sb.append("");
         } else {
             sb.append("<script type=\"text/javascript\">");
-            sb.append("alert(\"권한이 없습니다.\");");
+            if(locale.equals("en_US")){
+                sb.append("alert(\"permission denied.\");");
+            }else{
+                sb.append("alert(\"권한이 없습니다.\");");
+            }
             sb.append("history.back()");
             sb.append("</script>");
         }

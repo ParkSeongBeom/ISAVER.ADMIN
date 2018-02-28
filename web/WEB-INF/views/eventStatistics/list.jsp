@@ -83,6 +83,11 @@
     </article>
     <!-- 트리 영역 End -->
 
+    <!-- 조회전 조건 입력 안내 멘트 추가    조회 후 아래 <article> display : none 처리 -->
+    <article class="ment">
+        <div>Click the after-view button</div>
+    </article>
+
     <article class="chart_table_area type02" style="display:none;">
         <div class="table_title_area">
             <div class="month_btn_set">
@@ -414,6 +419,7 @@
         }
 
         $("#eventStatisticsList").append(chartDivHtml).append(tableDivHtml);
+        $("article .ment").hide();
         $(".chart_table_area").show();
         tabShowHide($(".depthtabs_btn_set > button.tabs_on"));
     }

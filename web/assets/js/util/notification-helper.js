@@ -305,11 +305,14 @@ var NotificationHelper = (
          * @author psb
          */
         this.saveNotification = function(actionType){
-            var notificationIdList = _element.find("li.check").map(function(){return $(this).attr("notificationId")}).get();
+            var paramData = _element.find("li.check").map(function(){
+                var notificationData = _self.getNotification('data',$(this).attr("notificationId"));
+                return notificationData["notificationId"]+"|"+notificationData["areaId"]+"|"+notificationData["criticalLevel"]
+            }).get();
             var cancelDesc = $("#cancelDesc").val();
 
             var param = {
-                'notificationIds' : notificationIdList.join(",")
+                'paramData' : paramData.join(",")
                 ,'actionType' : actionType
                 ,'cancelDesc' : cancelDesc
             };
@@ -322,10 +325,10 @@ var NotificationHelper = (
          * @author psb
          * @param notifications
          */
-        this.updateNotificationList = function(notifications){
+        this.updateNotificationList = function(notifications, callbackEventListener){
             if(notifications!=null){
                 for(var index in notifications){
-                    _self.updateNotification(notifications[index]);
+                    _self.updateNotification(notifications[index], callbackEventListener);
                 }
 
                 notificationCancelBtnAction();
@@ -338,7 +341,7 @@ var NotificationHelper = (
          * @author psb
          * @private
          */
-        this.updateNotification = function(notification){
+        this.updateNotification = function(notification, callbackEventListener){
             var notificationTag = _self.getNotification('element',notification['notificationId']);
             if(notificationTag==null){
                 console.warn("[NotificationHelper][updateNotification] empty notification - "+notification['notificationId']);
@@ -371,6 +374,10 @@ var NotificationHelper = (
 
                     notificationTag.remove();
                     delete _notificationList[notification['notificationId']];
+
+                    if(typeof callbackEventListener=="function"){
+                        callbackEventListener('removeNotification', null, notification);
+                    }
                     break;
             }
         };

@@ -36,11 +36,11 @@ body.chart_mode {
       .depthtabs_set {
 
         &, & > div {position: relative; height:100%;}
-        & > div {position: relative; height:100%;}
+        & > div {@include flexbase; @include flex-column;}
 
-        .chart_box, .chart_label {position: absolute; width:100%; left:0;}
-        .chart_box   {top:0; bottom:60px;}
-        .chart_label {bottom:0; height:20px;}
+        .chart_box, .chart_label {width:100%; }
+        .chart_box   {overflow-y: auto; height:100%; }
+        .chart_label {min-height:20px; max-height:20px; margin:20px 0 0 0;}
       }
     }
 
@@ -265,7 +265,7 @@ div.tablebase, .d_defalut {display: inline-block;}
 
         }
         & > div {
-          @include flex-option(1, 0, 110px); max-width:110px; @include flexbase; padding:0;
+          @include flex-option(1, 0, 130px); max-width:130px; @include flexbase; padding:0;
           border:none;
           button {
             @include flex-option(0, 1, 100%); height:100%; margin:0;
@@ -644,7 +644,7 @@ ul.u_defalut {
     &:last-of-type:after {display: none;}
   }
 
-  button {@include tree-button; min-height:40px; padding:5px 10px 5px 40px; }
+  button {@include tree-button; min-height:40px; padding:5px 10px 5px 40px; line-height: 1rem;}
 
   input[type="checkbox"] {
     position: absolute; z-index: 5; left:0; top:0; margin:0; padding:0;
@@ -930,7 +930,8 @@ ul.u_defalut {
           & > a {
             &:before {content:"\e929"; width:$tree-bwidth; height:$tree-bwidth; font-size:26px; margin:0 10px 0 0;}
             span {font-weight:bold;}
-            &:hover, &:focus {color:$color-red-01; background-color: transparent;}
+
+            &:hover, &:focus {&, & > * {color:$color-red-01 !important; background-color: transparent;}}
           }
 
           span.dynatree-expander, span.dynatree-connector {
@@ -1133,8 +1134,13 @@ a.fc-more {position: relative; z-index: 2;}
     }
   }
   &.type02 > div {width:100%;}
-
-
+}
+.ment {
+  @include flex-midddle; width:100%; height:100%; padding:0 !important;
+  & > div {
+    font-size:1.3rem;
+    &:before {content:"\e925"; font-size:5rem; display: block; text-align: center; padding:0 0 30px 0;}
+  }
 }
 /////......  이벤트 통계 원 차트 끝
 

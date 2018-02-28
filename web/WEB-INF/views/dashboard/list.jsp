@@ -318,7 +318,7 @@
                                                             </c:when>
                                                         </c:choose>
 
-                                                        <li deviceId="${device.deviceId}">
+                                                        <li deviceId="${device.deviceId}" areaId="${childArea.areaId}">
                                                             <section class="treffic_set" style="display: none;">
                                                                 <c:forEach var="critical" items="${criticalList}">
                                                                     <div criticalLevel="${critical.codeId}"><p></p></div>
@@ -339,6 +339,49 @@
                                             </div>
                                         </c:when>
                                     </c:choose>
+                                </section>
+                                <div class="m_marqueebox">
+                                    <!-- <span>에 내용 삽입 -->
+                                    <p messageBox></p>
+                                </div>
+                            </article>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${childArea.templateCode=='TMP008'}">
+                        <!-- Guard -->
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                            <header>
+                                <h3>${childArea.areaName}</h3>
+                                <c:if test="${childArea.childAreaIds!=null}">
+                                    <!-- 구역에 구역이 존재할 때 area -->
+                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                </c:if>
+                            </header>
+                            <article>
+                                <section class="treffic_set" style="display: none;">
+                                    <c:forEach var="critical" items="${criticalList}">
+                                        <div criticalLevel="${critical.codeId}"><p></p></div>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <!-- quanergy_m8 : DEV013 / IP카메라 : DEV002 -->
+                                                <c:if test="${device.deviceCode=='DEV002' or device.deviceCode=='DEV013'}">
+                                                    <div childDevice deviceId="${device.deviceId}" deviceCode="${device.deviceCode}" ipAddress="${device.ipAddress}" linkUrl="${device.linkUrl}"></div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:when>
+                                    </c:choose>
+                                </section>
+
+                                <section class="guard_set">
+                                    <div class="s_lbox">
+                                        <div name="map-canvas"></div>
+                                    </div>
+                                    <div class="s_rbox">
+                                        <ul id="ptzPlayers"></ul>
+                                    </div>
                                 </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
@@ -431,11 +474,18 @@
     </div>
 </article>
 
+<link type="text/css" href="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.min.css?version=${version}" rel="stylesheet"/>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-helper.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.js?version=${version}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/googlemap-helper.js?version=${version}"></script>
+
 <script type="text/javascript">
     var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
     var areaId = String('${paramBean.areaId}');
     var chartList = {};
+    var guardList = {};
     var renderDatetime = new Date();
 
     /*
@@ -443,7 +493,7 @@
      @author psb
      */
     var urlConfig = {
-        eventLogUrl : "${rootPath}/eventLog/dashboard.json"
+        notificationUrl : "${rootPath}/notification/dashboard.json"
         ,inoutListUrl : "${rootPath}/eventLogInout/list.json"
         ,inoutDetailUrl : "${rootPath}/eventLogInout/list.json"
         ,chartUrl : "${rootPath}/eventLog/chart.json"
@@ -452,7 +502,7 @@
     };
 
     var messageConfig = {
-        eventLogFailure   :'<spring:message code="dashboard.message.eventLogFailure"/>'
+        notificationFailure   :'<spring:message code="dashboard.message.notificationFailure"/>'
         , inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutDetailFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
@@ -479,8 +529,11 @@
             updateInoutSettingDatetime();
         });
 
+        webSocketHelper.addWebSocketList("device", "${deviceWebSocketUrl}", null, deviceMessageEventHandler);
+        webSocketHelper.wsConnect("device",false);
+
         /* 이벤트 */
-        requestHelper.addRequestData('eventLog', urlConfig['eventLogUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        requestHelper.addRequestData('notificationList', urlConfig['notificationUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 진출입 */
         requestHelper.addRequestData('inoutList', urlConfig['inoutListUrl'], {areaIds:getInoutArea()}, dashBoardSuccessHandler, dashBoardFailureHandler);
         /* 이벤트 callback (websocket 리스너) */
@@ -490,12 +543,105 @@
         initChartList();
     });
 
+    function test(){
+        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0000","location":[{"lat": 37.495460,"lng": 127.030969}]});
+        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":"AR0004","id":"fence1","location":[
+            {"lat" : "37.495453","lng" : "127.030874"},
+            {"lat" : "37.495493","lng" : "127.030943"},
+            {"lat" : "37.495633","lng" : "127.030893"},
+            {"lat" : "37.495593","lng" : "127.030824"}
+        ]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1235","location":[{"lat": "37.495503","lng": "127.031104"}]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1234","location":[{"lat": "37.495603","lng": "127.031204"}]});
+
+        google.maps.event.addListener(guardList["AR0004"]['googleMap'].getMap(), 'click', function(event) {
+            guardList["AR0004"]['googleMap'].saveMarker('object','1235',event.latLng);
+        });
+    }
+
+    /**
+     * Google Map Initialize
+     * @param message
+     */
+    function initMap() {
+        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/richmarker.js?version=${version}");
+        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/maplabel.js?version=${version}");
+        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/jquery_easing.js?version=${version}");
+        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/markerAnimate.js?version=${version}");
+
+        $.each($("div[templateCode='TMP008']"),function(){
+            var _areaId = $(this).attr("areaId");
+            guardList[_areaId] = {
+                "video" : new VideoHelper("${rootPath}")
+                ,"googleMap" : new GoogleMapHelper("${rootPath}")
+                ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
+            };
+
+            var deviceList = [];
+            $.each($(this).find("div[childDevice]"),function(){
+                deviceList.push({
+                    'areaId' : _areaId
+                    ,'deviceId' : $(this).attr("deviceId")
+                    ,'deviceCode' : $(this).attr("deviceCode")
+                    ,'ipAddress' : $(this).attr("ipAddress")
+                    ,'linkUrl' : $(this).attr("linkUrl")
+                });
+            });
+
+            guardList[_areaId]['video'].setElement($("#ptzPlayers"));
+            guardList[_areaId]['video'].createPlayer(deviceList);
+            guardList[_areaId]['googleMap'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), getDeviceData(deviceList));
+
+            /**
+             * @param message
+             */
+            function getDeviceData(_deviceList){
+                for(var index in _deviceList){
+                    if(_deviceList[index]['deviceCode']=="DEV013"){
+                        webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 웹소켓 메세지 리스너
+     * @param message
+     */
+    function deviceMessageEventHandler(message) {
+        var resultData;
+        try{
+            resultData = JSON.parse(message.data);
+        }catch(e){
+            console.warn("[deviceMessageEventHandler] json parse error - " + message.data);
+            return false;
+        }
+//        console.log(resultData);
+
+        if(resultData['areaId']==null || guardList[resultData['areaId']]==null){
+            return false;
+        }
+
+        switch (resultData['actionType']) {
+            case "add":
+                guardList[resultData['areaId']]['googleMap'].addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                break;
+            case "save":
+                guardList[resultData['areaId']]['googleMap'].saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                break;
+            case "remove":
+                guardList[resultData['areaId']]['googleMap'].removeMarker(resultData['messageType'], resultData['id']);
+                break;
+        }
+    }
+
     function initChartList(){
         $(".watch_area li[deviceId]").on("click",function(){
             if(!$(this).hasClass("on")){
                 $(this).parent().find("li").removeClass("on");
                 $(this).addClass("on");
-                findListChart($(this).parent().parent().parent().parent().parent().attr("areaId"), $(this).attr("deviceId"));
+                findListChart($(this).attr("areaId"), $(this).attr("deviceId"));
             }
         });
 
@@ -553,12 +699,11 @@
             requestHelper.getData('inoutList');
         }
 
-
         if(renderDatetime.format("yyyyMMdd")!=_serverDatetime.format("yyyyMMdd")){
             $.each($(".watch_area li[deviceId]"),function(){
                 $(this).find("span[evtValue]").text("-");
                 if($(this).hasClass("on")){
-                    findListChart($(this).parent().parent().parent().parent().parent().attr("areaId"), $(this).attr("deviceId"));
+                    findListChart($(this).attr("areaId"), $(this).attr("deviceId"));
                 }
             });
 
@@ -722,17 +867,17 @@
                     case "TMP003": // 전시물 보호
                         break;
                     case "TMP004": // 진출입
-                        inoutAppender(data);
+                        inoutAppender(eventLog);
                         break;
                     case "TMP005": // NHR
-                        nhrAppender(data);
+                        nhrAppender(eventLog);
                         break;
                 }
                 break;
-            case "addAlarmEvent": // 알림이벤트 등록
-            case "removeAlarmEvent": // 알림이벤트 해제
-            case "refreshView" : // 초기로딩 및 리스트 교체
-                eventLogRender(eventLog, messageType);
+            case "addNotification": // 알림이벤트 등록
+            case "removeNotification": // 알림이벤트 해제
+                notificationRender(notification, messageType);
+            case "cancelDetection": // 감지 해제
                 break;
         }
     }
@@ -748,8 +893,8 @@
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
-            case 'eventLog':
-                eventLogRender(data['eventLogs'], "refreshView");
+            case 'notificationList':
+                notificationRender(data['notifications'], "refreshView");
                 break;
             case 'inoutList':
                 inoutRender(data['eventLogInoutList']);
@@ -830,70 +975,38 @@
     }
 
     /**
-     * 구역별 알림 상태
+     * 알림 상태
      */
-    function eventLogRender(data, messageType){
+    function notificationRender(data, messageType){
         if(data==null){
             return false;
         }
 
-        // Config
-        var renderConfig = {
-            'refreshFlag' : true // 초기화여부
-            ,'appendType' : 'add'
-        };
-
-        switch (messageType) {
-            case "addAlarmEvent": // 알림이벤트 등록
-                renderConfig['refreshFlag'] = false;
-                break;
-            case "removeAlarmEvent": // 알림이벤트 해제
-                renderConfig['refreshFlag'] = false;
-                renderConfig['appendType'] = 'remove';
-                break;
-            case "refreshView" : // 초기로딩 및 리스트 교체
-                renderConfig['refreshFlag'] = true;
-                break;
-        }
-
         // 초기화
-        if(renderConfig['refreshFlag']){
+        if(messageType=="refreshView"){
             for(var index in criticalCss){
                 modifyElementClass($(".watch_area div[areaId]"),"level-"+criticalCss[index],'remove');
             }
             $(".watch_area div[areaId] div[criticalLevel] p").text("");
+            messageType = "addNotification";
         }
 
         if(Array.isArray(data)){
             for(var index in data){
-                appendEvent(data[index], renderConfig);
+                appendNotification(data[index], messageType);
             }
         }else{
-            appendEvent(data, renderConfig);
-            inoutAppender(data);
+            appendNotification(data, messageType);
         }
 
-        function appendEvent(_data, _config){
+        function appendNotification(_data, _messageType){
             var _element = findAreaElement(_data['areaId']);
             if(_element==null){
-                console.debug("[eventLogRender][appendEvent] do not need to work on '" + _data['areaId'] + "' area - " + _data['eventLogId']);
+                console.debug("[notificationRender][appendNotification] do not need to work on '" + _data['areaId'] + "' area - " + _data['notificationId']);
                 return false;
             }
 
-            var eventLogInfo = _data['infos'];
-            var criticalLevel = null;
-            for(var i in eventLogInfo){
-                var _info = eventLogInfo[i];
-                if(_info['key']=='criticalLevel'){
-                    criticalLevel = _info['value'];
-                }
-            }
-
-            if(criticalLevel==null){
-                console.debug("[eventLogRender][appendEvent] criticalLevel is not found - " + _data['eventLogId']);
-                return false;
-            }
-
+            var criticalLevel = _data['criticalLevel'];
             var eventCntTag;
             var deviceElement = $(_element).find("li[deviceId='"+_data['deviceId']+"']");
             if(deviceElement.length > 0){
@@ -902,39 +1015,29 @@
                 eventCntTag = $(_element).find("[criticalLevel='"+criticalLevel+"'] p");
             }
 
-            if(eventCntTag.length == 0){
-                console.debug("[eventLogRender][appendEvent] criticalLevel Tag is not found '" + _data['areaId'] + "' area - " + _data['eventLogId']);
-                return false;
-            }
-
             var eventCnt = eventCntTag.text()!="" ? Number(eventCntTag.text()) : 0;
-            switch (_config['appendType']){
-                case "add" :
+            switch (_messageType){
+                case "addNotification" :
                     eventCntTag.text(++eventCnt);
                     modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'add');
                     if(deviceElement!=null){
                         modifyElementClass(deviceElement,"ts-"+criticalCss[criticalLevel],'add');
                     }
                     $(_element).find("p[messageBox]").append(
-                        $("<span/>",{eventLogId:_data['eventLogId']}).text(_data['areaName']+" "+_data['deviceName']+" "+_data['eventName']+" "+new Date(_data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"))
+                        $("<span/>",{notificationId:_data['notificationId']}).text(_data['areaName']+" "+_data['deviceName']+" "+_data['eventName']+" "+new Date(_data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"))
                     );
                     break;
-                case "remove" :
+                case "removeNotification" :
                     eventCntTag.text(--eventCnt==0?"":eventCnt);
+                        console.log(eventCnt, _element, "level-"+criticalCss[criticalLevel]);
                     if(eventCnt==0){
                         modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'remove');
                         if(deviceElement!=null){
                             modifyElementClass(deviceElement,"ts-"+criticalCss[criticalLevel],'remove');
                         }
                     }
-                    $(_element).find("p[messageBox] span[eventLogId='"+_data['eventLogId']+"']").remove();
+                    $(_element).find("p[messageBox] span[notificationId='"+_data['notificationId']+"']").remove();
                     break;
-            }
-
-            var _eventDate = new Date();
-            _eventDate.setTime(_data['eventDatetime']);
-            if(_eventDate>renderDatetime){
-                nhrAppender(_data);
             }
         }
     }
@@ -1005,53 +1108,49 @@
             }
 
             if(nhrDeviceTag.hasClass("on") && updateFlag){
-                updateChart(data['areaId'], data['deviceId'], eventValue, data['eventDatetime']);
-            }
-        }
-    }
-
-    function updateChart(_areaId, _deviceId, _eventValue, _eventDatetime){
-        if($(".watch_area li[deviceId='"+_deviceId+"']").hasClass("on")){
-            if(chartList[_areaId]==null) {
-                console.error("[updateChart] chartList is null - areaId : " + _areaId);
-                return false;
-            }
-
-            var _eventDate = new Date();
-            _eventDate.setTime(_eventDatetime);
-            var _eventDateStr;
-            switch ($("div[areaId='"+_areaId+"'] div[dateSelType] button.on").attr("value")){
-                case 'day':
-                    _eventDateStr = _eventDate.format("HH");
-                    break;
-                case 'week':
-                    _eventDateStr = _eventDate.format("es");
-                    break;
-                case 'month':
-                    _eventDateStr = _eventDate.getWeekOfMonth()+"주";
-                    break;
-                case 'year':
-                    _eventDateStr = _eventDate.format("MM");
-                    break;
-            }
-
-            var _labels = chartList[_areaId].data.labels;
-            var seriesIndex = null;
-            for(var i=0; i<_labels.length; i++){
-                if(_labels[i]==_eventDateStr){
-                    seriesIndex = i;
-                    break;
-                }
-            }
-
-            if(seriesIndex!=null){
-                try{
-                    if(chartList[_areaId].data.series[0][i] < _eventValue){
-                        chartList[_areaId].data.series[0][i] = _eventValue;
-                        chartList[_areaId].update();
+                if($(".watch_area li[deviceId='"+data['deviceId']+"']").hasClass("on")){
+                    if(chartList[data['areaId']]==null) {
+                        console.error("[updateChart] chartList is null - areaId : " + data['areaId']);
+                        return false;
                     }
-                }catch(e){
-                    console.error("[updateChart] series index error - "+e);
+
+                    var _eventDate = new Date();
+                    _eventDate.setTime(data['eventDatetime']);
+                    var _eventDateStr;
+                    switch ($("div[areaId='"+data['areaId']+"'] div[dateSelType] button.on").attr("value")){
+                        case 'day':
+                            _eventDateStr = _eventDate.format("HH");
+                            break;
+                        case 'week':
+                            _eventDateStr = _eventDate.format("es");
+                            break;
+                        case 'month':
+                            _eventDateStr = _eventDate.getWeekOfMonth()+"주";
+                            break;
+                        case 'year':
+                            _eventDateStr = _eventDate.format("MM");
+                            break;
+                    }
+
+                    var _labels = chartList[data['areaId']].data.labels;
+                    var seriesIndex = null;
+                    for(var i=0; i<_labels.length; i++){
+                        if(_labels[i]==_eventDateStr){
+                            seriesIndex = i;
+                            break;
+                        }
+                    }
+
+                    if(seriesIndex!=null){
+                        try{
+                            if(chartList[data['areaId']].data.series[0][i] < eventValue){
+                                chartList[data['areaId']].data.series[0][i] = eventValue;
+                                chartList[data['areaId']].update();
+                            }
+                        }catch(e){
+                            console.error("[updateChart] series index error - "+e);
+                        }
+                    }
                 }
             }
         }

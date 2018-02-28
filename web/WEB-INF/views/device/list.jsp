@@ -7,7 +7,7 @@
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
 <c:set value="D00010" var="menuId"/>
 <c:set value="D00000" var="subMenuId"/>
-<isaver:pageRoleCheck menuId="${menuId}" />
+<isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <!-- 장치 상세 화면 -->

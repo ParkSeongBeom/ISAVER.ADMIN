@@ -43,7 +43,9 @@ var VideoHelper = (
             for(var index in _deviceList){
                 if(_deviceList[index]['deviceCode']==useDeviceCode && _deviceList[index]['linkUrl']!=null){
                     element.append(
-                        $("<div/>",{id:_deviceList[index]['deviceId'],class:"vxgplayer",style:"border:0; margin:0;"})
+                        $("<li/>",{class:'ptz'}).append(
+                            $("<div/>",{id:_deviceList[index]['deviceId'],class:"vxgplayer",style:"border:0; margin:0;"})
+                        )
                     );
 
                     vxgplayer(_deviceList[index]['deviceId'], {

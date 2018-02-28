@@ -8,7 +8,7 @@
 <%@ taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="F00013" var="menuId"/>
 <c:set value="F00012" var="subMenuId"/>
-<isaver:pageRoleCheck menuId="${menuId}" />
+<isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
