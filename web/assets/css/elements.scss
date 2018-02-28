@@ -10,7 +10,7 @@ form-bg-effect :
 .datetime_set {
   @include flex-midddle; opacity: 0.6;
   & span {
-    @include font-size-h3; height:auto !important;
+    @include font-size-h3; height:auto !important; letter-spacing: 1px;
     &.c-Day,&.c-Date,&.c-Week {padding:0 10px 0 0;}
   }
 }

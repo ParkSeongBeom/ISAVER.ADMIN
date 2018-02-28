@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-helper.js?version=${version}"></script>
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js"type="text/javascript" ></script>
 
 <article>
@@ -178,11 +179,6 @@
                                 </c:if>
                             </header>
                             <article>
-                                <section class="treffic_set" style="display: none;">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
-                                </section>
                                 <section class="safeeye_set">
                                     <div class="s_lbox ico-invasion"></div>
                                     <%--<div class="s_rbox">--%>
@@ -291,7 +287,7 @@
                                                 .unit-ppm = ppm
                                                 .unit-kwh = 킬로와트
                                                  -->
-                                                <ul nhrDeviceList data-duplicated='true' data-direction='up'>
+                                                <ul detectorDeviceList data-duplicated='true' data-direction='up'>
                                                     <c:forEach var="device" items="${childArea.devices}">
                                                         <c:set var="deviceClass" value=""/>
                                                         <c:choose>
@@ -319,11 +315,6 @@
                                                         </c:choose>
 
                                                         <li deviceId="${device.deviceId}" areaId="${childArea.areaId}">
-                                                            <section class="treffic_set" style="display: none;">
-                                                                <c:forEach var="critical" items="${criticalList}">
-                                                                    <div criticalLevel="${critical.codeId}"><p></p></div>
-                                                                </c:forEach>
-                                                            </section>
                                                             <span class="${deviceClass}">${device.deviceCodeName}</span>
                                                             <span evtValue>
                                                                 <c:if test="${device.evtValue!=null}">
@@ -359,10 +350,7 @@
                                 </c:if>
                             </header>
                             <article>
-                                <section class="treffic_set" style="display: none;">
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <div criticalLevel="${critical.codeId}"><p></p></div>
-                                    </c:forEach>
+                                <section style="display: none;">
                                     <c:choose>
                                         <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
                                             <c:forEach var="device" items="${childArea.devices}">
@@ -487,14 +475,18 @@
     var chartList = {};
     var guardList = {};
     var renderDatetime = new Date();
+    var dashboardHelper = new DashboardHelper({
+        <c:forEach var="critical" items="${criticalList}">
+            '${critical.codeId}' : [],
+        </c:forEach>
+    });
 
     /*
      url defind
      @author psb
      */
     var urlConfig = {
-        notificationUrl : "${rootPath}/notification/dashboard.json"
-        ,inoutListUrl : "${rootPath}/eventLogInout/list.json"
+        inoutListUrl : "${rootPath}/eventLogInout/list.json"
         ,inoutDetailUrl : "${rootPath}/eventLogInout/list.json"
         ,chartUrl : "${rootPath}/eventLog/chart.json"
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
@@ -502,8 +494,7 @@
     };
 
     var messageConfig = {
-        notificationFailure   :'<spring:message code="dashboard.message.notificationFailure"/>'
-        , inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
+        inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutDetailFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
         , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
         , inoutConfigEmptyArea : '<spring:message code="dashboard.message.inoutConfigEmptyArea"/>'
@@ -532,19 +523,20 @@
         webSocketHelper.addWebSocketList("device", "${deviceWebSocketUrl}", null, deviceMessageEventHandler);
         webSocketHelper.wsConnect("device",false);
 
-        /* 이벤트 */
-        requestHelper.addRequestData('notificationList', urlConfig['notificationUrl'], {areaId:areaId}, dashBoardSuccessHandler, dashBoardFailureHandler);
+        dashboardHelper.setAreaList();
+        notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
+
         /* 진출입 */
         requestHelper.addRequestData('inoutList', urlConfig['inoutListUrl'], {areaIds:getInoutArea()}, dashBoardSuccessHandler, dashBoardFailureHandler);
+
         /* 이벤트 callback (websocket 리스너) */
-        requestHelper.setCallBackEventHandler(appendEventHandler);
         setRefreshTimeCallBack(refreshInoutSetting);
         initInoutConfigAreaDynatree();
         initChartList();
     });
 
     function test(){
-        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0000","location":[{"lat": 37.495460,"lng": 127.030969}]});
+        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0022","location":[{"lat": 37.495460,"lng": 127.030969}]});
         webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":"AR0004","id":"fence1","location":[
             {"lat" : "37.495453","lng" : "127.030874"},
             {"lat" : "37.495493","lng" : "127.030943"},
@@ -667,7 +659,7 @@
            });
         });
 
-        $(".watch_area ul[nhrDeviceList]").each(function(){
+        $(".watch_area ul[detectorDeviceList]").each(function(){
             $(this).find("li:eq(0)").trigger("click");
         });
     }
@@ -851,37 +843,6 @@
         callAjax('saveInoutConfiguration',param);
     }
 
-    /**
-     * alarm success handler
-     * @author psb
-     * @private
-     */
-    function appendEventHandler(messageType, eventLog, notification, cancelList){
-        switch (messageType) {
-            case "addEvent" : // 일반 이벤트
-                switch ($(".watch_area div[areaId='"+eventLog['areaId']+"']").attr("templateCode")){
-                    case "TMP001": // 신호등
-                        break;
-                    case "TMP002": // safe-eye
-                        break;
-                    case "TMP003": // blinker
-                        inoutAppender(eventLog);
-                        break;
-                    case "TMP004": // detector
-                        nhrAppender(eventLog);
-                        break;
-                    case "TMP008": // guard
-                        break;
-                }
-                break;
-            case "addNotification": // 알림이벤트 등록
-            case "removeNotification": // 알림이벤트 해제
-                notificationRender(notification, messageType);
-            case "cancelDetection": // 감지 해제
-                break;
-        }
-    }
-
     function callAjax(actionType, data){
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,dashBoardSuccessHandler,dashBoardFailureHandler,actionType);
     }
@@ -893,9 +854,6 @@
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
-            case 'notificationList':
-                notificationRender(data['notifications'], "refreshView");
-                break;
             case 'inoutList':
                 inoutRender(data['eventLogInoutList']);
                 break;
@@ -955,204 +913,6 @@
                     }
                 });
                 break;
-        }
-    }
-
-    function findAreaElement(_areaId){
-        var _element = null;
-
-        $.each($(".watch_area div[areaId]"), function(){
-            if($(this).attr("areaId")==_areaId){
-                _element = this;
-            }else if($(this).find(".area[childAreaIds]").length > 0){
-                var childAreaIds = $(this).find(".area[childAreaIds]").attr("childAreaIds");
-                if(childAreaIds.indexOf(_areaId) > -1){
-                    _element = this;
-                }
-            }
-        });
-        return _element;
-    }
-
-    /**
-     * 알림 상태
-     */
-    function notificationRender(data, messageType){
-        if(data==null){
-            return false;
-        }
-
-        // 초기화
-        if(messageType=="refreshView"){
-            for(var index in criticalCss){
-                modifyElementClass($(".watch_area div[areaId]"),"level-"+criticalCss[index],'remove');
-            }
-            $(".watch_area div[areaId] div[criticalLevel] p").text("");
-            messageType = "addNotification";
-        }
-
-        if(Array.isArray(data)){
-            for(var index in data){
-                appendNotification(data[index], messageType);
-            }
-        }else{
-            appendNotification(data, messageType);
-        }
-
-        function appendNotification(_data, _messageType){
-            var _element = findAreaElement(_data['areaId']);
-            if(_element==null){
-                console.debug("[notificationRender][appendNotification] do not need to work on '" + _data['areaId'] + "' area - " + _data['notificationId']);
-                return false;
-            }
-
-            var criticalLevel = _data['criticalLevel'];
-            var eventCntTag;
-            var deviceElement = $(_element).find("li[deviceId='"+_data['deviceId']+"']");
-            if(deviceElement.length > 0){
-                eventCntTag = deviceElement.find("[criticalLevel='"+criticalLevel+"'] p");
-            }else{
-                eventCntTag = $(_element).find("[criticalLevel='"+criticalLevel+"'] p");
-            }
-
-            var eventCnt = eventCntTag.text()!="" ? Number(eventCntTag.text()) : 0;
-            switch (_messageType){
-                case "addNotification" :
-                    eventCntTag.text(++eventCnt);
-                    modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'add');
-                    if(deviceElement!=null){
-                        modifyElementClass(deviceElement,"ts-"+criticalCss[criticalLevel],'add');
-                    }
-                    $(_element).find("p[messageBox]").append(
-                        $("<span/>",{notificationId:_data['notificationId']}).text(_data['areaName']+" "+_data['deviceName']+" "+_data['eventName']+" "+new Date(_data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"))
-                    );
-                    break;
-                case "removeNotification" :
-                    eventCntTag.text(--eventCnt==0?"":eventCnt);
-                        console.log(eventCnt, _element, "level-"+criticalCss[criticalLevel]);
-                    if(eventCnt==0){
-                        modifyElementClass($(_element),"level-"+criticalCss[criticalLevel],'remove');
-                        if(deviceElement!=null){
-                            modifyElementClass(deviceElement,"ts-"+criticalCss[criticalLevel],'remove');
-                        }
-                    }
-                    $(_element).find("p[messageBox] span[notificationId='"+_data['notificationId']+"']").remove();
-                    break;
-            }
-        }
-    }
-
-    /**
-     * 진출입 이벤트 발생시
-     */
-    function inoutAppender(data){
-        var inoutAreaTag = $(".watch_area div[inoutArea][areaId='"+data['areaId']+"']");
-        if(inoutAreaTag.length > 0){
-            var startDatetime = new Date(Number(inoutAreaTag.attr("startDatetime")));
-            var endDatetime = new Date(Number(inoutAreaTag.attr("endDatetime")));
-            var eventDatetime = new Date(data['eventDatetime']);
-            var updateFlag = false;
-
-            if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
-                for(var index in data['infos']){
-                    var info = data['infos'][index];
-
-                    if(info['key']=="inCount"){
-                        var inTag = inoutAreaTag.find("[in]");
-                        var inCount = Number(inTag.text());
-                        inCount += Number(info['value']);
-                        inTag.text(inCount);
-                        updateFlag = true;
-                    }else if(info['key']=="outCount"){
-                        var outTag = inoutAreaTag.find("[out]");
-                        var outCount = Number(outTag.text());
-                        outCount += Number(info['value']);
-                        outTag.text(outCount);
-                        updateFlag = true;
-                    }
-                }
-            }
-
-            if(updateFlag){
-                inoutAreaTag.find("[gap]").text(Number(inoutAreaTag.find("[in]").text())-Number(inoutAreaTag.find("[out]").text()));
-            }
-        }
-    }
-
-    /**
-     * NHR 이벤트 발생시
-     */
-    function nhrAppender(data){
-        // 배재호SB 요청으로 스마트플래그 이벤트는 (A)만 입력받음
-        if(data['eventId']=='EVT308' || data['eventId']=='EVT310' || data['eventId']=='EVT312' || data['eventId']=='EVT313'){
-            return false;
-        }
-
-        var nhrDeviceTag = $(".watch_area div[areaId='"+data['areaId']+"'] li[deviceId='"+data['deviceId']+"']");
-        if(nhrDeviceTag.length > 0) {
-            var updateFlag = false;
-            var eventValue;
-            for(var index in data['infos']){
-                var info = data['infos'][index];
-
-                if(info['key']=="value"){
-                    eventValue = info['value'];
-                    try{
-                        nhrDeviceTag.find("span[evtValue]").text(Number(eventValue).toFixed(2));
-                    }catch(e){
-                        nhrDeviceTag.find("span[evtValue]").text(eventValue);
-                        console.error("[nhrAppender] parse error - "+ e.message);
-                    }
-                    updateFlag = true;
-                }
-            }
-
-            if(nhrDeviceTag.hasClass("on") && updateFlag){
-                if($(".watch_area li[deviceId='"+data['deviceId']+"']").hasClass("on")){
-                    if(chartList[data['areaId']]==null) {
-                        console.error("[updateChart] chartList is null - areaId : " + data['areaId']);
-                        return false;
-                    }
-
-                    var _eventDate = new Date();
-                    _eventDate.setTime(data['eventDatetime']);
-                    var _eventDateStr;
-                    switch ($("div[areaId='"+data['areaId']+"'] div[dateSelType] button.on").attr("value")){
-                        case 'day':
-                            _eventDateStr = _eventDate.format("HH");
-                            break;
-                        case 'week':
-                            _eventDateStr = _eventDate.format("es");
-                            break;
-                        case 'month':
-                            _eventDateStr = _eventDate.getWeekOfMonth()+"주";
-                            break;
-                        case 'year':
-                            _eventDateStr = _eventDate.format("MM");
-                            break;
-                    }
-
-                    var _labels = chartList[data['areaId']].data.labels;
-                    var seriesIndex = null;
-                    for(var i=0; i<_labels.length; i++){
-                        if(_labels[i]==_eventDateStr){
-                            seriesIndex = i;
-                            break;
-                        }
-                    }
-
-                    if(seriesIndex!=null){
-                        try{
-                            if(chartList[data['areaId']].data.series[0][i] < eventValue){
-                                chartList[data['areaId']].data.series[0][i] = eventValue;
-                                chartList[data['areaId']].update();
-                            }
-                        }catch(e){
-                            console.error("[updateChart] series index error - "+e);
-                        }
-                    }
-                }
-            }
         }
     }
 

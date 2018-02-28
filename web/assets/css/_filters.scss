@@ -569,25 +569,45 @@ $bbl01:100%; $bbl02:1px;
     50%  {opacity: 0.2;}
     100% {opacity: 1;}
   }
-
 } // ex) @include issue;
+
+@mixin notice {
+  animation-name: notice;
+  -webkit-animation-name: notice;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 50;
+  animation-iteration-count: 50;
+
+  @-webkit-keyframes notice {
+    0%   {margin:0 3px 0 0;}
+    100%  {margin:0 -3px 0 0;}
+  }
+  @keyframes notice {
+    0%   {margin:0 3px 0 0;}
+    100%  {margin:0 -3px 0 0;}
+  }
+} // ex) @include notice;
+
 
 @mixin issue02 {
   animation-name: issue02;
   -webkit-animation-name: issue02;
   @include infinite;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
 
   @-webkit-keyframes issue02 {
-    0%   { opacity: 0; }
+    0%   { opacity: 0.5; }
     10%  { opacity: 1; }
     50%  { opacity: 1; }
-    100% { opacity: 0; }
+    100% { opacity: 0.5; }
   }
   @keyframes issue02 {
-    0%   { opacity: 0; }
+    0%   { opacity: 0.5; }
     10%  { opacity: 1; }
     50%  { opacity: 1; }
-    100% { opacity: 0; }
+    100% { opacity: 0.5; }
   }
 } // ex) @include issue02;
 @mixin issue03 {
@@ -856,6 +876,29 @@ $bbl01:100%; $bbl02:1px;
 } // ex) @include loding02;
 
 
+@mixin header_ani {
+  animation-name: header_ani;
+  -webkit-animation-name: header_ani;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         10s;
+  -webkit-animation-duration: 10s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+
+
+  @-webkit-keyframes header_ani {
+    0%   {left:-100%;}
+    100% {left:100%;}
+  }
+  @-webkit-keyframes header_ani {
+    0%   {left:-100%;}
+    100% {left:100%;}
+  }
+} // ex) @include header_ani;
 
 // Guard 감지 아이콘 애니메이션
 @mixin pOn {

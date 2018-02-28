@@ -143,6 +143,7 @@ header {
     @include box-shadow02(0px, 18px, 24px, -17px, 0, 0, 0, 0.5);
     @include transition01(500ms);
   }
+
   &.up:before {opacity: 1; height:50px;}
 
   .header_area {
@@ -175,9 +176,12 @@ header {
 
           &.level-caution, &.level-warning, &.level-danger {
             &.issue_btn {
-              width:($noticecenter-width - 80px); /*background-color:$color-red-01;*/
+              width:100%; /*background-color:$color-red-01;*/
               &:before {color:#fff !important;}
-              &.on {@include issue;}
+              &.on {
+                @include issue;
+                &:before {@include notice;}
+              }
             }
           }
           /*
@@ -232,7 +236,7 @@ menu {
       float:left; margin:0 10px 0 0;
 
       & > button {
-        @include font-size-menubtn; text-align: center; text-transform:uppercase;
+        @include font-size-menubtn; text-align: center; text-transform:uppercase; padding-top:5px;
         &.on {border:none;}
       } // menu > ul > li > button
 
@@ -504,7 +508,7 @@ menu {
     & > div {
       span {
         @include flex-midddle; @include border-radius(200px);
-        @include box-inset-shadow(0, 2px, 4px, #000, 0.2);
+        @include box-shadow01(0px, 6px, 6px, 0px, #000, 0.1);
         float:left; min-width:40px; height:40px; margin:0 0 0 5px; padding:0 10px;
         font-size:1.4rem; color:$color-white-01; line-height: 1.4rem;
         @include text-shadow(0, 1px, 2px, #000, 0.7);
@@ -519,6 +523,8 @@ menu {
   section.db_list_box {
     @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
     @include border01( 1px,$color-gray-01,1); background-color: $adm-color;
+
+
 
     .db_filter_set {
       @include flexbase; @include flex-option(1, 0, 41px); max-height:41px;
@@ -577,7 +583,7 @@ menu {
       overflow: auto;
       li {
         @include flexbase; @include flex-align-items-center;
-        position: relative; width:100%; margin:0 0 2px 0; padding:5px 0;
+        position: relative; width:100%; margin:0 0 1px 0; padding:5px 0;
         //@include border01(0 0 1px 0,$color-gray-01,1);
         & * {color:$color-white-01;}
         & > .checkbox_set, & > button {@include flex-option(1, 0, 40px);}
@@ -767,7 +773,7 @@ menu {
   &-danger  {background-color: rgba($color-red-01,1);}    // .level-danger  위험
 
   &-caution, &-warning, &-danger {
-    & *, & *:before, & *:after {color:$color-white-01; }
+    //& *, & *:before, & *:after {color:$color-white-01; }
 
 
     &.type-list, .watch_area > div {
@@ -788,7 +794,10 @@ menu {
         & * , &:before {color:$color-red-01 !important; }
         &:before {background-color: $color-white-01 !important;}
       }
-      .safeeye_set .s_lbox {color:$color-red-01; &:after { @include issue05;} }
+      .safeeye_set .s_lbox {
+        color:$color-red-01; @include issue02;
+        &:after { @include issue05;}
+      }
     }
 
     .m_marqueebox {
@@ -813,7 +822,7 @@ menu {
       background-color:$color-white-01;
     }
     &:after  {
-      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5);
+      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5); @include issue02;
       //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
     }
     p {color:$color-white-01 !important;}
@@ -822,15 +831,19 @@ menu {
   &-caution {
     .treffic_set .ts-caution {
       &:before { @include border01(2px,$color-gray-03,0.4 ); }
-      @include level-Common; & > p:before {@include border01(2px,$color-gray-03,1 ); @include issue06; }
+      @include level-Common;
+      & > p:before {@include border01(3px,$color-gray-03,1 ); @include issue06; }
+
     }
-    .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
+    .treffic_set .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
   } // .level-caution 주의
 
   &-warning {
     .treffic_set .ts-warning {
       &:before { @include border01(2px,$color-orange-01,0.4 ); }
-      @include level-Common; & > p:before {@include border01(2px,$color-orange-01,1 ); @include issue06;}
+      @include level-Common;
+      & > p:before {@include border01(3px,$color-orange-01,1 ); @include issue06;}
+
     }
     .treffic_set .ts-warning:after, .m_marqueebox:before {background-color:$color-orange-01;}
   } // .level-warning 경고
@@ -838,7 +851,9 @@ menu {
   &-danger  {
     .treffic_set .ts-danger {
       &:before { @include border01(2px,$color-red-01,0.4 ); }
-      @include level-Common; & > p:before {@include border01(2px,$color-red-01,1 ); @include issue06;}
+      @include level-Common;
+      & > p:before {@include border01(3px,$color-red-01,1 ); @include issue06;}
+
     }
     .treffic_set .ts-danger:after, .m_marqueebox:before {background-color:$color-red-01;}
   } // .level-danger  위험

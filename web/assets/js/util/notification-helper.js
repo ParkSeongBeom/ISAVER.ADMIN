@@ -17,6 +17,12 @@ var NotificationHelper = (
         var _messageConfig;
         var _notificationList = {};
         var _element;
+
+        var _callBackEventHandler = null;
+        var CALL_BACK_RETRY = {
+            'cnt' : 10
+            , 'delay' : 1000
+        };
         var _self = this;
 
         /**
@@ -29,6 +35,17 @@ var NotificationHelper = (
             for(var index in _urlConfig){
                 _urlConfig[index] = _rootPath + _urlConfig[index];
             }
+            console.log('[NotificationHelper] initialize complete');
+        };
+
+
+        this.setCallBackEventHandler = function(_eventHandler){
+            if(_eventHandler==null || typeof _eventHandler != "function"){
+                console.error('[RequestHelper][setCallBackEventHandler] _appendEventHandler is null or type error');
+                return false;
+            }
+
+            _callBackEventHandler = _eventHandler;
         };
 
         /**
@@ -298,6 +315,8 @@ var NotificationHelper = (
 
                 selectBoxChangeHandler();
             }
+
+            _self.callBackEvent('addNotification', {'notification':notification});
         };
 
         /**
@@ -325,10 +344,10 @@ var NotificationHelper = (
          * @author psb
          * @param notifications
          */
-        this.updateNotificationList = function(notifications, callbackEventListener){
+        this.updateNotificationList = function(notifications){
             if(notifications!=null){
                 for(var index in notifications){
-                    _self.updateNotification(notifications[index], callbackEventListener);
+                    _self.updateNotification(notifications[index]);
                 }
 
                 notificationCancelBtnAction();
@@ -341,7 +360,7 @@ var NotificationHelper = (
          * @author psb
          * @private
          */
-        this.updateNotification = function(notification, callbackEventListener){
+        this.updateNotification = function(notification){
             var notificationTag = _self.getNotification('element',notification['notificationId']);
             if(notificationTag==null){
                 console.warn("[NotificationHelper][updateNotification] empty notification - "+notification['notificationId']);
@@ -375,10 +394,34 @@ var NotificationHelper = (
                     notificationTag.remove();
                     delete _notificationList[notification['notificationId']];
 
-                    if(typeof callbackEventListener=="function"){
-                        callbackEventListener('removeNotification', null, notification);
-                    }
+                    _self.callBackEvent('removeNotification', {'notification':notificationData});
                     break;
+            }
+        };
+
+        /**
+         * append data
+         * WS에서 이벤트 수신시 DB거치지 않고 실시간 대쉬보드 반영을 위함
+         * @author psb
+         */
+        this.callBackEvent = function(messageType, data, count){
+            if(dashboardFlag){
+                if(_callBackEventHandler!=null){
+                    _callBackEventHandler(messageType, data);
+                }else{
+                    if(count == null){
+                        count = CALL_BACK_RETRY['cnt'];
+                    }
+                    console.log('[NotificationHelper] callBackEvent retry - ' + (CALL_BACK_RETRY['cnt']-count));
+
+                    if(count > 0){
+                        setTimeout(function(){
+                            _self.callBackEvent(messageType, data, count - 1);
+                        },CALL_BACK_RETRY['deley']);
+                    }else{
+                        console.error('[NotificationHelper] callBackEvent failure - callback event handler is null');
+                    }
+                }
             }
         };
 

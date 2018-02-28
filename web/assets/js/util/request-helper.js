@@ -12,9 +12,6 @@ var RequestHelper = (
         };
 
         var _requestData = {};
-
-        var _callBackEventHandler = null;
-
         var _self = this;
 
         /**
@@ -80,15 +77,6 @@ var RequestHelper = (
             };
         };
 
-        this.setCallBackEventHandler = function(_eventHandler){
-            if(_eventHandler==null || typeof _eventHandler != "function"){
-                console.error('[RequestHelper][setCallBackEventHandler] _appendEventHandler is null or type error');
-                return false;
-            }
-
-            _callBackEventHandler = _eventHandler;
-        };
-
         /**
          * request data save
          * @author psb
@@ -123,17 +111,6 @@ var RequestHelper = (
                 if(_requestData[_actionType]!=null){
                     sendAjaxPostRequest(_requestData[_actionType]['url'],_requestData[_actionType]['data'],_requestData[_actionType]['success'],_requestData[_actionType]['failure'],_actionType);
                 }
-            }
-        };
-
-        /**
-         * append data
-         * WS에서 이벤트 수신시 DB거치지 않고 실시간 대쉬보드 반영을 위함
-         * @author psb
-         */
-        this.callBackEvent = function(messageType, eventLog, notification, cancelList){
-            if(_callBackEventHandler!=null){
-                _callBackEventHandler(messageType, eventLog, notification, cancelList);
             }
         };
     }

@@ -22,9 +22,29 @@ $ks_ssize:($ks_bsize / 4.5);
 
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {
+
+  .watch_area * , .db_area * {
+    ::-webkit-scrollbar, ::-webkit-scrollbar-corner  {height:8px; width:8px; background-color: $adm-color;}
+
+    ::-webkit-scrollbar-thumb {
+      background-color: $bas-color; @include border01(2px,$adm-color,1 );
+      &:hover {background-color: $color-gray-07 ;}
+    }
+
+  }
+
   overflow: hidden; position: absolute; top:0; left:0; right:0;
   height:100%; min-height:0; padding:0 $dash-margin;
   .wrap {height:100%;}
+
+  .wrap > header:after {
+    content:""; position: absolute; left:0; top:($headerHeight + 5px); width:100%; height:2px;
+    background: -webkit-linear-gradient(left, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
+    background: linear-gradient(to right, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#007db9e8',GradientType=1 );
+    @include header_ani;
+  }
+
   article {
     @include flexbase; @include flex-column;
     button {
@@ -154,6 +174,17 @@ body.dashboard_mode {
 
   &.dark_mode {
 
+    .watch_area * , .db_area * {
+      ::-webkit-scrollbar, ::-webkit-scrollbar-corner {background-color: $color-gray-09;}
+
+      ::-webkit-scrollbar-thumb {
+        background-color: $bas-color; @include border01(2px,$color-gray-09,1 );
+      }
+
+
+    }
+
+
     @mixin dark_select {
       @include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02;
     }
@@ -166,7 +197,7 @@ body.dashboard_mode {
     &, .db_area, .db_area:before, .db_list_box, .wrap > header, .db_filter_set h3 {@include screenbg;}
 
     .db_list_box {
-      border-color: $color-gray-09;
+      border-color: $color-gray-09; @include box-shadow02(-30px, 0, 50px, -30px, 0, 0, 0, 0.8);
       textarea {
         color:$color-white-02;
         background-color: transparent;
@@ -220,19 +251,22 @@ body.dashboard_mode {
           }
 
         }
-        &-caution:before {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
-        &-warning:before {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
-        &-danger:before  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
+        //&-caution:before {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
+        //&-warning:before {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
+        //&-danger:before  {background-color: rgba($color-red-01,1) !important;}    // .level-danger  위험
       }
     }
 
     .chart_select_set button {color:$bas-color;}
+    .nhr_set .s_rbox {border-color:$color-gray-08;}
     .nhr_set li {
 
       &:after {background-color: $color-gray-08; border-color:$color-gray-09;}
       &.on {&:after {border-color:$color-gray-06;} }
     }
 
+    .safeeye_set .s_lbox:before, .blinker_set.s_lbox h3 + div:before
+    {@include text-shadow(0, 20px, 40px, #000, 0.5);}
   }
 
 }
@@ -286,7 +320,7 @@ body.dashboard_mode {
   & > div {
 
     width:25%; /*min-width:350px; max-width:50%; */min-height:25%; padding:0 $m_lr;
-
+    &,&:before {background-color: transparent !important;}
     &:before, &:after {content:""; position: absolute; left:-1px; top:-1px; right:0; bottom:0; }
     &:before {@include border01(1px,$color-gray-01,1);}
     &:after {z-index:-1; background-color: $color-white-01;}
@@ -367,6 +401,7 @@ body.dashboard_mode {
       h3 {font-size:$bs_hsize_ss; letter-spacing: -0.1rem;}
 
       & > div {
+
         & > p {font-size:$bs_bsize_ss; line-height:($bs_bsize_ss - 1rem); letter-spacing: -0.2rem;}
         & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
       }
@@ -591,6 +626,7 @@ body.dashboard_mode {
     }
   }
 
+
   .blinker_set {
     /*
     <h3>구역명 삽입</h3>
@@ -612,7 +648,7 @@ body.dashboard_mode {
 
     & > div {
       @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-      width:100%;
+      width:100%; background-color: transparent !important;
       & > p {font-size:$bs_bsize; line-height:($bs_bsize - 1rem); letter-spacing: -0.2rem;}
       & > div {
         padding:5px 0 0 5px; font-weight:bold; text-align:right;
@@ -630,7 +666,7 @@ body.dashboard_mode {
 
       h3 + div {
         @include flex-row-wrap;
-        &::before {
+        &:before {
           content:"\e944"; font-size:$se_bsize;
           text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
         }
@@ -665,12 +701,13 @@ body.dashboard_mode {
 //.marquee_h ul { @include marquee_h; cursor:pointer;}
 
 
+
 /////..... safeeye section Start
 .safeeye_set {
   .s_lbox {
     @include flex-midddle;
     &:before, &:after {position: absolute; font-size:$se_bsize; @include border-radius(200px);}
-    &:before {z-index: 1;}
+    &:before {z-index: 1; }
     &:after {content:""; @include border01(3px,$color-red-01,1 ); padding:10%; }
 
   }
@@ -693,7 +730,8 @@ body.dashboard_mode {
 
 }
 /////..... safeeye section End
-
+.safeeye_set .s_lbox:before, .blinker_set.s_lbox h3 + div:before
+{@include text-shadow(10px, 10px, 3px, #000, 0.1);}
 
 /////..... NHR section Start
 
@@ -815,33 +853,47 @@ body.dashboard_mode {
   .s_lbox, .s_rbox {height:100%; background-color: $bas-color;}
   .s_lbox {
     overflow: hidden;
+    & > div {width:100%; height:100%;}
 
-    .device > div, .icon-tof, .icon-ptz, .tracking {
-      @include flexbase;
-      &, &:before, &:after {
-        @include flex-midddle; position: absolute; z-index: 2;  width:$devicewidth; height:$devicewidth;
-        background-color: transparent !important; font-size:1.9rem; color:$color-white-01;
-        @include border-radius(200px);
-        @include transition(400ms); cursor: pointer;
+    .device, .device > div, .icon-tof, .icon-ptz, .tracking {
+      &, &:before, &:after {@include flex-midddle; background-color: transparent !important;}
+
+      &:before, &:after {
+        width:100%; height:100%; font-size:1.9rem; color:$color-white-01;
+        @include border-radius(200px); @include transition(400ms); cursor: pointer;
       }
     }
-    .tracking:before {content:"\e91b"; font-size:0.6rem; color:$color-blue-03 !important;}
+
+    .icon-tof, .icon-ptz, .tracking {
+      position: relative; width:$devicewidth; height:$devicewidth;
+    }
+
+    .tracking:before {content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;}
 
     .icon-tof, .icon-ptz { &:before {@include text-shadow(0, 3px, 8px, #000, 1);} }
-
-
     .icon-tof {top:10%; left:10%;}
     .icon-ptz {top:20%; left:20%;}
     .tracking {top:40%; left:40%;}
 
-
-    .icon-tof, .icon-ptz, .device > div, .tracking {
+    .icon-tof, .icon-ptz, .tracking {
       /////..... 임계치 적용 표시 Start
       &.level {
-        &-caution,&-warning,&-danger {@include pOn;}
+        &-caution,&-warning,&-danger {@include pOn; }
         &-caution:after {@include border01(2px,$color-gray-05,1);  }
         &-warning:after {@include border01(2px,$color-yellow-01,1);}
         &-danger:after  {@include border01(2px,$color-red-01,1);   }
+      }
+      /////..... 임계치 적용 표시 End
+    }
+
+
+    .device {
+      /////..... 임계치 적용 표시 Start
+      &.level {
+        &-caution,&-warning,&-danger { & > div {@include pOn;} }
+        &-caution > div:after {@include border01(2px,$color-gray-05,1);  }
+        &-warning > div:after {@include border01(2px,$color-yellow-01,1);}
+        &-danger > div:after  {@include border01(2px,$color-red-01,1);   }
       }
       /////..... 임계치 적용 표시 End
     }
@@ -856,15 +908,19 @@ body.dashboard_mode {
       li {
         overflow: hidden; position: relative; width:100%; height:50%; min-height:25%;
         background-position: 50%; background-repeat: no-repeat; background-size: cover;
-        & *:not(.vxgplayer-loader) {widtH:100%; height:100%;}
-
+        & > div {width:100%; height:100%;}
       }
     }
   }
 }
-.gm-style-pbc {opacity: 1 !important;}
-.vxgplayer-loader {margin:-25px 0 0 -25px !important;}
 
+.gm-style {
+  &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }
+  iframe + div, .gmnoprint {display: none !important;}
+}
+
+.vxgplayer-loader {margin:-25px 0 0 -25px !important;}
+.vxgplayer-error  {margin:-60px 0 0 0 !important;}
 /////.......................................... Guard End
 
 

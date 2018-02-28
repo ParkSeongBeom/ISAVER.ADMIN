@@ -36,7 +36,8 @@ form-bg-effect :
   opacity: 0.6; }
   .datetime_set span {
     font-size: 1.5rem;
-    height: auto !important; }
+    height: auto !important;
+    letter-spacing: 1px; }
     .datetime_set span.c-Day, .datetime_set span.c-Date, .datetime_set span.c-Week {
       padding: 0 10px 0 0; }
 

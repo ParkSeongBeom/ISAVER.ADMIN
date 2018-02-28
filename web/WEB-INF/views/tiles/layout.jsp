@@ -51,6 +51,7 @@
         var _eventDatetime = new Date();
         var webSocketHelper = new WebSocketHelper();
         var notificationHelper = new NotificationHelper(rootPath);
+        var dashboardFlag = false;
 
         var layoutUrlConfig = {
             'logoutUrl':'${rootPath}/logout.html'
@@ -126,6 +127,7 @@
                 modifyElementClass($("html"),'dashboard_mode','add');
                 modifyElementClass($("body"),'dashboard_mode','add');
                 modifyElementClass($("body"),'dark_mode','add');
+                dashboardFlag = true;
             }
 
             printTime();
@@ -171,16 +173,15 @@
                         setAlarmAudio();
                     }
                     notificationHelper.addNotification(resultData['notification'], true);
-                    requestHelper.callBackEvent(resultData['messageType'], null, resultData['notification'], null);
                     break;
                 case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
-                    notificationHelper.updateNotificationList(resultData['notification'], requestHelper.callBackEvent);
+                    notificationHelper.updateNotificationList(resultData['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
-                    requestHelper.callBackEvent(resultData['messageType'], resultData['eventLog'], resultData['notification'], resultData['cancelList']);
+                    notificationHelper.callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     break;
                 case "addEvent": // 일반이벤트 등록
-                    requestHelper.callBackEvent(resultData['messageType'], resultData['eventLog'], null, null);
+                    notificationHelper.callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
                     break;
             }
         }
