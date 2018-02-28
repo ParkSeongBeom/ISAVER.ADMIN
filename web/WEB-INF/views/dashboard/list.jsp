@@ -85,7 +85,7 @@
                 -->
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
-                        <!-- 신호등 -->
+                        <!-- Default 신호등 -->
                         <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
@@ -168,7 +168,7 @@
                     </c:if>
 
                     <c:if test="${childArea.templateCode=='TMP002'}">
-                        <!-- 감시구역 침입 -->
+                        <!-- Safe-Eye -->
                         <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
@@ -202,7 +202,7 @@
                     </c:if>
 
                     <c:if test="${childArea.templateCode=='TMP003'}">
-                        <!-- 진출입 -->
+                        <!-- Blinker -->
                         <div class="type-list">
                             <header>
                                 <h3>${childArea.areaName}</h3>
@@ -261,7 +261,7 @@
                     </c:if>
 
                     <c:if test="${childArea.templateCode=='TMP004'}">
-                        <!-- NHR -->
+                        <!-- Detector -->
                         <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
@@ -862,15 +862,15 @@
                 switch ($(".watch_area div[areaId='"+eventLog['areaId']+"']").attr("templateCode")){
                     case "TMP001": // 신호등
                         break;
-                    case "TMP002": // 감시구역 침입
+                    case "TMP002": // safe-eye
                         break;
-                    case "TMP003": // 전시물 보호
-                        break;
-                    case "TMP004": // 진출입
+                    case "TMP003": // blinker
                         inoutAppender(eventLog);
                         break;
-                    case "TMP005": // NHR
+                    case "TMP004": // detector
                         nhrAppender(eventLog);
+                        break;
+                    case "TMP008": // guard
                         break;
                 }
                 break;

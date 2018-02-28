@@ -119,6 +119,7 @@
     <form id="deviceForm" method="POST">
         <article class="search_area">
             <div class="search_contents">
+                <spring:message code="common.selectbox.select" var="allSelectText"/>
                 <p class="itype_01">
                     <span><spring:message code='device.column.deviceId'/></span>
                     <span>
@@ -128,13 +129,13 @@
                 <p class="itype_01">
                     <span><spring:message code='device.column.deviceType'/></span>
                     <span>
-                        <isaver:codeSelectBox groupCodeId="D00" codeId="${paramBean.deviceTypeCode}" htmlTagName="deviceTypeCode" allModel="true"/>
+                        <isaver:codeSelectBox groupCodeId="D00" codeId="${paramBean.deviceTypeCode}" htmlTagName="deviceTypeCode" allModel="true" allText="${allSelectText}"/>
                     </span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code='device.column.deviceCode'/></span>
                     <span>
-                        <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true"/>
+                        <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true" allText="${allSelectText}"/>
                     </span>
                 </p>
                 <p class="itype_01">

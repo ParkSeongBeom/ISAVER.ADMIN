@@ -35,7 +35,8 @@
                 <div class="search_contents">
                     <p>
                         <span><spring:message code="statistics.column.area"/></span>
-                        <span><isaver:areaSelectBox htmlTagId="areaId" allModel="true"/></span>
+                        <spring:message code="common.selectbox.select" var="allSelectText"/>
+                        <span><isaver:areaSelectBox htmlTagId="areaId" allModel="true" allText="${allSelectText}"/></span>
                     </p>
                     <p>
                         <span><spring:message code="statistics.column.datetime"/></span>
@@ -419,7 +420,7 @@
         }
 
         $("#eventStatisticsList").append(chartDivHtml).append(tableDivHtml);
-        $("article .ment").hide();
+        $("article.ment").hide();
         $(".chart_table_area").show();
         tabShowHide($(".depthtabs_btn_set > button.tabs_on"));
     }

@@ -44,9 +44,8 @@
                             </p>
                             <p class="itype_01">
                                 <span><spring:message code="device.column.deviceCode"/></span>
-                            <span>
-                                <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="pop_device_code" allModel="true"/>
-                            </span>
+                                <spring:message code="common.selectbox.select" var="allSelectText"/>
+                                <span><isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagId="pop_device_code" allModel="true" allText="${allSelectText}"/></span>
                             </p>
                             <p class="itype_01">
                                 <span><spring:message code="device.column.areaName"/></span>

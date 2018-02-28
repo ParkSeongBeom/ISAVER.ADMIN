@@ -501,8 +501,9 @@
                     <input type="checkbox" class="check_input" onclick="javascript:notificationHelper.notificationAllCheck(this);"/>
                     <label></label>
                 </div>
-                <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true"/>
-                <isaver:areaSelectBox htmlTagId="areaType" allModel="true"/>
+                <spring:message code="common.selectbox.select" var="allSelectText"/>
+                <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true" allText="${allSelectText}"/>
+                <isaver:areaSelectBox htmlTagId="areaType" allModel="true" allText="${allSelectText}"/>
                 <button class="btn dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');"></button>
             </div>
 

@@ -44,18 +44,19 @@
 
         <article class="search_area">
             <div class="search_contents">
+                <spring:message code="common.selectbox.select" var="allSelectText"/>
                 <!-- 일반 input 폼 공통 -->
                 <p class="itype_01">
                     <span><spring:message code="notification.column.areaName" /></span>
-                    <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" areaId="${paramBean.areaId}"/></span>
+                    <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" areaId="${paramBean.areaId}" allText="${allSelectText}"/></span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="notification.column.deviceName" /></span>
-                    <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true"/>
+                    <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="notification.column.criticalLevel" /></span>
-                    <isaver:codeSelectBox groupCodeId="LEV" codeId="${paramBean.criticalLevel}" htmlTagName="criticalLevel" allModel="true"/>
+                    <isaver:codeSelectBox groupCodeId="LEV" codeId="${paramBean.criticalLevel}" htmlTagName="criticalLevel" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_04">
                     <span><spring:message code="notification.column.eventDatetime" /></span>

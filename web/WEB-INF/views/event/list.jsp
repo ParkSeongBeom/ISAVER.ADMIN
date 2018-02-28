@@ -87,9 +87,8 @@
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="event.column.eventFlag" /></span>
-                    <span>
-                        <isaver:codeSelectBox groupCodeId="EVT" codeId="${paramBean.eventFlag}" htmlTagName="eventFlag" allModel="true"/>
-                    </span>
+                    <spring:message code="common.selectbox.select" var="allSelectText"/>
+                    <span><isaver:codeSelectBox groupCodeId="EVT" codeId="${paramBean.eventFlag}" htmlTagName="eventFlag" allModel="true" allText="${allSelectText}"/></span>
                 </p>
             </div>
             <div class="search_btn">

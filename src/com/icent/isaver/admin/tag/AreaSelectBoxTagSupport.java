@@ -105,7 +105,7 @@ public class AreaSelectBoxTagSupport extends ParamTag {
 
                 sb.append(">");
                 if(allModel) {
-                    sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "전체") );
+                    sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "All") );
                 }
                 for(AreaBean area:areas) {
                     if (areaId.equals(area.getAreaId())) {

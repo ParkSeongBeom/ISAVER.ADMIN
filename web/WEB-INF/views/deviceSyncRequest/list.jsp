@@ -27,14 +27,15 @@
 
         <article class="search_area">
             <div class="search_contents">
+                <spring:message code="common.selectbox.select" var="allSelectText"/>
                 <!-- 일반 input 폼 공통 -->
                 <p class="itype_01">
                     <span><spring:message code="deviceSyncRequest.column.type" /></span>
-                    <isaver:codeSelectBox groupCodeId="T01" codeId="${paramBean.type}" htmlTagName="type" allModel="true"/>
+                    <isaver:codeSelectBox groupCodeId="T01" codeId="${paramBean.type}" htmlTagName="type" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="deviceSyncRequest.column.status" /></span>
-                    <isaver:codeSelectBox groupCodeId="S01" codeId="${paramBean.status}" htmlTagName="status" allModel="true"/>
+                    <isaver:codeSelectBox groupCodeId="S01" codeId="${paramBean.status}" htmlTagName="status" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_04">
                     <span><spring:message code="deviceSyncRequest.column.requestDatetime" /></span>

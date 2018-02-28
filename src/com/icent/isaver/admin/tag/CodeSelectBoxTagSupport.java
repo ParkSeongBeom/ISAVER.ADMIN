@@ -115,7 +115,7 @@ public class CodeSelectBoxTagSupport extends ParamTag {
 
                     sb.append(">");
                     if(allModel) {
-                        sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "전체") );
+                        sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "All") );
                     }
                     for(CodeBean code:codes) {
                         if (codeId.equals(code.getCodeId())) {

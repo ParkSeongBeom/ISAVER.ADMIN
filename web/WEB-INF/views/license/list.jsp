@@ -47,7 +47,8 @@
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="license.column.deviceType" /></span>
-                    <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagId="selectDeviceCode" htmlTagName="deviceCode" allModel="true"/>
+                    <spring:message code="common.selectbox.select" var="allSelectText"/>
+                    <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagId="selectDeviceCode" htmlTagName="deviceCode" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_04">
                     <span><spring:message code="license.column.expireDate"/></span>
