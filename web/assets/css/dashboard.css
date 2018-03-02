@@ -1153,18 +1153,14 @@ body.dashboard_mode {
   .safeeye_set .s_lbox:before, .safeeye_set .s_lbox:after {
     position: absolute;
     font-size: 12rem;
-    -moz-border-radius: 200px;
-    -webkit-border-radius: 200px;
-    border-radius: 200px;
-    -khtml-border-radius: 200px; }
+    -moz-border-radius: 500px;
+    -webkit-border-radius: 500px;
+    border-radius: 500px;
+    -khtml-border-radius: 500px; }
   .safeeye_set .s_lbox:before {
     z-index: 1; }
   .safeeye_set .s_lbox:after {
-    content: "";
-    border-style: solid;
-    border-width: 3px;
-    border-color: #be1e1e;
-    padding: 10%; }
+    content: ""; }
 .safeeye_set .s_rbox {
   display: none !important; }
 .safeeye_set li {

@@ -870,10 +870,6 @@ menu {
         background-color: #ff8400; }
       .db_area h2 > div span:nth-of-type(3) {
         background-color: #be1e1e; }
-  .db_area .db_list_box {
-    box-shadow: -30px 0 50px -30px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: -30px 0 50px -30px rgba(0, 0, 0, 0.8);
-    -moz-box-shadow: -30px 0 50px -30px rgba(0, 0, 0, 0.8); }
   .db_area section.db_list_box {
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
@@ -1341,6 +1337,10 @@ menu {
   100% {
     opacity: 0.5; } }
     .level-caution.type-list .safeeye_set .s_lbox:after, .level-caution .watch_area > div .safeeye_set .s_lbox:after, .level-warning.type-list .safeeye_set .s_lbox:after, .level-warning .watch_area > div .safeeye_set .s_lbox:after, .level-danger.type-list .safeeye_set .s_lbox:after, .level-danger .watch_area > div .safeeye_set .s_lbox:after {
+      border-style: solid;
+      border-width: 3px;
+      border-color: #be1e1e;
+      padding: 10%;
       animation-name: issue05;
       -webkit-animation-name: issue05;
       -webkit-animation-duration: 0.5s;

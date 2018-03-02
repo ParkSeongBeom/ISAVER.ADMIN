@@ -796,7 +796,7 @@ menu {
       }
       .safeeye_set .s_lbox {
         color:$color-red-01; @include issue02;
-        &:after { @include issue05;}
+        &:after { @include border01(3px,$color-red-01,1 ); padding:10%;  @include issue05;}
       }
     }
 
