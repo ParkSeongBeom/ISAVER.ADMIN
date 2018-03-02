@@ -202,7 +202,7 @@
                         <div class="type-list">
                             <header>
                                 <h3>${childArea.areaName}</h3>
-                                <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}','${childArea.areaName}'); return false;"></button>
+                                <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}'); return false;"></button>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -475,7 +475,7 @@
     var chartList = {};
     var guardList = {};
     var renderDatetime = new Date();
-    var dashboardHelper = new DashboardHelper({
+    var dashboardHelper = new DashboardHelper("${rootPath}",{
         <c:forEach var="critical" items="${criticalList}">
             '${critical.codeId}' : [],
         </c:forEach>
@@ -751,7 +751,7 @@
      * 진출입 설정 팝업 열기
      * @author psb
      */
-    function openInoutConfigListPopup(_areaId,_areaName){
+    function openInoutConfigListPopup(_areaId){
         $(".iocount_popup").attr("areaId",_areaId);
         $(".iocount_popup").fadeIn(200);
 
@@ -922,15 +922,15 @@
             return false;
         }
 
-        var inoutDatetimes = [];
+        var blinkerDatetimes = [];
         for(var index in data){
             var inout = data[index];
-            var inoutStarttime = new Date(inout['inoutStarttime']);
-            inoutDatetimes.push(inoutStarttime.format("HH:mm:ss"));
+            var startDatetime = new Date(inout['startDatetime']);
+            blinkerDatetimes.push(startDatetime.format("HH:mm:ss"));
         }
 
-        inoutDatetimes.sort();
-        inoutDatetimes = uniqArrayList(inoutDatetimes);
+        blinkerDatetimes.sort();
+        blinkerDatetimes = uniqArrayList(blinkerDatetimes);
 
         var inoutSetTag = $(".iocount_popup .iotime_set");
         // 진출입 조회주기 설정 초기화
@@ -940,9 +940,9 @@
         inoutSetTag.find("input[name='endTime']").val("");
 
         // 진출입 조회주기 설정 render
-        for(var index in inoutDatetimes){
+        for(var index in blinkerDatetimes){
             try{
-                var inoutDatetime = inoutDatetimes[index].split(":");
+                var inoutDatetime = blinkerDatetimes[index].split(":");
                 var settingTag = inoutSetTag.find("li[settingIndex='"+index+"']");
                 settingTag.find("input[type='number']:eq(0)").val(inoutDatetime[0]);
                 settingTag.find("input[type='number']:eq(1)").val(inoutDatetime[1]);

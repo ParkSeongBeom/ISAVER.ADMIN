@@ -293,7 +293,6 @@
 
 
     $(document).ready(function(){
-
         $("select[id=selectParentAreaId]").change(function() {
             var id  = $(event.currentTarget).val();
             $("input[name=parentAreaId]").val(id);
@@ -304,6 +303,7 @@
          * 구역 트리 생성
          */
         areaCtrl.findMenuTree();
+        areaCtrl.setAddBefore();
     });
 
 </script>

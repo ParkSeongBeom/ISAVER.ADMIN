@@ -52,6 +52,7 @@ public class EventLogCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/blinkerList")
     public ModelAndView findListEventLogBlinkerForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = eventLogSvc.findListEventLogBlinkerForArea(parameters);
         return modelAndView;
     }

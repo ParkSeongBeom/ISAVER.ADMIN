@@ -84,44 +84,37 @@ public class AreaSelectBoxTagSupport extends ParamTag {
 
         List<AreaBean> areas = areaDao.findListArea(paramBean);
 
-        if (areas != null) {
-            if (areas.size() > 0 ) {
-                sb.append("<select ");
-                if (StringUtils.notNullCheck(htmlTagId)) {
-                    sb.append(String.format("id=\"%s\"", htmlTagId));
-                }
-
-                if (StringUtils.notNullCheck(htmlTagName)) {
-                    sb.append(String.format(" name=\"%s\"", htmlTagName));
-                }
-
-                if (StringUtils.notNullCheck(htmlTagClass)) {
-                    sb.append(String.format(" class=\"%s\"", htmlTagClass));
-                }
-
-                if (StringUtils.notNullCheck(htmlTagClass)) {
-                    sb.append(String.format(" beforeSelect=\"%s\"", areaId));
-                }
-
-                sb.append(">");
-                if(allModel) {
-                    sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "All") );
-                }
-                for(AreaBean area:areas) {
-                    if (areaId.equals(area.getAreaId())) {
-                        sb.append(String.format("<option value=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getPath()));
-                    } else {
-                        sb.append(String.format("<option value=\"%s\">%s</option>", area.getAreaId(), area.getPath()));
-                    }
-
-                }
-                sb.append("</select>");
-            } else {
-                sb.append("");
-            }
-        } else {
-            sb.append("");
+        sb.append("<select ");
+        if (StringUtils.notNullCheck(htmlTagId)) {
+            sb.append(String.format("id=\"%s\"", htmlTagId));
         }
+
+        if (StringUtils.notNullCheck(htmlTagName)) {
+            sb.append(String.format(" name=\"%s\"", htmlTagName));
+        }
+
+        if (StringUtils.notNullCheck(htmlTagClass)) {
+            sb.append(String.format(" class=\"%s\"", htmlTagClass));
+        }
+
+        if (StringUtils.notNullCheck(htmlTagClass)) {
+            sb.append(String.format(" beforeSelect=\"%s\"", areaId));
+        }
+
+        sb.append(">");
+        if(allModel) {
+            sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "All") );
+        }
+        if(areas!=null){
+            for(AreaBean area:areas) {
+                if (areaId.equals(area.getAreaId())) {
+                    sb.append(String.format("<option value=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getPath()));
+                } else {
+                    sb.append(String.format("<option value=\"%s\">%s</option>", area.getAreaId(), area.getPath()));
+                }
+            }
+        }
+        sb.append("</select>");
 
         try {
             pageContext.getOut().write(sb.toString());
