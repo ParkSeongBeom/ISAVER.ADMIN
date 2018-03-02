@@ -33,7 +33,6 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.iframe-post-form.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/request-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/notification-helper.js?version=${version}"></script>
@@ -41,10 +40,9 @@
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
-        var calendarHelper = new CalendarHelper(rootPath);
+        var calendarHelper = new CalendarHelper(rootPath, "${pageContext.response.locale}");
         var menuModel = new MenuModel();
         var menuCtrl = null;
-        var requestHelper = new RequestHelper();
         var templateHelper = new TemplateHelper();
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
@@ -138,7 +136,7 @@
             notificationHelper.getNotificationList();
 
             webSocketHelper.addWebSocketList("notification", "${webSocketUrl}", null, notificationMessageEventHandler);
-            webSocketHelper.wsConnect("notification", true);
+            webSocketHelper.wsConnect("notification");
             aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
@@ -163,8 +161,8 @@
             }
 
             switch (resultData['messageType']) {
-                case "refreshView": // 화면갱신
-                    requestHelper.getData("inoutList");
+                case "refreshBlinker": // 진출입 갱신
+                    notificationHelper.callBackEvent(resultData['messageType'], {'areaId':resultData['areaId']});
                     break;
                 case "addNotification": // 알림센터 이벤트 등록
                     if(resultData['dashboardAlarmFileUrl']!=null){
@@ -470,10 +468,10 @@
                     <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
                     <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
                     <!-- 다국어 지원 추가 -->
-                    <select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">
-                        <option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>
-                        <option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>
-                    </select>
+                    <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
+                        <%--<option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>--%>
+                        <%--<option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>--%>
+                    <%--</select>--%>
                 </div>
             </div>
             <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 End -->

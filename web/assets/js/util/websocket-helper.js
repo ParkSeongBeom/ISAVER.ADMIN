@@ -77,17 +77,13 @@ var WebSocketHelper = (
          * @author psb
          * @param _target
          */
-        this.wsConnect = function(_target, getDataFlag){
+        this.wsConnect = function(_target){
             if(_target==null || webSocketList[_target]==null){
                 console.error("[WebSocketHelper][wsConnect] target is null or not in webSocketList");
                 return false;
             }
 
             setTimeout(function() {
-                if(getDataFlag){
-                    requestHelper.getData();
-                }
-
                 webSocketList[_target]['ws'] = new WebSocket(webSocketList[_target]['url']);
                 webSocketList[_target]['ws'].onopen = function () {
                     webSocketList[_target]['conn'] = CONNECT_STATUS[0];
@@ -100,7 +96,7 @@ var WebSocketHelper = (
 
                     if (webSocketList[_target]['options']['reConnectFlag']) {
                         setTimeout(function() {
-                            _self.wsConnect(_target, false);
+                            _self.wsConnect(_target);
                         }, webSocketList[_target]['options']['reConnectDelay']);
                     }
                 };

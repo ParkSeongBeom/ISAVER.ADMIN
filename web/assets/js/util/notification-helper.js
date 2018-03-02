@@ -209,9 +209,9 @@ var NotificationHelper = (
             }
         };
 
-        /*
-         alert message method
-         @author psb
+        /**
+         * alert message method
+         * @author psb
          */
         var _alertMessage = function(type){
             alert(_messageConfig[type]);

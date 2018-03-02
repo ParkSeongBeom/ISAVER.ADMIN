@@ -21,7 +21,7 @@ function setHourDataToSelect(select, value, desc){
         var hh = n(cnt);
         var optTag = document.createElement("option");
         optTag.setAttribute("value", hh);
-        optTag.textContent = n(cnt)+ "시";
+        optTag.textContent = n(cnt);
         select.append(optTag);
         cnt++;
     }

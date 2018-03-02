@@ -6,7 +6,7 @@
  * @type {Function}
  */
 var CalendarHelper = (
-    function(_rootPath){
+    function(_rootPath, _locale){
         $.datepicker.regional['ko'] = {
             buttonText:'',
             prevText: '',
@@ -16,6 +16,15 @@ var CalendarHelper = (
             dayNames: ['일', '월', '화', '수', '목', '금', '토'],
             dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            firstDay: 0,
+            yearSuffix: '',
+            showAnim: "slideDown"
+        };
+
+        $.datepicker.regional['en'] = {
+            buttonText:'',
+            prevText: '',
+            nextText: '',
             firstDay: 0,
             yearSuffix: '',
             showAnim: "slideDown"
@@ -34,12 +43,15 @@ var CalendarHelper = (
          * @param webDbModule
          * @returns
          */
-        var _initialize = function(_rootPath){
+        var _initialize = function(_rootPath, _locale){
             for(var key in _imgUrlConfig){
                 _imgUrlConfig[key] = _rootPath + _imgUrlConfig[key];
             }
 
-            $.datepicker.setDefaults($.datepicker.regional["ko"]);
+            if(_locale!=null){
+                _locale = _locale.substr(0,2);
+            }
+            $.datepicker.setDefaults($.datepicker.regional[_locale]);
         };
 
         /**
@@ -69,6 +81,6 @@ var CalendarHelper = (
             });
         };
 
-        _initialize(_rootPath);
+        _initialize(_rootPath, _locale);
     }
 );

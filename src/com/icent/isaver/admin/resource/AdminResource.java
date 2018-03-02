@@ -179,39 +179,6 @@ public class AdminResource {
     };
 
     /**
-     * worker eventIds
-     * @author psb
-     */
-    public final static String[] WORKER_EVENT_ID_ALL = new String[]{"EVT009", "EVT015","EVT016","EVT013","EVT014"};
-    public final static String[] WORKER_EVENT_ID_DETAIL = new String[]{"EVT009", "EVT015","EVT016","EVT013"};
-
-    /**
-     * crane eventIds
-     * @author psb
-     */
-    public final static String[] CRANE_EVENT_ID_ALL = new String[]{"EVT100", "EVT101", "EVT102", "EVT210", "EVT211"};
-    public final static String[] CRANE_EVENT_ID_DETAIL = new String[]{"EVT100", "EVT101", "EVT210"};
-
-    /**
-     * in, out eventIds
-     * @author psb
-     */
-    public final static String[] INOUT_EVENT_ID = new String[]{"EVT002", "EVT221", "EVT300", "EVT003", "EVT222", "EVT301"};
-
-
-    /**
-     * in eventIds
-     * @author psb
-     */
-    public final static String[] IN_EVENT_ID = new String[]{"EVT002", "EVT221", "EVT300"};
-
-    /**
-     * out eventIds
-     * @author psb
-     */
-    public final static String[] OUT_EVENT_ID = new String[]{"EVT003", "EVT222", "EVT301"};
-
-    /**
      * 통계메뉴 상위 ID
      * @author psb
      */

@@ -486,8 +486,7 @@
      @author psb
      */
     var urlConfig = {
-        inoutListUrl : "${rootPath}/eventLogInout/list.json"
-        ,inoutDetailUrl : "${rootPath}/eventLogInout/list.json"
+        inoutDetailUrl : "${rootPath}/eventLog/blinkerList.json"
         ,chartUrl : "${rootPath}/eventLog/chart.json"
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
         ,inoutConfigAreaTreeUrl : "${rootPath}/area/treeList.json"
@@ -521,13 +520,13 @@
         });
 
         webSocketHelper.addWebSocketList("device", "${deviceWebSocketUrl}", null, deviceMessageEventHandler);
-        webSocketHelper.wsConnect("device",false);
+        webSocketHelper.wsConnect("device");
 
+        dashboardHelper.setMessageConfig(messageConfig);
         dashboardHelper.setAreaList();
+        dashboardHelper.getBlinkerList();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
-        /* 진출입 */
-        requestHelper.addRequestData('inoutList', urlConfig['inoutListUrl'], {areaIds:getInoutArea()}, dashBoardSuccessHandler, dashBoardFailureHandler);
 
         /* 이벤트 callback (websocket 리스너) */
         setRefreshTimeCallBack(refreshInoutSetting);
@@ -680,16 +679,11 @@
     }
 
     function refreshInoutSetting(_serverDatetime){
-        var refreshFlag = false;
         $.each($(".watch_area div[inoutArea]"),function(){
             if(_serverDatetime.getTime() > $(this).attr("endDatetime")){
-                refreshFlag = true;
+                dashboardHelper.getBlinker($(this).attr("areaId"));
             }
         });
-
-        if(refreshFlag){
-            requestHelper.getData('inoutList');
-        }
 
         if(renderDatetime.format("yyyyMMdd")!=_serverDatetime.format("yyyyMMdd")){
             $.each($(".watch_area li[deviceId]"),function(){
@@ -751,20 +745,6 @@
                 }
             }
         });
-    }
-
-    /**
-     * 진출입 데이터를 가져와야할 구역 조회
-     * @author psb
-     */
-    function getInoutArea(){
-        var areaIds = "";
-        $.each($(".watch_area div[inoutArea]"), function(){
-            if(areaIds!=""){ areaIds += ",";}
-            areaIds += $(this).attr("areaId");
-        });
-
-        return areaIds;
     }
 
     /**
@@ -854,14 +834,11 @@
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
-            case 'inoutList':
-                inoutRender(data['eventLogInoutList']);
-                break;
             case 'chart':
                 chartRender(data);
                 break;
             case 'inoutDetail':
-                inoutDetailRender(data['eventLogInoutList']);
+                inoutDetailRender(data['eventLog']);
                 break;
             case 'saveInoutConfiguration':
                 alertMessage(actionType+'Complete');
@@ -935,34 +912,6 @@
                 break;
         }
         callAjax('chart',{areaId:_chartAreaId, deviceId:_deviceId, truncType: truncType, dateType: dateSelType});
-    }
-
-    /**
-     * 구역별 진출입 상태
-     */
-    function inoutRender(data){
-        if(data==null){
-            return false;
-        }
-
-        var _targetAreaId = null;
-
-        for(var index in data){
-            var inout = data[index];
-            if(_targetAreaId==null || _targetAreaId!=inout['areaId']){
-                _targetAreaId = inout['areaId'];
-                var inoutTag = $(".watch_area div[areaId='"+inout['areaId']+"']");
-                if(inoutTag.length > 0){
-                    var inCount = inout['inCount']!=null?inout['inCount']:0;
-                    var outCount = inout['outCount']!=null?inout['outCount']:0;
-                    inoutTag.find("p[in]").text(inCount);
-                    inoutTag.find("p[out]").text(outCount);
-                    inoutTag.find("p[gap]").text(inCount-outCount);
-                    inoutTag.attr("startDatetime",inout['inoutStarttime']);
-                    inoutTag.attr("endDatetime",inout['inoutEndtime']);
-                }
-            }
-        }
     }
 
     /**

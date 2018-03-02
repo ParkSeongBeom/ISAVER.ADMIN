@@ -5,7 +5,12 @@
  * @type {Function}
  */
 var DashboardHelper = (
-    function(criticalList){
+    function(rootPath, criticalList){
+        var _rootPath;
+        var _urlConfig = {
+            blinkerListUrl : "/eventLog/blinkerList.json"
+        };
+        var _messageConfig;
         var _areaList = {};
         var _criticalList = {};
 
@@ -14,9 +19,22 @@ var DashboardHelper = (
         /**
          * initialize
          */
-        var initialize = function(criticalList){
+        var initialize = function(rootPath, criticalList){
+            _rootPath = rootPath;
             _criticalList = criticalList;
+
+            for(var index in _urlConfig){
+                _urlConfig[index] = _rootPath + _urlConfig[index];
+            }
             console.log('[DashboardHelper] initialize complete');
+        };
+
+        /**
+         * set message config
+         * @author psb
+         */
+        this.setMessageConfig = function(messageConfig){
+            _messageConfig = messageConfig;
         };
 
         /**
@@ -42,10 +60,25 @@ var DashboardHelper = (
         };
 
         /**
+         * get blinker list
+         */
+        this.getBlinkerList = function(){
+            var areaIds = "";
+            $.each($(".watch_area div[inoutArea]"), function(){
+                if(areaIds!=""){ areaIds += ",";}
+                areaIds += $(this).attr("areaId");
+            });
+            _self.getBlinker(areaIds);
+        };
+
+        /**
          * websocket callback append event handler
          */
         this.appendEventHandler = function(messageType, data){
             switch (messageType) {
+                case "refreshBlinker": // 진출입 갱신
+                    _self.getBlinker(data['areaId']);
+                    break;
                 case "addEvent" : // 일반 이벤트
                     switch (_self.getArea("templateCode", data['eventLog']['areaId'])){
                         case "TMP001": // 신호등
@@ -97,22 +130,100 @@ var DashboardHelper = (
          * get notification
          * @author psb
          */
+        this.getBlinker = function(areaIds){
+            if(areaIds!=null){
+                _ajaxCall('blinkerList', {areaIds:areaIds});
+            }
+        };
+
+        /**
+         * get area obj
+         * @author psb
+         */
         this.getArea = function(type, areaId){
+            var result = null;
             switch (type){
-                case 'element' :
-                case 'templateCode' :
-                case 'notification' :
-                case 'childDevice' :
+                case "all" :
                     if(_areaList[areaId]!=null){
-                        return _areaList[areaId][type];
+                        result = _areaList[areaId];
                     }
                     break;
-                case "all" :
-                    return _areaList[areaId];
                 case "full" :
-                    return _areaList;
+                    result = _areaList;
+                    break;
+                default :
+                    if(_areaList[areaId]!=null && _areaList[areaId][type]!=null){
+                        result = _areaList[areaId][type];
+                    }
+                    break;
             }
-            return null;
+            return result;
+        };
+
+        /**
+         * ajax call
+         * @author psb
+         */
+        var _ajaxCall = function(actionType, data){
+            sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
+        };
+
+        /**
+         * success handler
+         * @author psb
+         */
+        var _successHandler = function(data, dataType, actionType){
+            switch(actionType){
+                case 'blinkerList':
+                    blinkerRender(data['eventLog']);
+                    break;
+            }
+        };
+
+        /**
+         * failure handler
+         * @author psb
+         */
+        var _failureHandler = function(XMLHttpRequest, textStatus, errorThrown, actionType){
+            if(XMLHttpRequest['status']!="0"){
+                _alertMessage(actionType + 'Failure');
+            }
+        };
+
+        /**
+         * alert message method
+         * @author psb
+         */
+        var _alertMessage = function(type){
+            alert(_messageConfig[type]);
+        };
+
+        /**
+         * 구역별 진출입 상태
+         */
+        var blinkerRender = function(data){
+            if(data==null){
+                return false;
+            }
+
+            var _targetAreaId = null;
+
+            for(var index in data){
+                var inout = data[index];
+                if(_targetAreaId==null || _targetAreaId!=inout['areaId']){
+                    _targetAreaId = inout['areaId'];
+                    var inoutTag = _self.getArea("element", inout['areaId']);
+                    if(inoutTag!=null){
+                        var inCount = inout['inCount']!=null?inout['inCount']:0;
+                        var outCount = inout['outCount']!=null?inout['outCount']:0;
+                        inoutTag.find("p[in]").text(inCount);
+                        inoutTag.find("p[out]").text(outCount);
+                        inoutTag.find("p[gap]").text(inCount-outCount);
+                        inoutTag.attr("startDatetime",inout['startDatetime']);
+                        inoutTag.attr("endDatetime",inout['endDatetime']);
+                    }
+                }
+            }
         };
 
         /**
@@ -285,6 +396,6 @@ var DashboardHelper = (
             }
         };
 
-        initialize(criticalList);
+        initialize(rootPath, criticalList);
     }
 );

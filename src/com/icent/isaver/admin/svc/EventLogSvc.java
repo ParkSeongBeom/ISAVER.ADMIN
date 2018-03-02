@@ -41,6 +41,15 @@ public interface EventLogSvc {
     ModelAndView findListEventLogChart(Map<String, String> parameters);
 
     /**
+     * 이벤트 로그 목록을 가져온다. (진출입)
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListEventLogBlinkerForArea(Map<String, String> parameters);
+
+    /**
      * 이벤트 로그 상세을 가져온다.
      *
      * @author dhj

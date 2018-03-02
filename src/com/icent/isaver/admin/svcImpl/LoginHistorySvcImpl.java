@@ -53,14 +53,13 @@ public class LoginHistorySvcImpl implements LoginHistorySvc {
     public ModelAndView findListLoginHistoryForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
         List<LoginHistoryBean> loginHistoryList = loginHistoryDao.findListLoginHistoryForExcel(parameters);
 
-        String[] heads = new String[]{"사용자ID","사용자명","로그인구분","접속IP주소","로그일시"};
+        String[] heads = new String[]{"User ID","User Name","Login Class","Ip Address","Log Datetime"};
         String[] columns = new String[]{"userId","userName","loginFlagStr","ipAddress","logDatetimeStr"};
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
         ModelAndView modelAndView = new ModelAndView("excelView");
-        POIExcelUtil.downloadExcel(modelAndView, "로그인이력_" + sdf.format(new Date()), loginHistoryList, columns, heads, "로그인이력");
-        //POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_"+sdf.format(new Date()), events, columns, heads, "이벤트이력");
+        POIExcelUtil.downloadExcel(modelAndView, "isaver_login_history_" + sdf.format(new Date()), loginHistoryList, columns, heads, "LoginHistory");
         return modelAndView;
     }
 }

@@ -108,17 +108,33 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
+    public ModelAndView findListEventLogBlinkerForArea(Map<String, String> parameters) {
+        List<EventLogBean> eventLogList = null;
+
+        if(StringUtils.notNullCheck(parameters.get("areaIds"))){
+            Map eventLogParam = new HashMap();
+            eventLogParam.put("userId", parameters.get("userId"));
+            eventLogParam.put("areaIds", parameters.get("areaIds").split(","));
+            eventLogList = eventLogDao.findListEventLogBlinkerForArea(eventLogParam);
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLog", eventLogList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findListEventLogForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
         List<EventLogBean> events = eventLogDao.findListEventLog(parameters);
 
-        String[] heads = new String[]{"구역명","장치명","이벤트명","이벤트발생일시"};
+        String[] heads = new String[]{"Area Name","Device Name","Event Name","Event Datetime"};
         String[] columns = new String[]{"areaName","deviceName","eventName","eventDatetimeStr"};
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
         ModelAndView modelAndView = new ModelAndView("excelView");
-        POIExcelUtil.downloadExcel(modelAndView, "이벤트이력_"+sdf.format(new Date()), events, columns, heads, "이벤트이력");
-        //POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_"+sdf.format(new Date()), events, columns, heads, "이벤트이력");
+        POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_"+sdf.format(new Date()), events, columns, heads, "EventHistory");
         return modelAndView;
     }
 }

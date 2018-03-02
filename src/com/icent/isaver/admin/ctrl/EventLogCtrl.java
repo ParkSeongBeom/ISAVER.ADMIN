@@ -43,6 +43,20 @@ public class EventLogCtrl {
     }
 
     /**
+     * 이벤트 로그 목록을 가져온다. (blinker)
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/blinkerList")
+    public ModelAndView findListEventLogBlinkerForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogBlinkerForArea(parameters);
+        return modelAndView;
+    }
+
+    /**
      *  이벤트 로그 정보를 가져온다.
      *
      * @author dhj
