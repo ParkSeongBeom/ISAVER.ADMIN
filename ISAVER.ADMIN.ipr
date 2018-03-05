@@ -34,6 +34,12 @@
         </element>
       </root>
     </artifact>
+    <artifact type="war" build-on-make="true" name="ISAVER.ADMIN:war_install">
+      <output-path>D:/업무/1.개발/1.isaver/설치패키지/v1.7.2/isaver/was/isaver_web/webapps</output-path>
+      <root id="archive" name="ISAVER.ADMIN.war">
+        <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
+      </root>
+    </artifact>
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />

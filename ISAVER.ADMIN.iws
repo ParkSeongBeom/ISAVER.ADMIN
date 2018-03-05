@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ISAVER.ADMIN:war" />
+      <artifact name="ISAVER.ADMIN:war2" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JABBER.ADMIN.iws" afterPath="$PROJECT_DIR$/JABBER.ADMIN.iws" />
+    <list default="true" readonly="true" id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="" />
+    <list id="9fefa557-46a4-4575-bc0f-405aa1bcf661" name="config" comment="">
+      <change type="MOVED" beforePath="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\JABBER.ADMIN.ipr" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.ipr" />
+      <change type="MOVED" beforePath="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\JABBER.ADMIN.iws" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.iws" />
+      <change type="MOVED" beforePath="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\JABBER.ADMIN.ids" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.ids" />
     </list>
-    <list id="9fefa557-46a4-4575-bc0f-405aa1bcf661" name="config" comment="" />
     <ignored path="JABBER.ADMIN.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -17,6 +19,7 @@
     <ignored path="$PROJECT_DIR$/../JABBER.ADMIN.RESPOSIORY/test/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <file path="$PROJECT_DIR$/ISAVER.ADMIN.iws" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,41 +95,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="detail.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp">
+      <file leaf-file-name="list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.285715">
-              <caret line="74" column="29" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="29" />
+            <state vertical-scroll-proportion="-7.142857">
+              <caret line="610" column="21" selection-start-line="610" selection-start-column="10" selection-end-line="610" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp">
+      <file leaf-file-name="googlemap-helper.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/googlemap-helper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.76510066">
-              <caret line="159" column="79" selection-start-line="159" selection-start-column="79" selection-end-line="159" selection-end-column="79" />
+            <state vertical-scroll-proportion="0.59873617">
+              <caret line="222" column="50" selection-start-line="222" selection-start-column="50" selection-end-line="222" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/license/detail.jsp">
+      <file leaf-file-name="dashboard-helper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-28.5">
-              <caret line="66" column="62" selection-start-line="66" selection-start-column="62" selection-end-line="66" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="220" column="71" selection-start-line="220" selection-start-column="71" selection-end-line="220" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/code/detail.jsp">
+      <file leaf-file-name="websocket-helper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/util/websocket-helper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.892858">
-              <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="61" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="120" column="17" selection-start-line="120" selection-start-column="17" selection-end-line="120" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -154,57 +157,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/deviceSyncRequest/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventLog/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/menu/MenuModel.js" />
-        <option value="$PROJECT_DIR$/conf/properties/message/common_ko.properties" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/MenuDao.java" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/menu/MenuCtrl.js" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/MenuSvcImpl.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/menuMapper.xml" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/RoleBean.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/UsersDao.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/RoleMapper.xml" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/RoleSvcImpl.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/RoleMenuSvcImpl.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/RoleMenuMapper.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/rolemenu/list.jsp" />
-        <option value="$PROJECT_DIR$/conf/log4j/log4j.properties" />
-        <option value="$PROJECT_DIR$/conf/logback/local-logback.xml" />
-        <option value="$PROJECT_DIR$/conf/properties/message/event_ko.properties" />
-        <option value="$PROJECT_DIR$/conf/properties/message/eventlog_ko.properties" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/action/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/alarm/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/alarm/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/critical/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/event/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventAction/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/file/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/license/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/event/list.jsp" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/UsersMapper.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/groupcode/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" />
-        <option value="$PROJECT_DIR$/conf/properties/message/role_ko.properties" />
-        <option value="$PROJECT_DIR$/web/assets/js/util/common-util.js" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/code/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/menu/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/role/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/critical/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/user/list.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/video-helper.js" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/AreaMapper.xml" />
+        <option value="$PROJECT_DIR$/conf/properties/message/dashboard_ko.properties" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/AuthorizationInterceptor.java" />
+        <option value="$PROJECT_DIR$/conf/properties/config.properties" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/ajax-util.js" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/NotificationDao.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/NotificationCtrl.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/views/action/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventAction/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/area/AreaView.js" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/area/AreaCtrl.js" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/common/tags/isaver.tld" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/tag/CodeSelectBoxTagSupport.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/action/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/alarmRequestHistory/list.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/views/device/tbList.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/license/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/deviceSyncRequest/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/event/detail.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/event/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventLog/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/license/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/notification/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/request-helper.js" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/InoutConfigurationSvcImpl.java" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/notification-helper.js" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/EventLogBean.java" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventLogInoutMapper.xml" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/EventLogDao.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svc/EventLogSvc.java" />
+        <option value="$PROJECT_DIR$/conf/properties/message/area_en.properties" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventLogSvcImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/LoginHistorySvcImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/NotificationSvcImpl.java" />
+        <option value="$PROJECT_DIR$/conf/properties/message/common_en.properties" />
+        <option value="$PROJECT_DIR$/conf/properties/message/dashboard_en.properties" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/authorization/login.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/elements-util.js" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/calendar-helper.js" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventMapper.xml" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventLogMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/EventLogCtrl.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp" />
+        <option value="$PROJECT_DIR$/conf/properties/message/notification_en.properties" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/tag/AreaSelectBoxTagSupport.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/websocket-helper.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/googlemap-helper.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js" />
       </list>
     </option>
   </component>
@@ -283,66 +286,27 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN.RESPOSIORY" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ISAVER.ADMIN.RESPOSIORY" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -360,7 +324,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -382,7 +346,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -404,39 +368,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN.RESPOSIORY" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN.RESPOSIORY" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="properties" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -446,7 +378,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -460,7 +392,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -482,7 +414,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -502,13 +434,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
+              <option name="myItemId" value="tiles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -528,39 +460,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="role" />
+              <option name="myItemId" value="notification" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -586,7 +492,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -606,13 +512,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="file" />
+              <option name="myItemId" value="eventStatistics" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -632,13 +538,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventAction" />
+              <option name="myItemId" value="eventLog" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -658,13 +564,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
+              <option name="myItemId" value="dashboard" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -690,7 +596,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -710,13 +616,17 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tags" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -742,33 +652,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="action" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -783,40 +667,10 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -838,7 +692,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -864,7 +718,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -894,25 +748,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -928,13 +764,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="page" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backup" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -952,7 +800,29 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tag" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -974,7 +844,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -996,7 +866,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1018,7 +888,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1032,7 +902,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1050,7 +920,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
+              <option name="myItemId" value="ISAVER.ADMIN" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1066,27 +936,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JABBER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log4j" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1096,7 +973,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../admin_v1.7" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../98.isaver_collect_agent/isaver_collect_agent" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -1107,15 +984,15 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="302" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="301" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="300" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="304" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="57" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="118" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="120" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="751" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="750" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="231" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
@@ -1140,10 +1017,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\css" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\library" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\js\util" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\js\page\dashboard\backup" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\library\googlemap" />
       <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\js\page\dashboard" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7\ISAVER.ADMIN\lib" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\conf\properties\message" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin_v1.6\ISAVER.ADMIN\web\assets\fonts" />
@@ -1153,127 +1030,12 @@
       <recent name="D:\DEV\01.projects\jabber_admin_v1.2\JABBER.ADMIN\web\assets\css\jqueryui\images" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.icent.isaver.admin.util" />
+      <recent name="com.icent.isaver.repository.bean" />
+      <recent name="com.icent.isaver.admin.ctrl" />
       <recent name="com.icent.isaver.admin.svcImpl" />
       <recent name="com.icent.isaver.admin.svc" />
-      <recent name="com.icent.isaver.repository.dao.base" />
-      <recent name="com.icent.isaver.admin.ctrl" />
-      <recent name="com.icent.isaver.repository.bean" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\conf\properties\message\common_ko.properties</PATH>
-          <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\js\util\ajax-util.js</PATH>
-          <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\WEB-INF\views\authorization\login.jsp</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-        <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\js\util\common-util.js</PATH>
-        <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\WEB-INF\views\groupcode\detail.jsp</PATH>
-        <PATH vcs="svn" revision="1001">D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\WEB-INF\views\code\detail.jsp</PATH>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7.0.67">
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
@@ -1543,6 +1305,7 @@
     </configuration>
     <configuration default="false" name="Tomcat 7.0.67" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.50" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="COMMON_VM_ARGUMENTS" value="-Dweb.execute.mode=dev" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
@@ -1555,7 +1318,7 @@
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="Tomcat_7_0_54_JABBER_ADMIN_3" />
         <option name="HTTP_PORT" value="80" />
-        <option name="JNDI_PORT" value="1107" />
+        <option name="JNDI_PORT" value="1106" />
       </server-settings>
       <predefined_log_file id="Tomcat" enabled="true" />
       <predefined_log_file id="Tomcat Catalina" enabled="true" />
@@ -2309,109 +2072,46 @@
       <workItem from="1517447316885" duration="1193000" />
       <workItem from="1517448589698" duration="12080000" />
       <workItem from="1517532074612" duration="16341000" />
-      <workItem from="1517902514546" duration="5453000" />
-    </task>
-    <task id="LOCAL-00237">
-      <created>1498009415162</created>
-      <option name="number" value="00237" />
-      <option name="project" value="LOCAL" />
-      <updated>1498009415164</updated>
-    </task>
-    <task id="LOCAL-00238">
-      <created>1498195699101</created>
-      <option name="number" value="00238" />
-      <option name="project" value="LOCAL" />
-      <updated>1498195699104</updated>
-    </task>
-    <task id="LOCAL-00239">
-      <created>1498452524100</created>
-      <option name="number" value="00239" />
-      <option name="project" value="LOCAL" />
-      <updated>1498452524100</updated>
-    </task>
-    <task id="LOCAL-00240">
-      <created>1498456235100</created>
-      <option name="number" value="00240" />
-      <option name="project" value="LOCAL" />
-      <updated>1498456235100</updated>
-    </task>
-    <task id="LOCAL-00241">
-      <created>1498611271100</created>
-      <option name="number" value="00241" />
-      <option name="project" value="LOCAL" />
-      <updated>1498611271100</updated>
-    </task>
-    <task id="LOCAL-00242">
-      <created>1499046566165</created>
-      <option name="number" value="00242" />
-      <option name="project" value="LOCAL" />
-      <updated>1499046566167</updated>
-    </task>
-    <task id="LOCAL-00243">
-      <created>1499677084115</created>
-      <option name="number" value="00243" />
-      <option name="project" value="LOCAL" />
-      <updated>1499677084117</updated>
-    </task>
-    <task id="LOCAL-00244">
-      <created>1500363872559</created>
-      <option name="number" value="00244" />
-      <option name="project" value="LOCAL" />
-      <updated>1500363872636</updated>
-    </task>
-    <task id="LOCAL-00245">
-      <created>1500426056117</created>
-      <option name="number" value="00245" />
-      <option name="project" value="LOCAL" />
-      <updated>1500426056118</updated>
-    </task>
-    <task id="LOCAL-00246">
-      <created>1500426571111</created>
-      <option name="number" value="00246" />
-      <option name="project" value="LOCAL" />
-      <updated>1500426571119</updated>
-    </task>
-    <task id="LOCAL-00247">
-      <created>1500439530100</created>
-      <option name="number" value="00247" />
-      <option name="project" value="LOCAL" />
-      <updated>1500439530100</updated>
-    </task>
-    <task id="LOCAL-00248">
-      <created>1500454204147</created>
-      <option name="number" value="00248" />
-      <option name="project" value="LOCAL" />
-      <updated>1500454204148</updated>
-    </task>
-    <task id="LOCAL-00249">
-      <created>1500528219133</created>
-      <option name="number" value="00249" />
-      <option name="project" value="LOCAL" />
-      <updated>1500528219139</updated>
-    </task>
-    <task id="LOCAL-00250">
-      <created>1501483956101</created>
-      <option name="number" value="00250" />
-      <option name="project" value="LOCAL" />
-      <updated>1501483956108</updated>
-    </task>
-    <task id="LOCAL-00251">
-      <created>1501655327263</created>
-      <option name="number" value="00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1501655327265</updated>
-    </task>
-    <task id="LOCAL-00252">
-      <created>1502353553190</created>
-      <option name="number" value="00252" />
-      <option name="project" value="LOCAL" />
-      <updated>1502353553192</updated>
-    </task>
-    <task id="LOCAL-00253">
-      <created>1502932158110</created>
-      <option name="number" value="00253" />
-      <option name="project" value="LOCAL" />
-      <updated>1502932158151</updated>
+      <workItem from="1517902514546" duration="5465000" />
+      <workItem from="1517962354014" duration="18017000" />
+      <workItem from="1517991680034" duration="50000" />
+      <workItem from="1517992580711" duration="252000" />
+      <workItem from="1517992899406" duration="26000" />
+      <workItem from="1517993629871" duration="372000" />
+      <workItem from="1518048170603" duration="1027000" />
+      <workItem from="1518064099806" duration="187000" />
+      <workItem from="1518064331408" duration="116000" />
+      <workItem from="1518064976548" duration="86000" />
+      <workItem from="1518065100821" duration="28000" />
+      <workItem from="1518065233874" duration="410000" />
+      <workItem from="1518079425640" duration="909000" />
+      <workItem from="1518138193490" duration="53000" />
+      <workItem from="1518144268122" duration="3434000" />
+      <workItem from="1518152390714" duration="26000" />
+      <workItem from="1518156498828" duration="1010000" />
+      <workItem from="1518164081998" duration="1146000" />
+      <workItem from="1518419060148" duration="792000" />
+      <workItem from="1519086785265" duration="1459000" />
+      <workItem from="1519103200112" duration="736000" />
+      <workItem from="1519104642159" duration="12261000" />
+      <workItem from="1519171450286" duration="12434000" />
+      <workItem from="1519193993135" duration="66000" />
+      <workItem from="1519194116900" duration="31000" />
+      <workItem from="1519198865270" duration="1004000" />
+      <workItem from="1519202255626" duration="1613000" />
+      <workItem from="1519261917710" duration="5229000" />
+      <workItem from="1519276490519" duration="618000" />
+      <workItem from="1519361374010" duration="13056000" />
+      <workItem from="1519603696801" duration="17956000" />
+      <workItem from="1519627442531" duration="20000" />
+      <workItem from="1519627493895" duration="7942000" />
+      <workItem from="1519690044042" duration="725000" />
+      <workItem from="1519691857198" duration="20000" />
+      <workItem from="1519692158554" duration="19008000" />
+      <workItem from="1519776051542" duration="4013000" />
+      <workItem from="1519783400686" duration="18793000" />
+      <workItem from="1519949444669" duration="14584000" />
+      <workItem from="1520208686821" duration="2522000" />
     </task>
     <task id="LOCAL-00254">
       <created>1502935839100</created>
@@ -2605,11 +2305,113 @@
       <option name="project" value="LOCAL" />
       <updated>1517908000105</updated>
     </task>
-    <option name="localTasksCounter" value="286" />
+    <task id="LOCAL-00286">
+      <created>1517908018100</created>
+      <option name="number" value="00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1517908018100</updated>
+    </task>
+    <task id="LOCAL-00287" summary="UI 수정사항 반영">
+      <created>1517987115107</created>
+      <option name="number" value="00287" />
+      <option name="project" value="LOCAL" />
+      <updated>1517987115109</updated>
+    </task>
+    <task id="LOCAL-00288" summary="- 임계치알림 관리 상세 수정&#10; : 알림대상 장치 설정에 감지장치, 대상장치의 selectbox 리스트 변경">
+      <created>1517991502100</created>
+      <option name="number" value="00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1517991502100</updated>
+    </task>
+    <task id="LOCAL-00289">
+      <created>1517992797102</created>
+      <option name="number" value="00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1517992797105</updated>
+    </task>
+    <task id="LOCAL-00290">
+      <created>1518065522100</created>
+      <option name="number" value="00290" />
+      <option name="project" value="LOCAL" />
+      <updated>1518065522100</updated>
+    </task>
+    <task id="LOCAL-00291">
+      <created>1518151592103</created>
+      <option name="number" value="00291" />
+      <option name="project" value="LOCAL" />
+      <updated>1518151592104</updated>
+    </task>
+    <task id="LOCAL-00292">
+      <created>1518157090103</created>
+      <option name="number" value="00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1518157090104</updated>
+    </task>
+    <task id="LOCAL-00293">
+      <created>1519621255115</created>
+      <option name="number" value="00293" />
+      <option name="project" value="LOCAL" />
+      <updated>1519621255118</updated>
+    </task>
+    <task id="LOCAL-00294">
+      <created>1519691513113</created>
+      <option name="number" value="00294" />
+      <option name="project" value="LOCAL" />
+      <updated>1519691513114</updated>
+    </task>
+    <task id="LOCAL-00295">
+      <created>1519779188105</created>
+      <option name="number" value="00295" />
+      <option name="project" value="LOCAL" />
+      <updated>1519779188119</updated>
+    </task>
+    <task id="LOCAL-00296">
+      <created>1519785779774</created>
+      <option name="number" value="00296" />
+      <option name="project" value="LOCAL" />
+      <updated>1519785779775</updated>
+    </task>
+    <task id="LOCAL-00297">
+      <created>1519808905190</created>
+      <option name="number" value="00297" />
+      <option name="project" value="LOCAL" />
+      <updated>1519808905190</updated>
+    </task>
+    <task id="LOCAL-00298">
+      <created>1519808978104</created>
+      <option name="number" value="00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1519808978104</updated>
+    </task>
+    <task id="LOCAL-00299">
+      <created>1519968385100</created>
+      <option name="number" value="00299" />
+      <option name="project" value="LOCAL" />
+      <updated>1519968385100</updated>
+    </task>
+    <task id="LOCAL-00300">
+      <created>1519973308100</created>
+      <option name="number" value="00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1519973308100</updated>
+    </task>
+    <task id="LOCAL-00301">
+      <created>1519976707100</created>
+      <option name="number" value="00301" />
+      <option name="project" value="LOCAL" />
+      <updated>1519976707100</updated>
+    </task>
+    <task id="LOCAL-00302">
+      <created>1520212421100</created>
+      <option name="number" value="00302" />
+      <option name="project" value="LOCAL" />
+      <updated>1520212421100</updated>
+    </task>
+    <option name="localTasksCounter" value="303" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2650672000" />
+    <option name="totallyTimeSpent" value="2812715000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2624,32 +2426,31 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3437838" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3837838" sideWeight="0.5042644" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36216217" sideWeight="0.49413645" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3362162" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29405406" sideWeight="0.5063966" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28432432" sideWeight="0.5063966" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32772493" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31567568" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32937366" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18176973" sideWeight="0.4992272" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1716418" sideWeight="0.5007728" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38206786" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3827027" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38206786" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14605543" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1716418" sideWeight="0.5007728" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36216217" sideWeight="0.5207889" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3318919" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41513515" sideWeight="0.50586355" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3315335" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18230277" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18230277" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32919255" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -2657,6 +2458,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32953367" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2677,6 +2479,8 @@
     <MESSAGE value="config" />
     <MESSAGE value="알림센터 전체선택 버그 수정" />
     <MESSAGE value="-사용자관리 수정&#10; : Super 계정 Hide처리" />
+    <MESSAGE value="UI 수정사항 반영" />
+    <MESSAGE value="- 임계치알림 관리 상세 수정&#10; : 알림대상 장치 설정에 감지장치, 대상장치의 selectbox 리스트 변경" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
@@ -2707,12 +2511,11 @@
           <option name="timeStamp" value="451" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="656" />
+      <option name="time" value="671" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-        <watch expression="infos.length" language="JAVA" custom="" />
-        <watch expression="isaverCriticalUtil.getCritical()" language="JAVA" custom="" />
+        <watch expression="request" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -2721,424 +2524,407 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/RoleSvcImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/CriticalSvcImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="38" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="38" />
+          <caret line="83" column="55" selection-start-line="83" selection-start-column="55" selection-end-line="83" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/RoleMapper.xml">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/request-helper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="51" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.656304">
+          <caret line="20" column="44" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/rolemenu/list.jsp">
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/InoutConfigurationSvcImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.535714">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="97" column="67" selection-start-line="97" selection-start-column="67" selection-end-line="97" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/notification-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="217" column="10" selection-start-line="217" selection-start-column="10" selection-end-line="217" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svc/EventLogSvc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44856662">
+          <caret line="39" column="7" selection-start-line="39" selection-start-column="7" selection-end-line="39" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/device_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="7.2">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/area_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.4">
+          <caret line="18" column="58" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/LoginHistoryCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="51" selection-start-line="56" selection-start-column="36" selection-end-line="56" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/LoginHistorySvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.237288">
+          <caret line="61" column="146" selection-start-line="61" selection-start-column="146" selection-end-line="61" selection-end-column="146" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/NotificationCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="51" selection-start-line="62" selection-start-column="36" selection-end-line="62" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/NotificationSvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="140" column="66" selection-start-line="140" selection-start-column="66" selection-end-line="140" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/critical_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.666667">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/common_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.833333">
+          <caret line="92" column="24" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/dashboard_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.7">
+          <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="47" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/eventlog_ko.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.7">
+          <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/eventlog_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.233334">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/calendar-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5578583">
+          <caret line="60" column="24" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/login.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4827586">
           <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/user/list.jsp">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/elements-util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-45.464287">
-          <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.49222797">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/log4j/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/logback/local-logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/event_ko.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="46" selection-start-line="41" selection-start-column="46" selection-end-line="41" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/eventlog_ko.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="48" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/action/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/alarm/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.428571">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/alarm/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/critical/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/event/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventAction/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/conf/properties/dbms.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16934046">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jstl-1.2.jar!/META-INF/c.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="572" column="0" selection-start-line="451" selection-start-column="1" selection-end-line="572" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/common/tags/isaver.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/event/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.892858">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/license/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33771107">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/AuthorizationCtrl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="52" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/UsersMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="29" selection-start-line="110" selection-start-column="29" selection-end-line="110" selection-end-column="29" />
-          <folding>
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="SELECT role_..role..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="SELECT role_..role..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="select user_..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="select user_..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="select user_..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="SELECT a.use..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="select count..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="select count..users..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="update isave..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="UPDATE isave..." />
-            <marker date="1517559913441" expanded="true" signature="-1:-1" placeholder="update isave..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.82728845">
+          <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/AuthorizationSvcImpl.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventLog/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="63" selection-start-line="69" selection-start-column="63" selection-end-line="69" selection-end-column="63" />
+        <state vertical-scroll-proportion="-7.464286">
+          <caret line="131" column="71" selection-start-line="131" selection-start-column="71" selection-end-line="131" selection-end-column="71" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
+    <entry file="jar://$PROJECT_DIR$/lib/spring-web_2.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6694631">
-          <caret line="399" column="60" selection-start-line="399" selection-start-column="60" selection-end-line="399" selection-end-column="60" />
-          <folding>
-            <marker date="1517549875031" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.59165156">
+          <caret line="146" column="20" selection-start-line="146" selection-start-column="20" selection-end-line="146" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/groupcode/detail.jsp">
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/NotificationMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.535714">
-          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
-          <folding />
+        <state vertical-scroll-proportion="1.9932547">
+          <caret line="173" column="55" selection-start-line="173" selection-start-column="55" selection-end-line="173" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/menu/MenuCtrl.js">
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="315" column="61" selection-start-line="315" selection-start-column="56" selection-end-line="315" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="70" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/util/ajax-util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.535714">
-          <caret line="504" column="59" selection-start-line="504" selection-start-column="59" selection-end-line="504" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/menu/MenuModel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2996795">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/common_ko.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/role_ko.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33868092">
-          <caret line="10" column="30" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="30" />
-          <folding />
+        <state vertical-scroll-proportion="0.37132987">
+          <caret line="195" column="13" selection-start-line="195" selection-start-column="13" selection-end-line="195" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/util/common-util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/menu/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.535714">
-          <caret line="98" column="54" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+          <caret line="152" column="1" selection-start-line="120" selection-start-column="9" selection-end-line="152" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/role/detail.jsp">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/data-util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.821428">
-          <caret line="54" column="29" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.071429">
-          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
+        <state vertical-scroll-proportion="-19.142857">
+          <caret line="208" column="52" selection-start-line="208" selection-start-column="52" selection-end-line="208" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/action/detail.jsp">
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventSvcImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.5">
-          <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/EventLogDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="53" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/ISaverCommonBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="0" selection-start-line="19" selection-start-column="13" selection-end-line="82" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/EventLogBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/EventLogCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42022118">
+          <caret line="55" column="91" selection-start-line="55" selection-start-column="91" selection-end-line="55" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventLogSvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="67" selection-start-line="116" selection-start-column="67" selection-end-line="116" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventLogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="244" column="54" selection-start-line="244" selection-start-column="54" selection-end-line="244" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/statistics_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19709544">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/statistics_ko.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19709544">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51033056">
+          <caret line="43" column="46" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventAction/detail.jsp">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/notification/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.571428">
-          <caret line="29" column="70" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.2376033">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/common/tags/isaver.tld">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5175781">
+          <caret line="56" column="59" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/tag/AreaSelectBoxTagSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5175781">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/tag/CodeTextTagSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3359375">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/tag/CodeSelectBoxTagSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.072265625">
+          <caret line="85" column="51" selection-start-line="85" selection-start-column="51" selection-end-line="85" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/notification_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19709544">
+          <caret line="5" column="47" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/page/area/AreaView.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="274" column="12" selection-start-line="274" selection-start-column="12" selection-end-line="274" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/AreaCtrl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="120" column="42" selection-start-line="120" selection-start-column="35" selection-end-line="120" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/area/AreaModel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="395" column="54" selection-start-line="394" selection-start-column="54" selection-end-line="395" selection-end-column="54" />
-          <folding>
-            <marker date="1517448035623" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/area/AreaCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/AreaSvcImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/critical/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6785714">
-          <caret line="35" column="42" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.178572">
-          <caret line="218" column="56" selection-start-line="218" selection-start-column="56" selection-end-line="218" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/device/tbList.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.107143">
-          <caret line="33" column="77" selection-start-line="33" selection-start-column="77" selection-end-line="33" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/file/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6785714">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/code/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.892858">
-          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="61" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/license/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-28.5">
-          <caret line="66" column="62" selection-start-line="66" selection-start-column="62" selection-end-line="66" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.285715">
-          <caret line="74" column="29" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="29" />
+          <caret line="230" column="45" selection-start-line="229" selection-start-column="0" selection-end-line="230" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.76510066">
-          <caret line="159" column="79" selection-start-line="159" selection-start-column="79" selection-end-line="159" selection-end-column="79" />
+        <state vertical-scroll-proportion="1.722314">
+          <caret line="280" column="38" selection-start-line="280" selection-start-column="38" selection-end-line="280" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/websocket-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="120" column="17" selection-start-line="120" selection-start-column="17" selection-end-line="120" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.142857">
+          <caret line="610" column="21" selection-start-line="610" selection-start-column="10" selection-end-line="610" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/backup/dashboard-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.9414062">
+          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="220" column="71" selection-start-line="220" selection-start-column="71" selection-end-line="220" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/googlemap-helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59873617">
+          <caret line="222" column="50" selection-start-line="222" selection-start-column="50" selection-end-line="222" selection-end-column="50" />
           <folding />
         </state>
       </provider>
