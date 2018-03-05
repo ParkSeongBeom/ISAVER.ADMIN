@@ -124,7 +124,7 @@ var WebSocketHelper = (
                 if(_count == null){
                     _count = SEND_MESSAGE_RETRY['cnt'];
                 }
-                console.error('[WebSocketHelper][sendMessage] websocket is disconnect - retry '+ (SEND_MESSAGE_RETRY['cnt']-_count));
+                console.warn('[WebSocketHelper][sendMessage] websocket is disconnect - retry '+ (SEND_MESSAGE_RETRY['cnt']-_count));
 
                 if(_count > 0){
                     setTimeout(function(){

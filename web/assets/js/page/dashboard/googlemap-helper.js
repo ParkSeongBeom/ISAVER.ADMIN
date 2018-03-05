@@ -252,7 +252,7 @@ var GoogleMapHelper = (
                         break;
                 }
             }else{
-                console.error("[GoogleMapHelper][setAnimate] not found device marker or child object - " + _deviceId);
+                console.warn("[GoogleMapHelper][setAnimate] not found device marker or child object - " + _deviceId);
             }
 
             var fenceMarker = _self.getMarker("fence", _fenceId);
@@ -275,7 +275,7 @@ var GoogleMapHelper = (
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(false);
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(true);
             }else{
-                console.error("[GoogleMapHelper][setAnimate] not found fence marker or child object - " + _fenceId);
+                console.warn("[GoogleMapHelper][setAnimate] not found fence marker or child object - " + _fenceId);
             }
 
             var objectMarker = _self.getMarker("object", _objectId);
@@ -289,7 +289,7 @@ var GoogleMapHelper = (
                         break;
                 }
             }else{
-                console.error("[GoogleMapHelper][setAnimate] not found object marker - " + _objectId);
+                console.warn("[GoogleMapHelper][setAnimate] not found object marker - " + _objectId);
             }
         };
 

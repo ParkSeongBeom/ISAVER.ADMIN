@@ -208,7 +208,6 @@ var DashboardHelper = (
 
             var _targetAreaId = null;
 
-            console.log(data);
             for(var index in data){
                 var inout = data[index];
                 if(_targetAreaId==null || _targetAreaId!=inout['areaId']){
