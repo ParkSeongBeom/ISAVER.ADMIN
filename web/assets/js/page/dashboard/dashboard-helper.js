@@ -91,7 +91,7 @@ var DashboardHelper = (
                         case "TMP004": // detector
                             detectorUpdate(data['eventLog']);
                             break;
-                        case "TMP008": // guard
+                        case "TMP005": // guard
                             break;
                     }
                     break;

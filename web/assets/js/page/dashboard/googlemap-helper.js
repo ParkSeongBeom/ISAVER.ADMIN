@@ -6,12 +6,13 @@
  * @type {Function}
  */
 var GoogleMapHelper = (
-    function(_rootPath){
+    function(_rootPath, _version){
         var rootPath;
         var MARKER_TYPE = ['device', 'fence', 'object'];
-        var testLat = {lat : 37.495460,lng : 127.030969};
+        var testLat = {lat : 37.495450, lng : 127.031012};
+        var canvas;
         var map;
-        var imageUrl = "/assets/library/guard/images/map/kinmap.jpg";
+        var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
         var marker = {
             'device' : {},
             'fence' : {},
@@ -29,6 +30,9 @@ var GoogleMapHelper = (
             "object" : {
                 'content' : "<div class='tracking'></div>"
                 ,"targetClass" : ".tracking"
+            },
+            "image" : {
+                'content' : "<div class='mapimages'><div></div></div>"
             }
         };
 
@@ -40,9 +44,9 @@ var GoogleMapHelper = (
          * @param _canvas
          * @returns
          */
-        var _initialize = function(_rootPath){
+        var _initialize = function(_rootPath, _version){
             rootPath = _rootPath;
-            imageUrl = rootPath + imageUrl;
+            imageUrl = rootPath + imageUrl + "?version="+_version;
         };
 
         /**
@@ -56,18 +60,17 @@ var GoogleMapHelper = (
                 console.error("[GoogleMapHelper][_initialize] canvas is null");
                 return false;
             }
-
-            if(typeof _lat!="object"){
-                _lat = eval("("+_lat+")");
-            }
+            canvas = _canvas;
 
             if(_lat==null || _lat==""){
                 _lat = testLat;
+            }else if(typeof _lat!="object"){
+                _lat = eval("("+_lat+")");
             }
 
-            map = new google.maps.Map(_canvas.get(0), {
+            map = new google.maps.Map(canvas.get(0), {
                 center: new google.maps.LatLng(_lat['lat'], _lat['lng']),
-                zoom: 20, // 지도 zoom단계
+                zoom: 22, // 지도 zoom단계
                 /**
                  * roadmap : 기본 도로 지도 뷰를 표시합니다. 기본 지도 유형입니다.
                  * satellite : Google 어스 위성 이미지를 표시합니다.
@@ -75,8 +78,8 @@ var GoogleMapHelper = (
                  * terrain : 지형 정보를 기반으로 실제 지도를 표시합니다.
                  */
                 mapTypeId: "roadmap",
-                draggable: false,
-                zoomControl: false,
+                //draggable: false,
+                //zoomControl: false,
                 mapTypeControl : false,
                 mapTypeControlOptions: {
                     position: google.maps.ControlPosition.LEFT_BOTTOM
@@ -91,18 +94,6 @@ var GoogleMapHelper = (
                     _tilesLoadFunction();
                 }
             });
-        };
-
-        this.setImage = function(){
-            var historicalOverlay = new google.maps.GroundOverlay(
-                imageUrl,
-                {
-                    north: 37.496060,
-                    south: 37.494960,
-                    east: 127.031969,
-                    west: 127.029969
-                });
-            historicalOverlay.setMap(map);
         };
 
         this.getMap = function(){
@@ -339,6 +330,27 @@ var GoogleMapHelper = (
             return jsonData;
         };
 
-        _initialize(_rootPath);
+        var historicalOverlay = null;
+        this.addImage = function(){
+            historicalOverlay = new google.maps.GroundOverlay(
+                imageUrl,
+                {
+                    north: 37.49586539601683,
+                    east: 127.03165207272161,
+                    south: 37.49505460178254,
+                    west: 127.03028592727844
+                });
+            historicalOverlay.setMap(map);
+            canvas.addClass("map_images");
+        };
+
+        this.removeImage = function(){
+            if(historicalOverlay!=null){
+                historicalOverlay.setMap(null);
+            }
+            canvas.removeClass("map_images");
+        };
+
+        _initialize(_rootPath, _version);
     }
 );

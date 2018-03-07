@@ -60,7 +60,6 @@ var NotificationHelper = (
 
             // 알림센터 내부 셀렉트 박스 클릭시 이벤트
             $("#criticalLevel, #areaType").on("change",function(){
-                console.log("aa");
                 selectBoxChangeHandler();
             });
         };

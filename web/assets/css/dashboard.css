@@ -1620,6 +1620,21 @@ body.dashboard_mode {
 .gm-style iframe + div, .gm-style .gmnoprint {
   display: none !important; }
 
+.map_images .gm-style-pbc {
+  opacity: 0 !important; }
+.map_images .gm-style > div:after, .map_images .gm-style > div:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+.map_images .gm-style > div:after {
+  background-color: #3c3c3c;
+  z-index: -1; }
+.map_images .gm-style > div > div:first-of-type canvas {
+  color: #fff !important; }
+.map_images .gm-style > div > div:first-of-type > div:last-of-type > div > div img {
+  opacity: 0; }
+
 .vxgplayer-loader {
   margin: -25px 0 0 -25px !important; }
 

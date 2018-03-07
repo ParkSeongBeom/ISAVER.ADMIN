@@ -339,7 +339,7 @@
                         </div>
                     </c:if>
 
-                    <c:if test="${childArea.templateCode=='TMP008'}">
+                    <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Guard -->
                         <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
@@ -368,7 +368,7 @@
                                         <div name="map-canvas"></div>
                                     </div>
                                     <div class="s_rbox">
-                                        <ul id="ptzPlayers"></ul>
+                                        <ul ptzPlayers></ul>
                                     </div>
                                 </section>
                                 <div class="m_marqueebox">
@@ -550,6 +550,25 @@
         });
     }
 
+    function test1(){
+        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0022","location":[{"lat": 37.495450,"lng": 127.031012}]});
+        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":"AR0004","id":"fence1","location":[
+            {"lat" : "37.495463","lng" : "127.030996"},
+            {"lat" : "37.495473","lng" : "127.031013"},
+            {"lat" : "37.495503","lng" : "127.030998"},
+            {"lat" : "37.495493","lng" : "127.030984"}
+        ]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
+
+        testImage('AR0004');
+    }
+
+    function testImage(_areaId){
+        guardList[_areaId].googleMap.removeImage();
+        guardList[_areaId].googleMap.addImage();
+    }
+
     /**
      * Google Map Initialize
      * @param message
@@ -560,11 +579,11 @@
         addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/jquery_easing.js?version=${version}");
         addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/markerAnimate.js?version=${version}");
 
-        $.each($("div[templateCode='TMP008']"),function(){
+        $.each($("div[templateCode='TMP005']"),function(){
             var _areaId = $(this).attr("areaId");
             guardList[_areaId] = {
                 "video" : new VideoHelper("${rootPath}")
-                ,"googleMap" : new GoogleMapHelper("${rootPath}")
+                ,"googleMap" : new GoogleMapHelper("${rootPath}", "${version}")
                 ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
             };
 
@@ -579,7 +598,7 @@
                 });
             });
 
-            guardList[_areaId]['video'].setElement($("#ptzPlayers"));
+            guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
             guardList[_areaId]['video'].createPlayer(deviceList);
             guardList[_areaId]['googleMap'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), getDeviceData(deviceList));
 
