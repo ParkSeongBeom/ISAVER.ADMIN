@@ -1,11 +1,12 @@
 ﻿/**
- * Video Helper
- * - RTSP Streaming
+ * Video Mediator
+ * - 비디오 관련 이벤트 및 데이터를 처리한다.
+ * - 구역과 1:1 매칭
  *
  * @author psb
  * @type {Function}
  */
-var VideoHelper = (
+var VideoMediator = (
     function(_rootPath){
         var playerList = {};
         var rootPath;
@@ -27,7 +28,7 @@ var VideoHelper = (
          */
         this.setElement = function(_element){
             if(_element==null || _element.length==0){
-                console.error("[VideoHelper][_initialize] _element is null or not found");
+                console.error("[VideoMediator][_initialize] _element is null or not found");
                 return false;
             }
 
@@ -64,7 +65,7 @@ var VideoHelper = (
                     }).ready(function(){
                         playerList[_deviceList[index]['deviceId']] = vxgplayer(_deviceList[index]['deviceId']);
                         playerList[_deviceList[index]['deviceId']].src(_deviceList[index]['linkUrl']);
-                        console.log('[VideoHelper][createPlayer] ready player - '+_deviceList[index]['deviceId']);
+                        console.log('[VideoMediator][createPlayer] ready player - '+_deviceList[index]['deviceId']);
                         _self.play(_deviceList[index]['deviceId']);
                     });
                 }
@@ -78,11 +79,11 @@ var VideoHelper = (
          */
         this.play = function(_playerId){
             if(_playerId==null || playerList[_playerId]==null){
-                console.error("[VideoHelper][play] _playerId is null or not in playerList");
+                console.error("[VideoMediator][play] _playerId is null or not in playerList");
                 return false;
             }
             playerList[_playerId].play();
-            console.log('[VideoHelper][play] complete - '+_playerId);
+            console.log('[VideoMediator][play] complete - '+_playerId);
         };
 
         /**
@@ -92,7 +93,7 @@ var VideoHelper = (
          */
         this.stop = function(_playerId){
             if(_playerId==null || playerList[_playerId]==null){
-                console.error("[VideoHelper][stop] _playerId is null or not in playerList");
+                console.error("[VideoMediator][stop] _playerId is null or not in playerList");
                 return false;
             }
             playerList[_playerId].stop();

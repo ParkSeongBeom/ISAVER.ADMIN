@@ -5,13 +5,16 @@
  * @type {Function}
  */
 var DashboardHelper = (
-    function(rootPath, criticalList){
+    function(rootPath, version, criticalList){
         var _rootPath;
+        var _version;
         var _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
         };
         var _messageConfig;
+        var _defaultTemplateCode = "TMP001";
         var _areaList = {};
+        var _guardList = {};
         var _criticalList = {};
 
         var _self = this;
@@ -19,8 +22,9 @@ var DashboardHelper = (
         /**
          * initialize
          */
-        var initialize = function(rootPath, criticalList){
+        var initialize = function(rootPath, version, criticalList){
             _rootPath = rootPath;
+            _version = version;
             _criticalList = criticalList;
 
             for(var index in _urlConfig){
@@ -48,6 +52,7 @@ var DashboardHelper = (
                     ,'templateCode' : $(this).attr("templateCode")
                     ,'notification' : $.extend(true,{},_criticalList)
                     ,'childDevice' : {}
+                    ,'childAreaIds' : $(this).attr("childAreaIds")
                 };
 
                 $.each($(this).find("li[deviceId]"),function(){
@@ -56,6 +61,36 @@ var DashboardHelper = (
                         ,'notification' : $.extend(true,{},_criticalList)
                     };
                 });
+            });
+        };
+
+        /**
+         * set Guard List
+         */
+        this.setGuardList = function(){
+            $.each($("div[templateCode='TMP005']"),function(){
+                var _areaId = $(this).attr("areaId");
+                _guardList[_areaId] = {
+                    "video" : new VideoMediator(_rootPath)
+                    ,"googleMap" : new MapMediator(_rootPath, _version)
+                    ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
+                };
+
+                var deviceList = [];
+                $.each($(this).find("div[childDevice]"),function(){
+                    deviceList.push({
+                        'areaId' : _areaId
+                        ,'deviceId' : $(this).attr("deviceId")
+                        ,'deviceCode' : $(this).attr("deviceCode")
+                        ,'ipAddress' : $(this).attr("ipAddress")
+                        ,'linkUrl' : $(this).attr("linkUrl")
+                    });
+                });
+
+                _guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
+                _guardList[_areaId]['video'].createPlayer(deviceList);
+                _guardList[_areaId]['googleMap'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
+                _guardList[_areaId]['googleMap'].addImage();
             });
         };
 
@@ -96,8 +131,8 @@ var DashboardHelper = (
                     }
                     break;
                 case "addNotification": // 알림이벤트 등록
-                    if(data['notification']['areaId']!=null && guardList[data['notification']['areaId']]!=null){
-                        guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                    if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
+                        _guardList[data['notification']['areaId']]['googleMap'].setAnimate(
                             data['notification']['deviceId']
                             ,data['notification']['fenceId']
                             ,data['notification']['objectId']
@@ -111,9 +146,9 @@ var DashboardHelper = (
                     notificationUpdate(messageType, data['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
-                    if(data['notification']['areaId']!=null && guardList[data['notification']['areaId']]!=null){
+                    if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                            _guardList[data['notification']['areaId']]['googleMap'].setAnimate(
                                 data['notification']['deviceId']
                                 ,data['notification']['fenceId']
                                 ,data['notification']['objectId']
@@ -151,9 +186,40 @@ var DashboardHelper = (
                 case "full" :
                     result = _areaList;
                     break;
+                case "child" :
+                    for(var index in _areaList){
+                        var _area = _areaList[index];
+                        if(_area['childAreaIds']!=null && _area['childAreaIds']!="" && _area['childAreaIds'].split(",").indexOf(areaId)>-1){
+                            result = _areaList[index];
+                        }
+                    }
+                    break;
                 default :
                     if(_areaList[areaId]!=null && _areaList[areaId][type]!=null){
                         result = _areaList[areaId][type];
+                    }
+                    break;
+            }
+            return result;
+        };
+
+        /**
+         * get guard obj
+         */
+        this.getGuard = function(type, areaId){
+            var result = null;
+            switch (type){
+                case "all" :
+                    if(_guardList[areaId]!=null){
+                        result = _guardList[areaId];
+                    }
+                    break;
+                case "full" :
+                    result = _guardList;
+                    break;
+                default :
+                    if(_guardList[areaId]!=null && _guardList[areaId][type]!=null){
+                        result = _guardList[areaId][type];
                     }
                     break;
             }
@@ -231,13 +297,18 @@ var DashboardHelper = (
          */
         var notificationUpdate = function(messageType, data){
             var areaComponent = _self.getArea("all", data['areaId']);
+
             if(areaComponent==null){
-                console.warn("[DashboardHelper][notificationRender] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
-                return false;
+                areaComponent = _self.getArea("child", data['areaId']);
+                if(areaComponent==null){
+                    console.warn("[DashboardHelper][notificationRender] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
+                    return false;
+                }
             }
             var element = areaComponent['element'];
             var notification = areaComponent['notification'];
             var childDevice = areaComponent['childDevice'];
+            var templateCode = areaComponent['templateCode'];
 
             switch (messageType){
                 case "addNotification" :
@@ -263,6 +334,10 @@ var DashboardHelper = (
                     element.addClass("level-"+criticalCss[index]);
                 }else{
                     element.removeClass("level-"+criticalCss[index]);
+                }
+
+                if(templateCode==_defaultTemplateCode){
+                    element.find("div[criticalLevel='"+index+"'] p").text(notification[index].length>0?notification[index].length:"");
                 }
             }
 
@@ -396,6 +471,6 @@ var DashboardHelper = (
             }
         };
 
-        initialize(rootPath, criticalList);
+        initialize(rootPath, version, criticalList);
     }
 );

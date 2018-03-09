@@ -1,11 +1,12 @@
 ﻿/**
- * Google Map Helper
- * - 구글맵 제어
+ * Map Mediator
+ * - 맵 관련 이벤트 및 데이터를 처리한다.
+ * - 구역과 1:1 매칭
  *
  * @author psb
  * @type {Function}
  */
-var GoogleMapHelper = (
+var MapMediator = (
     function(_rootPath, _version){
         var rootPath;
         var MARKER_TYPE = ['device', 'fence', 'object'];
@@ -55,9 +56,9 @@ var GoogleMapHelper = (
          * @param _canvas
          * @returns
          */
-        this.setMap = function(_canvas, _lat, _tilesLoadFunction){
+        this.setMap = function(_canvas, _lat, _deviceList){
             if(_canvas==null){
-                console.error("[GoogleMapHelper][_initialize] canvas is null");
+                console.error("[MapMediator][_initialize] canvas is null");
                 return false;
             }
             canvas = _canvas;
@@ -90,8 +91,10 @@ var GoogleMapHelper = (
             });
 
             map.addListener('tilesloaded', function() {
-                if(typeof _tilesLoadFunction=="function"){
-                    _tilesLoadFunction();
+                for(var index in _deviceList){
+                    if(_deviceList[index]['deviceCode']=="DEV013"){
+                        webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
+                    }
                 }
             });
         };
@@ -106,11 +109,11 @@ var GoogleMapHelper = (
          */
         this.addMarker = function(_type, _id, _lat){
             if(_id==null || _lat==null){
-                console.error("[GoogleMapHelper][addMarker] parameter not enough");
+                console.error("[MapMediator][addMarker] parameter not enough");
                 return false;
             }
             if(marker[_type]!=null && marker[_type][_id]!=null){
-                console.warn("[GoogleMapHelper][addMarker] marker is exist - [" + _type + "][" + _id + "]");
+                console.warn("[MapMediator][addMarker] marker is exist - [" + _type + "][" + _id + "]");
                 return false;
             }
 
@@ -162,9 +165,9 @@ var GoogleMapHelper = (
                         });
                         break;
                 }
-                console.log("[GoogleMapHelper][addMarker] complete - [" + _type + "][" + _id + "]");
+                console.log("[MapMediator][addMarker] complete - [" + _type + "][" + _id + "]");
             }catch(e){
-                console.error("[GoogleMapHelper][addMarker] error- [" + _type + "][" + _id + "] - " + e.message);
+                console.error("[MapMediator][addMarker] error- [" + _type + "][" + _id + "] - " + e.message);
             }
         };
 
@@ -174,7 +177,7 @@ var GoogleMapHelper = (
          */
         this.saveMarker = function(_type, _id, _lat){
             if(_type==null || _id==null || _lat==null){
-                console.error("[GoogleMapHelper][saveMarker] parameter not enough");
+                console.error("[MapMediator][saveMarker] parameter not enough");
                 return false;
             }
 
@@ -201,7 +204,7 @@ var GoogleMapHelper = (
          */
         this.removeMarker = function(_type, _id){
             if(_type==null || _id==null){
-                console.error("[GoogleMapHelper][removeMarker] parameter not enough");
+                console.error("[MapMediator][removeMarker] parameter not enough");
                 return false;
             }
 
@@ -212,7 +215,7 @@ var GoogleMapHelper = (
                     if(marker[_type][_id]!=null){
                         marker[_type][_id].setMap(null);
                         delete marker[_type][_id];
-                        console.log("[GoogleMapHelper][removeMarker] complete - [" + _type + "][" + _id + "]");
+                        console.log("[MapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
                     }
                     break;
             }
@@ -243,7 +246,7 @@ var GoogleMapHelper = (
                         break;
                 }
             }else{
-                console.warn("[GoogleMapHelper][setAnimate] not found device marker or child object - " + _deviceId);
+                console.warn("[MapMediator][setAnimate] not found device marker or child object - " + _deviceId);
             }
 
             var fenceMarker = _self.getMarker("fence", _fenceId);
@@ -266,7 +269,7 @@ var GoogleMapHelper = (
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(false);
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(true);
             }else{
-                console.warn("[GoogleMapHelper][setAnimate] not found fence marker or child object - " + _fenceId);
+                console.warn("[MapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
             }
 
             var objectMarker = _self.getMarker("object", _objectId);
@@ -280,7 +283,7 @@ var GoogleMapHelper = (
                         break;
                 }
             }else{
-                console.warn("[GoogleMapHelper][setAnimate] not found object marker - " + _objectId);
+                console.warn("[MapMediator][setAnimate] not found object marker - " + _objectId);
             }
         };
 

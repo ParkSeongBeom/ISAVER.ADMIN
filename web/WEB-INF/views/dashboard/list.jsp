@@ -87,7 +87,7 @@
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
                         <!-- Default 신호등 -->
-                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
+                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
@@ -151,7 +151,7 @@
                                 </c:if>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
-                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                    <button class="area" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
                                 </c:if>
                             </header>
                             <article>
@@ -463,19 +463,17 @@
 </article>
 
 <link type="text/css" href="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.min.css?version=${version}" rel="stylesheet"/>
-<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-helper.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.js?version=${version}"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
-<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/googlemap-helper.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/map-mediator.js?version=${version}"></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
-    var areaId = String('${paramBean.areaId}');
     var chartList = {};
-    var guardList = {};
     var renderDatetime = new Date();
-    var dashboardHelper = new DashboardHelper("${rootPath}",{
+    var dashboardHelper = new DashboardHelper("${rootPath}","${version}",{
         <c:forEach var="critical" items="${criticalList}">
             '${critical.codeId}' : [],
         </c:forEach>
@@ -534,39 +532,19 @@
         initChartList();
     });
 
-    function test(){
-        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0022","location":[{"lat": 37.495460,"lng": 127.030969}]});
-        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":"AR0004","id":"fence1","location":[
-            {"lat" : "37.495453","lng" : "127.030874"},
-            {"lat" : "37.495493","lng" : "127.030943"},
-            {"lat" : "37.495633","lng" : "127.030893"},
-            {"lat" : "37.495593","lng" : "127.030824"}
-        ]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1235","location":[{"lat": "37.495503","lng": "127.031104"}]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1234","location":[{"lat": "37.495603","lng": "127.031204"}]});
-
-        google.maps.event.addListener(guardList["AR0004"]['googleMap'].getMap(), 'click', function(event) {
-            guardList["AR0004"]['googleMap'].saveMarker('object','1235',event.latLng);
-        });
-    }
-
-    function test1(){
-        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":"AR0004","id":"DE0022","location":[{"lat": 37.495450,"lng": 127.031012}]});
-        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":"AR0004","id":"fence1","location":[
+    function test(_areaId){
+        if(_areaId==null){
+            _areaId = "AR0000";
+        }
+        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
+        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
             {"lat" : "37.495463","lng" : "127.030996"},
             {"lat" : "37.495473","lng" : "127.031013"},
             {"lat" : "37.495503","lng" : "127.030998"},
             {"lat" : "37.495493","lng" : "127.030984"}
         ]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":"AR0004","id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
-
-        testImage('AR0004');
-    }
-
-    function testImage(_areaId){
-        guardList[_areaId].googleMap.removeImage();
-        guardList[_areaId].googleMap.addImage();
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
     }
 
     /**
@@ -578,41 +556,7 @@
         addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/maplabel.js?version=${version}");
         addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/jquery_easing.js?version=${version}");
         addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/markerAnimate.js?version=${version}");
-
-        $.each($("div[templateCode='TMP005']"),function(){
-            var _areaId = $(this).attr("areaId");
-            guardList[_areaId] = {
-                "video" : new VideoHelper("${rootPath}")
-                ,"googleMap" : new GoogleMapHelper("${rootPath}", "${version}")
-                ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
-            };
-
-            var deviceList = [];
-            $.each($(this).find("div[childDevice]"),function(){
-                deviceList.push({
-                    'areaId' : _areaId
-                    ,'deviceId' : $(this).attr("deviceId")
-                    ,'deviceCode' : $(this).attr("deviceCode")
-                    ,'ipAddress' : $(this).attr("ipAddress")
-                    ,'linkUrl' : $(this).attr("linkUrl")
-                });
-            });
-
-            guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
-            guardList[_areaId]['video'].createPlayer(deviceList);
-            guardList[_areaId]['googleMap'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), getDeviceData(deviceList));
-
-            /**
-             * @param message
-             */
-            function getDeviceData(_deviceList){
-                for(var index in _deviceList){
-                    if(_deviceList[index]['deviceCode']=="DEV013"){
-                        webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
-                    }
-                }
-            }
-        });
+        dashboardHelper.setGuardList();
     }
 
     /**
@@ -627,22 +571,20 @@
             console.warn("[deviceMessageEventHandler] json parse error - " + message.data);
             return false;
         }
-//        console.log(resultData);
 
-        if(resultData['areaId']==null || guardList[resultData['areaId']]==null){
-            return false;
-        }
-
-        switch (resultData['actionType']) {
-            case "add":
-                guardList[resultData['areaId']]['googleMap'].addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                break;
-            case "save":
-                guardList[resultData['areaId']]['googleMap'].saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                break;
-            case "remove":
-                guardList[resultData['areaId']]['googleMap'].removeMarker(resultData['messageType'], resultData['id']);
-                break;
+        var _mapMediator = dashboardHelper.getGuard('googleMap', resultData['areaId']);
+        if(resultData['areaId']!=null && _mapMediator!=null && _mapMediator instanceof MapMediator){
+            switch (resultData['actionType']) {
+                case "add":
+                    _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                    break;
+                case "save":
+                    _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                    break;
+                case "remove":
+                    _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
+                    break;
+            }
         }
     }
 
