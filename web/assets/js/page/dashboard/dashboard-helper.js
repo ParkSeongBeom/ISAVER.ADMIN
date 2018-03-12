@@ -162,7 +162,7 @@ var DashboardHelper = (
         };
 
         /**
-         * get notification
+         * get blinker
          * @author psb
          */
         this.getBlinker = function(areaIds){
@@ -301,7 +301,7 @@ var DashboardHelper = (
             if(areaComponent==null){
                 areaComponent = _self.getArea("child", data['areaId']);
                 if(areaComponent==null){
-                    console.warn("[DashboardHelper][notificationRender] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
+                    console.warn("[DashboardHelper][notificationUpdate] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
                     return false;
                 }
             }
@@ -418,7 +418,7 @@ var DashboardHelper = (
                             deviceElement.find("span[evtValue]").text(Number(eventValue).toFixed(2));
                         }catch(e){
                             deviceElement.find("span[evtValue]").text(eventValue);
-                            console.error("[detectorUpdate] parse error - "+ e.message);
+                            console.error("[DashboardHelper][detectorUpdate] parse error - "+ e.message);
                         }
                         updateFlag = true;
                     }
@@ -426,7 +426,7 @@ var DashboardHelper = (
 
                 if(deviceElement.hasClass("on") && updateFlag){
                     if(chartList[data['areaId']]==null) {
-                        console.error("[detectorUpdate] chartList is null - areaId : " + data['areaId']);
+                        console.error("[DashboardHelper][detectorUpdate] chartList is null - areaId : " + data['areaId']);
                         return false;
                     }
 
@@ -464,7 +464,7 @@ var DashboardHelper = (
                                 chartList[data['areaId']].update();
                             }
                         }catch(e){
-                            console.error("[detectorUpdate] series index error - "+e);
+                            console.error("[DashboardHelper][detectorUpdate] series index error - "+e);
                         }
                     }
                 }
