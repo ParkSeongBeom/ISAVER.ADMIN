@@ -189,7 +189,7 @@ var NotificationHelper = (
                 $("section[alarm_detail]").addClass("level-"+criticalCss[data['paramBean']['criticalLevel']]);
                 $("section[alarm_detail] p[areaName]").text(data['paramBean']['areaName']);
                 $("section[alarm_detail] p[eventName]").text(action['eventName']);
-                $("section[alarm_detail] p[actionDesc]").text(action['actionDesc']);
+                $("section[alarm_detail] textarea[actionDesc]").text(action['actionDesc']);
                 _eventDatetime.setTime(data['paramBean']['eventDatetime']);
 
                 if(data['device']!=null && data['device']['linkUrl']!=null){

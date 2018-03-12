@@ -534,7 +534,7 @@
             </div>
             <div class="dbi_cctv"><button></button></div>
             <div class="dbi_copy">
-                <p actionDesc></p>
+                <p><textarea disabled="true" actionDesc></textarea></p>
             </div>
         </section>
     </aside>
