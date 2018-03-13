@@ -243,11 +243,9 @@ body.dashboard_mode {
             &:after {background-color:$color-white-01;}
           }
 
-          &.type-list {
-            &, &:before {background-color: transparent !important;}
-            .m_marqueebox {
-              &:before {background-color: $bas-color !important;}
-            }
+          &, &:before {background-color: transparent !important;}
+          .m_marqueebox {
+            &:before {background-color: $bas-color !important;}
           }
 
         }

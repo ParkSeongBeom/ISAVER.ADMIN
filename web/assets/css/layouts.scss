@@ -802,7 +802,7 @@ menu {
 
     .m_marqueebox {
       & > p {@include marquee;}
-      & * , &:before {color:$color-white-01 !important; }
+      & * , &:before {color:$color-red-01 !important; }
     }  //각구역 마키
 
     .ts {
@@ -835,7 +835,7 @@ menu {
       & > p:before {@include border01(3px,$color-gray-03,1 ); @include issue06; }
 
     }
-    .treffic_set .ts-caution:after, .m_marqueebox:before {background-color:$color-gray-03;}
+    .treffic_set .ts-caution:after {background-color:$color-gray-03;}
   } // .level-caution 주의
 
   &-warning {
@@ -845,7 +845,7 @@ menu {
       & > p:before {@include border01(3px,$color-orange-01,1 ); @include issue06;}
 
     }
-    .treffic_set .ts-warning:after, .m_marqueebox:before {background-color:$color-orange-01;}
+    .treffic_set .ts-warning:after{background-color:$color-orange-01;}
   } // .level-warning 경고
 
   &-danger  {
@@ -855,7 +855,7 @@ menu {
       & > p:before {@include border01(3px,$color-red-01,1 ); @include issue06;}
 
     }
-    .treffic_set .ts-danger:after, .m_marqueebox:before {background-color:$color-red-01;}
+    .treffic_set .ts-danger:after {background-color:$color-red-01;}
   } // .level-danger  위험
 }
 /////..... 임계치 적용 표시 End

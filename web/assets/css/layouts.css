@@ -1401,7 +1401,7 @@ menu {
     left: -120%;
     opacity: 0; } }
 .level-caution .m_marqueebox *, .level-caution .m_marqueebox:before, .level-warning .m_marqueebox *, .level-warning .m_marqueebox:before, .level-danger .m_marqueebox *, .level-danger .m_marqueebox:before {
-  color: #fff !important; }
+  color: #be1e1e !important; }
 .level-caution .treffic_set .ts-caution:before {
   border-style: solid;
   border-width: 2px;
@@ -1479,7 +1479,7 @@ menu {
   100% {
     opacity: 0;
     padding: 70%; } }
-.level-caution .treffic_set .ts-caution:after, .level-caution .m_marqueebox:before {
+.level-caution .treffic_set .ts-caution:after {
   background-color: #999; }
 .level-warning .treffic_set .ts-warning:before {
   border-style: solid;
@@ -1558,7 +1558,7 @@ menu {
   100% {
     opacity: 0;
     padding: 70%; } }
-.level-warning .treffic_set .ts-warning:after, .level-warning .m_marqueebox:before {
+.level-warning .treffic_set .ts-warning:after {
   background-color: #ff8400; }
 .level-danger .treffic_set .ts-danger:before {
   border-style: solid;
@@ -1637,7 +1637,7 @@ menu {
   100% {
     opacity: 0;
     padding: 70%; } }
-.level-danger .treffic_set .ts-danger:after, .level-danger .m_marqueebox:before {
+.level-danger .treffic_set .ts-danger:after {
   background-color: #be1e1e; }
 
 body.adaptive_mobile menu, body.adaptive_mobile .datetime_set {

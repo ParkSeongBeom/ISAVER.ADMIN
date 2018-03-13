@@ -472,9 +472,9 @@ body.dashboard_mode {
       color: #fff; }
     body.dashboard_mode.dark_mode .watch_area > div.level-caution .kblinker_set *:after, body.dashboard_mode.dark_mode .watch_area > div.level-warning .kblinker_set *:after, body.dashboard_mode.dark_mode .watch_area > div.level-danger .kblinker_set *:after {
       background-color: #fff; }
-    body.dashboard_mode.dark_mode .watch_area > div.level-caution.type-list, body.dashboard_mode.dark_mode .watch_area > div.level-caution.type-list:before, body.dashboard_mode.dark_mode .watch_area > div.level-warning.type-list, body.dashboard_mode.dark_mode .watch_area > div.level-warning.type-list:before, body.dashboard_mode.dark_mode .watch_area > div.level-danger.type-list, body.dashboard_mode.dark_mode .watch_area > div.level-danger.type-list:before {
+    body.dashboard_mode.dark_mode .watch_area > div.level-caution, body.dashboard_mode.dark_mode .watch_area > div.level-caution:before, body.dashboard_mode.dark_mode .watch_area > div.level-warning, body.dashboard_mode.dark_mode .watch_area > div.level-warning:before, body.dashboard_mode.dark_mode .watch_area > div.level-danger, body.dashboard_mode.dark_mode .watch_area > div.level-danger:before {
       background-color: transparent !important; }
-    body.dashboard_mode.dark_mode .watch_area > div.level-caution.type-list .m_marqueebox:before, body.dashboard_mode.dark_mode .watch_area > div.level-warning.type-list .m_marqueebox:before, body.dashboard_mode.dark_mode .watch_area > div.level-danger.type-list .m_marqueebox:before {
+    body.dashboard_mode.dark_mode .watch_area > div.level-caution .m_marqueebox:before, body.dashboard_mode.dark_mode .watch_area > div.level-warning .m_marqueebox:before, body.dashboard_mode.dark_mode .watch_area > div.level-danger .m_marqueebox:before {
       background-color: #3c3c3c !important; }
   body.dashboard_mode.dark_mode .chart_select_set button {
     color: #3c3c3c; }
