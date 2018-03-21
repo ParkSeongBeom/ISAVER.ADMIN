@@ -1,21 +1,16 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventStatisticsSvc;
-import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.EventBean;
 import com.icent.isaver.repository.bean.EventStatisticsBean;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.icent.isaver.repository.dao.base.EventStatisticsDao;
 import com.kst.common.resource.CommonResource;
-import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 

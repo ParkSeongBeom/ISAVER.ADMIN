@@ -72,7 +72,7 @@ var DashboardHelper = (
                 var _areaId = $(this).attr("areaId");
                 _guardList[_areaId] = {
                     "video" : new VideoMediator(_rootPath)
-                    ,"googleMap" : new MapMediator(_rootPath, _version)
+                    ,"map" : new MapMediator(_rootPath, _version)
                     ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
                 };
 
@@ -89,8 +89,8 @@ var DashboardHelper = (
 
                 _guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
                 _guardList[_areaId]['video'].createPlayer(deviceList);
-                _guardList[_areaId]['googleMap'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
-                _guardList[_areaId]['googleMap'].addImage();
+                _guardList[_areaId]['map'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
+                //_guardList[_areaId]['map'].addImage();
             });
         };
 
@@ -132,7 +132,7 @@ var DashboardHelper = (
                     break;
                 case "addNotification": // 알림이벤트 등록
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
-                        _guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                        _guardList[data['notification']['areaId']]['map'].setAnimate(
                             data['notification']['deviceId']
                             ,data['notification']['fenceId']
                             ,data['notification']['objectId']
@@ -148,7 +148,7 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            _guardList[data['notification']['areaId']]['googleMap'].setAnimate(
+                            _guardList[data['notification']['areaId']]['map'].setAnimate(
                                 data['notification']['deviceId']
                                 ,data['notification']['fenceId']
                                 ,data['notification']['objectId']

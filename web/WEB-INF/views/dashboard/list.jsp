@@ -270,10 +270,10 @@
                                 <section class="nhr_set">
                                     <div class="s_lbox">
                                         <div class="chart_select_set" dateSelType>
-                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">일</button>
-                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">주</button>
-                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">월</button>
-                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;">년</button>
+                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.day"/></button>
+                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.week"/></button>
+                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.month"/></button>
+                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.year"/></button>
                                         </div>
                                         <div class="chart_box chart01" chartAreaId="${childArea.areaId}">
                                         </div>
@@ -572,7 +572,7 @@
             return false;
         }
 
-        var _mapMediator = dashboardHelper.getGuard('googleMap', resultData['areaId']);
+        var _mapMediator = dashboardHelper.getGuard('map', resultData['areaId']);
         if(resultData['areaId']!=null && _mapMediator!=null && _mapMediator instanceof MapMediator){
             switch (resultData['actionType']) {
                 case "add":

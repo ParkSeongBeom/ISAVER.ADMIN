@@ -272,4 +272,10 @@
     <definition name="alarmDetail" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/alarm/detail.jsp" />
     </definition>
+
+    <!--
+        시뮬레이터용 테스트페이지
+        @author psb
+    -->
+    <definition name="testList" template="/WEB-INF/views/authorization/test.jsp" />
 </tiles-definitions>

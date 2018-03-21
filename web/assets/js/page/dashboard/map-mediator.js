@@ -9,11 +9,28 @@
 var MapMediator = (
     function(_rootPath, _version){
         var rootPath;
+        var version;
         var MARKER_TYPE = ['device', 'fence', 'object'];
-        var testLat = {lat : 37.495450, lng : 127.031012};
+
+        var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
+        var imageLat = {
+            north: 37.49586539601683,
+            east: 127.03165207272161,
+            south: 37.49505460178254,
+            west: 127.03028592727844
+        };
+        var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
+        //var defaultCenterLat = {lat : 37.66817143942698, lng : 126.74532480737503};
+        //var imageLat = {
+        //    north: 37.66968403817788,
+        //    east: 126.74806271610487,
+        //    south: 37.66661822644006,
+        //    west: 126.74259813433218
+        //};
+        //var imageUrl = "/assets/library/googlemap/images/test01.svg";
+
         var canvas;
         var map;
-        var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
         var marker = {
             'device' : {},
             'fence' : {},
@@ -31,6 +48,10 @@ var MapMediator = (
             "object" : {
                 'content' : "<div class='tracking'></div>"
                 ,"targetClass" : ".tracking"
+                ,'animate' : {
+                    easing: "swing"
+                    ,'duration' : 200
+                }
             },
             "image" : {
                 'content' : "<div class='mapimages'><div></div></div>"
@@ -47,6 +68,7 @@ var MapMediator = (
          */
         var _initialize = function(_rootPath, _version){
             rootPath = _rootPath;
+            version = _version;
             imageUrl = rootPath + imageUrl + "?version="+_version;
         };
 
@@ -64,7 +86,7 @@ var MapMediator = (
             canvas = _canvas;
 
             if(_lat==null || _lat==""){
-                _lat = testLat;
+                _lat = defaultCenterLat;
             }else if(typeof _lat!="object"){
                 _lat = eval("("+_lat+")");
             }
@@ -190,7 +212,7 @@ var MapMediator = (
                         if(!(_lat instanceof google.maps.LatLng)){
                             _lat = new google.maps.LatLng(_lat['lat'], _lat['lng']);
                         }
-                        marker[_type][_id].animateTo(_lat, {easing: "swing", duration: 1});
+                        marker[_type][_id].animateTo(_lat, options[MARKER_TYPE[2]]['animate']);
                     }else{
                         _self.addMarker(_type, _id, _lat);
                     }
@@ -335,14 +357,7 @@ var MapMediator = (
 
         var historicalOverlay = null;
         this.addImage = function(){
-            historicalOverlay = new google.maps.GroundOverlay(
-                imageUrl,
-                {
-                    north: 37.49586539601683,
-                    east: 127.03165207272161,
-                    south: 37.49505460178254,
-                    west: 127.03028592727844
-                });
+            historicalOverlay = new google.maps.GroundOverlay(imageUrl,imageLat);
             historicalOverlay.setMap(map);
             canvas.addClass("map_images");
         };

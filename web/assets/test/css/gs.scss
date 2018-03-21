@@ -1,0 +1,111 @@
+@charset "utf-8";
+@import "filters";
+
+// LayOut
+
+$headerHeight:150px;
+$logowidth:340px;
+$buttonwidth:90px;
+
+@mixin padi {padding:0 60px;}
+@mixin buto {width:$buttonwidth; height:$buttonwidth;}
+
+
+body {
+  overflow: hidden; @include flexbase; @include flex-column;
+  position: absolute; width:100%; height:100%;
+  background-color: $bas-color;
+
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner  {height:8px; width:8px; background-color: $adm-color;}
+  ::-webkit-scrollbar-thumb {
+    background-color: $bas-color; @include border01(2px,$adm-color,1 );
+    &:hover {background-color: $color-gray-07 ;}
+  }
+}
+
+
+
+header, article {height:100%; }
+header {
+  width:100%; @include flexbase; @include flex-align-items-center; @include padi;
+  min-height:$headerHeight; max-height:$headerHeight; color:$color-white-01;
+  &:before {content:url("../images/logo/icent_isaver_w.svg"); width:$logowidth;}
+  &:after  {content:"DashBoard Simulator"; font-size:2.8rem; text-transform:uppercase;}
+}
+
+
+article {overflow: auto; padding:50px ($logowidth + 50px) 50px 0;}
+
+aside {
+  position: fixed; top:$headerHeight; right:20px; bottom:20px; width:$logowidth; padding:20px;
+  @include border01(1px,#000,1 ); background-color: #000; color:$color-white-01; opacity: 0.5;
+}
+
+button {
+  @include buto; @include flex-midddle; opacity: 0.7;
+  &:hover {opacity: 1}
+  &, &:after {@include border-radius(500px);}
+}
+
+.level {
+  &-caution, &-warning, &-danger, &-start {
+    margin:0 32px 0 0;
+    &:before {color:#fff;}
+
+    &.on {
+      @include issue01; opacity: 1;
+      &:after {content:""; position: absolute; width:100%; height:100%; @include borderwidth(3px);}
+    }
+
+  }
+  &-caution {
+    background-color: $color-gray-03;   &:before {content:"주의";}
+    &.on:after {@include issue02; border-color:$color-gray-03;}
+  }
+  &-warning {
+    background-color: $color-orange-01; &:before {content:"경고";}
+    &.on:after {@include issue02; border-color:$color-orange-01;}
+  }
+  &-danger, &-start  {
+    background-color: $color-red-01;
+    &.on:after {@include issue02; border-color:$color-red-01;}
+  }
+  &-danger:before {content:"위험";}
+  &-start:before {content:"START";}
+}
+.reset {
+  background-color: $color-white-01;
+  &:before {content:"STOP";}
+
+}
+
+select {
+  height:50px; padding:0 40px 0 20px;
+  background-position: calc(100% - 12px) 50%;
+  background-color: $bas-color;
+  background-image: url(../images/logo/select_allow_w.svg);
+  color:$color-white-01; border-color:#000;
+
+}
+
+article {
+  section {
+    @include flexbase; @include padi; padding-bottom:50px;
+    .set {
+      @include flexbase; @include flex-align-items-center; padding:0 0 70px 100px;
+    }
+
+
+    .button_set, .select_set {
+
+    }
+    .button_set {@include flexbase; @include flex-align-items-center;}
+    .select_set {min-width:500px; margin:0 100px 0 0; select {width:calc(50% - 5px);} }
+
+  }
+  h2, p {color:$color-white-01;}
+  h2 { width:250px; min-width:250px;font-size:3rem;
+    &:before {content:""; position: absolute; top:70px; left:0; width:100%; height:2px; background-color: #000}
+  }
+  p  {font-size:1.2rem; padding:0 0 10px 0;}
+}
