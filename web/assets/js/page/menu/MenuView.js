@@ -190,6 +190,12 @@ function MenuView(model) {
             }
         }
 
+        // ADMINISTRATOR 하위 메뉴 없을시 제거
+        var adminTag = mainMenuTag.find("li[name='000000']");
+        if(adminTag.length > 0 && adminTag.find("ul > li").length==0){
+            adminTag.remove();
+        }
+
         for(var index in areaList){
             var _area = areaList[index];
             var _childMenuLiTag = childMenuLiTag.clone();

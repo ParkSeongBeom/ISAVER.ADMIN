@@ -156,7 +156,7 @@ function DeviceCtrl(model) {
             }
 
             var deviceId = $("input[name=deviceId]").val();
-            if(confirm('[' + deviceId + '] ' + messageConfig['addConfirmMessage'] + '?')) {
+            if(confirm(messageConfig['addConfirmMessage'])) {
                 this.addDevice();
             }
         }
@@ -187,8 +187,7 @@ function DeviceCtrl(model) {
                 }
             }
 
-            var deviceId = $("input[name=deviceId]").val();
-            if(confirm('[' + deviceId + '] ' + messageConfig['saveConfirmMessage'] + '?')) {
+            if(confirm(messageConfig['saveConfirmMessage'])) {
                 this.saveDevice();
             }
         }
@@ -198,10 +197,7 @@ function DeviceCtrl(model) {
      * 장치 삭제 전 유효성 검증
      */
     DeviceCtrl.removeDeviceVaild = function () {
-
-        var deviceId = $("input[name=deviceId]").val();
-
-        if (!confirm("[ " + deviceId + " ] " + messageConfig['removeConfirmMessage'] + "?")) return;
+        if (!confirm(messageConfig['removeConfirmMessage'])) return;
 
         DeviceCtrl.removeDevice(deviceId);
 

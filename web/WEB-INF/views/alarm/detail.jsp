@@ -144,13 +144,13 @@
             </div>
 
             <!-- 알림대상장치 설정 -->
-            <div class="table_title_area">
+            <div class="table_title_area d_none">
                 <h4><spring:message code="alarm.column.alarmDeviceSetting"/></h4>
             </div>
             <c:choose>
                 <c:when test="${deviceAlarmInfos != null and fn:length(deviceAlarmInfos) > 0}">
                     <c:forEach var="deviceAlarmInfo" items="${deviceAlarmInfos}" varStatus="index">
-                        <div <c:if test="${index.count > 1}">appendDiv</c:if> class="table_contents">
+                        <div <c:if test="${index.count > 1}">appendDiv</c:if> class="table_contents d_none">
                             <!-- 입력 테이블 Start -->
                             <table changeTb <c:if test="${index.count==0}">mainTb</c:if> alarmTargetTb class="t_defalut t_type02 alarmset_col">
                                 <tbody>
@@ -229,7 +229,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <div class="table_contents">
+                    <div class="table_contents d_none">
                         <!-- 입력 테이블 Start -->
                         <table changeTb mainTb alarmTargetTb class="t_defalut t_type02 alarmset_col">
                             <tbody>

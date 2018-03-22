@@ -76,7 +76,7 @@
                         </select>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('co')"></button>
+                        <button class="level-danger" onclick="javascript:addEvent('co', 1)"></button>
                     </div>
                 </div>
                 <div class="set">
@@ -98,7 +98,7 @@
                         </select>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('smoke')"></button>
+                        <button class="level-danger" onclick="javascript:addEvent('smoke', 1)"></button>
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
                         </select>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('gas')"></button>
+                        <button class="level-danger" onclick="javascript:addEvent('gas', 1)"></button>
                     </div>
                 </div>
 

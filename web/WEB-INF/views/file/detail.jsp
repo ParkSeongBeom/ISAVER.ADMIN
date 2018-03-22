@@ -106,7 +106,7 @@
                     </c:if>
                     <c:if test="${!empty file.fileId}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveFile(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile(); return false;"><spring:message code="common.button.remove"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile('${file.externalUseYn}'); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
@@ -145,6 +145,7 @@
         ,'removeComplete':'<spring:message code="file.message.removeComplete"/>'
         ,'titleEmpty':'<spring:message code="file.message.titleEmpty"/>'
         ,'fileEmpty':'<spring:message code="file.message.fileEmpty"/>'
+        ,'externalUsed':'<spring:message code="file.message.externalUsed"/>'
     };
 
     var emptyListTag = $("<tr/>").append(
@@ -200,7 +201,12 @@
         }
     }
 
-    function removeFile(){
+    function removeFile(externalUseYn){
+        if(externalUseYn!='N'){
+            alertMessage('externalUsed');
+            return false;
+        }
+
         if(!confirm(messageConfig['removeConfirm'])){
             return false;
         }

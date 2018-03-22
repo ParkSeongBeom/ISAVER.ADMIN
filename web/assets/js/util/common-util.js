@@ -36,6 +36,20 @@ function isNumberWithPoint(input){
     }
 }
 
+/**
+ * input에 숫자 및 하이픈 입력 하도록 기능제한
+ * - onkeypress event handler
+ * @author psb
+ */
+function checkPhoneNumber(target){
+    var flag = (event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 45;
+    if (flag) {
+        return true;
+    }else{
+        event.returnValue = false;
+    }
+}
+
 String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/gi, "");
 };

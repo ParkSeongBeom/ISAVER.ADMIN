@@ -65,7 +65,7 @@
                         </td>
                         <th><spring:message code="user.column.telephone"/></th>
                         <td>
-                            <input type="text" name="telephone" value="${user.telephone}" />
+                            <input type="text" name="telephone" value="${user.telephone}" onkeypress="checkPhoneNumber(this);"/>
                         </td>
                     </tr>
                     <tr>

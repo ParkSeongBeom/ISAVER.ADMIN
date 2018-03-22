@@ -107,8 +107,15 @@ public class TestSvcImpl implements TestSvc {
             BufferedReader br;
             String s;
 
+            String command;
+            if(parameters.get("type").equals("start")) {
+                command = startProc;
+            }else{
+                command = stopProc;
+            }
+
             try{
-                String[] cmd = new String[]{"su", "-c", parameters.get("type").equals("start")?startProc:stopProc, testId};
+                String[] cmd = new String[]{"su", "-c", command, testId};
                 p = Runtime.getRuntime().exec(cmd);
                 br = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 if((s = br.readLine()) != null) {
