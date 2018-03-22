@@ -106,7 +106,7 @@
                     </c:if>
                     <c:if test="${!empty file.fileId}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveFile(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile('${file.externalUseYn}'); return false;"><spring:message code="common.button.remove"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile('${file.alarmUseYn}'); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
@@ -145,7 +145,7 @@
         ,'removeComplete':'<spring:message code="file.message.removeComplete"/>'
         ,'titleEmpty':'<spring:message code="file.message.titleEmpty"/>'
         ,'fileEmpty':'<spring:message code="file.message.fileEmpty"/>'
-        ,'externalUsed':'<spring:message code="file.message.externalUsed"/>'
+        ,'alarmUsed':'<spring:message code="file.message.alarmUsed"/>'
     };
 
     var emptyListTag = $("<tr/>").append(
@@ -201,9 +201,9 @@
         }
     }
 
-    function removeFile(externalUseYn){
-        if(externalUseYn!='N'){
-            alertMessage('externalUsed');
+    function removeFile(alarmUseYn){
+        if(alarmUseYn!='N'){
+            alertMessage('alarmUsed');
             return false;
         }
 

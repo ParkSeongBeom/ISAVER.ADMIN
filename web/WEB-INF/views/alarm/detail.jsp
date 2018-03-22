@@ -289,7 +289,7 @@
                     </c:if>
                     <c:if test="${!empty alarm}">
                         <button class="btn" onclick="javascript:saveAlarm(); return false;"><spring:message code="common.button.save"/></button>
-                        <button class="btn" onclick="javascript:removeAlarm(); return false;"><spring:message code="common.button.remove"/></button>
+                        <button class="btn" onclick="javascript:removeAlarm('${alarm.criticalUseYn}'); return false;"><spring:message code="common.button.remove"/></button>
                     </c:if>
                     <button class="btn" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/></button>
                 </div>
@@ -378,6 +378,7 @@
         ,'removeComplete':'<spring:message code="common.message.removeComplete"/>'
         ,'emptyAlarmName':'<spring:message code="alarm.message.emptyAlarmName"/>'
         ,'duplicationTargetDevice':'<spring:message code="alarm.message.duplicationTargetDevice"/>'
+        ,'criticalUsed':'<spring:message code="alarm.message.criticalUsed"/>'
     };
 
     $(document).ready(function() {
@@ -558,7 +559,12 @@
         }
     }
 
-    function removeAlarm(){
+    function removeAlarm(criticalUseYn){
+        if(criticalUseYn!='N'){
+            alertMessage('criticalUsed');
+            return false;
+        }
+
         if(!confirm(messageConfig['removeConfirm'])){
             return false;
         }
