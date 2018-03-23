@@ -524,7 +524,7 @@
 
                 switch ($(this).find("select[name='alarmType']").val()){
                     case "ARM001" :
-                        addText += "|ttsText:" + $(this).find("input[name='ttsText']").val()
+                        addText += "|ttsText:" + $(this).find("input[name='ttsText']").val();
                         break;
                     case "ARM002" :
                         addText += "|fileId:" + $(this).find("select[name='fileId']").val();
