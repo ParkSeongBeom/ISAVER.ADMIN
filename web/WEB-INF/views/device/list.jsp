@@ -185,7 +185,7 @@
                     <tr>
                         <th><spring:message code='device.column.ipAddress'/></th>
                         <td colspan="3">
-                            <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />"/>
+                            <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />" onkeypress="isNumberWithPoint(this);"/>
                         </td>
                     </tr>
                     <tr>

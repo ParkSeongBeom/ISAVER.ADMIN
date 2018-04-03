@@ -67,7 +67,7 @@ var TemplateHelper = (
         var STATISTICS_EVENT_TEMPLATE = $("<span/>").append(
             $("<input/>", {type:"text", name:"eventId", disabled:"disabled"})
         ).append(
-            $("<button/>", {href:"#", class:"btn del", onclick:"javascript:$(this).parent().remove();"})
+            $("<button/>", {href:"#", class:"btn del"})
         );
 
         /**

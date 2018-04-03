@@ -51,7 +51,12 @@ h1 {
   background-size: 100% 32px; background-repeat: no-repeat;
   background-position:0 50%;
 
-  .login_area & {height:70px; background-size:170px;}
+  .login_area & {
+    height:70px; background-size:170px;
+    @include flexbase; @include flex-row-wrap; @include flex-align-items-center;
+    font-size: 1.2rem; font-weight:bold; padding:0 0 0 180px;
+
+  }
 }
 h2 {font-size:2rem;}
 h3 {

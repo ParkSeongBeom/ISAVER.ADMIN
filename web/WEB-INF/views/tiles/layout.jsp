@@ -194,7 +194,14 @@
             $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
 
             if(_eventDatetime!=null){
-                var gap = serverDatetime.getTime() - _eventDatetime.getTime();
+                var gap;
+                var negative = false;
+                if(serverDatetime > _eventDatetime){
+                    gap = serverDatetime.getTime() - _eventDatetime.getTime();
+                }else{
+                    gap = _eventDatetime.getTime() - serverDatetime.getTime();
+                    negative = true;
+                }
                 var hour = Math.floor(gap / (1000*60*60));
                 if(hour>=0 && hour<10) {hour = "0" + hour;}
                 var minute = Math.floor(gap / (1000*60))%60;
@@ -202,7 +209,7 @@
                 var second = Math.floor(gap / (1000))%60;
                 if(second>=0 && second<10) {second = "0" + second;}
 
-                $("section[alarm_detail] p[currentDatetime]").text(hour + ":" + minute + ":" + second);
+                $("section[alarm_detail] p[currentDatetime]").text((negative?"-":"") + hour + ":" + minute + ":" + second);
             }
 
             if(refreshTimeCallBack!=null && typeof refreshTimeCallBack == "function"){

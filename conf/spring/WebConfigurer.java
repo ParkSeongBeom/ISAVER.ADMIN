@@ -2,17 +2,18 @@ package spring;
 
 import com.icent.isaver.admin.common.PropertyManager;
 import com.icent.isaver.admin.common.resource.CommonResource;
-import com.icent.isaver.admin.util.AppContextUtil;
-import com.icent.isaver.admin.util.AuthorizationInterceptor;
-import com.icent.isaver.admin.util.IsaverCriticalUtil;
+import com.icent.isaver.admin.util.*;
 import com.kst.common.util.POIExcelView;
 import com.sun.org.glassfish.gmbal.Description;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
@@ -35,7 +36,6 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -61,12 +61,33 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
         registry.addInterceptor(authorizationInterceptor());
+        registry.addInterceptor(xssInterceptor());
     }
 
     @Bean
     public AuthorizationInterceptor authorizationInterceptor() {
         AuthorizationInterceptor interceptor = new AuthorizationInterceptor();
         interceptor.setNoneAuthorTargets(propertyManager.getProperty("cnf.noneAuthTargets"));
+        return interceptor;
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+        converters.add(htmlEscapingConveter());
+    }
+
+    private HttpMessageConverter<?> htmlEscapingConveter() {
+        MappingJacksonHttpMessageConverter htmlEscapingConverter = new MappingJacksonHttpMessageConverter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.getJsonFactory().setCharacterEscapes(new HTMLCharacterEscapes());
+        htmlEscapingConverter.setObjectMapper(objectMapper);
+        return htmlEscapingConverter;
+    }
+
+    @Bean
+    public XSSInterceptor xssInterceptor() {
+        XSSInterceptor interceptor = new XSSInterceptor();
         return interceptor;
     }
 

@@ -544,6 +544,11 @@ div.tablebase, .d_defalut {
       -webkit-align-items: center;
       -ms-flex-align: center;
       align-items: center;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
       overflow: hidden;
       vertical-align: middle;
       height: auto;
@@ -606,7 +611,7 @@ div.tablebase, .d_defalut {
       word-wrap: normal; }
 
 div.d_defalut > div > div > * {
-  min-width: 30px; }
+  min-width: 45px; }
 div.d_defalut.d_type01 > div {
   float: left; }
 div.d_defalut.d_type01 .d_thead {

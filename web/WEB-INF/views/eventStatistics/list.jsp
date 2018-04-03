@@ -205,6 +205,12 @@
                 eventTag.find("input[name='eventId']").attr("statisticsName",statisticsName);
                 eventTag.find("input[name='eventId']").attr("eventId",eventId);
                 eventTag.find("input[name='eventId']").val(eventName);
+                eventTag.find(".del").on("click",function(){
+                    var parentSpan = $(this).parent();
+                    var eventId = parentSpan.find("input[name='eventId']").attr("eventId");
+                    parentSpan.remove();
+                    $("#eventSelect option[value='"+eventId+"']").attr("disabled",false);
+                });
                 $(".add_p").append(eventTag);
 
                 $(this).find("option:selected").attr("disabled","disabled");
@@ -495,12 +501,7 @@
             $("<tbody/>")
         );
 
-        var excelTag = null;
-
-        if(excelTag==null){
-            console.error("[excelDownload] type error : "+ type);
-            return false;
-        }
+        var excelTag = $(".tableView");
 
         excelTag.find(".theadDiv span").each(function (key) {
             if(key==0){

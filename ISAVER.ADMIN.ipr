@@ -107,6 +107,9 @@
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/util/TransactionUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/ResultState.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/IsaverCriticalUtil.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSFilter.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSInterceptor.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSRequestWrapper.java" charset="x-windows-949" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
   <component name="EntryPointsManager">
@@ -356,6 +359,7 @@
         <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/kstcu_lib_v0.943.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/ISAVER.UTIL_v1.0.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/commons-lang3-3.7.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

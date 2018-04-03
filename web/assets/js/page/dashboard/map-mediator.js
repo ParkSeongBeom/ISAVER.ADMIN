@@ -10,36 +10,32 @@ var MapMediator = (
     function(_rootPath, _version){
         var rootPath;
         var version;
-        var MARKER_TYPE = ['device', 'fence', 'object'];
+        var MARKER_TYPE = ['device', 'fence', 'object','camera'];
 
         var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
-        var imageLat = {
-            north: 37.49586539601683,
-            east: 127.03165207272161,
-            south: 37.49505460178254,
-            west: 127.03028592727844
-        };
+        var imageLat = {north: 37.49586539601683, east: 127.03165207272161, south: 37.49505460178254, west: 127.03028592727844};
         var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
-        //var defaultCenterLat = {lat : 37.66817143942698, lng : 126.74532480737503};
-        //var imageLat = {
-        //    north: 37.66968403817788,
-        //    east: 126.74806271610487,
-        //    south: 37.66661822644006,
-        //    west: 126.74259813433218
-        //};
-        //var imageUrl = "/assets/library/googlemap/images/test01.svg";
-
+        //var defaultCenterLat = {lat: 33.2270341616581, lng: 126.47650582604706};
+        //var imageLat = {north: 33.23051741102446, east: 126.48215145692825, south: 33.22367866853329, west: 126.47122229338288};
+        //var imageUrl = "/assets/library/googlemap/images/map_03.svg";
         var canvas;
         var map;
         var marker = {
             'device' : {},
             'fence' : {},
-            'object' : {}
+            'object' : {},
+            'camera' : {}
         };
         var options = {
             "device" : {
                 'content' : "<div class='device'><div class='icon-tof'></div><div class='icon-ptz'></div></div>"
+                ,'content1' : "<div class='device'><div class='icon-tof'></div></div>"
                 ,"targetClass" : ".device"
+            },
+            "camera" : {
+                'useYn' : false
+                ,'lat' : 33.227130639998
+                , 'lng' : 126.47661713772118
             },
             "fence" : {
                 "fillColor" : ["#f6b900", "#FF0000"]
@@ -93,7 +89,7 @@ var MapMediator = (
 
             map = new google.maps.Map(canvas.get(0), {
                 center: new google.maps.LatLng(_lat['lat'], _lat['lng']),
-                zoom: 22, // 지도 zoom단계
+                zoom: 20, // 지도 zoom단계
                 /**
                  * roadmap : 기본 도로 지도 뷰를 표시합니다. 기본 지도 유형입니다.
                  * satellite : Google 어스 위성 이미지를 표시합니다.
@@ -116,6 +112,8 @@ var MapMediator = (
                 for(var index in _deviceList){
                     if(_deviceList[index]['deviceCode']=="DEV013"){
                         webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
+                    }else if(_deviceList[index]['deviceCode']=='DEV002'){
+                        _self.addCamera(_deviceList[index]['deviceId']);
                     }
                 }
             });
@@ -123,6 +121,28 @@ var MapMediator = (
 
         this.getMap = function(){
             return map;
+        };
+
+        this.addCamera = function(_id){
+            if(!options['camera']['useYn']){
+                return false;
+            }
+            if(_id==null){
+                console.error("[MapMediator][addCamera] parameter not enough");
+                return false;
+            }
+            if(marker['camera']!=null && marker['camera'][_id]!=null){
+                console.warn("[MapMediator][addCamera] marker is exist - [camera][" + _id + "]");
+                return false;
+            }
+
+            marker['camera'][_id] = new RichMarker({
+                position: new google.maps.LatLng(options['camera']['lat'], options['camera']['lng']),
+                title : _id,
+                map: map,
+                content : "<div class='device'><div class='icon-ptz'></div></div>",
+                anchor: RichMarkerPosition.MIDDLE
+            });
         };
 
         /**
@@ -146,7 +166,7 @@ var MapMediator = (
                             position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
                             title : _id,
                             map: map,
-                            content : options[_type]["content"],
+                            content : !options['camera']['useYn']?options[_type]["content"]:options[_type]["content1"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
                         marker[_type][_id]['objects'] = [];

@@ -28,6 +28,9 @@ import java.util.Date;
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
+    @Value("${cnf.server.version}")
+    private String version = null;
+
     @Value("${ws.server.address}")
     private String wsAddress = null;
 
@@ -115,6 +118,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
+        modelAndView.addObject("version", version);
         super.postHandle(request, response, handler, modelAndView);
     }
 

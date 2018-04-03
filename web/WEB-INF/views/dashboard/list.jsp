@@ -547,6 +547,41 @@
         webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
     }
 
+    var id = 1;
+    function testObject(_type, _lat){
+        var gps = getGps();
+        webSocketHelper.sendMessage("device",{"messageType":_type!=null?_type:"object","actionType":"add","areaId":gps['areaId'],"id":id++,"location":[_lat!=null?_lat:gps['center']]});
+    }
+
+    function getGps(_areaId){
+        var guard;
+        if(_areaId==null){
+            var fullGuard = dashboardHelper.getGuard("full");
+            for(var index in fullGuard){
+                guard = fullGuard[index];
+                _areaId = index;
+                break;
+            }
+        }else{
+            guard = dashboardHelper.getGuard("all", _areaId);
+        }
+
+        var map = guard['map'].getMap();
+        return {
+            'areaId' : _areaId
+            ,'center' :  {
+                lat : map.center.lat()
+                ,lng : map.center.lng()
+            }
+            ,bounds : {
+                north: map.getBounds().getNorthEast().lat(),
+                east: map.getBounds().getNorthEast().lng(),
+                south: map.getBounds().getSouthWest().lat(),
+                west: map.getBounds().getSouthWest().lng()
+            }
+        };
+    }
+
     /**
      * Google Map Initialize
      * @param message

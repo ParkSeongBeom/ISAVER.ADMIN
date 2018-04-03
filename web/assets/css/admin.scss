@@ -327,8 +327,7 @@ div.tablebase, .d_defalut {display: inline-block;}
       & > * {//td, th
         //display: table-cell;
         @include flex-option(0, 1, 100%);
-        @include flexbase;
-        @include flex-align-items-center;
+        @include flex-midddle;
         overflow: hidden;
         vertical-align: middle;
         height:auto; min-height:55px;
@@ -398,7 +397,7 @@ div.tablebase, .d_defalut {display: inline-block;}
 
 // div 테이블 base 정의 Start
 div.d_defalut {
-  & > div > div > * {min-width:30px;}
+  & > div > div > * {min-width:45px;}
   // 이벤트 통계 좌우 스크롤 테이블 타입
   &.d_type01 {
     & > div {float:left;}

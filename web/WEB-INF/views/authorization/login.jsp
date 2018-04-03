@@ -27,7 +27,7 @@
         <!-- hearder Start 공통부분 -->
         <section class="login_area">
             <article>
-                <h1></h1>
+                <h1>${version}</h1>
                 <!-- 로그인 입력 폼 Start -->
                 <!-- 다국어 지원 추가 -->
                 <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
