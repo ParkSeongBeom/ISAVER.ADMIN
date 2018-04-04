@@ -80,10 +80,13 @@ var DashboardHelper = (
                 $.each($(this).find("div[childDevice]"),function(){
                     deviceList.push({
                         'areaId' : _areaId
-                        ,'deviceId' : $(this).attr("deviceId")
-                        ,'deviceCode' : $(this).attr("deviceCode")
-                        ,'ipAddress' : $(this).attr("ipAddress")
-                        ,'linkUrl' : $(this).attr("linkUrl")
+                        ,'deviceId' : $(this).find("input[name='cDeviceId']").val()
+                        ,'deviceCode' : $(this).find("input[name='cDeviceCode']").val()
+                        ,'ipAddress' : $(this).find("input[name='cIpAddress']").val()
+                        ,'port' : $(this).find("input[name='cPort']").val()
+                        ,'deviceUserId' : $(this).find("input[name='cDeviceUserId']").val()
+                        ,'devicePassword' : $(this).find("input[name='cDevicePassword']").val()
+                        ,'linkUrl' : $(this).find("input[name='cLinkUrl']").val()
                     });
                 });
 

@@ -12,7 +12,7 @@
     <meta http-equiv="imagetoolbar" content="no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${rootPath}/assets/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
     <!--[endif] -->
     <title>i-Saver Login</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
@@ -27,7 +27,7 @@
         <!-- hearder Start 공통부분 -->
         <section class="login_area">
             <article>
-                <h1>${version}</h1>
+                <h1>${serverVersion}</h1>
                 <!-- 로그인 입력 폼 Start -->
                 <!-- 다국어 지원 추가 -->
                 <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>

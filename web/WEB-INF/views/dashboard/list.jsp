@@ -356,7 +356,15 @@
                                             <c:forEach var="device" items="${childArea.devices}">
                                                 <!-- quanergy_m8 : DEV013 / IP카메라 : DEV002 -->
                                                 <c:if test="${device.deviceCode=='DEV002' or device.deviceCode=='DEV013'}">
-                                                    <div childDevice deviceId="${device.deviceId}" deviceCode="${device.deviceCode}" ipAddress="${device.ipAddress}" linkUrl="${device.linkUrl}"></div>
+                                                    <div childDevice>
+                                                        <input type="text" name="cDeviceId" value="${device.deviceId}"/>
+                                                        <input type="text" name="cDeviceCode" value="${device.deviceCode}"/>
+                                                        <input type="text" name="cIpAddress" value="${device.ipAddress}"/>
+                                                        <input type="text" name="cPort" value="${device.port}"/>
+                                                        <input type="text" name="cDeviceUserId" value="${device.deviceUserId}"/>
+                                                        <input type="password" name="cDevicePassword" value="${device.devicePassword}"/>
+                                                        <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
+                                                    </div>
                                                 </c:if>
                                             </c:forEach>
                                         </c:when>

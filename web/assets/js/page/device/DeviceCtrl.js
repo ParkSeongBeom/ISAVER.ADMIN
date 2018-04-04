@@ -199,6 +199,7 @@ function DeviceCtrl(model) {
     DeviceCtrl.removeDeviceVaild = function () {
         if (!confirm(messageConfig['removeConfirmMessage'])) return;
 
+        var deviceId = $("input[name=deviceId]").val();
         DeviceCtrl.removeDevice(deviceId);
 
     };
@@ -266,7 +267,7 @@ function DeviceCtrl(model) {
         $(this._model.getTreaDevice()).empty();
 
         this.findMenuTree();
-    }
+    };
 
     /**
      * 장치 트리 전체 펼치기/닫기

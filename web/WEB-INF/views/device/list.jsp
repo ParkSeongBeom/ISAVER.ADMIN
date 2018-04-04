@@ -184,8 +184,22 @@
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.ipAddress'/></th>
-                        <td colspan="3">
+                        <td>
                             <input type="text" name="ipAddress" maxlength="20" placeholder="<spring:message code='device.message.requiredIpAddress' />" onkeypress="isNumberWithPoint(this);"/>
+                        </td>
+                        <th><spring:message code='device.column.port'/></th>
+                        <td>
+                            <input type="text" name="port" maxlength="6" onkeypress="isNumber(this);"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><spring:message code='device.column.deviceUserId'/></th>
+                        <td>
+                            <input type="text" name="deviceUserId" maxlength="20"/>
+                        </td>
+                        <th><spring:message code='device.column.devicePassword'/></th>
+                        <td>
+                            <input type="password" name="devicePassword" maxlength="50"/>
                         </td>
                     </tr>
                     <tr>
@@ -247,10 +261,6 @@
         <!-- END : contents -->
     </form>
 </section>
-
-
-
-</script>
 
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/device/DeviceModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>

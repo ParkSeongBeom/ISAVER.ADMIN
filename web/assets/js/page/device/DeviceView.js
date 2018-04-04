@@ -35,6 +35,12 @@ function DeviceView(model) {
         ipAddress: function (data) {
             $(formName + " [name='ipAddress']").val(data.ipAddress);
         },
+        port: function (data) {
+            $(formName + " [name='port']").val(data.port);
+        },
+        deviceUserId: function (data) {
+            $(formName + " [name='deviceUserId']").val(data.deviceUserId);
+        },
         linkUrl: function (data) {
             $(formName + " [name='linkUrl']").val(data.linkUrl);
         },

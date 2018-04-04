@@ -124,6 +124,13 @@
         ,'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
         ,'emptyStartDatetime':'<spring:message code="statistics.message.emptyStartDatetime"/>'
         ,'emptyEndDatetime':'<spring:message code="statistics.message.emptyEndDatetime"/>'
+        ,'earlyDatetime':'<spring:message code="statistics.message.earlyDatetime"/>'
+        ,'hourViewCondition':'<spring:message code="statistics.message.hourViewCondition"/>'
+        ,'dayViewCondition':'<spring:message code="statistics.message.dayViewCondition"/>'
+        ,'weekViewCondition':'<spring:message code="statistics.message.weekViewCondition"/>'
+        ,'dowViewCondition':'<spring:message code="statistics.message.dowViewCondition"/>'
+        ,'monthViewCondition':'<spring:message code="statistics.message.monthViewCondition"/>'
+        ,'yearViewCondition':'<spring:message code="statistics.message.yearViewCondition"/>'
     };
 
     var searchParam = {
@@ -240,6 +247,36 @@
         }
     }
 
+    function dateValidate(mode, start, end){
+        var _start = new Date(start);
+        switch (mode){
+            case 'hour':
+                _start.setHours(_start.getHours()+24);
+                break;
+            case 'day':
+                _start.setDate(_start.getDate()+31);
+                break;
+            case 'dow':
+                _start.setDate(_start.getDate()+14);
+                break;
+            case 'week':
+                _start.setDate(_start.getDate()+(10*7));
+                break;
+            case 'month':
+                _start.setMonth(_start.getMonth()+12);
+                break;
+            case 'year':
+                _start.setYear(_start.getYear()+10);
+                break;
+        }
+
+        if(_start < end){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     /*
      search
      @author psb
@@ -316,11 +353,23 @@
                     return false;
                 }
 
+                var start = new Date(startDatetime+startDatetimeHour);
+                var end = new Date(endDatetime+endDatetimeHour);
+                if(start>end){
+                    alertMessage("earlyDatetime");
+                    return false;
+                }
+
+                if(!dateValidate(mode, start, end)){
+                    alertMessage(mode+"ViewCondition");
+                    return false;
+                }
+
                 searchParam['mode'] = mode;
                 searchParam['areaId'] = areaId;
                 searchParam['eventIds'] = eventIds.join(",");
-                searchParam['startDatetime'] = new Date(startDatetime+startDatetimeHour);
-                searchParam['endDatetime'] = new Date(endDatetime+endDatetimeHour);
+                searchParam['startDatetime'] = start;
+                searchParam['endDatetime'] = end;
                 break;
         }
 

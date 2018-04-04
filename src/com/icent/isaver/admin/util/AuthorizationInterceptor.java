@@ -118,7 +118,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
-        modelAndView.addObject("version", version);
+        modelAndView.addObject("serverVersion", version);
         super.postHandle(request, response, handler, modelAndView);
     }
 

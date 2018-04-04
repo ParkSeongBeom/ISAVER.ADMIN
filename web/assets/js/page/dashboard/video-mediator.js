@@ -42,7 +42,8 @@ var VideoMediator = (
          */
         this.createPlayer = function(_deviceList){
             for(var index in _deviceList){
-                if(_deviceList[index]['deviceCode']==useDeviceCode && _deviceList[index]['linkUrl']!=null){
+                var _src = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+_deviceList[index]['linkUrl'];
+                if(_deviceList[index]['deviceCode']==useDeviceCode && _src!=null){
                     element.append(
                         $("<li/>",{class:'ptz'}).append(
                             $("<div/>",{id:_deviceList[index]['deviceId'],class:"vxgplayer",style:"border:0; margin:0;"})
@@ -50,7 +51,7 @@ var VideoMediator = (
                     );
 
                     vxgplayer(_deviceList[index]['deviceId'], {
-                        url: '',
+                        url: _src,
                         nmf_path: 'media_player.nmf',
                         nmf_src: rootPath+'/assets/library/vxg/pnacl/Release/media_player.nmf',
                         latency: 300000,
@@ -63,10 +64,10 @@ var VideoMediator = (
                         width : "100%",
                         height : "100%"
                     }).ready(function(){
-                        playerList[_deviceList[index]['deviceId']] = vxgplayer(_deviceList[index]['deviceId']);
-                        playerList[_deviceList[index]['deviceId']].src(_deviceList[index]['linkUrl']);
-                        console.log('[VideoMediator][createPlayer] ready player - '+_deviceList[index]['deviceId']);
-                        _self.play(_deviceList[index]['deviceId']);
+                        playerList[this.id] = vxgplayer(this.id);
+                        playerList[this.id].src(this.options['url']);
+                        console.log('[VideoMediator][createPlayer] ready player - '+this.id)
+                        _self.play(this.id);
                     });
                 }
             }
