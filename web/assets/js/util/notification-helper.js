@@ -24,6 +24,7 @@ var NotificationHelper = (
             , 'delay' : 1000
         };
         var _self = this;
+        var _viewMaxCnt = 20;
 
         /**
          * initialize
@@ -60,6 +61,7 @@ var NotificationHelper = (
 
             // 알림센터 내부 셀렉트 박스 클릭시 이벤트
             $("#criticalLevel, #areaType").on("change",function(){
+                pageIndex = 1;
                 selectBoxChangeHandler();
             });
         };
@@ -224,11 +226,13 @@ var NotificationHelper = (
         this.addNotificationList = function(notifications){
             if(notifications!=null){
                 for(var index in notifications){
-                    _self.addNotification(notifications[index], false);
+                    _self.addNotification(notifications[index], false, (notifications.length-_viewMaxCnt)<=index?true:false);
                 }
 
+                if(notifications.length<=_viewMaxCnt){
+                    $("#notiMoreBtn").hide();
+                }
                 notificationBtnRefresh();
-                selectBoxChangeHandler();
             }
         };
 
@@ -236,9 +240,10 @@ var NotificationHelper = (
          * add notification
          * @author psb
          * @param notification
-         * @param flag
+         * @param animateFlag
+         * @param viewFlag
          */
-        this.addNotification = function(notification, flag){
+        this.addNotification = function(notification, animateFlag, viewFlag){
             if(_self.getNotification('element',notification['notificationId'])!=null){
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
@@ -275,6 +280,13 @@ var NotificationHelper = (
                     });
             }
 
+            if(!viewFlag){
+                notificationTag.hide();
+            }else{
+                if(!checkNotificationData(notification)){
+                    notificationTag.hide();
+                }
+            }
             _element.prepend(notificationTag);
             _notificationList[notification['notificationId']] = {
                 'element' : notificationTag
@@ -286,7 +298,7 @@ var NotificationHelper = (
             levelTag.text(Number(levelTag.text())+1);
             modifyElementClass($(".issue_btn"),"level-"+criticalCss[notification['criticalLevel']],'add');
 
-            if(flag==true){
+            if(animateFlag){
                 /* 애니메이션 */
                 $(".issue_btn").removeClass("on");
                 try {
@@ -311,8 +323,6 @@ var NotificationHelper = (
                         _tag.remove();
                     },3000);
                 }
-
-                selectBoxChangeHandler();
             }
 
             _self.callBackEvent('addNotification', {'notification':notification});
@@ -436,7 +446,7 @@ var NotificationHelper = (
         };
 
         /**
-         * add Notification
+         * notification cancel btn action
          * @author psb
          */
         var notificationCancelBtnAction = function(){
@@ -449,7 +459,7 @@ var NotificationHelper = (
         };
 
         /**
-         * add Notification
+         * notification issue btn action
          * @author psb
          */
         var notificationBtnRefresh = function(){
@@ -474,21 +484,54 @@ var NotificationHelper = (
             }
         };
 
+        var pageIndex = 1;
+
+        this.moveNotificationPage = function(){
+            pageIndex++;
+            selectBoxChangeHandler();
+        };
+
         /**
          * notification select box change handler
          * @author psb
          */
         var selectBoxChangeHandler = function(){
-            var criticalLevel = $("#criticalLevel option:selected").val();
-            var areaId = $("#areaType option:selected").val();
+            var showElementList = [];
 
             for(var index in _notificationList){
                 var notification = _notificationList[index];
-                if((criticalLevel=="" || notification['data']['criticalLevel']==criticalLevel) && (areaId=="" || notification['data']['areaId']==areaId)){
-                    notification['element'].show();
+                if(checkNotificationData(notification['data'])){
+                    showElementList.push(notification['element']);
                 }else{
                     notification['element'].hide();
                 }
+            }
+
+            var limitCnt = _viewMaxCnt*pageIndex;
+
+            if(showElementList.length>limitCnt){
+                $("#notiMoreBtn").show();
+            }else{
+                $("#notiMoreBtn").hide();
+            }
+
+            for(var i=showElementList.length-1; i>=0; i--){
+                if(limitCnt>0){
+                    showElementList[i].show();
+                    limitCnt--;
+                }else{
+                    break;
+                }
+            }
+        };
+
+        var checkNotificationData = function(notification){
+            var criticalLevel = $("#criticalLevel option:selected").val();
+            var areaId = $("#areaType option:selected").val();
+            if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || notification['areaId']==areaId)){
+                return true;
+            }else{
+                return false;
             }
         };
 

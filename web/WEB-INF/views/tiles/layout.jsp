@@ -170,7 +170,7 @@
                     }else{
                         setAlarmAudio();
                     }
-                    notificationHelper.addNotification(resultData['notification'], true);
+                    notificationHelper.addNotification(resultData['notification'], true, true);
                     break;
                 case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
                     notificationHelper.updateNotificationList(resultData['notification']);
@@ -515,6 +515,8 @@
 
             <!-- 알림 이력-->
             <ul id="notificationList"></ul>
+
+            <button id="notiMoreBtn" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
 
             <!-- 알림해지 영역 -->
             <div class="db_cancel_set">

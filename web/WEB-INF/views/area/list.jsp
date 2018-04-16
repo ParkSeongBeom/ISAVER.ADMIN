@@ -243,6 +243,7 @@
         menuBarFailure            :'<spring:message code="menu.message.menuTreeFailure"/>'
         ,   menuTreeFailure           :'<spring:message code="menu.message.menuBarFailure"/>'
         ,   addFailure                :'<spring:message code="area.message.addFailure"/>'
+        ,   addOverflowFailure        :"<spring:message code='area.message.addOverflowFailure'/>"
         ,   saveFailure               :'<spring:message code="area.message.saveFailure"/>'
         ,   removeFailure             :'<spring:message code="area.message.removeFailure"/>'
         ,   addComplete               :'<spring:message code="area.message.addComplete"/>'
@@ -253,7 +254,7 @@
         ,   removeConfirmMessage      :'<spring:message code="common.message.removeConfirm"/>'
         ,   requiredAreaId            :"<spring:message code='area.message.requiredAreaId'/>"
         ,   requiredAreaName          :"<spring:message code='area.message.requiredAreaName'/>"
-        ,   requiredSortOrder          :"<spring:message code='area.message.requiredSortOrder'/>"
+        ,   requiredSortOrder         :"<spring:message code='area.message.requiredSortOrder'/>"
         ,   requiredMenuUrl           :"<spring:message code='menu.message.requiredMenuUrl'/>"
         ,   regexpDigits              :"<spring:message code='menu.message.regexpDigits'/>"
         ,   regexpUrl                 :"<spring:message code='menu.message.regexpUrl'/>"

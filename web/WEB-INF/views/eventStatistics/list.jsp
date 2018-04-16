@@ -266,7 +266,7 @@
                 _start.setMonth(_start.getMonth()+12);
                 break;
             case 'year':
-                _start.setYear(_start.getYear()+10);
+                _start.setYear(_start.getFullYear()+10);
                 break;
         }
 
@@ -409,22 +409,22 @@
             var datetimeText;
             switch (searchParam['mode']){
                 case 'hour':
-                    datetimeText = new Date(resultMap['stDt']).format("HH") + "시" ;
+                    datetimeText = new Date(resultMap['stDt']).format("HH") + "<spring:message code="common.column.hour"/>" ;
                     break;
                 case 'day':
-                    datetimeText = new Date(resultMap['stDt']).format("dd") + "일" ;
+                    datetimeText = new Date(resultMap['stDt']).format("dd") + "<spring:message code="common.column.day"/>" ;
                     break;
                 case 'dow':
                     datetimeText = new Date(resultMap['stDt']).format("e");
                     break;
                 case 'week':
-                    datetimeText = resultMap['week'] + "주" ;
+                    datetimeText = resultMap['week'] + "<spring:message code="common.column.week"/>" ;
                     break;
                 case 'month':
-                    datetimeText = resultMap['stDtStr'].split("-")[1] + "월" ;
+                    datetimeText = resultMap['stDtStr'].split("-")[1] + "<spring:message code="common.column.month"/>" ;
                     break;
                 case 'year':
-                    datetimeText = resultMap['stDtStr'] + "년" ;
+                    datetimeText = resultMap['stDtStr'] + "<spring:message code="common.column.year"/>" ;
                     break;
             }
 

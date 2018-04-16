@@ -633,6 +633,15 @@ menu {
         &:hover { & > button:after {opacity: 1;} }
       }
     }
+
+    // 더보기
+    & > button {
+      @include flex-option(1, 0, 40px);
+      &:after  {content:"More"; padding:0 0 0 10px;}
+      &:before {content:"\e92b";}
+      @include border01( 1px 0 0 0,$color-gray-09,1);
+      &:hover {background-color: $color-gray-09}
+    }
   }
 
   // 알림상세

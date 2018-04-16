@@ -20,6 +20,7 @@
     <title>iSaver Simulator</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
 </head>
 <body class="login_mode">
@@ -31,7 +32,7 @@
                 <div class="set">
                     <div class="select_set">
                         <p>거수자감지</p>
-                        <select area type="guard">
+                        <select area eventType="guard">
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP005'}">
@@ -39,7 +40,7 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select device type="guard">
+                        <select device eventType="guard">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
@@ -60,7 +61,7 @@
                 <div class="set">
                     <div class="select_set">
                         <p>일산화탄소(Co) 감지</p>
-                        <select type="co" area>
+                        <select eventType="co" area>
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP004'}">
@@ -68,21 +69,22 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select type="co" device>
+                        <select eventType="co" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="text" name="coValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('co', 1)"></button>
+                        <button class="level-start" onclick="javascript:addEvent('co')"></button>
                     </div>
                 </div>
                 <div class="set">
                     <div class="select_set">
                         <p>연기 감지</p>
-                        <select type="smoke" area>
+                        <select eventType="smoke" area>
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP004'}">
@@ -90,22 +92,23 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select type="smoke" device>
+                        <select eventType="smoke" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="text" name="smokeValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('smoke', 1)"></button>
+                        <button class="level-start" onclick="javascript:addEvent('smoke')"></button>
                     </div>
                 </div>
 
                 <div class="set">
                     <div class="select_set">
                         <p>가스(LPG/LNG) 감지</p>
-                        <select type="gas" area>
+                        <select eventType="gas" area>
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP004'}">
@@ -113,22 +116,23 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select type="gas" device>
+                        <select eventType="gas" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="text" name="gasValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-danger" onclick="javascript:addEvent('gas', 1)"></button>
+                        <button class="level-start" onclick="javascript:addEvent('gas')"></button>
                     </div>
                 </div>
 
                 <div class="set">
                     <div class="select_set">
                         <p>이산화탄소</p>
-                        <select type="co2" area>
+                        <select eventType="co2" area>
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP004'}">
@@ -136,24 +140,23 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select type="co2" device>
+                        <select eventType="co2" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="text" name="co2Value" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-caution" onclick="javascript:addEvent('co2', 7)"></button>
-                        <button class="level-warning" onclick="javascript:addEvent('co2', 53)"></button>
-                        <button class="level-danger" onclick="javascript:addEvent('co2', 123)"></button>
+                        <button class="level-start" onclick="javascript:addEvent('co2')"></button>
                     </div>
                 </div>
 
                 <div class="set">
                     <div class="select_set">
                         <p>온/습도 감지</p>
-                        <select type="temp" area>
+                        <select eventType="temp" area>
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP004'}">
@@ -161,17 +164,16 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select type="temp" device>
+                        <select eventType="temp" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="text" name="tempValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-caution" onclick="javascript:addEvent('temp',28)"></button>
-                        <button class="level-warning" onclick="javascript:addEvent('temp',33)"></button>
-                        <button class="level-danger" onclick="javascript:addEvent('temp',38)"></button>
+                        <button class="level-start" onclick="javascript:addEvent('temp')"></button>
                     </div>
                 </div>
             </div>
@@ -192,7 +194,7 @@
             $(deviceTag).val("");
             $(deviceTag).find("option").not("option[value='']").hide();
 
-            switch($(this).attr("type")){
+            switch($(this).attr("eventType")){
                 case 'guard':
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']").show();
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']:eq(0)").prop("selected",true);
@@ -229,14 +231,18 @@
         sendAjaxPostRequest(urlConfig['guardUrl'], {type:command},successHandler,failureHandler,command+'Guard');
     }
 
-    function addEvent(actionType, value){
-        var areaTag = $("select[area][type='"+actionType+"'] option:selected");
-        var deviceTag = $("select[device][type='"+actionType+"'] option:selected");
+    function addEvent(actionType){
+        var areaTag = $("select[area][eventType='"+actionType+"'] option:selected");
+        var deviceTag = $("select[device][eventType='"+actionType+"'] option:selected");
+        var valueTag = $("input[name='"+actionType+"Value']");
         if(areaTag.val()==""){
             alert("선택된 구역이 없습니다.");
             return false;
         }else if(deviceTag.val()==""){
             alert("선택된 장치가 없습니다.");
+            return false;
+        }else if(valueTag.val()==""){
+            alert("수치값을 입력해 주세요.");
             return false;
         }
 
@@ -245,7 +251,7 @@
             ,'areaName' : areaTag.text()
             ,'deviceId' : deviceTag.val()
             ,'deviceName' : deviceTag.text()
-            ,'value' : value
+            ,'value' : valueTag.val()
         };
 
         switch(actionType){
@@ -282,59 +288,71 @@
     }
 
     function successHandler(data, dataType, actionType){
+        var logTag = $("<div/>");
+
         switch(actionType){
             case 'startGuard':
-                alertMessage("거수자감지 시작!");
+                logTag.text("거수자감지 시작!");
                 break;
             case 'stopGuard':
-                alertMessage("거수자감지 종료!");
+                logTag.text("거수자감지 종료!");
                 break;
-            case 'co':
-                alertMessage("CO(일산화탄소) 전송 성공!");
-                break;
-            case 'co2':
-                alertMessage("CO2(이산화탄소) 전송 성공!");
-                break;
-            case 'gas':
-                alertMessage("가스 전송 성공!");
-                break;
-            case 'smoke':
-                alertMessage("연기 전송 성공!");
-                break;
-            case 'temp':
-                alertMessage("온도 전송 성공!");
+            default :
+                logTag.append(
+                    $("<div/>").text("전송 성공!")
+                ).append(
+                    $("<div/>").text("구역명 : "+data['paramBean']['areaName'])
+                ).append(
+                    $("<div/>").text("장치명 : "+data['paramBean']['deviceName'])
+                ).append(
+                    $("<div/>").text("이벤트명 : "+data['paramBean']['eventName'])
+                ).append(
+                    $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
+                );
                 break;
         }
+
+        addLog(logTag);
     }
 
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        var logTag = $("<div/>");
         switch(actionType){
-            case 'guard':
-                alertMessage("거수자감지 종료!");
+            case 'startGuard':
+                logTag.text("거수자감지 시작 실패!");
+                break;
+            case 'stopGuard':
+                logTag.text("거수자감지 종료 실패!");
                 break;
             case 'co':
-                alertMessage("CO(일산화탄소) 전송 실패!");
+                logTag.text("CO(일산화탄소) 전송 실패!");
                 break;
             case 'co2':
-                alertMessage("CO2(이산화탄소) 전송 실패!");
+                logTag.text("CO2(이산화탄소) 전송 실패!");
                 break;
             case 'gas':
-                alertMessage("가스 전송 실패!");
+                logTag.text("가스 전송 실패!");
                 break;
             case 'smoke':
-                alertMessage("연기 전송 실패!");
+                logTag.text("연기 전송 실패!");
                 break;
             case 'temp':
-                alertMessage("온도 전송 실패!");
+                logTag.text("온도 전송 실패!");
                 break;
         }
+
+        addLog(logTag);
         console.log(XMLHttpRequest, textStatus, errorThrown);
     }
 
-    function alertMessage(message){
-        $("#logArea").append(
-            $("<div/>").text(message)
-        )
+    function addLog(addTag){
+        $("#logArea").prepend(
+            $("<br/>")
+        ).prepend(
+            $("<div/>").append(
+                $("<div/>").text("["+new Date().format("yy.MM.dd HH:mm:ss")+"]")
+            ).append(addTag)
+        );
     }
 
 </script>

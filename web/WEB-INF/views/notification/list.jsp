@@ -158,7 +158,7 @@
     var form = $('#eventLogForm');
 
     var messageConfig = {
-        'actionDetailFailure':'<spring:message code="action.message.actionListFailure"/>'
+        'earlyDatetime':'<spring:message code="notification.message.earlyDatetime"/>'
     };
 
     var urlConfig = {
@@ -193,13 +193,26 @@
         });
     });
 
+    function validate(){
+        var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
+        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
+
+        if(start>end){
+            alertMessage("earlyDatetime");
+            return false;
+        }
+        return true;
+    }
+
     /*
      조회
      @author kst
      */
     function search(){
-        form.attr('action',urlConfig['listUrl']);
-        form.submit();
+        if(validate()){
+            form.attr('action',urlConfig['listUrl']);
+            form.submit();
+        }
     }
 
     /*
@@ -245,5 +258,13 @@
     function closeCancelDescPopup(){
         $("#cancelDescText").text("");
         $(".eventdetail_popup").fadeOut();
+    }
+
+    /*
+     alert message method
+     @author psb
+     */
+    function alertMessage(type){
+        alert(messageConfig[type]);
     }
 </script>

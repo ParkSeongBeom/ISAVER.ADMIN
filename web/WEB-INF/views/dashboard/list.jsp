@@ -58,17 +58,8 @@
         <c:when test="${fn:length(childAreas)>=5 and fn:length(childAreas)<=6}">
             <c:set var="areaCntClass" value="area06"/>
         </c:when>
-        <c:when test="${fn:length(childAreas)>=7 and fn:length(childAreas)<=8}">
-            <c:set var="areaCntClass" value="area08"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)==9}">
+        <c:when test="${fn:length(childAreas)>=7}">
             <c:set var="areaCntClass" value="area09"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=10 and fn:length(childAreas)<=12}">
-            <c:set var="areaCntClass" value="area00"/>
-        </c:when>
-        <c:when test="${fn:length(childAreas)>=13}">
-            <c:set var="areaCntClass" value="area16"/>
         </c:when>
     </c:choose>
 
@@ -227,24 +218,32 @@
                                     </div>
                                     <c:choose>
                                         <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
-                                            <div class="s_rbox ">
-                                                <!-- 스크롤 영역 시작 -->
-                                                <ul data-duplicated='true' data-direction='up'>
-                                                    <c:forEach var="area" items="${childArea.areas}">
-                                                        <li class="blinker_set">
-                                                            <h3>${area.areaName}</h3>
-                                                            <div templateCode="${childArea.templateCode}" inoutArea areaId="${area.areaId}">
-                                                                <p gap>0</p>
-                                                                <div>
-                                                                    <p in>0</p>
-                                                                    <p out>0</p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </c:forEach>
+                                            <c:set var="childBlinker" value="0"/>
+                                            <c:forEach var="area" items="${childArea.areas}">
+                                                <c:if test="${childBlinker<3 and area.templateCode=='TMP003'}">
+                                                    <c:if test="${childBlinker==0}">
+                                                        <div class="s_rbox ">
+                                                            <!-- 스크롤 영역 시작 -->
+                                                            <ul data-duplicated='true' data-direction='up'>
+                                                    </c:if>
+                                                                <li class="blinker_set">
+                                                                    <h3>${area.areaName}</h3>
+                                                                    <div templateCode="${area.templateCode}" inoutArea areaId="${area.areaId}">
+                                                                        <p gap>0</p>
+                                                                        <div>
+                                                                            <p in>0</p>
+                                                                            <p out>0</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                    <c:set var="childBlinker" value="${childBlinker+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:if test="${childBlinker!=0}">
                                                 </ul>
                                                 <!-- 스크롤 영역 끝 -->
-                                            </div>
+                                                </div>
+                                            </c:if>
                                         </c:when>
                                     </c:choose>
                                 </section>
@@ -270,10 +269,10 @@
                                 <section class="nhr_set">
                                     <div class="s_lbox">
                                         <div class="chart_select_set" dateSelType>
-                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.day"/></button>
-                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.week"/></button>
-                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.month"/></button>
-                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.selectbox.year"/></button>
+                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.day"/></button>
+                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.week"/></button>
+                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.month"/></button>
+                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.year"/></button>
                                         </div>
                                         <div class="chart_box chart01" chartAreaId="${childArea.areaId}">
                                         </div>

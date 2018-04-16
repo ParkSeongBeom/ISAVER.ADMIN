@@ -254,6 +254,9 @@ function DeviceView(model) {
         $(formName + " select[name='parentDeviceId'] option").eq(0).prop("selected", true);
         $(formName + " select[name='areaId'] option").eq(0).prop("selected", true);
         $(formName + " input[name=ipAddress]").val("");
+        $(formName + " input[name=port]").val("");
+        $(formName + " input[name=deviceUserId]").val("");
+        $(formName + " input[name=devicePassword]").val("");
 
         $(formName + " textarea[name='deviceDesc']").val("");
         $(formName + " input[name=linkUrl]").val("");

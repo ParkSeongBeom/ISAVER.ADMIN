@@ -4,7 +4,6 @@
  */
 /*
 일반, 주의, 경고, 위험 색상단계 정의
-
 일반 :
 주의 : 회색  $color-gray-03    level-caution
 경고 : 주황  $color-orange-01  level-warning
@@ -1102,6 +1101,22 @@ menu {
             opacity: 1; }
         .db_area section.db_list_box > ul li:hover > button:after {
           opacity: 1; }
+    .db_area section.db_list_box > button {
+      flex: 1 0 40px;
+      -webkit-flex: 1 0 40px;
+      flexbox: 1 0 40px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 40px;
+      border-style: solid;
+      border-width: 1px 0 0 0;
+      border-color: #111111; }
+      .db_area section.db_list_box > button:after {
+        content: "More";
+        padding: 0 0 0 10px; }
+      .db_area section.db_list_box > button:before {
+        content: "\e92b"; }
+      .db_area section.db_list_box > button:hover {
+        background-color: #111; }
   .db_area section.db_infor_box {
     visibility: hidden;
     position: absolute;

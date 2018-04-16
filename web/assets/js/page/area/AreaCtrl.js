@@ -114,7 +114,6 @@ function AreaCtrl(model) {
      *  구역 등록 전 유효성 검증
      */
     AreaCtrl.addAreaVaild = function () {
-
         this._model.setViewStatus(AreaModel().model.ACTION.ADD);
         if (this.commonVaild(true)) {
 
@@ -129,7 +128,6 @@ function AreaCtrl(model) {
             if(confirm('[' + areaName + '] ' + messageConfig['addConfirmMessage'] + '?')) {
                 this.addArea();
             }
-
         }
     };
 
@@ -137,7 +135,6 @@ function AreaCtrl(model) {
      * 구역 저장 전 유효성 검증
      */
     AreaCtrl.saveAreaVaild = function () {
-
         this._model.setViewStatus(AreaModel().model.ACTION.SAVE);
 
         if (this.commonVaild(true)) {
@@ -383,9 +380,16 @@ function AreaEvent(model) {
 //        menuCtrl.findMenuTopBar();
 //        menuCtrl.setMenuTreeReset();
 
-        alert(messageConfig[AreaEvent._model.getViewStatus() + 'Complete']);
-        //window.location.reload();
-        location.href = "./list.html?ctrl=reload";
+        if(data['resultCode']!=null){
+            switch (data['resultCode']){
+                case "ERR000":
+                    alert(messageConfig['addOverflowFailure']);
+                    break;
+            }
+        }else{
+            alert(messageConfig[AreaEvent._model.getViewStatus() + 'Complete']);
+            location.href = "./list.html?ctrl=reload";
+        }
     };
 
     /**

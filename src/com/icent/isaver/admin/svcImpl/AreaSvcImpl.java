@@ -91,19 +91,33 @@ public class AreaSvcImpl implements AreaSvc {
 
     @Override
     public ModelAndView addArea(HttpServletRequest request, Map<String, String> parameters) {
+        boolean addFlag = true;
+        ModelAndView modelAndView = new ModelAndView();
 
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        if(StringUtils.notNullCheck(parameters.get("parentAreaId"))){
+            Map<String, String> deviceCheckParam = new HashMap<>();
+            deviceCheckParam.put("delYn","N");
+            deviceCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
 
-        try {
-            parameters.put("areaId", generatorFunc());
-            areaDao.addArea(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            if(areaDao.findCountArea(deviceCheckParam)>=9){
+                addFlag = false;
+                modelAndView.addObject("resultCode", "ERR000");
+            }
         }
 
-        ModelAndView modelAndView = new ModelAndView();
+        if(addFlag){
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+            try {
+                parameters.put("areaId", generatorFunc());
+                areaDao.addArea(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
+        }
+
         return modelAndView;
     }
 

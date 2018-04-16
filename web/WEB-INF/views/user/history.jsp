@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="A00010" var="menuId"/>
+<c:set value="A00020" var="menuId"/>
 <c:set value="A00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
@@ -66,16 +66,16 @@
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
                     <col style="width: *;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
-                    <col style="width: 20%;" />
+                    <col style="width: 25%;" />
+                    <%--<col style="width: 20%;" />--%>
+                    <col style="width: 25%;" />
+                    <col style="width: 25%;" />
                 </colgroup>
                 <thead>
                     <tr>
                         <th><spring:message code="loginHistory.column.userId"/></th>
                         <th><spring:message code="loginHistory.column.userName"/></th>
-                        <th><spring:message code="loginHistory.column.loginFlag"/></th>
+                        <%--<th><spring:message code="loginHistory.column.loginFlag"/></th>--%>
                         <th><spring:message code="loginHistory.column.ipAddress"/></th>
                         <th><spring:message code="loginHistory.column.logDatetime"/></th>
                     </tr>
@@ -87,18 +87,18 @@
                                 <tr>
                                     <td>${loginHistory.userId}</td>
                                     <td>${loginHistory.userName}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${loginHistory.loginFlag == '1'}">
-                                                <spring:message code="loginHistory.column.login"/>
-                                            </c:when>
-                                            <c:when test="${loginHistory.loginFlag == '0'}">
-                                                <spring:message code="loginHistory.column.logout"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
+                                    <%--<td>--%>
+                                        <%--<c:choose>--%>
+                                            <%--<c:when test="${loginHistory.loginFlag == '1'}">--%>
+                                                <%--<spring:message code="loginHistory.column.login"/>--%>
+                                            <%--</c:when>--%>
+                                            <%--<c:when test="${loginHistory.loginFlag == '0'}">--%>
+                                                <%--<spring:message code="loginHistory.column.logout"/>--%>
+                                            <%--</c:when>--%>
+                                            <%--<c:otherwise>--%>
+                                            <%--</c:otherwise>--%>
+                                        <%--</c:choose>--%>
+                                    <%--</td>--%>
                                     <td>${loginHistory.ipAddress}</td>
                                     <td>
                                         <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${loginHistory.logDatetime}" />
@@ -108,7 +108,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td colspan="5"><spring:message code="common.message.emptyData"/></td>
+                                <td colspan="4"><spring:message code="common.message.emptyData"/></td>
                             </tr>
                         </c:otherwise>
                     </c:choose>

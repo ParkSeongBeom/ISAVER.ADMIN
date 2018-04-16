@@ -209,16 +209,16 @@
                         </td>
                     </tr>
                     <tr name="showHideTag">
-                        <th class="point"><spring:message code='device.column.provisionFlag'/></th>
-                        <td class="point">
-                            <div class="checkbox_set csl_style03">
-                                <input type="hidden" name="provisionFlag" value="Y"/>
-                                <input type="checkbox" id="provisionFlagCheckBox" checked onchange="setCheckBoxYn(this,'provisionFlag')"/>
-                                <label></label>
-                            </div>
-                        </td>
+                        <%--<th class="point"><spring:message code='device.column.provisionFlag'/></th>--%>
+                        <%--<td class="point">--%>
+                            <%--<div class="checkbox_set csl_style03">--%>
+                                <%--<input type="hidden" name="provisionFlag" value="Y"/>--%>
+                                <%--<input type="checkbox" id="provisionFlagCheckBox" checked onchange="setCheckBoxYn(this,'provisionFlag')"/>--%>
+                                <%--<label></label>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
                         <th class=""><spring:message code='device.column.deviceStat'/></th>
-                        <td class="">
+                        <td colspan="3" class="">
                             <div class="checkbox_set csl_style02 disabled">
                                 <input type="hidden" name="deviceStat" value="Y"/>
                                 <input type="checkbox" id="deviceStatCheckBox" checked onchange="setCheckBoxYn(this,'deviceStat')"/>

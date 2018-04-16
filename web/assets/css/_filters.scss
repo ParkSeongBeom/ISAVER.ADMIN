@@ -16,9 +16,27 @@
 @mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
 @mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
 
+$bs_hsize:1.5rem; // 진출입 구역명
+$bs_bsize:7.2rem; // 진출입 현재 잔존
+$bs_psize:3rem; // 진출입 인, 아웃
+$bs_lsize:15rem;  // 진출입 인, 아웃
+
+$bs_hsize_s:($bs_hsize - 0.3rem); // 진출입 구역명 작은글씨
+$bs_bsize_s:($bs_bsize - 2rem); // 진출입 목록 큰글씨
+$bs_psize_s:($bs_psize - 0.8rem); // 진출입 목록 작은글씨
+
+$bs_hsize_ss:($bs_hsize - 0.4rem); // 진출입 구역명 작은글씨
+$bs_bsize_ss:($bs_bsize - 3.7rem);  // 진출입 목록 큰글씨
+$bs_psize_ss:($bs_psize - 1.4rem);  // 진출입 목록 작은글씨
+
+$se_fsize:1.5rem; // safeeye 리스트
+$se_bsize:12rem;  // safeeye 이벤트 아이콘
+
+$ks_bsize:16rem;
+$ks_ssize:($ks_bsize / 4.5);
+
 /*
 일반, 주의, 경고, 위험 색상단계 정의
-
 일반 :
 주의 : 회색  $color-gray-03    level-caution
 경고 : 주황  $color-orange-01  level-warning

@@ -95,6 +95,7 @@ public class TestSvcImpl implements TestSvc {
         }
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
@@ -131,6 +132,7 @@ public class TestSvcImpl implements TestSvc {
         }
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 }

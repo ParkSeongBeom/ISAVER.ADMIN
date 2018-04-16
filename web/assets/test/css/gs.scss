@@ -21,6 +21,12 @@ body {
     background-color: $bas-color; @include border01(2px,$adm-color,1 );
     &:hover {background-color: $color-gray-07 ;}
   }
+
+  ::-webkit-input-placeholder     {color:rgba(255, 255, 255, 0.4);}
+  ::-moz-placeholder              {color:rgba(255, 255, 255, 0.4);}
+  :-ms-input-placeholder          {color:rgba(255, 255, 255, 0.4);}
+  :-moz-placeholder               {color:rgba(255, 255, 255, 0.4);}
+
 }
 
 
@@ -37,7 +43,7 @@ header {
 article {overflow: auto; padding:50px ($logowidth + 50px) 50px 0;}
 
 aside {
-  position: fixed; top:$headerHeight; right:20px; bottom:20px; width:$logowidth; padding:20px;
+  overflow: auto; position: fixed; top:$headerHeight; right:50px; bottom:20px; width:$logowidth; padding:20px;
   @include border01(1px,#000,1 ); background-color: #000; color:$color-white-01; opacity: 0.5;
 }
 
@@ -79,28 +85,32 @@ button {
 
 }
 
-select {
-  height:50px; padding:0 40px 0 20px;
-  background-position: calc(100% - 12px) 50%;
-  background-color: $bas-color;
-  background-image: url(../images/logo/select_allow_w.svg);
-  color:$color-white-01; border-color:#000;
-
+select, input {
+  float:left; height:50px; padding:0 40px 0 20px; margin:0 5px 5px 0;
+  color:$color-white-01; border-color:#000; background-color: $bas-color;
 }
+select {
+  background-position: calc(100% - 12px) 50%;
+  background-image: url(../images/logo/select_allow_w.svg);
+}
+
 
 article {
   section {
     @include flexbase; @include padi; padding-bottom:50px;
     .set {
-      @include flexbase; @include flex-align-items-center; padding:0 0 70px 100px;
+      @include flexbase; @include flex-align-items-center; padding:0 0 80px 100px;
     }
 
 
     .button_set, .select_set {
-
     }
     .button_set {@include flexbase; @include flex-align-items-center;}
-    .select_set {min-width:500px; margin:0 100px 0 0; select {width:calc(50% - 5px);} }
+    .select_set {
+      width:500px; margin:0 100px 0 0;
+      select {width:calc(50% - 5px);}
+      input {width:calc(100% - 5px);}
+    }
 
   }
   h2, p {color:$color-white-01;}

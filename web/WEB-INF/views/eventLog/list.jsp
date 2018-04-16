@@ -112,6 +112,10 @@
     var subMenuId = String('${subMenuId}');
     var form = $('#eventLogForm');
 
+    var messageConfig = {
+        'earlyDatetime':'<spring:message code="eventlog.message.earlyDatetime"/>'
+    };
+
     var urlConfig = {
         'listUrl':'${rootPath}/eventLog/list.html'
         ,'excelUrl':'${rootPath}/eventLog/excel.html'
@@ -144,13 +148,26 @@
         });
     });
 
+    function validate(){
+        var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
+        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
+
+        if(start>end){
+            alertMessage("earlyDatetime");
+            return false;
+        }
+        return true;
+    }
+
     /*
      조회
      @author kst
      */
     function search(){
-        form.attr('action',urlConfig['listUrl']);
-        form.submit();
+        if(validate()){
+            form.attr('action',urlConfig['listUrl']);
+            form.submit();
+        }
     }
 
     /*
@@ -178,5 +195,13 @@
     function excelFileDownloadFunc() {
         form.attr('action',urlConfig['excelUrl']);
         form.submit();
+    }
+
+    /*
+     alert message method
+     @author psb
+     */
+    function alertMessage(type){
+        alert(messageConfig[type]);
     }
 </script>

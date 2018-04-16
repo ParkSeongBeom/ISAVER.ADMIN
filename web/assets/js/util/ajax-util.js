@@ -8,31 +8,32 @@
  */
 var requestArr = [];
 
-function checkExcuteArray(reqUrl,method){
+function checkExcuteArray(reqUrl,method,data){
     var resultFlag = false;
 
     for(var index in requestArr){
         var req = requestArr[index];
-        if(req['url']==reqUrl && req['method']==method){
+        if(req['url']==reqUrl && req['method']==method && req['data']==data){
             resultFlag = true;
         }
     }
     return resultFlag;
 }
 
-function addExcuteArray(reqUrl,method){
+function addExcuteArray(reqUrl,method,data){
     requestArr.push({
         'url' : reqUrl
         ,'method' : method
+        ,'data' : data
     });
 }
 
-function removeExcuteArray(reqUrl,method){
+function removeExcuteArray(reqUrl,method,data){
     var removeIndex = null;
 
     for(var index in requestArr){
         var req = requestArr[index];
-        if(req['url']==reqUrl && req['method']==method){
+        if(req['url']==reqUrl && req['method']==method && req['data']==data){
             removeIndex = index;
         }
     }
@@ -85,12 +86,12 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         return;
     }
 
-    if(checkExcuteArray(reqUrl,method)){
-        console.error("[ajaxRequest] exist excute url - " + reqUrl + ", method - " + method);
+    if(checkExcuteArray(reqUrl,method,data)){
+        console.error("[ajaxRequest] exist excute url - " + reqUrl + ", method - " + method +", data - "+data);
         alert(commonMessageConfig['inProgress']);
         return false;
     }else{
-        addExcuteArray(reqUrl,method);
+        addExcuteArray(reqUrl,method,data);
     }
 
     if(successCallback == null || typeof successCallback != 'function'){
@@ -109,11 +110,11 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         contentsType: 'application/json',
         data: data,
         success : function(data, dataType){
-            removeExcuteArray(reqUrl,method);
+            removeExcuteArray(reqUrl,method,data);
             successCallback(data, dataType, actionType);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
-            removeExcuteArray(reqUrl,method);
+            removeExcuteArray(reqUrl,method,data);
             errorCallback(XMLHttpRequest, textStatus, errorThrown, actionType);
         }
     });
