@@ -6,6 +6,7 @@ import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.CommonUtil;
+import com.icent.isaver.admin.util.FileUtil;
 import com.icent.isaver.repository.bean.FileBean;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.FileDao;
@@ -188,22 +189,37 @@ public class FileSvcImpl implements FileSvc {
         return new ModelAndView();
     }
 
+//    @Override
+//    public ModelAndView downloadFile(Map<String, String> parameters, HttpServletRequest request, HttpServletResponse response) {
+//        FileBean file = fileDao.findByFile(parameters);
+//
+//        if(StringUtils.notNullCheck(file.getPhysicalFileName())) {
+//            try {
+//                if (new File(fileUploadPath + file.getPhysicalFileName()).exists()) {
+//                    CommonUtil.download(request, response, fileUploadPath + file.getPhysicalFileName(), "\"" + file.getLogicalFileName() + "\"", 1024);
+//                }
+//            } catch(IOException | ServletException e) {
+//                throw new IcentException("");
+//            }
+//        }
+//        ModelAndView modelAndView = new ModelAndView();
+//        return modelAndView;
+//    }
+
     @Override
     public ModelAndView downloadFile(Map<String, String> parameters, HttpServletRequest request, HttpServletResponse response) {
         FileBean file = fileDao.findByFile(parameters);
 
         if(StringUtils.notNullCheck(file.getPhysicalFileName())) {
             try {
-                if (new File(fileUploadPath + file.getPhysicalFileName()).exists()) {
-                    CommonUtil.download(request, response, fileUploadPath + file.getPhysicalFileName(), "\"" + file.getLogicalFileName() + "\"", 1024);
-                }
-            } catch(IOException | ServletException e) {
+                FileUtil.fileDown(request, response, fileUploadPath, file.getPhysicalFileName(), file.getLogicalFileName());
+            } catch(IOException e) {
                 throw new IcentException("");
             }
         }
-        ModelAndView modelAndView = new ModelAndView();
-        return modelAndView;
+        return new ModelAndView();
     }
+
     private void saveFileDevice(HttpServletRequest request, String fileId, String updateUserId, String addDevices, String removeDevices, String addDeviceSyncRequests) {
         List<Map<String, String>> parameterList = new ArrayList<>();
         if(StringUtils.notNullCheck(addDevices)){

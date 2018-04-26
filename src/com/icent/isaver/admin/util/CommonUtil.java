@@ -179,15 +179,27 @@ public class CommonUtil {
         }
 
         byte[] buffer = new byte[bufferSize];
-        response.setContentType(mime + "; charset=" + "EUC-KR");
+        response.setContentType(mime + "; charset=utf-8");
         String userAgent = request.getHeader("User-Agent");
         if(userAgent != null && userAgent.indexOf("MSIE 5.5") > -1) {
             response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(filename, "UTF-8") + ";");
         } else if(userAgent != null && userAgent.indexOf("MSIE") > -1) {
             response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(filename, "UTF-8") + ";");
+        } else if(userAgent != null && userAgent.indexOf("Chrome") > -1) {
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < filename.length(); i++) {
+                char c = filename.charAt(i);
+                if (c > '~') {
+                    sb.append(URLEncoder.encode("" + c, "UTF-8"));
+                } else {
+                    sb.append(c);
+                }
+            }
+            response.setHeader("Content-Disposition", "attachment; filename=" + sb.toString() + ";");
         } else {
             response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes("EUC-KR"), "latin1") + ";");
         }
+        response.setHeader("Content-Transfer-Encoding", "binary");
 
         if(filesize > 0L) {
             response.setHeader("Content-Length", "" + filesize);

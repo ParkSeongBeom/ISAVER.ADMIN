@@ -526,13 +526,16 @@ menu {
 
   // 알림센터
   section.db_list_box {
+    $db_filter_h:41px;
+    $db_morebt_h:40px;
+
     @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
     @include border01( 1px,$color-gray-01,1); background-color: $adm-color;
 
 
 
     .db_filter_set {
-      @include flexbase; @include flex-option(1, 0, 41px); max-height:41px;
+      @include flexbase; @include flex-option(1, 0, $db_filter_h); max-height:$db_filter_h;
       @include border01( 0 0 1px 0,$color-gray-01,1); background-color: $color-white-01;
 
       & > * {
@@ -633,10 +636,11 @@ menu {
         &:hover { & > button:after {opacity: 1;} }
       }
     }
+    
 
     // 더보기
     & > button {
-      @include flex-option(1, 0, 40px);
+      @include flex-option(1, 0, $db_morebt_h);
       &:after  {content:"More"; padding:0 0 0 10px;}
       &:before {content:"\e92b";}
       @include border01( 1px 0 0 0,$color-gray-09,1);

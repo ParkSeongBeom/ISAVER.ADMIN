@@ -4,7 +4,6 @@
  */
 /*
 일반, 주의, 경고, 위험 색상단계 정의
-
 일반 :
 주의 : 회색  $color-gray-03    level-caution
 경고 : 주황  $color-orange-01  level-warning
@@ -947,5 +946,100 @@ input.datepicker + button + .in-timepicker {
 
 .chart_box.type02 {
   overflow-y: auto; }
+
+.loading_ico {
+  position: absolute;
+  bottom: 10px;
+  width: 80px;
+  height: 80px; }
+  .loading_ico:before {
+    position: absolute;
+    left: 0;
+    top: 0; }
+
+.loding_bar.on, .loading_ico.on {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); }
+  .loding_bar.on:before, .loading_ico.on:before {
+    content: "";
+    width: 80px;
+    height: 80px;
+    box-shadow: 0px 0px 20px 0px black;
+    -webkit-box-shadow: 0px 0px 20px 0px black;
+    -moz-box-shadow: 0px 0px 20px 0px black;
+    animation-name: loding;
+    -webkit-animation-name: loding;
+    /*  animation-delay:         2s;
+      -webkit-animation-delay: 2s;*/
+    animation-duration: 6s;
+    -webkit-animation-duration: 6s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-duration: 1s !important;
+    -webkit-animation-duration: 1s !important;
+    -moz-border-radius: 500px;
+    -webkit-border-radius: 500px;
+    border-radius: 500px;
+    -khtml-border-radius: 500px;
+    border-style: solid;
+    border-width: 0 3px 3px 3px;
+    border-color: #109dcb #109dcb #109dcb transparent; }
+@-webkit-keyframes loding {
+  0% {
+    transform: rotate(0);
+    ms-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0); }
+  100% {
+    transform: rotate(360deg);
+    ms-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg); } }
+@keyframes loding {
+  0% {
+    transform: rotate(0);
+    ms-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0); }
+  100% {
+    transform: rotate(360deg);
+    ms-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg); } }
 
 /*# sourceMappingURL=elements.css.map */

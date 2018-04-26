@@ -94,15 +94,13 @@ public class AreaSvcImpl implements AreaSvc {
         boolean addFlag = true;
         ModelAndView modelAndView = new ModelAndView();
 
-        if(StringUtils.notNullCheck(parameters.get("parentAreaId"))){
-            Map<String, String> deviceCheckParam = new HashMap<>();
-            deviceCheckParam.put("delYn","N");
-            deviceCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
+        Map<String, String> deviceCheckParam = new HashMap<>();
+        deviceCheckParam.put("delYn","N");
+        deviceCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
 
-            if(areaDao.findCountArea(deviceCheckParam)>=9){
-                addFlag = false;
-                modelAndView.addObject("resultCode", "ERR000");
-            }
+        if(areaDao.findCountArea(deviceCheckParam)>=9){
+            addFlag = false;
+            modelAndView.addObject("resultCode", "ERR000");
         }
 
         if(addFlag){

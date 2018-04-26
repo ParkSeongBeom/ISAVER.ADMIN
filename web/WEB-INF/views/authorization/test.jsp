@@ -26,30 +26,82 @@
 <body class="login_mode">
     <header></header>
     <article>
-        <section class="Safe-Guard">
-            <h2>Safe-Guard</h2>
+        <section class="Safe-Eye">
+            <h2>Safe-Eye</h2>
             <div>
                 <div class="set">
                     <div class="select_set">
-                        <p>거수자감지</p>
-                        <select area eventType="guard">
+                        <p>위험지역.작업자감지</p>
+                        <select area eventType="worker">
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
-                                <c:if test="${area.templateCode == 'TMP005'}">
+                                <c:if test="${area.templateCode == 'TMP002'}">
                                     <option value="${area.areaId}">${area.areaName}</option>
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select device eventType="guard">
+                        <select device eventType="worker">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
                             </c:forEach>
                         </select>
+                        <input type="hidden" name="workerValue" value="1"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-start" onclick="javascript:addEventGuard('start')"></button>
-                        <button class="reset" onclick="javascript:addEventGuard('stop')"></button>
+                        <button class="level-start" onclick="javascript:addEvent('worker')"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="Blinker">
+            <h2>Blinker</h2>
+            <div>
+                <div class="set">
+                    <div class="select_set">
+                        <p>진입</p>
+                        <select area eventType="in">
+                            <option value="">감시구역선택</option>
+                            <c:forEach items="${areaList}" var="area">
+                                <c:if test="${area.templateCode == 'TMP003'}">
+                                    <option value="${area.areaId}">${area.areaName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select device eventType="in">
+                            <option value="">감시장치선택</option>
+                            <c:forEach items="${deviceList}" var="device">
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="inValue" placeholder="진입자 수 입력" onkeypress="javascript:isNumberWithPoint();"/>
+                    </div>
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:addEvent('in')"></button>
+                    </div>
+                </div>
+                <div class="set">
+                    <div class="select_set">
+                        <p>진출</p>
+                        <select area eventType="out">
+                            <option value="">감시구역선택</option>
+                            <c:forEach items="${areaList}" var="area">
+                                <c:if test="${area.templateCode == 'TMP003'}">
+                                    <option value="${area.areaId}">${area.areaName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select device eventType="out">
+                            <option value="">감시장치선택</option>
+                            <c:forEach items="${deviceList}" var="device">
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="outValue" placeholder="진출자 수 입력" onkeypress="javascript:isNumberWithPoint();"/>
+                    </div>
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:addEvent('out')"></button>
                     </div>
                 </div>
             </div>
@@ -178,6 +230,35 @@
                 </div>
             </div>
         </section>
+
+        <section class="Safe-Guard">
+            <h2>Safe-Guard</h2>
+            <div>
+                <div class="set">
+                    <div class="select_set">
+                        <p>거수자감지</p>
+                        <select area eventType="guard">
+                            <option value="">감시구역선택</option>
+                            <c:forEach items="${areaList}" var="area">
+                                <c:if test="${area.templateCode == 'TMP005'}">
+                                    <option value="${area.areaId}">${area.areaName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select device eventType="guard">
+                            <option value="">감시장치선택</option>
+                            <c:forEach items="${deviceList}" var="device">
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceCodeName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:addEventGuard('start')"></button>
+                        <button class="reset" onclick="javascript:addEventGuard('stop')"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </article>
 
     <aside id="logArea"></aside>
@@ -218,6 +299,15 @@
                 case 'temp':
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV901']").show();
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV901']:eq(0)").prop("selected",true);
+                    break;
+                case 'in':
+                case 'out':
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV009']").show();
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV009']:eq(0)").prop("selected",true);
+                    break;
+                case 'worker':
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV003']").show();
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV003']:eq(0)").prop("selected",true);
                     break;
             }
         });
@@ -274,6 +364,28 @@
             case 'temp':
                 data['eventId'] = "EVT306";
                 data['eventName'] = "온도";
+                break;
+            case 'in' :
+                data['eventId'] = "EVT300";
+                data['eventName'] = "피플카운터 진입자 감지";
+                data['inCount'] = valueTag.val();
+                data['outCount'] = 0;
+                data['value'] = 0;
+                data['direction'] = "test";
+                break;
+            case 'out':
+                data['eventId'] = "EVT301";
+                data['eventName'] = "피플카운터 진출자 감지";
+                data['inCount'] = 0;
+                data['outCount'] = valueTag.val();
+                data['value'] = 0;
+                data['direction'] = "test";
+                break;
+            case 'worker':
+                data['eventId'] = "EVT013";
+                data['eventName'] = "위험지역.작업자감지";
+                data['riskFlag'] = 0;
+                data['targetCount'] = valueTag.val();
                 break;
             default :
                 alert("알수 없는 타입의 요청 입니다.");
@@ -338,6 +450,12 @@
                 break;
             case 'temp':
                 logTag.text("온도 전송 실패!");
+                break;
+            case 'in':
+                logTag.text("진입 전송 실패!");
+                break;
+            case 'out':
+                logTag.text("진출 전송 실패!");
                 break;
         }
 

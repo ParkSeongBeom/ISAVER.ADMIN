@@ -46,6 +46,7 @@
         var templateHelper = new TemplateHelper();
         var serverDatetime = new Date();
         serverDatetime.setTime(${serverDatetime});
+        var datetimeGap = new Date().getTime() - serverDatetime.getTime();
         var _eventDatetime = new Date();
         var webSocketHelper = new WebSocketHelper();
         var notificationHelper = new NotificationHelper(rootPath);
@@ -191,6 +192,7 @@
         }
 
         function printTime() {
+            serverDatetime.setTime(new Date().getTime()-datetimeGap);
             $("#nowTime").text(serverDatetime.format("MM.dd E HH:mm:ss"));
 
             if(_eventDatetime!=null){
@@ -217,7 +219,6 @@
             }
 
             setTimeout(function(){
-                serverDatetime.setSeconds(serverDatetime.getSeconds()+1);
                 printTime();
             },1000);
         }
@@ -516,6 +517,10 @@
             <!-- 알림 이력-->
             <ul id="notificationList"></ul>
 
+            <!-- 더보기, 검색 로딩 바 -->
+            <div id="notiLoading" class="loding_bar"></div>
+
+            <!-- 더보기 버튼 -->
             <button id="notiMoreBtn" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
 
             <!-- 알림해지 영역 -->

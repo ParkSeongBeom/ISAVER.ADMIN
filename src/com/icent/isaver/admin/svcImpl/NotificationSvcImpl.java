@@ -76,9 +76,11 @@ public class NotificationSvcImpl implements NotificationSvc {
     @Override
     public ModelAndView findListNotificationForDashboard(Map<String, String> parameters) {
         List<NotificationBean> notifications = notificationDao.findListNotificationForDashboard(parameters);
+        List<NotificationBean> notiCountList = notificationDao.findListNotificationForDashboardCount();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("notifications", notifications);
+        modelAndView.addObject("notiCountList", notiCountList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

@@ -622,6 +622,14 @@ div[contenteditable] {}
 .chart_box.type02 {overflow-y:auto;}
 
 
+////// ----------------- Loading Start
+.loading_ico {
+  position: absolute; bottom:10px; width:80px; height:80px;
+  &:before {position: absolute; left:0; top:0;}
+}
+.loding_bar, .loading_ico {&.on {@include loding_bar;}}
+////// ----------------- Loading End
+
 
 
 

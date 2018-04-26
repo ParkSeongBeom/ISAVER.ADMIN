@@ -65,6 +65,9 @@
 
     <!-- 구역이 9개 이하 일때 구역레이아웃 변경 design.js "구역 개수에 따른 레이아웃 변경"-->
     <section class="watch_area ${areaCntClass}">
+        <!-- 더보기, 검색 로딩 바 -->
+        <section id="areaLoading" class="loding_bar"></section>
+
         <c:choose>
             <c:when test="${childAreas != null and fn:length(childAreas) > 0}">
                 <!--
@@ -220,27 +223,31 @@
                                         <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
                                             <c:set var="childBlinker" value="0"/>
                                             <c:forEach var="area" items="${childArea.areas}">
-                                                <c:if test="${childBlinker<3 and area.templateCode=='TMP003'}">
-                                                    <c:if test="${childBlinker==0}">
-                                                        <div class="s_rbox ">
-                                                            <!-- 스크롤 영역 시작 -->
-                                                            <ul data-duplicated='true' data-direction='up'>
-                                                    </c:if>
-                                                                <li class="blinker_set">
-                                                                    <h3>${area.areaName}</h3>
-                                                                    <div templateCode="${area.templateCode}" inoutArea areaId="${area.areaId}">
-                                                                        <p gap>0</p>
-                                                                        <div>
-                                                                            <p in>0</p>
-                                                                            <p out>0</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                    <c:set var="childBlinker" value="${childBlinker+1}"/>
+                                                <c:if test="${area.templateCode=='TMP003'}">
+                                                    <c:set var="childBlinker" value="1"/>
                                                 </c:if>
                                             </c:forEach>
-                                            <c:if test="${childBlinker!=0}">
-                                                </ul>
+                                            <c:if test="${childBlinker==1}">
+                                                <div class="s_rbox ">
+                                                    <!-- 스크롤 영역 시작 -->
+                                                    <ul data-duplicated='true' data-direction='up'>
+                                            </c:if>
+                                                <c:forEach var="area" items="${childArea.areas}">
+                                                    <c:if test="${area.templateCode=='TMP003'}">
+                                                        <li class="blinker_set">
+                                                            <h3>${area.areaName}</h3>
+                                                            <div templateCode="${area.templateCode}" inoutArea areaId="${area.areaId}">
+                                                                <p gap>0</p>
+                                                                <div>
+                                                                    <p in>0</p>
+                                                                    <p out>0</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </c:if>
+                                                </c:forEach>
+                                            <c:if test="${childBlinker==1}">
+                                                    </ul>
                                                 <!-- 스크롤 영역 끝 -->
                                                 </div>
                                             </c:if>

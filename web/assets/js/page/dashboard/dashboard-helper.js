@@ -11,6 +11,9 @@ var DashboardHelper = (
         var _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
         };
+        var _options ={
+            marquee : true
+        };
         var _messageConfig;
         var _defaultTemplateCode = "TMP001";
         var _areaList = {};
@@ -112,7 +115,7 @@ var DashboardHelper = (
         /**
          * websocket callback append event handler
          */
-        this.appendEventHandler = function(messageType, data){
+        this.appendEventHandler = function(messageType, data, flag){
             switch (messageType) {
                 case "refreshBlinker": // 진출입 갱신
                     _self.getBlinker(data['areaId']);
@@ -134,19 +137,26 @@ var DashboardHelper = (
                     }
                     break;
                 case "addNotification": // 알림이벤트 등록
-                    if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
-                        _guardList[data['notification']['areaId']]['map'].setAnimate(
-                            data['notification']['deviceId']
-                            ,data['notification']['fenceId']
-                            ,data['notification']['objectId']
-                            ,"add"
-                            ,"level-"+criticalCss[data['notification']['criticalLevel']]
-                        );
+                    if(Array.isArray(data['notification'])){
+                        for(var index in data['notification']){
+                            _self.appendEventHandler(messageType, data['notification'][index], false);
+                        }
+                        notificationMarqueeUpdate();
+                    }else{
+                        if(data['areaId']!=null && _guardList[data['areaId']]!=null){
+                            _guardList[data['areaId']]['map'].setAnimate(
+                                data['deviceId']
+                                ,data['fenceId']
+                                ,data['objectId']
+                                ,"add"
+                                ,"level-"+criticalCss[data['criticalLevel']]
+                            );
+                        }
+                        notificationUpdate(messageType, data, flag!=null?flag:true);
                     }
-                    notificationUpdate(messageType, data['notification']);
                     break;
                 case "removeNotification": // 알림이벤트 해제
-                    notificationUpdate(messageType, data['notification']);
+                    notificationUpdate(messageType, data['notification'], flag!=null?flag:true);
                     break;
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
@@ -295,10 +305,67 @@ var DashboardHelper = (
             }
         };
 
+
+        /**
+         * Notification marquee Update
+         */
+        var notificationMarqueeUpdate = function(paramComponent, data){
+            function setMarquee(areaComponent, _data){
+                var element = areaComponent['element'];
+                var lastNoti = null;
+
+                if(_data!=null){
+                    lastNoti = _data;
+                }else{
+                    var notification = areaComponent['notification'];
+                    for(var index in notification){
+                        var noti = notification[index];
+                        var notiLen = noti.length;
+                        if(notiLen > 0){
+                            var notiData = null;
+                            var roop = true;
+                            while(roop){
+                                if(notiLen<0){
+                                    roop = false;
+                                }else{
+                                    notiData = notificationHelper.getNotification("data",noti[--notiLen]);
+
+                                    if(notiData!=null && (lastNoti==null || lastNoti['eventDatetime']<notiData['eventDatetime'])){
+                                        lastNoti = notiData;
+                                        roop = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //console.log(_data, lastNoti);
+                if(lastNoti!=null){
+                    var marqueeText = lastNoti['areaName']+" "+lastNoti['deviceName']+" "+lastNoti['eventName']+" "+new Date(lastNoti['eventDatetime']).format("yyyy.MM.dd HH:mm:ss");
+                    if(element.find("p[messageBox] span").length > 0){
+                        element.find("p[messageBox] span").attr("notificationId",lastNoti['notificationId']).text(marqueeText);
+                    }else{
+                        element.find("p[messageBox]").append(
+                            $("<span/>",{notificationId:lastNoti['notificationId']}).text(marqueeText)
+                        );
+                    }
+                }
+            }
+
+            if(paramComponent!=null){
+                setMarquee(paramComponent, data);
+            }else{
+                var component = _self.getArea("full");
+                for(var key in component){
+                    setMarquee(component[key]);
+                }
+            }
+        };
+
         /**
          * Notification update
          */
-        var notificationUpdate = function(messageType, data){
+        var notificationUpdate = function(messageType, data, flag){
             var areaComponent = _self.getArea("all", data['areaId']);
 
             if(areaComponent==null){
@@ -319,16 +386,20 @@ var DashboardHelper = (
                     if(childDevice[data['deviceId']] != null){
                         childDevice[data['deviceId']]['notification'][data['criticalLevel']].push(data['notificationId']);
                     }
-                    element.find("p[messageBox]").append(
-                        $("<span/>",{notificationId:data['notificationId']}).text(data['areaName']+" "+data['deviceName']+" "+data['eventName']+" "+new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"))
-                    );
+
+                    if(flag && _options['marquee']){
+                        notificationMarqueeUpdate(areaComponent, data);
+                    }
                     break;
                 case "removeNotification" :
                     notification[data['criticalLevel']].splice(data['notificationId'],1);
                     if(childDevice[data['deviceId']] != null){
                         childDevice[data['deviceId']]['notification'][data['criticalLevel']].splice(data['notificationId'],1);
                     }
-                    element.find("p[messageBox] span[notificationId='"+data['notificationId']+"']").remove();
+
+                    if(flag && _options['marquee']){
+                        notificationMarqueeUpdate(areaComponent);
+                    }
                     break;
             }
 

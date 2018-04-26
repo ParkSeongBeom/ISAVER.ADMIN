@@ -53,6 +53,8 @@ body.dashboard_mode {
     &:before {bottom:0;}
     &:after  {height:1px;}
 
+
+
     & > section {
       @include flex-option(0, 1, 100%);
       &, & > div {@include flexbase; position: relative;}
@@ -112,7 +114,10 @@ body.dashboard_mode {
           }
         }
       }
+
     }
+
+
 
   }
 
