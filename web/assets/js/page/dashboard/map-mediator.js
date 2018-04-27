@@ -50,7 +50,8 @@ var MapMediator = (
                 }
             },
             "image" : {
-                'content' : "<div class='mapimages'><div></div></div>"
+                'useFlag' : false
+                ,'content' : "<div class='mapimages'><div></div></div>"
             }
         };
 
@@ -377,6 +378,10 @@ var MapMediator = (
 
         var historicalOverlay = null;
         this.addImage = function(){
+            if(!options['image']['useFlag']){
+                return false;
+            }
+
             historicalOverlay = new google.maps.GroundOverlay(imageUrl,imageLat);
             historicalOverlay.setMap(map);
             canvas.addClass("map_images");

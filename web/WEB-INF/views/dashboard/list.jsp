@@ -76,7 +76,7 @@
                 TMP002 : Safe-Eye
                 TMP003 : Blinker
                 TMP004 : Detector
-                TMP005 : Guard
+                TMP005 : Safe-Guard
                 -->
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
@@ -346,7 +346,7 @@
                     </c:if>
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
-                        <!-- Guard -->
+                        <!-- Safe-Guard -->
                         <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>

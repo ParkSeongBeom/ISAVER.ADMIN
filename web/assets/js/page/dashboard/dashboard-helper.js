@@ -96,7 +96,7 @@ var DashboardHelper = (
                 _guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
                 _guardList[_areaId]['video'].createPlayer(deviceList);
                 _guardList[_areaId]['map'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
-                //_guardList[_areaId]['map'].addImage();
+                _guardList[_areaId]['map'].addImage();
             });
         };
 

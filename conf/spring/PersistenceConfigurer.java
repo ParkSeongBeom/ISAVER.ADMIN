@@ -61,9 +61,7 @@ public class PersistenceConfigurer {
                 logger.error(resultSystemBean.getLogdata());
                 System.exit(0);
             }
-
         }
-
         return findSystemUtil;
     }
 }
