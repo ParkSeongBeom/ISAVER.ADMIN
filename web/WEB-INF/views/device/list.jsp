@@ -142,20 +142,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="point"><spring:message code='device.column.deviceType'/></th>
-                        <td class="point">
-                            <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagName="deviceTypeCode"/>
+                        <th><spring:message code='device.column.vendorCode'/></th>
+                        <td>
+                            <spring:message code="device.message.emptyData" var="emptyData"/>
+                            <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="vendorCode" allModel="true" allValue="CA0000" allText='${emptyData}'/>
                         </td>
                         <th class="point"><spring:message code='device.column.deviceCode'/></th>
                         <td class="point">
-                            <div class="infile_set">
-                                <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/><br />
-                            </div>
+                            <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code='device.column.parentdeviceName'/></th>
-                        <td colspan="3">
+                        <td>
                             <select name="parentDeviceId">
                                 <option value=""><spring:message code="device.message.emptyData"/></option>
                                 <c:forEach items="${devices}" var="devices"  varStatus="status">
@@ -167,6 +166,10 @@
                                     </c:if>
                                 </c:forEach>
                             </select>
+                        </td>
+                        <th class="point"><spring:message code='device.column.deviceType'/></th>
+                        <td class="point">
+                            <isaver:codeSelectBox groupCodeId="D00" codeId="" htmlTagName="deviceTypeCode"/>
                         </td>
                     </tr>
                     <tr>

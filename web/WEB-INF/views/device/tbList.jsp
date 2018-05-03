@@ -56,6 +56,7 @@
                                     </td>
                                     <th><spring:message code='device.column.deviceCode'/></th>
                                     <td>
+                                        <isaver:codeSelectBox groupCodeId="CA1" htmlTagId="vendorCode" disabled="true"/>
                                         <isaver:codeSelectBox groupCodeId="DEV" htmlTagId="deviceCode" disabled="true"/>
                                     </td>
                                 </tr>
@@ -183,6 +184,7 @@
                 <colgroup>
                     <col style="width: 10%;" />
                     <col style="width: 10%;" />
+                    <col style="width: 10%;" />
                     <col style="width: *;" />
                     <col style="width: 20%;" />
                     <col style="width: 10%;" />
@@ -192,6 +194,7 @@
                 <tr>
                     <th><spring:message code="device.column.deviceId"/></th>
                     <th><spring:message code="device.column.deviceType"/></th>
+                    <th><spring:message code="device.column.vendorCode"/></th>
                     <th><spring:message code="device.column.deviceCode"/></th>
                     <th><spring:message code="device.column.areaName"/></th>
                     <th><spring:message code="device.column.deviceStat"/></th>
@@ -205,6 +208,14 @@
                             <tr onclick="moveDetail(String('${device.deviceId}'));">
                                 <td>${device.deviceId}</td>
                                 <td>${device.deviceTypeCode}</td>
+                                <td>
+                                    <c:if test="${device.vendorCodeName==null}">
+                                        <spring:message code="device.message.emptyData"/>
+                                    </c:if>
+                                    <c:if test="${device.vendorCodeName!=null}">
+                                        ${device.vendorCodeName}
+                                    </c:if>
+                                </td>
                                 <td>${device.deviceCode}</td>
                                 <td>${device.areaName}</td>
                                 <td>
@@ -223,7 +234,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="7"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>

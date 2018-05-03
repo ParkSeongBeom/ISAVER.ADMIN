@@ -23,6 +23,9 @@ function DeviceView(model) {
         deviceTypeCode: function (data) {
             $(formName + " [name='deviceTypeCode']").val(data.deviceTypeCode).prop("selected", true);
         },
+        vendorCode: function (data) {
+            $(formName + " [name='vendorCode']").val(data.vendorCode).prop("selected", true);
+        },
         areaId: function (data) {
             $(formName + " [name='areaId']").val(data.areaId).prop("selected", true);
         },
