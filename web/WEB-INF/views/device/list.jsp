@@ -145,7 +145,7 @@
                         <th><spring:message code='device.column.vendorCode'/></th>
                         <td>
                             <spring:message code="device.message.emptyData" var="emptyData"/>
-                            <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="vendorCode" allModel="true" allValue="CA0000" allText='${emptyData}'/>
+                            <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="vendorCode" allModel="true" allText='${emptyData}'/>
                         </td>
                         <th class="point"><spring:message code='device.column.deviceCode'/></th>
                         <td class="point">

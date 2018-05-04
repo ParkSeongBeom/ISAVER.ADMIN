@@ -40,18 +40,12 @@ public class CodeSelectBoxTagSupport extends ParamTag {
     private String htmlTagName = "";
     /* htmlTag(CLASS) 명 */
     private String htmlTagClass = "";
-    /* 전체값 */
-    private String allValue = "";
     /* 전체여부 */
     private Boolean allModel = false;
     /* 비활성여부 */
     private Boolean disabled = false;
     /* 전체 */
     private String allText = "";
-
-    public void setAllValue(String allValue) {
-        this.allValue = allValue;
-    }
 
     public void setGroupCodeId(String groupCodeId) {
         this.groupCodeId = groupCodeId;
@@ -121,7 +115,7 @@ public class CodeSelectBoxTagSupport extends ParamTag {
 
                     sb.append(">");
                     if(allModel) {
-                        sb.append(String.format("<option value=\"%s\">%s</option>", StringUtils.notNullCheck(allValue) ? allValue : "", StringUtils.notNullCheck(allText) ? allText : "All") );
+                        sb.append(String.format("<option value=\"\">%s</option>", StringUtils.notNullCheck(allText) ? allText : "All") );
                     }
                     for(CodeBean code:codes) {
                         if (codeId.equals(code.getCodeId())) {

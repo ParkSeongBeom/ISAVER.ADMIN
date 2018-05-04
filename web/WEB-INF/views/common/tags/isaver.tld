@@ -183,15 +183,6 @@
         </attribute>
         <attribute>
             <description>
-                전체값
-            </description>
-            <name>allValue</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
                 활성화여부
             </description>
             <name>disabled</name>
