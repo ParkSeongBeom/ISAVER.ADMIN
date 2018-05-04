@@ -439,30 +439,29 @@ var DashboardHelper = (
             var startDatetime = new Date(Number(element.attr("startDatetime")));
             var endDatetime = new Date(Number(element.attr("endDatetime")));
             var eventDatetime = new Date(data['eventDatetime']);
-            var updateFlag = false;
+            var inCount = 0;
+            var outCount = 0;
 
             if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
                 for(var index in data['infos']){
                     var info = data['infos'][index];
 
                     if(info['key']=="inCount"){
-                        var inTag = element.find("[in]");
-                        var inCount = Number(inTag.text());
-                        inCount += Number(info['value']);
-                        inTag.text(inCount);
-                        updateFlag = true;
+                        inCount = info['value'];
                     }else if(info['key']=="outCount"){
-                        var outTag = element.find("[out]");
-                        var outCount = Number(outTag.text());
-                        outCount += Number(info['value']);
-                        outTag.text(outCount);
-                        updateFlag = true;
+                        outCount = info['value'];
                     }
                 }
             }
 
-            if(updateFlag){
+            if(inCount>0 || outCount>0){
+                var inTag = element.find("[in]");
+                var outTag = element.find("[out]");
+                inTag.text(Number(inCount) + Number(inTag.text()));
+                outTag.text(Number(outCount) + Number(outTag.text()));
                 element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
+            }else{
+                console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
             }
         };
 
