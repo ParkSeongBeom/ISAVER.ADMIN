@@ -54,13 +54,10 @@ public class PersistenceConfigurer {
     public FindSystemUtil findSystemUtil() {
         // H/W 라이선스 체크
         FindSystemUtil findSystemUtil = new FindSystemUtil();
-
-        if (System.getProperty("web.execute.mode") == null) {
-            ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
-            if(!resultSystemBean.getaBoolean()){
-                logger.error(resultSystemBean.getLogdata());
-                System.exit(0);
-            }
+        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
+        if(!resultSystemBean.getaBoolean()){
+            logger.error(resultSystemBean.getLogdata());
+            System.exit(0);
         }
         return findSystemUtil;
     }

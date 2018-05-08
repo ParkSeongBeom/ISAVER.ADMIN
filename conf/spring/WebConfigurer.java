@@ -6,6 +6,8 @@ import com.icent.isaver.admin.util.*;
 import com.kst.common.util.POIExcelView;
 import com.sun.org.glassfish.gmbal.Description;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -47,6 +49,7 @@ import java.util.List;
 }
 )
 public class WebConfigurer extends WebMvcConfigurerAdapter {
+    static Logger logger = LoggerFactory.getLogger(WebConfigurer.class);
 
     @Inject
     private PropertyManager propertyManager;
@@ -249,5 +252,19 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     public IsaverCriticalUtil isaverCriticalUtil() {
         IsaverCriticalUtil criticalUtil=new IsaverCriticalUtil();
         return criticalUtil;
+    }
+
+    @Bean
+    public String printVersion() {
+        String version = null;
+        StringBuilder loggerBuiler = new StringBuilder();
+        loggerBuiler.append("\n==============================").append("\n");
+        loggerBuiler.append("= iSaver Admin Version : "+propertyManager.getProperty("cnf.server.version")).append("\n");
+        loggerBuiler.append("==============================");
+        version = loggerBuiler.toString();
+        loggerBuiler.setLength(0);
+
+        logger.info(version);
+        return version;
     }
 }
