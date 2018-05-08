@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -37,6 +38,21 @@ public class InoutConfigurationCtrl {
     private InoutConfigurationSvc inoutConfigurationSvc;
 
     private final static String[] saveInoutConfigurationParam = new String[]{"areaId","inoutDatetimes"};
+
+    /**
+     * 진출입자 조회 주기 목록을 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
+    public ModelAndView findListInoutConfiguration(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
+        ModelAndView modelAndView = inoutConfigurationSvc.findListInoutConfiguration(parameters);
+        return modelAndView;
+    }
 
     /**
      * 진출입자 조회 주기를 저장한다.

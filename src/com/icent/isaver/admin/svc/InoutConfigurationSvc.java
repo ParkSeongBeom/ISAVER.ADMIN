@@ -20,6 +20,14 @@ import java.util.Map;
  * </pre>
  */
 public interface InoutConfigurationSvc {
+    /**
+     * 진출입자 조회 주기 목록을 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    public ModelAndView findListInoutConfiguration(Map<String, String> parameters);
 
     /**
      * 진출입자 조회 주기를 저장한다.

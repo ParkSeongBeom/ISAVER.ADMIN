@@ -498,7 +498,7 @@
      @author psb
      */
     var urlConfig = {
-        inoutDetailUrl : "${rootPath}/eventLog/blinkerList.json"
+        inoutConfigListUrl : "${rootPath}/inoutConfiguration/list.json"
         ,chartUrl : "${rootPath}/eventLog/chart.json"
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
         ,inoutConfigAreaTreeUrl : "${rootPath}/area/treeList.json"
@@ -506,7 +506,7 @@
 
     var messageConfig = {
         inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
-        , inoutDetailFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
+        , inoutConfigListFailure  :'<spring:message code="dashboard.message.inoutConfigListFailure"/>'
         , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
         , inoutConfigEmptyArea : '<spring:message code="dashboard.message.inoutConfigEmptyArea"/>'
         , saveInoutConfigurationComplete : '<spring:message code="dashboard.message.saveInoutConfigurationComplete"/>'
@@ -787,7 +787,7 @@
      * @author psb
      */
     function selectInoutConfigArea(_areaId){
-        callAjax('inoutDetail',{areaIds:_areaId});
+        callAjax('inoutConfigList',{areaId:_areaId});
     }
 
     /**
@@ -847,8 +847,8 @@
             case 'chart':
                 chartRender(data);
                 break;
-            case 'inoutDetail':
-                inoutDetailRender(data['eventLog']);
+            case 'inoutConfigList':
+                inoutConfigListRender(data['inoutConfigList']);
                 break;
             case 'saveInoutConfiguration':
                 alertMessage(actionType+'Complete');
@@ -925,22 +925,12 @@
     }
 
     /**
-     * 해당구역의 진출입 상세
+     * 진출입 조회주기 설정 Render
      */
-    function inoutDetailRender(data){
+    function inoutConfigListRender(data){
         if(data==null){
             return false;
         }
-
-        var blinkerDatetimes = [];
-        for(var index in data){
-            var inout = data[index];
-            var startDatetime = new Date(inout['startDatetime']);
-            blinkerDatetimes.push(startDatetime.format("HH:mm:ss"));
-        }
-
-        blinkerDatetimes.sort();
-        blinkerDatetimes = uniqArrayList(blinkerDatetimes);
 
         var inoutSetTag = $(".iocount_popup .iotime_set");
         // 진출입 조회주기 설정 초기화
@@ -949,21 +939,25 @@
         inoutSetTag.find("input[type='number']").val(0);
         inoutSetTag.find("input[name='endTime']").val("");
 
-        // 진출입 조회주기 설정 render
-        for(var index in blinkerDatetimes){
-            try{
-                var inoutDatetime = blinkerDatetimes[index].split(":");
+        try{
+            for(var index in data){
+                var inout = data[index];
+                var inoutDatetime = inout['inoutStarttime'].split(":");
                 var settingTag = inoutSetTag.find("li[settingIndex='"+index+"']");
-                settingTag.find("input[type='number']:eq(0)").val(inoutDatetime[0]);
-                settingTag.find("input[type='number']:eq(1)").val(inoutDatetime[1]);
-                settingTag.find("input[type='number']:eq(2)").val(inoutDatetime[2]);
-                if(index>0){
-                    settingTag.find(".checkbox_set").addClass("on");
-                    settingTag.find("input[type='checkbox']").prop("checked",true);
+
+                if(settingTag!=null){
+                    if(index>0){
+                        settingTag.find(".checkbox_set").addClass("on");
+                        settingTag.find("input[type='checkbox']").prop("checked",true);
+                    }
+
+                    for(var i in inoutDatetime){
+                        settingTag.find("input[type='number']:eq("+i+")").val(inoutDatetime[i]);
+                    }
                 }
-            }catch(e){
-                console.error(e);
             }
+        }catch(e){
+            console.error("[inoutConfigListRender] parse error - "+ e.message);
         }
 
         updateInoutSettingDatetime();

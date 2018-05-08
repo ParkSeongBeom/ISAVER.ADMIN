@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.repository.bean.InoutConfigurationBean;
 import com.icent.isaver.repository.dao.base.InoutConfigurationDao;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
@@ -58,6 +59,16 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
 
     @Inject
     private InoutConfigurationDao inoutConfigurationDao;
+
+    @Override
+    public ModelAndView findListInoutConfiguration(Map<String, String> parameters) {
+        List<InoutConfigurationBean> inoutConfigurationBeanList = inoutConfigurationDao.findListInoutConfiguration(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("inoutConfigList", inoutConfigurationBeanList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
 
     @Override
     public ModelAndView saveInoutConfiguration(Map<String, String> parameters) {

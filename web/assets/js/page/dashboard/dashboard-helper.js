@@ -285,22 +285,17 @@ var DashboardHelper = (
                 return false;
             }
 
-            var _targetAreaId = null;
-
             for(var index in data){
                 var inout = data[index];
-                if(_targetAreaId==null || _targetAreaId!=inout['areaId']){
-                    _targetAreaId = inout['areaId'];
-                    var inoutTag = _self.getArea("element", inout['areaId']);
-                    if(inoutTag!=null){
-                        var inCount = inout['inCount']!=null?inout['inCount']:0;
-                        var outCount = inout['outCount']!=null?inout['outCount']:0;
-                        inoutTag.find("p[in]").text(inCount);
-                        inoutTag.find("p[out]").text(outCount);
-                        inoutTag.find("p[gap]").text(inCount-outCount);
-                        inoutTag.attr("startDatetime",inout['startDatetime']);
-                        inoutTag.attr("endDatetime",inout['endDatetime']);
-                    }
+                var inoutTag = _self.getArea("element", inout['areaId']);
+                if(inoutTag!=null){
+                    var inCount = inout['inCount']!=null?inout['inCount']:0;
+                    var outCount = inout['outCount']!=null?inout['outCount']:0;
+                    inoutTag.find("p[in]").text(inCount);
+                    inoutTag.find("p[out]").text(outCount);
+                    inoutTag.find("p[gap]").text(inCount-outCount);
+                    inoutTag.attr("startDatetime",inout['startDatetime']);
+                    inoutTag.attr("endDatetime",inout['endDatetime']);
                 }
             }
         };
@@ -439,10 +434,10 @@ var DashboardHelper = (
             var startDatetime = new Date(Number(element.attr("startDatetime")));
             var endDatetime = new Date(Number(element.attr("endDatetime")));
             var eventDatetime = new Date(data['eventDatetime']);
-            var inCount = 0;
-            var outCount = 0;
 
             if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
+                var inCount = 0;
+                var outCount = 0;
                 for(var index in data['infos']){
                     var info = data['infos'][index];
 
@@ -452,16 +447,19 @@ var DashboardHelper = (
                         outCount = info['value'];
                     }
                 }
-            }
 
-            if(inCount>0 || outCount>0){
-                var inTag = element.find("[in]");
-                var outTag = element.find("[out]");
-                inTag.text(Number(inCount) + Number(inTag.text()));
-                outTag.text(Number(outCount) + Number(outTag.text()));
-                element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
+                if(inCount>0 || outCount>0){
+                    var inTag = element.find("[in]");
+                    var outTag = element.find("[out]");
+                    inTag.text(Number(inCount) + Number(inTag.text()));
+                    outTag.text(Number(outCount) + Number(outTag.text()));
+                    element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
+                }else{
+                    console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
+                }
             }else{
-                console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
+                console.warn("[DashboardHelper][blinkerUpdate] eventDatetime is not between startDatetime and endDatetime"
+                    ,{"areaId":data['areaId'],"startDatetime":startDatetime.format("yyyy-MM-dd HH:mm:ss"),"endDatetime":endDatetime.format("yyyy-MM-dd HH:mm:ss"),"eventDatetime":eventDatetime.format("yyyy-MM-dd HH:mm:ss")});
             }
         };
 
