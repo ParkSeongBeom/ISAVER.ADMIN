@@ -107,8 +107,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             Map websocketParam = new HashMap();
             websocketParam.put("messageType","refreshBlinker");
             websocketParam.put("areaId", parameters.get("areaId"));
-            InetAddress address = InetAddress.getByName(wsAddress);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -40,8 +40,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${ws.server.urlConnect}")
-    private String wsUrlConnect = null;
+    @Value("${ws.server.eventUrlConnect}")
+    private String wsEventUrlConnect = null;
 
     @Value("${ws.server.deviceUrlConnect}")
     private String wsDeviceUrlConnect = null;
@@ -112,7 +112,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
         InetAddress address = InetAddress.getByName(wsAddress);
-        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlConnect);
+        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
         modelAndView.addObject("deviceWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsDeviceUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);

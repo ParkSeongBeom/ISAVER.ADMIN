@@ -88,8 +88,7 @@ public class TestSvcImpl implements TestSvc {
         parameters.put("time",sdf.format(new Date()));
 
         try {
-            InetAddress address = InetAddress.getByName(ipAddress);
-            AlarmRequestUtil.sendAlarmRequestFunc(parameters, "http://" + address.getHostAddress() + ":" + port + "/" + projectName + eventAddUrl, "form", null);
+            AlarmRequestUtil.sendAlarmRequestFunc(parameters, "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl, "form", null);
         } catch (IOException e) {
             e.printStackTrace();
         }

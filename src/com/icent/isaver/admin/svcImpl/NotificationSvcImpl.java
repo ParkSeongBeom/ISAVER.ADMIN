@@ -125,8 +125,7 @@ public class NotificationSvcImpl implements NotificationSvc {
             websocketParam.put("notification", parameterList);
             websocketParam.put("messageType","updateNotification");
 
-            InetAddress address = InetAddress.getByName(wsAddress);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

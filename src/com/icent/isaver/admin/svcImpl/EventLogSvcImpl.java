@@ -6,12 +6,9 @@ import com.icent.isaver.repository.bean.EventLogBean;
 import com.icent.isaver.repository.dao.base.EventLogDao;
 import com.kst.common.util.POIExcelUtil;
 import com.kst.common.util.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,36 +23,6 @@ import java.util.Map;
  */
 @Service
 public class EventLogSvcImpl implements EventLogSvc {
-
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
-
-    @Value("${ws.server.port}")
-    private String wsPort = null;
-
-    @Value("${ws.server.projectName}")
-    private String wsProjectName = null;
-
-    @Value("${ws.server.urlSendEvent}")
-    private String wsUrlSendEvent = null;
-
-    @Value("${vms.server.logSendFlag}")
-    private String vmsLogSend = null;
-
-    @Value("${vms.server.address}")
-    private String vmsAddress = null;
-
-    @Value("${vms.server.port}")
-    private String vmsPort = null;
-
-    @Value("${vms.server.projectName}")
-    private String vmsProjectName = null;
-
-    @Value("${vms.server.urlSendEvent}")
-    private String vmsUrlSendEvent = null;
-
-    @Resource(name="isaverTxManager")
-    private DataSourceTransactionManager transactionManager;
 
     @Inject
     private EventLogDao eventLogDao;

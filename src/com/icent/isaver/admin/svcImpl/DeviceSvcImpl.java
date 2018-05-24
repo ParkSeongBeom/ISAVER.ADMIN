@@ -58,8 +58,8 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${ws.server.urlDeviceRequestSync}")
-    private String wsUrlDeviceRequestSync = null;
+    @Value("${ws.server.urlDeviceSync}")
+    private String wsUrlDeviceSync = null;
 
     @Inject
     private DeviceDao deviceDao;
@@ -213,7 +213,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 throw new IcentException("");
             }
 
-            deviceRequestSync(parameters.get("deviceId"));
+            deviceSync(parameters.get("deviceId"));
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -264,7 +264,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             throw new IcentException("");
         }
 
-        deviceRequestSync(parameters.get("deviceId"));
+        deviceSync(parameters.get("deviceId"));
 
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
@@ -313,7 +313,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 throw new IcentException("");
             }
 
-            deviceRequestSync(parameters.get("deviceId"));
+            deviceSync(parameters.get("deviceId"));
         }
 
 
@@ -356,7 +356,7 @@ public class DeviceSvcImpl implements DeviceSvc {
         return modelAndView;
     }
 
-    private void deviceRequestSync(String deviceId){
+    private void deviceSync(String deviceId){
         Map parentDeviceParam = new HashMap();
         parentDeviceParam.put("deviceId",deviceId);
         DeviceBean parentDevice = deviceDao.findByParentDevice(parentDeviceParam);
@@ -366,13 +366,12 @@ public class DeviceSvcImpl implements DeviceSvc {
                 Map websocketParam = new HashMap();
                 websocketParam.put("deviceId",parentDevice.getDeviceId());
 
-                InetAddress address = InetAddress.getByName(wsAddress);
-                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceRequestSync, "form", null);
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceSync, "form", null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else{
-            logger.error("[deviceRequestSync] error - parent device is null");
+            logger.error("[deviceSync] error - parent device is null");
         }
 
         parentDeviceParam = null;

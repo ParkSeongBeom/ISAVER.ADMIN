@@ -42,8 +42,8 @@ var VideoMediator = (
          */
         this.createPlayer = function(_deviceList){
             for(var index in _deviceList){
-                var _src = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+_deviceList[index]['linkUrl'];
-                if(_deviceList[index]['deviceCode']==useDeviceCode && _src!=null){
+                if(_deviceList[index]['deviceCode']==useDeviceCode && _deviceList[index]['ipAddress']!=null && _deviceList[index]['ipAddress']!=''){
+                    var _src = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+(_deviceList[index]['port']!=null?":"+_deviceList[index]['port']:"")+_deviceList[index]['linkUrl'];
                     element.append(
                         $("<li/>",{class:'ptz'}).append(
                             $("<div/>",{id:_deviceList[index]['deviceId'],class:"vxgplayer",style:"border:0; margin:0;"})
@@ -54,7 +54,7 @@ var VideoMediator = (
                         url: _src,
                         nmf_path: 'media_player.nmf',
                         nmf_src: rootPath+'/assets/library/vxg/pnacl/Release/media_player.nmf',
-                        latency: 300000,
+                        latency: 10000,
                         aspect_ratio_mode: 1,
                         autohide: 3,
                         controls: false,

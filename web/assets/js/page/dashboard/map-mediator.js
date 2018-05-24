@@ -12,9 +12,17 @@ var MapMediator = (
         var version;
         var MARKER_TYPE = ['device', 'fence', 'object','camera'];
 
-        var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
-        var imageLat = {north: 37.49586539601683, east: 127.03165207272161, south: 37.49505460178254, west: 127.03028592727844};
-        var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
+        // 코엑스 전시회
+        var defaultCenterLat = {lat: 37.51118474372142, lng: 127.05980761824708};
+        var imageLat = {north: 37.51305614478644, east: 127.06221758679703, south: 37.50981366171428, west: 127.05675300502435};
+        var imageUrl = "/assets/library/googlemap/images/map_wide_02.svg";
+
+        // 사내
+        //var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
+        //var imageLat = {north: 37.49586539601683, east: 127.03165207272161, south: 37.49505460178254, west: 127.03028592727844};
+        //var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
+
+        // 강정항
         //var defaultCenterLat = {lat: 33.2270341616581, lng: 126.47650582604706};
         //var imageLat = {north: 33.23051741102446, east: 126.48215145692825, south: 33.22367866853329, west: 126.47122229338288};
         //var imageUrl = "/assets/library/googlemap/images/map_03.svg";
@@ -50,7 +58,7 @@ var MapMediator = (
                 }
             },
             "image" : {
-                'useFlag' : false
+                'useFlag' : true
                 ,'content' : "<div class='mapimages'><div></div></div>"
             }
         };
@@ -90,7 +98,7 @@ var MapMediator = (
 
             map = new google.maps.Map(canvas.get(0), {
                 center: new google.maps.LatLng(_lat['lat'], _lat['lng']),
-                zoom: 20, // 지도 zoom단계
+                zoom: 22, // 지도 zoom단계
                 /**
                  * roadmap : 기본 도로 지도 뷰를 표시합니다. 기본 지도 유형입니다.
                  * satellite : Google 어스 위성 이미지를 표시합니다.
