@@ -13,19 +13,10 @@ var MapMediator = (
         var MARKER_TYPE = ['device', 'fence', 'object','camera'];
 
         // 코엑스 전시회
-        var defaultCenterLat = {lat: 37.51118474372142, lng: 127.05980761824708};
-        var imageLat = {north: 37.51305614478644, east: 127.06221758679703, south: 37.50981366171428, west: 127.05675300502435};
-        var imageUrl = "/assets/library/googlemap/images/map_wide_02.svg";
-
+        //var defaultCenterLat = {lat: 37.51118474372142, lng: 127.05980761824708};
         // 사내
-        //var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
-        //var imageLat = {north: 37.49586539601683, east: 127.03165207272161, south: 37.49505460178254, west: 127.03028592727844};
-        //var imageUrl = "/assets/library/googlemap/images/mapex_n.svg";
+        var defaultCenterLat = {lat : 37.495450, lng : 127.031012};
 
-        // 강정항
-        //var defaultCenterLat = {lat: 33.2270341616581, lng: 126.47650582604706};
-        //var imageLat = {north: 33.23051741102446, east: 126.48215145692825, south: 33.22367866853329, west: 126.47122229338288};
-        //var imageUrl = "/assets/library/googlemap/images/map_03.svg";
         var canvas;
         var map;
         var marker = {
@@ -40,11 +31,6 @@ var MapMediator = (
                 ,'content1' : "<div class='device'><div class='icon-tof'></div></div>"
                 ,"targetClass" : ".device"
             },
-            "camera" : {
-                'useYn' : false
-                ,'lat' : 33.227130639998
-                , 'lng' : 126.47661713772118
-            },
             "fence" : {
                 "fillColor" : ["#f6b900", "#FF0000"]
                 ,"strokeColor" : ["#f6b900", "#FF0000"]
@@ -57,8 +43,16 @@ var MapMediator = (
                     ,'duration' : 200
                 }
             },
+            "camera" : {
+                'useFlag' : false
+                ,'lat' : 33.227130639998
+                , 'lng' : 126.47661713772118
+            },
             "image" : {
-                'useFlag' : true
+                'useFlag' : false
+                ,'url' : "/assets/library/googlemap/images/mapex_n.svg"
+                //,'lat' : {north: 37.51305614478644, east: 127.06221758679703, south: 37.50981366171428, west: 127.05675300502435} // 코엑스
+                ,'lat' : {north: 37.49586539601683, east: 127.03165207272161, south: 37.49505460178254, west: 127.03028592727844} // 사내
                 ,'content' : "<div class='mapimages'><div></div></div>"
             }
         };
@@ -74,7 +68,7 @@ var MapMediator = (
         var _initialize = function(_rootPath, _version){
             rootPath = _rootPath;
             version = _version;
-            imageUrl = rootPath + imageUrl + "?version="+_version;
+            options['image']['url'] = rootPath + options['image']['url'] + "?version="+_version;
         };
 
         /**
@@ -133,7 +127,7 @@ var MapMediator = (
         };
 
         this.addCamera = function(_id){
-            if(!options['camera']['useYn']){
+            if(!options['camera']['useFlag']){
                 return false;
             }
             if(_id==null){
@@ -175,7 +169,7 @@ var MapMediator = (
                             position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
                             title : _id,
                             map: map,
-                            content : !options['camera']['useYn']?options[_type]["content"]:options[_type]["content1"],
+                            content : !options['camera']['useFlag']?options[_type]["content"]:options[_type]["content1"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
                         marker[_type][_id]['objects'] = [];
@@ -390,7 +384,7 @@ var MapMediator = (
                 return false;
             }
 
-            historicalOverlay = new google.maps.GroundOverlay(imageUrl,imageLat);
+            historicalOverlay = new google.maps.GroundOverlay(options['image']['url'],options['image']['lat']);
             historicalOverlay.setMap(map);
             canvas.addClass("map_images");
         };

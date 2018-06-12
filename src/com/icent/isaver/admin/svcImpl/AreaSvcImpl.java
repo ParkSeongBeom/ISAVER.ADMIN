@@ -36,6 +36,7 @@ import java.util.Map;
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
  *  2016. 6. 1.     dhj           최초 생성
+ *  2018. 6. 12.     psb           트리 제거 및 소스정리
  * </pe>
  */
 @Service
@@ -54,17 +55,8 @@ public class AreaSvcImpl implements AreaSvc {
     private DeviceSyncRequestSvc deviceSyncRequestSvc;
 
     @Override
-    public ModelAndView findAllAreaTree(Map<String, String> parameters) {
-        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("areaList", areaList);
-        return modelAndView;
-    }
-
-    @Override
     public ModelAndView findListArea(Map<String, String> parameters) {
-//        List<AreaBean> areas = areaDao.findListArea(parameters);
-        List<AreaBean> areas = areaDao.findAllAreaTree(null);
+        List<AreaBean> areas = areaDao.findListArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("areas", areas);
@@ -129,7 +121,7 @@ public class AreaSvcImpl implements AreaSvc {
         try {
             areaDao.saveArea(parameters);
             if(StringUtils.notNullCheck(parameters.get("allTemplate"))){
-                areaDao.saveAreaTemplate(parameters );
+                areaDao.saveAreaTemplate(parameters);
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

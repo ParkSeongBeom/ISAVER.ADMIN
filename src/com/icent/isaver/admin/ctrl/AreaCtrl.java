@@ -30,50 +30,16 @@ public class AreaCtrl {
     private AreaSvc areaSvc;
 
     /**
-     * 구역 트리를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/treeList")
-    public ModelAndView findListTree(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-
-        ModelAndView modelAndView = areaSvc.findAllAreaTree(parameters);
-        return modelAndView;
-    }
-
-    /**
      * 구역 목록을 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "areaList", parameters);
-        AdminHelper.setPageParam(parameters, defaultPageSize);
-
         ModelAndView modelAndView = areaSvc.findListArea(parameters);
-        modelAndView.setViewName("areaList");
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-    /**
-     *  구역 정보를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
-    public ModelAndView findByArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = areaSvc.findByArea(parameters);
-//        modelAndView.setViewName("areaDetail");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -83,7 +49,7 @@ public class AreaCtrl {
     /**
      *  구역을 등록 한다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return
@@ -105,7 +71,7 @@ public class AreaCtrl {
     /**
      *  구역을 수정 한다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return
@@ -127,7 +93,7 @@ public class AreaCtrl {
     /**
      *  구역을 제거 한다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return

@@ -109,9 +109,9 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         accept : "application/json; charset=UTF-8;",
         contentsType: 'application/json',
         data: data,
-        success : function(data, dataType){
+        success : function(resultData, dataType){
             removeExcuteArray(reqUrl,method,data);
-            successCallback(data, dataType, actionType);
+            successCallback(resultData, dataType, actionType);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
             removeExcuteArray(reqUrl,method,data);

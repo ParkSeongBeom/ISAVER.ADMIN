@@ -179,6 +179,17 @@ public class AdminResource {
     };
 
     /**
+     * 파일 타입
+     * @author psb
+     */
+    public final static Map<String, String> FILE_TYPE = new HashMap<String, String>(){
+        {
+            put("alarm","alarm"); // 알람파일
+            put("map","map"); // Map파일
+        }
+    };
+
+    /**
      * 통계메뉴 상위 ID
      * @author psb
      */

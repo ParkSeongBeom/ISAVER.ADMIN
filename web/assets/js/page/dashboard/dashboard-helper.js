@@ -45,6 +45,46 @@ var DashboardHelper = (
         };
 
         /**
+         * set websocket
+         * @author psb
+         */
+        this.setWebsocket = function(_webSocketHelper, _deviceWebSocketUrl){
+            if($("div[templateCode='TMP005']").length>0){
+                _webSocketHelper.addWebSocketList("device", _deviceWebSocketUrl, null, deviceMessageEventHandler);
+                _webSocketHelper.wsConnect("device");
+            }
+        };
+
+        /**
+         * 웹소켓 메세지 리스너
+         * @param message
+         */
+        var deviceMessageEventHandler = function(message) {
+            var resultData;
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                console.warn("[deviceMessageEventHandler] json parse error - " + message.data);
+                return false;
+            }
+
+            var _mapMediator = _self.getGuard('map', resultData['areaId']);
+            if(resultData['areaId']!=null && _mapMediator!=null && _mapMediator instanceof MapMediator){
+                switch (resultData['actionType']) {
+                    case "add":
+                        _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                        break;
+                    case "save":
+                        _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                        break;
+                    case "remove":
+                        _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
+                        break;
+                }
+            }
+        };
+
+        /**
          * set Area List
          */
         this.setAreaList = function(){
@@ -456,6 +496,44 @@ var DashboardHelper = (
                     element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
                 }else{
                     console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
+                }
+
+                if(chartList[data['areaId']]!=null && outCount>0) {
+                    var _eventDate = new Date();
+                    _eventDate.setTime(data['eventDatetime']);
+                    var _eventDateStr;
+                    switch ($("div[dateSelType='"+data['areaId']+"'] button.on").attr("value")){
+                        case 'day':
+                            _eventDateStr = _eventDate.format("HH");
+                            break;
+                        case 'week':
+                            _eventDateStr = _eventDate.format("es");
+                            break;
+                        case 'month':
+                            _eventDateStr = _eventDate.getWeekOfMonth()+"주";
+                            break;
+                        case 'year':
+                            _eventDateStr = _eventDate.format("MM");
+                            break;
+                    }
+
+                    var _labels = chartList[data['areaId']].data.labels;
+                    var seriesIndex = null;
+                    for(var i=0; i<_labels.length; i++){
+                        if(_labels[i]==_eventDateStr){
+                            seriesIndex = i;
+                            break;
+                        }
+                    }
+
+                    if(seriesIndex!=null){
+                        try{
+                            chartList[data['areaId']].data.series[0][i] = Number(chartList[data['areaId']].data.series[0][i]) + Number(outCount);
+                            chartList[data['areaId']].update();
+                        }catch(e){
+                            console.error("[DashboardHelper][blinkerUpdate] series index error - "+e);
+                        }
+                    }
                 }
             }else{
                 console.warn("[DashboardHelper][blinkerUpdate] eventDatetime is not between startDatetime and endDatetime"

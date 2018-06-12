@@ -203,35 +203,56 @@
                                 </c:if>
                             </header>
                             <article>
-                                <section class="personnel_set">
-                                    <!--
-                                     s_lbox : 왼쪽 컨텐츠 삽입 영역
-                                     s_rbox : 오른쪽 컨텐츠 리스트 삽입영역
-                                    -->
-                                    <!-- 대표 지정 진출입 -->
-                                    <div class="s_lbox blinker_set ">
-                                        <h3></h3>
-                                        <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}">
-                                            <p gap>0</p>
-                                            <div>
-                                                <p in>0</p>
-                                                <p out>0</p>
+                                <c:if test="${mainTarget.targetId=='taekwon'}">
+                                    <section class="personnel_set">
+                                        <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}" class="kblinker_set">
+                                            <p class="title">
+                                                <em>${childArea.areaName}</em>
+                                                <em><spring:message code="dashboard.title.taekwonOutCount"/></em>
+                                            </p>
+                                            <p out class="out">0</p>
+                                        </div>
+                                    </section>
+                                    <section class="chart_area">
+                                        <div class="chart_select_set" inoutChart dateSelType="${childArea.areaId}">
+                                            <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.day"/></button>
+                                            <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.week"/></button>
+                                            <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.month"/></button>
+                                            <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.year"/></button>
+                                        </div>
+                                        <div class="chart_box chart01" chartAreaId="${childArea.areaId}"></div>
+                                    </section>
+                                </c:if>
+                                <c:if test="${mainTarget.targetId!='taekwon'}">
+                                    <section class="personnel_set">
+                                        <!--
+                                        s_lbox : 왼쪽 컨텐츠 삽입 영역
+                                        s_rbox : 오른쪽 컨텐츠 리스트 삽입영역
+                                        -->
+                                        <!-- 대표 지정 진출입 -->
+                                        <div class="s_lbox blinker_set ">
+                                            <h3></h3>
+                                            <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}">
+                                                <p gap>0</p>
+                                                <div>
+                                                    <p in>0</p>
+                                                    <p out>0</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <c:choose>
-                                        <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
-                                            <c:set var="childBlinker" value="0"/>
-                                            <c:forEach var="area" items="${childArea.areas}">
-                                                <c:if test="${area.templateCode=='TMP003'}">
-                                                    <c:set var="childBlinker" value="1"/>
-                                                </c:if>
-                                            </c:forEach>
-                                            <c:if test="${childBlinker==1}">
-                                                <div class="s_rbox ">
+                                        <c:choose>
+                                            <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
+                                                <c:set var="childBlinker" value="0"/>
+                                                <c:forEach var="area" items="${childArea.areas}">
+                                                    <c:if test="${area.templateCode=='TMP003'}">
+                                                        <c:set var="childBlinker" value="1"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:if test="${childBlinker==1}">
+                                                    <div class="s_rbox ">
                                                     <!-- 스크롤 영역 시작 -->
                                                     <ul data-duplicated='true' data-direction='up'>
-                                            </c:if>
+                                                </c:if>
                                                 <c:forEach var="area" items="${childArea.areas}">
                                                     <c:if test="${area.templateCode=='TMP003'}">
                                                         <li class="blinker_set">
@@ -246,18 +267,19 @@
                                                         </li>
                                                     </c:if>
                                                 </c:forEach>
-                                            <c:if test="${childBlinker==1}">
+                                                <c:if test="${childBlinker==1}">
                                                     </ul>
-                                                <!-- 스크롤 영역 끝 -->
-                                                </div>
-                                            </c:if>
-                                        </c:when>
-                                    </c:choose>
-                                </section>
-                                <div class="m_marqueebox">
-                                    <!-- <span>에 내용 삽입 -->
-                                    <p messageBox></p>
-                                </div>
+                                                    <!-- 스크롤 영역 끝 -->
+                                                    </div>
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </section>
+                                    <div class="m_marqueebox">
+                                        <!-- <span>에 내용 삽입 -->
+                                        <p messageBox></p>
+                                    </div>
+                                </c:if>
                             </article>
                         </div>
                     </c:if>
@@ -275,14 +297,13 @@
                             <article>
                                 <section class="nhr_set">
                                     <div class="s_lbox">
-                                        <div class="chart_select_set" dateSelType>
+                                        <div class="chart_select_set" dateSelType="${childArea.areaId}">
                                             <button value="day" class="on" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.day"/></button>
                                             <button value="week" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.week"/></button>
                                             <button value="month" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.month"/></button>
                                             <button value="year" href="#" onclick="javascript:dateSelTypeClick('${childArea.areaId}', this); return false;"><spring:message code="common.column.year"/></button>
                                         </div>
-                                        <div class="chart_box chart01" chartAreaId="${childArea.areaId}">
-                                        </div>
+                                        <div class="chart_box chart01" chartAreaId="${childArea.areaId}"></div>
                                     </div>
                                     <c:choose>
                                         <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
@@ -501,7 +522,7 @@
         inoutConfigListUrl : "${rootPath}/inoutConfiguration/list.json"
         ,chartUrl : "${rootPath}/eventLog/chart.json"
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
-        ,inoutConfigAreaTreeUrl : "${rootPath}/area/treeList.json"
+        ,inoutConfigAreaTreeUrl : "${rootPath}/area/list.json"
     };
 
     var messageConfig = {
@@ -531,14 +552,11 @@
             updateInoutSettingDatetime();
         });
 
-        webSocketHelper.addWebSocketList("device", "${deviceWebSocketUrl}", null, deviceMessageEventHandler);
-        webSocketHelper.wsConnect("device");
-
         dashboardHelper.setMessageConfig(messageConfig);
+        dashboardHelper.setWebsocket(webSocketHelper, "${deviceWebSocketUrl}");
         dashboardHelper.setAreaList();
         dashboardHelper.getBlinkerList();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
-
 
         /* 이벤트 callback (websocket 리스너) */
         setRefreshTimeCallBack(refreshInoutSetting);
@@ -608,35 +626,6 @@
         dashboardHelper.setGuardList();
     }
 
-    /**
-     * 웹소켓 메세지 리스너
-     * @param message
-     */
-    function deviceMessageEventHandler(message) {
-        var resultData;
-        try{
-            resultData = JSON.parse(message.data);
-        }catch(e){
-            console.warn("[deviceMessageEventHandler] json parse error - " + message.data);
-            return false;
-        }
-
-        var _mapMediator = dashboardHelper.getGuard('map', resultData['areaId']);
-        if(resultData['areaId']!=null && _mapMediator!=null && _mapMediator instanceof MapMediator){
-            switch (resultData['actionType']) {
-                case "add":
-                    _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                    break;
-                case "save":
-                    _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                    break;
-                case "remove":
-                    _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
-                    break;
-            }
-        }
-    }
-
     function initChartList(){
         $(".watch_area li[deviceId]").on("click",function(){
             if(!$(this).hasClass("on")){
@@ -663,14 +652,48 @@
                    divisor: 100
                }),
                plugins: [
-                   Chartist.plugins.tooltip()
+                   ctPointLabels()
+                   ,Chartist.plugins.tooltip()
                ]
            });
         });
 
+        // Detector 초기 로딩시 처음 Device 선택
         $(".watch_area ul[detectorDeviceList]").each(function(){
             $(this).find("li:eq(0)").trigger("click");
         });
+
+        // Blinker Chart 초기 로딩시 데이터 로드
+        $("div[inoutChart][dateSelType]").each(function(){
+            findListChart($(this).attr("dateSelType"), null);
+        });
+    }
+
+    function ctPointLabels(options) {
+        return function ctPointLabels(_chart) {
+            var defaultOptions = {
+                labelClass: 'ct-label01',
+                labelOffset: {
+                    x: 0,
+                    y: -10
+                },
+                textAnchor: 'middle'
+            };
+
+            options = Chartist.extend({}, defaultOptions, options);
+
+            if (_chart instanceof Chartist.Line) {
+                _chart.on('draw', function (data) {
+                    if (data.type === 'point') {
+                        data.group.elem('text', {
+                            x: data.x + options.labelOffset.x,
+                            y: data.y + options.labelOffset.y + 5,
+                            style: 'text-anchor: ' + options.textAnchor
+                        }, options.labelClass).text(data.value.y);
+                    }
+                });
+            }
+        }
     }
 
     function dateSelTypeClick(_areaId, _this){
@@ -685,7 +708,7 @@
     }
 
     function initInoutConfigAreaDynatree(){
-        callAjax('inoutConfigAreaTree');
+        callAjax('inoutConfigAreaTree', {delYn:'N'});
     }
 
     function refreshInoutSetting(_serverDatetime){
@@ -855,7 +878,7 @@
                 closeInoutConfigListPopup();
                 break;
             case 'inoutConfigAreaTree':
-                var areaList = data['areaList'];
+                var areaList = data['areas'];
                 var _treeModel = [];
                 for(var index in areaList){
                     var area = areaList[index];
@@ -904,7 +927,7 @@
     }
 
     function findListChart(_chartAreaId, _deviceId){
-        var dateSelType = $("div[areaId='"+_chartAreaId+"'] div[dateSelType] button.on").attr("value");
+        var dateSelType = $("div[dateSelType='"+_chartAreaId+"'] button.on").attr("value");
         var truncType;
 
         switch (dateSelType){

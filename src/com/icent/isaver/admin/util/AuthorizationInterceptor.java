@@ -49,6 +49,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
 
+    @Inject
+    private IsaverTargetUtil isaverTargetUtil;
+
     /**
      * 인자절차가 필요없는 path</br>
      * - properties/config.properties 참조
@@ -112,10 +115,11 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
         InetAddress address = InetAddress.getByName(wsAddress);
-        modelAndView.addObject("webSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
+        modelAndView.addObject("eventWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
         modelAndView.addObject("deviceWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsDeviceUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
+        modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
         modelAndView.addObject("serverVersion", version);

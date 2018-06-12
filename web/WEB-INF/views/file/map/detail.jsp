@@ -5,8 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="L00011" var="menuId"/>
-<c:set value="L00010" var="subMenuId"/>
+<c:set value="L00021" var="menuId"/>
+<c:set value="L00020" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
@@ -14,7 +14,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.mapFile"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -24,10 +24,7 @@
 
     <form id="fileForm" method="POST">
         <input type="hidden" name="fileId" value="${file.fileId}" />
-        <input type="hidden" name="selDevices" />
-        <input type="hidden" name="addDevices" />
-        <input type="hidden" name="removeDevices" />
-        <input type="hidden" name="addDeviceSyncRequests" />
+        <input type="hidden" name="fileType" value="map"/>
         <input type="hidden" name="physicalFileName" value="${file.physicalFileName}" />
         <input type="hidden" name="logicalFileName" value="${file.logicalFileName}" />
 
@@ -106,7 +103,7 @@
                     </c:if>
                     <c:if test="${!empty file.fileId}">
                         <button class="btn btype01 bstyle03" onclick="javascript:saveFile(); return false;"><spring:message code="common.button.save"/> </button>
-                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile('${file.alarmUseYn}'); return false;"><spring:message code="common.button.remove"/> </button>
+                        <button class="btn btype01 bstyle03" onclick="javascript:removeFile('${file.fkUseYn}'); return false;"><spring:message code="common.button.remove"/> </button>
                     </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
@@ -120,17 +117,12 @@
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
     var form = $('#fileForm');
-    var deviceInfo = {
-        "selDeviceList" : []
-        ,"addDeviceList" : []
-        ,"removeDeviceList" : []
-    };
 
     var urlConfig = {
         'addUrl':'${rootPath}/file/add.json'
         ,'saveUrl':'${rootPath}/file/save.json'
         ,'removeUrl':'${rootPath}/file/remove.json'
-        ,'listUrl':'${rootPath}/file/list.html'
+        ,'listUrl':'${rootPath}/file/mapList.html'
     };
 
     var messageConfig = {
@@ -145,7 +137,7 @@
         ,'removeComplete':'<spring:message code="file.message.removeComplete"/>'
         ,'titleEmpty':'<spring:message code="file.message.titleEmpty"/>'
         ,'fileEmpty':'<spring:message code="file.message.fileEmpty"/>'
-        ,'alarmUsed':'<spring:message code="file.message.alarmUsed"/>'
+        ,'usedFile':'<spring:message code="file.message.usedFile"/>'
     };
 
     var emptyListTag = $("<tr/>").append(
@@ -181,7 +173,6 @@
         }
 
         if(validate(1)){
-            $("input[name='addDevices']").val(deviceInfo['addDeviceList'].toString());
             callAjaxWithFile('add', form);
         }
     }
@@ -192,18 +183,13 @@
         }
 
         if(validate(1)){
-            $("input[name='selDevices']").val(deviceInfo['selDeviceList'].toString());
-            $("input[name='addDevices']").val(deviceInfo['addDeviceList'].toString());
-            $("input[name='removeDevices']").val(deviceInfo['removeDeviceList'].toString());
-            $("input[name='addDeviceSyncRequests']").val(deviceInfo['addDeviceList'].concat(deviceInfo['removeDeviceList']).toString());
-
             callAjaxWithFile('save', form);
         }
     }
 
-    function removeFile(alarmUseYn){
-        if(alarmUseYn!='N'){
-            alertMessage('alarmUsed');
+    function removeFile(fkUseYn){
+        if(fkUseYn!='N'){
+            alertMessage('usedFile');
             return false;
         }
 

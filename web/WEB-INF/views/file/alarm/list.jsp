@@ -15,7 +15,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.alarmFile"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -133,8 +133,8 @@
     var form = $('#fileForm');
 
     var urlConfig = {
-        'listUrl':'${rootPath}/file/list.html'
-        ,'detailUrl':'${rootPath}/file/detail.html'
+        'listUrl':'${rootPath}/file/alarmList.html'
+        ,'detailUrl':'${rootPath}/file/alarmDetail.html'
     };
 
     var pageConfig = {

@@ -61,12 +61,12 @@
         장치  관리
         @author dhj
     -->
-    <definition name="deviceList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/device/list.jsp" />
-    </definition>
-    <definition name="deviceDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/device/detail.jsp" />
-    </definition>
+    <!--<definition name="deviceList" extends="base">-->
+        <!--<put-attribute name="body" value="/WEB-INF/views/device/list.jsp" />-->
+    <!--</definition>-->
+    <!--<definition name="deviceDetail" extends="base">-->
+        <!--<put-attribute name="body" value="/WEB-INF/views/device/detail.jsp" />-->
+    <!--</definition>-->
 
     <!--
         장치 목록
@@ -96,12 +96,12 @@
         구역  관리
         @author dhj
     -->
-    <definition name="areaList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/area/list.jsp" />
-    </definition>
-    <definition name="areaDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/area/detail.jsp" />
-    </definition>
+    <!--<definition name="areaList" extends="base">-->
+        <!--<put-attribute name="body" value="/WEB-INF/views/area/list.jsp" />-->
+    <!--</definition>-->
+    <!--<definition name="areaDetail" extends="base">-->
+        <!--<put-attribute name="body" value="/WEB-INF/views/area/detail.jsp" />-->
+    <!--</definition>-->
 
     <!--
         라이센스  관리
@@ -241,14 +241,25 @@
     <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
 
     <!--
-        파일 관리
+        알람 파일 관리
         @author psb
     -->
-    <definition name="fileList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/list.jsp" />
+    <definition name="alarmFileList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/alarm/list.jsp" />
     </definition>
-    <definition name="fileDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/detail.jsp" />
+    <definition name="alarmFileDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/alarm/detail.jsp" />
+    </definition>
+
+    <!--
+        Map 파일 관리
+        @author psb
+    -->
+    <definition name="mapFileList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/map/list.jsp" />
+    </definition>
+    <definition name="mapFileDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/map/detail.jsp" />
     </definition>
 
     <!--
@@ -271,6 +282,22 @@
     </definition>
     <definition name="alarmDetail" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/alarm/detail.jsp" />
+    </definition>
+
+    <!--
+        고객사 관리
+        @author psb
+    -->
+    <definition name="targetDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/target/detail.jsp" />
+    </definition>
+
+    <!--
+        구역/장치  관리
+        @author psb
+    -->
+    <definition name="resourceList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/resource/list.jsp" />
     </definition>
 
     <!--

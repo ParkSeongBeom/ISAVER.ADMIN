@@ -2,6 +2,7 @@ package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.AuthorizationSvc;
 import com.icent.isaver.admin.util.IsaverCriticalUtil;
+import com.icent.isaver.admin.util.IsaverTargetUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,9 @@ public class AuthorizationCtrl {
 
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
+
+    @Inject
+    private IsaverTargetUtil isaverTargetUtil;
 
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/index")
     public ModelAndView index(){
@@ -72,12 +76,24 @@ public class AuthorizationCtrl {
     /**
      * 임계치 설정 reset
      *
-     * @author kst
+     * @author psb
      * @return
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/resetCritical")
     public ModelAndView resetCriticalConfig() {
         isaverCriticalUtil.reset();
+        return new ModelAndView();
+    }
+
+    /**
+     * 고객사 설정 reset
+     *
+     * @author psb
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/resetTarget")
+    public ModelAndView resetTargetConfig() {
+        isaverTargetUtil.reset();
         return new ModelAndView();
     }
 

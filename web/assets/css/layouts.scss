@@ -28,17 +28,20 @@ body {
     .wrap > header { position: absolute; }
     &.dashboard_mode {
       overflow: auto !important;
-      /*
-      .db_area {
-        position: absolute; height:calc(100vh - 90px);
-        right:auto; left:($body-minwidth - ($noticecenter-width + $dash-margin));
-      }
-      */
     }
     &.admin_mode {
       section.container.on {padding-right:$admin-margin;}
     }
   }
+
+  .watch_area * , .db_area * {
+    ::-webkit-scrollbar, ::-webkit-scrollbar-corner {height:8px; width:8px; background-color: $color-gray-09;}
+    ::-webkit-scrollbar-thumb {
+      background-color: $bas-color; @include border01(2px,$color-gray-09,1 );
+    }
+  }
+
+
 }
 
 
@@ -47,7 +50,7 @@ h1,h2,h3,h4,h5,h6 {position: relative; letter-spacing: 0;}
 h1,h3,h4 {display: inline-block; }
 h1 {
   min-width: 250px; height:100%; border:none;
-  background-image: url(../images/logo/icent_isaver.svg);
+  background-image: url(../images/logo/icent_isaver_w.svg);
   background-size: 100% 32px; background-repeat: no-repeat;
   background-position:0 50%;
 
@@ -103,34 +106,37 @@ h4 {
 }
 
 ////// ----------------- 로그인 영역 Start
+
 .login_area {
   position: absolute; @include flex-midddle; width:100%; height:100%;
+  @include screenbg; background-image: url(../images/bg/bg_spot.svg);
 
-  &:after, &:before {content:""; z-index:-1; position: absolute;  background-color: rgba(0,0,0,0.05); }
+  &:after, &:before {content:""; z-index:1; position: absolute;  background-color: rgba(0,0,0,.2); }
   &:after  {width:100vw; height:1px; top:50%;  left:0;}
   &:before {width:1px; height:100vh; left:50%; top:0; }
 
   article {
-    position: relative; width: 500px; padding:20px 30px 40px 30px; background-color: #fff;
+    position: relative; z-index: 3; width: 500px; padding:20px 30px 40px 30px; background-color: $bas-color;
     @include box-shadow02(0px, 55px, 90px, -50px, 0, 0, 0, 0.8);
 
     & > * {position: relative;  }
 
     .login_input_area {
       width:100%; height:125px; text-align: left;  margin:10px 0;
-      & > input {width:100%;height:40px;margin:0 0 10px 0;}
+      & > input {
+        width:100%;height:40px;margin:0 0 10px 0; background-color: #181818;
+        @include border01(1px,#000,1 );
+      }
       & > input.log_pw.red {border-color:red;}
       & > input[type="checkbox"] {width:18px; height:18px;vertical-align: bottom; margin:0;}
     }
 
-    button {float:right;}
+    button {float:right;  @include border01(1px,#fff,0.5 );}
     .caps {color:$color-red-01; }
   }
 
 }
 ////// ----------------- 로그인 영역 End
-
-
 
 
 ////// ----------------- header Start
@@ -153,7 +159,7 @@ header {
 
   .header_area {
     @include flexbase; @include flex-justify-content-end;
-    position: relative; width:100%; height:$headerHeight - 10px;
+    position: relative; width:100%; height:$headerHeight;
 
     & > * {display: inline-block; height: 100%;}
 
@@ -189,17 +195,19 @@ header {
               }
             }
           }
-          /*
-          &.issue_btn.issue {
-            width:($noticecenter-width - 80px); !*background-color:$color-red-01;*!
-            &:before {color:#fff !important;}
-            &.on {@include issue;}
-          }
-          */
-
         }
       }
     }
+  }
+}
+.wrap > header {
+  background-color: $bas-color; color:$color-white-02;
+  &:after {
+    content:""; position: absolute; left:0; top:($headerHeight - 2px); width:100%; height:2px;
+    background: -webkit-linear-gradient(left, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
+    background: linear-gradient(to right, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#007db9e8',GradientType=1 );
+    @include header_ani;
   }
 }
 ////// ----------------- header End
@@ -241,15 +249,15 @@ menu {
       float:left; margin:0 10px 0 0;
 
       & > button {
-        @include font-size-menubtn; text-align: center; text-transform:uppercase; padding-top:5px;
+        @include font-size-menubtn; text-align: center; text-transform:uppercase;
         &.on {border:none;}
       } // menu > ul > li > button
 
       & > ul {
         @include flexbase; @include flex-row-wrap;
-        overflow-y: auto; overflow-x: hidden; position: absolute; @include z-index-menu;
-        top:40px; left:0; width:100%; height:auto !important; max-height:0; padding:0 40px;
-        background-color:$color-white-01;
+        overflow-y: auto; overflow-x: hidden; position: fixed; @include z-index-menu;
+        top:$headerHeight; left:0; width:100%; height:auto !important; max-height:0; padding:0 40px;
+        background-color: $color-gray-09;
         @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1); @include transition(400ms);
 
         & > li {
@@ -266,7 +274,7 @@ menu {
       &:hover {
         & > ul {
           max-height:calc(100vh - 200px); padding:40px 40px; z-index:81;
-          @include border01(3px,$color-blue-01,1 );
+          //@include border01(3px,$color-blue-01,1 );
         }
         & > button {@include mbHover;}
       }
@@ -285,9 +293,9 @@ menu {
 .tpopupbase, .personal_popup, .popupbase > div > div  {
   & *:not(button) {color:#3c3c3c;}
   &, header {background-color: $adm-color; }
-  padding:$popup-margin;
+  padding:$popup-margin; padding-top:15px;
   @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
-  @include border01(3px,$color-blue-01,1 );
+  @include border01(2px,$bas-color,1 );
   @include transition(400ms);
 }
 
@@ -324,20 +332,36 @@ menu {
 
   & > div {
     @include flex-midddle; position: relative; width:100%; height:100%;
+
     & > div {
 
-      display: inline-block; overflow: auto; z-index: 10;
-      position: relative; max-width:70%; max-height:90%; min-width:40%; min-height:50%;
+      @include flexbase; @include flex-column; @include flex-justify-content-start;
+
+
+      overflow: hidden; z-index: 10;
+      position: relative; max-width:70%; max-height:80%; min-width:40%; min-height:50%;
 
       & > * { position: relative; width:100%;}
+
       & > header {
+        max-height:50px; height:50px;
         min-width:0; background-color: transparent; padding:0;
         h2 , h3  {@include title_icon; margin:0 auto 0 0;}
         button:before {content:"\e91a"; font-size: 1.8rem;}
         &:before {display: none !important;}
       }
+
+      & > article {
+
+        overflow: auto; max-height: 600px; height:100%; margin:30px 0 40px 0;
+        @include flex-column;
+
+        &.map_sett_box {@include flex-column-row;;} // MAP 설정 팝업
+      }
+
       & > footer {
-        display: inline-block; text-align: right; margin:40px 0 0 0;
+        max-height:40px; height:40px; margin:auto 0 0 0;
+        display: inline-block; text-align: right;
         button {right:0;}
       }
     }
@@ -348,13 +372,20 @@ menu {
     background-color: rgba($color-dark-01,0.8);
   }
 
+  /////..... 레이어 팝업 Start
+  &.admin_popup, body.admin_mode & {
+    top:0;
+    & > div > div { form {width:100%;} }
+  }
+  /////..... 레이어 팝업 End
+
   /////.......... 진출입 조회주기설정 팝업 시작
   &.iocount_popup {
     position: absolute !important;  top:$headerHeight;
     & > div > div {
+      max-height:70%; height:100%;
       & > article {
-
-        @include flex-column-row; margin:30px 0 0 0;
+        @include flex-column-row;
         & > * {
           &:first-of-type  {width:350px; min-width:350px;  margin:0 90px 0 0;}
           &:nth-of-type(2) {width:500px; min-width:480px;  }
@@ -421,25 +452,19 @@ menu {
   }
   /////.......... 진출입 조회주기설정 팝업 끝
 
+  /////.......... 구역 / 장치 관리 설정 옵션 팝업 시작
 
-  /////..... 레이어 팝업 Start
-  &.admin_popup {
-    top:0;
-    & > div > div {
-      form {width:100%;}
-      & > article {@include common_contents; @include flex-column;}
-    }
-  }
-  /////..... 레이어 팝업 End
+
+
 
 }
 /////..... 팝업 공통 효과 END
 
 
 /////..... 사용자 보기 팝업 popup_type_01 Start
-.tpopupbase , .personal_popup{
+.tpopupbase , .personal_popup {
   @include flexbase; @include flex-column; z-index:101;
-  position: fixed; top:($headerHeight - 10px); right:-($noticecenter-width + 100px);
+  position: fixed; top:($headerHeight - 2px); right:-($noticecenter-width + 100px);
   width:$noticecenter-width;
 
   h2 {padding:0 0 30px 0;}
@@ -487,18 +512,19 @@ menu {
   body.admin_mode & {
     right:-($noticecenter-width * 2);
     &.on {right:$dash-margin;}
+    background-color: $adm-color;
+
+    h2 {color:$bas-color;}
   }
 
-
-
   position: fixed; @include z-index-notice;
-  top:($btnarea-height + 30px); bottom:$dash-margin; right:$dash-margin;  /*right:-($noticecenter-width * 2);*/
-  width:$noticecenter-width; background-color: $adm-color;
+  top:$headerHeight; bottom:0; right:$dash-margin; padding:20px 0;
+  width:$noticecenter-width;
 
 
   &.on {right:$dash-margin;}
 
-  &:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; background-color: $adm-color}
+  &:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; }
 
   & > * {width:100%;}
 
@@ -524,28 +550,46 @@ menu {
     }
   }
 
+
+  .db_list_box {
+    border-color: $color-gray-09; @include box-shadow02(-30px, 0, 50px, -30px, 0, 0, 0, 0.8);
+    textarea {
+      color:$color-white-02;
+      background-color: transparent;
+      &::-webkit-input-placeholder     {color:rgba(255,255,255, 0.4);}
+      &::-moz-placeholder              {color:rgba(255,255,255, 0.4);}
+      &:-ms-input-placeholder          {color:rgba(255,255,255, 0.4);}
+      &:-moz-placeholder               {color:rgba(255,255,255, 0.4);}
+    }
+
+    select {@include dark_select;}
+
+  }
+
+
+
   // 알림센터
   section.db_list_box {
     $db_filter_h:41px;
     $db_morebt_h:40px;
 
     @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
-    @include border01( 1px,$color-gray-01,1); background-color: $adm-color;
+    @include border01( 1px,$color-gray-09,1); background-color: $color-gray-09;
 
 
 
     .db_filter_set {
+
       @include flexbase; @include flex-option(1, 0, $db_filter_h); max-height:$db_filter_h;
-      @include border01( 0 0 1px 0,$color-gray-01,1); background-color: $color-white-01;
+      background-color: $bas-color;
 
       & > * {
         @include flex-option(0, 1, 100%); width:100%;
-        @include border01( 0 1px 0 0,$color-gray-01,1);
+        @include border01( 0 1px 0 0,$color-gray-09,1);
       }
 
-      .checkbox_set, button {
-        @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
-      }
+      .checkbox_set, button {@include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;}
+      .checkbox_set {@include screenbg;}
       button {
 
         @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
@@ -566,7 +610,7 @@ menu {
     // 알림해지 사유
     .db_cancel_set {
       position: absolute; z-index: 1; top:0; bottom:0; left:100%;
-      width:100%;  background-color: $color-white-01;
+      width:100%; background-color: $color-gray-09;
 
 
       textarea, div[contenteditable] {
@@ -640,6 +684,7 @@ menu {
 
     // 더보기
     & > button {
+      background-color: $bas-color;
       @include flex-option(1, 0, $db_morebt_h);
       &:after  {content:"More"; padding:0 0 0 10px;}
       &:before {content:"\e92b";}
@@ -732,6 +777,7 @@ menu {
   }
 }
 
+
 //// 알림리스트
 .infor_set {
   @include flex-option(0, 1, 100%);
@@ -786,9 +832,18 @@ menu {
 /////..... 임계치 적용 표시 Start
 .confirm {background-color: rgba($color-blue-02,1) !important;}
 .level {
-  &-caution {background-color: rgba($color-gray-03,1);}   // .level-caution 주의
-  &-warning {background-color: rgba($color-orange-01,1);} // .level-warning 경고
-  &-danger  {background-color: rgba($color-red-01,1);}    // .level-danger  위험
+  &-caution {
+    background-color: rgba($color-gray-03,1);
+    .m_marqueebox {& * , &:before {color:$color-gray-03 !important; } }
+  }   // .level-caution 주의
+  &-warning {
+    background-color: rgba($color-orange-01,1);
+    .m_marqueebox {& * , &:before {color:$color-orange-01 !important; }}
+  } // .level-warning 경고
+  &-danger  {
+    background-color: rgba($color-red-01,1);
+    .m_marqueebox {& * , &:before {color:$color-red-01 !important; }}
+  }    // .level-danger  위험
 
   &-caution, &-warning, &-danger {
     //& *, & *:before, & *:after {color:$color-white-01; }
@@ -799,7 +854,6 @@ menu {
       &, &:before {background-color: transparent !important;}
 
       /*
-
       &.level {
         &-caution:before {@include border01(2px,$color-gray-03,1 );} // .level-caution 주의
         &-warning:before {@include border01(2px,$color-orange-01,1 );} // .level-warning 경고
@@ -807,11 +861,6 @@ menu {
       }
       */
 
-
-      .m_marqueebox {
-        & * , &:before {color:$color-red-01 !important; }
-        &:before {background-color: $color-white-01 !important;}
-      }
       .safeeye_set .s_lbox {
         color:$color-red-01; @include issue02;
         &:after { @include border01(3px,$color-red-01,1 ); padding:10%;  @include issue05;}
@@ -819,8 +868,8 @@ menu {
     }
 
     .m_marqueebox {
-      & > p {@include marquee;}
-      & * , &:before {color:$color-red-01 !important; }
+      display: inline-block !important;
+      & > p > span {@include marquee;}
     }  //각구역 마키
 
     .ts {
@@ -878,10 +927,7 @@ menu {
 }
 /////..... 임계치 적용 표시 End
 
-
-
 body.adaptive_mobile {
-
   menu, .datetime_set {display: none;}
   &, header { min-width:0 !important;}
 
@@ -892,7 +938,34 @@ body.adaptive_mobile {
 
 }
 
+body.login_mode.taekwon_mode { h1 {background-position: 0 50% !important;} }
 
+body.dashboard_mode.taekwon_mode,
+body.admin_mode.taekwon_mode { h1 {background-position: 0 0 !important; background-size: 100% 40px !important;} }
+
+body.dashboard_mode.taekwon_mode,
+body.login_mode.taekwon_mode,
+body.admin_mode.taekwon_mode {
+  h1 {min-width: 150px !important; background-image: url(../images/logo/taekwon/taekwon_w.svg) !important;}
+
+  .header_btn_set {width:auto !important;}
+  .wrap > article {
+    right:$margin; top:($headerHeight + 10px);
+    & > section {
+      border:none;
+      &:before {display: none;}
+      &:nth-of-type(2) { @include flex-option(1, 0, 33%);}
+
+      & > div {
+        h3 {opacity: 0;}
+        padding:0 $m_lr ($m_lr - 5px) $m_lr;
+        &:before, &:after {left:$m_slr; top:0; right:$m_slr; bottom:($m_slr * 2); }
+        article {.s_rbox {right:-($m_lr - 6px); } }
+      }
+    }
+  }
+  .db_area, .issue_btn {display: none;}
+}
 
 
 

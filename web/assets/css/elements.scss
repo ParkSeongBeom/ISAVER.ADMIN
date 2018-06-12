@@ -217,7 +217,8 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   } // 라벨 스타일 csl_style01 End
 
   // 라벨 스타일 csl_style02 Start
-  &.csl_style02, &.csl_style03 {
+  $cslwidth:80px;
+  &.csl_style02, &.csl_style03, &.csl_style04 {
     /*
   <div class="checkbox_set csl_style02">
       <span>자동로그인</span>
@@ -226,7 +227,8 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   </div>
   */
     margin:0 45px 0 0;
-    & > input, & > label {width:80px; min-width:80px; max-width:80px;}
+
+    & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
 
     & > label {
       background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
@@ -239,7 +241,7 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
     & > input, &.on {
       &:checked + label , &.on + label, label {
         background-color:$color-red-01; border:none;
-        &:before {left:50px; background-color:$color-white-01;}
+        &:before {left:calc(100% - 30px); background-color:$color-white-01;}
         &:after  {content:"ON"; right:5px; color:$color-white-01;}
       }
     }
@@ -256,6 +258,18 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
     & > input, &.on {
       &:checked + label , &.on + label, label {
         &:after  {content:"YES"; }
+      }
+    }
+  }
+
+  &.csl_style04 {
+    & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
+    & > label {
+      &:after  {content:"Hide";  }
+    }
+    & > input, &.on {
+      &:checked + label , &.on + label, label {
+        &:after  {content:"Show"; }
       }
     }
   }
@@ -344,6 +358,7 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
   .zoom_btn.on:before   {content: "\e903";}
   .zoomclose_btn:before {content: "\e91a";}
   .sett_btn:before      {content: "\e905";}
+  .refl_btn:before      {content:"\e961";}
 
 }
 /////...... button base 정의 End
@@ -558,8 +573,9 @@ div[contenteditable] {}
     text-align:              center !important;
     text-anchor:              start;
   }
-}
 
+}
+.ct-label01 {stroke:rgba(255,255,255,0.8) !important; font-size:13px;}
 
 /////..... 통계 툴팁 시작
 .chartist-tooltip {

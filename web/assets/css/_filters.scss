@@ -106,7 +106,7 @@ $screen-width:100%;
 $screen-height:100%;
 $nav_width:100px;
 $btnarea-height:40px;
-$headerHeight:50px; // wrap > header의 height
+$headerHeight:40px; // wrap > header의 height
 $areaHeaderHeight:60px;
 $padpay:80px; //admin 공통 padding 값
 $td-height:55px;
@@ -114,6 +114,7 @@ $tree-area-width:400px;
 $btnHeight:40px;
 $loding-size:220px;
 $thwidth:180px;
+$tdwidth:calc(50% - 180px);
 $tree-table-width:350px;
 
 $margin:20px; // root article 상하좌우 마진값
@@ -135,18 +136,18 @@ $display-inline-block:inline-block;
 @mixin z-index-menu   {z-index:50; } //ex) menu @include z-index-menu;
 
 
+@mixin dark_select {
+  @include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02;
+}
+
 @mixin screenbg {
-  background-color: $bas-color;
-  color:$color-white-02;
-
+  background-color: $bas-color; color:$color-white-02;
   /*
-
   &:after {
     content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
     background-image: url(../images/bg/bg_spot.svg); opacity: 0.5;
   }
   */
-
 
   ::-webkit-input-placeholder {color:rgba(255, 255, 255, 0.4);}
   ::-moz-placeholder          {color:rgba(255, 255, 255, 0.4);}
@@ -241,8 +242,7 @@ $display-inline-block:inline-block;
   display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;
   box-align:center; -webkit-box-align:center; -moz-box-align:center; -webkit-align-items:center; -ms-flex-align:center; align-items:center;
   -webkit-box-pack:center; -moz-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center;
-}
-// ex) @include flex-midddle;
+}  // ex) @include flex-midddle;
 @mixin flex-midddle-important {
   display:-webkit-box !important; display:-moz-box !important; display:-ms-flexbox !important;
   display:-webkit-flex !important; display:flex !important; display:flexbox !important; display:box !important;
@@ -250,8 +250,7 @@ $display-inline-block:inline-block;
   -webkit-align-items:center !important; -ms-flex-align:center !important; align-items:center !important;
   -webkit-box-pack:center !important; -moz-box-pack:center !important; -webkit-justify-content:center !important;
   -ms-flex-pack:center !important; justify-content:center !important;
-}
-// ex) @include flex-midddle-important;
+}  // ex) @include flex-midddle-important;
 
 // box-sizing
 @mixin border-box  {-webkit-box-sizing:border-box;  -moz-box-sizing:border-box;  box-sizing:border-box;}
@@ -373,8 +372,6 @@ $display-inline-block:inline-block;
 @mixin border($px,$color){border-style:solid; border-width:$px; border-color:$color;}
 // ex) @include border(2px 0 0 4px,rgba(0,0,0,0) );
 @mixin border01($px,$color,$opacity){border-style:solid; border-width:$px; border-color:rgba($color,$opacity);}
-// ex) @include border01(2px 0 0 4px,$컬러지정,1 );
-
 // ex) @include border01(2px 0 0 4px,$컬러지정,1 );
 @mixin borderwidth($px){border-style:solid; border-width:$px;}
 // ex) @include borderwidth(2px 0 0 4px);
@@ -507,18 +504,6 @@ $bbl01:100%; $bbl02:1px;
     width:$btnHeight; height:$btnHeight; font-size:1.8rem;
   }
 } //ex) @include btnbase;  버튼 공통
-
-// contents header 공통값
-@mixin common_header {
-  padding:0 15px; flex:1 0 50px; -webkit-flex:1 0 50px; flexbox:1 0 50px;
-  @include flex-align-items-center; @include flex-justify-content-between;
-} // ex) @include common_header;
-
-
-// contents 공통값
-@mixin common_contents {
-  flex:0 1 100%; -webkit-flex:0 1 100%; flexbox:0 1 100%;
-} // ex) @include common_contents;
 
 
 // webkit-scroll Bar
@@ -966,3 +951,58 @@ $bbl01:100%; $bbl02:1px;
   @include border01(3px,$color-blue-01,1 );
   @include transition(400ms);
 }
+
+// menu_tree_set 공통부분
+$plus_icon_wh:30px;
+$mt_btn_h:50px;
+$mt_btn_w:40px;
+@mixin tree-line {content:""; position: absolute; background-color:$color-gray-06; }
+
+@mixin tree-hover
+{background-color: $color-blue-01 !important; border-color:transparent; color:#fff !important;}
+@mixin tree-on
+{background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
+@mixin tree-normal
+{background-color:rgba($color-white-02,1); border-color:$color-gray-01; color:$color-dark-01; opacity: 1 !important;}
+
+// tree 공통부분
+@mixin treebase {
+  width:100%; height:100%; max-height:600px; margin:50px 0;
+  ul, li {position: relative; @include transition(400ms);}
+
+  ul:before, ul:after, li:after, li:before, .dynatree-expander:before
+  {@include tree-line; }
+  ul:before, li:before, .dynatree-expander:before {width:10px; height:1px;}
+
+  ul:before {top:20px; left:-20px;}
+  li:before {top:20px; left:-10px;}
+
+  li {
+    &:after {top:20px; left:-10px; bottom:-21px; width:1px;}
+    &:last-of-type:after {display: none;}
+  }
+
+  input[type="checkbox"] {
+    position: absolute; z-index: 5; left:0; top:0; margin:0; padding:0; height:$mt_btn_h;
+    border:none; background-color: transparent; cursor: pointer; opacity: 0;
+  }
+} // @include treebase;
+
+//버튼기본
+@mixin tree-button {
+  text-align: left; margin:0 0 6px 0;
+  background-color: $color-white-02; color:$color-dark-01;
+  @include border01(1px,$color-gray-01,1 );
+  @include box-shadow01(0px, 10px, 8px, -10px, #000, 0.4);
+} //  @include tree-button;
+
+// 트리 + - 아이콘
+@mixin plus_icon {
+  content: "\e92b";
+  @include flex-midddle;
+  width:$plus_icon_wh; height:$plus_icon_wh; background-color: $color-dark-01; color:#fff;
+  z-index: 2;  top:9px; left:-($mt_btn_w - 1px);
+  @include border-radius(200px);
+  @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
+
+} // @include plus_icon;

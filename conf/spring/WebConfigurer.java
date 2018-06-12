@@ -189,6 +189,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/code"
             ,"classpath:properties/message/groupcode"
             ,"classpath:properties/message/license"
+            ,"classpath:properties/message/resource"
             ,"classpath:properties/message/area"
             ,"classpath:properties/message/device"
             ,"classpath:properties/message/loginHistory"
@@ -201,6 +202,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/alarm"
             ,"classpath:properties/message/login"
             ,"classpath:properties/message/notification"
+            ,"classpath:properties/message/target"
         );
         return messageSource;
     }
@@ -252,6 +254,12 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     public IsaverCriticalUtil isaverCriticalUtil() {
         IsaverCriticalUtil criticalUtil=new IsaverCriticalUtil();
         return criticalUtil;
+    }
+
+    @Bean
+    public IsaverTargetUtil isaverTargetUtil() {
+        IsaverTargetUtil targetUtil=new IsaverTargetUtil();
+        return targetUtil;
     }
 
     @Bean

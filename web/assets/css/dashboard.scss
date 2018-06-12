@@ -4,27 +4,9 @@
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {
 
-  .watch_area * , .db_area * {
-    ::-webkit-scrollbar, ::-webkit-scrollbar-corner  {height:8px; width:8px; background-color: $adm-color;}
-
-    ::-webkit-scrollbar-thumb {
-      background-color: $bas-color; @include border01(2px,$adm-color,1 );
-      &:hover {background-color: $color-gray-07 ;}
-    }
-
-  }
-
   overflow: hidden; position: absolute; top:0; left:0; right:0;
   height:100%; min-height:0; padding:0 $dash-margin;
   .wrap {height:100%;}
-
-  .wrap > header:after {
-    content:""; position: absolute; left:0; top:($headerHeight + 5px); width:100%; height:2px;
-    background: -webkit-linear-gradient(left, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
-    background: linear-gradient(to right, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#007db9e8',GradientType=1 );
-    @include header_ani;
-  }
 
   article {
     @include flexbase; @include flex-column;
@@ -53,8 +35,6 @@ body.dashboard_mode {
     &:before {bottom:0;}
     &:after  {height:1px;}
 
-
-
     & > section {
       @include flex-option(0, 1, 100%);
       &, & > div {@include flexbase; position: relative;}
@@ -63,10 +43,14 @@ body.dashboard_mode {
         @include flex-column; overflow: hidden;
         header,article {position: relative; width:100%; @include transition(200ms);}
         header {
-          z-index: 0; background-color: transparent; padding:0; min-width:0;
+          z-index: 0; background-color: transparent; padding:0 $m_lr; min-width:0;
           @include flex-option(1, 0, $headerHeight);
           @include flex-justify-content-start;
 
+          &:before {
+            @include box-shadow01(0px, 0px, 0px, 0px, #000, 0.0); opacity: 1;
+            background-color: $color-gray-09; left:0; right:0; height:1px;
+          }
           h3 {
             @include text-overflow-ellipsis;
             letter-spacing: -0.1rem; font-size:1.3rem; margin: -3px auto 0 0; padding:0 5px 0 0;
@@ -99,17 +83,22 @@ body.dashboard_mode {
         }
         article {
           @include flex-option(0, 1, 100%); @include flex-align-items-center;
+
           .m_marqueebox {
-            @include flex-option(1, 0, auto); @include flex-justify-content-start;
-            overflow: hidden; position: relative; padding:8px 0; line-height:1.1rem;
+            overflow: hidden; display: none; position: absolute; left:0; bottom:0; z-index: 1;
+            height:24px; line-height:1.1rem; background-color: rgba(#000,0.2);
+
+            &:before, p {@include flex-midddle; height:100%; }
             &:before {
-              content:"\e946"; position: relative; z-index: 1; left:0;
-              width:30px; height:100%; font-size:1.2rem; padding:0 6px 0 0;
+              content:"\e946"; position: absolute; z-index: 1; left:0; width:40px; font-size:1.2rem;
             }
             p {
-              display: inline-block; position: absolute; left:100%;
-              white-space:nowrap; word-wrap:normal;
-              span {padding:0 15px 0 0; &:before {content:"ㆍ";} }
+              overflow: hidden; position: relative; margin:0 0 0 40px;
+              span {
+                display: inline-block; position: absolute; left:100%;
+                white-space:nowrap; word-wrap:normal; font-weight:bold;
+                &:before {content:"ㆍ";}
+              }
             }
           }
         }
@@ -117,57 +106,15 @@ body.dashboard_mode {
 
     }
 
-
-
   }
 
   &.dark_mode {
 
-    .watch_area * , .db_area * {
-      ::-webkit-scrollbar, ::-webkit-scrollbar-corner {background-color: $color-gray-09;}
-
-      ::-webkit-scrollbar-thumb {
-        background-color: $bas-color; @include border01(2px,$color-gray-09,1 );
-      }
-
-
-    }
-
-
-    @mixin dark_select {
-      @include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02;
-    }
-
+    background-color: $bas-color; color:$color-white-02;
     h1 {background-image: url(../images/logo/icent_isaver_w.svg); }
     .language {@include dark_select;}
 
     &, & *:not(personal_popup, popupbase)  {color:$color-white-02; }
-
-    &, .db_area, .db_area:before, .db_list_box, .wrap > header, .db_filter_set h3 {@include screenbg;}
-
-    .db_list_box {
-      border-color: $color-gray-09; @include box-shadow02(-30px, 0, 50px, -30px, 0, 0, 0, 0.8);
-      textarea {
-        color:$color-white-02;
-        background-color: transparent;
-        &::-webkit-input-placeholder     {color:rgba(255,255,255, 0.4);}
-        &::-moz-placeholder              {color:rgba(255,255,255, 0.4);}
-        &:-ms-input-placeholder          {color:rgba(255,255,255, 0.4);}
-        &:-moz-placeholder               {color:rgba(255,255,255, 0.4);}
-      }
-
-      select {@include dark_select;}
-
-    }
-    .db_cancel_set {background-color: $color-gray-09;}
-    .db_filter_set {
-      h3 {border:none;}
-      &, & * {border-color:$color-gray-09;}
-      .checkbox_set {
-        @include screenbg;
-        label:before {}
-      }
-    }
 
     .wrap {
       & > article > section {
@@ -185,18 +132,12 @@ body.dashboard_mode {
       &:after {background-color: transparent;}
       &.level {
         &-caution, &-warning, &-danger {
-
           background-color:transparent;
           .kblinker_set * {
             &, &:after, &:before {color:$color-white-01;}
             &:after {background-color:$color-white-01;}
           }
-
           &, &:before {background-color: transparent !important;}
-          .m_marqueebox {
-            &:before {background-color: $bas-color !important;}
-          }
-
         }
         //&-caution:before {background-color: rgba($color-gray-03,1) !important;}   // .level-caution 주의
         //&-warning:before {background-color: rgba($color-orange-01,1) !important;} // .level-warning 경고
@@ -204,10 +145,8 @@ body.dashboard_mode {
       }
     }
 
-    .chart_select_set button {color:$bas-color;}
     .nhr_set .s_rbox {border-color:$color-gray-08;}
     .nhr_set li {
-
       &:after {background-color: $color-gray-08; border-color:$color-gray-09;}
       &.on {&:after {border-color:$color-gray-06;} }
     }
@@ -254,11 +193,11 @@ body.dashboard_mode {
 
 
 /////..... .watch_area > div > article > * >  좌 / 우
-.s_lbox {@include flex-width-one(2);}
+.s_lbox {@include flex-width-one(2); overflow: hidden; height:100%; }
 .s_rbox {
   @include flex-align-items-center; @include flex-width-one(1);
   overflow-y: auto; overflow-x: hidden !important;
-  right:(-$m_lr + 1px); height:100%; min-width:150px; padding: 0 $m_lr 0 0; margin:0 0 0 20px;
+  right:0; height:100%; min-width:150px; padding: 0 $m_lr 0 0; margin:0 0 0 20px;
 
   & > * {
     position: absolute; left:0; right:$m_lr; max-height:100%;
@@ -280,13 +219,30 @@ body.dashboard_mode {
 
 /////..... 차트 영역 Start
 .chart_area {
-  &, & > * {width:100%;}
-  .chart_box {height:100%; margin:10px 0; }
-  .date_select {
-    z-index: 1; position: absolute; top:0; right:0; width:auto;
-    select {background-color: $color-gray-09;}
+  width:100%;
+  select {
+    z-index: 1; position: absolute; top:-24px; right:0; width:120px;
+    background-color: $color-gray-09;
+    border-color:$color-gray-09;
+    &, & * {color:$color-white-02 !important;}
+    background-image: url(../images/ico/select_allow_w.svg);
   }
 }
+.chart_select_set {
+  position: absolute !important; z-index:1; top:-50px; right:15px; height:40px; text-align: right;
+  @include transition(400ms);
+  button {
+    float: left; @include line_btn02; border-width:1px; width:40px; height:40px; right:0; margin:0 0 0 5px;
+    color:$adm-color; background-color: $bas-color;
+  }
+}
+.chart_box {position: relative; width:100%; height:100%; margin:10px 0; }
+.date_select {
+  z-index: 1; position: absolute; top:0; right:0; width:auto;
+  select {background-color: $color-gray-09;}
+}
+
+
 /////..... 차트 영역 End
 
 
@@ -368,7 +324,22 @@ body.dashboard_mode {
   </section>
   */
   min-height:65px;
-
+  .kblinker_set {
+    @include flexbase; @include flex-justify-content-around; @include flex-align-items-center;
+    position: relative; width:100%;
+    .out {
+      font-size:($ks_bsize + 5rem); line-height:($ks_ssize + 5rem);
+      color:$color-green-03; letter-spacing: -1rem; font-weight:bold;
+    }
+    .title {
+      color:$color-white-01; letter-spacing: 0 !important;
+      em {display: block;}
+      em:first-of-type {
+        font-size:$ks_ssize; @include border01(0 0 2px 0, $color-white-01, 0.5 ); padding:50px 0 10px 0;
+      }
+      em:last-of-type {font-size:($ks_ssize + 3rem); opacity: 0.5;}
+    }
+  }
   .blinker_set {
     /*
     <h3>구역명 삽입</h3>
@@ -381,6 +352,7 @@ body.dashboard_mode {
     </div>
     */
 
+    padding:0 15px;
     h3 {
       float:left; width:100%; padding:0 0 2px 0;
       font-size:$bs_hsize; letter-spacing: -0.3rem;
@@ -417,7 +389,7 @@ body.dashboard_mode {
     }
   }
   .s_rbox {
-    opacity: 0.6;
+    opacity: 0.6; padding:15px 15px 15px 0;
     .blinker_set {
       h3 {font-size: 1rem; letter-spacing: -0.1rem; }
       & > div {
@@ -478,20 +450,9 @@ body.dashboard_mode {
 
   @include flex-column;
   & > * {@include flex-option(0, 1, 100%); width:100%;}
-  .s_lbox {
-    // order:2;
 
-    overflow: hidden;
 
-    &:hover .chart_select_set {top:10px;}
-
-    .chart_select_set {
-      position: absolute; z-index:1; top:-50px; right:0; height:40px; text-align: right;
-      @include transition(400ms);
-      button {@include line_btn02; border-width:1px; width:40px; height:40px; right:0; background-color: $color-white-01;}
-    }
-    .chart_box {position: relative; width:100%; height:100%;}
-  }
+  .s_lbox:hover .chart_select_set {top:10px;}
 
   .s_rbox {
     //order: 1; margin: 0 0 20px 0;
@@ -499,7 +460,6 @@ body.dashboard_mode {
     right:0; @include flex-align-items-start;
     @include border01(0 0 1px 0,$color-gray-06,1 );
     ul {
-
       @include flexbase; @include flex-row-wrap; @include flex-justify-content-start;
       @include flex-align-items-start; @include flex-align-content-start;
       overflow: auto; z-index:1; right:0; height:100%; @include transition(400ms);
@@ -693,7 +653,7 @@ body.dashboard_mode {
   //// 각 구역
   & > div {
 
-    /*width:25%; min-width:350px; max-width:50%; min-height:25%;*/ padding:0 $m_lr;
+    /*width:25%; min-width:350px; max-width:50%; min-height:25%; padding:0 $m_lr;*/
     &,&:before {background-color: transparent !important;}
     &:before, &:after {content:""; position: absolute; left:-1px; top:-1px; right:0; bottom:0; }
     &:before {@include border01(1px,$color-gray-01,1);}
@@ -786,7 +746,15 @@ body.dashboard_mode {
   &.area02 {
     .safeeye_set { & > .s_lbox { &:before {font-size: 16rem;} } }
   }
-
+  &.area02, &.area04 {
+    .kblinker_set {
+      .out {font-size:($ks_bsize - 4rem); letter-spacing: 0;}
+      .title {
+        em:first-of-type {font-size:($ks_ssize - 2rem); padding:50px 0 10px 0;}
+        em:last-of-type  {font-size:($ks_ssize);}
+      }
+    }
+  }
   &.area04 {
     .personnel_set {
       .s_lbox.blinker_set > div { min-width:320px;}
@@ -835,7 +803,6 @@ body.dashboard_mode {
 
 }
 /////..... 구역 End
-
 
 
 /////...... button base 정의 Start

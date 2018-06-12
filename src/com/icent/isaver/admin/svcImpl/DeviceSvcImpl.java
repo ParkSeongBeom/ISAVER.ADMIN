@@ -80,27 +80,11 @@ public class DeviceSvcImpl implements DeviceSvc {
     private AlarmTargetDeviceConfigDao alarmTargetDeviceConfigDao;
 
     @Override
-    public ModelAndView findAllDeviceTree(Map<String, String> parameters) {
-
-        List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("deviceList", deviceTreeList);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findListDeviceArea(Map<String, String> parameters) {
-        return null;
-    }
-
-    @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-        List<DeviceBean> deviceTreeList = deviceDao.findAllDeviceTree(null);
-        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
+        List<DeviceBean> deviceTreeList = deviceDao.findListDevice(null);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceTreeList);
-        modelAndView.addObject("areas", areaList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -108,7 +92,7 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Override
     public ModelAndView findTbListDevice(Map<String, String> parameters) {
         List<DeviceBean> deviceList = deviceDao.findTbListDevice(parameters);
-        List<AreaBean> areaList = areaDao.findAllAreaTree(null);
+        List<AreaBean> areaList = areaDao.findListArea(null);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceList);

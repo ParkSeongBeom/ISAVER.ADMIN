@@ -22,7 +22,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/ajax-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.iframe-post-form.js"></script>
 </head>
-<body class="login_mode">
+<body class="login_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
     <div class="wrap">
         <!-- hearder Start 공통부분 -->
         <section class="login_area">

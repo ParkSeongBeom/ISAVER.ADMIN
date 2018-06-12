@@ -418,7 +418,7 @@ input.datepicker + button + .in-timepicker {
       font-size: 26px;
       font-weight: bold;
       opacity: 1; }
-  .checkbox_set.csl_style02, .checkbox_set.csl_style03 {
+  .checkbox_set.csl_style02, .checkbox_set.csl_style03, .checkbox_set.csl_style04 {
   /*
 <div class="checkbox_set csl_style02">
     <span>자동로그인</span>
@@ -427,47 +427,55 @@ input.datepicker + button + .in-timepicker {
 </div>
 */
     margin: 0 45px 0 0; }
-    .checkbox_set.csl_style02 > input, .checkbox_set.csl_style02 > label, .checkbox_set.csl_style03 > input, .checkbox_set.csl_style03 > label {
+    .checkbox_set.csl_style02 > input, .checkbox_set.csl_style02 > label, .checkbox_set.csl_style03 > input, .checkbox_set.csl_style03 > label, .checkbox_set.csl_style04 > input, .checkbox_set.csl_style04 > label {
       width: 80px;
       min-width: 80px;
       max-width: 80px; }
-    .checkbox_set.csl_style02 > label, .checkbox_set.csl_style03 > label {
+    .checkbox_set.csl_style02 > label, .checkbox_set.csl_style03 > label, .checkbox_set.csl_style04 > label {
       background-color: #fff;
       border-style: solid;
       border-width: 1px;
       border-color: darkgray; }
-      .checkbox_set.csl_style02 > label, .checkbox_set.csl_style02 > label:before, .checkbox_set.csl_style03 > label, .checkbox_set.csl_style03 > label:before {
+      .checkbox_set.csl_style02 > label, .checkbox_set.csl_style02 > label:before, .checkbox_set.csl_style03 > label, .checkbox_set.csl_style03 > label:before, .checkbox_set.csl_style04 > label, .checkbox_set.csl_style04 > label:before {
         -moz-border-radius: 200px;
         -webkit-border-radius: 200px;
         border-radius: 200px;
         -khtml-border-radius: 200px; }
-      .checkbox_set.csl_style02 > label:before, .checkbox_set.csl_style03 > label:before {
+      .checkbox_set.csl_style02 > label:before, .checkbox_set.csl_style03 > label:before, .checkbox_set.csl_style04 > label:before {
         content: "";
         left: 10px;
         width: 20px;
         height: 20px;
         background-color: #a9a9a9; }
-      .checkbox_set.csl_style02 > label:after, .checkbox_set.csl_style03 > label:after {
+      .checkbox_set.csl_style02 > label:after, .checkbox_set.csl_style03 > label:after, .checkbox_set.csl_style04 > label:after {
         content: "OFF";
         right: -20px;
         color: #4c4c4c; }
-    .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label, .checkbox_set.csl_style02 > input label, .checkbox_set.csl_style02.on:checked + label, .checkbox_set.csl_style02.on.on + label, .checkbox_set.csl_style02.on label, .checkbox_set.csl_style03 > input:checked + label, .checkbox_set.csl_style03 > input.on + label, .checkbox_set.csl_style03 > input label, .checkbox_set.csl_style03.on:checked + label, .checkbox_set.csl_style03.on.on + label, .checkbox_set.csl_style03.on label {
+    .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label, .checkbox_set.csl_style02 > input label, .checkbox_set.csl_style02.on:checked + label, .checkbox_set.csl_style02.on.on + label, .checkbox_set.csl_style02.on label, .checkbox_set.csl_style03 > input:checked + label, .checkbox_set.csl_style03 > input.on + label, .checkbox_set.csl_style03 > input label, .checkbox_set.csl_style03.on:checked + label, .checkbox_set.csl_style03.on.on + label, .checkbox_set.csl_style03.on label, .checkbox_set.csl_style04 > input:checked + label, .checkbox_set.csl_style04 > input.on + label, .checkbox_set.csl_style04 > input label, .checkbox_set.csl_style04.on:checked + label, .checkbox_set.csl_style04.on.on + label, .checkbox_set.csl_style04.on label {
       background-color: #be1e1e;
       border: none; }
-      .checkbox_set.csl_style02 > input:checked + label:before, .checkbox_set.csl_style02 > input.on + label:before, .checkbox_set.csl_style02 > input label:before, .checkbox_set.csl_style02.on:checked + label:before, .checkbox_set.csl_style02.on.on + label:before, .checkbox_set.csl_style02.on label:before, .checkbox_set.csl_style03 > input:checked + label:before, .checkbox_set.csl_style03 > input.on + label:before, .checkbox_set.csl_style03 > input label:before, .checkbox_set.csl_style03.on:checked + label:before, .checkbox_set.csl_style03.on.on + label:before, .checkbox_set.csl_style03.on label:before {
-        left: 50px;
+      .checkbox_set.csl_style02 > input:checked + label:before, .checkbox_set.csl_style02 > input.on + label:before, .checkbox_set.csl_style02 > input label:before, .checkbox_set.csl_style02.on:checked + label:before, .checkbox_set.csl_style02.on.on + label:before, .checkbox_set.csl_style02.on label:before, .checkbox_set.csl_style03 > input:checked + label:before, .checkbox_set.csl_style03 > input.on + label:before, .checkbox_set.csl_style03 > input label:before, .checkbox_set.csl_style03.on:checked + label:before, .checkbox_set.csl_style03.on.on + label:before, .checkbox_set.csl_style03.on label:before, .checkbox_set.csl_style04 > input:checked + label:before, .checkbox_set.csl_style04 > input.on + label:before, .checkbox_set.csl_style04 > input label:before, .checkbox_set.csl_style04.on:checked + label:before, .checkbox_set.csl_style04.on.on + label:before, .checkbox_set.csl_style04.on label:before {
+        left: calc(100% - 30px);
         background-color: #fff; }
-      .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after, .checkbox_set.csl_style02 > input label:after, .checkbox_set.csl_style02.on:checked + label:after, .checkbox_set.csl_style02.on.on + label:after, .checkbox_set.csl_style02.on label:after, .checkbox_set.csl_style03 > input:checked + label:after, .checkbox_set.csl_style03 > input.on + label:after, .checkbox_set.csl_style03 > input label:after, .checkbox_set.csl_style03.on:checked + label:after, .checkbox_set.csl_style03.on.on + label:after, .checkbox_set.csl_style03.on label:after {
+      .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after, .checkbox_set.csl_style02 > input label:after, .checkbox_set.csl_style02.on:checked + label:after, .checkbox_set.csl_style02.on.on + label:after, .checkbox_set.csl_style02.on label:after, .checkbox_set.csl_style03 > input:checked + label:after, .checkbox_set.csl_style03 > input.on + label:after, .checkbox_set.csl_style03 > input label:after, .checkbox_set.csl_style03.on:checked + label:after, .checkbox_set.csl_style03.on.on + label:after, .checkbox_set.csl_style03.on label:after, .checkbox_set.csl_style04 > input:checked + label:after, .checkbox_set.csl_style04 > input.on + label:after, .checkbox_set.csl_style04 > input label:after, .checkbox_set.csl_style04.on:checked + label:after, .checkbox_set.csl_style04.on.on + label:after, .checkbox_set.csl_style04.on label:after {
         content: "ON";
         right: 5px;
         color: #fff; }
-    .checkbox_set.csl_style02.disabled, .checkbox_set.csl_style03.disabled {
+    .checkbox_set.csl_style02.disabled, .checkbox_set.csl_style03.disabled, .checkbox_set.csl_style04.disabled {
       opacity: 0.6;
       pointer-events: none; }
   .checkbox_set.csl_style03 > label:after {
     content: "NO"; }
   .checkbox_set.csl_style03 > input:checked + label:after, .checkbox_set.csl_style03 > input.on + label:after, .checkbox_set.csl_style03 > input label:after, .checkbox_set.csl_style03.on:checked + label:after, .checkbox_set.csl_style03.on.on + label:after, .checkbox_set.csl_style03.on label:after {
     content: "YES"; }
+  .checkbox_set.csl_style04 > input, .checkbox_set.csl_style04 > label {
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px; }
+  .checkbox_set.csl_style04 > label:after {
+    content: "Hide"; }
+  .checkbox_set.csl_style04 > input:checked + label:after, .checkbox_set.csl_style04 > input.on + label:after, .checkbox_set.csl_style04 > input label:after, .checkbox_set.csl_style04.on:checked + label:after, .checkbox_set.csl_style04.on.on + label:after, .checkbox_set.csl_style04.on label:after {
+    content: "Show"; }
 
 * {
   /*버튼 공통 정리
@@ -663,6 +671,8 @@ input.datepicker + button + .in-timepicker {
     content: "\e91a"; }
   * .sett_btn:before {
     content: "\e905"; }
+  * .refl_btn:before {
+    content: "\e961"; }
 
 * {
   /*
@@ -854,6 +864,10 @@ input.datepicker + button + .in-timepicker {
     justify-content: center !important;
     text-align: center !important;
     text-anchor: start; }
+
+.ct-label01 {
+  stroke: rgba(255, 255, 255, 0.8) !important;
+  font-size: 13px; }
 
 .chartist-tooltip {
   display: -webkit-box !important;

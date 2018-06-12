@@ -129,8 +129,6 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
-
-        saveFileDevice(request, fileId, parameters.get("updateUserId"), parameters.get("addDevices"), parameters.get("removeDevices"), parameters.get("addDeviceSyncRequests"));
         return new ModelAndView();
     }
 
@@ -168,8 +166,6 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
-
-        saveFileDevice(request, parameters.get("fileId"), parameters.get("updateUserId"), parameters.get("addDevices"), parameters.get("removeDevices"), parameters.get("addDeviceSyncRequests"));
         return new ModelAndView();
     }
 
@@ -184,8 +180,6 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
-
-        saveFileDevice(request, parameters.get("fileId"), parameters.get("updateUserId"), parameters.get("addDevices"), parameters.get("removeDevices"), parameters.get("addDeviceSyncRequests"));
         return new ModelAndView();
     }
 
@@ -218,42 +212,5 @@ public class FileSvcImpl implements FileSvc {
             }
         }
         return new ModelAndView();
-    }
-
-    private void saveFileDevice(HttpServletRequest request, String fileId, String updateUserId, String addDevices, String removeDevices, String addDeviceSyncRequests) {
-        List<Map<String, String>> parameterList = new ArrayList<>();
-        if(StringUtils.notNullCheck(addDevices)){
-            String[] addDeviceIds = addDevices.split(AdminResource.COMMA_STRING);
-
-            for (String deviceId : addDeviceIds) {
-                Map<String, String> addDeviceParamMap = new HashMap<>();
-                addDeviceParamMap.put("fileId", fileId);
-                addDeviceParamMap.put("deviceId", deviceId);
-                addDeviceParamMap.put("updateUserId", updateUserId);
-                parameterList.add(addDeviceParamMap);
-            }
-        }
-        if(StringUtils.notNullCheck(removeDevices)){
-            String[] removeDeviceIds = removeDevices.split(AdminResource.COMMA_STRING);
-
-            for (String deviceId : removeDeviceIds) {
-                Map<String, String> removeDeviceParamMap = new HashMap<>();
-                removeDeviceParamMap.put("fileId", null);
-                removeDeviceParamMap.put("deviceId", deviceId);
-                removeDeviceParamMap.put("updateUserId", updateUserId);
-                parameterList.add(removeDeviceParamMap);
-            }
-        }
-
-        if(ListUtils.notNullCheck(parameterList)){
-            deviceDao.saveListDeviceForFile(parameterList);
-        }
-
-        if(StringUtils.notNullCheck(addDeviceSyncRequests)){
-            Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
-            addDeviceSyncRequestParam.put("deviceIds", addDeviceSyncRequests);
-            addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
-            deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
-        }
     }
 }

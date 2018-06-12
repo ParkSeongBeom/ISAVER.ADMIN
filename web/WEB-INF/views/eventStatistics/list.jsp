@@ -403,6 +403,12 @@
         var resultList = data['eventStatisticsList'];
         var eventSeries = {};
 
+        if($(".add_p input[name='eventId']:eq(0)").attr("statisticsName")=="Count"){
+            tableDivHtml.find("#gubnBody").append(
+                $("<span/>").text("합계")
+            );
+        }
+
         for(var index in resultList){
             var resultMap = resultList[index];
             var infos = resultMap['infos'];
@@ -450,17 +456,24 @@
 
                 var value = info['value']!=null?info['value']:0;
 
-                if(tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").length>0){
-                    tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").append(
-                        $("<span/>").text(value)
-                    );
-                }else{
+                if(tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").length==0){
                     tableDivHtml.find(".d_tbody").append(
-                        $("<div/>",{eventId:info['eventId']}).append(
-                            $("<span/>").text(value)
-                        )
+                        $("<div/>",{eventId:info['eventId']})
                     );
+
+                    if($(".add_p input[name='eventId']:eq(0)").attr("statisticsName")=="Count"){
+                        tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").append(
+                            $("<span/>",{id:"sum"}).text(0)
+                        );
+                    }
                 }
+
+                tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").append(
+                    $("<span/>").text(value)
+                );
+
+                var sumValue = tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"'] span[id='sum']").text();
+                tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"'] span[id='sum']").text(Number(sumValue)+Number(value));
 
                 if(eventSeries[info['eventId']]==null){
                     eventSeries[info['eventId']] = [value];

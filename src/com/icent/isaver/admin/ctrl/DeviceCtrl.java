@@ -30,35 +30,16 @@ public class DeviceCtrl {
     private DeviceSvc deviceSvc;
 
     /**
-     * 장치 트리를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/treeList")
-    public ModelAndView findListTree(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-
-        ModelAndView modelAndView = deviceSvc.findAllDeviceTree(parameters);
-        return modelAndView;
-    }
-
-    /**
      * 장치 목록을 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListDevice(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "deviceList", parameters);
-        AdminHelper.setPageParam(parameters, defaultPageSize);
-
         ModelAndView modelAndView = deviceSvc.findListDevice(parameters);
-        modelAndView.setViewName("deviceList");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

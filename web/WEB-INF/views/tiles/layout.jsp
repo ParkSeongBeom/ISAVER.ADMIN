@@ -40,6 +40,7 @@
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
+        var targetId = '${mainTarget.targetId}';
         var calendarHelper = new CalendarHelper(rootPath, "${pageContext.response.locale}");
         var menuModel = new MenuModel();
         var menuCtrl = null;
@@ -136,7 +137,7 @@
             notificationHelper.createEventListener();
             notificationHelper.getNotificationList();
 
-            webSocketHelper.addWebSocketList("notification", "${webSocketUrl}", null, notificationMessageEventHandler);
+            webSocketHelper.addWebSocketList("notification", "${eventWebSocketUrl}", null, notificationMessageEventHandler);
             webSocketHelper.wsConnect("notification");
             aliveSend(900000);
 
@@ -454,7 +455,7 @@
         }
     </script>
 </head>
-<body class="admin_mode">
+<body class="admin_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
 <!-- wrap Start -->
 <div class="wrap">
     <!-- hearder Start 고통부분 -->

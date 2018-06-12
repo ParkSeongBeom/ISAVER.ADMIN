@@ -22,13 +22,6 @@ import java.util.Map;
 public interface AreaSvc {
 
     /**
-     * 구역 트리를 가져온다.
-     * @param parameters
-     * @return
-     */
-    ModelAndView findAllAreaTree(Map<String, String> parameters);
-
-    /**
      * 구역 목록을 가져온다.
      *
      * @author dhj

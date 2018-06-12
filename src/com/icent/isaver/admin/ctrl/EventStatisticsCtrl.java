@@ -76,6 +76,7 @@ public class EventStatisticsCtrl {
                     break;
             }
         }
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 }

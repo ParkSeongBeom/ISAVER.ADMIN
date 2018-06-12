@@ -5,6 +5,9 @@ body.admin_mode {
 
 }
 
+/*
+
+
 body.chart_mode {
 
 
@@ -50,9 +53,12 @@ body.chart_mode {
   //.sub_title_area {position: absolute; }
 }
 
+*/
+
+
 ///// ----------------- container START
 section.container {
-  position: relative; width:100%; height:100%;
+  position: relative; width:100%; height:100vh;
   padding:($headerHeight + 50px) $admin-margin 50px $admin-margin;
   @include transition(400ms);
   &.on { padding-right:(40px + $noticecenter-width); }
@@ -139,10 +145,12 @@ div.tablebase, .d_defalut {display: inline-block;}
  */
   @mixin table_padding {padding:0 10px; }
 
-  position: relative; width:100%; margin:0 0 20px 0;
-  background-color:rgba( $color-white-02, 0.8);
+  position: relative; width:100%; margin:0 0 20px 0; background-color:rgba( $color-white-02, 0.8);
 
   @include box-shadow01(0, 3px, 15px, 0, #000, 0.15);
+
+
+
   tr.on td {color:$color-white-01; background-color:$color-dark-01;}
 
   th,td, & > div > div > * {
@@ -161,10 +169,12 @@ div.tablebase, .d_defalut {display: inline-block;}
 
 
   }
+
   th, & > div > div > p, & > div.d_thead > div > * {
     color:$color-white-01 !important; background-color: $color-gray-05; border-color:$color-gray-03;
     &.point {background-color:$color-orange-01;  border-color:$color-orange-02; }
   }
+
   td, & > div > div > * {border-color:$color-gray-06; }
 
   td {
@@ -250,9 +260,13 @@ div.tablebase, .d_defalut {display: inline-block;}
         &, & > * {@include flexbase;  @include flex-align-items-center;}
 
         & > * {
-           @include flex-option(0, 1, 100%); height:100%;
+          @include flex-option(0, 1, 100%); height:100%;
           @include border01(0 1px 0 0,$color-gray-01,1 ); padding:0 30px 0 10px;
+          &:last-child {border:none;}
         }
+
+        & > button { @include flex-midddle; padding:0;}
+
         & > span {
           @include flex-align-items-center; @include flex-justify-content-center; max-width:30px; padding:0;
         }
@@ -262,8 +276,19 @@ div.tablebase, .d_defalut {display: inline-block;}
         }
 
         & > select {
-
+          &.temp_select {
+            border:none;
+            & ~ button {max-width:90px !important; border:none !important;}
+            & ~ .checkbox_set {
+              width:170px !important; min-width:170px !important; max-width:170px !important;
+              @include flex-justify-content-between; padding:0 10px;
+              & > span {padding:0 !important; margin:0 !important; }
+              @include border01(0 0 0 1px,$color-gray-01,1 );
+              background-color: $color-white-01;
+            }
+          }
         }
+
         & > div {
           @include flex-option(1, 0, 130px); max-width:130px; @include flexbase; padding:0;
           border:none;
@@ -316,7 +341,6 @@ div.tablebase, .d_defalut {display: inline-block;}
       }
     }
   }
-
 
   //div형 테이블
   & > div {// thead, tbody
@@ -594,7 +618,7 @@ ul.u_defalut {
 }
 
 
-///// menu_tree_set 메뉴관리권한, tree UI 정의 시작
+/////  tree UI 정의 시작
 .tree_area  {
   @include flexbase; @include flex-column; @include flex-align-items-start;
   position: fixed; z-index: 1; top:150px; bottom:50px; left:$padpay;
@@ -611,45 +635,32 @@ ul.u_defalut {
   & + * {margin-left:$tree-area-width + 80px;}
 
 }
+// 메뉴관리권한
 .menu_tree_set {
-  @mixin tree-hover
-  {background-color: $color-blue-01 !important; border-color:transparent !important; color:#fff !important;}
-  @mixin tree-on
-  {background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
-  @mixin tree-normal
-  {background-color:rgba($color-white-01,0.7); border-color:$color-gray-01; color:$color-dark-01; opacity: 1;}
 
-  //버튼기본
-  @mixin tree-button {
-    text-align: left; margin:0 0 6px 0;
-    background-color: $color-white-02;
-    @include border01(1px,$color-gray-01,1 );
-    @include box-shadow01(0px, 10px, 8px, -10px, #000, 0.4);
+  @include treebase;
+
+  button, input { width:220px; min-width:220px; height:$mt_btn_h;}
+  button {
+    @include tree-button; min-height:$mt_btn_h; padding:5px 10px 5px $mt_btn_w; line-height: 1rem;
+
+    opacity: 1 !important;
+
+    &:before {
+      content: "\e92b";
+      @include flex-midddle; position: absolute; top:0; left:0;
+      width:$mt_btn_w; height:100%; font-size:22px;
+    }
     &:hover {@include tree-hover;}
+    &.on {@include tree-on;}
+
   }
 
-  width:100%; height:100%; padding:50px 0;
-  ul, li {position: relative; @include transition(400ms);}
-
-  ul:before, ul:after, li:after, li:before, .dynatree-expander:before
-  {content:""; position: absolute; background-color:$color-gray-06; }
-  ul:before, li:before, .dynatree-expander:before {width:10px; height:1px;}
-
-  ul:before {top:20px; left:-20px;}
-  li:before {top:20px; left:-10px;}
-
-  li {
-    &:after {top:20px; left:-10px; bottom:-21px; width:1px;}
-    &:last-of-type:after {display: none;}
-  }
-
-  button {@include tree-button; min-height:40px; padding:5px 10px 5px 40px; line-height: 1rem;}
+  li {@include flexbase; @include flex-align-items-start;}
 
   input[type="checkbox"] {
-    position: absolute; z-index: 5; left:0; top:0; margin:0; padding:0;
-    border:none; background-color: transparent; cursor: pointer;
-    opacity: 0;
     &:hover + button {@include tree-hover;}
+    &:checked + button,  &:checked + button + ul li button {@include tree-on;}
   }
 
   & > li {
@@ -658,107 +669,23 @@ ul.u_defalut {
     &:before {display: none;}
   }
 
-  &, &.divtree_type {
-    li {@include flexbase; @include flex-align-items-start;}
-    button, input { width:220px; min-width:220px; height:50px;}
+  &.libaray_type {
 
-    button:before {
-      content: "\e92b";
-      @include flex-midddle; position: absolute; top:0; left:0;
-      width:40px; height:100%; font-size:22px;
-    }
-
-    button {&.on {@include tree-on;} }
-
-    // 체크가 삽입될 때
-    input[type="checkbox"] {
-      &:checked + button,  &:checked + button + ul li button {@include tree-on;}
-    }
-
-  }
-
-  &.view_type, &.libaray_type {
+    overflow: auto; width:100%; height: 100%;  padding: 20px;
     a, button {
       width:auto; min-width:120px; padding: 5px 10px;
       white-space: nowrap; @include font-size15; font-weight:bold;
     }
-  }
 
-  @mixin plus_icon {
-    content: "\e919";
-    @include flex-midddle;
-    width:26px; height:26px; background-color: $color-dark-01; color:#fff;
-    @include border-radius(200px);
-    @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
-  }
-
-  &.view_type {
-    overflow: auto; padding:20px;
-
-    li {display: inline-block;  margin:0 0 0 41px;}
-
-    & > li {
-      width:auto;
-      //& > input[type="checkbox"], & > button {pointer-events: none;}
-      &:before, & > ul:before {display: block !important;}
-      &:after {left:-21px;}
-
-      ul {
-        margin:0 0 0 0;
-        &:after {@include plus_icon; z-index:5; top:-39px; left:-34px;}
-        &:before {display: none; top:-6px; left:20px; width:1px; height:26px;}
-
-        li {
-          &:before, &:after {top:20px; left:-21px;}
-          &:before {width:20px;}
-          &:after  {bottom:-21px; width:1px;}
-        }
-
-      }
-
-      ul li ul li {display: none;  height:0;}
-      /* 전체 열기 닫기
-      & > .all_see_btn {
-        &:checked ~ ul li ul li {display: inline-block;}
-        &:checked ~ ul li ul:after {content:"-";}
-        &:checked ~ ul li ul:before {display: block;}
-      }
-      */
-
-      input[type="checkbox"] {
-        z-index:6; left:-40px; width:40px; min-width:40px;
-        & + button {
-          &:hover {@include tree-hover;}
-        }
-        &:hover + button  {
-          @include tree-hover;
-          & + ul {
-            &:after {background-color: $color-red-01;}
-          }
-        }
-        &:checked + button {
-          &, & + ul li button { @include tree-normal; }
-          & + ul {
-            & > li {display: inline-block !important; height:auto;}
-            &:after {content:"\e91a" !important;}
-            &:before {display: block;}
-          }
-        }
-      }
-    }
-  }
-
-  &.libaray_type {
-    overflow: auto; width:100%; height: 100%;  padding: 20px;
     a, li > span {@include flexbase; @include flex-align-items-center; }
-    li > span { height:40px; margin:0 0 6px 0;}
+    li > span { height:$mt_btn_w; margin:0 0 6px 0;}
     a {@include tree-button; height:100%; margin:0; }
 
     li {
       &:before {display: none;}
       &:after {z-index: -1; left:19px; }
       ul {
-        margin:0 0 0 41px;
+        margin:0 0 0 $mt_btn_w;
         &:before {top:-7px; left:19px; width:1px; height:14px; }
       }
     }
@@ -778,13 +705,105 @@ ul.u_defalut {
     .ui-dynatree-disabled ul.dynatree-container { opacity: 0.5;}
 
   }
+
 }
-///// menu_tree_set 메뉴관리권한, tree UI 정의 끝
+//구역 디바이스 관리
+.area_tree_set {
+  @include treebase;
+
+  $bar_h:16px; $bar_w:20px;
+
+  overflow: auto; margin:0;
+
+  li {
+    display: inline-block; margin:0 0 0 $mt_btn_w;
+    &:before {display: none;}
+  }
+
+  input + div {
+    @include flexbase-inline; @include flex-column;
+    @include flex-align-items-start; @include flex-justify-content-center;
+
+    @include tree-button;
+
+    min-width:120px; min-height:50px; height:auto; padding: 5px 10px;
+
+    @include border01(1px, $color-gray-01, 1);
+
+    &:after {content:""; position: absolute; top:24px; left:-24px;width:24px; height:1px; background-color:$color-gray-06;}
+    &:hover {border-color:rgba($color-blue-01, 1);}
+    &.on {border-color:rgba($color-red-01, 1) !important;}
+
+    button {
+      width:100%; padding: 5px 0; opacity: 0.8;
+      text-align: left; font-weight:normal; white-space: nowrap; font-size:0.9rem; line-height: 0.9rem;
+      &:before {content:"\e92a"; padding:0 5px 0 0;}
+      &:first-of-type { font-weight:bold; opacity: 1; &:before {display: none;} }
+
+      &:hover {color:$color-blue-01;}
+      &.on {
+        color:$color-red-01; font-weight: bold;
+        &:after {content:""; position: absolute; bottom:0; left:0; width:100%; height:1px; background-color:$color-red-01; }
+      }
+    }
+
+  }
+
+  & > li {
+    width:auto; margin:0;
+    &:after {left:-($bar_h);}
+
+    & > button {
+      @include line_btn02;
+      min-width:auto; width:50px; height:50px; display: inline-block; margin-right:5px;
+      @include border-radius(200px); @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
+
+      &:before {z-index: 1; font-size:2rem; width:100%; @include flex-midddle;}
+      &.all_see_btn:before {content:"\e929" !important;}
+      //&.refl_btn:before {content:"\e961" !important;}
+    }
+
+    ul {
+      position: static; margin:0 0 0 0;
+      &:after {@include plus_icon;}
+
+      li:after, li:before {z-index: -1; width:1px !important; height: auto;}
+      li:after {top:-11px; bottom:-($mt_btn_h / 2); left:-($mt_btn_w - $bar_h); }
+      li:before {top:-5px; left:-24px; width:1px; height:30px;}
+      li:last-of-type:before {display: block !important;}
+    }
+
+    & > ul {margin:10px 0 0 7px; &:after, &:before {display: none;} }
+
+    ul li ul li {
+      display: none;  height:0;
+    }
+
+    input[type="checkbox"] {
+      z-index:6; left:-$mt_btn_w; width:$mt_btn_w; min-width:$mt_btn_w;
+      &:checked + div {
+        & + ul {
+          & > li {display: inline-block !important; height:auto;}
+          &:after {content:"\e92c" !important;}
+        }
+      }
+      &:hover + div + ul:after {@include tree-hover;}
+    }
+  }
+
+
+}
+// 트리탭
+.tree_tab_set > ul {
+  display: none;
+  &.on {display: block;}
+}
+/////  tree UI 정의 끝
 
 
 /////...... 탭 영역 정의 Start
 .tabs_area {
-  width:100%; padding: 10px 0;
+  width:100%;
 
   .tabs, .tabs > li, .tabs_contents_area {position: relative;}
 
@@ -812,9 +831,10 @@ ul.u_defalut {
     & > div {display: none;}
   }
 
+  .tabs_btn_set {}
+
 }
 /////...... 탭 영역 정의 End
-
 
 
 /////...... input[type="file"] base 정의 Start
@@ -880,14 +900,11 @@ ul.u_defalut {
 /////...... input[type="file"] base 정의 End
 
 
-
 /////..... 트리 테이블 시작
 .tree_table  {
 
-
-
   position: absolute; z-index: 1; width:$tree-table-width !important; float: left;
-  margin:20px 0 0 0;  padding:20px; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
+  margin:20px 0 0 0;  padding:$dash-margin; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
   @include border01(1px,$color-gray-06,1 );
 
   .dashboard_mode &, .iocount_popup & {
@@ -900,8 +917,8 @@ ul.u_defalut {
     }
   }
 
-  & ~ .form_type01, & + article  {padding: 0 0 0 ($tree-table-width + 60px);}
-  & + article  {padding-top: 10px;}
+
+
 
   .table_title_area {
     height:40px; @include flex-option(1, 0, 40px);
@@ -975,22 +992,25 @@ ul.u_defalut {
     }
 
     .dynatree-lastsib > ul > li:before {display: none !important;}
-    /*
-    & > ul > li > ul > li {
-      &:after  {width:1px; bottom:-18px; top:-5px; left:-$tree-bwidth;}
-      &:before {top:17px;  width:$tree-bwidth; height:1px; left:-$tree-bwidth;}
-      &:last-of-type:after {display: none;}
-    }
-    */
-    /*& > ul > li > ul > li > ul li {
-      &:after, &:before {left:-($tree-bwidth - 2px); }
-      &:after {width:1px; height:100%; top:-16px;}
-      &:before {top:50%;  width:($tree-bwidth - 10px); height:1px; }
-    }*/
+
   }
 
 }
-.tr_table    { /*padding: 20px 0 0 320px;*/}
+
+.tree_table ~ .form_type01,
+.tree_table ~ article,
+.tree_table ~ .chart_table_area,
+.tr_table
+{position: relative; padding: 10px 0 0 ($tree-table-width + 60px); min-height:800px;}
+
+.form_type01 .tr_table {padding-left: 0 !important;}
+
+.tr_table.type01 {
+  .ment, .area_table, .device_table {
+    display: none;
+    &.on {display: block;}
+  }
+}
 /////..... 트리 테이블 끝
 
 
@@ -1036,7 +1056,7 @@ ul.u_defalut {
 
 /////..... 테이블 타이틀 영역 시작
 .table_title_area {
-  position: relative; width:100%; @include flex-option(1,0,65px); height:65px;
+  position: relative; width:100%; @include flex-option(1,0,65px); height:65px; min-height:auto !important;
 
   @include flexbase;  @include flex-align-items-center; @include flex-justify-content-between;
 
@@ -1054,6 +1074,7 @@ ul.u_defalut {
   position: relative;
 
   & > select {width:120px;}
+
   & > p {
     position: absolute; top: 50%; left: 0; height: 18px;
     margin: -9px 0 0 0; opacity: 0.8;
@@ -1074,6 +1095,24 @@ ul.u_defalut {
     }
   }
 
+  &.type03 {
+    margin:$dash-margin 0; padding:$dash-margin 0;
+    &:before {
+      content:""; position: absolute; top:0; left:-$dash-margin; right:-$dash-margin;
+      height:1px; background-color:$color-gray-06;
+    }
+
+    button {
+      @include flex-midddle; @include line_btn; border-width:0 0 3px 0; color:$bas-color; font-size: 1.1rem;
+      &:before {content:""; position: absolute; bottom:-22px; @include triangle-bot(10px,$color-blue-01); opacity: 0;}
+      &.on {
+        &:before {@include triangle-bot(10px,$color-red-01); opacity: 1;}
+        &:hover:before {@include triangle-bot(10px,$color-blue-01);}
+      }
+    }
+  }
+
+  .sett_btn, .refl_btn {width:40px; min-width: 40px; &:before {font-size:1.4rem;} }
 }
 /////..... 테이블 버튼 영역 끝
 
@@ -1101,11 +1140,9 @@ a.fc-more {position: relative; z-index: 2;}
 .colorbox {width: 20px; height: 20px; margin: auto;}
 
 
-
-
 /////......  이벤트 통계 원 차트 시작
 .chart_table_area {
-  display:inline-block; width:100%; padding: 0 0 50px 0;
+  width:100%; padding: 0 0 50px 0;
 
   & > div {
     position: relative; float:left; margin:40px 0 0 0;
@@ -1133,17 +1170,146 @@ a.fc-more {position: relative; z-index: 2;}
     }
   }
   &.type02 > div {width:100%;}
-}
-.ment {
-  @include flex-midddle; width:100%; height:100%; padding:0 !important;
-  & > div {
-    font-size:1.3rem;
-    &:before {content:"\e925"; font-size:5rem; display: block; text-align: center; padding:0 0 30px 0;}
+
+  .depthtabs_set {
+    height:600px;
+    & > div {height:100%;}
   }
+}
+
+.ment {
+  position: relative; padding:20% 0;
+  &, & > div {width:100%; }
+  & > div {
+    @include flex-midddle; @include flex-column; height:100%; font-size:1.3rem;
+    &:before {
+      content:"\e925"; font-size:5rem; display: block; text-align: center; padding:0 0 30px 0;
+    }
+  }
+
+  .tree_table + & { padding-left:($tree-table-width + 60px); }
 }
 /////......  이벤트 통계 원 차트 끝
 
+/////......  구역 / 장치 관리 옵션 시작
+.opatin_list {
+  & > div {
+    @include flexbase; @include flex-align-items-start; @include flex-justify-content-start;
 
+    & > input {
+      width:40px; height:40px; opacity: 0;
+      &:hover + ul:after {@include tree-hover;}
+      &:checked + ul {
+        &:after {content:"\e92c" !important;}
+        li {
+          @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
+          width:100%; height:40px;
+          &:before {content:"\e92a"; padding:0 10px 0 0;}
+          & > span {width:120px;}
+        }
+      }
+    }
+
+    & > ul {
+      @include flexbase; @include flex-column;
+      position: relative; width:100%; padding:50px 0 15px 0;
+      &:before, &:after {position: absolute; left:0;}
+      &:after {@include plus_icon; top:5px; z-index: -1;}
+      &:before {
+        content:"";
+        top:0; width:100%; height:40px;
+        background-position: 0 8px; background-repeat: no-repeat; background-size: auto 28px;
+      }
+
+      li {
+        display: none; position: relative; margin:6px 0;
+        &:first-of-type:after {display: none;}
+        &:after {
+          content:""; position: absolute; width:100%; height:1px; top:-6px; left:0;
+          background-color: rgba($color-gray-01,0.5);
+        }
+
+      }
+    }
+    &.safeguard_option > ul { &:before {background-image: url(../images/logo/safeguard.svg);} }
+    &.safeeye_option > ul { &:before {background-image: url(../images/logo/safeeye.svg);}   }
+    &.blinker_option > ul { &:before {background-image: url(../images/logo/blinker.svg);}   }
+    &.detector_option > ul { &:before {background-image: url(../images/logo/detector.svg);}  }
+  }
+}
+/////......  구역 / 장치 관리 옵션 끝
+
+
+/////......  구역 / 장치 관리 MAP 설정 시작
+.map_sett_area {
+  td {border-width:0px 1px 1px 1px !important;}
+}
+.map_sett_box {
+  //min-width:1150px;  padding:$dash-margin;
+  @include flexbase; @include flex-column-row; min-width:1120px;
+
+  & > section {
+    $sec_h:450px;
+
+    @include flex-option(0, 1, 100%);
+    margin:0 0 0 20px;
+
+    & > * {
+      width:100%; position: relative;
+      &:first-child {height:$sec_h;}
+      &:last-child {height:40px; }
+    }
+
+    &.map {
+      @include flex-option(1, 0, 800px); margin:0;
+
+      & > div {
+        &:first-of-type {
+          height:$sec_h; @include border01(1px 1px 0 1px,$color-gray-06,1 );
+        }
+        &:last-of-type {
+          @include flexbase; @include flex-align-items-center;
+          height:40px;
+          & > * {position: relative; z-index: 1;}
+          &:before, &:after {
+            content:""; position:absolute; left:0;
+            width:100%; height:1px; background-color:$color-gray-06;
+          }
+          &:after {bottom:0;} &:before {top:0;}
+          select {@include flex-option(0, 1, 100%);}
+          span  {max-width:35px; min-width:35px; text-align: center; padding: 0 !important;}
+          input {max-width:60px;}
+        }
+      }
+
+    }
+
+    &.list {
+      @include flex-option(1, 0, 300px);
+      @include border01(1px,$color-gray-06,1 );
+      button.btn {width:100%; max-width:none;}
+
+      h3 {@include flexbase; @include flex-align-items-center; height:40px; padding:0 20px;}
+      ul {
+        overflow: auto; height:$sec_h; padding:10px 20px 20px 20px;
+        li {
+           @include flex-justify-content-between; width: 100%; min-height:50px;
+          &, span {@include flexbase; @include flex-align-items-center;}
+          .checkbox_set {margin:0 !important;}
+          span {
+            &:before {font-size:1.8rem; padding:0 10px 0 0;}
+            &.m8:before {content:"\e962";}
+            &.camera:before {content:"\e95a";}
+          }
+
+        }
+      }
+
+    }
+
+  }
+}
+/////......  구역 / 장치 관리 MAP 설정 끝
 
 .eventlog_col col {
   &:nth-of-type(1) {width:10%;}    // 1 구역명
@@ -1214,7 +1380,16 @@ a.fc-more {position: relative; z-index: 2;}
 .eventactiondetail_col {}
 
 //구역관리
-.arealist_col {}
+.arealist_col {
+  colgroup  {
+    col {
+      &:nth-of-type(1) {width:$thwidth;}    // 1 구역명
+      &:nth-of-type(2) {width:$tdwidth;}  // 2 이벤트구분
+      &:nth-of-type(3) {width:$thwidth;}  // 3 장치명
+      &:nth-of-type(4) {width:$tdwidth;}  // 4 이벤트발생일시
+    }
+  }
+}
 
 //장치관리
 .devicelist_col {}
