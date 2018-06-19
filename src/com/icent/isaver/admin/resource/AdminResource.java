@@ -2,6 +2,7 @@ package com.icent.isaver.admin.resource;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -195,6 +196,11 @@ public class AdminResource {
      */
     public final static String[] STATISTICS_PARENT_MENU_ID = new String[]{"200000", "2A0000","2B0000"};
 
+    /**
+     * Dashboard Template 환경설정
+     * @author psb
+     */
+    public static Hashtable<String, String> TEMPLATE_SETTING;
 
     public final static String PEOPLE_COUNT_DEVICE_ID = "DEV009";
 }

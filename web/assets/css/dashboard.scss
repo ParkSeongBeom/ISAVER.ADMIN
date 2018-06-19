@@ -456,8 +456,7 @@ body.dashboard_mode {
 
   .s_rbox {
     //order: 1; margin: 0 0 20px 0;
-    margin: 20px 0 0 0;
-    right:0; @include flex-align-items-start;
+    width:98%; padding:0 !important; margin: 20px 0 0 0; right:0; @include flex-align-items-start;
     @include border01(0 0 1px 0,$color-gray-06,1 );
     ul {
       @include flexbase; @include flex-row-wrap; @include flex-justify-content-start;
@@ -476,7 +475,7 @@ body.dashboard_mode {
       & * {cursor:pointer;}
       &:before, &:after {content:""; position: absolute;}
       &:after {
-        z-index: -1; top:0; left:0; width:calc(100% - 5px); height:calc(100% - 5px);
+        z-index: -1; top:3px; left:3px; width:calc(100% - 6px); height:calc(100% - 6px);
         @include border01(1px,$color-gray-01,1 ); background-color: $color-white-01;
       }
       &:before {
@@ -545,8 +544,7 @@ body.dashboard_mode {
 /////..... Guard section Start
 .guard_set {
   $watchpadding:115px;
-  $devicewidth:30px;
-
+  $devicewidth:40px;
 
   .s_lbox, .s_rbox {height:100%; /*background-color: $bas-color;*/}
   .s_lbox {
@@ -554,32 +552,64 @@ body.dashboard_mode {
     & > div {width:100%; height:100%;}
 
     .device, .device > div, .icon-tof, .icon-ptz, .tracking {
-      &, &:before, &:after {@include flex-midddle; background-color: transparent !important;}
+      &, &:before, &:after {@include flex-midddle; }
 
       &:before, &:after {
-        width:100%; height:100%; font-size:1.9rem; color:$color-white-01;
+        width:100%; height:100%; font-size:1.9rem; color:$color-white-01; background-color: transparent;
         @include border-radius(200px); @include transition(400ms); cursor: pointer;
       }
     }
 
     .icon-tof, .icon-ptz, .tracking {
-      position: relative; width:$devicewidth; height:$devicewidth;
+      position: absolute; width:$devicewidth; height:$devicewidth; @include border-radius(200px);
     }
 
-    .tracking:before {content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;}
+    .tracking {
+      &:before, &:after {background-color: transparent !important;}
+      &:before {content:"\e91b"; font-size:1rem; color:$color-blue-03; }
+    }
 
-    .icon-tof, .icon-ptz { &:before {@include text-shadow(0, 3px, 8px, #000, 1);} }
-    .icon-tof {top:10%; left:10%;}
-    .icon-ptz {top:20%; left:20%;}
-    .tracking {top:40%; left:40%;}
+    .icon-tof, .icon-ptz {
+      background-color: $bas-color;
+      &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
+      & > span {
+        @include flex-midddle; position: absolute; height:20px; bottom:-($devicewidth - 15px);
+        padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
+        background-color:$color-gray-09; @include border-radius(200px);
+      }
+    }
 
     .icon-tof, .icon-ptz, .tracking {
       /////..... 임계치 적용 표시 Start
       &.level {
         &-caution,&-warning,&-danger {@include pOn; }
+
         &-caution:after {@include border01(2px,$color-gray-05,1);  }
-        &-warning:after {@include border01(2px,$color-yellow-01,1);}
+        &-warning:after {@include border01(2px,$color-orange-01,1);}
         &-danger:after  {@include border01(2px,$color-red-01,1);   }
+        &-die:after {}
+
+        &-caution { &,& > span {background-color:$color-gray-05;   } }
+        &-warning { &,& > span {background-color:$color-orange-01; } }
+        &-danger  { &,& > span {background-color:$color-red-01;    } }
+        &-die     {
+          @include issue02; background-color:$color-gray-09;
+          &:before {opacity: 0.6;}
+          &:after {
+            content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+            @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+          }
+        }
+
+
+      }
+      /////..... 임계치 적용 표시 End
+    }
+
+    .tracking {
+      /////..... 임계치 적용 표시 Start
+      &.level {
+        &-caution,&-warning,&-danger {&:before {font-size:1.5rem; color:$color-white-01 !important;}}
       }
       /////..... 임계치 적용 표시 End
     }
@@ -589,23 +619,75 @@ body.dashboard_mode {
       //&:before {content: url(../images/map/mapex_w.svg);}
       &.level {
         &-caution,&-warning,&-danger { & > div {@include pOn;} }
-        &-caution > div:after {@include border01(2px,$color-gray-05,1);  }
-        &-warning > div:after {@include border01(2px,$color-yellow-01,1);}
-        &-danger > div:after  {@include border01(2px,$color-red-01,1);   }
+
+        &-caution > div {
+          &, & > span {background-color:$color-gray-05;}
+          &:after {@include border01(2px,$color-gray-05,1);}
+        }
+        &-warning > div {
+          &, & > span {background-color:$color-orange-01;}
+          &:after {@include border01(2px,$color-orange-01,1);}
+        }
+        &-danger  > div {
+          &, & > span {background-color:$color-red-01; }
+          &:after {@include border01(2px,$color-red-01,1);}
+        }
+
+        &-die > div  {
+          @include issue02; background-color:$color-gray-09;
+          &:before {opacity: 0.6;}
+          &:after {
+            content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+            @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+          }
+        }
+
       }
       /////..... 임계치 적용 표시 End
     }
 
+
+
   }
   .s_rbox {
-    right:0;
+    right:0; background-color: #000;
     &, & * {margin:0; padding:0;}
     & > ul {
       @include flexbase; @include flex-column; width:100%; height: 100%;
       li {
         overflow: hidden; position: relative; width:100%; height:50%; min-height:25%;
-        background-position: 50%; background-repeat: no-repeat; background-size: cover;
-        & > div {width:100%; height:100%;}
+        background-color: transparent !important;
+
+        &:before {
+          content:""; position: absolute; z-index: 1; left:0; bottom:0;
+          width:100%; height:1px; background-color: $bas-color;
+        }
+
+        & > span {
+          @include flexbase; @include flex-align-items-center;
+          position: absolute; top:0; left:0; height:$headerHeight; padding:0 15px 0 35px;
+          background-color: rgba(0,0,0,0.7); opacity: 0.8;
+          &:before {content:"\e964"; position: absolute;  left:0; padding:0 0 0 7px; font-size:1.5rem;}
+        }
+
+        & > div {
+          position: relative;
+          &, &:before {width:100%; height:100%;}
+          &:before {content:""; position: absolute; z-index: 1; top:0; left:0; }
+        }
+
+        /////..... 임계치 적용 표시 Start
+        &.level {
+          &-caution,&-warning,&-danger {
+            & > div:before {border-style:solid; border-width:4px; @include issue02;}
+            span:before {@include notice03;}
+          }
+
+          &-caution { & > div:before {border-color:$color-gray-05;  } span {background-color:$color-gray-05;}    }
+          &-warning { & > div:before {border-color:$color-orange-01;} span {background-color:$color-orange-01;}  }
+          &-danger  { & > div:before {border-color:$color-red-01;   } span {background-color:$color-red-01;}     }
+        }
+        /////..... 임계치 적용 표시 End
       }
     }
   }
@@ -819,7 +901,7 @@ body.dashboard_mode {
   &-zoom:before    {content:"\e925";} // 더보기
   &-area:before    {content:"\e91b";} // 장소
   &-tof:before     {content:"\e962";} // TOF 센서
-  &-ptz:before     {content:"\e95a";} // PTZ 카메라
+  &-ptz:before     {content:"\e964";} // PTZ 카메라
   &-light:before   {content:"\e93b";} // 경광등
   &-speak:before   {content:"\e93a";} // 스피커
   &-chart:before   {content:"\e908";} // 차트

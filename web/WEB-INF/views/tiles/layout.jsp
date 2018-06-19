@@ -11,9 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
     <title>iSaver Admin</title>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/common/jquery-ui.min.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/calendar-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/default.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js?version=${version}"></script>
@@ -36,7 +36,7 @@
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/notification-helper.js?version=${version}"></script>
-    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
@@ -60,6 +60,10 @@
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
+
+        <%--var templateSetting = {--%>
+            <%--'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'--%>
+        <%--};--%>
 
         var commonMessageConfig = {
             'inProgress':'<spring:message code="common.message.inProgress"/>'

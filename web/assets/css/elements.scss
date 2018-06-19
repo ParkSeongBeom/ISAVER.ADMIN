@@ -178,101 +178,21 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 /////...... timepicker End
 
 
-
 ///// input[type="checkbox"] checkBox label base 정의 Start
 .checkbox_set {
-  position:relative; width:auto !important; height:40px !important; float: left;
-
-  & > *:not(span) {width:100%; height:40px;}
-  &, & > label {@include flexbase; @include flex-align-items-center; }
-  & > input {position: absolute; z-index:1;top:0;left:0;opacity:0; margin:0; height:100%; cursor: pointer; }
-  & > span {margin:0 10px; & + input {left:auto !important; right:0; margin:0;} }
+  @include checkbox_set;
 
   //라벨 스타일 csl_style01 Start
-  &.csl_style01 {
-    /*
-  <div class="checkbox_set csl_style01">
-      <input type="checkbox"  name="" />
-      <label></label>
-      <span>자동로그인</span>
-  </div>
-  */
-
-    & > input, & > label {width:40px;}
-
-    & > label {
-      @include flex-justify-content-center;
-      &:before {content:"\e901"; font-size:1.5rem; opacity: 0.8; }
-    }
-
-    & > input {
-      &:checked + label, &.on + label {
-        &:before {
-          @include text-shadow(1px, 3px, 4px, #000, 0.4);
-          font-size:26px; font-weight:bold; opacity: 1;
-        }
-      }
-    }
-
-  } // 라벨 스타일 csl_style01 End
+  &.csl_style01 {@include csl_style01;}
+  // 라벨 스타일 csl_style01 End
 
   // 라벨 스타일 csl_style02 Start
-  $cslwidth:80px;
-  &.csl_style02, &.csl_style03, &.csl_style04 {
-    /*
-  <div class="checkbox_set csl_style02">
-      <span>자동로그인</span>
-      <input type="checkbox"  name="" />
-      <label></label>
-  </div>
-  */
-    margin:0 45px 0 0;
+  &.csl_style02, &.csl_style03, &.csl_style04 {@include csl_style02;}
+  // 라벨 스타일 csl_style02 End
 
-    & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
-
-    & > label {
-      background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
-      &, &:before {@include border-radius(200px);}
-      &:before {content:""; left:10px; width:20px; height:20px; background-color: $color-gray-01;}
-      &:after  {content:"OFF"; right:-20px; color:$color-dark-01;}
-    }
-
-    &.on + label {}
-    & > input, &.on {
-      &:checked + label , &.on + label, label {
-        background-color:$color-red-01; border:none;
-        &:before {left:calc(100% - 30px); background-color:$color-white-01;}
-        &:after  {content:"ON"; right:5px; color:$color-white-01;}
-      }
-    }
-
-    &.disabled {opacity: 0.6; pointer-events: none;}
-
-  } // 라벨 스타일 csl_style02 End
-
-
-  &.csl_style03 {
-    & > label {
-      &:after  {content:"NO";  }
-    }
-    & > input, &.on {
-      &:checked + label , &.on + label, label {
-        &:after  {content:"YES"; }
-      }
-    }
-  }
-
-  &.csl_style04 {
-    & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
-    & > label {
-      &:after  {content:"Hide";  }
-    }
-    & > input, &.on {
-      &:checked + label , &.on + label, label {
-        &:after  {content:"Show"; }
-      }
-    }
-  }
+  &.csl_style02 {@include csl_style02_onoff;} // ON or OFF
+  &.csl_style03 {@include csl_style03_noyes;} // YES or NO
+  &.csl_style04 {@include csl_style04_showhide;} // SHOW or HIDE
 }
 ///// input[type="checkbox"] checkBox label base 정의 End
 

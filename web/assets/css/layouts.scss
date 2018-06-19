@@ -49,10 +49,8 @@ body {
 h1,h2,h3,h4,h5,h6 {position: relative; letter-spacing: 0;}
 h1,h3,h4 {display: inline-block; }
 h1 {
-  min-width: 250px; height:100%; border:none;
-  background-image: url(../images/logo/icent_isaver_w.svg);
-  background-size: 100% 32px; background-repeat: no-repeat;
-  background-position:0 50%;
+  min-width: 200px; height:100%; background-image: url(../images/logo/icent_isaver_w.svg);
+  background-size: contain; background-repeat: no-repeat; background-position:0 50%; border:none;
 
   .login_area & {
     height:70px; background-size:170px;
@@ -695,9 +693,9 @@ menu {
 
   // 알림상세
   section.db_infor_box {
-    visibility: hidden;
-    position: absolute; z-index:1; bottom:0; top:($btnarea-height + 10px); right:20px;
-    width:($noticecenter-width / 2); padding:50px 100px;
+
+    position: absolute; z-index:1; bottom:20px; top:70px; right:-($noticecenter-width * 2 + 20px);
+    width:($noticecenter-width * 2); padding:50px;
     @include box-shadow02(-60px, 0, 100px, -50px, 0, 0, 0, 1);
 
     & > * {
@@ -711,9 +709,9 @@ menu {
 
       &_event {
         p {
-          &:nth-of-type(odd) {font-size:3rem; opacity: 0.8; line-height: 2.5rem;}
+          &:nth-of-type(odd) {font-size:3rem; opacity: 0.8; }
           &:nth-of-type(2)   {font-size:3.5rem; padding:0 0 20px 0;}
-          &:last-of-type     {font-size:6rem; line-height:5.2rem;}
+          &:last-of-type     {font-size:8.5rem;}
         }
       }
 
@@ -773,7 +771,7 @@ menu {
 
     }
 
-    &.on {visibility: visible; width:($noticecenter-width * 2); right:($noticecenter-width + 20px); }
+    &.on { width:($noticecenter-width * 2); right:($noticecenter-width + 20px); }
   }
 }
 
@@ -969,6 +967,286 @@ body.admin_mode.taekwon_mode {
 
 
 
+
+/////......  구역 / 장치 관리 MAP 설정 시작
+.map_sett_area {
+  td {border-width:0px 1px 1px 1px !important;}
+}
+
+
+.map_sett_box {
+  //min-width:1150px;  padding:$dash-margin;
+  @include flexbase; @include flex-column-row; min-width:1120px;
+
+
+  & > section {
+    $sec_h:450px; $sec_m:800px; $sec_l:300px; overflow: hidden;
+
+    @include flexbase; @include flex-column; @include flex-option(0, 1, 100%);
+    margin:0 0 0 20px; height:490px;
+
+    & > * {width:100%; position: relative;}
+
+    &.map {
+      @include flex-option(1, 0, $sec_m); max-width:$sec_m; min-width:$sec_m; width:$sec_m; margin:0;
+
+      & > div {
+        &:first-of-type {
+          overflow: hidden; height:$sec_h; @include border01(1px 1px 0 1px,$color-gray-06,1 );
+          background-color: $bas-color;
+          &, & * {color:$color-white-02;}
+        }
+
+        &:last-of-type {
+          @include flexbase; @include flex-align-items-center;
+          height:40px;
+          & > * {position: relative; z-index: 1;}
+          &:before, &:after {
+            content:""; position:absolute; left:0;
+            width:100%; height:1px; background-color:$color-gray-06;
+          }
+          &:after {bottom:0;} &:before {top:0;}
+          select {@include flex-option(0, 1, 100%);}
+          span  {max-width:35px; min-width:35px; text-align: center; padding: 0 !important;}
+          input {max-width:80px;}
+        }
+      }
+    }
+
+    &.list {
+      $ch_width:90px; $ch_margin:20px;
+
+      @include flex-option(1, 0, $sec_l); max-width:$sec_l; min-width:$sec_l; width:$sec_l;
+      @include border01(1px,$color-gray-06,1 );
+
+      & > * {position: relative; width: 100%; padding:0 $ch_margin;}
+
+      h3 {
+        overflow: auto; margin:$ch_margin 0 0 0; max-height: 200px; min-height:40px;
+
+        /*
+        &:after, &:before {
+        }
+        &:after  {content:"구역명 / 장치명"; left:20px; width:calc(100% - 120px);}
+        &:before {content:"사용여부"; right:20px; width:80px; text-align: center;}
+        */
+      }
+
+      & > div {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px; }
+
+      & > div, ul li,  ul li button {@include flexbase; @include flex-align-items-center;}
+
+      & > div {
+        /*
+        <div>
+            <p>구역명/장치명</p>
+            <p>보기/감추기</p>
+            <p>적용여부</p>
+        </div>
+         */
+        @include flex-option(1, 0, 40px); min-height:40px; max-height:40px; opacity: 0.6; margin:10px 0;
+        & > * {font-size:0.9rem; }
+        &:before {
+          content:""; position: absolute; bottom:0; left:$ch_margin; right:$ch_margin;
+          @include border01(0 0 1px 0,$color-gray-06,1 );
+        }
+      }
+
+      ul {
+        overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
+        padding: 0 $ch_margin 0 ($ch_margin - 5px);
+
+        li {
+          height:50px;
+
+          button {
+            @include transition(200ms); @include flex-option(0, 1, 100%);
+            position: relative; height:100%; padding:0 0 0 20px;
+            &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
+            &:before {font-size:1.8rem; padding:0 10px 0 0;}
+            &.m8:before {content:"\e962";}
+            &.camera:before {content:"\e964";}
+
+            &.on {
+              &, &:after {font-weight:bold; color:$color-blue-01;}
+              &:after {content:"\e901"; font-size:1.2rem; }
+            }
+          }
+
+          & > div {@include checkbox_set; @include csl_style02; @include csl_style03_noyes; margin:0 0 0 10px;}
+
+        }
+      }
+
+      & > div, ul li {
+        position: relative; width: 100%;
+        & > * {
+          @include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;
+          &:nth-child(1) {@include flex-option(0, 1, 100%); margin:0; text-align: left;}
+        }
+      }
+
+    }
+
+  }
+}
+.map_images {
+  background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
+  width:100%; height:100%; cursor:move;
+  & > div {
+    /*resize: auto; overflow: hidden;*/ position: absolute !important;
+
+    &, & > * {cursor: pointer;}
+
+    &.on {@include box-shadow01(0, 3px, 8px, 0px, #000, 1);}
+
+    .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
+      display: none !important; position: absolute; width:20px; height:20px;
+
+      &:before {
+        content:"\e935";
+        @include flex-midddle; width:100%; height:100%;
+        @include border-radius(500px); color:#000; font-weight: bold; background-color: $color-white-01;
+      }
+      &:hover:before {background-color: $color-blue-01; color:$color-white-01;}
+    }
+
+    .ui-resizable-e:before  {@include rotate(180deg);  }
+    .ui-resizable-s:before  {@include rotate(-90deg);  }
+    .ui-resizable-se:before {@include rotate(-135deg); }
+  }
+
+  .m8, .camera {
+    z-index:10; width:30px; height:30px; background-color: transparent;
+    background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
+    @include border-radius(500px);
+    .ui-resizable-e, .ui-resizable-s {display: none !important;}
+    .ui-resizable-se {right:-10px; bottom:-10px;}
+
+    &.on {
+      background-color: $color-blue-01;
+      &:hover { .ui-resizable-se {display: block !important;} }
+    }
+  }
+  .m8 {background-image: url(../images/map/sico_96.svg);}
+  .camera {background-image: url(../images/map/sico_98.svg);}
+
+  .area {
+    z-index: 5; width:70px; height:70px; background-color: rgba(255,255,255,0.2);
+    border-style:dashed; border-width:2px; border-color:$color-white-01;
+
+    .ui-resizable-e  {bottom: 15px; right:-10px; }
+    .ui-resizable-s  {bottom:-10px; right: 15px; }
+    .ui-resizable-se {bottom:-10px; right:-10px; }
+
+    &.on {
+      background-color: rgba($color-blue-01,0.4); border-color:$color-blue-01;
+      &:hover  { .ui-resizable-se, .ui-resizable-e, .ui-resizable-s {display: block !important;} }
+    }
+  }
+}
+
+$devicewidth:40px;
+.device, .device > div, .icon-tof, .icon-ptz, .tracking {
+  &, &:before, &:after {@include flex-midddle; }
+
+  &:before, &:after {
+    width:100%; height:100%; font-size:1.9rem; color:$color-white-01; background-color: transparent;
+    @include border-radius(200px); @include transition(400ms); cursor: pointer;
+  }
+}
+
+.icon-tof, .icon-ptz, .tracking {
+  position: absolute; width:$devicewidth; height:$devicewidth; @include border-radius(200px);
+}
+
+.tracking {
+  &:before, &:after {background-color: transparent !important;}
+  &:before {content:"\e91b"; font-size:1rem; color:$color-blue-03; }
+}
+
+.icon-tof, .icon-ptz {
+  background-color: $bas-color;
+  &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
+  & > span {
+    @include flex-midddle; position: absolute; height:20px; bottom:-($devicewidth - 15px);
+    padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
+    background-color:$color-gray-09; @include border-radius(200px);
+  }
+}
+
+.icon-tof, .icon-ptz, .tracking {
+  /////..... 임계치 적용 표시 Start
+  &.level {
+    &-caution,&-warning,&-danger {@include pOn; }
+
+    &-caution:after {@include border01(2px,$color-gray-05,1);  }
+    &-warning:after {@include border01(2px,$color-orange-01,1);}
+    &-danger:after  {@include border01(2px,$color-red-01,1);   }
+    &-die:after {}
+
+    &-caution { &,& > span {background-color:$color-gray-05;   } }
+    &-warning { &,& > span {background-color:$color-orange-01; } }
+    &-danger  { &,& > span {background-color:$color-red-01;    } }
+    &-die     {
+      @include issue02; background-color:$color-gray-09;
+      &:before {opacity: 0.6;}
+      &:after {
+        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+      }
+    }
+
+  }
+  /////..... 임계치 적용 표시 End
+}
+
+.tracking {
+  /////..... 임계치 적용 표시 Start
+  &.level {
+    &-caution,&-warning,&-danger {&:before {font-size:1.5rem; color:$color-white-01 !important;}}
+  }
+  /////..... 임계치 적용 표시 End
+}
+
+.device {
+  /////..... 임계치 적용 표시 Start
+  //&:before {content: url(../images/map/mapex_w.svg);}
+  &.level {
+    &-caution,&-warning,&-danger { & > div {@include pOn;} }
+
+    &-caution > div {
+      &, & > span {background-color:$color-gray-05;}
+      &:after {@include border01(2px,$color-gray-05,1);}
+    }
+    &-warning > div {
+      &, & > span {background-color:$color-orange-01;}
+      &:after {@include border01(2px,$color-orange-01,1);}
+    }
+    &-danger  > div {
+      &, & > span {background-color:$color-red-01; }
+      &:after {@include border01(2px,$color-red-01,1);}
+    }
+
+    &-die > div  {
+      @include issue02; background-color:$color-gray-09;
+      &:before {opacity: 0.6;}
+      &:after {
+        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+      }
+    }
+
+  }
+  /////..... 임계치 적용 표시 End
+}
+
+
+
+
+.dashboard_mode {}
+.admin_mode {}
+/////......  구역 / 장치 관리 MAP 설정 끝
 
 
 

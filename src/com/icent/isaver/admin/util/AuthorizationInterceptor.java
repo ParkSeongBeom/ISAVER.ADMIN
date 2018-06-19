@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.util;
 
 import com.icent.isaver.admin.resource.AdminResource;
+import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
+
+    @Inject
+    private TemplateSettingSvc templateSettingSvc;
 
     @Inject
     private IsaverTargetUtil isaverTargetUtil;
@@ -119,6 +123,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("deviceWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsDeviceUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
+        modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
         modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);

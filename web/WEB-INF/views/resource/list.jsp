@@ -10,6 +10,9 @@
 <c:set value="D00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script src="${rootPath}/assets/js/page/resource/resource-helper.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/popup/template-setting-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/popup/custom-map-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
@@ -31,7 +34,7 @@
             <div class="table_btn_set">
                 <button class="btn" onclick="javascript:resourceHelper.getAreaDetail(); return false;"><spring:message code='resource.button.addArea'/></button>
                 <button class="btn" onclick="javascript:resourceHelper.getDeviceDetail(); return false;"><spring:message code='resource.button.addDevice'/></button>
-                <button class="btn sett_btn option_btn" onclick="javascript: return false;"></button>
+                <button class="btn sett_btn option_btn" onclick="javascript:templateSettingPopup.openPopup(); return false;"></button>
                 <button class="btn refl_btn" onclick="javascript:resourceHelper.refreshList(); return false;" title="<spring:message code='resource.title.refresh'/>"></button>
             </div>
         </div>
@@ -75,6 +78,7 @@
         <!-- 구역 상세 Start-->
         <div detail class="area_table">
             <form id="areaForm" method="POST" onsubmit="return false;" class="form_type01">
+                <input type="hidden" name="allTemplate"/>
                 <div class="table_contents">
                     <!-- 입력 테이블 Start -->
                     <table class="t_defalut t_type02 arealist_col">
@@ -112,12 +116,7 @@
                                 <td class="point intd">
                                     <div>
                                         <isaver:codeSelectBox groupCodeId="TMP" codeId="" htmlTagName="templateCode"/>
-                                        <div class="checkbox_set csl_style03" allTemplate style="display: none;">
-                                            <span><spring:message code="area.column.allTemplate"/></span>
-                                            <input type="checkbox" name="allTemplate"/>
-                                            <label></label>
-                                        </div>
-                                        <button class="btn map_sett_btn" style="display:none;">Map 설정</button>
+                                        <button class="btn map_sett_btn" style="display:none;"><spring:message code="resource.title.mapSetting"/></button>
                                     </div>
                                 </td>
                             </tr>
@@ -264,12 +263,101 @@
         <!-- 장치 상세 End-->
     </article>
     <!-- 테이블 입력 / 조회 영역 End -->
+
+    <!-- 옵션 팝업 -->
+    <div class="popupbase option_pop" >
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="resource.title.preferences"/></h2>
+                    <button onclick="javascript:templateSettingPopup.closePopup();"></button>
+                </header>
+                <article class="opatin_list">
+                    <div class="safeeye_option">
+                        <input type="checkbox" />
+                        <ul><li><spring:message code="resource.message.emptyOption"/></li></ul>
+                    </div>
+                    <div class="blinker_option">
+                        <input type="checkbox" />
+                        <ul><li><spring:message code="resource.message.emptyOption"/></li></ul>
+                    </div>
+                    <div class="detector_option">
+                        <input type="checkbox" />
+                        <ul><li><spring:message code="resource.message.emptyOption"/></li></ul>
+                    </div>
+                    <div class="safeguard_option">
+                        <input type="checkbox" checked/>
+                        <ul>
+                            <li>
+                                <span>Map View</span>
+                                <select name="safeGuardMapView">
+                                    <option value="online">Online Map</option>
+                                    <option value="offline">Offline Map</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                <footer>
+                    <button class="btn" onclick="javascript:templateSettingPopup.reset();"><spring:message code="common.button.reset"/></button>
+                    <button class="btn" onclick="javascript:templateSettingPopup.save();"><spring:message code="common.button.save"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="javascript:templateSettingPopup.closePopup();"></div>
+    </div>
+
+    <!-- MAP 설정 팝업 -->
+    <div class="popupbase map_pop">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="resource.title.mapSetting"/></h2>
+                    <button onclick="javascript:customMapPopup.closePopup();"></button>
+                </header>
+                <article class="map_sett_box">
+                    <section id="customMapSection" class="map">
+                        <div>
+                            <div id="mapElement" class="map_images"></div>
+                        </div>
+                        <div>
+                            <select id="fileId">
+                                <option value=""><spring:message code="resource.column.fileSelect"/></option>
+                            </select>
+                            <span>X1</span>
+                            <input name="x1" type="number" onkeypress="isNumberWithPoint(this);"/>
+                            <span>Y1</span>
+                            <input name="y1" type="number" onkeypress="isNumberWithPoint(this);"/>
+                            <span>X2</span>
+                            <input name="x2" type="number" onkeypress="isNumberWithPoint(this);"/>
+                            <span>Y2</span>
+                            <input name="y2" type="number" onkeypress="isNumberWithPoint(this);"/>
+                        </div>
+                    </section>
+                    <section class="list">
+                        <h3 id="areaName"></h3>
+                        <div>
+                            <p><spring:message code="resource.column.resourceTarget"/></p>
+                            <p><spring:message code="resource.column.useYn"/></p>
+                        </div>
+                        <ul id="childList"></ul>
+                    </section>
+                </article>
+                <footer>
+                    <button class="btn" onclick="javascript:customMapPopup.save();"><spring:message code="common.button.save"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="javascript:customMapPopup.closePopup();"></div>
+    </div>
 </section>
 
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
     var resourceHelper = new ResourceHelper(String('${rootPath}'));
+    var templateSettingPopup = new TemplateSettingPopup(String('${rootPath}'));
+    var customMapPopup = new CustomMapPopup(String('${rootPath}'),String('${version}'));
 
     var messageConfig = {
         // 공통
@@ -298,9 +386,35 @@
         ,   existsSerialNo        :"<spring:message code='device.message.existsSerialNo'/>"
     };
 
+    var templateSettingMessageConfig = {
+        listFailure             :'<spring:message code="resource.message.listFailure"/>'
+        ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
+        ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
+        ,   saveFailure         :'<spring:message code="area.message.saveFailure"/>'
+    };
+
+    var customMapMessageConfig = {
+        listFailure             :'<spring:message code="resource.message.listFailure"/>'
+        ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
+        ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
+        ,   saveFailure         :'<spring:message code="area.message.saveFailure"/>'
+    };
+
     $(document).ready(function(){
         resourceHelper.setMessageConfig(messageConfig);
         resourceHelper.refreshList();
+
+        templateSettingPopup.setMessageConfig(templateSettingMessageConfig);
+        templateSettingPopup.setElement($(".option_pop"));
+        templateSettingPopup.reset();
+
+        customMapPopup.setMessageConfig(customMapMessageConfig);
+        customMapPopup.setElement($(".map_pop"));
+        customMapPopup.initFileList();
+
+        $("#customMapSection").find("input[type='number']").on("change",function(){
+            customMapPopup.setTargetValue();
+        });
 
         $(".tree_tab_btn > button:eq(0)").trigger("click");
     });

@@ -73,13 +73,25 @@ var ResourceHelper = (
 
         /**
          * area validate
-         * mode : 1(add) 2(save) 3(remove)
+         * actionType : add / save / remove
          */
         var areaVaild = function(actionType){
             var form = $("#areaForm");
             if(form.find("input[name=areaName]").val().trim().length==0){
                 _alertMessage('requiredAreaName');
                 return false;
+            }
+
+            switch (actionType){
+                case "add" :
+                    break;
+                case "save" :
+                    //if(confirm(_messageConfig['saveAllTemplate'])){
+                    //    form.find("input[name='allTemplate']").val("Y");
+                    //}
+                    break;
+                case "add" :
+                    break;
             }
             return true;
         };
@@ -130,6 +142,15 @@ var ResourceHelper = (
             }
         };
 
+        this.openCustomMapPopup = function(areaId){
+            var data = _areaList[areaId]['data'];
+            if(!customMapPopup && !customMapPopup instanceof CustomMapPopup){
+                console.error("[ResourceHelper][openCustomMapPopup] customMapPopup is null or typeerror");
+                return false;
+            }
+            customMapPopup.openPopup(areaId,data['areaName'],data['fileId']?data['fileId']:'');
+        };
+
         /**
          * 구역 상세
          * @author psb
@@ -138,7 +159,6 @@ var ResourceHelper = (
             var form = $("#areaForm");
             // 구역 정보 초기화
             form[0].reset();
-            form.find("div[allTemplate]").show();
             form.find(".table_btn_set button").show();
             $("div[detail]").removeClass("on");
             $(".area_table").addClass("on");
@@ -164,6 +184,7 @@ var ResourceHelper = (
                 form.find("select[name='parentAreaId']").val(data['parentAreaId']).prop("selected", true);
                 form.find("input[name='sortOrder']").val(data['sortOrder']);
                 form.find("select[name='templateCode']").val(data['templateCode']).prop("selected", true).trigger("change");
+                form.find(".map_sett_btn").attr("onclick","javascript:resourceHelper.openCustomMapPopup('"+areaId+"'); return false;");
                 form.find("textarea[name='areaDesc']").val(data['areaDesc']);
                 form.find("td[name='insertUserName']").text(data['insertUserName']);
                 form.find("td[name='insertDatetime']").text(new Date(data['insertDatetime']).format("yyyy-MM-dd HH:mm:ss"));
@@ -177,8 +198,7 @@ var ResourceHelper = (
                 if(selAreaId!=null){
                     form.find("select[name='parentAreaId']").val(selAreaId).prop("selected", true);
                 }
-                form.find("div[allTemplate]").hide();
-                form.find("#allTemplate").prop("checked",false);
+                form.find("select[name='templateCode']").trigger("change");
                 form.find("tr[modifyTag]").hide();
                 form.find("button[name='saveBtn']").hide();
                 form.find("button[name='removeBtn']").hide();

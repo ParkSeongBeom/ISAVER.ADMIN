@@ -392,13 +392,13 @@ input.datepicker + button + .in-timepicker {
       right: 0;
       margin: 0; }
   .checkbox_set.csl_style01 {
-  /*
-<div class="checkbox_set csl_style01">
-    <input type="checkbox"  name="" />
-    <label></label>
-    <span>자동로그인</span>
-</div>
-*/ }
+    /*
+      <div class="checkbox_set csl_style01">
+          <input type="checkbox"  name="" />
+          <label></label>
+          <span>자동로그인</span>
+      </div>
+      */ }
     .checkbox_set.csl_style01 > input, .checkbox_set.csl_style01 > label {
       width: 40px; }
     .checkbox_set.csl_style01 > label {
@@ -419,13 +419,13 @@ input.datepicker + button + .in-timepicker {
       font-weight: bold;
       opacity: 1; }
   .checkbox_set.csl_style02, .checkbox_set.csl_style03, .checkbox_set.csl_style04 {
-  /*
-<div class="checkbox_set csl_style02">
-    <span>자동로그인</span>
-    <input type="checkbox"  name="" />
-    <label></label>
-</div>
-*/
+    /*
+    <div class="checkbox_set csl_style02">
+        <span>자동로그인</span>
+        <input type="checkbox"  name="" />
+        <label></label>
+    </div>
+    */
     margin: 0 45px 0 0; }
     .checkbox_set.csl_style02 > input, .checkbox_set.csl_style02 > label, .checkbox_set.csl_style03 > input, .checkbox_set.csl_style03 > label, .checkbox_set.csl_style04 > input, .checkbox_set.csl_style04 > label {
       width: 80px;
@@ -448,7 +448,6 @@ input.datepicker + button + .in-timepicker {
         height: 20px;
         background-color: #a9a9a9; }
       .checkbox_set.csl_style02 > label:after, .checkbox_set.csl_style03 > label:after, .checkbox_set.csl_style04 > label:after {
-        content: "OFF";
         right: -20px;
         color: #4c4c4c; }
     .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label, .checkbox_set.csl_style02 > input label, .checkbox_set.csl_style02.on:checked + label, .checkbox_set.csl_style02.on.on + label, .checkbox_set.csl_style02.on label, .checkbox_set.csl_style03 > input:checked + label, .checkbox_set.csl_style03 > input.on + label, .checkbox_set.csl_style03 > input label, .checkbox_set.csl_style03.on:checked + label, .checkbox_set.csl_style03.on.on + label, .checkbox_set.csl_style03.on label, .checkbox_set.csl_style04 > input:checked + label, .checkbox_set.csl_style04 > input.on + label, .checkbox_set.csl_style04 > input label, .checkbox_set.csl_style04.on:checked + label, .checkbox_set.csl_style04.on.on + label, .checkbox_set.csl_style04.on label {
@@ -458,12 +457,15 @@ input.datepicker + button + .in-timepicker {
         left: calc(100% - 30px);
         background-color: #fff; }
       .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after, .checkbox_set.csl_style02 > input label:after, .checkbox_set.csl_style02.on:checked + label:after, .checkbox_set.csl_style02.on.on + label:after, .checkbox_set.csl_style02.on label:after, .checkbox_set.csl_style03 > input:checked + label:after, .checkbox_set.csl_style03 > input.on + label:after, .checkbox_set.csl_style03 > input label:after, .checkbox_set.csl_style03.on:checked + label:after, .checkbox_set.csl_style03.on.on + label:after, .checkbox_set.csl_style03.on label:after, .checkbox_set.csl_style04 > input:checked + label:after, .checkbox_set.csl_style04 > input.on + label:after, .checkbox_set.csl_style04 > input label:after, .checkbox_set.csl_style04.on:checked + label:after, .checkbox_set.csl_style04.on.on + label:after, .checkbox_set.csl_style04.on label:after {
-        content: "ON";
         right: 5px;
         color: #fff; }
     .checkbox_set.csl_style02.disabled, .checkbox_set.csl_style03.disabled, .checkbox_set.csl_style04.disabled {
       opacity: 0.6;
       pointer-events: none; }
+  .checkbox_set.csl_style02 > label:after {
+    content: "OFF"; }
+  .checkbox_set.csl_style02 > input:checked + label:after, .checkbox_set.csl_style02 > input.on + label:after, .checkbox_set.csl_style02 > input label:after, .checkbox_set.csl_style02.on:checked + label:after, .checkbox_set.csl_style02.on.on + label:after, .checkbox_set.csl_style02.on label:after {
+    content: "ON"; }
   .checkbox_set.csl_style03 > label:after {
     content: "NO"; }
   .checkbox_set.csl_style03 > input:checked + label:after, .checkbox_set.csl_style03 > input.on + label:after, .checkbox_set.csl_style03 > input label:after, .checkbox_set.csl_style03.on:checked + label:after, .checkbox_set.csl_style03.on.on + label:after, .checkbox_set.csl_style03.on label:after {

@@ -26,7 +26,7 @@ function isNumber(input){
  * input에 숫자 및 소숫점만 입력 하도록 기능제한</br>
  * - onkeypress event handler
  * - input style에 ime-mode:disabled; 같이 추가 필요.
- * @author kst
+ * @author psb
  */
 function isNumberWithPoint(input){
     if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 46) { //숫자키 및 소수점만 입력
@@ -164,4 +164,14 @@ function addAsynchronousScript(_src){
     }catch(e){
         console.error("[addAsynchronousScript]" + e);
     }
+}
+
+/**
+ * 값의 소수점 자르기
+ * value : 값, places : 소수점자리수
+ * @author psb
+ */
+function toRound(value, places) {
+    var multiplier = Math.pow(10, places);
+    return (Math.round(value * multiplier) / multiplier);
 }

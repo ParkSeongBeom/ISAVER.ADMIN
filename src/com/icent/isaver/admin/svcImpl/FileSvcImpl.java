@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +54,14 @@ public class FileSvcImpl implements FileSvc {
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
-    @Value("${cnf.fileAttachedUploadPath}")
+    @Value("${cnf.fileUploadPath}")
     private String fileUploadPath = null;
+
+    @Value("${cnf.fileAddress}")
+    private String fileAddress = null;
+
+    @Value("${cnf.fileAttachedUploadPath}")
+    private String fileAttachedUploadPath = null;
 
     @Inject
     private FileDao fileDao;
@@ -74,6 +81,12 @@ public class FileSvcImpl implements FileSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("files", files);
+        try{
+            InetAddress address = InetAddress.getByName(fileAddress);
+            modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

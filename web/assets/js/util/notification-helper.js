@@ -48,7 +48,7 @@ var NotificationHelper = (
 
         this.setCallBackEventHandler = function(_eventHandler){
             if(_eventHandler==null || typeof _eventHandler != "function"){
-                console.error('[RequestHelper][setCallBackEventHandler] _appendEventHandler is null or type error');
+                console.error('[NotificationHelper][setCallBackEventHandler] _appendEventHandler is null or type error');
                 return false;
             }
 

@@ -176,7 +176,7 @@ input[type="text"],input[type="password"],input[type="email"],
 input[type="number"],input[type="search"],input[type="image"],
 input[type="tel"], input[type="button"], input[type="reset"],
 input[type="submit"], input[type="date"]
-{text-align: left; vertical-align:middle; font-style:normal; order-radius:0; cursor:pointer;}
+{text-align: left; vertical-align:middle; font-style:normal; border-radius:0; cursor:pointer;}
 /* 체크박스, 레디오버튼 정의 */
 
 input[type="checkbox"], input[type="radio"] {
