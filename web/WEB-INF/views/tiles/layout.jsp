@@ -61,10 +61,6 @@
             ,'saveProfileUrl':'${rootPath}/user/save.json'
         };
 
-        <%--var templateSetting = {--%>
-            <%--'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'--%>
-        <%--};--%>
-
         var commonMessageConfig = {
             'inProgress':'<spring:message code="common.message.inProgress"/>'
         };

@@ -88,7 +88,9 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         try {
             areaDao.saveAreaFileId(saveAreaParam);
             customMapLocationDao.removeCustomMapLocation(removeCustomParam);
-            customMapLocationDao.insertCustomMapLocation(customList);
+            if(customList.size()>0){
+                customMapLocationDao.insertCustomMapLocation(customList);
+            }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

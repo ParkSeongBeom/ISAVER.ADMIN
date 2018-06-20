@@ -13,16 +13,29 @@ var CustomMapMediator = (
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
         };
-        var _deviceCodeClass = {
-            'area' : "area"
-            ,"DEV013" : "m8"
-            ,"DEV002" : "camera"
+        var _markerClass = {
+            'area' : "g-area"
+            ,'object' : "g-tracking"
+            ,'fence' : "g-fence"
+            ,"DEV013" : "g-m8"
+            ,"DEV002" : "g-camera"
+        };
+        var _ratio={
+            'standard' : {
+                'width' : 800
+                ,'height' : 450
+            }
+            ,'scale' : {
+                'horizontal' : 1 // 가로
+                ,'vertical' : 1 // 세로
+            }
         };
         var _scale=1.0;
         var _element;
         var _messageConfig;
         var _callBackEventHandler = null;
         var _customList = {};
+        var _objectList = {};
 
         var _self = this;
 
@@ -41,19 +54,14 @@ var CustomMapMediator = (
         };
 
         /**
-         * get device Class
-         * @author psb
-         */
-        this.getDeviceClass = function(){
-            return _deviceCodeClass;
-        };
-
-        /**
          * set element
          * @author psb
          */
         this.setElement = function(element){
             _element = element;
+            _element.addClass("map_images");
+            _ratio['scale']['horizontal'] = toRound(_element.width()/_ratio['standard']['width'],2);
+            _ratio['scale']['vertical'] = toRound(_element.height()/_ratio['standard']['height'],2);
             _element.empty();
         };
 
@@ -85,16 +93,28 @@ var CustomMapMediator = (
         this.setBackgroundImage = function(filePath,physicalFileName){
             if(physicalFileName!=null && physicalFileName!=""){
                 _element.css({"background-image":"url("+filePath+physicalFileName+")"});
-                var limitLeft,limitTop;
+                var limitLeft, limitTop;
+                var pointerY, pointerX, canvasOffset, canvasHeight, canvasWidth;
                 _element.draggable({
                     cursor: "move"
-                    ,drag: function(event, ui){
-                        if(ui.helper.width()/2 < Math.abs(ui.position['left']) || ui.helper.height()/2 < Math.abs(ui.position['top'])){
-                            ui.position['left'] = limitLeft;
-                            ui.position['top'] = limitTop;
+                    ,start : function(evt, ui) {
+                        canvasOffset = _element.offset();
+                        canvasHeight = _element.height();
+                        canvasWidth = _element.width();
+                        pointerY = evt.pageY - (canvasOffset.top / _scale) - parseInt($(evt.target).css('top'));
+                        pointerX = evt.pageX - (canvasOffset.left / _scale) - parseInt($(evt.target).css('left'));
+                    }
+                    ,drag : function(evt, ui) {
+                        // Fix for zoom
+                        ui.position.top = Math.round(evt.pageY - (canvasOffset.top / _scale) - pointerY);
+                        ui.position.left = Math.round(evt.pageX - (canvasOffset.left / _scale) - pointerX);
+
+                        if(canvasWidth/2 < Math.abs(ui.position['left']) || canvasHeight/2 < Math.abs(ui.position['top'])){
+                            ui.position.left = limitLeft;
+                            ui.position.top = limitTop;
                         }else{
-                            limitLeft = ui.position['left'];
-                            limitTop = ui.position['top']
+                            limitLeft = ui.position.left;
+                            limitTop = ui.position.top;
                         }
                     }
                 });
@@ -104,16 +124,19 @@ var CustomMapMediator = (
                     if(event.originalEvent.deltaY < 0){if(compteur < 50){compteur++;}}
                     var scale = compteur/10;
                     _element.css({
-                        'transform':'scale('+scale+','+scale+')',
-                        '-webkit-transform':'scale('+scale+','+scale+')',
-                        '-moz-transform':'scale('+scale+','+scale+')',
-                        '-o-transform':'scale('+scale+','+scale+')',
-                        '-ms-transform':'scale('+scale+','+scale+')'
+                        'transform':'scale('+scale+')',
+                        '-webkit-transform':'scale('+scale+')',
+                        '-moz-transform':'scale('+scale+')',
+                        '-o-transform':'scale('+scale+')',
+                        '-ms-transform':'scale('+scale+')'
                     });
                     _scale = scale;
                 });
             }else{
-                _element.off('mousewheel').draggable('destroy').attr("style","").attr("scale","");;
+                if(_element.data('uiDraggable')){
+                    _element.draggable('destroy');
+                }
+                _element.off('mousewheel').removeAttr("style").removeAttr("scale");
             }
         };
 
@@ -179,20 +202,18 @@ var CustomMapMediator = (
 
             if(_callBackEventHandler!=null){
                 _callBackEventHandler('change', targetData);
-            }else{
-                _self.setDisplayTarget(targetData['targetId'],targetData['useYn']=='Y'?true:false);
             }
         };
 
         this.targetRender = function(data, controlFlag){
-            var pointerX, pointerY;
             if(_customList[data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId']}).addClass(_deviceCodeClass[data['deviceCode']])
-                    .on("click",function(){
-                        _self.positionChangeEventHandler($(this).attr("targetId"));
-                    });
+                var targetElement = $("<div/>",{targetId:data['targetId']}).addClass(_markerClass[data['deviceCode']]);
                 if(controlFlag){
+                    var pointerY, pointerX, canvasOffset;
                     targetElement
+                        .on("click",function(){
+                            _self.positionChangeEventHandler($(this).attr("targetId"));
+                        })
                         .resizable({
                             containment: "parent"
                             ,aspectRatio:data['deviceCode']!="area"?true:false
@@ -212,29 +233,22 @@ var CustomMapMediator = (
                             cursor: "move"
                             ,containment: "parent"
                             ,start : function(evt, ui) {
-                                pointerY = (evt.pageY - _element.offset().top) / _scale - parseInt($(evt.target).css('top'));
-                                pointerX = (evt.pageX - _element.offset().left) / _scale - parseInt($(evt.target).css('left'));
+                                canvasOffset = _element.offset();
+                                pointerY = (evt.pageY - canvasOffset.top) / _scale - parseInt($(evt.target).css('top'));
+                                pointerX = (evt.pageX - canvasOffset.left) / _scale - parseInt($(evt.target).css('left'));
                             }
                             ,drag : function(evt, ui) {
-                                var canvasTop = _element.offset().top;
-                                var canvasLeft = _element.offset().left;
-                                var canvasHeight = _element.height();
-                                var canvasWidth = _element.width();
-
-                                // Fix for zoom
-                                ui.position.top = Math.round((evt.pageY - canvasTop) / _scale - pointerY);
-                                ui.position.left = Math.round((evt.pageX - canvasLeft) / _scale - pointerX);
-
-                                // Check if element is outside canvas
-                                if (ui.position.left < 0) ui.position.left = 0;
-                                if (ui.position.left + $(this).width() > canvasWidth) ui.position.left = canvasWidth - $(this).width();
-                                if (ui.position.top < 0) ui.position.top = 0;
-                                if (ui.position.top + $(this).height() > canvasHeight) ui.position.top = canvasHeight - $(this).height();
-
-                                ui.offset.left = Math.round(ui.position.left + canvasLeft);
+                                ui.position.top = Math.round((evt.pageY - canvasOffset.top) / _scale - pointerY);
+                                ui.position.left = Math.round((evt.pageX - canvasOffset.left) / _scale - pointerX);
                                 _self.positionChangeEventHandler($(this).attr("targetId"),'update');
                             }
                         });
+                }else{
+                    if(data["targetName"]!=null && data["targetName"]!=''){
+                        targetElement.append(
+                            $("<span/>").text(data["targetName"])
+                        )
+                    }
                 }
 
                 _element.append(targetElement);
@@ -242,10 +256,10 @@ var CustomMapMediator = (
                     'data' : {
                         'targetId' : data['targetId']
                         ,'deviceCode' : data['deviceCode']
-                        ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']
-                        ,'x2' : data['useYn']?data['x2']:_element.width()-targetElement.position()['left']-targetElement.width()
-                        ,'y1' : data['useYn']?data['y1']:targetElement.position()['top']
-                        ,'y2' : data['useYn']?data['y2']:_element.height()-targetElement.position()['top']-targetElement.height()
+                        ,'x1' : data['useYn']?toRound(data['x1']*_ratio['scale']['horizontal'],2):targetElement.position()['left']
+                        ,'x2' : data['useYn']?toRound(data['x2']*_ratio['scale']['horizontal'],2):_element.width()-targetElement.position()['left']-targetElement.width()
+                        ,'y1' : data['useYn']?toRound(data['y1']*_ratio['scale']['vertical'],2):targetElement.position()['top']
+                        ,'y2' : data['useYn']?toRound(data['y2']*_ratio['scale']['vertical'],2):_element.height()-targetElement.position()['top']-targetElement.height()
                         ,'useYn' : data['useYn']
                     }
                     ,'element' : targetElement
@@ -254,6 +268,18 @@ var CustomMapMediator = (
             }else{
                 _self.positionChangeEventHandler(data['targetId']);
             }
+        };
+
+        this.addMarker = function(_type, _id, _lat){
+            //var ctx = document.getElementById('c').getContext('2d');
+            //ctx.fillStyle = '#f00';
+            //ctx.beginPath();
+            //ctx.moveTo(0, 0);
+            //ctx.lineTo(100, 50);
+            //ctx.lineTo(50, 100);
+            //ctx.lineTo(0, 90);
+            //ctx.closePath();
+            //ctx.fill();
         };
 
         /**
@@ -296,7 +322,7 @@ var CustomMapMediator = (
                         var childList = data['childList'];
                         for(var index in childList){
                             if(childList[index]['useYn']=='Y'){
-                                targetRender(childList[index], false);
+                                _self.targetRender(childList[index], false);
                             }
                         }
                     }

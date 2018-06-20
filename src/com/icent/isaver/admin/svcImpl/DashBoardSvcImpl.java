@@ -4,10 +4,12 @@ import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,12 @@ import java.util.Map;
  */
 @Service
 public class DashBoardSvcImpl implements DashBoardSvc {
+
+    @Value("${cnf.fileAddress}")
+    private String fileAddress = null;
+
+    @Value("${cnf.fileAttachedUploadPath}")
+    private String fileAttachedUploadPath = null;
 
     @Inject
     private AreaDao areaDao;
@@ -53,6 +61,12 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         modelAndView.addObject("childAreas", childAreas);
         modelAndView.addObject("area", area);
         modelAndView.addObject("paramBean",parameters);
+        try{
+            InetAddress address = InetAddress.getByName(fileAddress);
+            modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return modelAndView;
     }
 }

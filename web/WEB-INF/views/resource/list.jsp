@@ -318,7 +318,7 @@
                 <article class="map_sett_box">
                     <section id="customMapSection" class="map">
                         <div>
-                            <div id="mapElement" class="map_images"></div>
+                            <div id="mapElement"></div>
                         </div>
                         <div>
                             <select id="fileId">

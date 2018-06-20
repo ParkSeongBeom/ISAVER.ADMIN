@@ -49,7 +49,7 @@ public class CustomMapLocationCtrl {
         return modelAndView;
     }
 
-    private final static String[] saveCustomMapLocationParam = new String[]{"areaId","paramData"};
+    private final static String[] saveCustomMapLocationParam = new String[]{"areaId"};
 
     /**
      * Custom Map 설정을 저장한다.

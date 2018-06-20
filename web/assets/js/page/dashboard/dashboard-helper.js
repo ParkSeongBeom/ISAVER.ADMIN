@@ -15,6 +15,7 @@ var DashboardHelper = (
             marquee : true
         };
         var _messageConfig;
+        var _fileUploadPath;
         var _defaultTemplateCode = "TMP001";
         var _areaList = {};
         var _guardList = {};
@@ -45,6 +46,14 @@ var DashboardHelper = (
         };
 
         /**
+         * set message config
+         * @author psb
+         */
+        this.setFileUploadPath = function(fileUploadPath){
+            _fileUploadPath = fileUploadPath;
+        };
+
+        /**
          * set websocket
          * @author psb
          */
@@ -69,17 +78,31 @@ var DashboardHelper = (
             }
 
             var _mapMediator = _self.getGuard('map', resultData['areaId']);
-            if(resultData['areaId']!=null && _mapMediator!=null && _mapMediator instanceof MapMediator){
-                switch (resultData['actionType']) {
-                    case "add":
-                        _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                        break;
-                    case "save":
-                        _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                        break;
-                    case "remove":
-                        _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
-                        break;
+            if(resultData['areaId']!=null && _mapMediator!=null){
+                if(_mapMediator instanceof MapMediator){
+                    switch (resultData['actionType']) {
+                        case "add":
+                            _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                            break;
+                        case "save":
+                            _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                            break;
+                        case "remove":
+                            _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
+                            break;
+                    }
+                }else if(_mapMediator instanceof CustomMapMediator){
+                    switch (resultData['actionType']) {
+                        //case "add":
+                        //    _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                        //    break;
+                        //case "save":
+                        //    _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                        //    break;
+                        //case "remove":
+                        //    _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
+                        //    break;
+                    }
                 }
             }
         };
@@ -111,11 +134,12 @@ var DashboardHelper = (
          * set Guard List
          */
         this.setGuardList = function(){
+            var initFlag = false;
             $.each($("div[templateCode='TMP005']"),function(){
                 var _areaId = $(this).attr("areaId");
                 _guardList[_areaId] = {
                     "video" : new VideoMediator(_rootPath)
-                    ,"map" : new MapMediator(_rootPath, _version)
+                    ,"map" : templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath, _version)
                     ,"deviceIds" : $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get()
                 };
 
@@ -135,9 +159,21 @@ var DashboardHelper = (
 
                 _guardList[_areaId]['video'].setElement($(this).find("ul[ptzPlayers]"));
                 _guardList[_areaId]['video'].createPlayer(deviceList);
-                _guardList[_areaId]['map'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
-                _guardList[_areaId]['map'].addImage();
+                if(_guardList[_areaId]['map'] instanceof MapMediator){
+                    _guardList[_areaId]['map'].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
+                    _guardList[_areaId]['map'].addImage();
+                }else if(_guardList[_areaId]['map'] instanceof CustomMapMediator){
+                    _guardList[_areaId]['map'].setElement($(this).find("div[name='map-canvas']"));
+                    _guardList[_areaId]['map'].setMessageConfig(_messageConfig);
+                    _guardList[_areaId]['map'].initCustomList(_areaId);
+                    _guardList[_areaId]['map'].setBackgroundImage(_fileUploadPath,$(this).attr("physicalFileName"));
+                }
+                initFlag = true;
             });
+
+            if(initFlag){
+                console.log("[DashboardHelper] initialize Safe-Guard - "+templateSetting['safeGuardMapView']);
+            }
         };
 
         /**
@@ -184,13 +220,17 @@ var DashboardHelper = (
                         notificationMarqueeUpdate();
                     }else{
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null){
-                            _guardList[data['areaId']]['map'].setAnimate(
-                                data['deviceId']
-                                ,data['fenceId']
-                                ,data['objectId']
-                                ,"add"
-                                ,"level-"+criticalCss[data['criticalLevel']]
-                            );
+                            if(_guardList[data['areaId']]['map'] instanceof MapMediator){
+                                _guardList[data['areaId']]['map'].setAnimate(
+                                    data['deviceId']
+                                    ,data['fenceId']
+                                    ,data['objectId']
+                                    ,"add"
+                                    ,"level-"+criticalCss[data['criticalLevel']]
+                                );
+                            }else if(_guardList[data['areaId']]['map'] instanceof CustomMapMediator){
+
+                            }
                         }
                         notificationUpdate(messageType, data, flag!=null?flag:true);
                     }
@@ -201,13 +241,17 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            _guardList[data['notification']['areaId']]['map'].setAnimate(
-                                data['notification']['deviceId']
-                                ,data['notification']['fenceId']
-                                ,data['notification']['objectId']
-                                ,"remove"
-                                ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
-                            );
+                            if(_guardList[data['notification']['areaId']]['map'] instanceof MapMediator){
+                                _guardList[data['notification']['areaId']]['map'].setAnimate(
+                                    data['notification']['deviceId']
+                                    ,data['notification']['fenceId']
+                                    ,data['notification']['objectId']
+                                    ,"remove"
+                                    ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
+                                );
+                            }else if(_guardList[data['notification']['areaId']]['map'] instanceof CustomMapMediator){
+
+                            }
                         }
                     }
                     break;

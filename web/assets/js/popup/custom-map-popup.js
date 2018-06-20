@@ -13,7 +13,11 @@ var CustomMapPopup = (
             fileListUrl : "/file/mapList.json"
             ,saveUrl : "/customMapLocation/save.json"
         };
-        var _deviceCodeClass;
+        var _markerClass = {
+            'area' : "area"
+            ,"DEV013" : "m8"
+            ,"DEV002" : "camera"
+        };
         var _areaId = null;
         var _fileUploadPath;
         var _customMapMediator;
@@ -102,7 +106,6 @@ var CustomMapPopup = (
                 _areaId = areaId;
                 _customMapMediator = new CustomMapMediator(_rootPath,_version);
                 try{
-                    _deviceCodeClass = _customMapMediator.getDeviceClass();
                     _customMapMediator.setElement(_element.find("#mapElement"));
                     _customMapMediator.setMessageConfig(_messageConfig);
                     _customMapMediator.initCustomList(areaId,callBackRender);
@@ -110,10 +113,7 @@ var CustomMapPopup = (
                     console.error("[CustomMapPopup][openPopup] custom map mediator init error - "+ e.message);
                 }
             }
-
-            if(fileId!='' && fileId!=null){
-                _element.find("#fileId").val(fileId).prop("selected",true).trigger("change");
-            }
+            _element.find("#fileId").val(fileId).prop("selected",true).trigger("change");
         };
 
         /**
@@ -164,7 +164,7 @@ var CustomMapPopup = (
                         var target = data[index];
                         _element.find("#childList").append(
                             $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                $("<button/>").text(target['targetName']).addClass(_deviceCodeClass[target['deviceCode']]).on("click",function(){
+                                $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
                                     _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")}, true);
                                 })
                             ).append(

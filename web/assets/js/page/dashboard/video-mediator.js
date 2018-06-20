@@ -66,7 +66,7 @@ var VideoMediator = (
                     }).ready(function(){
                         playerList[this.id] = vxgplayer(this.id);
                         playerList[this.id].src(this.options['url']);
-                        console.log('[VideoMediator][createPlayer] ready player - '+this.id)
+                        console.log('[VideoMediator][createPlayer] ready player - '+this.id);
                         _self.play(this.id);
                     });
                 }

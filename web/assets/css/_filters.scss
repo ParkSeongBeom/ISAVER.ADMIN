@@ -185,7 +185,7 @@ $display-inline-block:inline-block;
 // ex) @include flex-column;
 @mixin flex-column-reverse {-webkit-box-orient:column-reverse; -webkit-box-direction:column-reverse; -webkit-flex-direction:column-reverse; -ms-flex-direction:column-reverse; flex-direction:column-reverse;}
 // ex) @include flex-column-reverse;
-@mixin flex-column-none {-webkit-box-orient:none; -webkit-box-direction:none; -webkit-flex-direction:none; -ms-flex-direction:none; flex-direction:none;}
+@mixin flex-column-none {-webkit-box-orient:unset; -webkit-box-direction:unset; -webkit-flex-direction:unset; -ms-flex-direction:unset; flex-direction:unset;}
 // ex) @include flex-column-none;
 @mixin flex-column-row {-webkit-box-orient:row; -webkit-box-direction:row; -webkit-flex-direction:row; -ms-flex-direction:row; flex-direction:row;}
 // ex) @include flex-column-row;
@@ -601,12 +601,12 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice02 {
-    0%   {margin:0 3px 0 0;}
-    100%  {margin:0 -3px 0 0; opacity: 0.7;}
+    0%    {margin:0 3px 0 0;   }
+    100%  {margin:0 -3px 0 0;  opacity: 0.7;}
   }
   @keyframes notice02 {
-    0%   {margin:0 3px 0 0;}
-    100%  {margin:0 -3px 0 0; opacity: 0.7;}
+    0%    {margin:0 3px 0 0;    }
+    100%  {margin:0 -3px 0 0;   opacity: 0.7;}
   }
 } // ex) @include notice02;
 
@@ -731,31 +731,6 @@ $bbl01:100%; $bbl02:1px;
 
 
 
-@mixin tracking01 {
-  animation-name: tracking01;
-  -webkit-animation-name: tracking01;
-
-  /*-webkit-animation-direction:alternate;
-  animation-direction:        alternate;*/
-  animation-fill-mode:             both;
-  -webkit-animation-fill-mode:     both;
-  animation-iteration-count:1;
-  -webkit-animation-iteration-count:1;
-  -webkit-animation-timing-function:ease-in-out;
-  -webkit-animation-play-state:running;
-  //-webkit-animation-iteration-count: infinite;
-
-  -webkit-animation-duration: 10s;
-  animation-duration: 10s;
-
-  @-webkit-keyframes tracking01 {
-    0%   { margin: -110px 0 0 -52px; }
-    50%  { margin: -130px 0 0 0; }
-    100% { margin: -130px 0 0 -65px; }
-  }
-} // ex) @include tracking01;
-
-
 @mixin list {
   animation-name: list;
   -webkit-animation-name: list;
@@ -798,7 +773,6 @@ $bbl01:100%; $bbl02:1px;
   }
 
 } // ex) @include arealist;
-
 
 
 @mixin marquee {
@@ -965,11 +939,8 @@ $bbl01:100%; $bbl02:1px;
 
 // Guard 감지 아이콘 애니메이션
 @mixin pOn {
-  &:before { @include notice02;}
-  &:after {
-    content:""; position: absolute; width:120%; height:120%;
-    @include issue03;
-  }
+  &:before { @include notice03;}
+  &:after {content:""; position: absolute; width:120%; height:120%; @include issue03;}
 } // @include pOn;
 
 
@@ -1145,3 +1116,5 @@ $cslwidth:80px;
     }
   }
 } // @include csl_style04_showhide;
+
+$devicewidth:40px;

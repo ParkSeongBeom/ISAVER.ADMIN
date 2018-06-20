@@ -368,7 +368,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Safe-Guard -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" physicalFileName="${childArea.physicalFileName}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -400,6 +400,7 @@
 
                                 <section class="guard_set">
                                     <div class="s_lbox">
+                                        <%--<div name="map-canvas" class="map_images"></div>--%>
                                         <div name="map-canvas"></div>
                                     </div>
                                     <div class="s_rbox">
@@ -500,8 +501,11 @@
 <link type="text/css" href="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.min.css?version=${version}" rel="stylesheet"/>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.js?version=${version}"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
+<c:if test="${templateSetting['safeGuardMapView']=='online'}">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
+</c:if>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/map-mediator.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}"></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
@@ -513,6 +517,10 @@
             '${critical.codeId}' : [],
         </c:forEach>
     });
+    var fileUploadPath = '${fileUploadPath}';
+    var templateSetting = {
+        'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
+    };
 
     /*
      url defind
@@ -532,6 +540,7 @@
         , inoutConfigEmptyArea : '<spring:message code="dashboard.message.inoutConfigEmptyArea"/>'
         , saveInoutConfigurationComplete : '<spring:message code="dashboard.message.saveInoutConfigurationComplete"/>'
         , saveInoutConfigurationFailure : '<spring:message code="dashboard.message.saveInoutConfigurationFailure"/>'
+        , customMapListFailure :'<spring:message code="resource.message.customMapListFailure"/>'
     };
 
     $(document).ready(function(){
@@ -552,10 +561,14 @@
             updateInoutSettingDatetime();
         });
 
+        dashboardHelper.setFileUploadPath(fileUploadPath);
         dashboardHelper.setMessageConfig(messageConfig);
         dashboardHelper.setWebsocket(webSocketHelper, "${deviceWebSocketUrl}");
         dashboardHelper.setAreaList();
         dashboardHelper.getBlinkerList();
+        if(templateSetting['safeGuardMapView']=='offline'){
+            dashboardHelper.setGuardList();
+        }
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
         /* 이벤트 callback (websocket 리스너) */

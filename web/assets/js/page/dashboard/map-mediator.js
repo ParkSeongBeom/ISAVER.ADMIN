@@ -27,8 +27,8 @@ var MapMediator = (
         };
         var options = {
             "device" : {
-                'content' : "<div class='device'><div class='icon-tof'></div><div class='icon-ptz'></div></div>"
-                ,'content1' : "<div class='device'><div class='icon-tof'></div></div>"
+                'content' : "<div class='device'><div class='g-m8'></div><div class='g-camera'></div></div>"
+                ,'content1' : "<div class='device'><div class='g-m8'></div></div>"
                 ,"targetClass" : ".device"
             },
             "fence" : {
@@ -36,8 +36,8 @@ var MapMediator = (
                 ,"strokeColor" : ["#f6b900", "#FF0000"]
             },
             "object" : {
-                'content' : "<div class='tracking'></div>"
-                ,"targetClass" : ".tracking"
+                'content' : "<div class='g-tracking'></div>"
+                ,"targetClass" : ".g-tracking"
                 ,'animate' : {
                     easing: "swing"
                     ,'duration' : 200
