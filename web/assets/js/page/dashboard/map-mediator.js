@@ -187,7 +187,7 @@ var MapMediator = (
                         _lat = validateLat(_lat);
                         marker[_type][_id] = new google.maps.Polygon({
                             paths: _lat,
-                            strokeColor: options["fence"]["fillColor"][0],
+                            strokeColor: options["fence"]["strokeColor"][0],
                             strokeOpacity: 0.8,
                             strokeWeight: 2,
                             fillColor: options["fence"]["fillColor"][0],
@@ -227,6 +227,12 @@ var MapMediator = (
             }
 
             switch (_type){
+                case MARKER_TYPE[1] : // fence
+                    if(marker[_type][_id]!=null){
+                        _self.removeMarker(_type, _id, _lat);
+                    }
+                    _self.addMarker(_type, _id, _lat);
+                    break;
                 case MARKER_TYPE[2] : // Object
                     if(marker[_type][_id]!=null){
                         if(_lat instanceof Array){
@@ -267,7 +273,7 @@ var MapMediator = (
         };
 
         /**
-         * get marker
+         * animation
          * @author psb
          */
         this.setAnimate = function(_deviceId, _fenceId, _objectId, _action, _className){
@@ -303,7 +309,8 @@ var MapMediator = (
                         }
                         break;
                     case "remove" :
-                        if(fenceMarker['objects'].indexOf(_objectId)!=-1){
+                        var index = fenceMarker['objects'].indexOf(_objectId);
+                        if(index!=-1){
                             fenceMarker['objects'].splice(index,1);
                         }
                         break;

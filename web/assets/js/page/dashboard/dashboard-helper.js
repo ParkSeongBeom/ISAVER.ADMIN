@@ -93,15 +93,15 @@ var DashboardHelper = (
                     }
                 }else if(_mapMediator instanceof CustomMapMediator){
                     switch (resultData['actionType']) {
-                        //case "add":
-                        //    _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                        //    break;
-                        //case "save":
-                        //    _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                        //    break;
-                        //case "remove":
-                        //    _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
-                        //    break;
+                        case "add":
+                            _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                            break;
+                        case "save":
+                            _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
+                            break;
+                        case "remove":
+                            _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
+                            break;
                     }
                 }
             }
@@ -220,17 +220,13 @@ var DashboardHelper = (
                         notificationMarqueeUpdate();
                     }else{
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null){
-                            if(_guardList[data['areaId']]['map'] instanceof MapMediator){
-                                _guardList[data['areaId']]['map'].setAnimate(
-                                    data['deviceId']
-                                    ,data['fenceId']
-                                    ,data['objectId']
-                                    ,"add"
-                                    ,"level-"+criticalCss[data['criticalLevel']]
-                                );
-                            }else if(_guardList[data['areaId']]['map'] instanceof CustomMapMediator){
-
-                            }
+                            _guardList[data['areaId']]['map'].setAnimate(
+                                data['deviceId']
+                                ,data['fenceId']
+                                ,data['objectId']
+                                ,"add"
+                                ,"level-"+criticalCss[data['criticalLevel']]
+                            );
                         }
                         notificationUpdate(messageType, data, flag!=null?flag:true);
                     }
@@ -241,17 +237,13 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            if(_guardList[data['notification']['areaId']]['map'] instanceof MapMediator){
-                                _guardList[data['notification']['areaId']]['map'].setAnimate(
-                                    data['notification']['deviceId']
-                                    ,data['notification']['fenceId']
-                                    ,data['notification']['objectId']
-                                    ,"remove"
-                                    ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
-                                );
-                            }else if(_guardList[data['notification']['areaId']]['map'] instanceof CustomMapMediator){
-
-                            }
+                            _guardList[data['notification']['areaId']]['map'].setAnimate(
+                                data['notification']['deviceId']
+                                ,data['notification']['fenceId']
+                                ,data['notification']['objectId']
+                                ,"remove"
+                                ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
+                            );
                         }
                     }
                     break;

@@ -1068,20 +1068,28 @@ input.datepicker + button + .in-timepicker {
   .map_images > * {
     position: absolute !important; }
 
+.g-m8, .g-camera {
+  z-index: 50; }
+.g-tracking {
+  z-index: 100; }
+.g-area {
+  z-index: 10; }
+.g-fence {
+  z-index: 5; }
 .g-m8, .g-camera, .g-tracking, .g-area, .g-fence {
   position: absolute !important; }
-.g-m8, .g-camera, .g-area, .g-fence {
+.g-m8, .g-camera, .g-area {
   box-shadow: 0 3px 8px 0px black;
   -webkit-box-shadow: 0 3px 8px 0px black;
   -moz-box-shadow: 0 3px 8px 0px black; }
-  .g-m8, .g-m8 > *, .g-camera, .g-camera > *, .g-area, .g-area > *, .g-fence, .g-fence > * {
+  .g-m8, .g-m8 > *, .g-camera, .g-camera > *, .g-area, .g-area > * {
     cursor: pointer; }
-  .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se, .g-fence .ui-resizable-e, .g-fence .ui-resizable-s, .g-fence .ui-resizable-se {
+  .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
     display: none !important;
     position: absolute;
     width: 16px;
     height: 16px; }
-    .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before, .g-fence .ui-resizable-e:before, .g-fence .ui-resizable-s:before, .g-fence .ui-resizable-se:before {
+    .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
       content: "\e935";
       display: -webkit-box;
       display: -moz-box;
@@ -1111,31 +1119,31 @@ input.datepicker + button + .in-timepicker {
       font-weight: bold;
       background-color: #fff;
       font-size: 0.9rem; }
-    .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before, .g-fence .ui-resizable-e:hover:before, .g-fence .ui-resizable-s:hover:before, .g-fence .ui-resizable-se:hover:before {
+    .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
       background-color: #109dcb;
       color: #fff; }
-  .g-m8 .ui-resizable-e:before, .g-camera .ui-resizable-e:before, .g-area .ui-resizable-e:before, .g-fence .ui-resizable-e:before {
+  .g-m8 .ui-resizable-e:before, .g-camera .ui-resizable-e:before, .g-area .ui-resizable-e:before {
     transform: rotate(180deg);
     ms-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     -o-transform: rotate(180deg); }
-  .g-m8 .ui-resizable-s:before, .g-camera .ui-resizable-s:before, .g-area .ui-resizable-s:before, .g-fence .ui-resizable-s:before {
+  .g-m8 .ui-resizable-s:before, .g-camera .ui-resizable-s:before, .g-area .ui-resizable-s:before {
     transform: rotate(-90deg);
     ms-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
     -o-transform: rotate(-90deg); }
-  .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-se:before, .g-fence .ui-resizable-se:before {
+  .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-se:before {
     transform: rotate(-135deg);
     ms-transform: rotate(-135deg);
     -ms-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
     -o-transform: rotate(-135deg); }
-  .g-m8 > span, .g-camera > span, .g-area > span, .g-fence > span {
+  .g-m8 > span, .g-camera > span, .g-area > span {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1155,6 +1163,7 @@ input.datepicker + button + .in-timepicker {
     -ms-flex-pack: center;
     justify-content: center;
     position: absolute;
+    width: max-content;
     height: 20px;
     bottom: -25px;
     padding: 0 10px 2px 10px;
@@ -1253,99 +1262,62 @@ input.datepicker + button + .in-timepicker {
     .g-area.on:hover .ui-resizable-se, .g-area.on:hover .ui-resizable-e, .g-area.on:hover .ui-resizable-s {
       display: block !important; }
 .g-fence {
-  width: 100px;
-  height: 50px;
-  background-color: transparent !important; }
-  .g-fence:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #f6b900;
-    background-color: rgba(246, 185, 0, 0.2); }
-  .g-fence.level-caution:before, .g-fence.level-warning:before, .g-fence.level-danger:before {
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    -webkit-animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
-    animation-name: notice03;
-    -webkit-animation-name: notice03;
-    -webkit-animation-duration: 0.1s !important;
-    animation-duration: 0.1s !important; }
-@-webkit-keyframes notice03 {
+  /*width:auto !important; height:auto !important;*/
+  background-color: transparent !important;
+  fill: rgba(246, 185, 0, 0.2);
+  stroke: #f6b900;
+  /*&:after {display: none !important;}
+  &:before {
+    content:""; position: absolute; width:100%; height:100%;
+    @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
+  }*/ }
+  .g-fence.level {
+    /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
+    &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
+    &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }*/
+    /*&-caution { & > span {background-color:$color-gray-05;   } }
+    &-warning { & > span {background-color:$color-orange-01; } }
+    &-danger  { & > span {background-color:$color-red-01;    } }*/ }
+    .g-fence.level-caution, .g-fence.level-warning, .g-fence.level-danger {
+      animation-name: issue02;
+      -webkit-animation-name: issue02;
+      -webkit-animation-duration: 0.5s;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      -webkit-animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -webkit-animation-duration: 0.8s;
+      animation-duration: 0.8s; }
+@-webkit-keyframes issue02 {
   0% {
-    left: 2px; }
-  100% {
-    left: -1px;
-    opacity: 0.7; } }
-@keyframes notice03 {
-  0% {
-    left: 2px; }
-  100% {
-    left: -1px;
-    opacity: 0.7; } }
-  .g-fence.level-caution:after, .g-fence.level-warning:after, .g-fence.level-danger:after {
-    content: "";
-    position: absolute;
-    width: 120%;
-    height: 120%;
-    animation-name: issue03;
-    -webkit-animation-name: issue03;
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    -webkit-animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
-    -webkit-animation-duration: 0.8s;
-    animation-duration: 0.8s; }
-@-webkit-keyframes issue03 {
-  0% {
-    opacity: 0; }
+    opacity: 0.5; }
   10% {
     opacity: 1; }
-  100% {
-    opacity: 0;
-    width: 180%;
-    height: 180%; } }
-@keyframes issue03 {
-  0% {
-    opacity: 0; }
-  10% {
+  50% {
     opacity: 1; }
   100% {
-    opacity: 0;
-    width: 180%;
-    height: 180%; } }
-  .g-fence.level-caution:before {
-    border-style: solid;
-    border-width: 3px;
-    border-color: #757575;
-    background-color: rgba(117, 117, 117, 0.7); }
-  .g-fence.level-warning:before {
-    border-style: solid;
-    border-width: 3px;
-    border-color: #ff8400;
-    background-color: rgba(255, 132, 0, 0.7); }
-  .g-fence.level-danger:before {
-    border-style: solid;
-    border-width: 3px;
-    border-color: #be1e1e;
-    background-color: rgba(190, 30, 30, 0.7); }
-  .g-fence.level-caution > span {
-    background-color: #757575; }
-  .g-fence.level-warning > span {
-    background-color: #ff8400; }
-  .g-fence.level-danger > span {
-    background-color: #be1e1e; }
+    opacity: 0.5; } }
+@keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+    .g-fence.level-caution {
+      fill: rgba(117, 117, 117, 0.2);
+      stroke: #757575; }
+    .g-fence.level-warning {
+      fill: rgba(255, 132, 0, 0.2);
+      stroke: #ff8400; }
+    .g-fence.level-danger {
+      fill: rgba(190, 30, 30, 0.2);
+      stroke: #be1e1e; }
 .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;

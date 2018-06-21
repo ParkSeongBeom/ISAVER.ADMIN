@@ -577,6 +577,21 @@
         initChartList();
     });
 
+    function customTest(_areaId){
+        if(_areaId==null){
+            _areaId = "AR0000";
+        }
+        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
+            {"lat" : "-70","lng" : "-50"},
+            {"lat" : "-40","lng" : "-60"},
+            {"lat" : "-40","lng" : "-20"},
+            {"lat" : "-70","lng" : "-10"},
+            {"lat" : "-80","lng" : "-20"}
+        ]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-70","lng": "-70"}]});
+        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "-20","lng": "-20"}]});
+    }
+
     function test(_areaId){
         if(_areaId==null){
             _areaId = "AR0000";

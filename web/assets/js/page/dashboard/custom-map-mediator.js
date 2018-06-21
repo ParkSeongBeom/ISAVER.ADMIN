@@ -10,10 +10,22 @@ var CustomMapMediator = (
     function(rootPath, version){
         var _rootPath;
         var _version;
+        var MARKER_TYPE = ['device','fence','object','camera','custom'];
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
         };
-        var _markerClass = {
+        var marker = {
+            'fence' : {}
+            ,'object' : {}
+            ,'custom' : {}
+        };
+        var options = {
+            "fence" : {
+                "fillColor" : ["#f6b900", "#FF0000"]
+                ,"strokeColor" : ["#f6b900", "#FF0000"]
+            }
+        };
+        var _targetClass = {
             'area' : "g-area"
             ,'object' : "g-tracking"
             ,'fence' : "g-fence"
@@ -34,7 +46,7 @@ var CustomMapMediator = (
         var _element;
         var _messageConfig;
         var _callBackEventHandler = null;
-        var _customList = {};
+        var _translate = null;
         var _objectList = {};
 
         var _self = this;
@@ -70,18 +82,18 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setDisplayTarget = function(targetId, flag){
-            if(_customList[targetId]==null){
+            if(marker[MARKER_TYPE[4]][targetId]==null){
                 return false;
             }
 
             if(flag){
                 _element.find(".on").removeClass("on");
-                _customList[targetId]['data']['useYn'] = 'Y';
-                _customList[targetId]['element'].addClass("on").show();
+                marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'Y';
+                marker[MARKER_TYPE[4]][targetId]['element'].addClass("on").show();
                 return true;
             }else{
-                _customList[targetId]['data']['useYn'] = 'N';
-                _customList[targetId]['element'].hide();
+                marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'N';
+                marker[MARKER_TYPE[4]][targetId]['element'].hide();
                 return false;
             }
         };
@@ -145,7 +157,7 @@ var CustomMapMediator = (
          * @author psb
          */
         this.getCustomList = function(){
-            return _customList;
+            return marker[MARKER_TYPE[4]];
         };
 
         /**
@@ -154,13 +166,13 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setTargetData = function(targetId, data){
-            if(_customList[targetId]==null){
+            if(marker[MARKER_TYPE[4]][targetId]==null){
                 console.error("[CustomMapMediator][setTargetData] targetId is null or empty - "+targetId);
                 return false;
             }
 
-            var targetElement = _customList[targetId]['element'];
-            var targetData = _customList[targetId]['data'];
+            var targetElement = marker[MARKER_TYPE[4]][targetId]['element'];
+            var targetData = marker[MARKER_TYPE[4]][targetId]['data'];
 
             $.extend(targetData,data);
             targetElement.css("left",targetData['x1']);
@@ -176,16 +188,16 @@ var CustomMapMediator = (
          *  - update : 마우스 드래그를 통한 위치 변경 or 축소 확대 시 이벤트 핸들러
          * @author psb
          */
-        this.positionChangeEventHandler = function(targetId, actionType){
-            if(_customList[targetId]==null){
-                console.error("[CustomMapMediator][positionChangeEventHandler] targetId is null or empty - "+targetId);
+        this.positionChangeEventHandler = function(_type, _id, _actionType){
+            if(marker[_type][_id]==null){
+                console.error("[CustomMapMediator][positionChangeEventHandler] id is null or empty - "+_id);
                 return false;
             }
 
-            var targetElement = _customList[targetId]['element'];
-            var targetData = _customList[targetId]['data'];
+            var targetElement = marker[_type][_id]['element'];
+            var targetData = marker[_type][_id]['data'];
 
-            switch (actionType){
+            switch (_actionType){
                 case 'init':
                     targetElement.css("left",targetData['x1']);
                     targetElement.css("width",_element.width()-targetData['x1']-targetData['x2']);
@@ -205,14 +217,18 @@ var CustomMapMediator = (
             }
         };
 
+        /**
+         * 구역/장치 단건 Render
+         * @author psb
+         */
         this.targetRender = function(data, controlFlag){
-            if(_customList[data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId']}).addClass(_markerClass[data['deviceCode']]);
+            if(marker[MARKER_TYPE[4]][data['targetId']]==null){
+                var targetElement = $("<div/>",{targetId:data['targetId']}).addClass(_targetClass[data['deviceCode']]);
                 if(controlFlag){
                     var pointerY, pointerX, canvasOffset;
                     targetElement
                         .on("click",function(){
-                            _self.positionChangeEventHandler($(this).attr("targetId"));
+                            _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"));
                         })
                         .resizable({
                             containment: "parent"
@@ -226,7 +242,7 @@ var CustomMapMediator = (
 
                                 ui.size.width = newWidth;
                                 ui.size.height = newHeight;
-                                _self.positionChangeEventHandler($(this).attr("targetId"),'update');
+                                _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"),'update');
                             }
                         })
                         .draggable({
@@ -240,7 +256,7 @@ var CustomMapMediator = (
                             ,drag : function(evt, ui) {
                                 ui.position.top = Math.round((evt.pageY - canvasOffset.top) / _scale - pointerY);
                                 ui.position.left = Math.round((evt.pageX - canvasOffset.left) / _scale - pointerX);
-                                _self.positionChangeEventHandler($(this).attr("targetId"),'update');
+                                _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"),'update');
                             }
                         });
                 }else{
@@ -252,7 +268,7 @@ var CustomMapMediator = (
                 }
 
                 _element.append(targetElement);
-                _customList[data['targetId']] = {
+                marker[MARKER_TYPE[4]][data['targetId']] = {
                     'data' : {
                         'targetId' : data['targetId']
                         ,'deviceCode' : data['deviceCode']
@@ -264,22 +280,193 @@ var CustomMapMediator = (
                     }
                     ,'element' : targetElement
                 };
-                _self.positionChangeEventHandler(data['targetId'],'init');
+                _self.positionChangeEventHandler(MARKER_TYPE[4],data['targetId'],'init');
             }else{
-                _self.positionChangeEventHandler(data['targetId']);
+                _self.positionChangeEventHandler(MARKER_TYPE[4],data['targetId']);
+            }
+
+            if(data['deviceCode']=='DEV013' && _translate==null){
+                _translate = {
+                    'x' : targetElement.position()['left'] + targetElement.width()/2
+                    ,'y' : targetElement.position()['top'] + targetElement.height()/2
+                };
             }
         };
 
+        /**
+         * Add Marker (object, fence)
+         * @author psb
+         */
         this.addMarker = function(_type, _id, _lat){
-            //var ctx = document.getElementById('c').getContext('2d');
-            //ctx.fillStyle = '#f00';
-            //ctx.beginPath();
-            //ctx.moveTo(0, 0);
-            //ctx.lineTo(100, 50);
-            //ctx.lineTo(50, 100);
-            //ctx.lineTo(0, 90);
-            //ctx.closePath();
-            //ctx.fill();
+            if(_id==null || _lat==null){
+                console.error("[CustomMapMediator][addMarker] parameter not enough");
+                return false;
+            }
+            if(marker[_type]!=null && marker[_type][_id]!=null){
+                console.warn("[CustomMapMediator][addMarker] marker is exist - [" + _type + "][" + _id + "]");
+                return false;
+            }
+
+            try{
+                switch (_type){
+                    case MARKER_TYPE[1] : // Fence
+                        marker[_type][_id] = $("<canvas/>",{class:_targetClass[_type]}).attr('width',_element.width()).attr('height',_element.height());
+                        _element.append(marker[_type][_id]);
+
+                        if(marker[_type][_id][0].getContext){
+                            var ctx = marker[_type][_id][0].getContext("2d");
+                            ctx.beginPath(); // Drawing start
+                            ctx.translate(_translate['x'],_translate['y']); // 기준점 x,y 좌표
+                            _lat = validateLat(_lat);
+                            for(var index in _lat){
+                                if(index==0){
+                                    ctx.moveTo(_lat[index]['lat'], _lat[index]['lng']); // 펜을 좌표로 이동
+                                }else{
+                                    ctx.lineTo(_lat[index]['lat'], _lat[index]['lng']);
+                                }
+                            }
+                            ctx.closePath(); // Drawing Close
+                            ctx.stroke(); // 윤곽석 잇기
+                            ctx.fillStyle = options[MARKER_TYPE[1]]["fillColor"][0];
+                            ctx.fill(); // 도형채우기
+                            ctx.strokeStyle = options[MARKER_TYPE[1]]["strokeColor"][0];
+                            ctx.stroke(); // 선채우기
+                        }
+                        marker[_type][_id]['objects'] = [];
+                        break;
+                    case MARKER_TYPE[2] : // Object
+                        marker[_type][_id] = $("<div/>",{objectId:_id}).addClass(_targetClass[_type]);
+                        _element.append(marker[_type][_id]);
+                        marker[_type][_id].css("left",toRound(Number(_translate['x'])+Number(_lat[0]['lat'])-(marker[_type][_id].width()/2),2));
+                        marker[_type][_id].css("top",toRound(Number(_translate['y'])+Number(_lat[0]['lng'])-(marker[_type][_id].height()/2),2));
+
+                        console.log(_translate, _lat);
+                        break;
+                }
+                console.log("[CustomMapMediator][addMarker] complete - [" + _type + "][" + _id + "]");
+            }catch(e){
+                console.error("[CustomMapMediator][addMarker] error- [" + _type + "][" + _id + "] - " + e.message);
+            }
+        };
+
+        /**
+         * save marker
+         * @author psb
+         */
+        this.saveMarker = function(_type, _id, _lat){
+            if(_type==null || _id==null || _lat==null){
+                console.error("[CustomMapMediator][saveMarker] parameter not enough");
+                return false;
+            }
+
+            switch (_type){
+                case MARKER_TYPE[1] : // fence
+                    if(marker[_type][_id]!=null){
+                        _self.removeMarker(_type, _id, _lat);
+                    }
+                    _self.addMarker(_type, _id, _lat);
+                    break;
+                case MARKER_TYPE[2] : // Object
+                    if(marker[_type][_id]!=null){
+                        if(_lat instanceof Array){
+                            _lat = _lat[0];
+                        }
+                        marker[_type][_id].animate({
+                            'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(marker[_type][_id].width()/2),2)
+                            ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(marker[_type][_id].height()/2),2)
+                        });
+                    }else{
+                        _self.addMarker(_type, _id, _lat);
+                    }
+                    break;
+            }
+        };
+
+        /**
+         * remove marker
+         * @author psb
+         */
+        this.removeMarker = function(_type, _id){
+            if(_type==null || _id==null){
+                console.error("[CustomMapMediator][removeMarker] parameter not enough");
+                return false;
+            }
+
+            switch (_type){
+                case MARKER_TYPE[1] : // Fence
+                case MARKER_TYPE[2] : // Object
+                    if(marker[_type][_id]!=null){
+                        marker[_type][_id].remove();
+                        delete marker[_type][_id];
+                        console.log("[CustomMapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
+                    }
+                    break;
+            }
+        };
+
+        /**
+         * animation
+         * @author psb
+         */
+        this.setAnimate = function(_deviceId, _fenceId, _objectId, _action, _className){
+            var fenceMarker = _self.getMarker(MARKER_TYPE[1], _fenceId);
+            if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
+                switch (_action){
+                    case "add" :
+                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(_objectId)==-1){
+                            fenceMarker['objects'].push(_objectId);
+                        }
+                        break;
+                    case "remove" :
+                        var index = fenceMarker['objects'].indexOf(_objectId);
+                        if(index!=-1){
+                            fenceMarker['objects'].splice(index,1);
+                        }
+                        break;
+                }
+
+                if(marker[MARKER_TYPE[1]][_fenceId][0].getContext){
+                    var ctx = marker[MARKER_TYPE[1]][_fenceId][0].getContext("2d");
+                    ctx.fillStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["fillColor"][1];
+                    ctx.fill(); // 도형채우기
+                    ctx.strokeStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["strokeColor"][1];
+                    ctx.stroke(); // 선채우기
+                }
+            }else{
+                console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
+            }
+
+            var objectMarker = _self.getMarker(MARKER_TYPE[2], _objectId);
+            if(objectMarker!=null){
+                switch (_action){
+                    case "add" :
+                        objectMarker.addClass(_className);
+                        break;
+                    case "remove" :
+                        objectMarker.removeClass(_className);
+                        break;
+                }
+            }else{
+                console.warn("[CustomMapMediator][setAnimate] not found object marker - " + _objectId);
+            }
+        };
+
+        /**
+         * get marker
+         * @author psb
+         */
+        this.getMarker = function(_type, _id){
+            switch (_type){
+                case MARKER_TYPE[1] : // Fence
+                case MARKER_TYPE[2] : // Object
+                    if(marker[_type][_id]!=null){
+                        return marker[_type][_id];
+                    }
+                    break;
+                case "all" : // Object
+                    return marker;
+            }
+            return null;
         };
 
         /**
@@ -347,6 +534,33 @@ var CustomMapMediator = (
          */
         var _alertMessage = function(type){
             alert(_messageConfig[type]);
+        };
+
+        var validateLat = function( jsonData ) {
+            if(jsonData instanceof Array){
+                for(var key in jsonData) {
+                    for(var i in jsonData[key]) {
+                        if( typeof jsonData[key][i] === 'object' || typeof jsonData[key][i] === 'array' ) {
+                            jsonData[key][i] = typeCheck( jsonData[key][i] );
+                        } else {
+                            if( /^(0|[1-9][0-9].*)$/.test( jsonData[key][i] ) ) {
+                                jsonData[key][i] = Number( jsonData[key][i] );
+                            }
+                        }
+                    }
+                }
+            }else{
+                for(var key in jsonData) {
+                    if( typeof jsonData[key] === 'object' || typeof jsonData[key] === 'array' ) {
+                        jsonData[key] = typeCheck( jsonData[key] );
+                    } else {
+                        if( /^(0|[1-9][0-9].*)$/.test( jsonData[key] ) ) {
+                            jsonData[key] = Number( jsonData[key] );
+                        }
+                    }
+                }
+            }
+            return jsonData;
         };
 
         _initialize(rootPath, version);
