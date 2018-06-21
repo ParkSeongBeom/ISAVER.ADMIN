@@ -57,12 +57,6 @@ public class FileSvcImpl implements FileSvc {
     @Value("${cnf.fileUploadPath}")
     private String fileUploadPath = null;
 
-    @Value("${cnf.fileAddress}")
-    private String fileAddress = null;
-
-    @Value("${cnf.fileAttachedUploadPath}")
-    private String fileAttachedUploadPath = null;
-
     @Inject
     private FileDao fileDao;
 
@@ -81,12 +75,6 @@ public class FileSvcImpl implements FileSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("files", files);
-        try{
-            InetAddress address = InetAddress.getByName(fileAddress);
-            modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

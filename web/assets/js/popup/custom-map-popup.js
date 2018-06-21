@@ -19,7 +19,6 @@ var CustomMapPopup = (
             ,"DEV002" : "camera"
         };
         var _areaId = null;
-        var _fileUploadPath;
         var _customMapMediator;
         var _messageConfig;
         var _element;
@@ -139,7 +138,6 @@ var CustomMapPopup = (
          */
         var fileListRender = function(data,fileUploadPath){
             _element.find("#fileId option").not(":eq(0)").remove();
-            _fileUploadPath = fileUploadPath;
             for(var index in data){
                 _element.find("#fileId").append(
                     $("<option/>",{value:data[index]['fileId'], physicalFileName:data[index]['physicalFileName']}).text(data[index]['title'])
@@ -147,7 +145,7 @@ var CustomMapPopup = (
             }
             _element.find("#fileId").on("change",function(){
                 if(_customMapMediator!=null){
-                    _customMapMediator.setBackgroundImage(_fileUploadPath,$(this).find("option:selected").attr("physicalFileName"));
+                    _customMapMediator.setBackgroundImage($(this).find("option:selected").attr("physicalFileName"));
                 }
             });
         };
@@ -192,7 +190,7 @@ var CustomMapPopup = (
          * set Target Value
          * @author psb
          */
-        this.setTargetValue = function(){
+        this.setTargetValue = function(_this){
             var targetId = _element.find("#childList button.on").parent().attr("targetId");
             if(targetId==null){
                 return false;

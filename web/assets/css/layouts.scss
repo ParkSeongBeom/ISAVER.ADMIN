@@ -140,7 +140,7 @@ h4 {
 ////// ----------------- header Start
 header {
   @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-  position: fixed; @include z-index-header; top:0; left:0;
+  position: fixed; z-index:500; top:0; left:0;
   width:100%; min-width:$body-minwidth; height:$headerHeight;
   padding:0 $dash-margin; background-color: $color-white-02;
   //border-bottom:2px solid rgba(0,0,0,0.1);

@@ -259,7 +259,7 @@ header {
   -ms-flex-pack: justify;
   justify-content: space-between;
   position: fixed;
-  z-index: 30;
+  z-index: 500;
   top: 0;
   left: 0;
   width: 100%;

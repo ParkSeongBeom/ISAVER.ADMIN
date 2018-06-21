@@ -1,20 +1,17 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
+import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.CustomMapLocationBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.CustomMapLocationDao;
 import com.kst.common.spring.TransactionUtil;
-import com.kst.common.util.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -23,9 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +48,12 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
+    @Value("${cnf.fileAddress}")
+    private String fileAddress = null;
+
+    @Value("${cnf.fileAttachedUploadPath}")
+    private String fileAttachedUploadPath = null;
+
     @Inject
     private CustomMapLocationDao customMapLocationDao;
 
@@ -62,9 +63,17 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     @Override
     public ModelAndView findListCustomMapLocation(Map<String, String> parameters) {
         List<CustomMapLocationBean> childList = customMapLocationDao.findListCustomMapLocation(parameters);
+        AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("childList", childList);
+        modelAndView.addObject("area", area);
+        try{
+            InetAddress address = InetAddress.getByName(fileAddress);
+            modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

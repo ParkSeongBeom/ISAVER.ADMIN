@@ -166,7 +166,6 @@ var DashboardHelper = (
                     _guardList[_areaId]['map'].setElement($(this).find("div[name='map-canvas']"));
                     _guardList[_areaId]['map'].setMessageConfig(_messageConfig);
                     _guardList[_areaId]['map'].initCustomList(_areaId);
-                    _guardList[_areaId]['map'].setBackgroundImage(_fileUploadPath,$(this).attr("physicalFileName"));
                 }
                 initFlag = true;
             });

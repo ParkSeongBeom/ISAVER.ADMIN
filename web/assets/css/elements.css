@@ -1087,8 +1087,8 @@ input.datepicker + button + .in-timepicker {
   .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
     display: none !important;
     position: absolute;
-    width: 16px;
-    height: 16px; }
+    width: 12px;
+    height: 12px; }
     .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
       content: "\e935";
       display: -webkit-box;
@@ -1118,7 +1118,7 @@ input.datepicker + button + .in-timepicker {
       color: #000;
       font-weight: bold;
       background-color: #fff;
-      font-size: 0.9rem; }
+      font-size: 0.5rem; }
     .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
       background-color: #109dcb;
       color: #fff; }
@@ -1177,8 +1177,8 @@ input.datepicker + button + .in-timepicker {
 .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
   display: none !important; }
 .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
-  right: -8px;
-  bottom: -8px; }
+  right: -6px;
+  bottom: -6px; }
 .g-m8.on, .g-camera.on {
   background-color: #109dcb; }
   .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
@@ -1245,17 +1245,17 @@ input.datepicker + button + .in-timepicker {
   height: 70px;
   background-color: rgba(255, 255, 255, 0.2);
   border-style: dashed;
-  border-width: 2px;
+  border-width: 1px;
   border-color: #fff; }
   .g-area .ui-resizable-e {
-    bottom: 16px;
-    right: -8px; }
+    bottom: 12px;
+    right: -6px; }
   .g-area .ui-resizable-s {
-    bottom: -8px;
-    right: 16px; }
+    bottom: -6px;
+    right: 12px; }
   .g-area .ui-resizable-se {
-    bottom: -8px;
-    right: -8px; }
+    bottom: -6px;
+    right: -6px; }
   .g-area.on {
     background-color: rgba(16, 157, 203, 0.4);
     border-color: #109dcb; }
@@ -1264,33 +1264,39 @@ input.datepicker + button + .in-timepicker {
 .g-fence {
   /*width:auto !important; height:auto !important;*/
   background-color: transparent !important;
-  fill: rgba(246, 185, 0, 0.2);
-  stroke: #f6b900;
-  /*&:after {display: none !important;}
-  &:before {
-    content:""; position: absolute; width:100%; height:100%;
-    @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-  }*/ }
-  .g-fence.level {
-    /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
-    &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
-    &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }*/
-    /*&-caution { & > span {background-color:$color-gray-05;   } }
-    &-warning { & > span {background-color:$color-orange-01; } }
-    &-danger  { & > span {background-color:$color-red-01;    } }*/ }
-    .g-fence.level-caution, .g-fence.level-warning, .g-fence.level-danger {
-      animation-name: issue02;
-      -webkit-animation-name: issue02;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 0.8s;
-      animation-duration: 0.8s; }
+  width: 100% !important;
+  height: 100% !important; }
+  .g-fence polygon, .g-fence path {
+    fill: rgba(246, 185, 0, 0.2);
+    stroke: #f6b900;
+    stroke-width: 1px;
+    /*&:after {display: none !important;}
+    &:before {
+      content:""; position: absolute; width:100%; height:100%;
+      @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
+    }*/ }
+    .g-fence polygon.level, .g-fence path.level {
+        /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
+        &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
+        &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }
+
+        &-caution { & > span {background-color:$color-gray-05;   } }
+        &-warning { & > span {background-color:$color-orange-01; } }
+        &-danger  { & > span {background-color:$color-red-01;    } }*/ }
+      .g-fence polygon.level-caution, .g-fence polygon.level-warning, .g-fence polygon.level-danger, .g-fence path.level-caution, .g-fence path.level-warning, .g-fence path.level-danger {
+        animation-name: issue02;
+        -webkit-animation-name: issue02;
+        -webkit-animation-duration: 0.5s;
+        animation-duration: 0.5s;
+        animation-iteration-count: infinite;
+        -webkit-animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        -webkit-animation-timing-function: linear;
+        animation-fill-mode: forwards;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-duration: 0.8s;
+        animation-duration: 0.8s;
+        stroke-width: 3px; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -1309,15 +1315,15 @@ input.datepicker + button + .in-timepicker {
     opacity: 1; }
   100% {
     opacity: 0.5; } }
-    .g-fence.level-caution {
-      fill: rgba(117, 117, 117, 0.2);
-      stroke: #757575; }
-    .g-fence.level-warning {
-      fill: rgba(255, 132, 0, 0.2);
-      stroke: #ff8400; }
-    .g-fence.level-danger {
-      fill: rgba(190, 30, 30, 0.2);
-      stroke: #be1e1e; }
+      .g-fence polygon.level-caution, .g-fence path.level-caution {
+        fill: rgba(117, 117, 117, 0.2);
+        stroke: #757575; }
+      .g-fence polygon.level-warning, .g-fence path.level-warning {
+        fill: rgba(255, 132, 0, 0.2);
+        stroke: #ff8400; }
+      .g-fence polygon.level-danger, .g-fence path.level-danger {
+        fill: rgba(190, 30, 30, 0.2);
+        stroke: #be1e1e; }
 .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;

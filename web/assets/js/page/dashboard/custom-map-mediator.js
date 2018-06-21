@@ -44,11 +44,11 @@ var CustomMapMediator = (
         };
         var _scale=1.0;
         var _element;
+        var _fenceSvg;
+        var _fileUploadPath;
         var _messageConfig;
         var _callBackEventHandler = null;
         var _translate = null;
-        var _objectList = {};
-
         var _self = this;
 
         /**
@@ -75,6 +75,16 @@ var CustomMapMediator = (
             _ratio['scale']['horizontal'] = toRound(_element.width()/_ratio['standard']['width'],2);
             _ratio['scale']['vertical'] = toRound(_element.height()/_ratio['standard']['height'],2);
             _element.empty();
+
+            // fence svg init
+            if($.fn.svg!=null){
+                _element.svg({
+                    onLoad:function(svg){
+                        _fenceSvg = svg;
+                    }
+                });
+                _element.find("svg").addClass("g-fence");
+            }
         };
 
         /**
@@ -102,9 +112,9 @@ var CustomMapMediator = (
          * set image
          * @author psb
          */
-        this.setBackgroundImage = function(filePath,physicalFileName){
+        this.setBackgroundImage = function(physicalFileName){
             if(physicalFileName!=null && physicalFileName!=""){
-                _element.css({"background-image":"url("+filePath+physicalFileName+")"});
+                _element.css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
                 var limitLeft, limitTop;
                 var pointerY, pointerX, canvasOffset, canvasHeight, canvasWidth;
                 _element.draggable({
@@ -310,37 +320,50 @@ var CustomMapMediator = (
             try{
                 switch (_type){
                     case MARKER_TYPE[1] : // Fence
-                        marker[_type][_id] = $("<canvas/>",{class:_targetClass[_type]}).attr('width',_element.width()).attr('height',_element.height());
-                        _element.append(marker[_type][_id]);
-
-                        if(marker[_type][_id][0].getContext){
-                            var ctx = marker[_type][_id][0].getContext("2d");
-                            ctx.beginPath(); // Drawing start
-                            ctx.translate(_translate['x'],_translate['y']); // 기준점 x,y 좌표
-                            _lat = validateLat(_lat);
-                            for(var index in _lat){
-                                if(index==0){
-                                    ctx.moveTo(_lat[index]['lat'], _lat[index]['lng']); // 펜을 좌표로 이동
-                                }else{
-                                    ctx.lineTo(_lat[index]['lat'], _lat[index]['lng']);
-                                }
-                            }
-                            ctx.closePath(); // Drawing Close
-                            ctx.stroke(); // 윤곽석 잇기
-                            ctx.fillStyle = options[MARKER_TYPE[1]]["fillColor"][0];
-                            ctx.fill(); // 도형채우기
-                            ctx.strokeStyle = options[MARKER_TYPE[1]]["strokeColor"][0];
-                            ctx.stroke(); // 선채우기
+                        var points = [];
+                        for(var index in _lat){
+                            points.push([toRound(Number(_translate['x'])+Number(_lat[index]['lat']),2),toRound(Number(_translate['y'])+Number(_lat[index]['lng']),2)]);
                         }
-                        marker[_type][_id]['objects'] = [];
+
+                        if(_fenceSvg==null){
+                            console.error("[CustomMapMediator][addMarker] fence svg is not init - fenceId :" + _id);
+                            return false;
+                        }
+                        _fenceSvg.polygon(points, {fenceId:_id});
+                        marker[_type][_id] = {
+                            'element' : _element.find("polygon[fenceId='"+_id+"']")
+                            ,'objects' : []
+                        };
+
+                        //marker[_type][_id] = $("<canvas/>",{class:_targetClass[_type]}).attr('width',_element.width()).attr('height',_element.height());
+                        //_element.append(marker[_type][_id]);
+                        //
+                        //if(marker[_type][_id][0].getContext){
+                        //    var ctx = marker[_type][_id][0].getContext("2d");
+                        //    ctx.beginPath(); // Drawing start
+                        //    ctx.translate(_translate['x'],_translate['y']); // 기준점 x,y 좌표
+                        //    _lat = validateLat(_lat);
+                        //    for(var index in _lat){
+                        //        if(index==0){
+                        //            ctx.moveTo(_lat[index]['lat'], _lat[index]['lng']); // 펜을 좌표로 이동
+                        //        }else{
+                        //            ctx.lineTo(_lat[index]['lat'], _lat[index]['lng']);
+                        //        }
+                        //    }
+                        //    ctx.closePath(); // Drawing Close
+                        //    ctx.stroke(); // 윤곽석 잇기
+                        //    ctx.fillStyle = options[MARKER_TYPE[1]]["fillColor"][0];
+                        //    ctx.fill(); // 도형채우기
+                        //    ctx.strokeStyle = options[MARKER_TYPE[1]]["strokeColor"][0];
+                        //    ctx.stroke(); // 선채우기
+                        //}
+                        //marker[_type][_id]['objects'] = [];
                         break;
                     case MARKER_TYPE[2] : // Object
                         marker[_type][_id] = $("<div/>",{objectId:_id}).addClass(_targetClass[_type]);
                         _element.append(marker[_type][_id]);
                         marker[_type][_id].css("left",toRound(Number(_translate['x'])+Number(_lat[0]['lat'])-(marker[_type][_id].width()/2),2));
                         marker[_type][_id].css("top",toRound(Number(_translate['y'])+Number(_lat[0]['lng'])-(marker[_type][_id].height()/2),2));
-
-                        console.log(_translate, _lat);
                         break;
                 }
                 console.log("[CustomMapMediator][addMarker] complete - [" + _type + "][" + _id + "]");
@@ -396,7 +419,7 @@ var CustomMapMediator = (
                 case MARKER_TYPE[1] : // Fence
                 case MARKER_TYPE[2] : // Object
                     if(marker[_type][_id]!=null){
-                        marker[_type][_id].remove();
+                        marker[_type][_id]['element'].remove();
                         delete marker[_type][_id];
                         console.log("[CustomMapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
                     }
@@ -425,13 +448,18 @@ var CustomMapMediator = (
                         break;
                 }
 
-                if(marker[MARKER_TYPE[1]][_fenceId][0].getContext){
-                    var ctx = marker[MARKER_TYPE[1]][_fenceId][0].getContext("2d");
-                    ctx.fillStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["fillColor"][1];
-                    ctx.fill(); // 도형채우기
-                    ctx.strokeStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["strokeColor"][1];
-                    ctx.stroke(); // 선채우기
+                if(fenceMarker['objects'].length>0){
+                    marker[MARKER_TYPE[1]][_fenceId]['element'].addClass(_className);
+                }else{
+                    marker[MARKER_TYPE[1]][_fenceId]['element'].removeClass(_className);
                 }
+                //if(marker[MARKER_TYPE[1]][_fenceId][0].getContext){
+                //    var ctx = marker[MARKER_TYPE[1]][_fenceId][0].getContext("2d");
+                //    ctx.fillStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["fillColor"][1];
+                //    ctx.fill(); // 도형채우기
+                //    ctx.strokeStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["strokeColor"][1];
+                //    ctx.stroke(); // 선채우기
+                //}
             }else{
                 console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
             }
@@ -513,6 +541,8 @@ var CustomMapMediator = (
                             }
                         }
                     }
+                    _fileUploadPath = data['fileUploadPath'];
+                    _self.setBackgroundImage(data['area']['physicalFileName']);
                     break;
                 default :
             }

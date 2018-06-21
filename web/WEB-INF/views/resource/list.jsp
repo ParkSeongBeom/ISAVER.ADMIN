@@ -413,7 +413,7 @@
         customMapPopup.initFileList();
 
         $("#customMapSection").find("input[type='number']").on("change",function(){
-            customMapPopup.setTargetValue();
+            customMapPopup.setTargetValue(this);
         });
 
         $(".tree_tab_btn > button:eq(0)").trigger("click");

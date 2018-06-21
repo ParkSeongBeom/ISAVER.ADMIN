@@ -12,7 +12,9 @@
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-helper.js?version=${version}"></script>
-<script src="${rootPath}/assets/library/tree/jquery.dynatree.js"type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/tree/jquery.dynatree.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 
 <article>
     <div class="sub_title_area">
@@ -368,7 +370,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Safe-Guard -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" physicalFileName="${childArea.physicalFileName}" areaDesc="${childArea.areaDesc}">
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -577,34 +579,31 @@
         initChartList();
     });
 
-    function customTest(_areaId){
-        if(_areaId==null){
-            _areaId = "AR0000";
-        }
-        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
-            {"lat" : "-70","lng" : "-50"},
-            {"lat" : "-40","lng" : "-60"},
-            {"lat" : "-40","lng" : "-20"},
-            {"lat" : "-70","lng" : "-10"},
-            {"lat" : "-80","lng" : "-20"}
-        ]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-70","lng": "-70"}]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "-20","lng": "-20"}]});
-    }
-
     function test(_areaId){
         if(_areaId==null){
             _areaId = "AR0000";
         }
-        webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
-        webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
-            {"lat" : "37.495463","lng" : "127.030996"},
-            {"lat" : "37.495473","lng" : "127.031013"},
-            {"lat" : "37.495503","lng" : "127.030998"},
-            {"lat" : "37.495493","lng" : "127.030984"}
-        ]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
-        webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
+
+        if(templateSetting['safeGuardMapView']=='online'){
+            webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
+            webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
+                {"lat" : "37.495463","lng" : "127.030996"},
+                {"lat" : "37.495473","lng" : "127.031013"},
+                {"lat" : "37.495503","lng" : "127.030998"},
+                {"lat" : "37.495493","lng" : "127.030984"}
+            ]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
+        }else{
+            webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
+                {"lat" : "-20","lng" : "-70"},
+                {"lat" : "-10","lng" : "-75"},
+                {"lat" : "0","lng" : "-50"},
+                {"lat" : "-10","lng" : "-45"}
+            ]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-30","lng": "-90"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "-5","lng": "-35"}]});
+        }
     }
 
     var id = 1;
