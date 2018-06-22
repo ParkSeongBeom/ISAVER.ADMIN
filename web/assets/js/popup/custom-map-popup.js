@@ -70,7 +70,7 @@ var CustomMapPopup = (
                 return false;
             }
 
-            var customList = _customMapMediator.getCustomList();
+            var customList = _customMapMediator.getMarkerList('custom');
             var paramList = [];
 
             for(var index in customList){
@@ -107,12 +107,42 @@ var CustomMapPopup = (
                 try{
                     _customMapMediator.setElement(_element.find("#mapElement"));
                     _customMapMediator.setMessageConfig(_messageConfig);
-                    _customMapMediator.initCustomList(areaId,callBackRender);
+                    _customMapMediator.init(areaId,{
+                        'draggable' : true
+                        ,'resizable' : true
+                        ,'onLoad' : function(data){
+                            _element.find("#childList").empty();
+                            for(var index in data){
+                                var target = data[index];
+                                _element.find("#childList").append(
+                                    $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
+                                        $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
+                                            _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
+                                        })
+                                    ).append(
+                                        $("<div/>").append(
+                                            $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
+                                                var targetId = $(this).parent().parent().attr("targetId");
+                                                _checkChildTarget(targetId, $(this).is(":checked"));
+                                            })
+                                        ).append(
+                                            $("<label/>")
+                                        )
+                                    )
+                                );
+                                _customMapMediator.targetRender(target);
+                            }
+                        }
+                        ,'change' : function(data){
+                            _checkChildTarget(data['targetId'], data['useYn']=='Y'?true:false);
+                            _updateTargetValue(data);
+                        }
+                    });
                 }catch(e){
                     console.error("[CustomMapPopup][openPopup] custom map mediator init error - "+ e.message);
                 }
             }
-            _element.find("#fileId").val(fileId).prop("selected",true).trigger("change");
+            _element.find("#fileId").val(fileId).prop("selected",true);
         };
 
         /**
@@ -128,7 +158,6 @@ var CustomMapPopup = (
          * @author psb
          */
         this.closePopup = function(){
-            _areaId=null;
             _element.fadeOut();
         };
 
@@ -148,42 +177,6 @@ var CustomMapPopup = (
                     _customMapMediator.setBackgroundImage($(this).find("option:selected").attr("physicalFileName"));
                 }
             });
-        };
-
-        /**
-         * child List Render
-         * @author psb
-         */
-        var callBackRender = function(actionType, data){
-            switch(actionType){
-                case 'list':
-                    _element.find("#childList").empty();
-                    for(var index in data){
-                        var target = data[index];
-                        _element.find("#childList").append(
-                            $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
-                                    _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")}, true);
-                                })
-                            ).append(
-                                $("<div/>").append(
-                                    $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
-                                        var targetId = $(this).parent().parent().attr("targetId");
-                                        _checkChildTarget(targetId, $(this).is(":checked"));
-                                    })
-                                ).append(
-                                    $("<label/>")
-                                )
-                            )
-                        );
-                        _customMapMediator.targetRender(target, true);
-                    }
-                    break;
-                case 'change':
-                    _checkChildTarget(data['targetId'], data['useYn']=='Y'?true:false);
-                    _updateTargetValue(data);
-                    break;
-            }
         };
 
         /**

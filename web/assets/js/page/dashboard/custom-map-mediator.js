@@ -14,15 +14,23 @@ var CustomMapMediator = (
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
         };
-        var marker = {
+        var _marker = {
             'fence' : {}
             ,'object' : {}
             ,'custom' : {}
         };
-        var options = {
-            "fence" : {
-                "fillColor" : ["#f6b900", "#FF0000"]
-                ,"strokeColor" : ["#f6b900", "#FF0000"]
+        var _options = {
+            'element' : {
+                'draggable': true // 드래그 기능
+                ,'mousewheel': true // zoom in/out 기능
+            }
+            ,'custom' : {
+                'draggable': false // 드래그 기능
+                , 'resizable': false // 사이즈 조절 기능
+                , 'nameView': true // 이름 표시 여부
+                , 'onLoad': null // List load eventHandler
+                , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
+                , 'click': null // click eventHandler
             }
         };
         var _targetClass = {
@@ -32,22 +40,11 @@ var CustomMapMediator = (
             ,"DEV013" : "g-m8"
             ,"DEV002" : "g-camera"
         };
-        var _ratio={
-            'standard' : {
-                'width' : 800
-                ,'height' : 450
-            }
-            ,'scale' : {
-                'horizontal' : 1 // 가로
-                ,'vertical' : 1 // 세로
-            }
-        };
         var _scale=1.0;
         var _element;
         var _fenceSvg;
         var _fileUploadPath;
         var _messageConfig;
-        var _callBackEventHandler = null;
         var _translate = null;
         var _self = this;
 
@@ -72,9 +69,58 @@ var CustomMapMediator = (
         this.setElement = function(element){
             _element = element;
             _element.addClass("map_images");
-            _ratio['scale']['horizontal'] = toRound(_element.width()/_ratio['standard']['width'],2);
-            _ratio['scale']['vertical'] = toRound(_element.height()/_ratio['standard']['height'],2);
             _element.empty();
+            if(_element.data('uiDraggable')){
+                _element.draggable('destroy');
+            }
+            _element.off('mousewheel').removeAttr("style").removeAttr("scale");
+
+            if(_options['element']['draggable']){
+                var limitLeft, limitTop;
+                var pointerY, pointerX, canvasOffset, canvasHeight, canvasWidth;
+                _element.draggable({
+                    cursor: "move"
+                    ,start : function(evt, ui) {
+                        canvasOffset = _element.offset();
+                        canvasHeight = _element.height();
+                        canvasWidth = _element.width();
+                        pointerY = evt.pageY - (canvasOffset.top / _scale) - parseInt($(evt.target).css('top'));
+                        pointerX = evt.pageX - (canvasOffset.left / _scale) - parseInt($(evt.target).css('left'));
+                    }
+                    ,drag : function(evt, ui) {
+                        // Fix for zoom
+                        ui.position.top = Math.round(evt.pageY - (canvasOffset.top / _scale) - pointerY);
+                        ui.position.left = Math.round(evt.pageX - (canvasOffset.left / _scale) - pointerX);
+
+                        if(canvasWidth/1.1 < Math.abs(ui.position['left']) || canvasHeight/1.1 < Math.abs(ui.position['top'])){
+                            ui.position.left = limitLeft;
+                            ui.position.top = limitTop;
+                        }else{
+                            limitLeft = ui.position.left;
+                            limitTop = ui.position.top;
+                        }
+                    }
+                });
+            }
+
+            if(_options['element']['mousewheel']){
+                var compteur = 10; // 10 = scale(1,1) and 5 = scale(0.5,0.5)
+                _element.on("mousewheel",function(event) {
+                    if(event.originalEvent.deltaY > 0){if(compteur > 5){compteur--;}}
+                    if(event.originalEvent.deltaY < 0){if(compteur < 50){compteur++;}}
+                    var scale = compteur/10;
+                    _element.css({
+                        'transform':'scale('+scale+')',
+                        '-webkit-transform':'scale('+scale+')',
+                        '-moz-transform':'scale('+scale+')',
+                        '-o-transform':'scale('+scale+')',
+                        '-ms-transform':'scale('+scale+')'
+                    });
+                    _scale = scale;
+                });
+            }
+
+            _element.css({left:(_element.parent().width()-_element.width())/2, top:(_element.parent().height()-_element.height())/2});
 
             // fence svg init
             if($.fn.svg!=null){
@@ -92,18 +138,18 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setDisplayTarget = function(targetId, flag){
-            if(marker[MARKER_TYPE[4]][targetId]==null){
+            if(_marker[MARKER_TYPE[4]][targetId]==null){
                 return false;
             }
 
             if(flag){
                 _element.find(".on").removeClass("on");
-                marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'Y';
-                marker[MARKER_TYPE[4]][targetId]['element'].addClass("on").show();
+                _marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'Y';
+                _marker[MARKER_TYPE[4]][targetId]['element'].addClass("on").show();
                 return true;
             }else{
-                marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'N';
-                marker[MARKER_TYPE[4]][targetId]['element'].hide();
+                _marker[MARKER_TYPE[4]][targetId]['data']['useYn'] = 'N';
+                _marker[MARKER_TYPE[4]][targetId]['element'].hide();
                 return false;
             }
         };
@@ -115,50 +161,8 @@ var CustomMapMediator = (
         this.setBackgroundImage = function(physicalFileName){
             if(physicalFileName!=null && physicalFileName!=""){
                 _element.css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
-                var limitLeft, limitTop;
-                var pointerY, pointerX, canvasOffset, canvasHeight, canvasWidth;
-                _element.draggable({
-                    cursor: "move"
-                    ,start : function(evt, ui) {
-                        canvasOffset = _element.offset();
-                        canvasHeight = _element.height();
-                        canvasWidth = _element.width();
-                        pointerY = evt.pageY - (canvasOffset.top / _scale) - parseInt($(evt.target).css('top'));
-                        pointerX = evt.pageX - (canvasOffset.left / _scale) - parseInt($(evt.target).css('left'));
-                    }
-                    ,drag : function(evt, ui) {
-                        // Fix for zoom
-                        ui.position.top = Math.round(evt.pageY - (canvasOffset.top / _scale) - pointerY);
-                        ui.position.left = Math.round(evt.pageX - (canvasOffset.left / _scale) - pointerX);
-
-                        if(canvasWidth/2 < Math.abs(ui.position['left']) || canvasHeight/2 < Math.abs(ui.position['top'])){
-                            ui.position.left = limitLeft;
-                            ui.position.top = limitTop;
-                        }else{
-                            limitLeft = ui.position.left;
-                            limitTop = ui.position.top;
-                        }
-                    }
-                });
-                var compteur = 10; // 10 = scale(1,1) and 5 = scale(0.5,0.5)
-                _element.on("mousewheel",function(event) {
-                    if(event.originalEvent.deltaY > 0){if(compteur > 5){compteur--;}}
-                    if(event.originalEvent.deltaY < 0){if(compteur < 50){compteur++;}}
-                    var scale = compteur/10;
-                    _element.css({
-                        'transform':'scale('+scale+')',
-                        '-webkit-transform':'scale('+scale+')',
-                        '-moz-transform':'scale('+scale+')',
-                        '-o-transform':'scale('+scale+')',
-                        '-ms-transform':'scale('+scale+')'
-                    });
-                    _scale = scale;
-                });
             }else{
-                if(_element.data('uiDraggable')){
-                    _element.draggable('destroy');
-                }
-                _element.off('mousewheel').removeAttr("style").removeAttr("scale");
+                _element.css({"background-image":""});
             }
         };
 
@@ -166,8 +170,12 @@ var CustomMapMediator = (
          * Map 설정 팝업에서 저장시 사용
          * @author psb
          */
-        this.getCustomList = function(){
-            return marker[MARKER_TYPE[4]];
+        this.getMarkerList = function(type){
+            if(MARKER_TYPE.indexOf(type) < 0){
+                console.error("[CustomMapMediator][getMarkerList] unknown type - "+type);
+                return false;
+            }
+            return _marker[type];
         };
 
         /**
@@ -176,13 +184,13 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setTargetData = function(targetId, data){
-            if(marker[MARKER_TYPE[4]][targetId]==null){
+            if(_marker[MARKER_TYPE[4]][targetId]==null){
                 console.error("[CustomMapMediator][setTargetData] targetId is null or empty - "+targetId);
                 return false;
             }
 
-            var targetElement = marker[MARKER_TYPE[4]][targetId]['element'];
-            var targetData = marker[MARKER_TYPE[4]][targetId]['data'];
+            var targetElement = _marker[MARKER_TYPE[4]][targetId]['element'];
+            var targetData = _marker[MARKER_TYPE[4]][targetId]['data'];
 
             $.extend(targetData,data);
             targetElement.css("left",targetData['x1']);
@@ -198,14 +206,14 @@ var CustomMapMediator = (
          *  - update : 마우스 드래그를 통한 위치 변경 or 축소 확대 시 이벤트 핸들러
          * @author psb
          */
-        this.positionChangeEventHandler = function(_type, _id, _actionType){
-            if(marker[_type][_id]==null){
+        var positionChangeEventHandler = function(_id, _actionType){
+            if(_marker[MARKER_TYPE[4]][_id]==null){
                 console.error("[CustomMapMediator][positionChangeEventHandler] id is null or empty - "+_id);
                 return false;
             }
 
-            var targetElement = marker[_type][_id]['element'];
-            var targetData = marker[_type][_id]['data'];
+            var targetElement = _marker[MARKER_TYPE[4]][_id]['element'];
+            var targetData = _marker[MARKER_TYPE[4]][_id]['data'];
 
             switch (_actionType){
                 case 'init':
@@ -222,8 +230,8 @@ var CustomMapMediator = (
                     break;
             }
 
-            if(_callBackEventHandler!=null){
-                _callBackEventHandler('change', targetData);
+            if(_options['custom']['change']!=null && typeof _options['custom']['change'] == "function"){
+                _options['custom']['change'](targetData);
             }
         };
 
@@ -231,68 +239,73 @@ var CustomMapMediator = (
          * 구역/장치 단건 Render
          * @author psb
          */
-        this.targetRender = function(data, controlFlag){
-            if(marker[MARKER_TYPE[4]][data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId']}).addClass(_targetClass[data['deviceCode']]);
-                if(controlFlag){
-                    var pointerY, pointerX, canvasOffset;
-                    targetElement
-                        .on("click",function(){
-                            _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"));
-                        })
-                        .resizable({
-                            containment: "parent"
-                            ,aspectRatio:data['deviceCode']!="area"?true:false
-                            ,resize: function(evt, ui){
-                                var changeWidth = ui.size.width - ui.originalSize.width; // find change in width
-                                var newWidth = ui.originalSize.width + changeWidth / _scale; // adjust new width by our zoomScale
-
-                                var changeHeight = ui.size.height - ui.originalSize.height; // find change in height
-                                var newHeight = ui.originalSize.height + changeHeight / _scale; // adjust new height by our zoomScale
-
-                                ui.size.width = newWidth;
-                                ui.size.height = newHeight;
-                                _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"),'update');
-                            }
-                        })
-                        .draggable({
-                            cursor: "move"
-                            ,containment: "parent"
-                            ,start : function(evt, ui) {
-                                canvasOffset = _element.offset();
-                                pointerY = (evt.pageY - canvasOffset.top) / _scale - parseInt($(evt.target).css('top'));
-                                pointerX = (evt.pageX - canvasOffset.left) / _scale - parseInt($(evt.target).css('left'));
-                            }
-                            ,drag : function(evt, ui) {
-                                ui.position.top = Math.round((evt.pageY - canvasOffset.top) / _scale - pointerY);
-                                ui.position.left = Math.round((evt.pageX - canvasOffset.left) / _scale - pointerX);
-                                _self.positionChangeEventHandler(MARKER_TYPE[4],$(this).attr("targetId"),'update');
-                            }
-                        });
-                }else{
-                    if(data["targetName"]!=null && data["targetName"]!=''){
-                        targetElement.append(
-                            $("<span/>").text(data["targetName"])
-                        )
+        this.targetRender = function(data){
+            if(_marker[MARKER_TYPE[4]][data['targetId']]==null){
+                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode']}).addClass(_targetClass[data['deviceCode']]);
+                targetElement.on("click",function(){
+                    if(_options['custom']['click']!=null && typeof _options['custom']['click'] == "function"){
+                        _options['custom']['click']($(this).attr("targetId"),$(this).attr("deviceCode"));
+                    }else{
+                        positionChangeEventHandler($(this).attr("targetId"));
                     }
+                });
+
+                if(_options['custom']['resizable']){
+                    targetElement.resizable({
+                        containment: "parent"
+                        ,aspectRatio:data['deviceCode']!="area"?true:false
+                        ,resize: function(evt, ui){
+                            var changeWidth = ui.size.width - ui.originalSize.width; // find change in width
+                            var newWidth = ui.originalSize.width + changeWidth / _scale; // adjust new width by our zoomScale
+
+                            var changeHeight = ui.size.height - ui.originalSize.height; // find change in height
+                            var newHeight = ui.originalSize.height + changeHeight / _scale; // adjust new height by our zoomScale
+
+                            ui.size.width = newWidth;
+                            ui.size.height = newHeight;
+                            positionChangeEventHandler($(this).attr("targetId"),'update');
+                        }
+                    });
+                }
+
+                if(_options['custom']['draggable']){
+                    var pointerY, pointerX, canvasOffset;
+                    targetElement.draggable({
+                        cursor: "move"
+                        ,containment: "parent"
+                        ,start : function(evt, ui) {
+                            canvasOffset = _element.offset();
+                            pointerY = (evt.pageY - canvasOffset.top) / _scale - parseInt($(evt.target).css('top'));
+                            pointerX = (evt.pageX - canvasOffset.left) / _scale - parseInt($(evt.target).css('left'));
+                        }
+                        ,drag : function(evt, ui) {
+                            ui.position.top = Math.round((evt.pageY - canvasOffset.top) / _scale - pointerY);
+                            ui.position.left = Math.round((evt.pageX - canvasOffset.left) / _scale - pointerX);
+                            positionChangeEventHandler($(this).attr("targetId"),'update');
+                        }
+                    });
+                }
+
+                if(_options['custom']['nameView'] && data["targetName"]!=null && data["targetName"]!=''){
+                    targetElement.append( $("<span/>").text(data["targetName"]) );
                 }
 
                 _element.append(targetElement);
-                marker[MARKER_TYPE[4]][data['targetId']] = {
+                _marker[MARKER_TYPE[4]][data['targetId']] = {
                     'data' : {
                         'targetId' : data['targetId']
                         ,'deviceCode' : data['deviceCode']
-                        ,'x1' : data['useYn']?toRound(data['x1']*_ratio['scale']['horizontal'],2):targetElement.position()['left']
-                        ,'x2' : data['useYn']?toRound(data['x2']*_ratio['scale']['horizontal'],2):_element.width()-targetElement.position()['left']-targetElement.width()
-                        ,'y1' : data['useYn']?toRound(data['y1']*_ratio['scale']['vertical'],2):targetElement.position()['top']
-                        ,'y2' : data['useYn']?toRound(data['y2']*_ratio['scale']['vertical'],2):_element.height()-targetElement.position()['top']-targetElement.height()
+                        ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']
+                        ,'x2' : data['useYn']?data['x2']:_element.width()-targetElement.position()['left']-targetElement.width()
+                        ,'y1' : data['useYn']?data['y1']:targetElement.position()['top']
+                        ,'y2' : data['useYn']?data['y2']:_element.height()-targetElement.position()['top']-targetElement.height()
                         ,'useYn' : data['useYn']
                     }
                     ,'element' : targetElement
                 };
-                _self.positionChangeEventHandler(MARKER_TYPE[4],data['targetId'],'init');
+                positionChangeEventHandler(data['targetId'],'init');
             }else{
-                _self.positionChangeEventHandler(MARKER_TYPE[4],data['targetId']);
+                positionChangeEventHandler(data['targetId']);
             }
 
             if(data['deviceCode']=='DEV013' && _translate==null){
@@ -312,7 +325,7 @@ var CustomMapMediator = (
                 console.error("[CustomMapMediator][addMarker] parameter not enough");
                 return false;
             }
-            if(marker[_type]!=null && marker[_type][_id]!=null){
+            if(_marker[_type]!=null && _marker[_type][_id]!=null){
                 console.warn("[CustomMapMediator][addMarker] marker is exist - [" + _type + "][" + _id + "]");
                 return false;
             }
@@ -330,40 +343,16 @@ var CustomMapMediator = (
                             return false;
                         }
                         _fenceSvg.polygon(points, {fenceId:_id});
-                        marker[_type][_id] = {
+                        _marker[_type][_id] = {
                             'element' : _element.find("polygon[fenceId='"+_id+"']")
                             ,'objects' : []
                         };
-
-                        //marker[_type][_id] = $("<canvas/>",{class:_targetClass[_type]}).attr('width',_element.width()).attr('height',_element.height());
-                        //_element.append(marker[_type][_id]);
-                        //
-                        //if(marker[_type][_id][0].getContext){
-                        //    var ctx = marker[_type][_id][0].getContext("2d");
-                        //    ctx.beginPath(); // Drawing start
-                        //    ctx.translate(_translate['x'],_translate['y']); // 기준점 x,y 좌표
-                        //    _lat = validateLat(_lat);
-                        //    for(var index in _lat){
-                        //        if(index==0){
-                        //            ctx.moveTo(_lat[index]['lat'], _lat[index]['lng']); // 펜을 좌표로 이동
-                        //        }else{
-                        //            ctx.lineTo(_lat[index]['lat'], _lat[index]['lng']);
-                        //        }
-                        //    }
-                        //    ctx.closePath(); // Drawing Close
-                        //    ctx.stroke(); // 윤곽석 잇기
-                        //    ctx.fillStyle = options[MARKER_TYPE[1]]["fillColor"][0];
-                        //    ctx.fill(); // 도형채우기
-                        //    ctx.strokeStyle = options[MARKER_TYPE[1]]["strokeColor"][0];
-                        //    ctx.stroke(); // 선채우기
-                        //}
-                        //marker[_type][_id]['objects'] = [];
                         break;
                     case MARKER_TYPE[2] : // Object
-                        marker[_type][_id] = $("<div/>",{objectId:_id}).addClass(_targetClass[_type]);
-                        _element.append(marker[_type][_id]);
-                        marker[_type][_id].css("left",toRound(Number(_translate['x'])+Number(_lat[0]['lat'])-(marker[_type][_id].width()/2),2));
-                        marker[_type][_id].css("top",toRound(Number(_translate['y'])+Number(_lat[0]['lng'])-(marker[_type][_id].height()/2),2));
+                        _marker[_type][_id] = $("<div/>",{objectId:_id}).addClass(_targetClass[_type]);
+                        _element.append(_marker[_type][_id]);
+                        _marker[_type][_id].css("left",toRound(Number(_translate['x'])+Number(_lat[0]['lat'])-(_marker[_type][_id].width()/2),2));
+                        _marker[_type][_id].css("top",toRound(Number(_translate['y'])+Number(_lat[0]['lng'])-(_marker[_type][_id].height()/2),2));
                         break;
                 }
                 console.log("[CustomMapMediator][addMarker] complete - [" + _type + "][" + _id + "]");
@@ -384,19 +373,19 @@ var CustomMapMediator = (
 
             switch (_type){
                 case MARKER_TYPE[1] : // fence
-                    if(marker[_type][_id]!=null){
+                    if(_marker[_type][_id]!=null){
                         _self.removeMarker(_type, _id, _lat);
                     }
                     _self.addMarker(_type, _id, _lat);
                     break;
                 case MARKER_TYPE[2] : // Object
-                    if(marker[_type][_id]!=null){
+                    if(_marker[_type][_id]!=null){
                         if(_lat instanceof Array){
                             _lat = _lat[0];
                         }
-                        marker[_type][_id].animate({
-                            'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(marker[_type][_id].width()/2),2)
-                            ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(marker[_type][_id].height()/2),2)
+                        _marker[_type][_id].animate({
+                            'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(_marker[_type][_id].width()/2),2)
+                            ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(_marker[_type][_id].height()/2),2)
                         });
                     }else{
                         _self.addMarker(_type, _id, _lat);
@@ -418,9 +407,9 @@ var CustomMapMediator = (
             switch (_type){
                 case MARKER_TYPE[1] : // Fence
                 case MARKER_TYPE[2] : // Object
-                    if(marker[_type][_id]!=null){
-                        marker[_type][_id]['element'].remove();
-                        delete marker[_type][_id];
+                    if(_marker[_type][_id]!=null){
+                        _marker[_type][_id]['element'].remove();
+                        delete _marker[_type][_id];
                         console.log("[CustomMapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
                     }
                     break;
@@ -449,17 +438,10 @@ var CustomMapMediator = (
                 }
 
                 if(fenceMarker['objects'].length>0){
-                    marker[MARKER_TYPE[1]][_fenceId]['element'].addClass(_className);
+                    _marker[MARKER_TYPE[1]][_fenceId]['element'].addClass(_className);
                 }else{
-                    marker[MARKER_TYPE[1]][_fenceId]['element'].removeClass(_className);
+                    _marker[MARKER_TYPE[1]][_fenceId]['element'].removeClass(_className);
                 }
-                //if(marker[MARKER_TYPE[1]][_fenceId][0].getContext){
-                //    var ctx = marker[MARKER_TYPE[1]][_fenceId][0].getContext("2d");
-                //    ctx.fillStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["fillColor"][1];
-                //    ctx.fill(); // 도형채우기
-                //    ctx.strokeStyle = fenceMarker['objects'].length==0?options[MARKER_TYPE[1]]["strokeColor"][0]:options[MARKER_TYPE[1]]["strokeColor"][1];
-                //    ctx.stroke(); // 선채우기
-                //}
             }else{
                 console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
             }
@@ -487,12 +469,12 @@ var CustomMapMediator = (
             switch (_type){
                 case MARKER_TYPE[1] : // Fence
                 case MARKER_TYPE[2] : // Object
-                    if(marker[_type][_id]!=null){
-                        return marker[_type][_id];
+                    if(_marker[_type][_id]!=null){
+                        return _marker[_type][_id];
                     }
                     break;
                 case "all" : // Object
-                    return marker;
+                    return _marker;
             }
             return null;
         };
@@ -509,9 +491,11 @@ var CustomMapMediator = (
          * get custom area/device list
          * @author psb
          */
-        this.initCustomList = function(areaId,eventHandler){
-            if(eventHandler!=null && typeof eventHandler == "function"){
-                _callBackEventHandler = eventHandler;
+        this.init = function(areaId,options){
+            for(var index in options){
+                if(_options['custom'].hasOwnProperty(index)){
+                    _options['custom'][index] = options[index];
+                }
             }
             _ajaxCall('list',{areaId:areaId});
         };
@@ -531,13 +515,13 @@ var CustomMapMediator = (
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
                 case 'list':
-                    if(_callBackEventHandler!=null){
-                        _callBackEventHandler(actionType, data['childList']);
+                    if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
+                        _options['custom']['onLoad'](data['childList']);
                     }else{
                         var childList = data['childList'];
                         for(var index in childList){
                             if(childList[index]['useYn']=='Y'){
-                                _self.targetRender(childList[index], false);
+                                _self.targetRender(childList[index]);
                             }
                         }
                     }

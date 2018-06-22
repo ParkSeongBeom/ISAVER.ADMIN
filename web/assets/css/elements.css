@@ -1059,8 +1059,8 @@ input.datepicker + button + .in-timepicker {
     -o-transform: rotate(360deg); } }
 .map_images {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 1600px !important;
+  height: 900px !important;
   cursor: move;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -1174,6 +1174,10 @@ input.datepicker + button + .in-timepicker {
     -webkit-border-radius: 200px;
     border-radius: 200px;
     -khtml-border-radius: 200px; }
+  .g-m8:hover, .g-m8:hover > span, .g-camera:hover, .g-camera:hover > span, .g-area:hover, .g-area:hover > span {
+    background-color: rgba(246, 185, 0, 0.5); }
+  .g-m8.on, .g-m8.on > span, .g-camera.on, .g-camera.on > span, .g-area.on, .g-area.on > span {
+    background-color: #109dcb; }
 .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
   display: none !important; }
 .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
@@ -1183,6 +1187,8 @@ input.datepicker + button + .in-timepicker {
   background-color: #109dcb; }
   .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
     display: block !important; }
+.dashboard_mode .g-m8, .dashboard_mode .g-camera {
+  pointer-events: none; }
 .g-m8, .g-camera, .g-tracking {
   width: 30px;
   height: 30px;
@@ -1542,9 +1548,7 @@ input.datepicker + button + .in-timepicker {
   -moz-border-radius: 200px;
   -webkit-border-radius: 200px;
   border-radius: 200px;
-  -khtml-border-radius: 200px; }
-
-.icon-tof, .icon-ptz {
+  -khtml-border-radius: 200px;
   background-color: #3c3c3c; }
   .icon-tof:before, .icon-ptz:before {
     text-shadow: 0 3px 8px black;
@@ -1580,20 +1584,19 @@ input.datepicker + button + .in-timepicker {
     -webkit-border-radius: 200px;
     border-radius: 200px;
     -khtml-border-radius: 200px; }
-
-.icon-tof.level-caution:before, .icon-tof.level-warning:before, .icon-tof.level-danger:before, .icon-ptz.level-caution:before, .icon-ptz.level-warning:before, .icon-ptz.level-danger:before {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-name: notice03;
-  -webkit-animation-name: notice03;
-  -webkit-animation-duration: 0.1s !important;
-  animation-duration: 0.1s !important; }
+  .icon-tof.level-caution:before, .icon-tof.level-warning:before, .icon-tof.level-danger:before, .icon-ptz.level-caution:before, .icon-ptz.level-warning:before, .icon-ptz.level-danger:before {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-name: notice03;
+    -webkit-animation-name: notice03;
+    -webkit-animation-duration: 0.1s !important;
+    animation-duration: 0.1s !important; }
 @-webkit-keyframes notice03 {
   0% {
     left: 2px; }
@@ -1606,23 +1609,23 @@ input.datepicker + button + .in-timepicker {
   100% {
     left: -1px;
     opacity: 0.7; } }
-.icon-tof.level-caution:after, .icon-tof.level-warning:after, .icon-tof.level-danger:after, .icon-ptz.level-caution:after, .icon-ptz.level-warning:after, .icon-ptz.level-danger:after {
-  content: "";
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  animation-name: issue03;
-  -webkit-animation-name: issue03;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-duration: 0.8s;
-  animation-duration: 0.8s; }
+  .icon-tof.level-caution:after, .icon-tof.level-warning:after, .icon-tof.level-danger:after, .icon-ptz.level-caution:after, .icon-ptz.level-warning:after, .icon-ptz.level-danger:after {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    animation-name: issue03;
+    -webkit-animation-name: issue03;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s; }
 @-webkit-keyframes issue03 {
   0% {
     opacity: 0; }
@@ -1641,38 +1644,38 @@ input.datepicker + button + .in-timepicker {
     opacity: 0;
     width: 180%;
     height: 180%; } }
-.icon-tof.level-caution:after, .icon-ptz.level-caution:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #757575; }
-.icon-tof.level-warning:after, .icon-ptz.level-warning:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ff8400; }
-.icon-tof.level-danger:after, .icon-ptz.level-danger:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #be1e1e; }
-.icon-tof.level-caution, .icon-tof.level-caution > span, .icon-ptz.level-caution, .icon-ptz.level-caution > span {
-  background-color: #757575; }
-.icon-tof.level-warning, .icon-tof.level-warning > span, .icon-ptz.level-warning, .icon-ptz.level-warning > span {
-  background-color: #ff8400; }
-.icon-tof.level-danger, .icon-tof.level-danger > span, .icon-ptz.level-danger, .icon-ptz.level-danger > span {
-  background-color: #be1e1e; }
-.icon-tof.level-die, .icon-ptz.level-die {
-  animation-name: issue02;
-  -webkit-animation-name: issue02;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-duration: 0.8s;
-  animation-duration: 0.8s;
-  background-color: #111; }
+  .icon-tof.level-caution:after, .icon-ptz.level-caution:after {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #757575; }
+  .icon-tof.level-warning:after, .icon-ptz.level-warning:after {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ff8400; }
+  .icon-tof.level-danger:after, .icon-ptz.level-danger:after {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #be1e1e; }
+  .icon-tof.level-caution, .icon-tof.level-caution > span, .icon-ptz.level-caution, .icon-ptz.level-caution > span {
+    background-color: #757575; }
+  .icon-tof.level-warning, .icon-tof.level-warning > span, .icon-ptz.level-warning, .icon-ptz.level-warning > span {
+    background-color: #ff8400; }
+  .icon-tof.level-danger, .icon-tof.level-danger > span, .icon-ptz.level-danger, .icon-ptz.level-danger > span {
+    background-color: #be1e1e; }
+  .icon-tof.level-die, .icon-ptz.level-die {
+    animation-name: issue02;
+    -webkit-animation-name: issue02;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    background-color: #111; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -1691,34 +1694,34 @@ input.datepicker + button + .in-timepicker {
     opacity: 1; }
   100% {
     opacity: 0.5; } }
-  .icon-tof.level-die:before, .icon-ptz.level-die:before {
-    opacity: 0.6; }
-  .icon-tof.level-die:after, .icon-ptz.level-die:after {
-    content: "";
-    position: absolute;
-    left: calc(50% - 2px);
-    top: 0;
-    width: 4px;
-    height: 100%;
-    transform: rotate(45deg);
-    ms-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    background-color: rgba(17, 17, 17, 0.8);
-    animation-name: loding;
-    -webkit-animation-name: loding;
-    /*  animation-delay:         2s;
-      -webkit-animation-delay: 2s;*/
-    animation-duration: 6s;
-    -webkit-animation-duration: 6s;
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    -webkit-animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards; }
+    .icon-tof.level-die:before, .icon-ptz.level-die:before {
+      opacity: 0.6; }
+    .icon-tof.level-die:after, .icon-ptz.level-die:after {
+      content: "";
+      position: absolute;
+      left: calc(50% - 2px);
+      top: 0;
+      width: 4px;
+      height: 100%;
+      transform: rotate(45deg);
+      ms-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      background-color: rgba(17, 17, 17, 0.8);
+      animation-name: loding;
+      -webkit-animation-name: loding;
+      /*  animation-delay:         2s;
+        -webkit-animation-delay: 2s;*/
+      animation-duration: 6s;
+      -webkit-animation-duration: 6s;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      -webkit-animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards; }
 @-webkit-keyframes loding {
   0% {
     transform: rotate(0);

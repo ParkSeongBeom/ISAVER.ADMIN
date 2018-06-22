@@ -165,7 +165,11 @@ var DashboardHelper = (
                 }else if(_guardList[_areaId]['map'] instanceof CustomMapMediator){
                     _guardList[_areaId]['map'].setElement($(this).find("div[name='map-canvas']"));
                     _guardList[_areaId]['map'].setMessageConfig(_messageConfig);
-                    _guardList[_areaId]['map'].initCustomList(_areaId);
+                    _guardList[_areaId]['map'].init(_areaId,{
+                        'click':function(targetId,deviceCode){
+                            if(deviceCode=='area'){ moveDashboard(_areaId,targetId); }
+                        }
+                    });
                 }
                 initFlag = true;
             });

@@ -684,6 +684,23 @@ menu {
     width: 100% !important;
     height: 100% !important;
     background-color: rgba(76, 76, 76, 0.8); }
+  .popupbase.map_pop > div > div {
+    position: absolute;
+    max-width: none;
+    max-height: none;
+    top: 80px;
+    bottom: 40px;
+    left: 40px;
+    right: 40px; }
+    .popupbase.map_pop > div > div > article {
+      max-height: none;
+      height: 100%;
+      margin: 20px 0;
+      -webkit-box-orient: row;
+      -webkit-box-direction: row;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row; }
   .popupbase.admin_popup, body.admin_mode .popupbase {
     top: 0; }
     .popupbase.admin_popup > div > div form, body.admin_mode .popupbase > div > div form {
@@ -1918,8 +1935,7 @@ body.admin_mode.taekwon_mode .issue_btn {
   -webkit-box-direction: row;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
-  flex-direction: row;
-  min-width: 1120px; }
+  flex-direction: row; }
   .map_sett_box > section {
     overflow: hidden;
     display: -webkit-box;
@@ -1940,27 +1956,43 @@ body.admin_mode.taekwon_mode .issue_btn {
     -webkit-box-flex: 1;
     -ms-flex: 0 1 100%;
     margin: 0 0 0 20px;
-    height: 490px; }
+    height: 100%; }
     .map_sett_box > section > * {
       width: 100%;
       position: relative; }
     .map_sett_box > section.map {
-      flex: 1 0 800px;
-      -webkit-flex: 1 0 800px;
-      flexbox: 1 0 800px;
-      -webkit-box-flex: 0;
-      -ms-flex: 1 0 800px;
-      max-width: 800px;
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
       min-width: 800px;
-      width: 800px;
       margin: 0; }
       .map_sett_box > section.map > div:first-of-type {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
         overflow: hidden;
-        height: 450px;
+        height: 100%;
+        background-color: #3c3c3c;
         border-style: solid;
         border-width: 1px 1px 0 1px;
-        border-color: #bcbcbc;
-        background-color: #3c3c3c; }
+        border-color: #bcbcbc; }
         .map_sett_box > section.map > div:first-of-type, .map_sett_box > section.map > div:first-of-type * {
           color: #f5f5f5; }
       .map_sett_box > section.map > div:last-of-type {
@@ -1985,6 +2017,7 @@ body.admin_mode.taekwon_mode .issue_btn {
           content: "";
           position: absolute;
           left: 0;
+          z-index: 1;
           width: 100%;
           height: 1px;
           background-color: #bcbcbc; }

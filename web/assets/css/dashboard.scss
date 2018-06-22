@@ -547,12 +547,12 @@ body.dashboard_mode {
 
   .s_lbox, .s_rbox {height:100%; /*background-color: $bas-color;*/}
 
-  .s_lbox { @include flex-width-one(1); }
-  .s_rbox { @include flex-option(0, 1, auto); min-width:auto;}
+  .s_lbox { @include flex-width-one(1);  }
+  .s_rbox { @include flex-option(0, 1, auto); min-width:auto; }
 
   .s_lbox {
     overflow: hidden;
-    & > div {width:100%; height:100%;}
+    & > div {width:100%; height:100%; @include flex-midddle;}
 
     .gm-style {
       &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }

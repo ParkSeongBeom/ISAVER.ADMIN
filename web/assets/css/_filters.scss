@@ -313,6 +313,9 @@ $display-inline-block:inline-block;
 }
 // ex) @include text-shadow(0, 0, 8px, #000, 0.5);
 
+
+
+
 @mixin box-blur ($xpx) {
   -webkit-filter: blur($xpx);
   -moz-filter:    blur($xpx);
@@ -328,6 +331,11 @@ $display-inline-block:inline-block;
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
   background: linear-gradient(  to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
 }
+
+// scale
+@mixin scale($deg){transform:scale($deg); ms-transform:scale($deg); -ms-transform:scale($deg); -moz-transform:scale($deg); -webkit-transform:scale($deg); -o-transform:scale($deg);}
+// ex) @include scale(1);
+
 
 // rotate 회전
 @mixin rotate($deg){transform:rotate($deg); ms-transform:rotate($deg); -ms-transform:rotate($deg); -moz-transform:rotate($deg); -webkit-transform:rotate($deg); -o-transform:rotate($deg);}

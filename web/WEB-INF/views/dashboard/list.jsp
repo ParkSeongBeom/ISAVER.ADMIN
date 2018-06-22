@@ -596,13 +596,13 @@
             webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
         }else{
             webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
-                {"lat" : "-20","lng" : "-70"},
-                {"lat" : "-10","lng" : "-75"},
-                {"lat" : "0","lng" : "-50"},
-                {"lat" : "-10","lng" : "-45"}
+                {"lat" : "-30","lng" : "-150"},
+                {"lat" : "-5","lng" : "-170"},
+                {"lat" : "30","lng" : "-70"},
+                {"lat" : "0","lng" : "-50"}
             ]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-30","lng": "-90"}]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "-5","lng": "-35"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-50","lng": "-190"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "10","lng": "-40"}]});
         }
     }
 

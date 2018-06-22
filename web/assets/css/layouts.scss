@@ -335,7 +335,6 @@ menu {
 
       @include flexbase; @include flex-column; @include flex-justify-content-start;
 
-
       overflow: hidden; z-index: 10;
       position: relative; max-width:70%; max-height:80%; min-width:40%; min-height:50%;
 
@@ -354,7 +353,7 @@ menu {
         overflow: auto; max-height: 600px; height:100%; margin:30px 0 40px 0;
         @include flex-column;
 
-        &.map_sett_box {@include flex-column-row;;} // MAP 설정 팝업
+        &.map_sett_box {@include flex-column-row;} // MAP 설정 팝업
       }
 
       & > footer {
@@ -368,6 +367,15 @@ menu {
     display: inline-block !important; position:absolute !important;
     left:0; top:0; width:100% !important; height:100% !important;
     background-color: rgba($color-dark-01,0.8);
+  }
+
+  &.map_pop > div > div {
+    position: absolute;  max-width:none; max-height:none; top:80px; bottom:40px; left:40px; right:40px;
+    & > article {
+
+      max-height: none; height:100%; margin:20px 0;
+      @include flex-column-row;
+    }
   }
 
   /////..... 레이어 팝업 Start
@@ -976,24 +984,24 @@ body.admin_mode.taekwon_mode {
 
 .map_sett_box {
   //min-width:1150px;  padding:$dash-margin;
-  @include flexbase; @include flex-column-row; min-width:1120px;
+  @include flexbase; @include flex-column-row;
 
 
   & > section {
     $sec_h:450px; $sec_m:800px; $sec_l:300px; overflow: hidden;
 
     @include flexbase; @include flex-column; @include flex-option(0, 1, 100%);
-    margin:0 0 0 20px; height:490px;
+    margin:0 0 0 20px; height:100%;
 
     & > * {width:100%; position: relative;}
 
     &.map {
-      @include flex-option(1, 0, $sec_m); max-width:$sec_m; min-width:$sec_m; width:$sec_m; margin:0;
+      @include flex-option(0,1,100%);  min-width:$sec_m; margin:0;
 
       & > div {
         &:first-of-type {
-          overflow: hidden; height:$sec_h; @include border01(1px 1px 0 1px,$color-gray-06,1 );
-          background-color: $bas-color;
+          @include flex-midddle; overflow: hidden; height:100%;
+          background-color: $bas-color; @include border01(1px 1px 0 1px,$color-gray-06,1 );
           &, & * {color:$color-white-02;}
         }
 
@@ -1002,7 +1010,7 @@ body.admin_mode.taekwon_mode {
           height:40px;
           & > * {position: relative; z-index: 1;}
           &:before, &:after {
-            content:""; position:absolute; left:0;
+            content:""; position:absolute; left:0; z-index: 1;
             width:100%; height:1px; background-color:$color-gray-06;
           }
           &:after {bottom:0;} &:before {top:0;}
