@@ -40,8 +40,8 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
 
     @Value("${ws.server.port}")
     private String wsPort = null;
@@ -116,7 +116,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             websocketParam.put("messageType","setMode");
             websocketParam.put("settingId","safeGuardMapView");
             websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendDevice, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendDevice, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

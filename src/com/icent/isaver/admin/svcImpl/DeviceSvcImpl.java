@@ -48,8 +48,8 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
 
     @Value("${ws.server.port}")
     private String wsPort = null;
@@ -349,7 +349,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                 Map websocketParam = new HashMap();
                 websocketParam.put("deviceId",parentDevice.getDeviceId());
 
-                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceSync, "form", null);
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceSync, "form", null);
             } catch (IOException e) {
                 e.printStackTrace();
             }

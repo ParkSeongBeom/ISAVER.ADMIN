@@ -41,8 +41,8 @@ import java.util.*;
 @Service
 public class NotificationSvcImpl implements NotificationSvc {
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
 
     @Value("${ws.server.port}")
     private String wsPort = null;
@@ -124,7 +124,7 @@ public class NotificationSvcImpl implements NotificationSvc {
             websocketParam.put("notification", parameterList);
             websocketParam.put("messageType","updateNotification");
 
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

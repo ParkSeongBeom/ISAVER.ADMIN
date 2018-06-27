@@ -44,8 +44,8 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
 
     @Value("${ws.server.port}")
     private String wsPort = null;
@@ -106,7 +106,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             Map websocketParam = new HashMap();
             websocketParam.put("messageType","refreshBlinker");
             websocketParam.put("areaId", parameters.get("areaId"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }
