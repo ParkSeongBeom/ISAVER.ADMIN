@@ -1189,6 +1189,8 @@ input.datepicker + button + .in-timepicker {
     display: block !important; }
 .dashboard_mode .g-m8, .dashboard_mode .g-camera {
   pointer-events: none; }
+.g-m8:before, .g-camera:before {
+  font-size: 1.4rem; }
 .g-m8, .g-camera, .g-tracking {
   width: 30px;
   height: 30px;
@@ -1234,9 +1236,11 @@ input.datepicker + button + .in-timepicker {
     background-position: 50% 50%;
     background-size: 80%; }
 .g-m8:before {
-  background-image: url(../images/map/sico_96.svg); }
+  /*background-image: url(../images/map/sico_96.svg);*/
+  content: "\e962"; }
 .g-camera:before {
-  background-image: url(../images/map/sico_98.svg); }
+  /*background-image: url(../images/map/sico_98.svg);*/
+  content: "\e964"; }
 .g-tracking {
   background-color: transparent; }
   .g-tracking:before {
@@ -1393,7 +1397,6 @@ input.datepicker + button + .in-timepicker {
 .g-m8.level-caution:after, .g-m8.level-warning:after, .g-m8.level-danger:after, .g-camera.level-caution:after, .g-camera.level-warning:after, .g-camera.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
   display: block; }
 .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
-  font-size: 1.2rem;
   color: #fff !important; }
 .g-m8.level-caution:after, .g-camera.level-caution:after, .g-tracking.level-caution:after {
   border-style: solid;

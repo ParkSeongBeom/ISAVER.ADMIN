@@ -633,6 +633,7 @@ $resi_w:12px;
     }
 
     @at-root {.dashboard_mode & {pointer-events: none; } }
+    &:before {font-size:1.4rem; }
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
@@ -651,8 +652,8 @@ $resi_w:12px;
     }
   }
 
-  &-m8:before     {background-image: url(../images/map/sico_96.svg);}
-  &-camera:before {background-image: url(../images/map/sico_98.svg);}
+  &-m8:before     {/*background-image: url(../images/map/sico_96.svg);*/ content:"\e962";}
+  &-camera:before {/*background-image: url(../images/map/sico_98.svg);*/ content:"\e964";}
 
   &-tracking {
     background-color: transparent;
@@ -714,7 +715,7 @@ $resi_w:12px;
       &-caution,&-warning,&-danger  {
         @include pOn;
         &:after {display: block;}
-        &:before {font-size:1.2rem; color:$color-white-01 !important;}
+        &:before {color:$color-white-01 !important;}
       }
       &-caution:after {@include border01(2px,$color-gray-05,1);  }
       &-warning:after {@include border01(2px,$color-orange-01,1);}

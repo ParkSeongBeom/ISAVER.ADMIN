@@ -260,7 +260,7 @@ body.dashboard_mode {
   </section>
   */
 
-  width:100%; max-width:500px;
+  width:1000px !important;
   &, & > div, & > div p {@include flex-midddle;}
 
   & > div {
@@ -270,35 +270,70 @@ body.dashboard_mode {
 
     &:before {
       top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
-      background-color: $color-gray-02; @include box-shadow01(0px, 10px, 10px, -8px, #000, 0.2);
-
+      @include box-shadow01(0px, 20px, 15px, -8px, #000, 0.5); border-style:solid; border-width:0;
     }
     &:after {
       top:($treffic_b * 2); right:($treffic_b * 2); bottom:($treffic_b * 2); left:($treffic_b * 2);
-      background-color: $color-white-01; @include box-shadow01(0px, 6px, 2px, -4px, #000, 0.2);
+      background-color: $color-white-01; @include box-shadow01(0px, 10px, 30px, -4px, #000, 0.3);
     }
 
     &.ts {
-      &-caution:before {background-color: rgba($color-gray-03,0.5);   border-color:rgba($color-gray-03,  0.4);}    // &-caution 주의
-      &-warning:before {background-color: rgba($color-orange-01,0.5); border-color:rgba($color-orange-01,0.4);}    // &-warning 경고
-      &-danger:before  {background-color: rgba($color-red-01,0.5);    border-color:rgba($color-red-01,   0.4);}    // &-danger  위험
+      &-caution{
+        &:before {background-color: rgba($color-gray-03,1);   border-color:rgba($color-gray-03,  1);}
+        p {color:$color-gray-03;}
+      }   // &-caution 주의
+      &-warning{
 
-
+        &:before {background-color: rgba($color-orange-01,1); border-color:rgba($color-orange-01,1);}
+        p {color:$color-orange-01;}
+      }  // &-warning 경고
+      &-danger {
+        &:before {background-color: rgba($color-red-01,1);    border-color:rgba($color-red-01,1);}
+        p {color:$color-red-01;}
+      }  // &-danger  위험
     }
 
-    p {position: absolute; z-index: 10; top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
-      font-size:2rem; line-height: 2.2rem; color:$color-gray-08 !important;
-      &:before {
-        content:""; position: absolute; padding:47%;
-        @include border-radius(200px);
-      }
+    p {position: absolute; z-index: 10; top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b; font-size:5rem;
+      &:before {content:""; position: absolute; padding:47%; @include border-radius(500px);}
     }
 
-    /*@media screen and (-webkit-min-device-pixel-ratio:0) {
-      p {top:($treffic_b * 1.5); }
-    }*/
   }
+}
+.level {
 
+  &-caution {
+    .treffic_set .ts-caution {
+      &:before {border-width:2px;  background-color:$color-white-01;}
+      &:after  { @include issue02; background-color:$color-gray-03;}
+      & > p{color:$color-white-01 !important;&:before {@include issue06; @include border01(3px,$color-gray-03,1 );  }}
+    } //신호등
+  } // .level-caution 주의
+
+  &-warning {
+    .treffic_set .ts-warning {
+      &:before {border-width:2px; background-color:$color-white-01;}
+      &:after  {@include issue02; background-color:$color-orange-01;}
+      & > p {color:$color-white-01 !important;&:before {@include issue06; @include border01(3px,$color-orange-01,1 ); }}
+    } // 신호등
+  } // .level-warning 경고
+
+  &-danger  {
+    .treffic_set .ts-danger {
+      &:before {border-width:2px; background-color:$color-white-01;}
+      &:after  {@include issue02; background-color:$color-red-01;}
+      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-red-01,1 ); } }
+    } // 신호등
+  } // .level-danger  위험
+
+  &-caution, &-warning, &-danger {
+
+    .treffic_set > div {
+      &:before {@include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5); }
+      &:after  {@include box-inset-shadow(0px, 2px, 5px, #000, 0.5);}
+    } // 신호등
+
+  }
+  // 신호등 3단계 끝
 
 }
 /////.....  신호등 상태 아이콘 일반, 경고, 감지 정의 section End
@@ -340,6 +375,7 @@ body.dashboard_mode {
       em:last-of-type {font-size:($ks_ssize + 3rem); opacity: 0.5;}
     }
   }
+
   .blinker_set {
     /*
     <h3>구역명 삽입</h3>
@@ -363,11 +399,11 @@ body.dashboard_mode {
     & > div {
       @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
       width:100%; background-color: transparent !important;
-      & > p {font-size:$bs_bsize; line-height:($bs_bsize - 1rem); letter-spacing: -0.2rem;}
+      & > p {font-size:$bs_bsize; line-height:-($bs_bsize - 1rem); letter-spacing: -0.2rem;}
       & > div {
-        padding:5px 0 0 5px; font-weight:bold; text-align:right;
+        font-weight:bold; text-align:right;
         & > p {
-          position: relative; font-size:$bs_psize; line-height:($bs_psize + 0.4rem); font-weight:bold;
+          position: relative; font-size:$bs_psize; line-height:$bs_psize; font-weight:bold;
           &:after {position: relative; top:2px; font-weight:normal; padding:0 0 0 10%;}
           &:nth-of-type(1) {&:after {content:"\e922"; right:1px;} }
           &:nth-of-type(2) {&:after {content:"\e923"; } opacity: 0.7;}
@@ -376,32 +412,28 @@ body.dashboard_mode {
     }
   }
 
-  & > .blinker_set {max-width:70%;}
-
   .s_lbox.blinker_set {
     h3 { display: none;}
     h3 + div {
       @include flex-row-wrap;
       &:before {
-        content:"\e944"; font-size:$se_bsize;
-        text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
+        content:"\e944"; font-size:14rem; text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
       }
     }
   }
-  .s_rbox {
-    opacity: 0.6; padding:15px 15px 15px 0;
-    .blinker_set {
-      h3 {font-size: 1rem; letter-spacing: -0.1rem; }
-      & > div {
-        & > p {font-size:$bs_psize; line-height:($bs_psize + 0.2rem); }
-        & > div > p {
-          font-size: ($bs_psize / 2); line-height:1.2rem;
-          &:after {top:1px;}
-          &:nth-of-type(2) {top:-4px;}
-        }
+  .s_rbox .blinker_set {
+    h3 {font-size: 1rem; letter-spacing: -0.1rem; }
+    & > div {
+      & > p {font-size:$bs_psize; line-height:($bs_psize + 0.2rem); }
+      & > div > p {
+        font-size: ($bs_psize / 2); line-height:1.2rem;
+        &:after {top:1px;}
+        &:nth-of-type(2) {top:-4px;}
       }
     }
   }
+
+  .s_rbox {opacity: 0.6; padding:15px 15px 15px 0; margin:0 0 0 50px;}
 
   li {@include flex-row-wrap;}
 
@@ -412,13 +444,13 @@ body.dashboard_mode {
 
 
 /////..... safeeye section Start
+
 .safeeye_set {
   .s_lbox {
-    @include flex-midddle;
+    @include flex-midddle; overflow: visible;
     &:before, &:after {position: absolute;  @include border-radius(500px);}
-    &:before {z-index: 1; font-size:$se_bsize;}
-    &:after {content:"";  font-size:20%;}
-
+    &:before {z-index: 1; font-size:20rem;}
+    &:after {display: none; content:""; width:290px; height:290px; @include content-box; border-style:solid; border-width:3px;}
   }
   .s_rbox {display: none !important;}
   li {
@@ -436,7 +468,41 @@ body.dashboard_mode {
       &:after  {content:"ON"; letter-spacing: 0.08rem; color:$color-red-01; }
     }
   }
+}
+.level {
+  // 신호등 3단계 시작
+  @mixin level-Common {
 
+    &:before {
+      @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
+      background-color:$color-white-01;
+    }
+    &:after  {
+      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5); @include issue02;
+      //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
+    }
+    p {color:$color-white-01 !important;}
+  }
+
+  &-caution {
+    .safeeye_set .s_lbox {color:$color-gray-03; &:after {border-color:$color-gray-03;} }
+  } // .level-caution 주의
+
+  &-warning {
+    .safeeye_set .s_lbox {color:$color-orange-01; &:after {border-color:$color-orange-01;} }
+  } // .level-warning 경고
+
+  &-danger  {
+    .safeeye_set .s_lbox {color:$color-red-01; &:after {border-color:$color-red-01; } }
+  } // .level-danger  위험
+
+  &-caution, &-warning, &-danger {
+    .safeeye_set .s_lbox {
+      @include issue02;
+      &:after {display: block; @include issue05;}
+    }
+  }
+  // 신호등 3단계 끝
 }
 /////..... safeeye section End
 .safeeye_set .s_lbox:before, .blinker_set.s_lbox h3 + div:before
@@ -623,9 +689,6 @@ body.dashboard_mode {
   }
 }
 
-
-
-
 .vxgplayer-loader {margin:-25px 0 0 -25px !important;}
 .vxgplayer-error  {margin:-60px 0 0 0 !important;}
 /////.......................................... Guard End
@@ -728,11 +791,11 @@ body.dashboard_mode {
       .s_lbox {@include flex-width-one(2); margin:50px 0;}
       .s_rbox {@include flex-width-one(1); li {width:20%;} }
     }
-    .safeeye_set { & > .s_lbox { &:before {font-size: 20rem;} } }
   }
 
   &.area02 {
-    .safeeye_set { & > .s_lbox { &:before {font-size: 16rem;} } }
+    .treffic_set {@include scale(0.7);}
+    .safeeye_set .s_lbox {@include scale(0.9);}
   }
   &.area02, &.area04 {
     .kblinker_set {
@@ -744,23 +807,33 @@ body.dashboard_mode {
     }
   }
   &.area04 {
-    .personnel_set {
-      .s_lbox.blinker_set > div { min-width:320px;}
-    }
+    .treffic_set {@include scale(0.6);}
+    .safeeye_set .s_lbox {@include scale(0.7);}
+    .s_lbox.blinker_set  {@include scale(0.7);}
     .nhr_set .s_rbox { li {width:33.333%; } }
+  }
+
+
+  &.area06, &.area09 {
+    .treffic_set {@include scale(0.5);}
+  }
+
+  &.area08, &.area12, &.area16, &.area00 {
+    .treffic_set {@include scale(0.4);}
   }
 
 
   &.area06, &.area09, &.area08, &.area12, &.area16, &.area00 {
     .personnel_set {
       .s_lbox.blinker_set {
-        @include flex-width-one(1.5);
+        @include flex-width-one(2);
         h3 + div:before { font-size:($se_bsize / 1.7); line-height:6rem; }
         & > div {
           & > p {font-size:$bs_bsize_ss; line-height:($bs_bsize_ss - 1rem); letter-spacing: -0.2rem;}
           & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
         }
       }
+      .s_rbox {margin:0 0 0 10px !important;}
       .s_rbox .blinker_set {
         h3 {font-size:1rem; letter-spacing: -0.1rem;}
         & > div {
@@ -769,15 +842,10 @@ body.dashboard_mode {
         }
       }
     }
+    .safeeye_set .s_lbox {@include scale(0.55);}
   }
 
   &.area09, &.area08, &.area12, &.area16, &.area00 {
-    .safeeye_set {
-      & > .s_rbox {min-width:120px; max-width:120px;}
-      & > .s_lbox{
-        &:before {font-size:($se_bsize - 2.5rem);}
-      }
-    }
   }
 
   &.area12, &.area16, &.area00 {

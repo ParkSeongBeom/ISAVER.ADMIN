@@ -4,6 +4,7 @@ import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.kst.common.resource.CommonResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         for(AreaBean area : childAreas){
             Map<String, String> deviceParam = new HashMap<>();
             deviceParam.put("areaId",area.getAreaId());
+            deviceParam.put("delYn", CommonResource.NO);
             area.setDevices(deviceDao.findListDevice(deviceParam));
             area.setAreas(areaDao.findListAreaForDashboard(deviceParam));
         }

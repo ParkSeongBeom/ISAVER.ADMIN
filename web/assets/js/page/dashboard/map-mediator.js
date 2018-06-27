@@ -277,28 +277,27 @@ var MapMediator = (
          * @author psb
          */
         this.setAnimate = function(_deviceId, _fenceId, _objectId, _action, _className){
-            var deviceMarker = _self.getMarker("device", _deviceId);
-            if(deviceMarker!=null && deviceMarker['objects'] instanceof Array){
-                switch (_action){
-                    case "add" :
-                        if(deviceMarker['objects'].length == 0 || deviceMarker['objects'].indexOf(_objectId)==-1){
-                            deviceMarker['objects'].push(_objectId);
-                        }
-                        $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).addClass(_className);
-                        break;
-                    case "remove" :
-                        var index = deviceMarker['objects'].indexOf(_objectId);
-                        if(index!=-1){
-                            deviceMarker['objects'].splice(index,1);
-                        }
-                        if(deviceMarker['objects'].length == 0) {
-                            $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).removeClass(_className);
-                        }
-                        break;
-                }
-            }else{
-                console.warn("[MapMediator][setAnimate] not found device marker or child object - " + _deviceId);
-            }
+            //var deviceMarker = _self.getMarker("device", _deviceId);
+            //if(deviceMarker!=null && deviceMarker['objects'] instanceof Array){
+            //    switch (_action){
+            //        case "add" :
+            //            if(deviceMarker['objects'].length == 0 || deviceMarker['objects'].indexOf(_objectId)==-1){
+            //                deviceMarker['objects'].push(_objectId);
+            //            }
+            //            $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).addClass(_className);
+            //            break;
+            //        case "remove" :
+            //            if(deviceMarker['objects'].indexOf(_objectId) > -1){
+            //                deviceMarker['objects'].splice(deviceMarker['objects'].indexOf(_objectId),1);
+            //            }
+            //            if(deviceMarker['objects'].length == 0) {
+            //                $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).removeClass(_className);
+            //            }
+            //            break;
+            //    }
+            //}else{
+            //    console.warn("[MapMediator][setAnimate] not found device marker or child object - deviceId : " + _deviceId + ", objectId : " + _objectId);
+            //}
 
             var fenceMarker = _self.getMarker("fence", _fenceId);
             if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
@@ -309,9 +308,8 @@ var MapMediator = (
                         }
                         break;
                     case "remove" :
-                        var index = fenceMarker['objects'].indexOf(_objectId);
-                        if(index!=-1){
-                            fenceMarker['objects'].splice(index,1);
+                        if(fenceMarker['objects'].indexOf(_objectId) > -1){
+                            fenceMarker['objects'].splice(fenceMarker['objects'].indexOf(_objectId),1);
                         }
                         break;
                 }
@@ -321,7 +319,7 @@ var MapMediator = (
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(false);
                 marker[MARKER_TYPE[1]][_fenceId].setVisible(true);
             }else{
-                console.warn("[MapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
+                console.warn("[MapMediator][setAnimate] not found fence marker or child object - fenceId : " + _fenceId + ", objectId : " + _objectId);
             }
 
             var objectMarker = _self.getMarker("object", _objectId);
@@ -335,7 +333,7 @@ var MapMediator = (
                         break;
                 }
             }else{
-                console.warn("[MapMediator][setAnimate] not found object marker - " + _objectId);
+                console.warn("[MapMediator][setAnimate] not found object marker - objectId : " + _objectId);
             }
         };
 

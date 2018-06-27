@@ -76,14 +76,12 @@ var CustomMapMediator = (
             _element.off('mousewheel').removeAttr("style").removeAttr("scale");
 
             if(_options['element']['draggable']){
-                var limitLeft, limitTop;
-                var pointerY, pointerX, canvasOffset, canvasHeight, canvasWidth;
+                //var limitLeft, limitTop;
+                var pointerY, pointerX, canvasOffset;
                 _element.draggable({
                     cursor: "move"
                     ,start : function(evt, ui) {
                         canvasOffset = _element.offset();
-                        canvasHeight = _element.height();
-                        canvasWidth = _element.width();
                         pointerY = evt.pageY - (canvasOffset.top / _scale) - parseInt($(evt.target).css('top'));
                         pointerX = evt.pageX - (canvasOffset.left / _scale) - parseInt($(evt.target).css('left'));
                     }
@@ -92,13 +90,17 @@ var CustomMapMediator = (
                         ui.position.top = Math.round(evt.pageY - (canvasOffset.top / _scale) - pointerY);
                         ui.position.left = Math.round(evt.pageX - (canvasOffset.left / _scale) - pointerX);
 
-                        if(canvasWidth/1.1 < Math.abs(ui.position['left']) || canvasHeight/1.1 < Math.abs(ui.position['top'])){
-                            ui.position.left = limitLeft;
-                            ui.position.top = limitTop;
-                        }else{
-                            limitLeft = ui.position.left;
-                            limitTop = ui.position.top;
-                        }
+                        // Fix for zoom
+                        //ui.position.top = Math.round(evt.pageY - (canvasOffset.top / _scale) - pointerY);
+                        //ui.position.left = Math.round(evt.pageX - (canvasOffset.left / _scale) - pointerX);
+                        //
+                        //if(_element.width()/1.1 < Math.abs(ui.position.left) || _element.height()/1.1 < Math.abs(ui.position.top)){
+                        //    ui.position.left = limitLeft;
+                        //    ui.position.top = limitTop;
+                        //}else{
+                        //    limitLeft = ui.position.left;
+                        //    limitTop = ui.position.top;
+                        //}
                     }
                 });
             }
@@ -430,9 +432,8 @@ var CustomMapMediator = (
                         }
                         break;
                     case "remove" :
-                        var index = fenceMarker['objects'].indexOf(_objectId);
-                        if(index!=-1){
-                            fenceMarker['objects'].splice(index,1);
+                        if(fenceMarker['objects'].indexOf(_objectId) > -1){
+                            fenceMarker['objects'].splice(fenceMarker['objects'].indexOf(_objectId),1);
                         }
                         break;
                 }
@@ -443,7 +444,7 @@ var CustomMapMediator = (
                     _marker[MARKER_TYPE[1]][_fenceId]['element'].removeClass(_className);
                 }
             }else{
-                console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - " + _fenceId);
+                console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + _fenceId + ", objectId : " + _objectId);
             }
 
             var objectMarker = _self.getMarker(MARKER_TYPE[2], _objectId);
@@ -457,7 +458,7 @@ var CustomMapMediator = (
                         break;
                 }
             }else{
-                console.warn("[CustomMapMediator][setAnimate] not found object marker - " + _objectId);
+                console.warn("[CustomMapMediator][setAnimate] not found object marker - objectId : " + _objectId);
             }
         };
 

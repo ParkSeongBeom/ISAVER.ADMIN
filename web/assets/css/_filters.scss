@@ -18,14 +18,14 @@
 
 $bs_hsize:1.5rem; // 진출입 구역명
 $bs_bsize:7.2rem; // 진출입 현재 잔존
-$bs_psize:3rem; // 진출입 인, 아웃
+$bs_psize:3rem;   // 진출입 인, 아웃
 $bs_lsize:15rem;  // 진출입 인, 아웃
 
 $bs_hsize_s:($bs_hsize - 0.3rem); // 진출입 구역명 작은글씨
-$bs_bsize_s:($bs_bsize - 2rem); // 진출입 목록 큰글씨
+$bs_bsize_s:($bs_bsize - 2rem);   // 진출입 목록 큰글씨
 $bs_psize_s:($bs_psize - 0.8rem); // 진출입 목록 작은글씨
 
-$bs_hsize_ss:($bs_hsize - 0.4rem); // 진출입 구역명 작은글씨
+$bs_hsize_ss:($bs_hsize - 0.4rem);  // 진출입 구역명 작은글씨
 $bs_bsize_ss:($bs_bsize - 3.7rem);  // 진출입 목록 큰글씨
 $bs_psize_ss:($bs_psize - 1.4rem);  // 진출입 목록 작은글씨
 
@@ -708,12 +708,12 @@ $bbl01:100%; $bbl02:1px;
   @-webkit-keyframes issue05 {
     0%   { opacity: 0; }
     10%  { opacity: 1; }
-    100% { opacity: 0; padding:20%}
+    100% { opacity: 0; padding:10%}
   }
   @keyframes issue04 {
     0%   { opacity: 0; }
     10%  { opacity: 1; }
-    100% { opacity: 0; padding:20%}
+    100% { opacity: 0; padding:10%}
   }
 } // ex) @include issue04;
 

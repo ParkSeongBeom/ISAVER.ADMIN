@@ -838,98 +838,33 @@ menu {
 /////..... 임계치 적용 표시 Start
 .confirm {background-color: rgba($color-blue-02,1) !important;}
 .level {
+
   &-caution {
     background-color: rgba($color-gray-03,1);
-    .m_marqueebox {& * , &:before {color:$color-gray-03 !important; } }
-  }   // .level-caution 주의
+    .m_marqueebox {& * , &:before {color:$color-gray-03 !important; } } // 마키
+  } // .level-caution 주의
+
   &-warning {
     background-color: rgba($color-orange-01,1);
-    .m_marqueebox {& * , &:before {color:$color-orange-01 !important; }}
+    .m_marqueebox {& * , &:before {color:$color-orange-01 !important; }} //마키
   } // .level-warning 경고
+
   &-danger  {
     background-color: rgba($color-red-01,1);
-    .m_marqueebox {& * , &:before {color:$color-red-01 !important; }}
-  }    // .level-danger  위험
+    .m_marqueebox {& * , &:before {color:$color-red-01 !important; }} // 마키
+  } // .level-danger  위험
 
   &-caution, &-warning, &-danger {
-    //& *, & *:before, & *:after {color:$color-white-01; }
-
 
     &.type-list, .watch_area > div {
       & *, & *:before, & *:after {color:inherit; }
       &, &:before {background-color: transparent !important;}
+    } // 각 구역
 
-      /*
-      &.level {
-        &-caution:before {@include border01(2px,$color-gray-03,1 );} // .level-caution 주의
-        &-warning:before {@include border01(2px,$color-orange-01,1 );} // .level-warning 경고
-        &-danger:before  {@include border01(2px,$color-red-01,1 );} // .level-danger  위험
-      }
-      */
-
-      .safeeye_set .s_lbox {
-        color:$color-red-01; @include issue02;
-        &:after { @include border01(3px,$color-red-01,1 ); padding:10%;  @include issue05;}
-      }
-    }
-
-    .m_marqueebox {
-      display: inline-block !important;
-      & > p > span {@include marquee;}
-    }  //각구역 마키
-
-    .ts {
-      &-caution, &-warning, &-danger {
-}
-      &-caution {}
-      &-warning {}
-      &-danger  {}
-    }
-
+    .m_marqueebox {display: inline-block !important; & > p > span {@include marquee;} }  //각구역 마키
   }
+  // 신호등 3단계 끝
 
-  @mixin level-Common {
-
-    &:before {
-      @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
-      background-color:$color-white-01;
-    }
-    &:after  {
-      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5); @include issue02;
-      //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
-    }
-    p {color:$color-white-01 !important;}
-  }
-
-  &-caution {
-    .treffic_set .ts-caution {
-      &:before { @include border01(2px,$color-gray-03,0.4 ); }
-      @include level-Common;
-      & > p:before {@include border01(3px,$color-gray-03,1 ); @include issue06; }
-
-    }
-    .treffic_set .ts-caution:after {background-color:$color-gray-03;}
-  } // .level-caution 주의
-
-  &-warning {
-    .treffic_set .ts-warning {
-      &:before { @include border01(2px,$color-orange-01,0.4 ); }
-      @include level-Common;
-      & > p:before {@include border01(3px,$color-orange-01,1 ); @include issue06;}
-
-    }
-    .treffic_set .ts-warning:after{background-color:$color-orange-01;}
-  } // .level-warning 경고
-
-  &-danger  {
-    .treffic_set .ts-danger {
-      &:before { @include border01(2px,$color-red-01,0.4 ); }
-      @include level-Common;
-      & > p:before {@include border01(3px,$color-red-01,1 ); @include issue06;}
-
-    }
-    .treffic_set .ts-danger:after {background-color:$color-red-01;}
-  } // .level-danger  위험
 }
 /////..... 임계치 적용 표시 End
 
