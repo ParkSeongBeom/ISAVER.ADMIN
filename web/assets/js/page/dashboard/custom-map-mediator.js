@@ -11,6 +11,7 @@ var CustomMapMediator = (
         var _rootPath;
         var _version;
         var MARKER_TYPE = ['device','fence','object','camera','custom'];
+        var _areaId;
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
         };
@@ -28,6 +29,7 @@ var CustomMapMediator = (
                 'draggable': false // 드래그 기능
                 , 'resizable': false // 사이즈 조절 기능
                 , 'nameView': true // 이름 표시 여부
+                , 'websocketSend': false // getdevice 요청 여부
                 , 'onLoad': null // List load eventHandler
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
                 , 'click': null // click eventHandler
@@ -315,6 +317,9 @@ var CustomMapMediator = (
                     'x' : targetElement.position()['left'] + targetElement.width()/2
                     ,'y' : targetElement.position()['top'] + targetElement.height()/2
                 };
+                if(_options['custom']['websocketSend']){
+                    webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_areaId,"deviceId":data['targetId'],"ipAddress":''});
+                }
             }
         };
 
@@ -328,7 +333,7 @@ var CustomMapMediator = (
                 return false;
             }
             if(_marker[_type]!=null && _marker[_type][_id]!=null){
-                console.warn("[CustomMapMediator][addMarker] marker is exist - [" + _type + "][" + _id + "]");
+                _self.saveMarker(_type, _id, _lat);
                 return false;
             }
 
@@ -388,6 +393,8 @@ var CustomMapMediator = (
                         _marker[_type][_id].animate({
                             'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(_marker[_type][_id].width()/2),2)
                             ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(_marker[_type][_id].height()/2),2)
+                            ,'easing': "swing"
+                            ,'duration' : 10
                         });
                     }else{
                         _self.addMarker(_type, _id, _lat);
@@ -410,7 +417,11 @@ var CustomMapMediator = (
                 case MARKER_TYPE[1] : // Fence
                 case MARKER_TYPE[2] : // Object
                     if(_marker[_type][_id]!=null){
-                        _marker[_type][_id]['element'].remove();
+                        if(_marker[_type][_id].hasOwnProperty('element')){
+                            _marker[_type][_id]['element'].remove();
+                        }else{
+                            _marker[_type][_id].remove();
+                        }
                         delete _marker[_type][_id];
                         console.log("[CustomMapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
                     }
@@ -493,6 +504,7 @@ var CustomMapMediator = (
          * @author psb
          */
         this.init = function(areaId,options){
+            _areaId = areaId;
             for(var index in options){
                 if(_options['custom'].hasOwnProperty(index)){
                     _options['custom'][index] = options[index];

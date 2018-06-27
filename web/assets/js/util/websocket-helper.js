@@ -129,7 +129,7 @@ var WebSocketHelper = (
                 if(_count > 0){
                     setTimeout(function(){
                         _self.sendMessage(_target, _text, _count - 1);
-                    },SEND_MESSAGE_RETRY['deley']);
+                    },SEND_MESSAGE_RETRY['delay']);
                 }else{
                     console.error('[WebSocketHelper][sendMessage] failure - retry count over',_target, _text);
                 }

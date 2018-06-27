@@ -166,7 +166,8 @@ var DashboardHelper = (
                     _guardList[_areaId]['map'].setElement($(this).find("div[name='map-canvas']"));
                     _guardList[_areaId]['map'].setMessageConfig(_messageConfig);
                     _guardList[_areaId]['map'].init(_areaId,{
-                        'click':function(targetId,deviceCode){
+                        'websocketSend':true
+                        ,'click':function(targetId,deviceCode){
                             if(deviceCode=='area'){ moveDashboard(_areaId,targetId); }
                         }
                     });
