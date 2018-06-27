@@ -1,14 +1,11 @@
 package com.icent.isaver.admin.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import org.springframework.util.FileCopyUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.util.FileCopyUtils;
+import java.io.*;
+import java.net.URLEncoder;
 
 public class FileUtil {
     public static void fileDown(HttpServletRequest request, HttpServletResponse response, String filePath, String realFilNm, String viewFileNm) throws IOException {

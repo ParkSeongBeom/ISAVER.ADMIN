@@ -4,9 +4,10 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.common.util.TransactionUtil;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.TemplateSettingBean;
 import com.icent.isaver.repository.dao.base.TemplateSettingDao;
-import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -37,6 +39,18 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
+
+    @Value("${ws.server.address}")
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSendDevice}")
+    private String wsUrlSendDevice = null;
 
     @Inject
     private TemplateSettingDao templateSettingDao;
@@ -88,5 +102,22 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             templateSettingMap.put(templateSetting.getSettingId(), templateSetting.getValue());
         }
         AdminResource.TEMPLATE_SETTING = templateSettingMap;
+    }
+
+    private void sendTemplateSetting(){
+        /**
+         * = 웹소켓 서버로 설정 전송
+         * @author psb
+         * @date 2018.06.27
+         */
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("messageType","setMode");
+            websocketParam.put("settingId","safeGuardMapView");
+            websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsAddress + ":" + wsPort + "/" + wsProjectName + wsUrlSendDevice, "form", "jsonData");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
