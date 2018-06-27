@@ -93,6 +93,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             throw new IcentException("");
         }
         setTemplateSetting();
+        sendTemplateSetting();
         return new ModelAndView();
     }
 
