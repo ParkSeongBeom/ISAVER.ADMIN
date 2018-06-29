@@ -25,7 +25,7 @@ var CustomMapMediator = (
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
                 ,'zoom' : {  // 10 = scale(1,1) and 5 = scale(0.5,0.5)
-                    'init' : 10
+                    'init' : 30
                     ,'min' : 5
                     ,'max' : 50
                 }
