@@ -1059,8 +1059,8 @@ input.datepicker + button + .in-timepicker {
     -o-transform: rotate(360deg); } }
 .map_images {
   position: absolute;
-  width: 1600px !important;
-  height: 900px !important;
+  width: 2500px !important;
+  height: 2500px !important;
   cursor: move;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -1087,10 +1087,10 @@ input.datepicker + button + .in-timepicker {
   .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
     display: none !important;
     position: absolute;
-    width: 12px;
-    height: 12px; }
+    width: 6px;
+    height: 6px; }
     .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
-      content: "\e935";
+      content: "";
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -1115,12 +1115,15 @@ input.datepicker + button + .in-timepicker {
       -webkit-border-radius: 500px;
       border-radius: 500px;
       -khtml-border-radius: 500px;
-      color: #000;
-      font-weight: bold;
-      background-color: #fff;
-      font-size: 0.5rem; }
-    .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
+      background-image: url(../images/map/arrow.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
       background-color: #109dcb;
+      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/ }
+    .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
+      /*background-color: $color-blue-01;*/
+      background-color: #be1e1e;
       color: #fff; }
   .g-m8 .ui-resizable-e:before, .g-camera .ui-resizable-e:before, .g-area .ui-resizable-e:before {
     transform: rotate(180deg);
@@ -1164,10 +1167,10 @@ input.datepicker + button + .in-timepicker {
     justify-content: center;
     position: absolute;
     width: max-content;
-    height: 20px;
-    bottom: -25px;
-    padding: 0 10px 2px 10px;
-    font-size: 0.9rem;
+    bottom: -20px;
+    padding: 0 10px;
+    font-size: 0.1rem;
+    /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */
     line-height: 0.9rem;
     background-color: #111;
     -moz-border-radius: 200px;
@@ -1181,8 +1184,8 @@ input.datepicker + button + .in-timepicker {
 .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
   display: none !important; }
 .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
-  right: -6px;
-  bottom: -6px; }
+  right: -3px;
+  bottom: -3px; }
 .g-m8.on, .g-camera.on {
   background-color: #109dcb; }
   .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
@@ -1192,8 +1195,8 @@ input.datepicker + button + .in-timepicker {
 .g-m8:before, .g-camera:before {
   font-size: 1.4rem; }
 .g-m8, .g-camera, .g-tracking {
-  width: 30px;
-  height: 30px;
+  width: 10px;
+  height: 10px;
   background-color: #3c3c3c; }
   .g-m8, .g-m8:before, .g-camera, .g-camera:before, .g-tracking, .g-tracking:before {
     display: -webkit-box;
@@ -1236,17 +1239,16 @@ input.datepicker + button + .in-timepicker {
     background-position: 50% 50%;
     background-size: 80%; }
 .g-m8:before {
-  /*background-image: url(../images/map/sico_96.svg);*/
-  content: "\e962"; }
+  background-image: url(../images/map/sico_96.svg);
+  /*content:"\e962";*/ }
 .g-camera:before {
-  /*background-image: url(../images/map/sico_98.svg);*/
-  content: "\e964"; }
+  background-image: url(../images/map/sico_98.svg);
+  /*content:"\e964";*/ }
 .g-tracking {
   background-color: transparent; }
   .g-tracking:before {
-    content: "\e91b";
-    font-size: 1rem;
-    color: #49dbff; }
+    /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
+    background-image: url(../images/map/tracking.svg); }
   .g-tracking:after {
     display: none; }
 .g-area {
@@ -1258,14 +1260,14 @@ input.datepicker + button + .in-timepicker {
   border-width: 1px;
   border-color: #fff; }
   .g-area .ui-resizable-e {
-    bottom: 12px;
-    right: -6px; }
+    bottom: 6px;
+    right: -3px; }
   .g-area .ui-resizable-s {
-    bottom: -6px;
-    right: 12px; }
+    bottom: -3px;
+    right: 6px; }
   .g-area .ui-resizable-se {
-    bottom: -6px;
-    right: -6px; }
+    bottom: -3px;
+    right: -3px; }
   .g-area.on {
     background-color: rgba(16, 157, 203, 0.4);
     border-color: #109dcb; }
@@ -1455,7 +1457,7 @@ input.datepicker + button + .in-timepicker {
     position: absolute;
     left: calc(50% - 2px);
     top: 0;
-    width: 4px;
+    width: 2px;
     height: 100%;
     transform: rotate(45deg);
     ms-transform: rotate(45deg);
@@ -1546,8 +1548,8 @@ input.datepicker + button + .in-timepicker {
 
 .icon-tof, .icon-ptz {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 10px;
+  height: 10px;
   -moz-border-radius: 200px;
   -webkit-border-radius: 200px;
   border-radius: 200px;
@@ -1578,7 +1580,7 @@ input.datepicker + button + .in-timepicker {
     justify-content: center;
     position: absolute;
     height: 20px;
-    bottom: -20px;
+    bottom: 0px;
     padding: 0 10px 2px 10px;
     font-size: 0.9rem;
     line-height: 0.9rem;

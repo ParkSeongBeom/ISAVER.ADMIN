@@ -24,6 +24,11 @@ var CustomMapMediator = (
             'element' : {
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
+                ,'zoom' : {  // 10 = scale(1,1) and 5 = scale(0.5,0.5)
+                    'init' : 10
+                    ,'min' : 5
+                    ,'max' : 50
+                }
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
@@ -108,23 +113,32 @@ var CustomMapMediator = (
             }
 
             if(_options['element']['mousewheel']){
-                var compteur = 10; // 10 = scale(1,1) and 5 = scale(0.5,0.5)
+                var compteur = _options['element']['zoom']['init'];
                 _element.on("mousewheel",function(event) {
-                    if(event.originalEvent.deltaY > 0){if(compteur > 5){compteur--;}}
-                    if(event.originalEvent.deltaY < 0){if(compteur < 50){compteur++;}}
+                    if(event.originalEvent.deltaY > 0){if(compteur > _options['element']['zoom']['min']){compteur--;}}
+                    if(event.originalEvent.deltaY < 0){if(compteur < _options['element']['zoom']['max']){compteur++;}}
                     var scale = compteur/10;
                     _element.css({
-                        'transform':'scale('+scale+')',
-                        '-webkit-transform':'scale('+scale+')',
-                        '-moz-transform':'scale('+scale+')',
-                        '-o-transform':'scale('+scale+')',
-                        '-ms-transform':'scale('+scale+')'
+                        'transform':'scale('+scale+')'
+                        ,'-webkit-transform':'scale('+scale+')'
+                        ,'-moz-transform':'scale('+scale+')'
+                        ,'-o-transform':'scale('+scale+')'
+                        ,'-ms-transform':'scale('+scale+')'
                     });
                     _scale = scale;
                 });
             }
 
-            _element.css({left:(_element.parent().width()-_element.width())/2, top:(_element.parent().height()-_element.height())/2});
+            _element.css({
+                left:(_element.parent().width()-_element.width())/2
+                , top:(_element.parent().height()-_element.height())/2
+                ,'transform':'scale('+_options['element']['zoom']['init']/10+')'
+                ,'-webkit-transform':'scale('+_options['element']['zoom']['init']/10+')'
+                ,'-moz-transform':'scale('+_options['element']['zoom']['init']/10+')'
+                ,'-o-transform':'scale('+_options['element']['zoom']['init']/10+')'
+                ,'-ms-transform':'scale('+_options['element']['zoom']['init']/10+')'
+            });
+            _scale = _options['element']['zoom']['init']/10;
 
             // fence svg init
             if($.fn.svg!=null){
@@ -222,15 +236,15 @@ var CustomMapMediator = (
             switch (_actionType){
                 case 'init':
                     targetElement.css("left",targetData['x1']);
-                    targetElement.css("width",_element.width()-targetData['x1']-targetData['x2']);
+                    targetElement.outerWidth(_element.width()-targetData['x1']-targetData['x2']);
                     targetElement.css("top",targetData['y1']);
-                    targetElement.css("height",_element.height()-targetData['y1']-targetData['y2']);
+                    targetElement.outerHeight(_element.height()-targetData['y1']-targetData['y2']);
                     break;
                 case 'update':
-                    targetData['x1'] = toRound(targetElement.position()['left'] / _scale,2);
-                    targetData['x2'] = toRound(_element.width() - (targetElement.position()['left'] / _scale) - targetElement.width(),2);
-                    targetData['y1'] = toRound(targetElement.position()['top'] / _scale,2);
-                    targetData['y2'] = toRound(_element.height() - (targetElement.position()['top'] / _scale) - targetElement.height(),2);
+                    targetData['x1'] = parseInt(targetElement.css("left"));
+                    targetData['x2'] = toRound(_element.width() - targetData['x1'] - targetElement.width(),2);
+                    targetData['y1'] = parseInt(targetElement.css("top"));
+                    targetData['y2'] = toRound(_element.height() - targetData['y1'] - targetElement.height(),2);
                     break;
             }
 
@@ -267,6 +281,8 @@ var CustomMapMediator = (
 
                             ui.size.width = newWidth;
                             ui.size.height = newHeight;
+                        }
+                        ,stop: function(){
                             positionChangeEventHandler($(this).attr("targetId"),'update');
                         }
                     });
@@ -285,6 +301,8 @@ var CustomMapMediator = (
                         ,drag : function(evt, ui) {
                             ui.position.top = Math.round((evt.pageY - canvasOffset.top) / _scale - pointerY);
                             ui.position.left = Math.round((evt.pageX - canvasOffset.left) / _scale - pointerX);
+                        }
+                        ,stop: function(){
                             positionChangeEventHandler($(this).attr("targetId"),'update');
                         }
                     });
@@ -299,10 +317,10 @@ var CustomMapMediator = (
                     'data' : {
                         'targetId' : data['targetId']
                         ,'deviceCode' : data['deviceCode']
-                        ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']
-                        ,'x2' : data['useYn']?data['x2']:_element.width()-targetElement.position()['left']-targetElement.width()
-                        ,'y1' : data['useYn']?data['y1']:targetElement.position()['top']
-                        ,'y2' : data['useYn']?data['y2']:_element.height()-targetElement.position()['top']-targetElement.height()
+                        ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']+(_element.width()/2)
+                        ,'x2' : data['useYn']?data['x2']:_element.width()-targetElement.position()['left']-(_element.width()/2)-(targetElement.width()/2)
+                        ,'y1' : data['useYn']?data['y1']:targetElement.position()['top']+(_element.height()/2)
+                        ,'y2' : data['useYn']?data['y2']:_element.height()-targetElement.position()['top']-(_element.height()/2)-(targetElement.height()/2)
                         ,'useYn' : data['useYn']
                     }
                     ,'element' : targetElement
@@ -314,8 +332,8 @@ var CustomMapMediator = (
 
             if(data['deviceCode']=='DEV013' && _translate==null){
                 _translate = {
-                    'x' : targetElement.position()['left'] + targetElement.width()/2
-                    ,'y' : targetElement.position()['top'] + targetElement.height()/2
+                    'x' : parseInt(targetElement.css("left")) + targetElement.width()/2
+                    ,'y' : parseInt(targetElement.css("top")) + targetElement.height()/2
                 };
                 if(_options['custom']['websocketSend']){
                     webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_areaId,"deviceId":data['targetId'],"ipAddress":''});
@@ -390,12 +408,16 @@ var CustomMapMediator = (
                         if(_lat instanceof Array){
                             _lat = _lat[0];
                         }
-                        _marker[_type][_id].animate({
-                            'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(_marker[_type][_id].width()/2),2)
-                            ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(_marker[_type][_id].height()/2),2)
-                            ,'easing': "swing"
-                            ,'duration' : 10
-                        });
+                        _marker[_type][_id].css("left",toRound(Number(_translate['x'])+Number(_lat['lat'])-(_marker[_type][_id].width()/2),2));
+                        _marker[_type][_id].css("top",toRound(Number(_translate['y'])+Number(_lat['lng'])-(_marker[_type][_id].height()/2),2));
+
+                        // 애니메이션 사용시 성능 저하됨
+                        //_marker[_type][_id].animate({
+                        //    'left' : toRound(Number(_translate['x'])+Number(_lat['lat'])-(_marker[_type][_id].width()/2),2)
+                        //    ,'top' : toRound(Number(_translate['y'])+Number(_lat['lng'])-(_marker[_type][_id].height()/2),2)
+                        //    ,'easing': "swing"
+                        //    ,'duration' : 10
+                        //});
                     }else{
                         _self.addMarker(_type, _id, _lat);
                     }

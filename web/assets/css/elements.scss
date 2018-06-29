@@ -568,17 +568,23 @@ div[contenteditable] {}
 
 
 ////// ----------------- OFFINLE MAP 설정 Start
-$devi_w:30px;
-$resi_w:12px;
+$devi_w:10px;
+$resi_w:6px;
 @mixin resize {
   .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
     display: none !important; position: absolute; width:$resi_w; height:$resi_w;
+
     &:before {
-      content:"\e935";
+      content:"";
       @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
-      color:#000; font-weight: bold; background-color: $color-white-01; font-size:0.5rem;
+      background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
+      background-position: 50% 50%; background-color: $color-blue-01;
+      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
+
     }
-    &:hover:before {background-color: $color-blue-01; color:$color-white-01;}
+    &:hover:before {
+      /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;
+    }
   }
   .ui-resizable-e:before  {@include rotate(180deg);  }
   .ui-resizable-s:before  {@include rotate(-90deg);  }
@@ -586,7 +592,7 @@ $resi_w:12px;
 } // @include resize;
 
 .map_images {
-  position: absolute; width:1600px !important; height:900px !important; cursor:move;
+  position: absolute; width:2500px !important; height:2500px !important; cursor:move;
   background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
 
   & > * {position: absolute !important;}
@@ -612,8 +618,9 @@ $resi_w:12px;
 
     // 디바이스, 구역 이름표
     & > span {
-      @include flex-midddle; position: absolute; width: max-content; height:20px; bottom:-($devi_w - 5px);
-      padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
+      @include flex-midddle; position: absolute; width: max-content; bottom:-20px;
+      padding:0 10px; font-size:0.1rem;
+      /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
       background-color:$color-gray-09; @include border-radius(200px);
     }
 
@@ -634,6 +641,7 @@ $resi_w:12px;
 
     @at-root {.dashboard_mode & {pointer-events: none; } }
     &:before {font-size:1.4rem; }
+    &:before, &:after {}
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
@@ -652,12 +660,15 @@ $resi_w:12px;
     }
   }
 
-  &-m8:before     {/*background-image: url(../images/map/sico_96.svg);*/ content:"\e962";}
-  &-camera:before {/*background-image: url(../images/map/sico_98.svg);*/ content:"\e964";}
+  &-m8:before     {background-image: url(../images/map/sico_96.svg); /*content:"\e962";*/ }
+  &-camera:before {background-image: url(../images/map/sico_98.svg); /*content:"\e964";*/ }
 
   &-tracking {
     background-color: transparent;
-    &:before {content:"\e91b"; font-size:1rem; color:$color-blue-03;}
+    &:before {
+      /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
+      background-image: url(../images/map/tracking.svg);
+    }
     &:after {display: none;}
   }
 
@@ -728,7 +739,7 @@ $resi_w:12px;
       &-die     {
         @include issue02; background-color:$color-gray-09; opacity: 0.7;
         &:after {
-          content:""; z-index: 10; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+          content:""; z-index: 10; position: absolute; left:calc(50% - 2px); top:0; width:2px; height:100%;
           @include rotate(45deg); background-color:rgba($color-gray-09,1); @include loding;
         }
       }

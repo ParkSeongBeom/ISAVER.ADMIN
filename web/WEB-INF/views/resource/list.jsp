@@ -322,7 +322,7 @@
                         </div>
                         <div>
                             <select id="fileId">
-                                <option value=""><spring:message code="resource.column.fileSelect"/></option>
+                                <option value=""><spring:message code="common.column.selectNo"/></option>
                             </select>
                             <span>X1</span>
                             <input name="x1" type="number" onkeypress="isNumberWithPoint(this);"/>
