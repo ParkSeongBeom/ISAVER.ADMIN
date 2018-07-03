@@ -153,7 +153,9 @@ var DashboardHelper = (
                         ,'port' : $(this).find("input[name='cPort']").val()
                         ,'deviceUserId' : $(this).find("input[name='cDeviceUserId']").val()
                         ,'devicePassword' : $(this).find("input[name='cDevicePassword']").val()
+                        ,'subUrl' : $(this).find("input[name='cSubUrl']").val()
                         ,'linkUrl' : $(this).find("input[name='cLinkUrl']").val()
+                        ,'streamServerUrl' : $(this).find("input[name='cStreamServerUrl']").val()
                     });
                 });
 

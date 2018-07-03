@@ -7,32 +7,35 @@
  * @type {Function}
  */
 var VideoMediator = (
-    function(_rootPath){
-        var playerList = {};
-        var rootPath;
-        var element;
-        var useDeviceCode = "DEV002";
+    function(rootPath){
+        var _playerList = {};
+        var _rootPath;
+        var _element;
+        var _options = {
+            'useDeviceCode' : "DEV002"
+            ,'webrtcConnect' : "rtptransport=tcp&timeout=60"
+        };
         var _self = this;
 
         /**
          * initialize
          * @author psb
          */
-        var _initialize = function(_rootPath){
-            rootPath = _rootPath;
+        var _initialize = function(rootPath){
+            _rootPath = rootPath;
         };
 
         /**
          * set element
          * @author psb
          */
-        this.setElement = function(_element){
-            if(_element==null || _element.length==0){
+        this.setElement = function(element){
+            if(element==null || element.length==0){
                 console.error("[VideoMediator][_initialize] _element is null or not found");
                 return false;
             }
 
-            element = _element;
+            _element = element;
         };
 
         /**
@@ -42,64 +45,78 @@ var VideoMediator = (
          */
         this.createPlayer = function(_deviceList){
             for(var index in _deviceList){
-                if(_deviceList[index]['deviceCode']==useDeviceCode && _deviceList[index]['ipAddress']!=null && _deviceList[index]['ipAddress']!=''){
-                    var _src = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+(_deviceList[index]['port']!=null?":"+_deviceList[index]['port']:"")+_deviceList[index]['linkUrl'];
-                    element.append(
-                        $("<li/>",{class:'ptz'}).append(
-                            $("<div/>",{id:_deviceList[index]['deviceId'],class:"vxgplayer",style:"border:0; margin:0;"})
-                        )
-                    );
+                if(_deviceList[index]['deviceCode']==_options['useDeviceCode'] && _deviceList[index]['streamServerUrl']!=null && _deviceList[index]['streamServerUrl']!=''){
+                    //request("GET",_deviceList[index]['streamServerUrl'] + "/api/getMediaList?streamServerUrl="+_deviceList[index]['streamServerUrl']+"&deviceId="+_deviceList[index]['deviceId']).done( function (response) {
+                    //    var params = new URLSearchParams(response.url.split("?")[1]);
+                    //    var deviceId = params.get("deviceId");
+                    //    var streamServerUrl = params.get("streamServerUrl");
+                    //
+                    //    var responseBody =  JSON.parse(response.body);
+                    //    var url = responseBody[0];
+                    //    var videoTag = "video_" + deviceId;
+                    //
+                    //    _element.append(
+                    //        $("<li/>",{class:'ptz', deviceId:deviceId}).append(
+                    //            $("<video/>",{id:videoTag,style:"width: 350px;"})
+                    //        )
+                    //    );
+                    //
+                    //    // connect video element to webrtc stream
+                    //    var webRtcServer = new WebRtcStreamer(videoTag, streamServerUrl);
+                    //    webRtcServer.connect(url.video, url.audio, _options['webrtcConnect']);
+                    //
+                    //    // register webrtc streamer connection
+                    //    _playerList[deviceId] = webRtcServer;
+                    //});
 
-                    vxgplayer(_deviceList[index]['deviceId'], {
-                        url: _src,
-                        nmf_path: 'media_player.nmf',
-                        nmf_src: rootPath+'/assets/library/vxg/pnacl/Release/media_player.nmf',
-                        latency: 10000,
-                        aspect_ratio_mode: 1,
-                        autohide: 3,
-                        controls: false,
-                        connection_timeout: 5000,
-                        connection_udp: 0,
-                        custom_digital_zoom: false,
-                        width : "100%",
-                        height : "100%"
-                    }).ready(function(){
-                        playerList[this.id] = vxgplayer(this.id);
-                        playerList[this.id].src(this.options['url']);
-                        console.log('[VideoMediator][createPlayer] ready player - '+this.id);
-                        _self.play(this.id);
-                    });
+                    var rtspSrc = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+(_deviceList[index]['port']!=null?":"+_deviceList[index]['port']:"")+_deviceList[index]['subUrl'];
+                    var videoTag = "video_" + _deviceList[index]['deviceId'];
+
+                    var ptzElement = $("<li/>",{class:'ptz', deviceId:_deviceList[index]['deviceId']}).append(
+                        $("<video/>",{id:videoTag,style:"width: 350px;"})
+                    );
+                    _element.append(ptzElement);
+
+                    // connect video element to webrtc stream
+                    var webRtcServer = new WebRtcStreamer(videoTag, _deviceList[index]['streamServerUrl']);
+                    webRtcServer.connect(rtspSrc, null, _options['webrtcConnect']);
+
+                    // register webrtc streamer connection
+                    _playerList[_deviceList[index]['deviceId']] = {
+                        'element' : ptzElement
+                        ,'server' : webRtcServer
+                    }
                 }
             }
         };
 
-        /**
-         * play
-         * @author psb
-         * @param _playerId
-         */
-        this.play = function(_playerId){
-            if(_playerId==null || playerList[_playerId]==null){
-                console.error("[VideoMediator][play] _playerId is null or not in playerList");
-                return false;
-            }
-            playerList[_playerId].play();
-            console.log('[VideoMediator][play] complete - '+_playerId);
-        };
+        ///**
+        // * play
+        // * @author psb
+        // * @param _playerId
+        // */
+        //this.play = function(_playerId){
+        //    if(_playerId==null || _playerList[_playerId]==null){
+        //        console.error("[VideoMediator][play] _playerId is null or not in _playerList");
+        //        return false;
+        //    }
+        //    _playerList[_playerId].play();
+        //    console.log('[VideoMediator][play] complete - '+_playerId);
+        //};
+        //
+        ///**
+        // * stop
+        // * @author psb
+        // * @param _playerId
+        // */
+        //this.stop = function(_playerId){
+        //    if(_playerId==null || _playerList[_playerId]==null){
+        //        console.error("[VideoMediator][stop] _playerId is null or not in _playerList");
+        //        return false;
+        //    }
+        //    _playerList[_playerId].stop();
+        //};
 
-        /**
-         * play
-         * @author psb
-         * @param _playerId
-         */
-        this.stop = function(_playerId){
-            if(_playerId==null || playerList[_playerId]==null){
-                console.error("[VideoMediator][stop] _playerId is null or not in playerList");
-                return false;
-            }
-            playerList[_playerId].stop();
-        };
-
-        _initialize(_rootPath);
+        _initialize(rootPath);
     }
 );

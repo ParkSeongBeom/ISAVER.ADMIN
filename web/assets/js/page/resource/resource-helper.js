@@ -251,8 +251,10 @@ var ResourceHelper = (
                 form.find("input[name='ipAddress']").val(data['ipAddress']!=null?data['ipAddress']:'');
                 form.find("input[name='port']").val(data['port']!=null?data['port']:'');
                 form.find("input[name='deviceUserId']").val(data['deviceUserId']!=null?data['deviceUserId']:'');
+                form.find("input[name='subUrl']").val(data['subUrl']!=null?data['subUrl']:'');
+                form.find("input[name='streamServerUrl']").val(data['streamServerUrl']!=null?data['streamServerUrl']:'');
                 form.find("input[name='linkUrl']").val(data['linkUrl']!=null?data['linkUrl']:'');
-                form.find("textarea[name='areaDesc']").val(data['areaDesc']!=null?data['areaDesc']:'');
+                form.find("textarea[name='deviceDesc']").val(data['deviceDesc']!=null?data['deviceDesc']:'');
                 form.find("td[name='insertUserName']").text(data['insertUserName']);
                 form.find("td[name='insertDatetime']").text(new Date(data['insertDatetime']).format("yyyy-MM-dd HH:mm:ss"));
                 form.find("td[name='updateUserName']").text(data['updateUserName']?data['updateUserName']:'');

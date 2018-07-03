@@ -392,7 +392,9 @@
                                                         <input type="text" name="cPort" value="${device.port}"/>
                                                         <input type="text" name="cDeviceUserId" value="${device.deviceUserId}"/>
                                                         <input type="password" name="cDevicePassword" value="${device.devicePassword}"/>
+                                                        <input type="text" name="cSubUrl" value="${device.subUrl}"/>
                                                         <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
+                                                        <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
                                                     </div>
                                                 </c:if>
                                             </c:forEach>
@@ -500,9 +502,17 @@
     </div>
 </article>
 
-<link type="text/css" href="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.min.css?version=${version}" rel="stylesheet"/>
+<%-- VXG Player를 통한 RTSP Stream --%>
+<%--<link type="text/css" href="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.min.css?version=${version}" rel="stylesheet"/>--%>
+<%--<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-mediator_vxg.js?version=${version}"></script>--%>
+<%--<script type="text/javascript" src="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.js?version=${version}"></script>--%>
+
+<%-- Medea Server를 통한 RTSP Stream --%>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/request.min.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/adapter.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/webrtcstreamer.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}"></script>
-<script type="text/javascript" src="${rootPath}/assets/library/vxg/vxgplayer-1.8.23.js?version=${version}"></script>
+
 <c:if test="${templateSetting['safeGuardMapView']=='online'}">
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
 </c:if>

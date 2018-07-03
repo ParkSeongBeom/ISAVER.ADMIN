@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 public class PersistenceConfigurer {
