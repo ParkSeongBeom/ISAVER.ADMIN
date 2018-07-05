@@ -50,24 +50,6 @@ var VideoMediator = (
                         {streamServerUrl:_deviceList[index]['streamServerUrl'],deviceId:_deviceList[index]['deviceId'],ipAddress:_deviceList[index]['ipAddress']}
                         ,_deviceList[index]['streamServerUrl'] + "/api/getMediaList"
                     );
-
-                    //var rtspSrc = "rtsp://"+_deviceList[index]['deviceUserId']+":"+_deviceList[index]['devicePassword']+"@"+_deviceList[index]['ipAddress']+(_deviceList[index]['port']!=null?":"+_deviceList[index]['port']:"")+_deviceList[index]['subUrl'];
-                    //var videoTag = "video_" + _deviceList[index]['deviceId'];
-                    //
-                    //var ptzElement = $("<li/>",{class:'ptz', deviceId:_deviceList[index]['deviceId']}).append(
-                    //    $("<video/>",{id:videoTag,style:"width: 350px;"})
-                    //);
-                    //_element.append(ptzElement);
-                    //
-                    //// connect video element to webrtc stream
-                    //var webRtcServer = new WebRtcStreamer(videoTag, _deviceList[index]['streamServerUrl']);
-                    //webRtcServer.connect(rtspSrc, null, _options['webrtcConnect']);
-                    //
-                    //// register webrtc streamer connection
-                    //_playerList[_deviceList[index]['deviceId']] = {
-                    //    'element' : ptzElement
-                    //    ,'server' : webRtcServer
-                    //}
                 }
             }
         };
