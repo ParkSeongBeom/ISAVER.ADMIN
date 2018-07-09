@@ -518,7 +518,7 @@ menu {
   body.admin_mode & {
     right:-($noticecenter-width * 2);
     &.on {right:$dash-margin;}
-    background-color: $adm-color;
+    //background-color: $adm-color;
 
     h2 {color:$bas-color;}
   }
@@ -942,7 +942,7 @@ body.admin_mode.taekwon_mode {
 
         &:last-of-type {
           @include flexbase; @include flex-align-items-center;
-          height:40px;
+          height:40px; min-height:40px;
           & > * {position: relative; z-index: 1;}
           &:before, &:after {
             content:""; position:absolute; left:0; z-index: 1;

@@ -35,7 +35,7 @@ var CustomMapMediator = (
                 'text' : {
                     'text-anchor': "middle"
                     , 'fill': "white"
-                    , 'font-size': "10px"
+                    , 'font-size': "5px"
                 }
             }
             ,'custom' : {
@@ -381,8 +381,15 @@ var CustomMapMediator = (
                 switch (_type){
                     case MARKER_TYPE[1] : // Fence
                         var points = [];
+                        var latMin=null,latMax=null,lngMin=null,lngMax=null;
                         for(var index in _lat){
-                            points.push([toRound(Number(_translate['x'])+Number(_lat[index]['lat']),2),toRound(Number(_translate['y'])+Number(_lat[index]['lng']),2)]);
+                            var lat = toRound(Number(_translate['x'])+Number(_lat[index]['lat']),2);
+                            var lng = toRound(Number(_translate['y'])+Number(_lat[index]['lng']),2);
+                            if(latMin==null || latMin > lat){ latMin = lat; }
+                            if(latMax==null || latMax < lat){ latMax = lat; }
+                            if(lngMin==null || lngMin > lng){ lngMin = lng; }
+                            if(lngMax==null || lngMax < lng){ lngMax = lng; }
+                            points.push([lat,lng]);
                         }
 
                         if(_fenceSvg==null){
@@ -390,7 +397,7 @@ var CustomMapMediator = (
                             return false;
                         }
                         _fenceSvg.polygon(points, {fenceId:_id});
-                        _fenceSvg.text(points[0][0],points[0][1],_data['fenceName'], $.extend({"fenceId":_id}, _options[MARKER_TYPE[1]]['text']));
+                        _fenceSvg.text(latMin+((latMax-latMin)/2),lngMin+((lngMax-lngMin)/2),_data['fenceName'], $.extend({"fenceId":_id}, _options[MARKER_TYPE[1]]['text']));
 
                         _marker[_type][_id] = {
                             'element' : _element.find("polygon[fenceId='"+_id+"']")

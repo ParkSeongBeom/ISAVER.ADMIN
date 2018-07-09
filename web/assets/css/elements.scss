@@ -568,8 +568,8 @@ div[contenteditable] {}
 
 
 ////// ----------------- OFFINLE MAP 설정 Start
-$devi_w:10px;
-$resi_w:6px;
+$devi_w:25px;
+$resi_w:8px;
 @mixin resize {
   .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
     display: none !important; position: absolute; width:$resi_w; height:$resi_w;
@@ -610,7 +610,7 @@ $resi_w:6px;
 
   // 감시, 감지 디바이스 공통
   &-m8, &-camera, &-area {
-
+    //@include scale(0.5);
     &, & > * {cursor: pointer;}
     @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
 
@@ -618,10 +618,11 @@ $resi_w:6px;
 
     // 디바이스, 구역 이름표
     & > span {
-      @include flex-midddle; position: absolute; width: max-content; bottom:-20px;
-      padding:0 10px; font-size:0.1rem;
+      @include flex-midddle; position: absolute; width: max-content; bottom:-15px;
+      padding:3px 10px; font-size:0.9rem;
       /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
       background-color:$color-gray-09; @include border-radius(200px);
+      @include scale(0.4);
     }
 
     &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
@@ -696,7 +697,7 @@ $resi_w:6px;
 
     polygon, path {
       fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01; stroke-width:1px;
-
+      text {font-size:5px !important;}
       /*&:after {display: none !important;}
       &:before {
         content:""; position: absolute; width:100%; height:100%;
