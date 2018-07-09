@@ -74,7 +74,8 @@ var VideoMediator = (
                     var videoTag = "video_" + actionType['deviceId'];
 
                     var ptzElement = $("<li/>",{class:'ptz', deviceId:actionType['deviceId']}).append(
-                        $("<video/>",{id:videoTag,style:"width: 350px;"})
+                        //$("<video/>",{id:videoTag,style:"width: 350px;"})
+                        $("<video/>",{id:videoTag})
                     );
                     _element.append(ptzElement);
 

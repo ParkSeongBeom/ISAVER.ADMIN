@@ -12,6 +12,8 @@
 <script src="${rootPath}/assets/js/page/resource/resource-helper.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/popup/template-setting-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/popup/custom-map-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
@@ -353,6 +355,11 @@
                             <p><spring:message code="resource.column.useYn"/></p>
                         </div>
                         <ul id="childList"></ul>
+                        <div>
+                            <p><spring:message code="resource.column.fenceName"/></p>
+                            <p><spring:message code="resource.column.fenceId"/></p>
+                        </div>
+                        <ul id="fenceList"></ul>
                     </section>
                 </article>
                 <footer>

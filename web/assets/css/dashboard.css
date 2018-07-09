@@ -1397,9 +1397,11 @@ body.dashboard_mode {
       overflow: hidden;
       position: relative;
       width: 100%;
-      height: 50%;
-      min-height: 25%;
       min-width: 350px;
+      max-width: 350px;
+      height: 25%;
+      min-height: 25%;
+      max-height: 25%;
       background-color: transparent !important; }
       .guard_set .s_rbox > ul li:before {
         content: "";
@@ -1427,7 +1429,7 @@ body.dashboard_mode {
         position: absolute;
         top: 0;
         left: 0;
-        height: 40px;
+        height: 26px;
         padding: 0 15px 0 35px;
         background-color: rgba(0, 0, 0, 0.7);
         opacity: 0.8; }
@@ -1436,7 +1438,7 @@ body.dashboard_mode {
           position: absolute;
           left: 0;
           padding: 0 0 0 7px;
-          font-size: 1.5rem; }
+          font-size: 1.2rem; }
       .guard_set .s_rbox > ul li > div {
         position: relative; }
         .guard_set .s_rbox > ul li > div, .guard_set .s_rbox > ul li > div:before {
@@ -1788,26 +1790,31 @@ body.dashboard_mode {
     margin: 5px 0 0 0; }
   .watch_area.area12 .nhr_set > .s_lbox, .watch_area.area16 .nhr_set > .s_lbox, .watch_area.area00 .nhr_set > .s_lbox {
     max-height: 120px !important; }
-  .watch_area.area02 .guard_set, .watch_area.area06 .guard_set, .watch_area.area08 .guard_set {
+  .watch_area.area02 .guard_set, .watch_area.area08 .guard_set {
     -webkit-box-orient: column;
     -webkit-box-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column; }
-    .watch_area.area02 .guard_set .s_lbox, .watch_area.area02 .guard_set .s_rbox, .watch_area.area06 .guard_set .s_lbox, .watch_area.area06 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_lbox, .watch_area.area08 .guard_set .s_rbox {
+    .watch_area.area02 .guard_set .s_lbox, .watch_area.area02 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_lbox, .watch_area.area08 .guard_set .s_rbox {
       width: 100%; }
-    .watch_area.area02 .guard_set .s_rbox, .watch_area.area06 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_rbox {
+    .watch_area.area02 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_rbox {
       min-width: auto;
-      height: auto; }
-      .watch_area.area02 .guard_set .s_rbox ul, .watch_area.area06 .guard_set .s_rbox ul, .watch_area.area08 .guard_set .s_rbox ul {
+      height: auto;
+      max-height: 50%; }
+      .watch_area.area02 .guard_set .s_rbox ul, .watch_area.area08 .guard_set .s_rbox ul {
         -webkit-box-orient: row;
         -webkit-box-direction: row;
         -webkit-flex-direction: row;
         -ms-flex-direction: row;
         flex-direction: row;
+        -webkit-flex-flow: row wrap;
+        -moz-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
         height: auto;
         width: 100%; }
-        .watch_area.area02 .guard_set .s_rbox ul li, .watch_area.area06 .guard_set .s_rbox ul li, .watch_area.area08 .guard_set .s_rbox ul li {
+        .watch_area.area02 .guard_set .s_rbox ul li, .watch_area.area08 .guard_set .s_rbox ul li {
           flex: 0 1 100%;
           -webkit-flex: 0 1 100%;
           flexbox: 0 1 100%;
@@ -1815,21 +1822,38 @@ body.dashboard_mode {
           -ms-flex: 0 1 100%;
           width: auto;
           height: auto;
-          min-width: 25%;
-          min-height: 150px; }
-          .watch_area.area02 .guard_set .s_rbox ul li:before, .watch_area.area06 .guard_set .s_rbox ul li:before, .watch_area.area08 .guard_set .s_rbox ul li:before {
+          min-width: 50%;
+          max-width: 50%; }
+          .watch_area.area02 .guard_set .s_rbox ul li:before, .watch_area.area08 .guard_set .s_rbox ul li:before {
             left: auto;
             right: 0;
             width: 1px;
             height: 100%; }
-          .watch_area.area02 .guard_set .s_rbox ul li:last-of-type:before, .watch_area.area06 .guard_set .s_rbox ul li:last-of-type:before, .watch_area.area08 .guard_set .s_rbox ul li:last-of-type:before {
+          .watch_area.area02 .guard_set .s_rbox ul li:nth-of-type(even):before, .watch_area.area08 .guard_set .s_rbox ul li:nth-of-type(even):before {
             display: none; }
-  .watch_area.area06 .guard_set .s_rbox ul li, .watch_area.area08 .guard_set .s_rbox ul li {
-    min-height: 130px; }
+  .watch_area.area02 .guard_set .s_rbox ul li {
+    min-height: 200px;
+    max-height: 200px; }
+  .watch_area.area06 .guard_set .s_rbox ul li {
+    min-width: 200px;
+    max-width: 200px; }
+  .watch_area.area08 .guard_set .s_rbox ul li {
+    min-height: 100px;
+    max-height: 100px; }
   .watch_area.area04 .guard_set .s_rbox ul li {
     min-width: 200px; }
-  .watch_area.area09 .guard_set .s_rbox ul li {
-    min-width: 150px; }
+  .watch_area.area09 .guard_set .s_rbox {
+    max-width: 250px; }
+    .watch_area.area09 .guard_set .s_rbox ul {
+      -webkit-flex-flow: row wrap;
+      -moz-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+      flex-flow: row wrap; }
+      .watch_area.area09 .guard_set .s_rbox ul li {
+        min-width: 125px;
+        max-width: 125px;
+        min-height: 50%;
+        max-height: 50%; }
 
 .btnbase {
   min-width: 40px;

@@ -651,7 +651,8 @@ body.dashboard_mode {
     & > ul {
       @include flexbase; @include flex-column; position: relative; width:100%; height: 100%;
       li {
-        overflow: hidden; position: relative; width:100%; height:50%; min-height:25%; min-width:350px;
+        overflow: hidden; position: relative;
+        width:100%; min-width:350px; max-width:350px; height:25%; min-height:25%; max-height:25%;
         background-color: transparent !important;
 
         &:before {
@@ -661,9 +662,9 @@ body.dashboard_mode {
 
         & > span {
           @include flexbase; @include flex-align-items-center;
-          position: absolute; top:0; left:0; height:$headerHeight; padding:0 15px 0 35px;
+          position: absolute; top:0; left:0; height:26px; padding:0 15px 0 35px;
           background-color: rgba(0,0,0,0.7); opacity: 0.8;
-          &:before {content:"\e964"; position: absolute;  left:0; padding:0 0 0 7px; font-size:1.5rem;}
+          &:before {content:"\e964"; position: absolute;  left:0; padding:0 0 0 7px; font-size:1.2rem;}
         }
 
         & > div {
@@ -856,26 +857,37 @@ body.dashboard_mode {
     }
   }
 
-  &.area02, &.area06,&.area08 {
+  &.area02 ,&.area08 {
     .guard_set {
       @include flex-column;
       .s_lbox, .s_rbox {width: 100%; }
       .s_rbox {
-        min-width: auto; height: auto;
+        min-width: auto; height: auto; max-height:50%;
         ul {
-          @include flex-column-row; height:auto; width:100%;
+          @include flex-column-row; @include flex-row-wrap;
+          height:auto; width:100%;
           li {
-            @include flex-option(0, 1, 100%); width:auto; height:auto; min-width:25%; min-height:150px;
+            @include flex-option(0, 1, 100%); width:auto; height:auto; min-width:50%; max-width:50%;
             &:before {left:auto; right:0; width:1px; height:100%;}
-            &:last-of-type:before {display: none;}
+            &:nth-of-type(even):before {display: none;}
           }
         }
       }
     }
   }
-  &.area06,&.area08 { .guard_set .s_rbox ul li {min-height:130px;} }
-  &.area04 {.guard_set .s_rbox ul li {min-width:200px;}}
-  &.area09 {.guard_set .s_rbox ul li {min-width:150px;} }
+  &.area02 { .guard_set .s_rbox ul li {min-height:200px; max-height:200px;} }
+  &.area06 { .guard_set .s_rbox ul li {min-width: 200px; max-width: 200px;} }
+  &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
+  &.area04 { .guard_set .s_rbox ul li {min-width: 200px;} }
+  &.area09 {
+    .guard_set .s_rbox  {
+      max-width:250px;
+      ul {
+        @include flex-row-wrap;
+        li {min-width: 125px; max-width: 125px; min-height:50%; max-height:50%;}
+      }
+    }
+  }
 }
 /////..... 구역 End
 

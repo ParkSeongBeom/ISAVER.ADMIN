@@ -6,8 +6,10 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.CustomMapLocationBean;
+import com.icent.isaver.repository.bean.FenceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.CustomMapLocationDao;
+import com.icent.isaver.repository.dao.base.FenceDao;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +60,9 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     private CustomMapLocationDao customMapLocationDao;
 
     @Inject
+    private FenceDao fenceDao;
+
+    @Inject
     private AreaDao areaDao;
 
     @Override
@@ -90,15 +95,18 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         saveAreaParam.put("fileId",parameters.get("fileId"));
 
         // Custom Map Insert Param
-        List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("paramData"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
+        List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("customParamList"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
+        List<FenceBean> fenceList = new Gson().fromJson(parameters.get("fenceParamList"), new TypeToken<List<FenceBean>>(){}.getType());
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try {
             areaDao.saveAreaFileId(saveAreaParam);
             customMapLocationDao.removeCustomMapLocation(removeCustomParam);
             if(customList.size()>0){
                 customMapLocationDao.insertCustomMapLocation(customList);
+            }
+            if(fenceList.size()>0){
+                fenceDao.saveFence(fenceList);
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

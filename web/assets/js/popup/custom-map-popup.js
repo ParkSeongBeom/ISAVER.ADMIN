@@ -71,16 +71,21 @@ var CustomMapPopup = (
             }
 
             var customList = _customMapMediator.getMarkerList('custom');
-            var paramList = [];
+            var customParamList = [];
 
             for(var index in customList){
                 var customMap = $.extend({}, customList[index]['data']);
                 customMap['areaId'] = _areaId;
-                paramList.push(customMap);
+                customParamList.push(customMap);
             }
 
+            var fenceList = _customMapMediator.getMarkerList('fence');
+            var fenceParamList = [];
+            for(var index in fenceList){
+                fenceParamList.push($.extend({}, fenceList[index]['data']));
+            }
             if(confirm(_messageConfig['saveConfirmMessage'])){
-                _ajaxCall('save', {areaId:_areaId, fileId:_element.find("#fileId").val(), paramData:JSON.stringify(paramList)});
+                _ajaxCall('save', {areaId:_areaId, fileId:_element.find("#fileId").val(), customParamList:JSON.stringify(customParamList), fenceParamList:JSON.stringify(fenceParamList)});
             }
         };
 
@@ -110,27 +115,49 @@ var CustomMapPopup = (
                     _customMapMediator.init(areaId,{
                         'draggable' : true
                         ,'resizable' : true
-                        ,'onLoad' : function(data){
-                            _element.find("#childList").empty();
-                            for(var index in data){
-                                var target = data[index];
-                                _element.find("#childList").append(
-                                    $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                        $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
-                                            _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
-                                        })
-                                    ).append(
-                                        $("<div/>").append(
-                                            $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
-                                                var targetId = $(this).parent().parent().attr("targetId");
-                                                _checkChildTarget(targetId, $(this).is(":checked"));
-                                            })
-                                        ).append(
-                                            $("<label/>")
-                                        )
-                                    )
-                                );
-                                _customMapMediator.targetRender(target);
+                        ,'fenceView':true
+                        ,'onLoad' : function(actionType,data){
+                            switch (actionType){
+                                case 'childList' :
+                                    _element.find("#childList").empty();
+                                    for(var index in data){
+                                        var target = data[index];
+                                        _element.find("#childList").append(
+                                            $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
+                                                $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
+                                                    _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
+                                                })
+                                            ).append(
+                                                $("<div/>").append(
+                                                    $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
+                                                        var targetId = $(this).parent().parent().attr("targetId");
+                                                        _checkChildTarget(targetId, $(this).is(":checked"));
+                                                    })
+                                                ).append(
+                                                    $("<label/>")
+                                                )
+                                            )
+                                        );
+                                        _customMapMediator.targetRender(target);
+                                    }
+                                    break;
+                                case 'fenceList' :
+                                    _element.find("#fenceList").empty();
+                                    for(var index in data){
+                                        var fence = data[index];
+                                        var fenceName = fence['fenceName']!=null?fence['fenceName']:fence['fenceId'];
+                                        _element.find("#fenceList").append(
+                                            $("<li/>",{fenceId:fence['fenceId']}).append(
+                                                $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
+                                                    _customMapMediator.saveFence($(this).parent().attr("fenceId"), $(this).val());
+                                                })
+                                            ).append(
+                                                $("<div/>").text(fence['fenceId'])
+                                            )
+                                        );
+                                        _customMapMediator.saveMarker('fence', fence['fenceId'], fence['locations'], {uuid:fence['uuid'], 'fenceName':fenceName});
+                                    }
+                                    break;
                             }
                         }
                         ,'change' : function(data){
