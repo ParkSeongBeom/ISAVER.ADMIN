@@ -465,8 +465,8 @@ var CustomMapMediator = (
                         if(data['location'] instanceof Array){
                             data['location'] = data['location'][0];
                         }
-                        _marker[messageType][data['id']].css("left",toRound(Number(_marker[_MARKER_TYPE[4]][_data['deviceId']]['data']['translate']['x'])+Number(data['location']['lat'])-(_marker[messageType][data['id']].width()/2),2));
-                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][_data['deviceId']]['data']['translate']['y'])+Number(data['location']['lng'])-(_marker[messageType][data['id']].height()/2),2));
+                        _marker[messageType][data['id']].css("left",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+Number(data['location']['lat'])-(_marker[messageType][data['id']].width()/2),2));
+                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location']['lng'])-(_marker[messageType][data['id']].height()/2),2));
                     }else{
                         _self.addMarker(messageType, data);
                     }
