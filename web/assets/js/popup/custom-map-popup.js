@@ -12,6 +12,7 @@ var CustomMapPopup = (
         var _urlConfig = {
             fileListUrl : "/file/mapList.json"
             ,saveUrl : "/customMapLocation/save.json"
+            ,fenceDeviceListUrl : "/fence/list.json"
         };
         var _markerClass = {
             'area' : "area"
@@ -84,8 +85,17 @@ var CustomMapPopup = (
             for(var index in fenceList){
                 fenceParamList.push($.extend({}, fenceList[index]['data']));
             }
+
+            var fenceDeviceParamList = [];
+
             if(confirm(_messageConfig['saveConfirmMessage'])){
-                _ajaxCall('save', {areaId:_areaId, fileId:_element.find("#fileId").val(), customParamList:JSON.stringify(customParamList), fenceParamList:JSON.stringify(fenceParamList)});
+                _ajaxCall('save', {
+                    areaId:_areaId
+                    , fileId:_element.find("#fileId").val()
+                    , customList:JSON.stringify(customParamList)
+                    , fenceList:JSON.stringify(fenceParamList)
+                    , fenceDeviceList:JSON.stringify(fenceDeviceParamList)
+                });
             }
         };
 
@@ -115,8 +125,9 @@ var CustomMapPopup = (
                     _customMapMediator.init(areaId,{
                         'draggable' : true
                         ,'resizable' : true
-                        ,'fenceView':true
-                        ,'onLoad' : function(actionType,data){
+                        ,'fenceView' : true
+                        ,'allView' : true
+                        ,'onLoad' : function(actionType,data,param){
                             switch (actionType){
                                 case 'childList' :
                                     _element.find("#childList").empty();
@@ -138,7 +149,6 @@ var CustomMapPopup = (
                                                 )
                                             )
                                         );
-                                        _customMapMediator.targetRender(target);
                                     }
                                     break;
                                 case 'fenceList' :
@@ -147,15 +157,14 @@ var CustomMapPopup = (
                                         var fence = data[index];
                                         var fenceName = fence['fenceName']!=null?fence['fenceName']:fence['fenceId'];
                                         _element.find("#fenceList").append(
-                                            $("<li/>",{fenceId:fence['fenceId']}).append(
+                                            $("<li/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
                                                 $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
-                                                    _customMapMediator.saveFence($(this).parent().attr("fenceId"), $(this).val());
+                                                    _customMapMediator.saveFence($(this).parent().attr("fenceId"), $(this).parent().attr("deviceId"), $(this).val());
                                                 })
                                             ).append(
                                                 $("<div/>").text(fence['fenceId'])
                                             )
                                         );
-                                        _customMapMediator.saveMarker('fence', fence['fenceId'], fence['locations'], {uuid:fence['uuid'], 'fenceName':fenceName});
                                     }
                                     break;
                             }

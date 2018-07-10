@@ -50,6 +50,12 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th><spring:message code='device.column.deviceName'/></th>
+                                    <td colspan="3">
+                                        <input type="text" id="deviceName" disabled="disabled"/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th><spring:message code='device.column.deviceType'/></th>
                                     <td>
                                         <isaver:codeSelectBox groupCodeId="D00" htmlTagId="deviceTypeCode" disabled="true"/>
@@ -183,9 +189,10 @@
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
                     <col style="width: 10%;" />
-                    <col style="width: 10%;" />
-                    <col style="width: 10%;" />
                     <col style="width: *;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 10%;" />
                     <col style="width: 20%;" />
                     <col style="width: 10%;" />
                     <col style="width: 15%;" />
@@ -193,6 +200,7 @@
                 <thead>
                 <tr>
                     <th><spring:message code="device.column.deviceId"/></th>
+                    <th><spring:message code="device.column.deviceName"/></th>
                     <th><spring:message code="device.column.deviceType"/></th>
                     <th><spring:message code="device.column.vendorCode"/></th>
                     <th><spring:message code="device.column.deviceCode"/></th>
@@ -207,7 +215,8 @@
                         <c:forEach var="device" items="${devices}">
                             <tr onclick="moveDetail(String('${device.deviceId}'));">
                                 <td>${device.deviceId}</td>
-                                <td>${device.deviceTypeCode}</td>
+                                <td>${device.deviceName}</td>
+                                <td>${device.deviceTypeCodeName}</td>
                                 <td>
                                     <c:if test="${device.vendorCodeName==null}">
                                         <spring:message code="device.message.emptyData"/>
@@ -216,7 +225,7 @@
                                         ${device.vendorCodeName}
                                     </c:if>
                                 </td>
-                                <td>${device.deviceCode}</td>
+                                <td>${device.deviceCodeName}</td>
                                 <td>${device.areaName}</td>
                                 <td>
                                     <c:if test="${device.deviceStat=='Y'}">
@@ -234,7 +243,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="7"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="8"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -281,6 +290,7 @@
 
     function detailRender(data){
         $("#deviceId").val(data['deviceId']);
+        $("#deviceName").val(data['deviceName']);
         $("#serialNo").val(data['serialNo']);
         $("#deviceTypeCode").val(data['deviceTypeCode']);
         $("#deviceCode").val(data['deviceCode']);

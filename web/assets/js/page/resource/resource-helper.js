@@ -102,6 +102,12 @@ var ResourceHelper = (
          */
         var deviceVaild = function(actionType){
             var form = $("#deviceForm");
+            var deviceName = form.find("input[name=deviceName]").val().trim();
+            if(deviceName==null && deviceName.length==0){
+                _alertMessage('requiredDeviceName');
+                return false;
+            }
+
             if(actionType=='add'){
                 var serialNo = form.find("input[name=serialNo]").val().trim();
                 if(serialNo==null && serialNo.length==0){
@@ -242,6 +248,7 @@ var ResourceHelper = (
                 }
                 var data = _deviceList[deviceId]['data'];
                 form.find("input[name='deviceId']").val(deviceId);
+                form.find("input[name='deviceName']").val(data['deviceName']);
                 form.find("select[name='deviceTypeCode']").val(data['deviceTypeCode']).prop("selected", true);
                 form.find("select[name='parentDeviceId']").val(data['parentDeviceId']).prop("selected", true);
                 form.find("select[name='vendorCode']").val(data['vendorCode']).prop("selected", true);
@@ -351,7 +358,7 @@ var ResourceHelper = (
                         $("<input/>",{type:'checkbox'})
                     ).append(
                         $("<div/>").append(
-                            $("<button/>", {deviceId:device['deviceId']}).text(device['deviceCodeName'] + " (" + device['deviceId'] + ")").on("click",function(){
+                            $("<button/>", {deviceId:device['deviceId']}).text(device['deviceName'] + " (" + device['deviceId'] + ")").on("click",function(){
                                 $("#deviceList div").removeClass("on");
                                 $("#deviceList button").removeClass("on");
                                 $(this).parent().addClass("on");
@@ -369,7 +376,7 @@ var ResourceHelper = (
                     var area = _areaList[device['areaId']];
                     if(area!=null && area['element']!=null){
                         area['element'].find("> div").append(
-                            $("<button/>", {areaId:device['areaId'],deviceId:device['deviceId']}).text(device['deviceCodeName'] + " (" + device['deviceId'] + ")").on("click",function(){
+                            $("<button/>", {areaId:device['areaId'],deviceId:device['deviceId']}).text(device['deviceName'] + " (" + device['deviceId'] + ")").on("click",function(){
                                 $("#areaList div").removeClass("on");
                                 $("#areaList button").removeClass("on");
                                 $(this).parent().addClass("on");

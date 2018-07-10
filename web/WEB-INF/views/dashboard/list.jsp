@@ -589,9 +589,12 @@
         initChartList();
     });
 
-    function test(_areaId){
+    function test(_areaId, _deviceId){
         if(_areaId==null){
             _areaId = "AR0000";
+        }
+        if(_deviceId==null){
+            _deviceId = "DE0012";
         }
 
         if(templateSetting['safeGuardMapView']=='online'){
@@ -605,14 +608,8 @@
             webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
             webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
         }else{
-            webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
-                {"lat" : "-30","lng" : "-150"},
-                {"lat" : "-5","lng" : "-170"},
-                {"lat" : "30","lng" : "-70"},
-                {"lat" : "0","lng" : "-50"}
-            ]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "-50","lng": "-190"}]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "10","lng": "-40"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"deviceId":_deviceId,"id":"1235","location":[{"lat": "-50","lng": "-190"}]});
+            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"deviceId":_deviceId,"id":"1234","location":[{"lat": "10","lng": "-40"}]});
         }
     }
 

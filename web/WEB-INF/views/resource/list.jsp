@@ -178,6 +178,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th class="point"><spring:message code='device.column.deviceName'/></th>
+                                <td class="point" colspan="3">
+                                    <input type="text" name="deviceName" placeholder="<spring:message code='device.message.requiredDeviceName'/>" maxlength="50"/>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><spring:message code='device.column.vendorCode'/></th>
                                 <td>
                                     <spring:message code="device.message.emptyData" var="emptyData"/>
@@ -402,7 +408,9 @@
         ,   removeDeviceFailure   :'<spring:message code="device.message.removeFailure"/>'
         ,   deviceDetailFailure   :"<spring:message code='device.message.detailFailure'/>"
         ,   requiredSerialNo      :"<spring:message code='device.message.requiredSerialNo'/>"
+        ,   requiredDeviceName    :"<spring:message code='device.message.requiredDeviceName'/>"
         ,   existsSerialNo        :"<spring:message code='device.message.existsSerialNo'/>"
+
     };
 
     var templateSettingMessageConfig = {

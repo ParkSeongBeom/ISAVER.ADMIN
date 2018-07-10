@@ -79,30 +79,16 @@ var DashboardHelper = (
 
             var _mapMediator = _self.getGuard('map', resultData['areaId']);
             if(resultData['areaId']!=null && _mapMediator!=null){
-                if(_mapMediator instanceof MapMediator){
-                    switch (resultData['actionType']) {
-                        case "add":
-                            _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                            break;
-                        case "save":
-                            _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                            break;
-                        case "remove":
-                            _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
-                            break;
-                    }
-                }else if(_mapMediator instanceof CustomMapMediator){
-                    switch (resultData['actionType']) {
-                        case "add":
-                            _mapMediator.addMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                            break;
-                        case "save":
-                            _mapMediator.saveMarker(resultData['messageType'], resultData['id'], resultData['location']);
-                            break;
-                        case "remove":
-                            _mapMediator.removeMarker(resultData['messageType'], resultData['id']);
-                            break;
-                    }
+                switch (resultData['actionType']) {
+                    case "add":
+                        _mapMediator.addMarker(resultData['messageType'], resultData);
+                        break;
+                    case "save":
+                        _mapMediator.saveMarker(resultData['messageType'], resultData);
+                        break;
+                    case "remove":
+                        _mapMediator.removeMarker(resultData['messageType'], resultData);
+                        break;
                 }
             }
         };
@@ -227,13 +213,7 @@ var DashboardHelper = (
                         notificationMarqueeUpdate();
                     }else{
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null){
-                            _guardList[data['areaId']]['map'].setAnimate(
-                                data['deviceId']
-                                ,data['fenceId']
-                                ,data['objectId']
-                                ,"add"
-                                ,"level-"+criticalCss[data['criticalLevel']]
-                            );
+                            _guardList[data['areaId']]['map'].setAnimate("add","level-"+criticalCss[data['criticalLevel']],data);
                         }
                         notificationUpdate(messageType, data, flag!=null?flag:true);
                     }
@@ -244,13 +224,7 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            _guardList[data['notification']['areaId']]['map'].setAnimate(
-                                data['notification']['deviceId']
-                                ,data['notification']['fenceId']
-                                ,data['notification']['objectId']
-                                ,"remove"
-                                ,"level-"+criticalCss[data['cancel'][index]['criticalLevel']]
-                            );
+                            _guardList[data['notification']['areaId']]['map'].setAnimate("remove","level-"+criticalCss[data['cancel'][index]['criticalLevel']],data['notification']);
                         }
                     }
                     break;

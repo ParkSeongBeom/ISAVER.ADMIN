@@ -7,9 +7,11 @@ import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.CustomMapLocationBean;
 import com.icent.isaver.repository.bean.FenceBean;
+import com.icent.isaver.repository.bean.FenceDeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.CustomMapLocationDao;
 import com.icent.isaver.repository.dao.base.FenceDao;
+import com.icent.isaver.repository.dao.base.FenceDeviceDao;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,9 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     private CustomMapLocationDao customMapLocationDao;
 
     @Inject
+    private FenceDeviceDao fenceDeviceDao;
+
+    @Inject
     private FenceDao fenceDao;
 
     @Inject
@@ -95,18 +100,23 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         saveAreaParam.put("fileId",parameters.get("fileId"));
 
         // Custom Map Insert Param
-        List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("customParamList"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
-        List<FenceBean> fenceList = new Gson().fromJson(parameters.get("fenceParamList"), new TypeToken<List<FenceBean>>(){}.getType());
+        List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("customList"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
+        List<FenceBean> fenceList = new Gson().fromJson(parameters.get("fenceList"), new TypeToken<List<FenceBean>>(){}.getType());
+        List<FenceDeviceBean> fenceDeviceList = new Gson().fromJson(parameters.get("fenceDeviceList"), new TypeToken<List<FenceDeviceBean>>(){}.getType());
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try {
             areaDao.saveAreaFileId(saveAreaParam);
             customMapLocationDao.removeCustomMapLocation(removeCustomParam);
+            fenceDeviceDao.removeFenceDevice(removeCustomParam);
             if(customList.size()>0){
                 customMapLocationDao.insertCustomMapLocation(customList);
             }
             if(fenceList.size()>0){
                 fenceDao.saveFence(fenceList);
+            }
+            if(fenceDeviceList.size()>0){
+                fenceDeviceDao.addFenceDevice(fenceDeviceList);
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

@@ -152,67 +152,67 @@ var MapMediator = (
          * add marker
          * @author psb
          */
-        this.addMarker = function(_type, _id, _lat){
-            if(_id==null || _lat==null){
+        this.addMarker = function(messageType, data){
+            if(data['id']==null || data['location']==null){
                 console.error("[MapMediator][addMarker] parameter not enough");
                 return false;
             }
-            if(marker[_type]!=null && marker[_type][_id]!=null){
-                console.warn("[MapMediator][addMarker] marker is exist - [" + _type + "][" + _id + "]");
+            if(marker[messageType]!=null && marker[messageType][data['id']]!=null){
+                console.warn("[MapMediator][addMarker] marker is exist - [" + messageType + "][" + data['id'] + "]");
                 return false;
             }
 
             try{
-                switch (_type){
+                switch (messageType){
                     case MARKER_TYPE[0] : // Device
-                        marker[_type][_id] = new RichMarker({
-                            position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
-                            title : _id,
+                        marker[messageType][data['id']] = new RichMarker({
+                            position: new google.maps.LatLng(data['location'][0]['lat'], data['location'][0]['lng']),
+                            title : data['id'],
                             map: map,
-                            content : !options['camera']['useFlag']?options[_type]["content"]:options[_type]["content1"],
+                            content : !options['camera']['useFlag']?options[messageType]["content"]:options[messageType]["content1"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
-                        marker[_type][_id]['objects'] = [];
+                        marker[messageType][data['id']]['objects'] = [];
                         break;
                     case MARKER_TYPE[2] : // Object
-                        marker[_type][_id] = new RichMarker({
-                            position: new google.maps.LatLng(_lat[0]['lat'], _lat[0]['lng']),
-                            title : _id,
+                        marker[messageType][data['id']] = new RichMarker({
+                            position: new google.maps.LatLng(data['location'][0]['lat'], data['location'][0]['lng']),
+                            title : data['id'],
                             map: map,
-                            content : options[_type]["content"],
+                            content : options[messageType]["content"],
                             anchor: RichMarkerPosition.MIDDLE
                         });
                         break;
                     case MARKER_TYPE[1] : // Fence
-                        _lat = validateLat(_lat);
-                        marker[_type][_id] = new google.maps.Polygon({
-                            paths: _lat,
+                        data['location'] = validateLat(data['location']);
+                        marker[messageType][data['id']] = new google.maps.Polygon({
+                            paths: data['location'],
                             strokeColor: options["fence"]["strokeColor"][0],
                             strokeOpacity: 0.8,
                             strokeWeight: 2,
                             fillColor: options["fence"]["fillColor"][0],
                             fillOpacity: 0.35,
-                            text:_id
+                            text:data['id']
                         });
-                        marker[_type][_id]['objects'] = [];
-                        marker[_type][_id].setMap(map);
+                        marker[messageType][data['id']]['objects'] = [];
+                        marker[messageType][data['id']].setMap(map);
 
                         var bounds = new google.maps.LatLngBounds();
-                        for (var i=0; i< _lat.length; i++) {
-                            bounds.extend(_lat[i]);
+                        for (var i=0; i< data['location'].length; i++) {
+                            bounds.extend(data['location'][i]);
                         }
                         var myLatlng = bounds.getCenter();
                         var mapLabel = new MapLabel({
-                            text: _id,
+                            text: data['id'],
                             position: myLatlng,
                             map: map,
                             fontSize: 11
                         });
                         break;
                 }
-                console.log("[MapMediator][addMarker] complete - [" + _type + "][" + _id + "]");
+                console.log("[MapMediator][addMarker] complete - [" + messageType + "][" + data['id'] + "]");
             }catch(e){
-                console.error("[MapMediator][addMarker] error- [" + _type + "][" + _id + "] - " + e.message);
+                console.error("[MapMediator][addMarker] error- [" + messageType + "][" + data['id'] + "] - " + e.message);
             }
         };
 
@@ -220,30 +220,31 @@ var MapMediator = (
          * save marker
          * @author psb
          */
-        this.saveMarker = function(_type, _id, _lat){
-            if(_type==null || _id==null || _lat==null){
+        this.saveMarker = function(messageType, data){
+            if(messageType==null || data['id']==null || data['location']==null){
                 console.error("[MapMediator][saveMarker] parameter not enough");
                 return false;
             }
 
-            switch (_type){
+            var target = marker[messageType][data['id']];
+            switch (messageType){
                 case MARKER_TYPE[1] : // fence
-                    if(marker[_type][_id]!=null){
-                        _self.removeMarker(_type, _id, _lat);
+                    if(target!=null){
+                        _self.removeMarker(messageType, data);
                     }
-                    _self.addMarker(_type, _id, _lat);
+                    _self.addMarker(messageType, data);
                     break;
                 case MARKER_TYPE[2] : // Object
-                    if(marker[_type][_id]!=null){
-                        if(_lat instanceof Array){
-                            _lat = _lat[0];
+                    if(target!=null){
+                        if(data['location'] instanceof Array){
+                            data['location'] = data['location'][0];
                         }
-                        if(!(_lat instanceof google.maps.LatLng)){
-                            _lat = new google.maps.LatLng(_lat['lat'], _lat['lng']);
+                        if(!(data['location'] instanceof google.maps.LatLng)){
+                            data['location'] = new google.maps.LatLng(data['location']['lat'], data['location']['lng']);
                         }
-                        marker[_type][_id].animateTo(_lat, options[MARKER_TYPE[2]]['animate']);
+                        target.animateTo(data['location'], options[MARKER_TYPE[2]]['animate']);
                     }else{
-                        _self.addMarker(_type, _id, _lat);
+                        _self.addMarker(messageType, data);
                     }
                     break;
             }
@@ -253,20 +254,20 @@ var MapMediator = (
          * remove marker
          * @author psb
          */
-        this.removeMarker = function(_type, _id){
-            if(_type==null || _id==null){
+        this.removeMarker = function(messageType, data){
+            if(messageType==null || data['id']==null){
                 console.error("[MapMediator][removeMarker] parameter not enough");
                 return false;
             }
 
-            switch (_type){
+            switch (messageType){
                 case MARKER_TYPE[0] : // Device
                 case MARKER_TYPE[1] : // Fence
                 case MARKER_TYPE[2] : // Object
-                    if(marker[_type][_id]!=null){
-                        marker[_type][_id].setMap(null);
-                        delete marker[_type][_id];
-                        console.log("[MapMediator][removeMarker] complete - [" + _type + "][" + _id + "]");
+                    if(marker[messageType][data['id']]!=null){
+                        marker[messageType][data['id']].setMap(null);
+                        delete marker[messageType][data['id']];
+                        console.log("[MapMediator][removeMarker] complete - [" + messageType + "][" + data['id'] + "]");
                     }
                     break;
             }
@@ -276,64 +277,64 @@ var MapMediator = (
          * animation
          * @author psb
          */
-        this.setAnimate = function(_deviceId, _fenceId, _objectId, _action, _className){
-            //var deviceMarker = _self.getMarker("device", _deviceId);
+        this.setAnimate = function(actionType, className, data){
+            //var deviceMarker = _self.getMarker("device", data['deviceId']);
             //if(deviceMarker!=null && deviceMarker['objects'] instanceof Array){
-            //    switch (_action){
+            //    switch (actionType){
             //        case "add" :
-            //            if(deviceMarker['objects'].length == 0 || deviceMarker['objects'].indexOf(_objectId)==-1){
-            //                deviceMarker['objects'].push(_objectId);
+            //            if(deviceMarker['objects'].length == 0 || deviceMarker['objects'].indexOf(data['objectId'])==-1){
+            //                deviceMarker['objects'].push(data['objectId']);
             //            }
-            //            $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).addClass(_className);
+            //            $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).addClass(className);
             //            break;
             //        case "remove" :
-            //            if(deviceMarker['objects'].indexOf(_objectId) > -1){
-            //                deviceMarker['objects'].splice(deviceMarker['objects'].indexOf(_objectId),1);
+            //            if(deviceMarker['objects'].indexOf(data['objectId']) > -1){
+            //                deviceMarker['objects'].splice(deviceMarker['objects'].indexOf(data['objectId']),1);
             //            }
             //            if(deviceMarker['objects'].length == 0) {
-            //                $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).removeClass(_className);
+            //                $(deviceMarker.markerWrapper_).find(options["device"]["targetClass"]).removeClass(className);
             //            }
             //            break;
             //    }
             //}else{
-            //    console.warn("[MapMediator][setAnimate] not found device marker or child object - deviceId : " + _deviceId + ", objectId : " + _objectId);
+            //    console.warn("[MapMediator][setAnimate] not found device marker or child object - deviceId : " + _deviceId + ", objectId : " + data['objectId']);
             //}
 
-            var fenceMarker = _self.getMarker("fence", _fenceId);
+            var fenceMarker = _self.getMarker("fence", data['fenceId']);
             if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
-                switch (_action){
+                switch (actionType){
                     case "add" :
-                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(_objectId)==-1){
-                            fenceMarker['objects'].push(_objectId);
+                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(data['objectId'])==-1){
+                            fenceMarker['objects'].push(data['objectId']);
                         }
                         break;
                     case "remove" :
-                        if(fenceMarker['objects'].indexOf(_objectId) > -1){
-                            fenceMarker['objects'].splice(fenceMarker['objects'].indexOf(_objectId),1);
+                        if(fenceMarker['objects'].indexOf(data['objectId']) > -1){
+                            fenceMarker['objects'].splice(fenceMarker['objects'].indexOf(data['objectId']),1);
                         }
                         break;
                 }
 
-                marker[MARKER_TYPE[1]][_fenceId].strokeColor = fenceMarker['objects'].length==0?options["fence"]["strokeColor"][0]:options["fence"]["strokeColor"][1];
-                marker[MARKER_TYPE[1]][_fenceId].fillColor = fenceMarker['objects'].length==0?options["fence"]["fillColor"][0]:options["fence"]["fillColor"][1];
-                marker[MARKER_TYPE[1]][_fenceId].setVisible(false);
-                marker[MARKER_TYPE[1]][_fenceId].setVisible(true);
+                marker[MARKER_TYPE[1]][data['fenceId']].strokeColor = fenceMarker['objects'].length==0?options["fence"]["strokeColor"][0]:options["fence"]["strokeColor"][1];
+                marker[MARKER_TYPE[1]][data['fenceId']].fillColor = fenceMarker['objects'].length==0?options["fence"]["fillColor"][0]:options["fence"]["fillColor"][1];
+                marker[MARKER_TYPE[1]][data['fenceId']].setVisible(false);
+                marker[MARKER_TYPE[1]][data['fenceId']].setVisible(true);
             }else{
-                console.warn("[MapMediator][setAnimate] not found fence marker or child object - fenceId : " + _fenceId + ", objectId : " + _objectId);
+                console.warn("[MapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
             }
 
-            var objectMarker = _self.getMarker("object", _objectId);
+            var objectMarker = _self.getMarker("object", data['objectId']);
             if(objectMarker!=null){
-                switch (_action){
+                switch (actionType){
                     case "add" :
-                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).addClass(_className);
+                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).addClass(className);
                         break;
                     case "remove" :
-                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).removeClass(_className);
+                        $(objectMarker.markerWrapper_).find(options["object"]["targetClass"]).removeClass(className);
                         break;
                 }
             }else{
-                console.warn("[MapMediator][setAnimate] not found object marker - objectId : " + _objectId);
+                console.warn("[MapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
             }
         };
 

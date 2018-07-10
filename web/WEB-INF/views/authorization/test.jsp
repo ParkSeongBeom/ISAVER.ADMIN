@@ -43,7 +43,7 @@
                         <select device eventType="worker">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="hidden" name="workerValue" value="1"/>
@@ -72,7 +72,7 @@
                         <select device eventType="in">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="inValue" placeholder="진입자 수 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -95,7 +95,7 @@
                         <select device eventType="out">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="outValue" placeholder="진출자 수 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -124,7 +124,7 @@
                         <select eventType="co" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="coValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -147,7 +147,7 @@
                         <select eventType="smoke" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="smokeValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -171,7 +171,7 @@
                         <select eventType="gas" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="gasValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -195,7 +195,7 @@
                         <select eventType="co2" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="co2Value" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -219,7 +219,7 @@
                         <select eventType="temp" device>
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                         <input type="text" name="tempValue" placeholder="임계치 수치 입력" onkeypress="javascript:isNumberWithPoint();"/>
@@ -248,7 +248,7 @@
                         <select device eventType="guard">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
-                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceCodeName}" value="${device.deviceId}">${device.deviceCodeName}(${device.deviceId})</option>
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
                     </div>
