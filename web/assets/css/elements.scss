@@ -632,6 +632,7 @@ $resi_w:8px;
 
   // MAP 설정 시 크기, 위치 버튼 표시
   &-m8, &-camera {
+    width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
 
@@ -647,7 +648,7 @@ $resi_w:8px;
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
   &-m8, &-camera, &-tracking {
-    width:$devi_w; height:$devi_w; background-color: $bas-color;
+     background-color: $bas-color;
     &, &:before {@include flex-midddle;}
     &, &:after  {@include border-radius(500px);}
 
@@ -665,7 +666,7 @@ $resi_w:8px;
   &-camera:before {background-image: url(../images/map/sico_98.svg); /*content:"\e964";*/ }
 
   &-tracking {
-    background-color: transparent;
+    width:$resi_w; height:$resi_w; background-color: transparent;
     &:before {
       /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
       background-image: url(../images/map/tracking.svg);
@@ -705,7 +706,7 @@ $resi_w:8px;
       }*/
 
       &.level {
-        &-caution, &-warning, &-danger {@include issue02; stroke-width:3px;}
+        &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
         &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
         &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
         &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }

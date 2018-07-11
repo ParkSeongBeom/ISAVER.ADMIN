@@ -90,6 +90,12 @@
             </c:forEach>
         };
 
+        var criticalList = {
+            <c:forEach var="critical" items="${criticalList}">
+                '${critical.codeId}' : [],
+            </c:forEach>
+        };
+
         $(document).ready(function(){
             // 메뉴그리기
             menuModel.setRootUrl(rootPath);

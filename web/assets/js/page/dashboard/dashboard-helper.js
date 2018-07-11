@@ -5,7 +5,7 @@
  * @type {Function}
  */
 var DashboardHelper = (
-    function(rootPath, version, criticalList){
+    function(rootPath, version){
         var _rootPath;
         var _version;
         var _MEDIATOR_TYPE = ['video','map'];
@@ -20,17 +20,14 @@ var DashboardHelper = (
         var _defaultTemplateCode = "TMP001";
         var _areaList = {};
         var _guardList = {};
-        var _criticalList = {};
-
         var _self = this;
 
         /**
          * initialize
          */
-        var initialize = function(rootPath, version, criticalList){
+        var initialize = function(rootPath, version){
             _rootPath = rootPath;
             _version = version;
-            _criticalList = criticalList;
 
             for(var index in _urlConfig){
                 _urlConfig[index] = _rootPath + _urlConfig[index];
@@ -103,7 +100,7 @@ var DashboardHelper = (
                 _areaList[areaId] = {
                     'element' : $(this)
                     ,'templateCode' : $(this).attr("templateCode")
-                    ,'notification' : $.extend(true,{},_criticalList)
+                    ,'notification' : $.extend(true,{},criticalList)
                     ,'childDevice' : {}
                     ,'childAreaIds' : $(this).attr("childAreaIds")
                 };
@@ -111,7 +108,7 @@ var DashboardHelper = (
                 $.each($(this).find("li[deviceId]"),function(){
                     _areaList[areaId]['childDevice'][$(this).attr("deviceId")] = {
                         'element' : $(this)
-                        ,'notification' : $.extend(true,{},_criticalList)
+                        ,'notification' : $.extend(true,{},criticalList)
                     };
                 });
             });
@@ -148,7 +145,7 @@ var DashboardHelper = (
 
                 // Video Mediator
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId,_criticalList);
+                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId);
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayer(deviceList);
 
                 // Map Mediator
@@ -158,7 +155,7 @@ var DashboardHelper = (
                 }else if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this).find("div[name='map-canvas']"));
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,_criticalList,{
+                    _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
                         'websocketSend':false
                         ,'fenceView':true
                         ,'click':function(targetId,deviceCode){
@@ -647,6 +644,6 @@ var DashboardHelper = (
             }
         };
 
-        initialize(rootPath, version, criticalList);
+        initialize(rootPath, version);
     }
 );

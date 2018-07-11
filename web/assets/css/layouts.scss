@@ -370,7 +370,7 @@ menu {
   }
 
   &.map_pop > div > div {
-    position: absolute;  max-width:none; max-height:none; top:80px; bottom:40px; left:40px; right:40px;
+    position: absolute;  max-width:none; max-height:none; top:40px; bottom:0; left:0; right:0;
     & > article {
 
       max-height: none; height:100%; margin:20px 0;
@@ -923,7 +923,7 @@ body.admin_mode.taekwon_mode {
 
 
   & > section {
-    $sec_h:450px; $sec_m:800px; $sec_l:300px; overflow: hidden;
+    $sec_h:450px; $sec_m:800px; $sec_l:400px; overflow: hidden;
 
     @include flexbase; @include flex-column; @include flex-option(0, 1, 100%);
     margin:0 0 0 20px; height:100%;
@@ -931,7 +931,7 @@ body.admin_mode.taekwon_mode {
     & > * {width:100%; position: relative;}
 
     &.map {
-      @include flex-option(0,1,100%);  min-width:$sec_m; margin:0;
+      @include flex-option(0,1,100%);  /*min-width:$sec_m;*/ margin:0;
 
       & > div {
         &:first-of-type {
@@ -977,7 +977,8 @@ body.admin_mode.taekwon_mode {
 
       & > div {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px; }
 
-      & > div, ul li,  ul li button {@include flexbase; @include flex-align-items-center;}
+      & > div, ul li > div , ul li button, .camera_list ul li, .fence_list, .fence_list p, .camera_list > div
+      {@include flexbase; @include flex-align-items-center;}
 
       & > div {
         /*
@@ -995,37 +996,98 @@ body.admin_mode.taekwon_mode {
         }
       }
 
+      & > ul > li {min-height:60px;}
+
       ul {
         overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
         padding: 0 $ch_margin 0 ($ch_margin - 5px);
 
         li {
-          height:50px;
 
-          button {
-            @include transition(200ms); @include flex-option(0, 1, 100%);
-            position: relative; height:100%; padding:0 0 0 20px;
-            &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
-            &:before {font-size:1.8rem; padding:0 10px 0 0;}
-            &.m8:before {content:"\e962";}
-            &.camera:before {content:"\e964";}
 
-            &.on {
-              &, &:after {font-weight:bold; color:$color-blue-01;}
-              &:after {content:"\e901"; font-size:1.2rem; }
+          & > div {
+            & > button {
+              @include transition(200ms); @include flex-option(0, 1, 100%);
+              position: relative; height:100%; padding:0 0 0 20px;
+              &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
+              &:before {content:"\e91b";  }
+
+            }
+
+            & > div {@include checkbox_set; @include csl_style02; @include csl_style03_noyes; margin:0 0 0 10px;}
+          }
+
+
+          & > section {
+            @include flex-option(0, 1, 100%); margin: 10px 0 10px 55px; position: relative;
+
+            &:before, &:after {content:""; position: absolute; background-color:$color-gray-01}
+            &:before {left:-20px; top:18px; width:18px; height:1px;}
+            &:after  {left:-20px; top:-18px; width:1px; bottom:0;}
+
+            &:last-of-type {
+              margin-bottom:25px;
+              &:after {bottom:auto; top:-10px; height:28px;}
+            }
+
+            .fence_list {
+              @include flex-column; @include flex-align-items-start; margin:0 0 10px 0;
+              & * {height:40px;}
+              & > * {
+                @include flex-option(0, 1, 100%);
+                &:nth-child(1) {}
+                &:nth-child(2) {margin:0 0 0 40px; width:calc(100% - 40px);}
+              }
+
+            }
+
+            .camera_list {
+              padding: 0 0 0 40px;
+
+              & * {width:100%;}
+
+              & > select {margin:0 0 10px 0;}
+
+              & > div {
+                @include border01(0 0 1px 0,$color-gray-01,1 );
+                & > button {
+                  &:last-of-type {
+                    width:40px; height:40px; @include flex-justify-content-end; padding:0;
+                    &:before {content:"\e91a"; font-size:1.2rem !important; padding:0;}
+                    &:after {display: none;}
+
+                    &:hover:before {color:$color-red-01;}
+                  }
+                }
+              }
+
             }
           }
 
-          & > div {@include checkbox_set; @include csl_style02; @include csl_style03_noyes; margin:0 0 0 10px;}
+
+          *:before {font-size:1.8rem !important; padding:0 10px 0 0;}
+          button {padding:0 0 0 20px;}
+          button:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
+          button.on {
+            &, &:after {font-weight:bold; color:$color-blue-01;}
+            &:after {content:"\e901"; font-size:1.2rem; }
+          }
+
+          .m8:before {content:"\e962" !important;}
+          .camera:before {content:"\e964" !important;}
+          .fence_list > p {
+            &:before {content:"\e904" !important;}
+            //&:after  {content:"-" !important; margin:0 10px;}
+          }
 
         }
       }
 
-      & > div, ul li {
+      & > div, ul li > div {
         position: relative; width: 100%;
         & > * {
-          @include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;
           &:nth-child(1) {@include flex-option(0, 1, 100%); margin:0; text-align: left;}
+          &:nth-child(2) {@include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;}
         }
       }
 

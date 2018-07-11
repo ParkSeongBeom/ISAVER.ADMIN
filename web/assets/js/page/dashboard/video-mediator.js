@@ -13,7 +13,6 @@ var VideoMediator = (
         var _rootPath;
         var _element;
         var _areaId;
-        var _criticalList = {};
         var _urlConfig = {
             fenceDeviceListUrl : "/fenceDevice/list.json"
         };
@@ -58,9 +57,8 @@ var VideoMediator = (
          * fenceList init
          * @author psb
          */
-        this.init = function(areaId, criticalList){
+        this.init = function(areaId){
             _areaId = areaId;
-            _criticalList = criticalList;
             _ajaxCall('fenceDeviceList',{areaId:_areaId});
         };
 
@@ -84,7 +82,7 @@ var VideoMediator = (
                     _videoList[_deviceList[index]['deviceId']] = {
                         'element' : ptzElement
                         ,'server' : null
-                        ,'notification' : $.extend(true,{},_criticalList)
+                        ,'notification' : $.extend(true,{},criticalList)
                     };
 
                     sendAjaxGetRequest(

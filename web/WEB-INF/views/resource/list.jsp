@@ -361,11 +361,6 @@
                             <p><spring:message code="resource.column.useYn"/></p>
                         </div>
                         <ul id="childList"></ul>
-                        <div>
-                            <p><spring:message code="resource.column.fenceName"/></p>
-                            <p><spring:message code="resource.column.fenceId"/></p>
-                        </div>
-                        <ul id="fenceList"></ul>
                     </section>
                 </article>
                 <footer>

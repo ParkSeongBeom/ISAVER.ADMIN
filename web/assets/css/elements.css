@@ -1187,22 +1187,23 @@ input.datepicker + button + .in-timepicker {
     background-color: rgba(246, 185, 0, 0.5); }
   .g-m8.on, .g-m8.on > span, .g-camera.on, .g-camera.on > span, .g-area.on, .g-area.on > span {
     background-color: #109dcb; }
-.g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
-  display: none !important; }
-.g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
-  right: -4px;
-  bottom: -4px; }
-.g-m8.on, .g-camera.on {
-  background-color: #109dcb; }
-  .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
-    display: block !important; }
-.dashboard_mode .g-m8, .dashboard_mode .g-camera {
-  pointer-events: none; }
-.g-m8:before, .g-camera:before {
-  font-size: 1.4rem; }
-.g-m8, .g-camera, .g-tracking {
+.g-m8, .g-camera {
   width: 25px;
-  height: 25px;
+  height: 25px; }
+  .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
+    display: none !important; }
+  .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
+    right: -4px;
+    bottom: -4px; }
+  .g-m8.on, .g-camera.on {
+    background-color: #109dcb; }
+    .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
+      display: block !important; }
+  .dashboard_mode .g-m8, .dashboard_mode .g-camera {
+    pointer-events: none; }
+  .g-m8:before, .g-camera:before {
+    font-size: 1.4rem; }
+.g-m8, .g-camera, .g-tracking {
   background-color: #3c3c3c; }
   .g-m8, .g-m8:before, .g-camera, .g-camera:before, .g-tracking, .g-tracking:before {
     display: -webkit-box;
@@ -1251,6 +1252,8 @@ input.datepicker + button + .in-timepicker {
   background-image: url(../images/map/sico_98.svg);
   /*content:"\e964";*/ }
 .g-tracking {
+  width: 8px;
+  height: 25px;
   background-color: transparent; }
   .g-tracking:before {
     /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
@@ -1316,7 +1319,7 @@ input.datepicker + button + .in-timepicker {
         -webkit-animation-fill-mode: forwards;
         -webkit-animation-duration: 0.8s;
         animation-duration: 0.8s;
-        stroke-width: 3px; }
+        stroke-width: 1px; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }

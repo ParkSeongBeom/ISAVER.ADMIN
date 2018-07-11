@@ -688,10 +688,10 @@ menu {
     position: absolute;
     max-width: none;
     max-height: none;
-    top: 80px;
-    bottom: 40px;
-    left: 40px;
-    right: 40px; }
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0; }
     .popupbase.map_pop > div > div > article {
       max-height: none;
       height: 100%;
@@ -1654,7 +1654,7 @@ body.admin_mode.taekwon_mode .issue_btn {
       flexbox: 0 1 100%;
       -webkit-box-flex: 1;
       -ms-flex: 0 1 100%;
-      min-width: 800px;
+      /*min-width:$sec_m;*/
       margin: 0; }
       .map_sett_box > section.map > div:first-of-type {
         display: -webkit-box;
@@ -1728,14 +1728,14 @@ body.admin_mode.taekwon_mode .issue_btn {
         .map_sett_box > section.map > div:last-of-type input {
           max-width: 80px; }
     .map_sett_box > section.list {
-      flex: 1 0 300px;
-      -webkit-flex: 1 0 300px;
-      flexbox: 1 0 300px;
+      flex: 1 0 400px;
+      -webkit-flex: 1 0 400px;
+      flexbox: 1 0 400px;
       -webkit-box-flex: 0;
-      -ms-flex: 1 0 300px;
-      max-width: 300px;
-      min-width: 300px;
-      width: 300px;
+      -ms-flex: 1 0 400px;
+      max-width: 400px;
+      min-width: 400px;
+      width: 400px;
       border-style: solid;
       border-width: 1px;
       border-color: #bcbcbc; }
@@ -1762,7 +1762,7 @@ body.admin_mode.taekwon_mode .issue_btn {
         -ms-flex: 1 0 40px;
         min-height: 40px;
         max-height: 40px; }
-      .map_sett_box > section.list > div, .map_sett_box > section.list ul li, .map_sett_box > section.list ul li button {
+      .map_sett_box > section.list > div, .map_sett_box > section.list ul li > div, .map_sett_box > section.list ul li button, .map_sett_box > section.list .camera_list ul li, .map_sett_box > section.list .fence_list, .map_sett_box > section.list .fence_list p, .map_sett_box > section.list .camera_list > div {
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
@@ -1804,6 +1804,8 @@ body.admin_mode.taekwon_mode .issue_btn {
           border-style: solid;
           border-width: 0 0 1px 0;
           border-color: #bcbcbc; }
+      .map_sett_box > section.list > ul > li {
+        min-height: 60px; }
       .map_sett_box > section.list ul {
         overflow: auto;
         overflow: overlay;
@@ -1814,129 +1816,225 @@ body.admin_mode.taekwon_mode .issue_btn {
         -ms-flex: 0 1 100%;
         height: 100%;
         padding: 0 20px 0 15px; }
-        .map_sett_box > section.list ul li {
-          height: 50px; }
-          .map_sett_box > section.list ul li button {
-            transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-            -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-            -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-            -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-            -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-            flex: 0 1 100%;
-            -webkit-flex: 0 1 100%;
-            flexbox: 0 1 100%;
-            -webkit-box-flex: 1;
-            -ms-flex: 0 1 100%;
-            position: relative;
+        .map_sett_box > section.list ul li > div > button {
+          transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          flex: 0 1 100%;
+          -webkit-flex: 0 1 100%;
+          flexbox: 0 1 100%;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 100%;
+          position: relative;
+          height: 100%;
+          padding: 0 0 0 20px; }
+          .map_sett_box > section.list ul li > div > button:after {
+            content: "ㆍ";
+            position: absolute;
+            left: 0;
+            width: 20px; }
+          .map_sett_box > section.list ul li > div > button:before {
+            content: "\e91b"; }
+        .map_sett_box > section.list ul li > div > div {
+          position: relative;
+          width: auto !important;
+          height: 40px !important;
+          float: left;
+          /*
+          <div class="checkbox_set csl_style02">
+              <span>자동로그인</span>
+              <input type="checkbox"  name="" />
+              <label></label>
+          </div>
+          */
+          margin: 0 45px 0 0;
+          margin: 0 0 0 10px; }
+          .map_sett_box > section.list ul li > div > div > *:not(span) {
+            width: 100%;
+            height: 40px; }
+          .map_sett_box > section.list ul li > div > div, .map_sett_box > section.list ul li > div > div > label {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: flexbox;
+            display: box;
+            box-align: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center; }
+          .map_sett_box > section.list ul li > div > div > input {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            margin: 0;
             height: 100%;
-            padding: 0 0 0 20px; }
-            .map_sett_box > section.list ul li button:after {
-              content: "ㆍ";
-              position: absolute;
-              left: 0;
-              width: 20px; }
-            .map_sett_box > section.list ul li button:before {
-              font-size: 1.8rem;
-              padding: 0 10px 0 0; }
-            .map_sett_box > section.list ul li button.m8:before {
-              content: "\e962"; }
-            .map_sett_box > section.list ul li button.camera:before {
-              content: "\e964"; }
-            .map_sett_box > section.list ul li button.on, .map_sett_box > section.list ul li button.on:after {
-              font-weight: bold;
-              color: #109dcb; }
-            .map_sett_box > section.list ul li button.on:after {
-              content: "\e901";
-              font-size: 1.2rem; }
-          .map_sett_box > section.list ul li > div {
-            position: relative;
-            width: auto !important;
-            height: 40px !important;
-            float: left;
-            /*
-            <div class="checkbox_set csl_style02">
-                <span>자동로그인</span>
-                <input type="checkbox"  name="" />
-                <label></label>
-            </div>
-            */
-            margin: 0 45px 0 0;
-            margin: 0 0 0 10px; }
-            .map_sett_box > section.list ul li > div > *:not(span) {
-              width: 100%;
+            cursor: pointer; }
+          .map_sett_box > section.list ul li > div > div > span {
+            margin: 0 10px; }
+            .map_sett_box > section.list ul li > div > div > span + input {
+              left: auto !important;
+              right: 0;
+              margin: 0; }
+          .map_sett_box > section.list ul li > div > div > input, .map_sett_box > section.list ul li > div > div > label {
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px; }
+          .map_sett_box > section.list ul li > div > div > label {
+            background-color: #fff;
+            border-style: solid;
+            border-width: 1px;
+            border-color: darkgray; }
+            .map_sett_box > section.list ul li > div > div > label, .map_sett_box > section.list ul li > div > div > label:before {
+              -moz-border-radius: 200px;
+              -webkit-border-radius: 200px;
+              border-radius: 200px;
+              -khtml-border-radius: 200px; }
+            .map_sett_box > section.list ul li > div > div > label:before {
+              content: "";
+              left: 10px;
+              width: 20px;
+              height: 20px;
+              background-color: #a9a9a9; }
+            .map_sett_box > section.list ul li > div > div > label:after {
+              right: -20px;
+              color: #4c4c4c; }
+          .map_sett_box > section.list ul li > div > div > input:checked + label, .map_sett_box > section.list ul li > div > div > input.on + label, .map_sett_box > section.list ul li > div > div > input label, .map_sett_box > section.list ul li > div > div.on:checked + label, .map_sett_box > section.list ul li > div > div.on.on + label, .map_sett_box > section.list ul li > div > div.on label {
+            background-color: #be1e1e;
+            border: none; }
+            .map_sett_box > section.list ul li > div > div > input:checked + label:before, .map_sett_box > section.list ul li > div > div > input.on + label:before, .map_sett_box > section.list ul li > div > div > input label:before, .map_sett_box > section.list ul li > div > div.on:checked + label:before, .map_sett_box > section.list ul li > div > div.on.on + label:before, .map_sett_box > section.list ul li > div > div.on label:before {
+              left: calc(100% - 30px);
+              background-color: #fff; }
+            .map_sett_box > section.list ul li > div > div > input:checked + label:after, .map_sett_box > section.list ul li > div > div > input.on + label:after, .map_sett_box > section.list ul li > div > div > input label:after, .map_sett_box > section.list ul li > div > div.on:checked + label:after, .map_sett_box > section.list ul li > div > div.on.on + label:after, .map_sett_box > section.list ul li > div > div.on label:after {
+              right: 5px;
+              color: #fff; }
+          .map_sett_box > section.list ul li > div > div.disabled {
+            opacity: 0.6;
+            pointer-events: none; }
+          .map_sett_box > section.list ul li > div > div > label:after {
+            content: "NO"; }
+          .map_sett_box > section.list ul li > div > div > input:checked + label:after, .map_sett_box > section.list ul li > div > div > input.on + label:after, .map_sett_box > section.list ul li > div > div > input label:after, .map_sett_box > section.list ul li > div > div.on:checked + label:after, .map_sett_box > section.list ul li > div > div.on.on + label:after, .map_sett_box > section.list ul li > div > div.on label:after {
+            content: "YES"; }
+        .map_sett_box > section.list ul li > section {
+          flex: 0 1 100%;
+          -webkit-flex: 0 1 100%;
+          flexbox: 0 1 100%;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 100%;
+          margin: 10px 0 10px 55px;
+          position: relative; }
+          .map_sett_box > section.list ul li > section:before, .map_sett_box > section.list ul li > section:after {
+            content: "";
+            position: absolute;
+            background-color: #a9a9a9; }
+          .map_sett_box > section.list ul li > section:before {
+            left: -20px;
+            top: 18px;
+            width: 18px;
+            height: 1px; }
+          .map_sett_box > section.list ul li > section:after {
+            left: -20px;
+            top: -18px;
+            width: 1px;
+            bottom: 0; }
+          .map_sett_box > section.list ul li > section:last-of-type {
+            margin-bottom: 25px; }
+            .map_sett_box > section.list ul li > section:last-of-type:after {
+              bottom: auto;
+              top: -10px;
+              height: 28px; }
+          .map_sett_box > section.list ul li > section .fence_list {
+            -webkit-box-orient: column;
+            -webkit-box-direction: column;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            box-align: start;
+            -webkit-box-align: start;
+            -moz-box-align: flex-start;
+            -webkit-align-items: flex-start;
+            -ms-flex-align: flex-start;
+            align-items: flex-start;
+            margin: 0 0 10px 0; }
+            .map_sett_box > section.list ul li > section .fence_list * {
               height: 40px; }
-            .map_sett_box > section.list ul li > div, .map_sett_box > section.list ul li > div > label {
-              display: -webkit-box;
-              display: -moz-box;
-              display: -ms-flexbox;
-              display: -webkit-flex;
-              display: flex;
-              display: flexbox;
-              display: box;
-              box-align: center;
-              -webkit-box-align: center;
-              -moz-box-align: center;
-              -webkit-align-items: center;
-              -ms-flex-align: center;
-              align-items: center; }
-            .map_sett_box > section.list ul li > div > input {
-              position: absolute;
-              z-index: 1;
-              top: 0;
-              left: 0;
-              opacity: 0;
-              margin: 0;
-              height: 100%;
-              cursor: pointer; }
-            .map_sett_box > section.list ul li > div > span {
-              margin: 0 10px; }
-              .map_sett_box > section.list ul li > div > span + input {
-                left: auto !important;
-                right: 0;
-                margin: 0; }
-            .map_sett_box > section.list ul li > div > input, .map_sett_box > section.list ul li > div > label {
-              width: 80px;
-              min-width: 80px;
-              max-width: 80px; }
-            .map_sett_box > section.list ul li > div > label {
-              background-color: #fff;
+            .map_sett_box > section.list ul li > section .fence_list > * {
+              flex: 0 1 100%;
+              -webkit-flex: 0 1 100%;
+              flexbox: 0 1 100%;
+              -webkit-box-flex: 1;
+              -ms-flex: 0 1 100%; }
+              .map_sett_box > section.list ul li > section .fence_list > *:nth-child(2) {
+                margin: 0 0 0 40px;
+                width: calc(100% - 40px); }
+          .map_sett_box > section.list ul li > section .camera_list {
+            padding: 0 0 0 40px; }
+            .map_sett_box > section.list ul li > section .camera_list * {
+              width: 100%; }
+            .map_sett_box > section.list ul li > section .camera_list > select {
+              margin: 0 0 10px 0; }
+            .map_sett_box > section.list ul li > section .camera_list > div {
               border-style: solid;
-              border-width: 1px;
+              border-width: 0 0 1px 0;
               border-color: darkgray; }
-              .map_sett_box > section.list ul li > div > label, .map_sett_box > section.list ul li > div > label:before {
-                -moz-border-radius: 200px;
-                -webkit-border-radius: 200px;
-                border-radius: 200px;
-                -khtml-border-radius: 200px; }
-              .map_sett_box > section.list ul li > div > label:before {
-                content: "";
-                left: 10px;
-                width: 20px;
-                height: 20px;
-                background-color: #a9a9a9; }
-              .map_sett_box > section.list ul li > div > label:after {
-                right: -20px;
-                color: #4c4c4c; }
-            .map_sett_box > section.list ul li > div > input:checked + label, .map_sett_box > section.list ul li > div > input.on + label, .map_sett_box > section.list ul li > div > input label, .map_sett_box > section.list ul li > div.on:checked + label, .map_sett_box > section.list ul li > div.on.on + label, .map_sett_box > section.list ul li > div.on label {
-              background-color: #be1e1e;
-              border: none; }
-              .map_sett_box > section.list ul li > div > input:checked + label:before, .map_sett_box > section.list ul li > div > input.on + label:before, .map_sett_box > section.list ul li > div > input label:before, .map_sett_box > section.list ul li > div.on:checked + label:before, .map_sett_box > section.list ul li > div.on.on + label:before, .map_sett_box > section.list ul li > div.on label:before {
-                left: calc(100% - 30px);
-                background-color: #fff; }
-              .map_sett_box > section.list ul li > div > input:checked + label:after, .map_sett_box > section.list ul li > div > input.on + label:after, .map_sett_box > section.list ul li > div > input label:after, .map_sett_box > section.list ul li > div.on:checked + label:after, .map_sett_box > section.list ul li > div.on.on + label:after, .map_sett_box > section.list ul li > div.on label:after {
-                right: 5px;
-                color: #fff; }
-            .map_sett_box > section.list ul li > div.disabled {
-              opacity: 0.6;
-              pointer-events: none; }
-            .map_sett_box > section.list ul li > div > label:after {
-              content: "NO"; }
-            .map_sett_box > section.list ul li > div > input:checked + label:after, .map_sett_box > section.list ul li > div > input.on + label:after, .map_sett_box > section.list ul li > div > input label:after, .map_sett_box > section.list ul li > div.on:checked + label:after, .map_sett_box > section.list ul li > div.on.on + label:after, .map_sett_box > section.list ul li > div.on label:after {
-              content: "YES"; }
-      .map_sett_box > section.list > div, .map_sett_box > section.list ul li {
+              .map_sett_box > section.list ul li > section .camera_list > div > button:last-of-type {
+                width: 40px;
+                height: 40px;
+                -webkit-box-pack: end;
+                -moz-box-pack: flex-end;
+                -webkit-justify-content: flex-end;
+                -ms-flex-pack: flex-end;
+                justify-content: flex-end;
+                padding: 0; }
+                .map_sett_box > section.list ul li > section .camera_list > div > button:last-of-type:before {
+                  content: "\e91a";
+                  font-size: 1.2rem !important;
+                  padding: 0; }
+                .map_sett_box > section.list ul li > section .camera_list > div > button:last-of-type:after {
+                  display: none; }
+                .map_sett_box > section.list ul li > section .camera_list > div > button:last-of-type:hover:before {
+                  color: #be1e1e; }
+        .map_sett_box > section.list ul li *:before {
+          font-size: 1.8rem !important;
+          padding: 0 10px 0 0; }
+        .map_sett_box > section.list ul li button {
+          padding: 0 0 0 20px; }
+        .map_sett_box > section.list ul li button:after {
+          content: "ㆍ";
+          position: absolute;
+          left: 0;
+          width: 20px; }
+        .map_sett_box > section.list ul li button.on, .map_sett_box > section.list ul li button.on:after {
+          font-weight: bold;
+          color: #109dcb; }
+        .map_sett_box > section.list ul li button.on:after {
+          content: "\e901";
+          font-size: 1.2rem; }
+        .map_sett_box > section.list ul li .m8:before {
+          content: "\e962" !important; }
+        .map_sett_box > section.list ul li .camera:before {
+          content: "\e964" !important; }
+        .map_sett_box > section.list ul li .fence_list > p:before {
+          content: "\e904" !important; }
+      .map_sett_box > section.list > div, .map_sett_box > section.list ul li > div {
         position: relative;
         width: 100%; }
-        .map_sett_box > section.list > div > *, .map_sett_box > section.list ul li > * {
+        .map_sett_box > section.list > div > *:nth-child(1), .map_sett_box > section.list ul li > div > *:nth-child(1) {
+          flex: 0 1 100%;
+          -webkit-flex: 0 1 100%;
+          flexbox: 0 1 100%;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 100%;
+          margin: 0;
+          text-align: left; }
+        .map_sett_box > section.list > div > *:nth-child(2), .map_sett_box > section.list ul li > div > *:nth-child(2) {
           flex: 1 0 80px;
           -webkit-flex: 1 0 80px;
           flexbox: 1 0 80px;
@@ -1944,14 +2042,6 @@ body.admin_mode.taekwon_mode .issue_btn {
           -ms-flex: 1 0 80px;
           text-align: center;
           margin: 0 0 0 10px; }
-          .map_sett_box > section.list > div > *:nth-child(1), .map_sett_box > section.list ul li > *:nth-child(1) {
-            flex: 0 1 100%;
-            -webkit-flex: 0 1 100%;
-            flexbox: 0 1 100%;
-            -webkit-box-flex: 1;
-            -ms-flex: 0 1 100%;
-            margin: 0;
-            text-align: left; }
 
 /*
 .device {

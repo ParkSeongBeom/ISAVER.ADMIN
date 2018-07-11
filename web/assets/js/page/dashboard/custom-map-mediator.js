@@ -12,7 +12,6 @@ var CustomMapMediator = (
         var _version;
         var _MARKER_TYPE = ['device','fence','object','camera','custom'];
         var _areaId;
-        var _criticalList = {};
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
             ,fenceListUrl : "/fence/list.json"
@@ -428,7 +427,7 @@ var CustomMapMediator = (
                                 ,'deviceId' : data['deviceId']
                                 ,'fenceName' : data['fenceName']?data['fenceName']:data['id']
                             }
-                            ,'notification' : $.extend(true,{},_criticalList)
+                            ,'notification' : $.extend(true,{},criticalList)
                         };
                         break;
                     case _MARKER_TYPE[2] : // Object
@@ -582,9 +581,8 @@ var CustomMapMediator = (
          * get custom area/device list
          * @author psb
          */
-        this.init = function(areaId,criticalList,options){
+        this.init = function(areaId,options){
             _areaId = areaId;
-            _criticalList = criticalList;
             for(var index in options){
                 if(_options['custom'].hasOwnProperty(index)){
                     _options['custom'][index] = options[index];

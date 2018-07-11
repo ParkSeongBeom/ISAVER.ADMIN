@@ -525,11 +525,7 @@
     var subMenuId = String('${subMenuId}');
     var chartList = {};
     var renderDatetime = new Date();
-    var dashboardHelper = new DashboardHelper("${rootPath}","${version}",{
-        <c:forEach var="critical" items="${criticalList}">
-            '${critical.codeId}' : [],
-        </c:forEach>
-    });
+    var dashboardHelper = new DashboardHelper("${rootPath}","${version}");
     var fileUploadPath = '${fileUploadPath}';
     var templateSetting = {
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'

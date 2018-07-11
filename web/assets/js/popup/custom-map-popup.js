@@ -12,7 +12,7 @@ var CustomMapPopup = (
         var _urlConfig = {
             fileListUrl : "/file/mapList.json"
             ,saveUrl : "/customMapLocation/save.json"
-            ,fenceDeviceListUrl : "/fence/list.json"
+            ,fenceDeviceListUrl : "/fenceDevice/list.json"
         };
         var _markerClass = {
             'area' : "area"
@@ -22,6 +22,7 @@ var CustomMapPopup = (
         var _areaId = null;
         var _customMapMediator;
         var _messageConfig;
+        var _cameraSelectTag;
         var _element;
         var _self = this;
 
@@ -83,11 +84,15 @@ var CustomMapPopup = (
             var fenceList = _customMapMediator.getMarkerList('fence');
             var fenceParamList = [];
             for(var index in fenceList){
-                fenceParamList.push($.extend({}, fenceList[index]['data']));
+                fenceParamList.push({uuid:fenceList[index]['data']['uuid'],fenceName:fenceList[index]['data']['fenceName']});
             }
 
             var fenceDeviceParamList = [];
+            $.each(_element.find("button[name='fenceDevice']"),function(){
+                fenceDeviceParamList.push({uuid:$(this).attr("uuid"),deviceId:$(this).attr("deviceId")})
+            });
 
+            console.log(fenceDeviceParamList);
             if(confirm(_messageConfig['saveConfirmMessage'])){
                 _ajaxCall('save', {
                     areaId:_areaId
@@ -122,7 +127,7 @@ var CustomMapPopup = (
                 try{
                     _customMapMediator.setElement(_element.find("#mapElement"));
                     _customMapMediator.setMessageConfig(_messageConfig);
-                    _customMapMediator.init(areaId,null,{
+                    _customMapMediator.init(areaId,{
                         'draggable' : true
                         ,'resizable' : true
                         ,'fenceView' : true
@@ -131,41 +136,78 @@ var CustomMapPopup = (
                             switch (actionType){
                                 case 'childList' :
                                     _element.find("#childList").empty();
+                                    _cameraSelectTag = $("<select/>",{name:"selCamera"}).append(
+                                        $("<option/>",{value:""}).text("Choice Camera")
+                                    );
+
                                     for(var index in data){
                                         var target = data[index];
+                                        if(target['deviceCode']=="DEV002"){
+                                            _cameraSelectTag.append(
+                                                $("<option/>",{value:target['targetId']}).text(target['targetName'])
+                                            );
+                                        }
+
                                         _element.find("#childList").append(
                                             $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                                $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
-                                                    _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
-                                                })
-                                            ).append(
                                                 $("<div/>").append(
-                                                    $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
-                                                        var targetId = $(this).parent().parent().attr("targetId");
-                                                        _checkChildTarget(targetId, $(this).is(":checked"));
+                                                    $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
+                                                        _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
                                                     })
                                                 ).append(
-                                                    $("<label/>")
+                                                    $("<div/>").append(
+                                                        $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
+                                                            var targetId = $(this).parent().parent().attr("targetId");
+                                                            _checkChildTarget(targetId, $(this).is(":checked"));
+                                                        })
+                                                    ).append(
+                                                        $("<label/>")
+                                                    )
                                                 )
                                             )
                                         );
                                     }
                                     break;
                                 case 'fenceList' :
-                                    _element.find("#fenceList").empty();
+                                    _element.find("#childList section").remove();
                                     for(var index in data){
                                         var fence = data[index];
+                                        var targetTag = _element.find("#childList > li[targetId='"+fence['deviceId']+"']");
                                         var fenceName = fence['fenceName']!=null?fence['fenceName']:fence['fenceId'];
-                                        _element.find("#fenceList").append(
-                                            $("<li/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
-                                                $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
-                                                    _customMapMediator.saveFence($(this).parent().attr("fenceId"), $(this).parent().attr("deviceId"), $(this).val());
-                                                })
+                                        var cameraSelectTag = _cameraSelectTag.clone();
+                                        cameraSelectTag.attr("uuid",fence['uuid']).on("change",function(){
+                                            var selectedOption = $(this).find("option:selected");
+                                            if(selectedOption.val()!=""){
+                                                $(this).after(
+                                                    $("<div/>").append(
+                                                        $("<button/>",{class:"camera"}).text(selectedOption.text())
+                                                    ).append(
+                                                        $("<button/>",{name:"fenceDevice",uuid:$(this).attr("uuid"),deviceId:selectedOption.val()}).on("click",function(){
+                                                            $(this).parent().parent().find("select option[value='"+$(this).attr("deviceId")+"']").prop("disabled",false);
+                                                            $(this).parent().remove();
+                                                        })
+                                                    )
+                                                );
+                                                selectedOption.prop("disabled",true);
+                                            }
+                                            $(this).val("");
+                                        });
+
+                                        targetTag.append(
+                                            $("<section/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
+                                                $("<div/>",{class:"fence_list"}).append(
+                                                    $("<p/>").text(fence['fenceId'])
+                                                ).append(
+                                                    $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
+                                                        _customMapMediator.saveFence($(this).parent().parent().attr("fenceId"), $(this).parent().parent().attr("deviceId"), $(this).val());
+                                                    })
+                                                )
                                             ).append(
-                                                $("<div/>").text(fence['fenceId'])
+                                                $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
                                             )
                                         );
                                     }
+                                    _ajaxCall("fenceDeviceList",{areaId:_areaId});
                                     break;
                             }
                         }
@@ -284,6 +326,12 @@ var CustomMapPopup = (
                         resourceHelper.refreshList();
                     }
                     _self.closePopup();
+                    break;
+                case 'fenceDeviceList':
+                    for(var index in data['fenceDeviceList']){
+                        var fenceDevice = data['fenceDeviceList'][index];
+                        _element.find("section[fenceId='"+fenceDevice['fenceId']+"']").find("select[name='selCamera']").val(fenceDevice['deviceId']).trigger("change");
+                    }
                     break;
                 default :
             }
