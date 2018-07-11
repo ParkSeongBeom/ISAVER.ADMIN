@@ -669,7 +669,7 @@ $resi_w:8px;
     width:$resi_w; height:$resi_w; background-color: transparent;
     &:before {
       /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-      background-image: url(../images/map/tracking.svg);
+      background-image: url(../images/map/tracking.svg); background-size: 100%;
     }
     &:after {display: none;}
   }

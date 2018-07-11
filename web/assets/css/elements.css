@@ -1257,7 +1257,8 @@ input.datepicker + button + .in-timepicker {
   background-color: transparent; }
   .g-tracking:before {
     /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-    background-image: url(../images/map/tracking.svg); }
+    background-image: url(../images/map/tracking.svg);
+    background-size: 100%; }
   .g-tracking:after {
     display: none; }
 .g-area {
