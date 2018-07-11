@@ -658,7 +658,7 @@
     }
 
     function initChartList(){
-        $(".watch_area li[deviceId]").on("click",function(){
+        $(".watch_area ul[detectorDeviceList] li[deviceId]").on("click",function(){
             if(!$(this).hasClass("on")){
                 $(this).parent().find("li").removeClass("on");
                 $(this).addClass("on");

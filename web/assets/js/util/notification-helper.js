@@ -13,8 +13,10 @@ var NotificationHelper = (
             ,'notificationDetailUrl':'/action/eventDetail.json'
             ,'confirmNotificationUrl':'/notification/save.json'
             ,'cancelNotificationUrl':'/notification/save.json'
+            ,'fenceListUrl' : "/fence/list.json"
         };
         var _messageConfig;
+        var _fenceList = {};
         var _notificationList = {};
         var _element;
 
@@ -88,7 +90,6 @@ var NotificationHelper = (
                 console.error("[NotificationHelper][setElement] error - empty element");
                 return false;
             }
-
             _element = element;
         };
 
@@ -106,6 +107,12 @@ var NotificationHelper = (
          */
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
+                case 'fenceList':
+                    for(var index in data['fenceList']){
+                        var fence = data['fenceList'][index];
+                        _fenceList[fence['fenceId']]=fence['fenceName'];
+                    }
+                    break;
                 case 'notificationList':
                     notificationHelper.addNotificationList(data['notifications'], data['notiCountList']);
                     break;
@@ -158,6 +165,7 @@ var NotificationHelper = (
          * @author psb
          */
         this.getNotificationList = function(){
+            _ajaxCall('fenceList');
             _ajaxCall('notificationList');
         };
 
@@ -283,15 +291,7 @@ var NotificationHelper = (
             if(notification['fenceName']!=null && notification['fenceName']!=''){
                 fenceName = notification['fenceName'];
             }else{
-                if(dashboardFlag){
-                    try{
-                        fenceName = dashboardHelper.getGuard("all",notification['areaId'])['map'].getMarkerList('fence')[notification['fenceId']]['data']['fenceName'];
-                    }catch(e){
-                        fenceName = notification['fenceId'];
-                    }
-                }else{
-                    fenceName = notification['fenceId'];
-                }
+                fenceName = _fenceList[notification['fenceId']]!=null?_fenceList[notification['fenceId']]:notification['fenceId'];
             }
 
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
