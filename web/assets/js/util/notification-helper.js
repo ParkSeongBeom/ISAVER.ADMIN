@@ -279,9 +279,24 @@ var NotificationHelper = (
                 notificationCancelBtnAction();
             });
 
+            var fenceName = null;
+            if(notification['fenceName']!=null && notification['fenceName']!=''){
+                fenceName = notification['fenceName'];
+            }else{
+                if(dashboardHelper!=null && dashboardHelper instanceof DashboardHelper){
+                    try{
+                        fenceName = dashboardHelper.getGuard("all",notification['areaId'])['map'].getMarkerList('fence')[notification['fenceId']]['data']['fenceName'];
+                    }catch(e){
+                        fenceName = notification['fenceId'];
+                    }
+                }else{
+                    fenceName = notification['fenceId'];
+                }
+            }
+
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
             notificationTag.attr("notificationId",notification['notificationId']);
-            notificationTag.find("#areaName").text(notification['areaName'] + (notification['fenceId']!=null?' - '+notification['fenceId']:''));
+            notificationTag.find("#areaName").text(notification['areaName'] + (fenceName!=null?' - '+fenceName:''));
             notificationTag.find("#eventName").text(notification['eventName'] + (notification['value']!=null?'('+notification['value']+')':''));
             notificationTag.find("#eventDatetime").text(new Date(notification['eventDatetime']).format("MM/dd HH:mm:ss"));
             notificationTag.find(".infor_btn").on("click",function(){

@@ -388,7 +388,7 @@ var CustomMapMediator = (
                 return false;
             }
             if(data['deviceId']==null || _marker[_MARKER_TYPE[4]][data['deviceId']]==null){
-                console.error("[CustomMapMediator][addMarker] target M8 device is null");
+                console.error("[CustomMapMediator][addMarker] target M8 device is null - deviceId : " + data['deviceId']);
                 return false;
             }
             if(_marker[messageType]!=null && _marker[messageType][data['id']]!=null){
@@ -434,7 +434,7 @@ var CustomMapMediator = (
                         _marker[messageType][data['id']] = $("<div/>",{objectId:data['id']}).addClass(_targetClass[messageType]);
                         _element.append(_marker[messageType][data['id']]);
                         _marker[messageType][data['id']].css("left",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+Number(data['location'][0]['lat'])-(_marker[messageType][data['id']].width()/2),2));
-                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location'][0]['lng'])-(_marker[messageType][data['id']].height()/2),2));
+                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location'][0]['lng'])-_marker[messageType][data['id']].height(),2));
                         break;
                 }
                 console.log("[CustomMapMediator][addMarker] complete - [" + messageType + "][" + data['id'] + "]");
@@ -466,7 +466,7 @@ var CustomMapMediator = (
                             data['location'] = data['location'][0];
                         }
                         _marker[messageType][data['id']].css("left",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+Number(data['location']['lat'])-(_marker[messageType][data['id']].width()/2),2));
-                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location']['lng'])-(_marker[messageType][data['id']].height()/2),2));
+                        _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location']['lng'])-_marker[messageType][data['id']].height(),2));
                     }else{
                         _self.addMarker(messageType, data);
                     }
@@ -508,6 +508,10 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setAnimate = function(actionType, className, data){
+            if(data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
+                return false;
+            }
+
             var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceId']);
             if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
                 switch (actionType){
@@ -524,9 +528,9 @@ var CustomMapMediator = (
                 }
 
                 if(fenceMarker['objects'].length>0){
-                    _marker[_MARKER_TYPE[1]][data['fenceId']]['element'].addClass(className);
+                    fenceMarker['element'].addClass(className);
                 }else{
-                    _marker[_MARKER_TYPE[1]][data['fenceId']]['element'].removeClass(className);
+                    fenceMarker['element'].removeClass(className);
                 }
             }else{
                 console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
