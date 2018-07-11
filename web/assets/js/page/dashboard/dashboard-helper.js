@@ -142,19 +142,23 @@ var DashboardHelper = (
                         ,'subUrl' : $(this).find("input[name='cSubUrl']").val()
                         ,'linkUrl' : $(this).find("input[name='cLinkUrl']").val()
                         ,'streamServerUrl' : $(this).find("input[name='cStreamServerUrl']").val()
+                        ,'deviceName' : $(this).find("input[name='cDeviceName']").val()
                     });
                 });
 
+                // Video Mediator
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].getFenceDeviceList(_areaId);
+                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId,_criticalList);
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayer(deviceList);
+
+                // Map Mediator
                 if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof MapMediator){
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].addImage();
                 }else if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this).find("div[name='map-canvas']"));
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
+                    _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,_criticalList,{
                         'websocketSend':false
                         ,'fenceView':true
                         ,'click':function(targetId,deviceCode){
@@ -213,9 +217,9 @@ var DashboardHelper = (
                         }
                         notificationMarqueeUpdate();
                     }else{
-                        if(data['areaId']!=null && _guardList[data['areaId']]!=null){
-                            _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add","level-"+criticalCss[data['criticalLevel']],data);
-                            _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add","level-"+criticalCss[data['criticalLevel']],data);
+                        if(data['areaId']!=null && _guardList[data['areaId']]!=null && data['status']!="C"){
+                            _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
+                            _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
                         }
                         notificationUpdate(messageType, data, flag!=null?flag:true);
                     }
@@ -226,8 +230,8 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
-                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove","level-"+criticalCss[data['cancel'][index]['criticalLevel']],data['notification']);
-                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove","level-"+criticalCss[data['cancel'][index]['criticalLevel']],data['notification']);
+                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
+                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                         }
                     }
                     break;
@@ -393,7 +397,6 @@ var DashboardHelper = (
                         }
                     }
                 }
-                //console.log(_data, lastNoti);
                 if(lastNoti!=null){
                     var marqueeText = lastNoti['areaName']+" "+lastNoti['deviceName']+" "+lastNoti['eventName']+" "+new Date(lastNoti['eventDatetime']).format("yyyy.MM.dd HH:mm:ss");
                     if(element.find("p[messageBox] span").length > 0){
@@ -446,9 +449,14 @@ var DashboardHelper = (
                     }
                     break;
                 case "removeNotification" :
-                    notification[data['criticalLevel']].splice(data['notificationId'],1);
+                    if(notification[data['criticalLevel']].indexOf(data['notificationId']) > -1){
+                        notification[data['criticalLevel']].splice(notification[data['criticalLevel']].indexOf(data['notificationId']),1);
+                    }
+
                     if(childDevice[data['deviceId']] != null){
-                        childDevice[data['deviceId']]['notification'][data['criticalLevel']].splice(data['notificationId'],1);
+                        if(childDevice[data['deviceId']]['notification'][data['criticalLevel']].indexOf(data['notificationId']) > -1){
+                            childDevice[data['deviceId']]['notification'][data['criticalLevel']].splice(childDevice[data['deviceId']]['notification'][data['criticalLevel']].indexOf(data['notificationId']),1);
+                        }
                     }
 
                     if(flag && _options['marquee']){

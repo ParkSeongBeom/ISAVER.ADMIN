@@ -12,6 +12,7 @@ var CustomMapMediator = (
         var _version;
         var _MARKER_TYPE = ['device','fence','object','camera','custom'];
         var _areaId;
+        var _criticalList = {};
         var _urlConfig = {
             listUrl : "/customMapLocation/list.json"
             ,fenceListUrl : "/fence/list.json"
@@ -427,7 +428,7 @@ var CustomMapMediator = (
                                 ,'deviceId' : data['deviceId']
                                 ,'fenceName' : data['fenceName']?data['fenceName']:data['id']
                             }
-                            ,'objects' : []
+                            ,'notification' : $.extend(true,{},_criticalList)
                         };
                         break;
                     case _MARKER_TYPE[2] : // Object
@@ -507,30 +508,30 @@ var CustomMapMediator = (
          * animation
          * @author psb
          */
-        this.setAnimate = function(actionType, className, data){
+        this.setAnimate = function(actionType, criticalLevel, data){
             if(data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
                 return false;
             }
 
             var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceId']);
-            if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
+            if(fenceMarker!=null){
                 switch (actionType){
                     case "add" :
-                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(data['objectId'])==-1){
-                            fenceMarker['objects'].push(data['objectId']);
-                        }
+                        fenceMarker['notification'][criticalLevel].push(data['objectId']);
                         break;
                     case "remove" :
-                        if(fenceMarker['objects'].indexOf(data['objectId']) > -1){
-                            fenceMarker['objects'].splice(fenceMarker['objects'].indexOf(data['objectId']),1);
+                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']) > -1){
+                            fenceMarker['notification'][criticalLevel].splice(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']),1);
                         }
                         break;
                 }
 
-                if(fenceMarker['objects'].length>0){
-                    fenceMarker['element'].addClass(className);
-                }else{
-                    fenceMarker['element'].removeClass(className);
+                for(var index in fenceMarker['notification']){
+                    if(fenceMarker['notification'][index].length > 0){
+                        fenceMarker['element'].addClass("level-"+criticalCss[index]);
+                    }else{
+                        fenceMarker['element'].removeClass("level-"+criticalCss[index]);
+                    }
                 }
             }else{
                 console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
@@ -540,10 +541,10 @@ var CustomMapMediator = (
             if(objectMarker!=null){
                 switch (actionType){
                     case "add" :
-                        objectMarker.addClass(className);
+                        objectMarker.addClass("level-"+criticalCss[criticalLevel]);
                         break;
                     case "remove" :
-                        objectMarker.removeClass(className);
+                        objectMarker.removeClass("level-"+criticalCss[criticalLevel]);
                         break;
                 }
             }else{
@@ -581,8 +582,9 @@ var CustomMapMediator = (
          * get custom area/device list
          * @author psb
          */
-        this.init = function(areaId,options){
+        this.init = function(areaId,criticalList,options){
             _areaId = areaId;
+            _criticalList = criticalList;
             for(var index in options){
                 if(_options['custom'].hasOwnProperty(index)){
                     _options['custom'][index] = options[index];

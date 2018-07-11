@@ -122,7 +122,7 @@ var CustomMapPopup = (
                 try{
                     _customMapMediator.setElement(_element.find("#mapElement"));
                     _customMapMediator.setMessageConfig(_messageConfig);
-                    _customMapMediator.init(areaId,{
+                    _customMapMediator.init(areaId,null,{
                         'draggable' : true
                         ,'resizable' : true
                         ,'fenceView' : true

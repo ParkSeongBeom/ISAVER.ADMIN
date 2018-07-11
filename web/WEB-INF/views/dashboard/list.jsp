@@ -395,6 +395,7 @@
                                                         <input type="text" name="cSubUrl" value="${device.subUrl}"/>
                                                         <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
                                                         <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
+                                                        <input type="text" name="cDeviceName" value="${device.deviceName}"/>
                                                     </div>
                                                 </c:if>
                                             </c:forEach>

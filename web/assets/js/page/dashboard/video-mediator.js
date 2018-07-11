@@ -8,11 +8,12 @@
  */
 var VideoMediator = (
     function(rootPath){
-        var _playerList = {};
+        var _videoList = {};
         var _fenceDeviceList = null;
         var _rootPath;
         var _element;
         var _areaId;
+        var _criticalList = {};
         var _urlConfig = {
             fenceDeviceListUrl : "/fenceDevice/list.json"
         };
@@ -46,11 +47,20 @@ var VideoMediator = (
         };
 
         /**
+         * get video list
+         * @author psb
+         */
+        this.getVideoList = function(){
+            return _videoList;
+        };
+
+        /**
          * fenceList init
          * @author psb
          */
-        this.getFenceDeviceList = function(areaId){
+        this.init = function(areaId, criticalList){
             _areaId = areaId;
+            _criticalList = criticalList;
             _ajaxCall('fenceDeviceList',{areaId:_areaId});
         };
 
@@ -62,6 +72,21 @@ var VideoMediator = (
         this.createPlayer = function(_deviceList){
             for(var index in _deviceList){
                 if(_deviceList[index]['deviceCode']==_options['useDeviceCode'] && _deviceList[index]['streamServerUrl']!=null && _deviceList[index]['streamServerUrl']!=''){
+                    var ptzElement = $("<li/>",{class:'ptz', deviceId:_deviceList[index]['deviceId']}).append(
+                        $("<span/>").text(_deviceList[index]['deviceName'])
+                    ).append(
+                        $("<div/>").append(
+                            $("<video/>")
+                        )
+                    );
+                    _element.append(ptzElement);
+                    // register webrtc streamer connection
+                    _videoList[_deviceList[index]['deviceId']] = {
+                        'element' : ptzElement
+                        ,'server' : null
+                        ,'notification' : $.extend(true,{},_criticalList)
+                    };
+
                     sendAjaxGetRequest(
                         _deviceList[index]['streamServerUrl'] + "/api/getMediaList"
                         ,null
@@ -70,23 +95,12 @@ var VideoMediator = (
                                 var responseBody = data[index];
                                 if(responseBody['video'].indexOf(actionType['ipAddress'])>-1){
                                     var videoTag = "video_" + actionType['deviceId'];
-
-                                    var ptzElement = $("<li/>",{class:'ptz', deviceId:actionType['deviceId']}).append(
-                                        //$("<video/>",{id:videoTag,style:"width: 350px;"})
-                                        $("<video/>",{id:videoTag})
-                                    );
-                                    _element.append(ptzElement);
+                                    _videoList[actionType['deviceId']]['element'].find("video").attr("id",videoTag);
 
                                     // connect video element to webrtc stream
                                     var webRtcServer = new WebRtcStreamer(videoTag, actionType['streamServerUrl']);
                                     webRtcServer.connect(responseBody['video'], responseBody['audio'], _options['webrtcConnect']);
-
-                                    // register webrtc streamer connection
-                                    _playerList[actionType['deviceId']] = {
-                                        'element' : ptzElement
-                                        ,'server' : webRtcServer
-                                        ,'objects' : []
-                                    };
+                                    _videoList[actionType['deviceId']]['server'] = webRtcServer;
                                     return true;
                                 }
                             }
@@ -94,7 +108,12 @@ var VideoMediator = (
                         ,function(XMLHttpRequest, textStatus, errorThrown, actionType){
                             console.error(XMLHttpRequest, textStatus, errorThrown, actionType);
                         }
-                        ,{streamServerUrl:_deviceList[index]['streamServerUrl'],deviceId:_deviceList[index]['deviceId'],ipAddress:_deviceList[index]['ipAddress']}
+                        ,{
+                            streamServerUrl:_deviceList[index]['streamServerUrl']
+                            ,deviceId:_deviceList[index]['deviceId']
+                            ,ipAddress:_deviceList[index]['ipAddress']
+                            ,deviceName:_deviceList[index]['deviceName']
+                        }
                     );
                 }
             }
@@ -104,7 +123,7 @@ var VideoMediator = (
          * animation
          * @author psb
          */
-        this.setAnimate = function(actionType, className, data){
+        this.setAnimate = function(actionType, criticalLevel, data){
             if(data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
                 return false;
             }
@@ -112,28 +131,28 @@ var VideoMediator = (
             for(var index in _fenceDeviceList){
                 var fenceDevice = _fenceDeviceList[index];
                 if(fenceDevice['fenceId']==data['fenceId']){
-                    var video = _playerList[fenceDevice['deviceId']];
-                    if(video!=null && video['objects'] instanceof Array){
+                    var video = _videoList[fenceDevice['deviceId']];
+                    if(video!=null){
                         switch (actionType){
                             case "add" :
-                                if(video['objects'].length == 0 || video['objects'].indexOf(data['objectId'])==-1){
-                                    video['objects'].push(data['objectId']);
-                                }
+                                video['notification'][criticalLevel].push(data['objectId']);
                                 break;
                             case "remove" :
-                                if(video['objects'].indexOf(data['objectId']) > -1){
-                                    video['objects'].splice(video['objects'].indexOf(data['objectId']),1);
+                                if(video['notification'][criticalLevel].indexOf(data['objectId']) > -1){
+                                    video['notification'][criticalLevel].splice(video['notification'][criticalLevel].indexOf(data['objectId']),1);
                                 }
                                 break;
                         }
 
-                        if(video['objects'].length>0){
-                            video['element'].addClass(className);
-                        }else{
-                            video['element'].removeClass(className);
+                        for(var index in video['notification']){
+                            if(video['notification'][index].length > 0){
+                                video['element'].addClass("level-"+criticalCss[index]);
+                            }else{
+                                video['element'].removeClass("level-"+criticalCss[index]);
+                            }
                         }
                     }else{
-                        console.warn("[VideoMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
+                        console.warn("[VideoMediator][setAnimate] not found video device - deviceId : " + fenceDevice['deviceId'] + ", deviceId : " + data['fenceId']);
                     }
                 }
             }

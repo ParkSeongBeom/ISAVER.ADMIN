@@ -283,7 +283,7 @@ var NotificationHelper = (
             if(notification['fenceName']!=null && notification['fenceName']!=''){
                 fenceName = notification['fenceName'];
             }else{
-                if(dashboardHelper!=null && dashboardHelper instanceof DashboardHelper){
+                if(dashboardFlag){
                     try{
                         fenceName = dashboardHelper.getGuard("all",notification['areaId'])['map'].getMarkerList('fence')[notification['fenceId']]['data']['fenceName'];
                     }catch(e){
