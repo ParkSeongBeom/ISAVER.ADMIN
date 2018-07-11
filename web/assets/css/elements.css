@@ -1253,7 +1253,7 @@ input.datepicker + button + .in-timepicker {
   /*content:"\e964";*/ }
 .g-tracking {
   width: 8px;
-  height: 25px;
+  height: 8px;
   background-color: transparent; }
   .g-tracking:before {
     /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
