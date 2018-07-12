@@ -150,14 +150,14 @@ var CustomMapPopup = (
 
                                         _element.find("#childList").append(
                                             $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                                $("<div/>").append(
+                                                $("<div/>",{name:"custom"}).append(
                                                     $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).on("click",function(){
                                                         _customMapMediator.targetRender({targetId:$(this).parent().attr("targetId"), deviceCode:$(this).parent().attr("deviceCode")});
                                                     })
                                                 ).append(
                                                     $("<div/>").append(
                                                         $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'?true:false}).on("click",function(){
-                                                            var targetId = $(this).parent().parent().attr("targetId");
+                                                            var targetId = $(this).parent().parent().parent().attr("targetId");
                                                             _checkChildTarget(targetId, $(this).is(":checked"));
                                                         })
                                                     ).append(
@@ -294,12 +294,12 @@ var CustomMapPopup = (
         var _checkChildTarget = function(targetId, flag){
             var resultFlag = _customMapMediator.setDisplayTarget(targetId,flag);
             if(!resultFlag){
-                _element.find("#childList li[targetId='"+targetId+"'] button").removeClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] input[name='useYn']").prop("checked",false);
+                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] button").removeClass("on");
+                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] input[name='useYn']").prop("checked",false);
             }else{
                 _element.find("#childList button").removeClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] button").addClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] input[name='useYn']").prop("checked",true);
+                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] button").addClass("on");
+                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] input[name='useYn']").prop("checked",true);
             }
         };
 
