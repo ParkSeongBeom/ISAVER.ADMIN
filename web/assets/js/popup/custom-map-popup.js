@@ -92,7 +92,6 @@ var CustomMapPopup = (
                 fenceDeviceParamList.push({uuid:$(this).attr("uuid"),deviceId:$(this).attr("deviceId")})
             });
 
-            console.log(fenceDeviceParamList);
             if(confirm(_messageConfig['saveConfirmMessage'])){
                 _ajaxCall('save', {
                     areaId:_areaId
