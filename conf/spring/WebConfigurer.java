@@ -267,9 +267,9 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     public String printVersion() {
         String version = null;
         StringBuilder loggerBuiler = new StringBuilder();
-        loggerBuiler.append("\n==============================").append("\n");
-        loggerBuiler.append("= iSaver Admin Version : "+propertyManager.getProperty("cnf.server.version")).append("\n");
-        loggerBuiler.append("==============================");
+        loggerBuiler.append("\n==============================");
+        loggerBuiler.append("\n= iSaver Admin Version : ").append(propertyManager.getProperty("cnf.server.version"));
+        loggerBuiler.append("\n==============================");
         version = loggerBuiler.toString();
         loggerBuiler.setLength(0);
 
