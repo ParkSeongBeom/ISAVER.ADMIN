@@ -222,6 +222,10 @@ var DashboardHelper = (
                     }
                     break;
                 case "removeNotification": // 알림이벤트 해제
+                    if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
+                        _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                        _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                    }
                     notificationUpdate(messageType, data['notification'], flag!=null?flag:true);
                     break;
                 case "cancelDetection": // 감지 해제
