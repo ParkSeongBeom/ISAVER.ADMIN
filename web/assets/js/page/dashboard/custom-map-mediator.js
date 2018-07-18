@@ -302,7 +302,7 @@ var CustomMapMediator = (
          */
         this.targetRender = function(data){
             if(_marker[_MARKER_TYPE[4]][data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode']}).addClass(_targetClass[data['deviceCode']]);
+                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode'],class:_targetClass[data['deviceCode']]});
                 targetElement.on("click",function(){
                     if(_options['custom']['click']!=null && typeof _options['custom']['click'] == "function"){
                         _options['custom']['click']($(this).attr("targetId"),$(this).attr("deviceCode"));
@@ -310,6 +310,7 @@ var CustomMapMediator = (
                         positionChangeEventHandler($(this).attr("targetId"));
                     }
                 });
+                setDeviceStatus(targetElement, data['deviceStat']);
 
                 if(_options['custom']['resizable']){
                     targetElement.resizable({
@@ -368,6 +369,7 @@ var CustomMapMediator = (
                     }
                     ,'element' : targetElement
                 };
+
                 positionChangeEventHandler(data['targetId'],'init');
             }else{
                 positionChangeEventHandler(data['targetId']);
@@ -504,6 +506,32 @@ var CustomMapMediator = (
         };
 
         /**
+         * 장치상태
+         * @author psb
+         */
+        this.setDeviceStatusList = function(deviceStatusList){
+            for(var index in deviceStatusList){
+                var deviceStatus = deviceStatusList[index];
+                var customMarker = _marker[_MARKER_TYPE[4]][deviceStatus['deviceId']];
+                if(customMarker!=null){
+                    setDeviceStatus(customMarker['element'], deviceStatus['deviceStat']);
+                }
+            }
+        };
+
+        /**
+         * 장치상태
+         * @author psb
+         */
+        var setDeviceStatus = function(targetElement, status){
+            if(status=='Y'){
+                targetElement.removeClass('level-die');
+            }else{
+                targetElement.addClass('level-die');
+            }
+        };
+
+        /**
          * animation
          * @author psb
          */
@@ -565,6 +593,7 @@ var CustomMapMediator = (
                     break;
                 case "all" : // Object
                     return _marker;
+                    break;
             }
             return null;
         };

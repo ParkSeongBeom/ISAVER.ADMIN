@@ -343,7 +343,7 @@
                                                             </c:when>
                                                         </c:choose>
 
-                                                        <li deviceId="${device.deviceId}" areaId="${childArea.areaId}">
+                                                        <li deviceId="${device.deviceId}" areaId="${childArea.areaId}" <c:if test="${device.deviceStat=='N'}">class="level-die"</c:if>>
                                                             <span class="${deviceClass}">${device.deviceCodeName}</span>
                                                             <span evtValue>
                                                                 <c:if test="${device.evtValue!=null}">
@@ -395,6 +395,7 @@
                                                         <input type="text" name="cSubUrl" value="${device.subUrl}"/>
                                                         <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
                                                         <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
+                                                        <input type="text" name="cDeviceStat" value="${device.deviceStat}"/>
                                                         <input type="text" name="cDeviceName" value="${device.deviceName}"/>
                                                     </div>
                                                 </c:if>

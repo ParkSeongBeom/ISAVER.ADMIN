@@ -78,6 +78,8 @@ var VideoMediator = (
                         )
                     );
                     _element.append(ptzElement);
+                    setDeviceStatus(ptzElement, _deviceList[index]['deviceStat']);
+
                     // register webrtc streamer connection
                     _videoList[_deviceList[index]['deviceId']] = {
                         'element' : ptzElement
@@ -114,6 +116,31 @@ var VideoMediator = (
                         }
                     );
                 }
+            }
+        };
+
+        /**
+         * 장치상태
+         * @author psb
+         */
+        this.setDeviceStatusList = function(deviceStatusList){
+            for(var index in deviceStatusList){
+                var deviceStatus = deviceStatusList[index];
+                if(_videoList[deviceStatus['deviceId']]!=null){
+                    setDeviceStatus(_videoList[deviceStatus['deviceId']]['element'], deviceStatus['deviceStat']);
+                }
+            }
+        };
+
+        /**
+         * 장치상태
+         * @author psb
+         */
+        var setDeviceStatus = function(targetElement, status){
+            if(status=='Y'){
+                targetElement.removeClass('level-die');
+            }else{
+                targetElement.addClass('level-die');
             }
         };
 

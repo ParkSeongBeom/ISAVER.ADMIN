@@ -140,6 +140,7 @@ var DashboardHelper = (
                         ,'linkUrl' : $(this).find("input[name='cLinkUrl']").val()
                         ,'streamServerUrl' : $(this).find("input[name='cStreamServerUrl']").val()
                         ,'deviceName' : $(this).find("input[name='cDeviceName']").val()
+                        ,'deviceStat' : $(this).find("input[name='cDeviceStat']").val()
                     });
                 });
 
@@ -234,6 +235,12 @@ var DashboardHelper = (
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                         }
+                    }
+                    break;
+                case "editDeviceStatus": // 감지 해제
+                    for(var index in _guardList){
+                        _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
+                        _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
                     }
                     break;
             }

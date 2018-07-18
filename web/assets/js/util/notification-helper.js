@@ -21,7 +21,7 @@ var NotificationHelper = (
         var _element;
 
         var _callBackEventHandler = null;
-        var CALL_BACK_RETRY = {
+        var _CALL_BACK_RETRY = {
             'cnt' : 10
             , 'delay' : 1000
         };
@@ -476,14 +476,14 @@ var NotificationHelper = (
                     _callBackEventHandler(messageType, data);
                 }else{
                     if(count == null){
-                        count = CALL_BACK_RETRY['cnt'];
+                        count = _CALL_BACK_RETRY['cnt'];
                     }
-                    console.log('[NotificationHelper] callBackEvent retry - ' + (CALL_BACK_RETRY['cnt']-count));
+                    console.log('[NotificationHelper] callBackEvent retry - ' + (_CALL_BACK_RETRY['cnt']-count));
 
                     if(count > 0){
                         setTimeout(function(){
                             _self.callBackEvent(messageType, data, count - 1);
-                        },CALL_BACK_RETRY['deley']);
+                        },_CALL_BACK_RETRY['deley']);
                     }else{
                         console.error('[NotificationHelper] callBackEvent failure - callback event handler is null');
                     }
