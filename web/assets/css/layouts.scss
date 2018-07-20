@@ -195,6 +195,72 @@ header {
           }
         }
       }
+
+
+      .issue_board {
+        @include flexbase; @include flex-justify-content-end; width:$noticecenter-width;
+        margin:0 0 0 20px; background-color: $not-color;
+        & > div {
+
+          @include flex-option(0, 1, 100%); @include flexbase; @include flex-align-items-center;
+          @include perspective(150px);
+
+          p, &:before {z-index: 2;}
+
+          p {@include flex-option(0, 1, 100%); font-size:1.8rem; text-align: center;}
+
+          &:before {
+            @include flex-midddle; @include flex-option(1, 0, 30px); height:30px; font-size:.8rem; padding:0 0 0 5px;
+          }
+
+          &:after {content:""; position: absolute; width:100%; height:100%;}
+
+          &.caution {
+            //background-color:$color-gray-03;
+            &,&:before {color:$color-gray-03;}
+            &:before {content:"주의"; }
+          }
+
+          &.warning {
+            //background-color:$color-orange-01;
+            &,&:before {color:$color-orange-01;}
+            &:before {content:"경고";}
+          }
+
+          &.danger  {
+            //background-color:$color-red-01;
+            &,&:before {color:$color-red-01;}
+            &:before {content:"위험";}
+          }
+        }
+        & > * {position: relative; height:100%;}
+        &.level {
+          &-caution, &-warning, &-danger {
+            & > div {  }
+            &.issue_btn {
+              width:100%; /*background-color:$color-red-01;*/
+              &:before {color:#fff !important;}
+              &.on {
+                @include issue;
+                &:before {@include notice;}
+              }
+            }
+          }
+
+          &-caution > div.caution {
+            &,&:before {color:$color-white-01;}
+            &:after {@include notice04; background-color:$color-gray-03;}
+          }
+          &-warning > div.warning {
+            &,&:before {color:$color-white-01;}
+            &:after {@include notice04; background-color:$color-orange-01;}
+          }
+          &-danger > div.danger {
+            &,&:before {color:$color-white-01;}
+            &:after {@include notice04; background-color:$color-red-01;}
+          }
+        }
+      }
     }
   }
 }
@@ -518,19 +584,23 @@ menu {
   body.admin_mode & {
     right:-($noticecenter-width * 2);
     &.on {right:$dash-margin;}
-    //background-color: $adm-color;
+    background-color: $adm-color;
 
     h2 {color:$bas-color;}
   }
 
-  position: fixed; @include z-index-notice;
-  top:$headerHeight; bottom:0; right:$dash-margin; padding:20px 0;
-  width:$noticecenter-width;
 
+  /*position: fixed; @include z-index-notice;
+  top:$headerHeight; bottom:0; right:-($noticecenter-width * 2); padding:20px 0;
+  width:$noticecenter-width;*/
+
+  position: fixed; @include z-index-notice;
+  top:($headerHeight + 20px); bottom:$dash-margin; right:$dash-margin; /*padding:20px 0;*/
+  width:$noticecenter-width;
 
   &.on {right:$dash-margin;}
 
-  &:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; }
+  //&:before {content: ""; position: absolute; top:0; right:-20px; width:20px; height:100%; }
 
   & > * {width:100%;}
 
@@ -541,7 +611,7 @@ menu {
     @include flex-align-items-center; @include flex-option(1, 0, $btnarea-height);
     @include flex-justify-content-between; margin:0 0 10px 0;
 
-
+    // 알림카운트
     & > div {
       span {
         @include flex-midddle; @include border-radius(200px);
@@ -554,10 +624,24 @@ menu {
         &:nth-of-type(3) {background-color: $color-red-01;   }
       }
     }
+
+    // 알림센터 고정 버튼
+    & > button {
+      width:40px; height:40px; @include rotate(90deg);
+      &:before {content:"\e92a"; font-size:1.4rem; }
+    }
+
   }
 
 
+  // 알림센터
   .db_list_box {
+    $db_filter_h:41px;
+    $db_morebt_h:40px;
+
+    @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
+    @include border01( 1px,$color-gray-09,1); background-color: $color-gray-09;
+
     border-color: $color-gray-09; @include box-shadow02(-30px, 0, 50px, -30px, 0, 0, 0, 0.8);
     textarea {
       color:$color-white-02;
@@ -567,22 +651,20 @@ menu {
       &:-ms-input-placeholder          {color:rgba(255,255,255, 0.4);}
       &:-moz-placeholder               {color:rgba(255,255,255, 0.4);}
     }
-
     select {@include dark_select;}
 
-  }
+    .db_count {
+      @include flexbase; @include flex-option(1, 0, $db_filter_h); max-height:$db_filter_h;
+      background-color: $bas-color;
 
-
-
-  // 알림센터
-  section.db_list_box {
-    $db_filter_h:41px;
-    $db_morebt_h:40px;
-
-    @include flex-option(0, 1, 100%); position: relative; z-index:10; overflow: hidden;
-    @include border01( 1px,$color-gray-09,1); background-color: $color-gray-09;
-
-
+      & > * {
+        @include flex-midddle; width:calc(100% / 3); height:100%;
+        font-size:1.4rem; color:$color-white-01; line-height: 1.4rem;
+        &:nth-of-type(1) {background-color: $color-gray-03;  }
+        &:nth-of-type(2) {background-color: $color-orange-01;}
+        &:nth-of-type(3) {background-color: $color-red-01;   }
+      }
+    }
 
     .db_filter_set {
 
@@ -599,8 +681,9 @@ menu {
       button {
 
         @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
-        margin-left: auto; border:none !important;
+        margin-left: auto;
         &:before {font-size: 1.5rem;}
+        &:last-of-type {border:none !important;}
         &.on.active {background-color: $color-blue-01;}
 
         &.dbc_open_btn{
@@ -609,30 +692,14 @@ menu {
           &:before {content:"\e937"; }
         }
         &.dbc_close_btn:before {content:"\e91a";}
+        &.notice_fix_btn {
+          &:before {content:"\e903";}
+          &.on:before {content:"\e904";}
+        }
       }
       h3 {@include flexbase; @include flex-align-items-center; padding:10px;}
     }
 
-    // 알림해지 사유
-    .db_cancel_set {
-      position: absolute; z-index: 1; top:0; bottom:0; left:100%;
-      width:100%; background-color: $color-gray-09;
-
-
-      textarea, div[contenteditable] {
-        @include flex-option(0, 1, 100%); position: relative;
-        border: none; resize: none; outline: none;
-      }
-
-      .btn_set {@include flex-option(1, 0, 40px); margin:10px;}
-
-      &.on {left:0;}
-    }
-
-    // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
-    .open_cancel {
-      & > div, & > select {opacity: 0; visibility: hidden}
-    }
 
     // 알림이력
     & > ul {
@@ -686,7 +753,6 @@ menu {
         &:hover { & > button:after {opacity: 1;} }
       }
     }
-    
 
     // 더보기
     & > button {
@@ -696,6 +762,27 @@ menu {
       &:before {content:"\e92b";}
       @include border01( 1px 0 0 0,$color-gray-09,1);
       &:hover {background-color: $color-gray-09}
+    }
+
+    // 알림해지 사유
+    .db_cancel_set {
+      position: absolute; z-index: 1; top:0; bottom:0; left:100%;
+      width:100%; background-color: $color-gray-09;
+
+
+      textarea, div[contenteditable] {
+        @include flex-option(0, 1, 100%); position: relative;
+        border: none; resize: none; outline: none;
+      }
+
+      .btn_set {@include flex-option(1, 0, 40px); margin:10px;}
+
+      &.on {left:0;}
+    }
+
+    // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
+    .open_cancel {
+      & > div, & > select {opacity: 0; visibility: hidden}
     }
   }
 

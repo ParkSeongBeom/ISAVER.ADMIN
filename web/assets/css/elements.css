@@ -1412,24 +1412,24 @@ input.datepicker + button + .in-timepicker {
   display: block; }
 .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   color: #fff !important; }
-.g-m8.level-caution:after, .g-camera.level-caution:after, .g-tracking.level-caution:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #757575; }
-.g-m8.level-warning:after, .g-camera.level-warning:after, .g-tracking.level-warning:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ff8400; }
-.g-m8.level-danger:after, .g-camera.level-danger:after, .g-tracking.level-danger:after {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #be1e1e; }
 .g-m8.level-caution, .g-m8.level-caution > span, .g-camera.level-caution, .g-camera.level-caution > span, .g-tracking.level-caution, .g-tracking.level-caution > span {
   background-color: #757575; }
+.g-m8.level-caution:after, .g-camera.level-caution:after, .g-tracking.level-caution:after {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #757575; }
 .g-m8.level-warning, .g-m8.level-warning > span, .g-camera.level-warning, .g-camera.level-warning > span, .g-tracking.level-warning, .g-tracking.level-warning > span {
   background-color: #ff8400; }
+.g-m8.level-warning:after, .g-camera.level-warning:after, .g-tracking.level-warning:after {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ff8400; }
 .g-m8.level-danger, .g-m8.level-danger > span, .g-camera.level-danger, .g-camera.level-danger > span, .g-tracking.level-danger, .g-tracking.level-danger > span {
   background-color: #be1e1e; }
+.g-m8.level-danger:after, .g-camera.level-danger:after, .g-tracking.level-danger:after {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #be1e1e; }
 .g-m8.level-die, .g-camera.level-die, .g-tracking.level-die {
   animation-name: issue02;
   -webkit-animation-name: issue02;
@@ -1444,7 +1444,7 @@ input.datepicker + button + .in-timepicker {
   -webkit-animation-duration: 0.8s;
   animation-duration: 0.8s;
   background-color: #111;
-  opacity: 0.7; }
+  opacity: 0.5; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -1467,9 +1467,9 @@ input.datepicker + button + .in-timepicker {
     content: "";
     z-index: 10;
     position: absolute;
-    left: calc(50% - 2px);
+    left: calc(50% - 1px);
     top: 0;
-    width: 2px;
+    width: 1px;
     height: 100%;
     transform: rotate(45deg);
     ms-transform: rotate(45deg);

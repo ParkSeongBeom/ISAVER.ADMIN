@@ -84,6 +84,7 @@ var VideoMediator = (
                     _videoList[_deviceList[index]['deviceId']] = {
                         'element' : ptzElement
                         ,'server' : null
+                        ,'responseBody' : null
                         ,'notification' : $.extend(true,{},criticalList)
                     };
 
@@ -101,6 +102,7 @@ var VideoMediator = (
                                     var webRtcServer = new WebRtcStreamer(videoTag, actionType['streamServerUrl']);
                                     webRtcServer.connect(responseBody['video'], responseBody['audio'], _options['webrtcConnect']);
                                     _videoList[actionType['deviceId']]['server'] = webRtcServer;
+                                    _videoList[actionType['deviceId']]['responseBody'] = responseBody;
                                     return true;
                                 }
                             }

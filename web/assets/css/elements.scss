@@ -688,6 +688,8 @@ $resi_w:8px;
     }
   }
 
+
+
   &-fence {
     /*width:auto !important; height:auto !important;*/
     //background-color: transparent !important;
@@ -730,31 +732,37 @@ $resi_w:8px;
         &:after {display: block;}
         &:before {color:$color-white-01 !important;}
       }
-      &-caution:after {@include border01(2px,$color-gray-05,1);  }
-      &-warning:after {@include border01(2px,$color-orange-01,1);}
-      &-danger:after  {@include border01(2px,$color-red-01,1);   }
 
-      &-caution { &,& > span {background-color:$color-gray-05;   } }
-      &-warning { &,& > span {background-color:$color-orange-01; } }
-      &-danger  { &,& > span {background-color:$color-red-01;    } }
+      &-caution {
+        &,& > span {background-color:$color-gray-05;   }
+        &:after {@include border01(1px,$color-gray-05,1);  }
+      }
+
+      &-warning {
+        &,& > span {background-color:$color-orange-01; }
+        &:after {@include border01(1px,$color-orange-01,1);}
+      }
+
+      &-danger  {
+        &,& > span {background-color:$color-red-01;    }
+        &:after  {@include border01(1px,$color-red-01,1);   }
+      }
 
       &-die     {
-        @include issue02; background-color:$color-gray-09; opacity: 0.7;
+        @include issue02; background-color:$color-gray-09; opacity: 0.5;
         &:after {
-          content:""; z-index: 10; position: absolute; left:calc(50% - 2px); top:0; width:2px; height:100%;
+          content:""; z-index: 10; position: absolute; left:calc(50% - 1px); top:0; width:1px; height:100%;
           @include rotate(45deg); background-color:rgba($color-gray-09,1); @include loding;
         }
       }
     }
   }
 }
-
-
 ////// ----------------- OFFINLE MAP 설정  End
 
 
-////// ----------------- ONNLE MAP 설정 Start
 
+////// ----------------- ONNLE MAP 설정 Start
 .device, .device > div, .icon-tof, .icon-ptz {
   &, &:before, &:after {@include flex-midddle; }
 
