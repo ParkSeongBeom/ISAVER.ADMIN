@@ -73,12 +73,9 @@ var VideoMediator = (
                     var ptzElement = $("<li/>",{class:'ptz', deviceId:_deviceList[index]['deviceId']}).append(
                         $("<span/>").text(_deviceList[index]['deviceName'])
                     ).append(
-                        $("<div/>").append(
-                            $("<video/>")
-                        )
+                        $("<div/>",{id:"videoDiv"})
                     );
                     _element.append(ptzElement);
-                    setDeviceStatus(ptzElement, _deviceList[index]['deviceStat']);
 
                     // register webrtc streamer connection
                     _videoList[_deviceList[index]['deviceId']] = {
@@ -86,37 +83,10 @@ var VideoMediator = (
                         ,'server' : null
                         ,'responseBody' : null
                         ,'notification' : $.extend(true,{},criticalList)
+                        ,'data' : _deviceList[index]
                     };
 
-                    sendAjaxGetRequest(
-                        _deviceList[index]['streamServerUrl'] + "/api/getMediaList"
-                        ,null
-                        ,function(data, dataType, actionType){
-                            for(var index in data){
-                                var responseBody = data[index];
-                                if(responseBody['video'].indexOf(actionType['ipAddress'])>-1){
-                                    var videoTag = "video_" + actionType['deviceId'];
-                                    _videoList[actionType['deviceId']]['element'].find("video").attr("id",videoTag);
-
-                                    // connect video element to webrtc stream
-                                    var webRtcServer = new WebRtcStreamer(videoTag, actionType['streamServerUrl']);
-                                    webRtcServer.connect(responseBody['video'], responseBody['audio'], _options['webrtcConnect']);
-                                    _videoList[actionType['deviceId']]['server'] = webRtcServer;
-                                    _videoList[actionType['deviceId']]['responseBody'] = responseBody;
-                                    return true;
-                                }
-                            }
-                        }
-                        ,function(XMLHttpRequest, textStatus, errorThrown, actionType){
-                            console.error(XMLHttpRequest, textStatus, errorThrown, actionType);
-                        }
-                        ,{
-                            streamServerUrl:_deviceList[index]['streamServerUrl']
-                            ,deviceId:_deviceList[index]['deviceId']
-                            ,ipAddress:_deviceList[index]['ipAddress']
-                            ,deviceName:_deviceList[index]['deviceName']
-                        }
-                    );
+                    setDeviceStatus(_videoList[_deviceList[index]['deviceId']], _deviceList[index]['deviceStat']);
                 }
             }
         };
@@ -129,7 +99,7 @@ var VideoMediator = (
             for(var index in deviceStatusList){
                 var deviceStatus = deviceStatusList[index];
                 if(_videoList[deviceStatus['deviceId']]!=null){
-                    setDeviceStatus(_videoList[deviceStatus['deviceId']]['element'], deviceStatus['deviceStat']);
+                    setDeviceStatus(_videoList[deviceStatus['deviceId']], deviceStatus['deviceStat']);
                 }
             }
         };
@@ -138,11 +108,17 @@ var VideoMediator = (
          * 장치상태
          * @author psb
          */
-        var setDeviceStatus = function(targetElement, status){
+        var setDeviceStatus = function(target, status){
+            if(target==null){
+                return false;
+            }
+
             if(status=='Y'){
-                targetElement.removeClass('level-die');
+                target['element'].removeClass('level-die');
+                _ajaxGetCall(target['data']);
             }else{
-                targetElement.addClass('level-die');
+                target['element'].addClass('level-die');
+                target['element'].find("video").remove();
             }
         };
 
@@ -183,6 +159,40 @@ var VideoMediator = (
                     }
                 }
             }
+        };
+
+        /**
+         * ajax call
+         * @author psb
+         */
+        var _ajaxGetCall = function(param){
+            sendAjaxGetRequest(
+                param['streamServerUrl'] + "/api/getMediaList"
+                ,null
+                ,function(data, dataType, actionType){
+                    for(var index in data){
+                        var responseBody = data[index];
+                        if(responseBody['video'].indexOf(actionType['ipAddress'])>-1){
+                            var videoTag = "video_" + actionType['deviceId'];
+                            _videoList[actionType['deviceId']]['element'].find("video").remove();
+                            _videoList[actionType['deviceId']]['element'].find("#videoDiv").append(
+                                $("<video/>",{"id":videoTag})
+                            );
+
+                            // connect video element to webrtc stream
+                            var webRtcServer = new WebRtcStreamer(videoTag, actionType['streamServerUrl']);
+                            webRtcServer.connect(responseBody['video'], responseBody['audio'], _options['webrtcConnect']);
+                            _videoList[actionType['deviceId']]['server'] = webRtcServer;
+                            _videoList[actionType['deviceId']]['responseBody'] = responseBody;
+                            return true;
+                        }
+                    }
+                }
+                ,function(XMLHttpRequest, textStatus, errorThrown, actionType){
+                    console.error(XMLHttpRequest, textStatus, errorThrown, actionType);
+                }
+                ,param
+            );
         };
 
         /**

@@ -582,10 +582,8 @@ menu {
 .db_area {
 
   body.admin_mode & {
-    right:-($noticecenter-width * 2);
-    &.on {right:$dash-margin;}
+    //right:-($noticecenter-width * 2); &.on {right:$dash-margin;}
     background-color: $adm-color;
-
     h2 {color:$bas-color;}
   }
 
@@ -595,7 +593,7 @@ menu {
   width:$noticecenter-width;*/
 
   position: fixed; @include z-index-notice;
-  top:($headerHeight + 20px); bottom:$dash-margin; right:$dash-margin; /*padding:20px 0;*/
+  top:($headerHeight + 20px); bottom:$dash-margin; right:-($noticecenter-width * 2);
   width:$noticecenter-width;
 
   &.on {right:$dash-margin;}

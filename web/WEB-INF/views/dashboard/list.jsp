@@ -16,7 +16,7 @@
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 
-<article>
+<article class="dashboardContainer">
     <div class="sub_title_area">
         <h3>
             <c:if test="${area.areaId!=null}">

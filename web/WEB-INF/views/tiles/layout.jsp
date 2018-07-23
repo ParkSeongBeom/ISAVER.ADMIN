@@ -111,14 +111,9 @@
 
             // 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if($("body").hasClass("admin_mode")){
-                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
-                        layerShowHide('list','hide');
-                    }
-                }else if($("body").hasClass("dashboard_mode")){
-                    if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
-                        layerShowHide('profile','hide');
-                    }
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
+                    layerShowHide('detail','hide');
+                    layerShowHide('profile','hide');
                 }
             });
 
@@ -154,6 +149,11 @@
                 }
             }, false);
             setAlarmAudio();
+
+            $.cookie.defaults = {path:'/'};
+            if($.cookie("notificationShowFlag")=='Y'){
+                layerShowHide('list');
+            }
         });
 
         /**
@@ -349,12 +349,12 @@
          */
         function layerShowHide(_type, _action){
             if(_action == null){
-                if($("body").hasClass("admin_mode")){
-                    if($(".db_area").hasClass("on")){
-                        layerShowHide('list','hide');
-                    }else{
-                        layerShowHide('list','show');
-                    }
+                if($(".db_area").hasClass("on")){
+                    $.cookie('notificationShowFlag','');
+                    layerShowHide('list','hide');
+                }else{
+                    $.cookie('notificationShowFlag','Y');
+                    layerShowHide('list','show');
                 }
                 return false;
             }
@@ -363,12 +363,12 @@
                 case "list":
                     if(_action == 'show'){
                         modifyElementClass($(".db_area"),'on','add');
-                        modifyElementClass($(".body.admin_mode section.container"),'on','add');
+                        modifyElementClass($(".dashboardContainer"),'on','add');
+                        modifyElementClass($(".sub_area"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".db_area"),'on','remove');
-                        modifyElementClass($(".body.admin_mode section.container"),'on','remove');
-                        layerShowHide('detail','hide');
-                        layerShowHide('profile','hide');
+                        modifyElementClass($(".dashboardContainer"),'on','remove');
+                        modifyElementClass($(".sub_area"),'on','remove');
                     }
                     break;
                 case "detail":
