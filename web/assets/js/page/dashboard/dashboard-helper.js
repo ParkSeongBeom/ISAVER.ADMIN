@@ -14,6 +14,7 @@ var DashboardHelper = (
         };
         var _options ={
             marquee : true
+            ,guardInfo : true
         };
         var _messageConfig;
         var _fileUploadPath;
@@ -99,6 +100,7 @@ var DashboardHelper = (
                 var areaId = $(this).attr("areaId");
                 _areaList[areaId] = {
                     'element' : $(this)
+                    ,'detect' : $.extend(true,{},criticalList)
                     ,'templateCode' : $(this).attr("templateCode")
                     ,'notification' : $.extend(true,{},criticalList)
                     ,'childDevice' : {}
@@ -187,7 +189,7 @@ var DashboardHelper = (
         /**
          * websocket callback append event handler
          */
-        this.appendEventHandler = function(messageType, data, flag){
+        this.appendEventHandler = function(messageType, data){
             switch (messageType) {
                 case "refreshBlinker": // 진출입 갱신
                     _self.getBlinker(data['areaId']);
@@ -211,15 +213,16 @@ var DashboardHelper = (
                 case "addNotification": // 알림이벤트 등록
                     if(Array.isArray(data['notification'])){
                         for(var index in data['notification']){
-                            _self.appendEventHandler(messageType, data['notification'][index], false);
+                            _self.appendEventHandler(messageType, data['notification'][index]);
                         }
-                        notificationMarqueeUpdate();
                     }else{
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null && data['status']!="C"){
                             _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
                             _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
+                            notificationGuardInfoUpdate(messageType, data['criticalLevel'], data);
                         }
-                        notificationUpdate(messageType, data, flag!=null?flag:true);
+                        notificationUpdate(messageType, data);
+                        notificationMarqueeUpdate(data['areaId'], data);
                     }
                     break;
                 case "removeNotification": // 알림이벤트 해제
@@ -227,17 +230,19 @@ var DashboardHelper = (
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
                     }
-                    notificationUpdate(messageType, data['notification'], flag!=null?flag:true);
+                    notificationUpdate(messageType, data['notification']);
+                    notificationMarqueeUpdate(data['areaId']);
                     break;
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(var index in data['cancel']){
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
+                            notificationGuardInfoUpdate(messageType, data['cancel'][index]['criticalLevel'], data['notification']);
                         }
                     }
                     break;
-                case "editDeviceStatus": // 감지 해제
+                case "editDeviceStatus": // 장치 상태
                     for(var index in _guardList){
                         _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
                         _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
@@ -373,9 +378,55 @@ var DashboardHelper = (
         };
 
         /**
+         * Safe-Guard 왼쪽 상단 거수자감시 인원 표시
+         */
+        var notificationGuardInfoUpdate = function(messageType, criticalLevel, data){
+            if(!_options['guardInfo']) {
+                return false;
+            }
+
+            var areaComponent = _self.getArea("all", data['areaId']);
+
+            if(areaComponent==null || data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
+                return false;
+            }
+            var element = areaComponent['element'];
+            var detect = areaComponent['detect'];
+
+            switch (messageType) {
+                case "addNotification": // 알림센터 이벤트 등록
+                    if(data['objectId']!=null){
+                        detect[criticalLevel].push(data['objectId']);
+                    }
+                    break;
+                case "cancelDetection": // 감지 해제
+                    if(detect[criticalLevel].indexOf(data['objectId']) > -1){
+                        detect[criticalLevel].splice(detect[criticalLevel].indexOf(data['objectId']),1);
+                    }
+                    break;
+            }
+
+            var detectCnt = 0;
+            for(var index in detect){
+                detectCnt += detect[index].length;
+                if(detect[index].length > 0){
+                    element.find("div[guardInfo]").addClass("level-"+criticalCss[index]);
+                }else{
+                    element.find("div[guardInfo]").removeClass("level-"+criticalCss[index]);
+                }
+            }
+            element.find("div[guardInfo] span[name='detectCnt']").text(detectCnt);
+            element.find("div[guardInfo] em[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+        };
+
+        /**
          * Notification marquee Update
          */
-        var notificationMarqueeUpdate = function(paramComponent, data){
+        var notificationMarqueeUpdate = function(areaId, data){
+            if(!_options['marquee']) {
+                return false;
+            }
+
             function setMarquee(areaComponent, _data){
                 var element = areaComponent['element'];
                 var lastNoti = null;
@@ -417,8 +468,10 @@ var DashboardHelper = (
                 }
             }
 
-            if(paramComponent!=null){
-                setMarquee(paramComponent, data);
+
+            var areaComponent = _self.getArea("all", areaId);
+            if(areaComponent!=null){
+                setMarquee(areaComponent, data);
             }else{
                 var component = _self.getArea("full");
                 for(var key in component){
@@ -430,7 +483,7 @@ var DashboardHelper = (
         /**
          * Notification update
          */
-        var notificationUpdate = function(messageType, data, flag){
+        var notificationUpdate = function(messageType, data){
             var areaComponent = _self.getArea("all", data['areaId']);
 
             if(areaComponent==null){
@@ -451,10 +504,6 @@ var DashboardHelper = (
                     if(childDevice[data['deviceId']] != null){
                         childDevice[data['deviceId']]['notification'][data['criticalLevel']].push(data['notificationId']);
                     }
-
-                    if(flag && _options['marquee']){
-                        notificationMarqueeUpdate(areaComponent, data);
-                    }
                     break;
                 case "removeNotification" :
                     if(notification[data['criticalLevel']].indexOf(data['notificationId']) > -1){
@@ -465,10 +514,6 @@ var DashboardHelper = (
                         if(childDevice[data['deviceId']]['notification'][data['criticalLevel']].indexOf(data['notificationId']) > -1){
                             childDevice[data['deviceId']]['notification'][data['criticalLevel']].splice(childDevice[data['deviceId']]['notification'][data['criticalLevel']].indexOf(data['notificationId']),1);
                         }
-                    }
-
-                    if(flag && _options['marquee']){
-                        notificationMarqueeUpdate(areaComponent);
                     }
                     break;
             }

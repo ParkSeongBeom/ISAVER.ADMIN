@@ -11,11 +11,23 @@
 */
 body {
   width: 100%;
-  min-width: 1400px;
+  min-width: 1450px;
   min-height: 768px; }
+  body ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px; }
+  body ::-webkit-scrollbar-track {
+    background-color: #fff; }
+  body ::-webkit-scrollbar-thumb {
+    min-height: 30px;
+    border: 2px solid #fff;
+    background-clip: content-box;
+    background-color: rgba(94, 94, 94, 0.6); }
+  body ::-webkit-scrollbar-thumb:hover {
+    background-color: #5e5e5e; }
   body .wrap {
     width: 100%; }
-  @media screen and (min-width: 0) and (max-width: 1400px) {
+  @media screen and (min-width: 0) and (max-width: 1450px) {
     body .wrap > header {
       position: absolute; }
     body.dashboard_mode {
@@ -107,6 +119,34 @@ h4 {
 .ico-invasion:before {content:"\e93e";} // 침입
 .ico-exhibit:before  {content:"\e93c";} // 전시물보호
  */
+.language {
+  background-color: #3c3c3c;
+  color: #f5f5f5;
+  /*
+  &:after {
+    content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
+    background-image: url(../images/bg/bg_spot.svg); opacity: 0.5;
+  }
+  */
+  background-image: url(../images/ico/select_allow_w.svg);
+  color: #f5f5f5; }
+  .language ::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.4); }
+  .language ::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.4); }
+  .language :-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.4); }
+  .language :-moz-placeholder {
+    color: rgba(255, 255, 255, 0.4); }
+  .language input, .language textarea, .language select, .language div[contenteditable] {
+    color: #fff !important;
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgray;
+    background-color: #999; }
+  .language select, .language input[type="date"] {
+    background-image: url(../images/ico/select_allow_w.svg) !important; }
+
 .ico-safeeye:before {
   content: "\e941"; }
 .ico-blinker:before {
@@ -263,7 +303,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  min-width: 1400px;
+  min-width: 1450px;
   height: 40px;
   padding: 0 20px;
   background-color: #f5f5f5; }
@@ -704,7 +744,8 @@ header {
     -o-transform: rotateY(0deg); } }
 .wrap > header {
   background-color: #3c3c3c;
-  color: #f5f5f5; }
+  color: #f5f5f5;
+  overflow-x: hidden; }
   .wrap > header:after {
     content: "";
     position: absolute;
@@ -1848,35 +1889,31 @@ menu {
 
 .level-caution {
   background-color: #999999; }
-  .level-caution .m_marqueebox *, .level-caution .m_marqueebox:before {
-    color: #999 !important; }
-.level-warning {
+  .level-caution, .level-caution .m_marqueebox:after, .level-caution.copybox:after {
+    background-color: #999999; }
+.level-warning, .level-warning .m_marqueebox:after, .level-warning.copybox:after {
   background-color: #ff8400; }
-  .level-warning .m_marqueebox *, .level-warning .m_marqueebox:before {
-    color: #ff8400 !important; }
-.level-danger {
+.level-danger, .level-danger .m_marqueebox:after, .level-danger.copybox:after {
   background-color: #be1e1e; }
-  .level-danger .m_marqueebox *, .level-danger .m_marqueebox:before {
-    color: #be1e1e !important; }
 .level-caution.type-list *, .level-caution.type-list *:before, .level-caution.type-list *:after, .level-caution .watch_area > div *, .level-caution .watch_area > div *:before, .level-caution .watch_area > div *:after, .level-warning.type-list *, .level-warning.type-list *:before, .level-warning.type-list *:after, .level-warning .watch_area > div *, .level-warning .watch_area > div *:before, .level-warning .watch_area > div *:after, .level-danger.type-list *, .level-danger.type-list *:before, .level-danger.type-list *:after, .level-danger .watch_area > div *, .level-danger .watch_area > div *:before, .level-danger .watch_area > div *:after {
   color: inherit; }
 .level-caution.type-list, .level-caution.type-list:before, .level-caution .watch_area > div, .level-caution .watch_area > div:before, .level-warning.type-list, .level-warning.type-list:before, .level-warning .watch_area > div, .level-warning .watch_area > div:before, .level-danger.type-list, .level-danger.type-list:before, .level-danger .watch_area > div, .level-danger .watch_area > div:before {
   background-color: transparent !important; }
-.level-caution .m_marqueebox, .level-warning .m_marqueebox, .level-danger .m_marqueebox {
+.level-caution .m_marqueebox, .level-caution.copybox, .level-warning .m_marqueebox, .level-warning.copybox, .level-danger .m_marqueebox, .level-danger.copybox {
   display: inline-block !important; }
-  .level-caution .m_marqueebox > p > span, .level-warning .m_marqueebox > p > span, .level-danger .m_marqueebox > p > span {
-    animation-name: marquee;
-    -webkit-animation-name: marquee;
-    /*  animation-delay:         2s;
-      -webkit-animation-delay: 2s;*/
-    animation-duration: 15s;
-    -webkit-animation-duration: 15s;
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    -webkit-animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards; }
+.level-caution .m_marqueebox > p > span, .level-warning .m_marqueebox > p > span, .level-danger .m_marqueebox > p > span {
+  animation-name: marquee;
+  -webkit-animation-name: marquee;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration: 15s;
+  -webkit-animation-duration: 15s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards; }
 @-webkit-keyframes marquee {
   0% {
     left: 100%;
@@ -1895,6 +1932,37 @@ menu {
   100% {
     left: -120%;
     opacity: 0; } }
+.level-caution.copybox:after, .level-warning.copybox:after, .level-danger.copybox:after {
+  animation-name: issue02;
+  -webkit-animation-name: issue02;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s; }
+@-webkit-keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+@keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
 body.adaptive_mobile menu, body.adaptive_mobile .datetime_set {
   display: none; }
 body.adaptive_mobile, body.adaptive_mobile header {

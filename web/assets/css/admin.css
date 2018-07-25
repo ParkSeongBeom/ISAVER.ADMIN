@@ -13,8 +13,6 @@
 
 
 body.chart_mode {
-
-
   section.container {
     @include flexbase;
     position: absolute; padding:0; width:auto; height:auto;

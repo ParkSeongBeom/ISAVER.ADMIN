@@ -92,7 +92,7 @@ $hov-color:#040404;   //rgba(20,20,20,1) 구분라인
 
 
 // 길이지정
-$body-minwidth:1400px;
+$body-minwidth:1450px;
 $dash-margin:20px;
 $popup-margin:20px;
 $admin-margin : 150px;
@@ -635,6 +635,28 @@ $bbl01:100%; $bbl02:1px;
     100%  {left:-1px; opacity: 0.7;}
   }
 } // ex) @include notice03;
+
+
+@mixin notice04 {
+  animation-name: notice04;
+  -webkit-animation-name: notice04;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 50;
+  animation-iteration-count: 50;
+
+  @-webkit-keyframes notice04 {
+    0%   {@include rotate-y(10deg); }
+    50%  {@include rotate-y(-10deg); opacity: 0.8;}
+    100%    {@include rotate-y(0deg);  }
+  }
+  @keyframes notice04 {
+
+    0%   {@include rotate-y(10deg); }
+    50%  {@include rotate-y(-10deg); opacity: 0.8;}
+    100%    {@include rotate-y(0deg);  }
+  }
+} // ex) @include notice04;
 
 
 
