@@ -86,6 +86,9 @@ var CustomMapMediator = (
             _element = element;
             _element.addClass("map_images");
             _element.empty();
+            if(_element.data('svgwrapper')){
+                _element.svg('destroy');
+            }
             if(_element.data('uiDraggable')){
                 _element.draggable('destroy');
             }
@@ -414,7 +417,7 @@ var CustomMapMediator = (
                         }
 
                         if(_fenceSvg==null){
-                            console.error("[CustomMapMediator][addMarker] fence svg is not init - fenceId :" + data['id']);
+                            console.warn("[CustomMapMediator][addMarker] fence svg is not init - fenceId :" + data['id']);
                             return false;
                         }
                         _fenceSvg.polygon(points, {fenceId:data['id']});

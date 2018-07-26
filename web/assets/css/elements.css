@@ -378,7 +378,7 @@ input.datepicker + button + .in-timepicker {
     align-items: center; }
   .checkbox_set > input {
     position: absolute;
-    z-index: 1;
+    z-index: 10;
     top: 0;
     left: 0;
     opacity: 0;
@@ -409,15 +409,32 @@ input.datepicker + button + .in-timepicker {
       justify-content: center; }
       .checkbox_set.csl_style01 > label:before {
         content: "\e901";
-        font-size: 1.5rem;
-        opacity: 0.8; }
+        font-size: 1.2rem;
+        opacity: 0.3;
+        z-index: 1; }
+      .checkbox_set.csl_style01 > label:after {
+        content: "";
+        opacity: 0.8;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        -moz-border-radius: 200px;
+        -webkit-border-radius: 200px;
+        border-radius: 200px;
+        -khtml-border-radius: 200px;
+        background-color: rgba(0, 0, 0, 0.5); }
     .checkbox_set.csl_style01 > input:checked + label:before, .checkbox_set.csl_style01 > input.on + label:before {
       text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
       -webkit-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
       -moz-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
-      font-size: 26px;
+      font-size: 1.6rem;
       font-weight: bold;
       opacity: 1; }
+    .checkbox_set.csl_style01 > input:checked + label:after, .checkbox_set.csl_style01 > input.on + label:after {
+      opacity: 1;
+      width: 28px;
+      height: 28px;
+      background-color: rgba(0, 0, 0, 0.7); }
   .checkbox_set.csl_style02, .checkbox_set.csl_style03, .checkbox_set.csl_style04 {
     /*
     <div class="checkbox_set csl_style02">
@@ -1298,7 +1315,8 @@ input.datepicker + button + .in-timepicker {
       @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
     }*/ }
     .g-fence polygon text, .g-fence path text {
-      font-size: 5px !important; }
+      font-size: 5px !important;
+      letter-spacing: 0; }
     .g-fence polygon.level, .g-fence path.level {
         /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
         &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }

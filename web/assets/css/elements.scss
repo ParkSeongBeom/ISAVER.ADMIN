@@ -700,7 +700,7 @@ $resi_w:8px;
 
     polygon, path {
       fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01; stroke-width:1px;
-      text {font-size:5px !important;}
+      text {font-size:5px !important; letter-spacing: 0;}
       /*&:after {display: none !important;}
       &:before {
         content:""; position: absolute; width:100%; height:100%;

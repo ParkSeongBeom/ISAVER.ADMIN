@@ -370,7 +370,7 @@ header {
         -webkit-justify-content: flex-end;
         -ms-flex-pack: flex-end;
         justify-content: flex-end;
-        width: 300px;
+        /*width:$noticecenter-width;*/
         margin: 0 0 0 20px; }
         header .header_area .header_right_area .header_btn_set > * {
           position: relative; }
@@ -401,7 +401,8 @@ header {
               -webkit-animation-duration: 0.5s;
               animation-duration: 0.5s;
               -webkit-animation-iteration-count: 10;
-              animation-iteration-count: 10; }
+              animation-iteration-count: 10;
+              width: 220px; }
 @-webkit-keyframes issue {
   0% {
     opacity: 1; }
@@ -928,7 +929,12 @@ menu {
   right: 0;
   bottom: 0;
   left: 0;
-  width: auto !important; }
+  width: auto !important;
+  transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
   .popupbase > div {
     display: -webkit-box;
     display: -moz-box;
@@ -1034,6 +1040,8 @@ menu {
     width: 100% !important;
     height: 100% !important;
     background-color: rgba(76, 76, 76, 0.8); }
+  .popupbase.map_pop.on {
+    right: 330px; }
   .popupbase.map_pop > div > div {
     position: absolute;
     max-width: none;
@@ -1550,6 +1558,15 @@ menu {
         -ms-flex-align: center;
         align-items: center;
         padding: 10px; }
+      .db_area .db_list_box .db_filter_set .checkbox_set label:before {
+        font-size: 1.4rem; }
+      .db_area .db_list_box .db_filter_set .checkbox_set label:after {
+        width: 100%;
+        height: 100%;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+        -khtml-border-radius: 0px; }
     .db_area .db_list_box > ul {
       flex: 0 1 100%;
       -webkit-flex: 0 1 100%;
@@ -1900,7 +1917,7 @@ menu {
 .level-caution.type-list, .level-caution.type-list:before, .level-caution .watch_area > div, .level-caution .watch_area > div:before, .level-warning.type-list, .level-warning.type-list:before, .level-warning .watch_area > div, .level-warning .watch_area > div:before, .level-danger.type-list, .level-danger.type-list:before, .level-danger .watch_area > div, .level-danger .watch_area > div:before {
   background-color: transparent !important; }
 .level-caution .m_marqueebox, .level-caution.copybox, .level-warning .m_marqueebox, .level-warning.copybox, .level-danger .m_marqueebox, .level-danger.copybox {
-  display: inline-block !important; }
+  display: block !important; }
 .level-caution .m_marqueebox > p > span, .level-warning .m_marqueebox > p > span, .level-danger .m_marqueebox > p > span {
   animation-name: marquee;
   -webkit-animation-name: marquee;
@@ -2301,7 +2318,7 @@ body.admin_mode.taekwon_mode .issue_btn {
             align-items: center; }
           .map_sett_box > section.list ul li > div > div > input {
             position: absolute;
-            z-index: 1;
+            z-index: 10;
             top: 0;
             left: 0;
             opacity: 0;

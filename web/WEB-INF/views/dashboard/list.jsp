@@ -413,11 +413,7 @@
                                         <ul ptzPlayers></ul>
                                     </div>
                                 </section>
-                                <div guardInfo class="copybox">
-                                    <p><spring:message code='dashboard.title.guardDetection'/></p>
-                                    <span name="detectCnt"></span>
-                                    <em name="detectEventDatetime"></em>
-                                </div>
+                                <div guardInfo class="copybox_area"></div>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>

@@ -287,16 +287,9 @@ var NotificationHelper = (
                 notificationCancelBtnAction();
             });
 
-            var fenceName = null;
-            if(notification['fenceName']!=null && notification['fenceName']!=''){
-                fenceName = notification['fenceName'];
-            }else{
-                fenceName = _fenceList[notification['fenceId']]!=null?_fenceList[notification['fenceId']]:notification['fenceId'];
-            }
-
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
             notificationTag.attr("notificationId",notification['notificationId']);
-            notificationTag.find("#areaName").text(notification['areaName'] + (fenceName!=null?' - '+fenceName:''));
+            notificationTag.find("#areaName").text(notification['areaName'] + ' - ' + notification['fenceName']);
             notificationTag.find("#eventName").text(notification['eventName'] + (notification['value']!=null?'('+notification['value']+')':''));
             notificationTag.find("#eventDatetime").text(new Date(notification['eventDatetime']).format("MM/dd HH:mm:ss"));
             notificationTag.find(".infor_btn").on("click",function(){
@@ -332,6 +325,10 @@ var NotificationHelper = (
             if(_self.getNotification('element',notification['notificationId'])!=null){
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
+            }
+
+            if(notification['fenceName']==null || notification['fenceName']==''){
+                notification['fenceName'] = _fenceList[notification['fenceId']]!=null?_fenceList[notification['fenceId']]:notification['fenceId'];
             }
 
             _notificationList[notification['notificationId']] = {

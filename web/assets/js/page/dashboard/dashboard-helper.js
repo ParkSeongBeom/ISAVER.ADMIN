@@ -100,7 +100,7 @@ var DashboardHelper = (
                 var areaId = $(this).attr("areaId");
                 _areaList[areaId] = {
                     'element' : $(this)
-                    ,'detect' : $.extend(true,{},criticalList)
+                    ,'detect' : {}
                     ,'templateCode' : $(this).attr("templateCode")
                     ,'notification' : $.extend(true,{},criticalList)
                     ,'childDevice' : {}
@@ -390,33 +390,56 @@ var DashboardHelper = (
             if(areaComponent==null || data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
                 return false;
             }
-            var element = areaComponent['element'];
             var detect = areaComponent['detect'];
 
+            if(detect[data['fenceId']] == null){
+                var element = areaComponent['element'];
+                var detectTag = $("<div/>",{class:'copybox'}).append(
+                    $("<p/>").text(data['eventName']+' - '+data['fenceName'])
+                ).append(
+                    $("<span/>",{name:'detectCnt'})
+                ).append(
+                    $("<em/>",{name:'detectEventDatetime'})
+                );
+                element.find("div[guardInfo]").append(detectTag);
+
+                detect[data['fenceId']] = {
+                    'element' : detectTag
+                    ,'notification' : $.extend(true,{},criticalList)
+                }
+            }
+
+            var fenceTarget = detect[data['fenceId']];
             switch (messageType) {
                 case "addNotification": // 알림센터 이벤트 등록
                     if(data['objectId']!=null){
-                        detect[criticalLevel].push(data['objectId']);
+                        fenceTarget['notification'][criticalLevel].push(data['objectId']);
                     }
                     break;
                 case "cancelDetection": // 감지 해제
-                    if(detect[criticalLevel].indexOf(data['objectId']) > -1){
-                        detect[criticalLevel].splice(detect[criticalLevel].indexOf(data['objectId']),1);
+                    if(fenceTarget['notification'][criticalLevel].indexOf(data['objectId']) > -1){
+                        fenceTarget['notification'][criticalLevel].splice(fenceTarget['notification'][criticalLevel].indexOf(data['objectId']),1);
                     }
                     break;
             }
 
             var detectCnt = 0;
-            for(var index in detect){
-                detectCnt += detect[index].length;
-                if(detect[index].length > 0){
-                    element.find("div[guardInfo]").addClass("level-"+criticalCss[index]);
+            for(var index in fenceTarget['notification']){
+                detectCnt += fenceTarget['notification'][index].length;
+                if(fenceTarget['notification'][index].length > 0){
+                    fenceTarget['element'].addClass("level-"+criticalCss[index]);
                 }else{
-                    element.find("div[guardInfo]").removeClass("level-"+criticalCss[index]);
+                    fenceTarget['element'].removeClass("level-"+criticalCss[index]);
                 }
             }
-            element.find("div[guardInfo] span[name='detectCnt']").text(detectCnt);
-            element.find("div[guardInfo] em[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+
+            if(detectCnt>0){
+                fenceTarget['element'].find("span[name='detectCnt']").text(detectCnt);
+                fenceTarget['element'].find("em[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+            }else{
+                fenceTarget['element'].remove();
+                delete _areaList[data['areaId']]['detect'][data['fenceId']];
+            }
         };
 
         /**
