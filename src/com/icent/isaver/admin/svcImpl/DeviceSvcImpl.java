@@ -57,8 +57,8 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${ws.server.urlDeviceSync}")
-    private String wsUrlDeviceSync = null;
+    @Value("${ws.server.urlSync}")
+    private String wsUrlSync = null;
 
     @Inject
     private DeviceDao deviceDao;
@@ -348,8 +348,9 @@ public class DeviceSvcImpl implements DeviceSvc {
             try {
                 Map websocketParam = new HashMap();
                 websocketParam.put("deviceId",parentDevice.getDeviceId());
+                websocketParam.put("messageType","deviceSync");
 
-                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlDeviceSync, "form", null);
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
