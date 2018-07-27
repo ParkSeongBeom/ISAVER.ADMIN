@@ -799,13 +799,16 @@ body.dashboard_mode {
   &, & * {color:$color-white-01;}
 }
 
-.m_marqueebox, .copybox {display: none;}
+.m_marqueebox, .copybox {
+  display: none;
+  &:after {content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; opacity: 0.6;}
+}
 
 
 .copybox {
   position: relative; width:auto; top:0; padding:10px 20px; background-color: transparent !important;
   &:before {}
-  &:after {content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; opacity: 0.6;}
+
   p {
     display: block;
     &:first-of-type {font-size:1.4rem; letter-spacing: -1px;}

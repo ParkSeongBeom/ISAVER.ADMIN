@@ -1694,14 +1694,7 @@ body.dashboard_mode {
 
 .m_marqueebox, .copybox {
   display: none; }
-
-.copybox {
-  position: relative;
-  width: auto;
-  top: 0;
-  padding: 10px 20px;
-  background-color: transparent !important; }
-  .copybox:after {
+  .m_marqueebox:after, .copybox:after {
     content: "";
     position: absolute;
     z-index: -1;
@@ -1710,6 +1703,13 @@ body.dashboard_mode {
     width: 100%;
     height: 100%;
     opacity: 0.6; }
+
+.copybox {
+  position: relative;
+  width: auto;
+  top: 0;
+  padding: 10px 20px;
+  background-color: transparent !important; }
   .copybox p {
     display: block; }
     .copybox p:first-of-type {

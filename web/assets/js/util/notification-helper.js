@@ -289,7 +289,7 @@ var NotificationHelper = (
 
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
             notificationTag.attr("notificationId",notification['notificationId']);
-            notificationTag.find("#areaName").text(notification['areaName'] + ' - ' + notification['fenceName']);
+            notificationTag.find("#areaName").text(notification['areaName'] + (notification['fenceName']!=null?' - '+notification['fenceName']:''));
             notificationTag.find("#eventName").text(notification['eventName'] + (notification['value']!=null?'('+notification['value']+')':''));
             notificationTag.find("#eventDatetime").text(new Date(notification['eventDatetime']).format("MM/dd HH:mm:ss"));
             notificationTag.find(".infor_btn").on("click",function(){

@@ -1664,6 +1664,7 @@ menu {
           opacity: 1; }
     .db_area .db_list_box > button {
       background-color: #3c3c3c;
+      color: #fff;
       flex: 1 0 40px;
       -webkit-flex: 1 0 40px;
       flexbox: 1 0 40px;
