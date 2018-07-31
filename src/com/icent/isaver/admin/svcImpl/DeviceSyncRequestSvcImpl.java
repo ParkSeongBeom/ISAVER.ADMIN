@@ -4,10 +4,12 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.DeviceSyncRequestBean;
 import com.icent.isaver.repository.dao.base.DeviceSyncRequestDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +47,18 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
+
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSync}")
+    private String wsUrlSync = null;
 
     @Override
     public ModelAndView findListDeviceSyncRequest(Map<String, String> parameters) {
@@ -110,6 +125,15 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
             throw new IcentException("");
         }
 
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("allFlag","Y");
+            websocketParam.put("messageType","deviceSync");
+
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
     }

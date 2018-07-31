@@ -49,8 +49,8 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${ws.server.urlSendDevice}")
-    private String wsUrlSendDevice = null;
+    @Value("${ws.server.urlSendMap}")
+    private String wsUrlSendMap = null;
 
     @Inject
     private TemplateSettingDao templateSettingDao;
@@ -116,7 +116,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             websocketParam.put("messageType","setMode");
             websocketParam.put("settingId","safeGuardMapView");
             websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendDevice, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

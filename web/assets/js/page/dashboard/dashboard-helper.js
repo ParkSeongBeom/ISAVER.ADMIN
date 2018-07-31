@@ -56,9 +56,9 @@ var DashboardHelper = (
          * set websocket
          * @author psb
          */
-        this.setWebsocket = function(_webSocketHelper, _deviceWebSocketUrl){
+        this.setWebsocket = function(_webSocketHelper, _mapWebSocketUrl){
             if($("div[templateCode='TMP005']").length>0){
-                _webSocketHelper.addWebSocketList("device", _deviceWebSocketUrl, null, deviceMessageEventHandler);
+                _webSocketHelper.addWebSocketList("device", _mapWebSocketUrl, null, mapMessageEventHandler);
                 _webSocketHelper.wsConnect("device");
             }
         };
@@ -67,12 +67,12 @@ var DashboardHelper = (
          * 웹소켓 메세지 리스너
          * @param message
          */
-        var deviceMessageEventHandler = function(message) {
+        var mapMessageEventHandler = function(message) {
             var resultData;
             try{
                 resultData = JSON.parse(message.data);
             }catch(e){
-                console.warn("[deviceMessageEventHandler] json parse error - " + message.data);
+                console.warn("[mapMessageEventHandler] json parse error - " + message.data);
                 return false;
             }
 

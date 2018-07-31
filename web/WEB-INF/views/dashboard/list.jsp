@@ -574,7 +574,7 @@
 
         dashboardHelper.setFileUploadPath(fileUploadPath);
         dashboardHelper.setMessageConfig(messageConfig);
-        dashboardHelper.setWebsocket(webSocketHelper, "${deviceWebSocketUrl}");
+        dashboardHelper.setWebsocket(webSocketHelper, "${mapWebSocketUrl}");
         dashboardHelper.setAreaList();
         dashboardHelper.getBlinkerList();
         if(templateSetting['safeGuardMapView']=='offline'){
