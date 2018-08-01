@@ -31,24 +31,6 @@ public interface DeviceSvc {
     ModelAndView findListDevice(Map<String, String> parameters);
 
     /**
-     * 장치 목록을 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    ModelAndView findTbListDevice(Map<String, String> parameters);
-
-    /**
-     * 장치 정보를 가져온다.
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    ModelAndView findByDevice(Map<String, String> parameters);
-
-    /**
      * 장치를 등록한다.
      *
      * @author dhj
@@ -74,12 +56,4 @@ public interface DeviceSvc {
      * @return
      */
     ModelAndView removeDevice(HttpServletRequest request, Map<String, String> parameters);
-
-    /**
-     * 알림 장치 매핑 목록을 가져온다.
-     * @param parameters
-     * @return
-     */
-    ModelAndView findListAlarmMappingDetail(Map<String, String> parameters);
-
 }

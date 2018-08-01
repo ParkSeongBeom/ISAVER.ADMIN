@@ -58,50 +58,12 @@
     </definition>
 
     <!--
-        장치  관리
-        @author dhj
-    -->
-    <!--<definition name="deviceList" extends="base">-->
-        <!--<put-attribute name="body" value="/WEB-INF/views/device/list.jsp" />-->
-    <!--</definition>-->
-    <!--<definition name="deviceDetail" extends="base">-->
-        <!--<put-attribute name="body" value="/WEB-INF/views/device/detail.jsp" />-->
-    <!--</definition>-->
-
-    <!--
-        장치 목록
-        @author psb
-    -->
-    <definition name="deviceTbList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/device/tbList.jsp" />
-    </definition>
-
-    <!--
-        알림 장치 매핑 설정(ivas->sioc)
-        @author dhj
-    -->
-    <definition name="alarmMappingDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/device/alarmMappingDetail.jsp" />
-    </definition>
-
-    <!--
         장치 동기화 요청 이력 관리
         @author psb
     -->
     <definition name="deviceSyncRequestList" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/deviceSyncRequest/list.jsp" />
     </definition>
-
-    <!--
-        구역  관리
-        @author dhj
-    -->
-    <!--<definition name="areaList" extends="base">-->
-        <!--<put-attribute name="body" value="/WEB-INF/views/area/list.jsp" />-->
-    <!--</definition>-->
-    <!--<definition name="areaDetail" extends="base">-->
-        <!--<put-attribute name="body" value="/WEB-INF/views/area/detail.jsp" />-->
-    <!--</definition>-->
 
     <!--
         라이센스  관리
