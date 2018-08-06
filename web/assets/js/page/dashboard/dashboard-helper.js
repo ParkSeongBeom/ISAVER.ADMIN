@@ -149,7 +149,7 @@ var DashboardHelper = (
                 // Video Mediator
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId);
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayer(deviceList);
+                _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayerList(deviceList);
 
                 // Map Mediator
                 if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof MapMediator){

@@ -114,7 +114,7 @@ var MapMediator = (
             map.addListener('tilesloaded', function() {
                 for(var index in _deviceList){
                     if(_deviceList[index]['deviceCode']=="DEV013"){
-                        webSocketHelper.sendMessage("device",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
+                        webSocketHelper.sendMessage("map",{"messageType":"getDevice","areaId":_deviceList[index]['areaId'],"deviceId":_deviceList[index]['deviceId'],"ipAddress":_deviceList[index]['ipAddress']});
                     }else if(_deviceList[index]['deviceCode']=='DEV002'){
                         _self.addCamera(_deviceList[index]['deviceId']);
                     }

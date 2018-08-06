@@ -198,43 +198,7 @@ body.dashboard_mode {
 
   }
 }
-.level {
 
-  &-caution {
-    .treffic_set .ts-caution {
-      &:before {border-width:2px;  background-color:$color-white-01;}
-      &:after  { @include issue02; background-color:$color-gray-03;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-gray-03,1 );  }}
-    } //신호등
-  } // .level-caution 주의
-
-  &-warning {
-    .treffic_set .ts-warning {
-      &:before {border-width:2px; background-color:$color-white-01;}
-      &:after  {@include issue02; background-color:$color-orange-01;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-orange-01,1 ); }}
-    } // 신호등
-  } // .level-warning 경고
-
-  &-danger  {
-    .treffic_set .ts-danger {
-      &:before {border-width:2px; background-color:$color-white-01;}
-      &:after  {@include issue02; background-color:$color-red-01;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-red-01,1 ); } }
-    } // 신호등
-  } // .level-danger  위험
-
-  &-caution, &-warning, &-danger {
-
-    .treffic_set > div {
-      &:before {@include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5); }
-      &:after  {@include box-inset-shadow(0px, 2px, 5px, #000, 0.5);}
-    } // 신호등
-
-  }
-  // 신호등 3단계 끝
-
-}
 /////.....  신호등 상태 아이콘 일반, 경고, 감지 정의 section End
 
 
@@ -377,61 +341,10 @@ body.dashboard_mode {
     }
   }
 }
-
-.level {
-  // 신호등 3단계 시작
-  @mixin level-Common {
-
-    &:before {
-      @include box-shadow01(0px, 14px, 8px, -8px, #000, 0.5);
-      background-color:$color-white-01;
-    }
-    &:after  {
-      @include box-inset-shadow(0px, 2px, 5px, #000, 0.5); @include issue02;
-      //border:none; margin-top:-($treffic_a); margin-left:-($treffic_a);
-    }
-    p {color:$color-white-01 !important;}
-  }
-
-  &-caution {
-    .safeeye_set .s_lbox {color:$color-gray-03; &:after {border-color:$color-gray-03;} }
-  } // .level-caution 주의
-
-  &-warning {
-    .safeeye_set .s_lbox {color:$color-orange-01; &:after {border-color:$color-orange-01;} }
-  } // .level-warning 경고
-
-  &-danger  {
-    .safeeye_set .s_lbox {color:$color-red-01; &:after {border-color:$color-red-01; } }
-  } // .level-danger  위험
-
-  &-die  {
-    .safeeye_set .s_lbox {
-      color:$color-gray-03;  opacity: 0.4 !important;
-      &:after {display: none !important;}
-      &:before {content:"\e90f";}
-    }
-    .s_lbox.blinker_set {
-      opacity: 0.3;
-      & > div:before {content:"\e90f" !important;}
-    }
-  } // .level-danger  위험
-
-  &-caution, &-warning, &-danger  {
-    .safeeye_set .s_lbox {
-      @include issue02;
-      &:after {display: block; @include issue05;}
-    }
-  }
-  // 신호등 3단계 끝
-}
-
-
 /////..... safeeye section End
 
 
 /////..... NHR section Start
-
 .nhr_set {
   $nh_lhe:52px;
   $nh_lhe_s:($nh_lhe - 12px);
@@ -454,11 +367,10 @@ body.dashboard_mode {
     }
 
     li {
-      @include flex-row-wrap; overflow: hidden; opacity: 0.7; margin:0;
-
-      position: relative; z-index: 1; width:50%; height:55px;
-      line-height:1rem; letter-spacing: -0.1rem; padding:4px 30px 9px 55px;
-
+      @include flex-row-wrap;
+      $l-h:55px;
+      overflow: hidden; opacity: 0.7; position: relative; z-index: 1; width:50%; height:$l-h;
+      padding:4px 30px 9px $l-h; margin:0; cursor: pointer; background-color: transparent;
 
       &, &:before, &:after {@include transition01(200ms);}
       & * {cursor:pointer;}
@@ -477,29 +389,11 @@ body.dashboard_mode {
         &:before {display: block;}
       }
 
-      &.ts {
-        &-caution, &-warning, &-danger {
-          color:$color-white-01; opacity: 1;
-          &:after {border:none !important;}
-          &:before {
-            //@include border(0 2px 2px 2px, $color-white-01 $color-white-01 $color-white-01 transparent);
-          }
-        }
-
-        &-caution { &:after, &:before {background-color: rgba($color-gray-03,1) !important;  } }    // &-caution 주의
-        &-warning { &:after, &:before {background-color: rgba($color-orange-01,1) !important;} }    // &-warning 경고
-        &-danger  { &:after, &:before {background-color: rgba($color-red-01,1) !important;   } }    // &-danger  위험
-        &-die     { opacity: 0.2 }    // &-danger  위험
-      }
-
       span {
-        //@include flex-option(0, 1, 100%);
         &:nth-of-type(1) {
           @include flex-option(0, 1, 100%); font-size:0.9rem; @include text-overflow-ellipsis;
 
-          &:before {
-            @include flex-midddle; position: absolute; font-size:2rem; height:50px; top:0; left:10px;
-          }
+          &:before {@include flex-midddle; position: absolute; font-size:2rem; width:$l-h; height:100%; top:0; left:0;}
           &.co2:before, &.co:before {font-size:2.4rem;}
           &.gate:before {content:"\e92f";} // 게이트 웨이 센서
           &.temp:before {content:"\e949";} // 온도
@@ -510,20 +404,7 @@ body.dashboard_mode {
           &.smok:before {content:"\e963";} // 연기
           &.gas:before  {content:"\e910";} // 가스
         }
-        &:nth-of-type(2) {
-          font-weight:bold; font-size:1.4rem; padding:6px 0;
-          /*@include flex-option(1, 0, 60px); text-align: right; min-width:55px; */
-        }
-
-        /*
-        &:after {display: inline-block; text-align: right; min-width:25px; font-size:0.7rem;}
-        &.unit {
-          &-per:after {content:"％";}
-          &-tem:after {content:"℃";}
-          &-ppm:after {content:"ppm";}
-          &-kwh:after {content:"kWh";}
-        }
-        */
+        &:nth-of-type(2) {font-weight:bold; font-size:1.4rem; line-height: 1.2rem;}
       }
     }
   }
@@ -591,7 +472,7 @@ body.dashboard_mode {
           &, &:before {width:100%; height:100%;}
           &:before {content:""; position: absolute; z-index: 1; top:0; left:0; }
 
-          & > video {width:100%;}
+          & > video {height:100%;}
         }
 
         /////..... 임계치 적용 표시 Start
@@ -804,7 +685,6 @@ body.dashboard_mode {
   &:after {content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; opacity: 0.6;}
 }
 
-
 .copybox {
   position: relative; width:auto; top:0; padding:10px 20px; background-color: transparent !important;
   &:before {}
@@ -824,6 +704,7 @@ body.dashboard_mode {
     &:before { content:"\e950"; font-size:1.5rem; }
   }
 }
+
 .m_marqueebox {
   bottom:0; width:100%; height:24px; line-height:1.1rem;
 

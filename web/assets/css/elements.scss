@@ -291,6 +291,8 @@ div[contenteditable] {}
 
 
 
+
+
 //////...... 차트 상태 표시 시작
 * {
   // 상태 표시
@@ -567,277 +569,123 @@ div[contenteditable] {}
 ////// ----------------- Loading End
 
 
-////// ----------------- OFFINLE MAP 설정 Start
-$devi_w:25px;
-$resi_w:8px;
-@mixin resize {
-  .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
-    display: none !important; position: absolute; width:$resi_w; height:$resi_w;
 
-    &:before {
-      content:"";
-      @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
-      background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
-      background-position: 50% 50%; background-color: $color-blue-01;
-      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
-
-    }
-    &:hover:before {
-      /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;
-    }
+// Paging 정의  [총건수 + 현재페이지 번호 + 총페이지 수 + 이전 + 이후 ] Start
+.paging {
+  /*
+  <div class="pasing">
+       <p>120</p><!-- 총 건수 -->
+       <div class="page_count">
+           <div>
+               <input type="number" name="" value="01">
+               <select onchange="this.previousElementSibling.value=this.value">
+                   <option value="01" selected="selected">01</option>
+                   <option value="02">02</option>
+               </select>
+           </div>
+           <p>5</p>
+       </div><!-- 현재 페이지 -->
+       <button class="pre"></button>
+       <button class="nex"></button>
+       <!-- 좌우버튼 -->
+   </div>
+  */
+  display:inline-block; height:40px;
+  & * {font-size:15px; @include flex-midddle;}
+  & > * {
+    float: left; position: relative; height:100%;
+    @include border01(1px 0 1px 1px, $color-gray-01, 1); background-color: $color-white-01;
   }
-  .ui-resizable-e:before  {@include rotate(180deg);  }
-  .ui-resizable-s:before  {@include rotate(-90deg);  }
-  .ui-resizable-se:before {@include rotate(-135deg); }
-} // @include resize;
+  & p {
+    &:before, &:after
+    {@include flex-midddle; position: absolute; top:0; height:100%; opacity: 0.5;}
+  }
+  & > p {
+    width:90px; font-weight:bold;
+    &:before {content:"All"; left:10px;}
+    &:after  {content:"N"; right:10px;}
+  }
 
-.map_images {
-  position: absolute; width:2500px !important; height:2500px !important; cursor:move;
-  background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
+  & > .page_count {
+    width:100px;
+    & * {position: relative; border:none; height:100%;  }
+    & > div {
+      width:60px;
+      & > input  {position: absolute; z-index:1; top:0; left:0; width:40px; font-weight:bold;}
+      & > select {width:100%;}
+    }
+    & > p { width:30px; opacity: 0.5; }
+  }
 
-  & > * {position: absolute !important;}
+  & > button {
+    width:40px;
+    &:hover {
+      background-color: $color-blue-01; color:$color-white-01; border:none;
+      &:before, &:after {color:#fff;}
+    }
+    &.nex {border-width:1px;}
+    &:before, &:after {font-size:16px; color:#2d2d2d;}
+    &.pre:before {content:"\e918";}
+    &.nex:before {content:"\e919";}
+  }
+
 }
 
-.g {
+// page 정의 Start [처음 + 이전 + 페이지 + 다음 + 마지막]
+.page {
+  /*
+  <div class="page">
+      <p class="paging">
+          <button class="p_arrow pll">《</button>
+          <button class="p_arrow pl"> 〈</button>
+          <button class="page_select ">1</button>
+          <button >2</button>
+          <button class="p_arrow pl"> 〉</button>
+          <button class="p_arrow pll">》</button>
+      </p>
+  </div>
+  */
+  position:relative; width:100%; height:40px; margin:20px 0; text-align:center;
 
-  &-m8, &-camera  {z-index: 50;}
-  &-camera {}
-  &-tracking {z-index: 100;}
-  &-area {z-index:10;}
-  &-fence {z-index: 5;}
-
-  &-m8, &-camera, &-tracking, &-area, &-fence {position: absolute !important;}
-
-  // 감시, 감지 디바이스 공통
-  &-m8, &-camera, &-area {
-    //@include scale(0.5);
-    &, & > * {cursor: pointer;}
-    @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
-
-
-
-    // 디바이스, 구역 이름표
-    & > span {
-      @include flex-midddle; position: absolute; width: max-content; bottom:-15px;
-      padding:3px 10px; font-size:0.9rem;
-      /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
-      background-color:$color-gray-09; @include border-radius(200px);
-      @include scale(0.4);
-    }
-
-    &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
-    &.on {&, & > span {background-color: $color-blue-01;}}
-
-  }
-
-  // MAP 설정 시 크기, 위치 버튼 표시
-  &-m8, &-camera {
-    width:$devi_w; height:$devi_w;
-    .ui-resizable-e, .ui-resizable-s {display: none !important;}
-    .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
-
-    &.on {
-      background-color: $color-blue-01;
-      &:hover { .ui-resizable-se {display: block !important;} }
-    }
-
-    @at-root {.dashboard_mode & {pointer-events: none; } }
-    &:before {font-size:1.4rem; }
-    &:before, &:after {}
-  }
-
-  // 감시, 감지 디바이스, 트레킹 아이콘 공통
-  &-m8, &-camera, &-tracking {
-     background-color: $bas-color;
-    &, &:before {@include flex-midddle;}
-    &, &:after  {@include border-radius(500px);}
-
-    &:before, &:after {
-      content:""; width:100%; height:100%; background-color: transparent; @include transition(400ms);
-    }
-
-    &:before {
-      content:""; position: absolute;
-      background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
-    }
-  }
-
-  &-m8:before     {background-image: url(../images/map/sico_96.svg); /*content:"\e962";*/ }
-  &-camera:before {background-image: url(../images/map/sico_98.svg); /*content:"\e964";*/ }
-
-  &-tracking {
-    width:$resi_w; height:$resi_w; background-color: transparent;
-    &:before {
-      /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-      background-image: url(../images/map/tracking.svg); background-size: 100%;
-    }
-    &:after {display: none;}
-  }
-
-  &-area {
-    z-index: 5; width:70px; height:70px; background-color: rgba(255,255,255,0.2);
-    border-style:dashed; border-width:1px; border-color:$color-white-01;
-
-    .ui-resizable-e  {bottom: ($resi_w); right:-($resi_w / 2); }
-    .ui-resizable-s  {bottom:-($resi_w / 2); right: ($resi_w); }
-    .ui-resizable-se {bottom:-($resi_w / 2); right:-($resi_w / 2); }
-
-    &.on {
-      background-color: rgba($color-blue-01,0.4); border-color:$color-blue-01;
-      &:hover  { .ui-resizable-se, .ui-resizable-e, .ui-resizable-s {display: block !important;} }
-    }
-  }
-
-
-
-  &-fence {
-    /*width:auto !important; height:auto !important;*/
-    //background-color: transparent !important;
-    //@include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-    background-color: transparent !important;
-
-    width:100% !important; height:100% !important;
-
-    polygon, path {
-      fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01; stroke-width:1px;
-      text {font-size:5px !important; letter-spacing: 0;}
-      /*&:after {display: none !important;}
-      &:before {
-        content:""; position: absolute; width:100%; height:100%;
-        @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-      }*/
-
-      &.level {
-        &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
-        &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
-        &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
-        &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }
-
-        /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
-        &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
-        &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }
-
-        &-caution { & > span {background-color:$color-gray-05;   } }
-        &-warning { & > span {background-color:$color-orange-01; } }
-        &-danger  { & > span {background-color:$color-red-01;    } }*/
-      }
-    }
-
-  }
-  // 임계치 적용 표시
-  &-m8, &-camera, &-tracking {
-    &.level {
-      &-caution,&-warning,&-danger  {
-        @include pOn;
-        &:after {display: block;}
-        &:before {color:$color-white-01 !important;}
+  .paging {
+    display:inline-block;
+    button {
+      width:40px; height:40px; margin:0 2px;
+      @include border01(1px, $color-gray-01, 1); background-color: $color-white-01;
+      &:hover, &.page_select {
+        @include borderwidth(1); background-color: $color-blue-01; color:$color-white-01; border:none;
       }
 
-      &-caution {
-        &,& > span {background-color:$color-gray-05;   }
-        &:after {@include border01(1px,$color-gray-05,1);  }
-      }
+      &.p_arrow {
+        overflow: hidden; text-indent: -1000px;
 
-      &-warning {
-        &,& > span {background-color:$color-orange-01; }
-        &:after {@include border01(1px,$color-orange-01,1);}
-      }
-
-      &-danger  {
-        &,& > span {background-color:$color-red-01;    }
-        &:after  {@include border01(1px,$color-red-01,1);   }
-      }
-
-      &-die     {
-        @include issue02; background-color:$color-gray-09; opacity: 0.5;
-        &:after {
-          content:""; z-index: 10; position: absolute; left:calc(50% - 1px); top:0; width:1px; height:100%;
-          @include rotate(45deg); background-color:rgba($color-gray-09,1); @include loding;
+        &:before, &:after {
+          @include flex-midddle; position: absolute; top:0; left:0;
+          width:100%; height:100%; text-indent: 0;
         }
+
+        &:first-of-type, &:last-of-type {
+          &:before, &:after {width:15px; left:50%; }
+        }
+        &:first-of-type {
+          &:before, &:after {content:"\e918";}
+          &:before {margin:0 0 0 -6px}
+          &:after  {margin:0 0 0 -12px}
+        }
+        &:last-of-type  {
+          &:before, &:after {content:"\e919";}
+          &:before {margin:0 0 0 -9px}
+          &:after  {margin:0 0 0 -3px}
+        }
+
+        &:nth-of-type(2):before {content:"\e918";}
+        &:nth-last-of-type(2):before {content:"\e919";}
       }
+
     }
   }
 }
-////// ----------------- OFFINLE MAP 설정  End
+/////...... Table_layout 정의 End
 
 
-
-////// ----------------- ONNLE MAP 설정 Start
-.device, .device > div, .icon-tof, .icon-ptz {
-  &, &:before, &:after {@include flex-midddle; }
-
-  &:before, &:after {
-    width:100%; height:100%; font-size:1.5rem; color:$color-white-01; background-color: transparent;
-    @include border-radius(200px); @include transition(400ms); cursor: pointer;
-  }
-  &:before {position:absolute; }
-}
-.icon-tof, .icon-ptz {
-  position: absolute; width:$devi_w; height:$devi_w; @include border-radius(200px); background-color: $bas-color;
-  &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
-  & > span {
-    @include flex-midddle; position: absolute; height:20px; bottom:-($devi_w - 10px);
-    padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
-    background-color:$color-gray-09; @include border-radius(200px);
-  }
-
-  /////..... 임계치 적용 표시 Start
-  &.level {
-    &-caution,&-warning,&-danger {@include pOn; }
-
-    &-caution:after {@include border01(2px,$color-gray-05,1);  }
-    &-warning:after {@include border01(2px,$color-orange-01,1);}
-    &-danger:after  {@include border01(2px,$color-red-01,1);   }
-    &-die:after {}
-
-    &-caution { &,& > span {background-color:$color-gray-05;   } }
-    &-warning { &,& > span {background-color:$color-orange-01; } }
-    &-danger  { &,& > span {background-color:$color-red-01;    } }
-    &-die     {
-      @include issue02; background-color:$color-gray-09;
-      &:before {opacity: 0.6;}
-      &:after {
-        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
-        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
-      }
-    }
-
-
-  }
-  /////..... 임계치 적용 표시 End
-}
-
-.device {
-  /////..... 임계치 적용 표시 Start
-  //&:before {content: url(../images/map/mapex_w.svg);}
-  &.level {
-    &-caution,&-warning,&-danger { & > div {@include pOn;} }
-
-    &-caution > div {
-      &, & > span {background-color:$color-gray-05;}
-      &:after {@include border01(2px,$color-gray-05,1);}
-    }
-    &-warning > div {
-      &, & > span {background-color:$color-orange-01;}
-      &:after {@include border01(2px,$color-orange-01,1);}
-    }
-    &-danger  > div {
-      &, & > span {background-color:$color-red-01; }
-      &:after {@include border01(2px,$color-red-01,1);}
-    }
-
-    &-die > div  {
-      @include issue02; background-color:$color-gray-09;
-      &:before {opacity: 0.6;}
-      &:after {
-        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
-        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
-      }
-    }
-
-  }
-  /////..... 임계치 적용 표시 End
-}
-
-////// ----------------- ONNLE MAP 설정  End
 

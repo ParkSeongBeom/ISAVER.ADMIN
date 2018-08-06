@@ -12,9 +12,16 @@
 <script src="${rootPath}/assets/js/page/resource/resource-helper.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/popup/template-setting-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/js/popup/custom-map-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/js/popup/ptz-control-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+
+<%-- Medea Server를 통한 RTSP Stream --%>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/request.min.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/adapter.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/webrtcstreamer.js?version=${version}"></script>
+<script src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
@@ -190,8 +197,11 @@
                                     <isaver:codeSelectBox groupCodeId="CA1" codeId="" htmlTagName="vendorCode" allModel="true" allText='${emptyData}'/>
                                 </td>
                                 <th class="point"><spring:message code='device.column.deviceCode'/></th>
-                                <td class="point">
-                                    <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/>
+                                <td class="point intd">
+                                    <div>
+                                        <isaver:codeSelectBox groupCodeId="DEV" codeId="" htmlTagName="deviceCode"/>
+                                        <button class="btn onvif_sett_btn" style="display:none;"><spring:message code="resource.title.ptzControl"/></button>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -328,7 +338,7 @@
     </div>
 
     <!-- MAP 설정 팝업 -->
-    <div class="popupbase map_pop">
+    <div class="popupbase map_pop mapSetting">
         <div>
             <div>
                 <header>
@@ -370,6 +380,52 @@
         </div>
         <div class="bg option_pop_close" onclick="javascript:customMapPopup.closePopup();"></div>
     </div>
+
+    <!-- PTZ 제어 팝업 -->
+    <div class="popupbase map_pop ptzControl">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="resource.title.ptzControl"/></h2>
+                    <button onclick="javascript:ptzControlPopup.closePopup();"></button>
+                </header>
+                <article class="map_sett_box">
+                    <section class="onvif">
+                        <video></video>
+                    </section>
+                    <section class="controls">
+                        <h3 id="deviceName"></h3>
+                        <div>
+                            <div class="direction_set">
+                                <button onmousedown="javascript:ptzControlPopup.operation('leftTop',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 1 좌상단-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('top',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 2 상단-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('rightTop',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 3 우상단-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('left',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 4 좌-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('right',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 5 우-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('leftBottom',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 6 좌하단-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('bottom',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 7 하단-->
+                                <button onmousedown="javascript:ptzControlPopup.operation('rightBottom',true);" onmouseup="javascript:ptzControlPopup.stopOperation();"></button> <!-- 8 우하단-->
+                                <span></span>
+                            </div>
+
+                            <div class="function_set">
+                                <div class="zoom"> <!-- 줌인/아웃 -->
+                                    <button onclick="javascript:ptzControlPopup.operation('zoomIn');"></button> <!-- Zoom IN -->
+                                    <button onclick="javascript:ptzControlPopup.operation('zoomOut');"></button> <!-- Zoom OUT -->
+                                </div>
+                                <div class="focus"> <!-- 포커스 인/아웃 -->
+                                    <button onclick="javascript:ptzControlPopup.operation('focusIn');"></button> <!-- 포커스 IN -->
+                                    <button onclick="javascript:ptzControlPopup.operation('focusOut');"></button> <!-- 포커스 OUT -->
+                                </div>
+                            </div>
+                        </div>
+                        <ul id="presetElement"></ul>
+                    </section>
+                </article>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="javascript:ptzControlPopup.closePopup();"></div>
+    </div>
 </section>
 
 <script type="text/javascript">
@@ -378,6 +434,7 @@
     var resourceHelper = new ResourceHelper(String('${rootPath}'));
     var templateSettingPopup = new TemplateSettingPopup(String('${rootPath}'));
     var customMapPopup = new CustomMapPopup(String('${rootPath}'),String('${version}'));
+    var ptzControlPopup = new PtzControlPopup(String('${rootPath}'), String('${ptzWebSocketUrl}'));
 
     var messageConfig = {
         // 공통
@@ -430,14 +487,15 @@
         templateSettingPopup.setElement($(".option_pop"));
         templateSettingPopup.reset();
 
+        ptzControlPopup.setElement($(".ptzControl"));
+
         customMapPopup.setMessageConfig(customMapMessageConfig);
-        customMapPopup.setElement($(".map_pop"));
+        customMapPopup.setElement($(".mapSetting"));
         customMapPopup.initFileList();
 
         $("#customMapSection").find("input[type='number']").on("change",function(){
             customMapPopup.setTargetValue(this);
         });
-
         $(".tree_tab_btn > button:eq(0)").trigger("click");
     });
 

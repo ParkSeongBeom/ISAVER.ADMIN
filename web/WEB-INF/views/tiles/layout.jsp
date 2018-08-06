@@ -365,12 +365,14 @@
                         modifyElementClass($(".db_area"),'on','add');
                         modifyElementClass($(".dashboardContainer"),'on','add');
                         modifyElementClass($(".sub_area"),'on','add');
-                        modifyElementClass($(".map_pop"),'on','add');
+                        modifyElementClass($(".mapSetting"),'on','add');
+                        modifyElementClass($(".ptzControl"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".db_area"),'on','remove');
                         modifyElementClass($(".dashboardContainer"),'on','remove');
                         modifyElementClass($(".sub_area"),'on','remove');
-                        modifyElementClass($(".map_pop"),'on','remove');
+                        modifyElementClass($(".mapSetting"),'on','remove');
+                        modifyElementClass($(".ptzControl"),'on','remove');
                     }
                     break;
                 case "detail":

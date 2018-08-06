@@ -93,6 +93,21 @@ var NotificationHelper = (
             _element = element;
         };
 
+        this.getFenceList = function(areaId){
+            var resultList = [];
+            if(areaId==null || areaId==""){
+                resultList = _fenceList;
+            }else{
+                for(var index in _fenceList){
+                    var fence = _fenceList[index];
+                    if(fence['areaId']==areaId){
+                        resultList.push(fence);
+                    }
+                }
+            }
+            return resultList;
+        };
+
         /**
          * ajax call
          * @author psb
@@ -110,7 +125,7 @@ var NotificationHelper = (
                 case 'fenceList':
                     for(var index in data['fenceList']){
                         var fence = data['fenceList'][index];
-                        _fenceList[fence['fenceId']]=fence['fenceName'];
+                        _fenceList[fence['fenceId']]=fence;
                     }
                     break;
                 case 'notificationList':
@@ -328,7 +343,7 @@ var NotificationHelper = (
             }
 
             if(notification['fenceName']==null || notification['fenceName']==''){
-                notification['fenceName'] = _fenceList[notification['fenceId']]!=null?_fenceList[notification['fenceId']]:notification['fenceId'];
+                notification['fenceName'] = _fenceList[notification['fenceId']]['fenceName']!=null?_fenceList[notification['fenceId']]['fenceName']:notification['fenceId'];
             }
 
             _notificationList[notification['notificationId']] = {

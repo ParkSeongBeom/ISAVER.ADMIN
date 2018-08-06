@@ -73,7 +73,7 @@ var WebSocketHelper = (
         };
 
         /**
-         * wsConnect
+         * ws Connect
          * @author psb
          * @param _target
          */
@@ -101,6 +101,24 @@ var WebSocketHelper = (
                     }
                 };
             }, 250);
+        };
+
+        /**
+         * ws DisConnect
+         * @author psb
+         * @param _target
+         */
+        this.wsDisConnect = function(_target){
+            if(_target==null || webSocketList[_target]==null){
+                console.error("[WebSocketHelper][wsDisConnect] target is null or not in webSocketList");
+                return false;
+            }
+
+            webSocketList[_target]['ws'].onclose = null;
+            webSocketList[_target]['ws'].close();
+            webSocketList[_target]['ws'] = null;
+            webSocketList[_target]['conn'] = CONNECT_STATUS[1];
+            console.log(_target+' websocket closed');
         };
 
         /**

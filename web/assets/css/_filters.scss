@@ -58,6 +58,7 @@ $color-gray-06:#bcbcbc;   // rgba(188,188,188,1)  테이블 border-color
 $color-gray-07:#4c4c4c;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
 $color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
 $color-gray-09:#111;      // rgba(45,45,45,1)  데시보드 스킨 그레이
+$color-gray-10:#2c2c2c;
 
 $color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
 $color-red-02:#be1e1e;    // rgba(190,30,30,1)
@@ -98,8 +99,12 @@ $popup-margin:20px;
 $admin-margin : 150px;
 $video-width:400px;
 
-$noticecenter-width:300px;
 
+$noticecenter-width:300px;
+$noticecenter-onwidth:calc(100% - 340px);
+
+
+$devicewidth:40px;
 $device-width:100vw;
 $device-height:100vh;
 $screen-width:100%;
@@ -500,7 +505,6 @@ $bbl01:100%; $bbl02:1px;
 
 @mixin btnbase {
   min-width:$btnHeight; height:$btnHeight; background-color: $bas-color;
-
   float: left; margin:0 10px 0 0; &:last-of-type {margin:0;}
 
   @include border01(1px,$color-white-01,0.7); padding:0 10px;
@@ -513,18 +517,33 @@ $bbl01:100%; $bbl02:1px;
   }
 } //ex) @include btnbase;  버튼 공통
 
+@mixin btnbase_type01 {
+  &:before, &:after {width:100%; height:100%;}
+  &:before {@include flex-midddle; position: absolute; z-index:1; top:0; left:0;  font-size:1.4rem; }
+  &:after {content:""; display: inline-block;}
+  &:hover:after  {background-color: $color-blue-01;}
+  &:hover:before {color:$color-white-01;}
+  &:active:after {background-color: $color-red-01;}
+} //ex) @include btnbase_type01;
 
 // webkit-scroll Bar
-@mixin webkit_scroll {
+@mixin webkit_scroll_dashboard {
   ::-webkit-scrollbar {width: 10px;height: 10px; }
-  ::-webkit-scrollbar-track {background-color:#fff;}
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner {height:8px; width:8px; background-color: $color-gray-09;}
+  ::-webkit-scrollbar-track {background-color: $color-gray-09;}
   ::-webkit-scrollbar-thumb {
-    min-height: 30px; border: 2px solid #fff;
-    background-clip: content-box; background-color: rgba(94,94,94,0.6);
+    min-height: 30px; background-clip: content-box; background-color: $bas-color; @include border01(2px,$color-gray-09,1 );
   }
-  ::-webkit-scrollbar-thumb:hover {background-color: rgba(94,94,94,1);}
-} // ex) @include webkit_scroll;
+} // ex) @include webkit_scroll_dashboard;
 
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar {width: 10px;height: 10px; }
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner {height:8px; width:8px; background-color: $color-white-01;}
+  ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {
+    min-height: 30px; background-clip: content-box; background-color: $color-gray-03; @include border01(2px,$color-white-01,1 );
+  }
+} // ex) @include webkit_admin;
 
 // line Bar
 @mixin line_bar{
@@ -1153,4 +1172,16 @@ $cslwidth:80px;
   }
 } // @include csl_style04_showhide;
 
-$devicewidth:40px;
+
+
+
+@mixin listbase {
+  @include flex-option(0, 1, 100%);
+  p {font-size:0.9rem; opacity: 0.8; letter-spacing: 0; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+  p:nth-of-type(2) {font-size:1rem; font-weight:bold; opacity: 1; padding:3px 0;}
+  p:nth-of-type(3) {word-spacing: 2px; }
+  p:nth-of-type(4) {
+    padding:5px 0 0 0; margin:5px 0 0 0; @include border01(1px 0 0 0,$color-gray-09,0.3 );
+    &, & ~ p {}
+  }
+} // @include listbase;

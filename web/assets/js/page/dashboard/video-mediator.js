@@ -63,31 +63,52 @@ var VideoMediator = (
         };
 
         /**
-         * create
+         * Create Player List (대시보드전용)
          * @author psb
-         * @param _deviceList
+         * @param deviceList
          */
-        this.createPlayer = function(_deviceList){
-            for(var index in _deviceList){
-                if(_deviceList[index]['deviceCode']==_options['useDeviceCode'] && _deviceList[index]['streamServerUrl']!=null && _deviceList[index]['streamServerUrl']!=''){
-                    var ptzElement = $("<li/>",{class:'ptz', deviceId:_deviceList[index]['deviceId']}).append(
-                        $("<span/>").text(_deviceList[index]['deviceName'])
+        this.createPlayerList = function(deviceList){
+            for(var index in deviceList){
+                if(deviceList[index]['deviceCode']==_options['useDeviceCode'] && deviceList[index]['streamServerUrl']!=null && deviceList[index]['streamServerUrl']!=''){
+                    var ptzElement = $("<li/>",{class:'ptz', deviceId:deviceList[index]['deviceId']}).append(
+                        $("<span/>").text(deviceList[index]['deviceName'])
                     ).append(
                         $("<div/>",{id:"videoDiv"})
                     );
                     _element.append(ptzElement);
 
                     // register webrtc streamer connection
-                    _videoList[_deviceList[index]['deviceId']] = {
+                    _videoList[deviceList[index]['deviceId']] = {
                         'element' : ptzElement
                         ,'server' : null
                         ,'responseBody' : null
                         ,'notification' : $.extend(true,{},criticalList)
-                        ,'data' : _deviceList[index]
+                        ,'data' : deviceList[index]
                     };
 
-                    setDeviceStatus(_videoList[_deviceList[index]['deviceId']], _deviceList[index]['deviceStat']);
+                    setDeviceStatus(_videoList[deviceList[index]['deviceId']], deviceList[index]['deviceStat']);
                 }
+            }
+        };
+
+        /**
+         * Create Player (구역장치관리 전용)
+         * @author psb
+         * @param data
+         */
+        this.createPlayer = function(data){
+            if(data['deviceCode']==_options['useDeviceCode'] && data['streamServerUrl']!=null && data['streamServerUrl']!=''){
+                _element.find(".onvif").attr("id","videoDiv");
+
+                // register webrtc streamer connection
+                _videoList[data['deviceId']] = {
+                    'element' : _element
+                    ,'server' : null
+                    ,'responseBody' : null
+                    ,'notification' : $.extend(true,{},criticalList)
+                    ,'data' : data
+                };
+                setDeviceStatus(_videoList[data['deviceId']], data['deviceStat']);
             }
         };
 
@@ -193,6 +214,10 @@ var VideoMediator = (
                 }
                 ,param
             );
+        };
+
+        this.disconnect = function(deviceId){
+            _videoList[deviceId]['server'].disconnect();
         };
 
         /**

@@ -47,6 +47,15 @@ var ResourceHelper = (
                     $(".map_sett_btn").hide();
                 }
             });
+
+            $("select[name='deviceCode']").on("change",function(){
+                // 장치구분이 IP카메라이고 수정모드에서만 PTZ 설정 팝업 버튼 활성화
+                if($(this).val()=='DEV002' && $("input[name='deviceId']").val()!=""){
+                    $(".onvif_sett_btn").show();
+                }else{
+                    $(".onvif_sett_btn").hide();
+                }
+            });
         };
 
         /**
@@ -157,6 +166,15 @@ var ResourceHelper = (
             customMapPopup.openPopup(areaId,data['areaName'],data['fileId']?data['fileId']:'');
         };
 
+        this.openPtzControlPopup = function(deviceId){
+            var data = _deviceList[deviceId]['data'];
+            if(!ptzControlPopup && !ptzControlPopup instanceof PtzControlPopup){
+                console.error("[ResourceHelper][openPtzControlPopup] customMapPopup is null or typeerror");
+                return false;
+            }
+            ptzControlPopup.openPopup(data);
+        };
+
         /**
          * 구역 상세
          * @author psb
@@ -253,7 +271,7 @@ var ResourceHelper = (
                 form.find("select[name='parentDeviceId']").val(data['parentDeviceId']).prop("selected", true);
                 form.find("select[name='vendorCode']").val(data['vendorCode']).prop("selected", true);
                 form.find("select[name='areaId']").val(data['areaId']).prop("selected", true);
-                form.find("select[name='deviceCode']").val(data['deviceCode']).prop("selected", true);
+                form.find("select[name='deviceCode']").val(data['deviceCode']).prop("selected", true).trigger("change");
                 form.find("input[name='serialNo']").val(data['serialNo']).prop("readonly",true);
                 form.find("input[name='ipAddress']").val(data['ipAddress']!=null?data['ipAddress']:'');
                 form.find("input[name='port']").val(data['port']!=null?data['port']:'');
@@ -268,6 +286,7 @@ var ResourceHelper = (
                 form.find("td[name='updateDatetime']").text(new Date(data['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
                 form.find("tr[modifyTag]").show();
                 form.find("button[name='addBtn']").hide();
+                form.find(".onvif_sett_btn").attr("onclick","javascript:resourceHelper.openPtzControlPopup('"+deviceId+"'); return false;");
             }else{ // 등록버튼 클릭시
                 // 현재 선택된 장치를 부모장치로 자동맵핑
                 var selDeviceId = $(".area_tree_set .on").find("button.on").attr("deviceId");
