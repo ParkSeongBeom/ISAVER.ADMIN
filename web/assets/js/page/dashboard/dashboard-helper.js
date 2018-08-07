@@ -229,6 +229,7 @@ var DashboardHelper = (
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                        notificationGuardInfoUpdate(messageType, data['notification']['criticalLevel'],data['notification']);
                     }
                     notificationUpdate(messageType, data['notification']);
                     notificationMarqueeUpdate(data['areaId']);
@@ -417,6 +418,7 @@ var DashboardHelper = (
                     }
                     break;
                 case "cancelDetection": // 감지 해제
+                case "removeNotification": // 알림 해지
                     if(fenceTarget['notification'][criticalLevel].indexOf(data['objectId']) > -1){
                         fenceTarget['notification'][criticalLevel].splice(fenceTarget['notification'][criticalLevel].indexOf(data['objectId']),1);
                     }
