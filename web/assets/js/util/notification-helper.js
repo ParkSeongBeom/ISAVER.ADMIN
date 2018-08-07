@@ -342,8 +342,10 @@ var NotificationHelper = (
                 return false;
             }
 
-            if(notification['fenceName']==null || notification['fenceName']==''){
-                notification['fenceName'] = _fenceList[notification['fenceId']]['fenceName']!=null?_fenceList[notification['fenceId']]['fenceName']:notification['fenceId'];
+            if(notification['fenceId']!=null){
+                if(notification['fenceName']==null || notification['fenceName']==''){
+                    notification['fenceName'] = _fenceList[notification['fenceId']]['fenceName']!=null?_fenceList[notification['fenceId']]['fenceName']:notification['fenceId'];
+                }
             }
 
             _notificationList[notification['notificationId']] = {
