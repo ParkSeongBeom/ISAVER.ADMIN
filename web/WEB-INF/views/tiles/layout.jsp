@@ -189,7 +189,7 @@
                 case "addEvent": // 일반이벤트 등록
                     notificationHelper.callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
                     break;
-                case "editDeviceStatus": // 감지 해제
+                case "editDeviceStatus": // 장치 상태 변경
                     notificationHelper.callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
                     break;
             }
