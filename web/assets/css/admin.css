@@ -1011,6 +1011,7 @@ ul.u_defalut {
     opacity: 0; }
   .area_tree_set li {
     display: inline-block;
+    width: 100%;
     margin: 0 0 0 40px; }
     .area_tree_set li:before {
       display: none; }

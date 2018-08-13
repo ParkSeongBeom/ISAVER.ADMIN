@@ -549,7 +549,7 @@ ul.u_defalut {
   overflow: auto; margin:0;
 
   li {
-    display: inline-block; margin:0 0 0 $mt_btn_w;
+    display: inline-block; width: 100%; margin:0 0 0 $mt_btn_w;
     &:before {display: none;}
   }
 
