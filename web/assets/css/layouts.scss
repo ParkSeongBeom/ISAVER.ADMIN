@@ -50,7 +50,7 @@ h1 {
     @include flexbase; @include flex-row-wrap; @include flex-align-items-center;
   }
 }
-h2 {font-size:2rem;}
+h2 {font-size:1.7rem;}
 h3 {
   font-size:1.5rem;
   .main_title_area {@include flexbase;}
