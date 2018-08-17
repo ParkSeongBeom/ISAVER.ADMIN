@@ -196,7 +196,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/dashboard"
             ,"classpath:properties/message/statistics"
             ,"classpath:properties/message/deviceSyncRequest"
-            ,"classpath:properties/message/alarmRequestHistory"
             ,"classpath:properties/message/file"
             ,"classpath:properties/message/critical"
             ,"classpath:properties/message/alarm"
@@ -204,6 +203,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/notification"
             ,"classpath:properties/message/target"
             ,"classpath:properties/message/deviceStatusHistory"
+            ,"classpath:properties/message/videoHistory"
         );
         return messageSource;
     }

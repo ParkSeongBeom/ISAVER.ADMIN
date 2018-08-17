@@ -137,6 +137,14 @@
     </definition>
 
     <!--
+        영상 이력 관리
+        @author psb
+    -->
+    <definition name="videoHistoryList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/videoHistory/list.jsp" />
+    </definition>
+
+    <!--
         사용자 로그인 이력 관리
         @author psb
     -->
@@ -176,21 +184,6 @@
         <put-attribute name="body" value="/WEB-INF/views/eventStatistics/list.jsp" />
     </definition>
 
-    <!--
-        알림 전송 이력  관리 목록
-        @author dhj
-    -->
-    <definition name="alarmRequestHistoryList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alarmRequestHistory/list.jsp" />
-    </definition>
-
-    <!--
-        알림 전송 이력  관리 상세
-        @author dhj
-    -->
-    <definition name="alarmRequestHistoryDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alarmRequestHistory/detail.jsp" />
-    </definition>
 
     <!-- ############# -->
     <!-- [END] 안전 방재 -->
