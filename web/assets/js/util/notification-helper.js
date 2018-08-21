@@ -227,13 +227,15 @@ var NotificationHelper = (
                 $("section[alarm_detail] textarea[actionDesc]").text(action['actionDesc']);
                 _eventDatetime.setTime(data['paramBean']['eventDatetime']);
 
-                if(data['device']!=null && data['device']['linkUrl']!=null){
-                    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:cctvOpen('"+data['device']['linkUrl']+"'); event.stopPropagation();");
-                    $("section[alarm_detail] .dbi_cctv").show();
-                }else{
-                    $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
-                    $("section[alarm_detail] .dbi_cctv").hide();
-                }
+                $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
+                $("section[alarm_detail] .dbi_cctv").hide();
+                //if(data['device']!=null && data['device']['linkUrl']!=null){
+                //    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:cctvOpen('"+data['device']['linkUrl']+"'); event.stopPropagation();");
+                //    $("section[alarm_detail] .dbi_cctv").show();
+                //}else{
+                //    $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
+                //    $("section[alarm_detail] .dbi_cctv").hide();
+                //}
 
                 $("section[alarm_detail] p[eventDatetime]").text(_eventDatetime.format("MM/dd HH:mm:ss"));
                 modifyElementClass($("#notificationList li[notificationId='"+data['paramBean']['notificationId']+"'] .infor_btn"),'on','add');
