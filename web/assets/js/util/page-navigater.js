@@ -57,7 +57,8 @@ var PageNavigator = (
 		 * 그룹버튼 태그정의
 		 */
 		var _groupTags = {
-			"first":null
+			"useFlag":false
+			,"first":null
 			,"pre":null
 			,"next":null
 			,"end":null
@@ -136,10 +137,12 @@ var PageNavigator = (
 					resultHtml[lineCount++] = " onclick='goPage(1); return false;'";
 				}
 				resultHtml[lineCount++] = ">";
-				if(_groupTags["first"] != null){
-					resultHtml[lineCount++] = _groupTags["first"];
-				}else{
-					resultHtml[lineCount++] = "&laquo;";
+				if(_groupTags["useFlag"]){
+					if(_groupTags["first"] != null){
+						resultHtml[lineCount++] = _groupTags["first"];
+					}else{
+						resultHtml[lineCount++] = "&laquo;";
+					}
 				}
                 resultHtml[lineCount++] = "</button>";
 
@@ -156,10 +159,12 @@ var PageNavigator = (
 					resultHtml[lineCount++] = " onclick='javascript:goPage(" +preGroupPageNum+ "); return false;'";
 				}
 				resultHtml[lineCount++] = " >";
-				if(_groupTags["pre"] != null){
-					resultHtml[lineCount++] = _groupTags["pre"];
-				}else{
-					resultHtml[lineCount++] = "&lt;"; //&gt; 
+				if(_groupTags["useFlag"]){
+					if(_groupTags["pre"] != null){
+						resultHtml[lineCount++] = _groupTags["pre"];
+					}else{
+						resultHtml[lineCount++] = "&lt;"; //&gt;
+					}
 				}
                 resultHtml[lineCount++] = "</button>";
 
@@ -204,10 +209,12 @@ var PageNavigator = (
 					resultHtml[lineCount++] = "); return false;";
 				}
 				resultHtml[lineCount++] = "'>";
-				if(_groupTags["next"] != null){
-					resultHtml[lineCount++] = _groupTags["next"];
-				}else{
-					resultHtml[lineCount++] = "&gt;";
+				if(_groupTags["useFlag"]){
+					if(_groupTags["next"] != null){
+						resultHtml[lineCount++] = _groupTags["next"];
+					}else{
+						resultHtml[lineCount++] = "&gt;";
+					}
 				}
                 resultHtml[lineCount++] = "</button>";
 				
@@ -223,10 +230,12 @@ var PageNavigator = (
 					resultHtml[lineCount++] = "); return false;";
 				}
 				resultHtml[lineCount++] = "' >";
-				if(_groupTags["end"] != null){
-					resultHtml[lineCount++] = _groupTags["end"];
-				}else{
-					resultHtml[lineCount++] = "&raquo;";
+				if(_groupTags["useFlag"]){
+					if(_groupTags["end"] != null){
+						resultHtml[lineCount++] = _groupTags["end"];
+					}else{
+						resultHtml[lineCount++] = "&raquo;";
+					}
 				}
                 resultHtml[lineCount++] = "</button>";
 				

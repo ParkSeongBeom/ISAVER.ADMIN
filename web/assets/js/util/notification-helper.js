@@ -344,9 +344,11 @@ var NotificationHelper = (
                 return false;
             }
 
-            if(notification['fenceId']!=null){
-                if(notification['fenceName']==null || notification['fenceName']==''){
+            if(notification['fenceId']!=null && (notification['fenceName']==null || notification['fenceName']=='')){
+                if(_fenceList[notification['fenceId']]!=null){
                     notification['fenceName'] = _fenceList[notification['fenceId']]['fenceName']!=null?_fenceList[notification['fenceId']]['fenceName']:notification['fenceId'];
+                }else{
+                    notification['fenceName'] = notification['fenceId'];
                 }
             }
 

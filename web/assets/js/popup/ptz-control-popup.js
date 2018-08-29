@@ -151,7 +151,7 @@ var PtzControlPopup = (
          */
         var getPresetList = function(_count){
             if(webSocketHelper.isConnect("ptz")){
-                webSocketHelper.sendMessage("ptz",{"messageType":"getPresetList","device":_device});
+                webSocketHelper.sendMessage("ptz",{"messageType":"getPresetList","deviceId":_device['deviceId']});
             }else{
                 if(_count == null){
                     _count = _GET_LIST_RETRY['cnt'];

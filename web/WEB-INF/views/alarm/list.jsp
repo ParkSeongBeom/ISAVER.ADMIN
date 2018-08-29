@@ -67,14 +67,12 @@
             <!-- 입력 테이블 Start -->
             <table class="t_defalut t_type01 t_style02">
                 <colgroup>
-                    <col style="width: 15%;" />
                     <col style="width: *;" />
-                    <col style="width: 10%;" />
                     <col style="width: 20%;" />
+                    <col style="width: 30%;" />
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><spring:message code="alarm.column.alarmId"/></th>
                     <th><spring:message code="alarm.column.alarmName"/></th>
                     <th><spring:message code="common.column.useYn"/></th>
                     <th><spring:message code="common.column.insertDatetime"/></th>
@@ -85,7 +83,6 @@
                     <c:when test="${alarmList != null and fn:length(alarmList) > 0}">
                         <c:forEach var="alarm" items="${alarmList}">
                             <tr onclick="moveDetail(String('${alarm.alarmId}'));">
-                                <td>${alarm.alarmId}</td>
                                 <td>${alarm.alarmName}</td>
                                 <td>
                                     <c:if test="${alarm.useYn=='Y'}">
@@ -103,7 +100,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="4"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="3"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>

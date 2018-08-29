@@ -54,75 +54,18 @@
                     </tr>
                     <tr>
                         <th class="point"><spring:message code="alarm.column.alarmName"/></th>
-                        <td class="point" colspan="3">
+                        <td class="point">
                             <input type="text" name="alarmName" value="${alarm.alarmName}"/>
                         </td>
-                    </tr>
-                    <tr>
-                        <th><spring:message code="alarm.column.alarmMessage"/></th>
-                        <td colspan="3">
-                            <input type="text" name="alarmMessage" value="${alarm.alarmMessage}"/>
-                        </td>
-                    </tr>
-                    <tr dashboard>
-                        <c:choose>
-                            <c:when test="${dashboardAlarmInfos != null and fn:length(dashboardAlarmInfos) > 0}">
-                                <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
-                                <td>
-                                    <div class="checkbox_set csl_style03">
-                                        <input type="hidden" name="dashboardUseYn" value="Y"/>
-                                        <input type="checkbox" checked name="dashboardUseYnCheckBox" onchange="setCheckBoxYn(this,'dashboardUseYn')"/>
-                                        <label></label>
-                                    </div>
-                                </td>
-                                <c:forEach var="info" items="${dashboardAlarmInfos[0].infos[0].datas}">
-                                    <c:choose>
-                                        <c:when test="${info.key=='alarmType'}">
-                                            <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" codeId="${info.value}" /></td>
-                                        </c:when>
-                                        <c:when test="${info.key=='fileId'}">
-                                            <td>
-                                                <input type="text" style="display: none;" name="ttsText"/>
-                                                <select name="fileId">
-                                                    <c:forEach var="file" items="${files}">
-                                                        <option value="${file.fileId}" <c:if test="${file.fileId == info.value}">selected="selected"</c:if>>${file.title}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>
-                                        </c:when>
-                                        <c:when test="${info.key=='ttsText'}">
-                                            <td>
-                                                <input type="text" name="ttsText" value="${info.value}"/>
-                                                <select name="fileId" style="display: none;">
-                                                    <c:forEach var="file" items="${files}">
-                                                        <option value="${file.fileId}">${file.title}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>
-                                        </c:when>
-                                    </c:choose>
+                        <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
+                        <td>
+                            <select name="dashboardFileId">
+                                <option value=""><spring:message code="common.column.selectNo"/></option>
+                                <c:forEach var="file" items="${files}">
+                                    <option value="${file.fileId}" <c:if test="${file.fileId == alarm.dashboardFileId}">selected="selected"</c:if>>${file.title}</option>
                                 </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <th><spring:message code="alarm.column.alarmDashboardSetting"/></th>
-                                <td>
-                                    <div class="checkbox_set csl_style03">
-                                        <input type="hidden" name="dashboardUseYn" value="N"/>
-                                        <input type="checkbox" name="dashboardUseYnCheckBox" onchange="setCheckBoxYn(this,'dashboardUseYn')"/>
-                                        <label></label>
-                                    </div>
-                                </td>
-                                <td><isaver:codeSelectBox groupCodeId="ARM" htmlTagName="alarmType" disabled="true"/></td>
-                                <td>
-                                    <input type="text" name="ttsText" disabled="disabled"/>
-                                    <select name="fileId" disabled="disabled">
-                                        <c:forEach var="file" items="${files}">
-                                            <option value="${file.fileId}">${file.title}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                            </c:otherwise>
-                        </c:choose>
+                            </select>
+                        </td>
                     </tr>
                     <c:if test="${!empty alarm}">
                         <tr>
@@ -144,13 +87,13 @@
             </div>
 
             <!-- 알림대상장치 설정 -->
-            <div class="table_title_area d_none">
+            <div class="table_title_area">
                 <h4><spring:message code="alarm.column.alarmDeviceSetting"/></h4>
             </div>
             <c:choose>
                 <c:when test="${deviceAlarmInfos != null and fn:length(deviceAlarmInfos) > 0}">
                     <c:forEach var="deviceAlarmInfo" items="${deviceAlarmInfos}" varStatus="index">
-                        <div <c:if test="${index.count > 1}">appendDiv</c:if> class="table_contents d_none">
+                        <div <c:if test="${index.count > 1}">appendDiv</c:if> class="table_contents">
                             <!-- 입력 테이블 Start -->
                             <table changeTb <c:if test="${index.count==0}">mainTb</c:if> alarmTargetTb class="t_defalut t_type02 alarmset_col">
                                 <tbody>
@@ -174,7 +117,7 @@
                                             <div class="except01">
                                                 <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
                                                 <p><spring:message code="alarm.column.selectAlarmType"/></p>
-                                                <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                                                <p><spring:message code="alarm.column.selectAlarmDetail"/></p>
                                                 <div><spring:message code="alarm.column.removeOrAdd"/></div>
                                             </div>
                                             <c:forEach var="infos" items="${deviceAlarmInfo.infos}" varStatus="status">
@@ -229,7 +172,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <div class="table_contents d_none">
+                    <div class="table_contents">
                         <!-- 입력 테이블 Start -->
                         <table changeTb mainTb alarmTargetTb class="t_defalut t_type02 alarmset_col">
                             <tbody>
@@ -251,7 +194,7 @@
                                         <div class="except01">
                                             <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
                                             <p><spring:message code="alarm.column.selectAlarmType"/></p>
-                                            <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                                            <p><spring:message code="alarm.column.selectAlarmDetail"/></p>
                                             <div><spring:message code="alarm.column.removeOrAdd"/></div>
                                         </div>
                                         <div device>
@@ -322,7 +265,7 @@
                         <div class="except01">
                             <p><spring:message code="alarm.column.selectAlarmDevice"/></p>
                             <p><spring:message code="alarm.column.selectAlarmType"/></p>
-                            <p><spring:message code="alarm.column.selectAlarmFile"/></p>
+                            <p><spring:message code="alarm.column.selectAlarmDetail"/></p>
                             <div><spring:message code="alarm.column.removeOrAdd"/></div>
                         </div>
                         <div device>
@@ -390,18 +333,6 @@
 
         $("table[mainTb] select[name='targetDeviceId']").on("change", function(){
             changeTargetDeviceType();
-        });
-
-        $("input[name='dashboardUseYnCheckBox']").on("change", function(){
-            if($(this).is(":checked")){
-                $("tr[dashboard] select[name='alarmType']").prop("disabled",false);
-                $("tr[dashboard] input[name='ttsText']").prop("disabled",false);
-                $("tr[dashboard] select[name='fileId']").prop("disabled",false);
-            }else{
-                $("tr[dashboard] select[name='alarmType']").prop("disabled",true);
-                $("tr[dashboard] input[name='ttsText']").prop("disabled",true);
-                $("tr[dashboard] select[name='fileId']").prop("disabled",true);
-            }
         });
 
         changeAlarmType();
@@ -493,25 +424,6 @@
 
     function addAlarmInfo(){
         var alarmInfo = [];
-
-        if($("input[name='dashboardUseYn']").val()=='Y'){
-            var addText = "";
-
-            addText += "DASHBOARD";
-            addText += "|alarmType:" + $("tr[dashboard] select[name='alarmType']").val();
-
-            switch ($("tr[dashboard] select[name='alarmType']").val()){
-                case "ARM001" :
-                    addText += "|ttsText:" + $("tr[dashboard] input[name='ttsText']").val();
-                    break;
-                case "ARM002" :
-                    addText += "|fileId:" + $("tr[dashboard] select[name='fileId']").val();
-                    break;
-                default :
-                    break;
-            }
-            alarmInfo.push(addText);
-        }
 
         $.each($("table[alarmTargetTb]"),function(){
             var targetDeviceId = $(this).find("select[name='targetDeviceId']").val();

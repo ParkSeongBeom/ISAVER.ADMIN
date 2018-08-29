@@ -94,7 +94,7 @@
                                 <span>~</span>
                                 <p><spring:message code="critical.column.enterMaxRangeVal"/></p>
                                 <p><spring:message code="critical.column.thresholdSelection"/></p>
-                                <p><spring:message code="critical.column.selectNotificationFile"/></p>
+                                <p><spring:message code="critical.column.selectAlarm"/></p>
                                 <div><spring:message code="critical.column.deleteAdd"/></div>
                             </div>
 

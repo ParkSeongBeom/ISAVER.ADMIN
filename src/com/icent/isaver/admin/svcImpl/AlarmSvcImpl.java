@@ -80,9 +80,6 @@ public class AlarmSvcImpl implements AlarmSvc {
         Map<String, String> alarmInfoParam = new HashMap<>();
         alarmInfoParam.put("alarmId",parameters.get("alarmId"));
         alarmInfoParam.put("dashboardTargetId",AdminResource.ALARM_TARGET_ID);
-        alarmInfoParam.put("dashboardYn",AdminResource.YES);
-        List<AlarmInfoBean> dashboardAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
-        alarmInfoParam.put("dashboardYn",AdminResource.NO);
         List<AlarmInfoBean> deviceAlarmInfos = alarmInfoDao.findListAlarmInfo(alarmInfoParam);
 
         List<DeviceBean> targetDevices = deviceDao.findListDevice(new HashMap<String,String>(){{put("deviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("target"));}});
@@ -91,7 +88,6 @@ public class AlarmSvcImpl implements AlarmSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("alarm", alarm);
-        modelAndView.addObject("dashboardAlarmInfos", dashboardAlarmInfos);
         modelAndView.addObject("deviceAlarmInfos", deviceAlarmInfos);
         modelAndView.addObject("targetDevices", targetDevices);
         modelAndView.addObject("alarmDevices", alarmDevices);
