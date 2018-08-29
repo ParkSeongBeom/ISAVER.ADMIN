@@ -449,6 +449,13 @@ var NotificationHelper = (
 
             switch (notification['actionType']){
                 case "confirm" :
+                    var notificationData = _self.getNotification('data',notification['notificationId']);
+                    if(notificationData!=null){
+                        notificationData['confirmUserId'] = notification['updateUserId'];
+                        notificationData['confirmUserName'] = notification['updateUserName'];
+                        notificationData['confirmDatetime'] = notification['updateDatetime'];
+                    }
+
                     if(notificationTag!=null){
                         appendConfirm(
                             notificationTag

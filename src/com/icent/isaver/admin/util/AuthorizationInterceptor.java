@@ -29,8 +29,8 @@ import java.util.Date;
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("${cnf.server.version}")
-    private String version = null;
+    @Value("${cnf.server.majorVersion}")
+    private String majorVersion = null;
 
     @Value("${ws.server.address}")
     private String wsAddress = null;
@@ -127,7 +127,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
-        modelAndView.addObject("serverVersion", version);
+        modelAndView.addObject("majorVersion", majorVersion);
         super.postHandle(request, response, handler, modelAndView);
     }
 
