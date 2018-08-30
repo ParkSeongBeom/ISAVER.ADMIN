@@ -14,6 +14,8 @@ var PtzControlPopup = (
         var _video = null;
         var _device = null;
         var _element;
+        var _fenceElement;
+        var _setPresetList = [];
         var _GET_LIST_RETRY = {
             'cnt' : 10
             , 'delay' : 1000
@@ -103,20 +105,21 @@ var PtzControlPopup = (
          * @author psb
          */
         this.updatePreset = function(presetId, actionType){
-            if(_presetList[presetId]==null){
-                console.error("[PtzControlPopup][updatePreset] presetId is null or not found ptzList",presetId,actionType);
+            var presetName = _element.find("#presetElement li[id='"+presetId+"'] select option:selected").val();
+            if(presetName==null){
+                console.error("[PtzControlPopup][updatePreset] preset name is null",presetId,actionType);
                 return false;
             }
-            webSocketHelper.sendMessage("ptz",{"messageType":"setPreset","deviceId":_device['deviceId'],"operation":actionType,"presetId":presetId,"presetName":_presetList[presetId]['presetName']});
+
+            webSocketHelper.sendMessage("ptz",{"messageType":"setPreset","deviceId":_device['deviceId'],"operation":actionType,"presetId":presetId,"presetName":presetName});
 
             switch (actionType){
                 case "move" :
                     break;
                 case "save" :
-                    _element.find("#presetElement li[id='"+presetId+"']").addClass("setting");
-                    break;
                 case "remove" :
-                    _element.find("#presetElement li[id='"+presetId+"']").removeClass("setting");
+                    updateSetting(_element.find("#presetElement li[id='"+presetId+"']"),actionType,presetName);
+                    _initFlag = false;
                     break;
             }
         };
@@ -132,6 +135,7 @@ var PtzControlPopup = (
             }
 
             _device = data;
+            _setPresetList = [];
             _element.find("#deviceName").text(_device['deviceName']);
             _element.fadeIn();
 
@@ -141,6 +145,15 @@ var PtzControlPopup = (
 
             if(!webSocketHelper.isConnect("ptz")){
                 webSocketHelper.wsConnect("ptz");
+            }
+
+            var fenceList = notificationHelper.getFenceList(_device['areaId']);
+            _fenceElement = $("<select/>");
+            for(var index in fenceList){
+                var fence = fenceList[index];
+                _fenceElement.append(
+                    $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
+                )
             }
             getPresetList();
         };
@@ -166,6 +179,41 @@ var PtzControlPopup = (
             }
         };
 
+        var updateSetting = function(element, mode, presetName){
+            // Reset
+            _fenceElement.find("option").prop("disabled",false);
+            _element.find("#presetElement li select option").prop("disabled",false);
+
+            switch (mode){
+                case "save" :
+                    if(_setPresetList.indexOf(presetName) < 0){
+                        _setPresetList.push(presetName);
+                    }
+                    element.addClass("setting");
+                    break;
+                case "remove" :
+                    if(_setPresetList.indexOf(presetName) > 0){
+                        _setPresetList.splice(_setPresetList.indexOf(presetName),1);
+                    }
+                    element.removeClass("setting");
+                    
+                    $.each(_element.find("#presetElement li select"),function(){
+                        $(this).find("option[value='"+presetName+"']").prop("disabled",false);
+                    });
+                    _fenceElement.find("option[value='"+presetName+"']").prop("disabled",false);
+                    break;
+            }
+
+            for(var index in _setPresetList){
+                $.each(_element.find("#presetElement li select"),function(){
+                    if($(this).val()!=_setPresetList[index]){
+                        $(this).find("option[value='"+_setPresetList[index]+"']").prop("disabled",true);
+                    }
+                });
+                _fenceElement.find("option[value='"+_setPresetList[index]+"']").prop("disabled",true);
+            }
+        };
+
         /**
          * close popup
          * @author psb
@@ -174,9 +222,13 @@ var PtzControlPopup = (
             _element.fadeOut();
             webSocketHelper.wsDisConnect("ptz");
             _video.disconnect(_device['deviceId']);
+            reset();
+            _initFlag = false;
+        };
+
+        var reset = function(){
             _presetList = {};
             _element.find("#presetElement").empty();
-            _initFlag = false;
         };
 
         /**
@@ -187,20 +239,17 @@ var PtzControlPopup = (
             if(_initFlag){
                 return false;
             }
-
-            var fenceElement = $("<select/>");
-            var fenceList = notificationHelper.getFenceList(_device['areaId']);
-            for(var index in fenceList){
-                var fence = fenceList[index];
-                fenceElement.append(
-                    $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
-                )
-            }
+            reset();
 
             var presetElement = _element.find("#presetElement");
             for(var index in dataList){
                 var data = dataList[index];
-                var fenceElementClone = fenceElement.clone();
+                var fenceElementClone = _fenceElement.clone();
+                if(fenceElementClone.find("option[value='"+data['presetName']+"']").length==0){
+                    fenceElementClone.append(
+                        $("<option/>",{value:data['presetName']}).text(data['presetName'])
+                    )
+                }
                 fenceElementClone.val(data['presetName']).prop("selected","selected");
 
                 var element = $("<li/>",{id:data['presetId']}).append(
@@ -210,9 +259,7 @@ var PtzControlPopup = (
                     })
                 ).append(
                     // 프리셋 펜스명
-                    $("<div/>").append(
-                        $("<input/>",{type:"text",readonly:"readonly"})
-                    ).append(fenceElementClone)
+                    $("<div/>").append(fenceElementClone)
                 ).append(
                     // 프리셋 이동 버튼
                     $("<button/>",{class:"cp_btn"}).on("click",function(){
@@ -225,10 +272,15 @@ var PtzControlPopup = (
                     })
                 );
 
+                if(data['setYn']=='Y'){
+                    updateSetting(element,'save', data['presetName']);
+                }
+
                 element.on("click",function(){
                     presetElement.find("li").removeClass("on");
                     $(this).addClass("on");
                 });
+
                 _presetList[data['presetId']] = {
                     'data' : data
                     ,'element' : element

@@ -1347,7 +1347,7 @@ a.fc-more {position: relative; z-index: 2;}
           select {position: absolute; z-index: 1; top:0; left:0; height:100%; }
         }
 
-        div select, .cp_btn, .cd_btn {display: none;}
+        .cp_btn, .cd_btn {display: none;}
 
         button {
           width:40px; height:40px; min-width:40px; max-width:40px; @include flex-option(1, 0, 40px);

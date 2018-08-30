@@ -217,7 +217,9 @@ var VideoMediator = (
         };
 
         this.disconnect = function(deviceId){
-            _videoList[deviceId]['server'].disconnect();
+            if(_videoList[deviceId]!=null && _videoList[deviceId]['server']!=null){
+                _videoList[deviceId]['server'].disconnect();
+            }
         };
 
         /**

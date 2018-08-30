@@ -419,7 +419,7 @@ body.dashboard_mode {
   .s_lbox, .s_rbox {height:100%; /*background-color: $bas-color;*/}
 
   .s_lbox { @include flex-width-one(1);  }
-  .s_rbox { @include flex-option(0, 1, auto); min-width:auto; }
+  .s_rbox { @include flex-option(0, 1, auto); min-width:auto;  @include flex-align-items-start; }
 
   .s_lbox {
     overflow: hidden;
@@ -643,7 +643,7 @@ body.dashboard_mode {
       @include flex-column;
       .s_lbox, .s_rbox {width: 100%; }
       .s_rbox {
-        min-width: auto; height: auto; max-height:50%;
+        min-width: auto; height: auto; max-height:40%;
         ul {
           @include flex-column-row; @include flex-row-wrap;
           height:auto; width:100%;

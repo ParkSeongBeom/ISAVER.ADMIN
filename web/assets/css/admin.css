@@ -2925,7 +2925,7 @@ a.fc-more {
             top: 0;
             left: 0;
             height: 100%; }
-        .map_sett_box .controls > ul li div select, .map_sett_box .controls > ul li .cp_btn, .map_sett_box .controls > ul li .cd_btn {
+        .map_sett_box .controls > ul li .cp_btn, .map_sett_box .controls > ul li .cd_btn {
           display: none; }
         .map_sett_box .controls > ul li button {
           width: 40px;

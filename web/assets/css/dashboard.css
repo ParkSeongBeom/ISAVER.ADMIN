@@ -874,7 +874,13 @@ body.dashboard_mode {
   flexbox: 0 1 auto;
   -webkit-box-flex: 1;
   -ms-flex: 0 1 auto;
-  min-width: auto; }
+  min-width: auto;
+  box-align: start;
+  -webkit-box-align: start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start; }
 .guard_set .s_lbox {
   overflow: hidden; }
   .guard_set .s_lbox > div {
@@ -1305,7 +1311,7 @@ body.dashboard_mode {
     .watch_area.area02 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_rbox {
       min-width: auto;
       height: auto;
-      max-height: 50%; }
+      max-height: 40%; }
       .watch_area.area02 .guard_set .s_rbox ul, .watch_area.area08 .guard_set .s_rbox ul {
         -webkit-box-orient: row;
         -webkit-box-direction: row;
