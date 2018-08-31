@@ -695,6 +695,9 @@ menu {
   .tpopupbase, .tpopupbase header, .personal_popup, .personal_popup header, .popupbase > div > div, .popupbase > div > div header {
     background-color: #f5f5f5; }
 
+.bodyohidden {
+  overflow: hidden !important; }
+
 .popupbase {
   /*
    <div class="iocount_popup">

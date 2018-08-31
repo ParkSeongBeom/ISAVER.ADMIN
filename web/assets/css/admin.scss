@@ -1190,7 +1190,7 @@ a.fc-more {position: relative; z-index: 2;}
 
   }
 
-  .onvif {background-color: #000;}
+  .onvif {background-color: #000; @include flex-justify-content-center;}
   .controls {
     @include flex-option(1, 0, $sec_c); max-width:$sec_c; min-width:$sec_c; width:$sec_c;
 

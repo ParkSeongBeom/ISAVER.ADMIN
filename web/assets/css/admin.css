@@ -2432,7 +2432,12 @@ a.fc-more {
         text-align: center;
         margin: 0 0 0 10px; }
   .map_sett_box .onvif {
-    background-color: #000; }
+    background-color: #000;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
   .map_sett_box .controls {
     flex: 1 0 500px;
     -webkit-flex: 1 0 500px;

@@ -1,6 +1,23 @@
 // URL Parameter 제거
 history.replaceState({}, null, location.pathname);
 
+/*
+ show hide Event Binding
+ @author psb
+ */
+(function($) {
+    $.each(['show', 'hide'], function(i, ev) {
+        var el = $.fn[ev];
+        $.fn[ev] = function () {
+            var result = el.apply(this, arguments);
+            result.promise().done(function () {
+                this.trigger(ev, [result]);
+            });
+            return result;
+        };
+    });
+})(jQuery);
+
 /**
  * 일반적인 유틸 모음</br>
  * - 해당 function에 대한 기능 간략히 주척 필히.
