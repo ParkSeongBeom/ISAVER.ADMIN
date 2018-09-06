@@ -226,6 +226,7 @@ var ResourceHelper = (
                 form.find("tr[modifyTag]").hide();
                 form.find("button[name='saveBtn']").hide();
                 form.find("button[name='removeBtn']").hide();
+                form.find(".onvif_sett_btn").hide();
             }
         };
 
