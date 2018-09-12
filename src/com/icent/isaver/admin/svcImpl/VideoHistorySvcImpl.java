@@ -2,8 +2,10 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.bean.NotificationBean;
 import com.icent.isaver.repository.bean.VideoHistoryBean;
+import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.NotificationDao;
 import com.icent.isaver.repository.dao.base.VideoHistoryDao;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,13 +43,19 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
     @Inject
     private VideoHistoryDao videoHistoryDao;
 
+    @Inject
+    private DeviceDao deviceDao;
+
     @Override
     public ModelAndView findListVideoHistory(Map<String, String> parameters) {
         List<VideoHistoryBean> videoHistoryList = videoHistoryDao.findListVideoHistory(parameters);
         Integer totalCount = videoHistoryDao.findCountVideoHistory(parameters);
 
+        List<DeviceBean> deviceList = deviceDao.findListDeviceForHistory(parameters);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("videoHistoryList", videoHistoryList);
+        modelAndView.addObject("deviceList", deviceList);
         modelAndView.addObject("paramBean",parameters);
         modelAndView.addObject("totalCount",totalCount);
         try{

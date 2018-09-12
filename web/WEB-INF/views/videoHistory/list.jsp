@@ -31,6 +31,17 @@
                     <span><spring:message code="videoHistory.column.areaName" /></span>
                     <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" areaId="${paramBean.areaId}" allText="${allSelectText}"/></span>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="videoHistory.column.deviceName" /></span>
+                    <span>
+                        <select name="deviceId">
+                            <option value="" ><spring:message code="common.selectbox.all"/></option>
+                            <c:forEach var="device" items="${deviceList}">
+                                <option value="${device.deviceId}" <c:if test="${device.deviceId == paramBean.deviceId}">selected="selected"</c:if>>${device.deviceName}</option>
+                            </c:forEach>
+                        </select>
+                    </span>
+                </p>
                 <p class="itype_04">
                     <span><spring:message code="videoHistory.column.eventDatetime" /></span>
                     <span class="plable04">
