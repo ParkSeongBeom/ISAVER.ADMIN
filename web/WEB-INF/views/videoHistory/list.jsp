@@ -41,6 +41,16 @@
                         <select id="endDatetimeHourSelect" name="endDatetimeHour"></select>
                     </span>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="videoHistory.column.videoType" /></span>
+                    <span>
+                        <select name="videoType">
+                            <option value="" ><spring:message code="common.selectbox.all"/></option>
+                            <option value="event" <c:if test="${paramBean.videoType == 'event'}">selected="selected"</c:if>><spring:message code="videoHistory.selectbox.event"/></option>
+                            <option value="normal" <c:if test="${paramBean.videoType == 'normal'}">selected="selected"</c:if>><spring:message code="videoHistory.selectbox.normal"/></option>
+                        </select>
+                    </span>
+                </p>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
@@ -72,15 +82,15 @@
                 <c:choose>
                     <c:when test="${videoHistoryList != null and fn:length(videoHistoryList) > 0}">
                         <c:forEach var="videoHistory" items="${videoHistoryList}">
-                            <li onclick="javascript:openVideo(this,'${videoHistory.notificationId}','${videoHistory.deviceId}');">
+                            <li onclick="javascript:openVideo(this,'${videoHistory.videoType}/${videoHistory.videoFileName}');">
                                 <div>
-                                    <img src="${videoUrl}${videoHistory.notificationId}${videoHistory.deviceId}.jpg"/>
+                                    <img src="${videoUrl}${videoHistory.videoType}/${videoHistory.thumbnailFileName}.jpg"/>
                                 </div>
                                 <div>
                                     <span>${videoHistory.areaName}</span>
                                     <span>${videoHistory.deviceName}</span>
                                     <p>${videoHistory.eventName}</p>
-                                    <span><fmt:formatDate value="${videoHistory.eventDatetime}" pattern="MM/dd HH:mm:ss"/></span>
+                                    <span><fmt:formatDate value="${videoHistory.videoDatetime}" pattern="MM/dd HH:mm:ss"/></span>
                                 </div>
                             </li>
                         </c:forEach>
@@ -130,11 +140,11 @@
         });
     });
 
-    function openVideo(_this, notificationId,deviceId){
+    function openVideo(_this, videoFileName){
         $(".video_list li").removeClass("on");
         $(_this).addClass("on");
 
-        $("#videoSource").attr("src",videoUrl+notificationId+deviceId+".mp4");
+        $("#videoSource").attr("src",videoUrl+videoFileName);
         $("#videoElement")[0].load();
     }
 

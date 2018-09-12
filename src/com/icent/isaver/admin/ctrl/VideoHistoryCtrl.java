@@ -1,10 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
-import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +48,7 @@ public class VideoHistoryCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListVideoHistory(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters = AdminHelper.checkSearchDate(parameters,1);
         ModelAndView modelAndView = videoHistorySvc.findListVideoHistory(parameters);
         modelAndView.setViewName("videoHistoryList");
         return modelAndView;
