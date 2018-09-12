@@ -84,7 +84,7 @@
                         <c:forEach var="videoHistory" items="${videoHistoryList}">
                             <li onclick="javascript:openVideo(this,'${videoHistory.videoType}/${videoHistory.videoFileName}');">
                                 <div>
-                                    <img src="${videoUrl}${videoHistory.videoType}/${videoHistory.thumbnailFileName}.jpg"/>
+                                    <img src="${videoUrl}${videoHistory.videoType}/${videoHistory.thumbnailFileName}"/>
                                 </div>
                                 <div>
                                     <span>${videoHistory.areaName}</span>
