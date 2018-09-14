@@ -526,6 +526,16 @@ $bbl01:100%; $bbl02:1px;
   &:active:after {background-color: $color-red-01;}
 } //ex) @include btnbase_type01;
 
+
+@mixin list_more_btn {
+  background-color: $bas-color; color:$color-white-01;
+  @include flex-option(1, 0, $btnarea-height);
+  &:after  {content:"More"; padding:0 0 0 10px;}
+  &:before {content:"\e92b";}
+  @include border01( 1px 0 0 0,$color-gray-09,1);
+  &:hover {background-color: $color-gray-09}
+} //ex) @include list_more_btn;
+
 // webkit-scroll Bar
 @mixin webkit_scroll_dashboard {
   ::-webkit-scrollbar {width: 10px;height: 10px; }

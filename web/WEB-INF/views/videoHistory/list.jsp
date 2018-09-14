@@ -23,6 +23,7 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <form id="videoHistoryForm" method="POST">
+        <input type="hidden" name="mode" value="search"/>
         <article class="search_area">
             <div class="search_contents">
                 <spring:message code="common.selectbox.select" var="allSelectText"/>
@@ -77,7 +78,7 @@
                     <source id="videoSource" type="video/mp4">
                 </video>
                 <div class="speed">
-                    <button class="x1" speed="1"></button>
+                    <button class="x1 on" speed="1"></button>
                     <button class="x2" speed="2"></button>
                     <button class="x4" speed="4"></button>
                     <button class="x8" speed="8"></button>
@@ -87,27 +88,10 @@
 
         <section>
             <div class="table_btn_set">
-                <p><span><spring:message code="common.message.total"/><em>${totalCount}</em><spring:message code="common.message.number01"/></span></p>
+                <p><span><spring:message code="common.message.total"/><em id="totalCount"></em><spring:message code="common.message.number01"/></span></p>
             </div>
-            <ul class="video_list">
-                <c:choose>
-                    <c:when test="${videoHistoryList != null and fn:length(videoHistoryList) > 0}">
-                        <c:forEach var="videoHistory" items="${videoHistoryList}">
-                            <li onclick="javascript:openVideo(this,'${videoHistory.videoType}/${videoHistory.videoFileName}');">
-                                <div>
-                                    <img src="${videoUrl}${videoHistory.videoType}/${videoHistory.thumbnailFileName}"/>
-                                </div>
-                                <div>
-                                    <span>${videoHistory.areaName}</span>
-                                    <span>${videoHistory.deviceName}</span>
-                                    <p>${videoHistory.eventName}</p>
-                                    <span><fmt:formatDate value="${videoHistory.videoDatetime}" pattern="MM/dd HH:mm:ss"/></span>
-                                </div>
-                            </li>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-            </ul>
+            <ul class="video_list" id="videoList"></ul>
+            <button id="videoHistoryMoreBtn" onclick="javascript:listRender();"></button>
         </section>
     </article>
 </section>
@@ -120,20 +104,45 @@
 
     var messageConfig = {
         'earlyDatetime':'<spring:message code="videoHistory.message.earlyDatetime"/>'
+        ,'listFailure':'<spring:message code="videoHistory.message.listFailure"/>'
     };
 
     var urlConfig = {
-        'listUrl':'${rootPath}/videoHistory/list.html'
+        'listUrl':'${rootPath}/videoHistory/list.json'
     };
-
 
     var searchConfig = {
         'startDatetimeHour':'${paramBean.startDatetimeHour}'
         ,'endDatetimeHour':'${paramBean.endDatetimeHour}'
     };
 
+    var videoElementTag = $("<li/>").append(
+        $("<div/>").append(
+            $("<img/>",{id:'thumbnail'})
+        )
+    ).append(
+        $("<div/>").append(
+            $("<span/>",{id:'areaName'})
+        ).append(
+            $("<span/>",{id:'deviceName'})
+        ).append(
+            $("<p/>",{id:'eventName'})
+        ).append(
+            $("<span/>",{id:'videoDatetime'})
+        )
+    );
+
+    var videoHistoryList;
+    var pageConfig = {
+        viewMaxCnt : 20
+        ,elementIndex : 0
+        ,totalCount : 0
+    };
+
     $(document).ready(function(){
         $(".speed > button").on("click",function(){
+            $(".speed > button").removeClass("on");
+            $(this).addClass("on");
             $("#videoElement")[0].playbackRate = Number($(this).attr("speed"));
             $("#videoElement")[0].play();
         });
@@ -149,6 +158,8 @@
                 search();
             }
         });
+
+        search();
     });
 
     function openVideo(_this, videoFileName){
@@ -172,13 +183,76 @@
 
     /*
      조회
-     @author kst
+     @author psb
      */
     function search(){
         if(validate()){
-            form.attr('action',urlConfig['listUrl']);
-            form.submit();
+            callAjax('list', form.serialize());
         }
+    }
+
+    function listRender(){
+        var index = 0;
+
+        for(pageConfig['elementIndex']; pageConfig['elementIndex']<videoHistoryList.length; pageConfig['elementIndex']++){
+            if(index<=pageConfig['viewMaxCnt']){
+                var videoHistory = videoHistoryList[pageConfig['elementIndex']];
+                addVideoHistory(videoHistory);
+            }else{
+                return false;
+            }
+            index++;
+        }
+
+        if(pageConfig['elementIndex']<videoHistoryList.length){
+            $("#videoHistoryMoreBtn").show();
+        }else{
+            $("#videoHistoryMoreBtn").hide();
+        }
+    }
+
+    function addVideoHistory(videoHistory){
+        var videoTag = videoElementTag.clone();
+        videoTag.attr("onclick","openVideo(this,'"+videoHistory['videoType']+"/"+videoHistory['videoFileName']+"');");
+        videoTag.find("#thumbnail").attr("src","${videoUrl}"+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']);
+        videoTag.find("#areaName").text(videoHistory['areaName']?videoHistory['areaName']:'');
+        videoTag.find("#deviceName").text(videoHistory['deviceName']?videoHistory['deviceName']:'');
+        videoTag.find("#eventName").text(videoHistory['eventName']?videoHistory['eventName']:'');
+        videoTag.find("#videoDatetime").text(new Date(videoHistory['videoDatetime']).format("MM/dd HH:mm:ss"));
+        $("#videoList").append(videoTag)
+    }
+
+    /*
+     ajax call
+     @author psb
+     */
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,videoHistory_successHandler,videoHistory_errorHandler,actionType);
+    }
+
+    /*
+     ajax success handler
+     @author psb
+     */
+    function videoHistory_successHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'list':
+                videoHistoryList = data['videoHistoryList'];
+                pageConfig['elementIndex'] = 0;
+                pageConfig['totalCount'] = Number(data['totalCount']);
+                $("#videoList").empty();
+                $("#totalCount").text(pageConfig['totalCount']);
+                listRender();
+                break;
+        }
+    }
+
+    /*
+     ajax error handler
+     @author psb
+     */
+    function videoHistory_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
     }
 
     /*

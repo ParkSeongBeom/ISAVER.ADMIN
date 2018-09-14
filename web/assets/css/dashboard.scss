@@ -282,6 +282,7 @@ body.dashboard_mode {
   }
 
   .s_lbox.blinker_set {
+    height:auto;
     h3 { display: none;}
     h3 + div {
       @include flex-row-wrap;
@@ -472,7 +473,7 @@ body.dashboard_mode {
           &, &:before {width:100%; height:100%;}
           &:before {content:""; position: absolute; z-index: 1; top:0; left:0; }
 
-          & > video {height:100%;}
+          & > video {width: 100%; height:100%;}
         }
 
         /////..... 임계치 적용 표시 Start
@@ -544,8 +545,8 @@ body.dashboard_mode {
   &.area08, &.area16, &.area00 { & > div {width:25%;} }
 
   //높이
-  &.area01, &.area02, &.area04,
-  &.area04, &.area06, &.area08 { & > div {min-height:50%;} }
+  &.area01, &.area02 { & > div {min-height:50%;} }
+  &.area04, &.area06, &.area08 { & > div {min-height:50%; max-height:50%; height:50%;} }
   &.area09 { & > div {height:calc(100% / 3);} }
   &.area12, &.area16, &.area00 { & > div {min-height:25%; max-height:calc(100% / 3);} }
 
@@ -642,11 +643,12 @@ body.dashboard_mode {
     .guard_set {
       @include flex-column;
       .s_lbox, .s_rbox {width: 100%; }
+      .s_lbox {}
       .s_rbox {
-        min-width: auto; height: auto; max-height:40%;
+        min-width: auto; height: auto; /*max-height:40%;*/
         ul {
           @include flex-column-row; @include flex-row-wrap;
-          height:auto; width:100%;
+          width:100%;
           li {
             @include flex-option(0, 1, 100%); width:auto; height:auto; min-width:50%; max-width:50%;
             &:before {left:auto; right:0; width:1px; height:100%;}
@@ -657,9 +659,9 @@ body.dashboard_mode {
     }
   }
   &.area02 { .guard_set .s_rbox ul li {min-height:200px; max-height:200px;} }
-  &.area06 { .guard_set .s_rbox ul li {min-width: 200px; max-width: 200px;} }
+  &.area04, &.area06 { .guard_set .s_rbox ul li {min-width: 200px; max-width: 200px;} }
   &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
-  &.area04 { .guard_set .s_rbox ul li {min-width: 200px;} }
+
   &.area09 {
     .guard_set .s_rbox  {
       max-width:250px;

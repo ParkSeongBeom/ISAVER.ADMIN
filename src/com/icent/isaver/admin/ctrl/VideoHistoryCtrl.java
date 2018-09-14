@@ -2,6 +2,7 @@ package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +49,11 @@ public class VideoHistoryCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListVideoHistory(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkSearchDate(parameters,1);
+        parameters = AdminHelper.checkSearchDate(parameters,0);
         ModelAndView modelAndView = videoHistorySvc.findListVideoHistory(parameters);
-        modelAndView.setViewName("videoHistoryList");
+        if(StringUtils.nullCheck(parameters.get("mode"))){
+            modelAndView.setViewName("videoHistoryList");
+        }
         return modelAndView;
     }
 }

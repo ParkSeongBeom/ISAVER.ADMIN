@@ -8,6 +8,7 @@ import com.icent.isaver.repository.bean.VideoHistoryBean;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.NotificationDao;
 import com.icent.isaver.repository.dao.base.VideoHistoryDao;
+import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,16 +49,18 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
 
     @Override
     public ModelAndView findListVideoHistory(Map<String, String> parameters) {
-        List<VideoHistoryBean> videoHistoryList = videoHistoryDao.findListVideoHistory(parameters);
-        Integer totalCount = videoHistoryDao.findCountVideoHistory(parameters);
-
         List<DeviceBean> deviceList = deviceDao.findListDeviceForHistory(parameters);
-
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("videoHistoryList", videoHistoryList);
+
+        if(StringUtils.notNullCheck(parameters.get("mode"))){
+            List<VideoHistoryBean> videoHistoryList = videoHistoryDao.findListVideoHistory(parameters);
+            Integer totalCount = videoHistoryDao.findCountVideoHistory(parameters);
+            modelAndView.addObject("videoHistoryList", videoHistoryList);
+            modelAndView.addObject("totalCount",totalCount);
+        }
+
         modelAndView.addObject("deviceList", deviceList);
         modelAndView.addObject("paramBean",parameters);
-        modelAndView.addObject("totalCount",totalCount);
         try{
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("videoUrl", "http://" + address.getHostAddress() + videoAttachedUploadPath);

@@ -575,21 +575,23 @@ body.dashboard_mode {
             opacity: 0.7; }
             .personnel_set .blinker_set > div > div > p:nth-of-type(2):after {
               content: "\e923"; }
-  .personnel_set .s_lbox.blinker_set h3 {
-    display: none; }
-  .personnel_set .s_lbox.blinker_set h3 + div {
-    -webkit-flex-flow: row wrap;
-    -moz-flex-flow: row wrap;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap; }
-    .personnel_set .s_lbox.blinker_set h3 + div:before {
-      content: "\e944";
-      font-size: 14rem;
-      text-align: center;
-      width: 100%;
-      border-style: solid;
-      border-width: 0 0 1px 0;
-      border-color: black; }
+  .personnel_set .s_lbox.blinker_set {
+    height: auto; }
+    .personnel_set .s_lbox.blinker_set h3 {
+      display: none; }
+    .personnel_set .s_lbox.blinker_set h3 + div {
+      -webkit-flex-flow: row wrap;
+      -moz-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+      flex-flow: row wrap; }
+      .personnel_set .s_lbox.blinker_set h3 + div:before {
+        content: "\e944";
+        font-size: 14rem;
+        text-align: center;
+        width: 100%;
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        border-color: black; }
   .personnel_set .s_rbox .blinker_set h3 {
     font-size: 1rem;
     letter-spacing: -0.1rem; }
@@ -1023,6 +1025,7 @@ body.dashboard_mode {
           top: 0;
           left: 0; }
         .guard_set .s_rbox > ul li > div > video {
+          width: 100%;
           height: 100%; }
       .guard_set .s_rbox > ul li.level-caution > div:before, .guard_set .s_rbox > ul li.level-warning > div:before, .guard_set .s_rbox > ul li.level-danger > div:before {
         border-style: solid;
@@ -1149,8 +1152,12 @@ body.dashboard_mode {
     width: calc(100% / 3); }
   .watch_area.area08 > div, .watch_area.area16 > div, .watch_area.area00 > div {
     width: 25%; }
-  .watch_area.area01 > div, .watch_area.area02 > div, .watch_area.area04 > div, .watch_area.area04 > div, .watch_area.area06 > div, .watch_area.area08 > div {
+  .watch_area.area01 > div, .watch_area.area02 > div {
     min-height: 50%; }
+  .watch_area.area04 > div, .watch_area.area06 > div, .watch_area.area08 > div {
+    min-height: 50%;
+    max-height: 50%;
+    height: 50%; }
   .watch_area.area09 > div {
     height: calc(100% / 3); }
   .watch_area.area12 > div, .watch_area.area16 > div, .watch_area.area00 > div {
@@ -1311,7 +1318,7 @@ body.dashboard_mode {
     .watch_area.area02 .guard_set .s_rbox, .watch_area.area08 .guard_set .s_rbox {
       min-width: auto;
       height: auto;
-      max-height: 40%; }
+      /*max-height:40%;*/ }
       .watch_area.area02 .guard_set .s_rbox ul, .watch_area.area08 .guard_set .s_rbox ul {
         -webkit-box-orient: row;
         -webkit-box-direction: row;
@@ -1322,7 +1329,6 @@ body.dashboard_mode {
         -moz-flex-flow: row wrap;
         -ms-flex-flow: row wrap;
         flex-flow: row wrap;
-        height: auto;
         width: 100%; }
         .watch_area.area02 .guard_set .s_rbox ul li, .watch_area.area08 .guard_set .s_rbox ul li {
           flex: 0 1 100%;
@@ -1344,14 +1350,12 @@ body.dashboard_mode {
   .watch_area.area02 .guard_set .s_rbox ul li {
     min-height: 200px;
     max-height: 200px; }
-  .watch_area.area06 .guard_set .s_rbox ul li {
+  .watch_area.area04 .guard_set .s_rbox ul li, .watch_area.area06 .guard_set .s_rbox ul li {
     min-width: 200px;
     max-width: 200px; }
   .watch_area.area08 .guard_set .s_rbox ul li {
     min-height: 100px;
     max-height: 100px; }
-  .watch_area.area04 .guard_set .s_rbox ul li {
-    min-width: 200px; }
   .watch_area.area09 .guard_set .s_rbox {
     max-width: 250px; }
     .watch_area.area09 .guard_set .s_rbox ul {

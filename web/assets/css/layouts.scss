@@ -719,13 +719,8 @@ menu {
     }
 
     // 더보기
-    & > button {
-      background-color: $bas-color; color:$color-white-01;
-      @include flex-option(1, 0, $db_morebt_h);
-      &:after  {content:"More"; padding:0 0 0 10px;}
-      &:before {content:"\e92b";}
-      @include border01( 1px 0 0 0,$color-gray-09,1);
-      &:hover {background-color: $color-gray-09}
+    & > button  {
+      @include list_more_btn;
     }
 
     // 알림해지 사유
@@ -990,7 +985,7 @@ menu {
     &-caution { &:after, &:before {background-color: rgba($color-gray-03,1) !important;  } }    // &-caution 주의
     &-warning { &:after, &:before {background-color: rgba($color-orange-01,1) !important;} }    // &-warning 경고
     &-danger  { &:after, &:before {background-color: rgba($color-red-01,1) !important;   } }    // &-danger  위험
-    &-die     { opacity: 0.2 }    // &-danger  위험
+    &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
 
     &-caution, &-warning, &-danger {
       color:$color-white-01; opacity: 1;

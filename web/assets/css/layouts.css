@@ -2083,7 +2083,37 @@ menu {
 .nhr_set li.ts-danger:after, .nhr_set li.ts-danger:before, .nhr_set li.level-danger:after, .nhr_set li.level-danger:before {
   background-color: #be1e1e !important; }
 .nhr_set li.ts-die, .nhr_set li.level-die {
+  animation-name: issue02;
+  -webkit-animation-name: issue02;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
   opacity: 0.2; }
+@-webkit-keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+@keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
 .nhr_set li.ts-caution, .nhr_set li.ts-warning, .nhr_set li.ts-danger, .nhr_set li.level-caution, .nhr_set li.level-warning, .nhr_set li.level-danger {
   color: #fff;
   opacity: 1; }

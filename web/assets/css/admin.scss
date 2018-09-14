@@ -1696,70 +1696,84 @@ $resi_w:8px;
 
 
 ////// 영상이력 레이아웃 Start
+#videoHistoryForm select[name="areaId"] {width:250px;}
 .video_area {
-  @include flexbase; margin:20px 0 0 0;  max-height: 750px;
+  @include flexbase; margin:20px 0 0 0; height:750px; max-height: 750px;
+
+  & > * {overflow: hidden; height:100%;}
 
   & > *:first-of-type {
     @include flex-option(0, 1, 100%); @include flex-midddle; background-color: #000;
+
     & > div {
       position: relative; display: inline-block;
-      &:hover .speed {opacity: 1;}
+
+      .speed {
+        opacity: 1; position: absolute; right:46px; bottom:0; @include transition(400ms);
+        & > button {
+          width:40px; color:$color-white-01;
+          &:nth-of-type(1):before {content:"1x";}
+          &:nth-of-type(2):before {content:"2x";}
+          &:nth-of-type(3):before {content:"4x";}
+          &:nth-of-type(4):before {content:"8x";}
+
+          &.on {color:$color-red-01;}
+        }
+      }
+
     }
   }
   & > *:last-of-type  {
-    overflow: hidden;
-    @include flex-option(1, 0, 400px); margin:0 0 0 20px;
-  }
+    @include flexbase; @include flex-align-items-start; @include flex-column;
+    @include flex-option(1, 0, 350px); margin:0 0 0 20px;
 
- .speed {
-   opacity: 0; position: absolute; right:120px; bottom:38px; @include transition(400ms);
-   & > button {
-     width:40px; color:$color-white-01;
-     &:nth-of-type(1):before {content:"1x";}
-     &:nth-of-type(2):before {content:"2x";}
-     &:nth-of-type(3):before {content:"4x";}
-     &:nth-of-type(4):before {content:"8x";}
-   }
- }
+    .table_btn_set {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px;}
 
-  ul {
-     height: 100%; overflow-y:auto;
-    li {
+    ul {
+      overflow-y:auto; @include flex-option(0, 1, 100%); width:100%;
+      li {
 
-      @include flexbase; @include flex-align-items-center; cursor: pointer; position: relative; margin:0 0 5px 0;
+        @include flexbase; @include flex-align-items-center; cursor: pointer; position: relative; margin:0 0 5px 0;
 
 
-      &:before {
-        content:""; opacity: 0; position: absolute; width:100%; height:100%; background-color: transparent;
-        @include border01(1px,$color-blue-01,1 );
-      }
-
-      &:hover:before {opacity: 1;}
-      &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-red-01;}
-      & > div {
-        &:first-of-type {
-          @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:94px; background-color: $color-gray-02;
-          margin:0 10px 0 0;
+        &:before {
+          content:""; opacity: 0; position: absolute; width:100%; height:100%; background-color: transparent;
+          @include border01(1px,$color-blue-01,1 );
         }
 
-        &:last-of-type {
-          @include flex-option(0, 1, 100%);
-
-          & * {position: relative; font-size:0.9rem; opacity: 0.8; letter-spacing: 0;}
-
-          span {
-            &:nth-of-type(2) {
-              opacity: 1;
-              &:before {content:"\e919"; font-size:0.8rem; padding:0 5px 0 0; }
-            }
+        &:hover:before {opacity: 1;}
+        &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-red-01;}
+        & > div {
+          &:first-of-type {
+            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:94px; background-color: $color-gray-02;
+            margin:0 10px 0 0;
           }
-          p {font-size:1rem; font-weight:bold; opacity: 1;}
 
+          &:last-of-type {
+            @include flex-option(0, 1, 100%);
+
+            & * {position: relative; font-size:0.9rem; opacity: 0.8; letter-spacing: 0;}
+
+            span {
+              &:nth-of-type(2) {
+                opacity: 1;
+                &:before {content:"\e919"; font-size:0.8rem; padding:0 5px 0 0; }
+              }
+            }
+            p {font-size:1rem; font-weight:bold; opacity: 1;}
+
+          }
         }
-      }
 
+      }
     }
+
+    button {@include list_more_btn; width:100%;}
   }
+
+
+
+
 }
 ////// 영상이력 레이아웃 End
 
