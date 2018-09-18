@@ -646,7 +646,17 @@ var NotificationHelper = (
         var checkNotificationData = function(notification){
             var criticalLevel = $("#criticalLevel option:selected").val();
             var areaId = $("#areaType option:selected").val();
-            if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || notification['areaId']==areaId)){
+            var areaIds = [];
+
+            $.each($("#areaType option"),function(){
+                var areaPath = $(this).attr("areaPath");
+                if(areaPath!=null && areaPath.indexOf(areaId)>-1){
+                    areaIds.push($(this).val());
+                }
+            });
+
+            if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || areaIds.indexOf(notification['areaId'])>-1)){
+            //if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || notification['areaId']==areaId)){
                 return true;
             }else{
                 return false;

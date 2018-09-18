@@ -60,7 +60,10 @@
         <c:when test="${fn:length(childAreas)>=5 and fn:length(childAreas)<=6}">
             <c:set var="areaCntClass" value="area06"/>
         </c:when>
-        <c:when test="${fn:length(childAreas)>=7}">
+        <c:when test="${fn:length(childAreas)>=7 and fn:length(childAreas)<=8}">
+            <c:set var="areaCntClass" value="area08"/>
+        </c:when>
+        <c:when test="${fn:length(childAreas)>=9}">
             <c:set var="areaCntClass" value="area09"/>
         </c:when>
     </c:choose>

@@ -194,13 +194,14 @@
     function listRender(){
         var index = 0;
 
-        for(pageConfig['elementIndex']; pageConfig['elementIndex']<videoHistoryList.length; pageConfig['elementIndex']++){
-            if(index<=pageConfig['viewMaxCnt']){
+        while (index<=pageConfig['viewMaxCnt']){
+            if(pageConfig['elementIndex']<videoHistoryList.length){
                 var videoHistory = videoHistoryList[pageConfig['elementIndex']];
                 addVideoHistory(videoHistory);
             }else{
-                return false;
+                break;
             }
+            pageConfig['elementIndex']++;
             index++;
         }
 

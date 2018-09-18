@@ -1,9 +1,11 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.admin.util.FileUtil;
 import com.icent.isaver.repository.bean.FileBean;
 import com.icent.isaver.repository.dao.base.DeviceDao;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +52,18 @@ public class FileSvcImpl implements FileSvc {
 
     @Value("${cnf.fileUploadPath}")
     private String fileUploadPath = null;
+
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSync}")
+    private String wsUrlSync = null;
 
     @Inject
     private FileDao fileDao;
@@ -123,6 +138,8 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
+
+        deviceSync();
         return new ModelAndView();
     }
 
@@ -160,6 +177,8 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
+
+        deviceSync();
         return new ModelAndView();
     }
 
@@ -174,7 +193,21 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
+
+        deviceSync();
         return new ModelAndView();
+    }
+
+    private void deviceSync(){
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("allFlag", CommonResource.YES);
+            websocketParam.put("messageType","alarmFileSync");
+
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 //    @Override

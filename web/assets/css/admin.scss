@@ -1733,19 +1733,21 @@ $resi_w:8px;
       overflow-y:auto; @include flex-option(0, 1, 100%); width:100%;
       li {
 
-        @include flexbase; @include flex-align-items-center; cursor: pointer; position: relative; margin:0 0 5px 0;
+        @include flexbase; @include flex-align-items-center; cursor: pointer;
+        position: relative; margin:0 0 5px 0; height:95px;
 
 
         &:before {
-          content:""; opacity: 0; position: absolute; width:100%; height:100%; background-color: transparent;
-          @include border01(1px,$color-blue-01,1 );
+          content:""; position: absolute; width:100%; height:100%; background-color: transparent;
+          /*opacity: 0;  @include border01(1px,$color-blue-01,1 );*/
+          border-style:solid; border-color:rgba($color-gray-09,0.2); border-width:0 0 1px 0;
         }
 
-        &:hover:before {opacity: 1;}
+        &:hover:before {border-color:$color-blue-01; border-width:1px;}
         &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-red-01;}
         & > div {
           &:first-of-type {
-            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:94px; background-color: $color-gray-02;
+            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:100%; background-color: $color-gray-02;
             margin:0 10px 0 0;
           }
 
