@@ -324,7 +324,7 @@ body.dashboard_mode {
     &:before {z-index: 1; font-size:20rem; @include text-shadow(0, 20px, 40px, #000, 0.5);}
     &:after {display: none; content:""; width:290px; height:290px; @include content-box; border-style:solid; border-width:3px;}
   }
-  .s_rbox {display: none !important;}
+  .s_rbox {}
   li {
     //@include flex-justify-content-between;
     position: relative; font-size:$se_fsize; opacity: 0.7;
@@ -504,6 +504,110 @@ body.dashboard_mode {
 /////.......................................... Guard End
 
 
+/////..... device section Start
+.device_set {
+  $devi_width:60px;
+  & > * {
+    @include flexbase; @include flex-align-items-center;
+    position: relative; margin: 10px 0; padding:0 0 0 80px; height:$devi_width;
+
+    background-color: transparent !important;
+    &:before, &:after {
+      content: "" !important;
+      position: absolute; left:10px;  width:($devi_width - 10px); height:($devi_width - 10px);
+      @include border-radius(1000px);@include transition(400ms);
+    }
+    &:after {z-index: -1;}
+    &:before {
+      z-index: 1;
+      background-color: $color-gray-08;background-repeat: no-repeat;background-position: center;background-size: 70%;
+    }
+
+    &.ico {
+      &-spe:before {background-image: url(../images/ico/sico_59.svg);}
+      // 스피커
+      &-lig:before {background-image: url(../images/ico/sico_60.svg);}
+      // 경광등
+      &-hld:before {background-image: url(../images/ico/sico_87.svg);}
+      // 근거리
+      &-cam:before {background-image: url(../images/ico/sico_88.svg);}
+      // 고정카메라
+      &-com:before {background-image: url(../images/ico/sico_91.svg);}
+      // 통신
+      &-env:before {background-image: url(../images/ico/sico_92.svg);}
+      // 환경센서
+      &-dis:before {background-image: url(../images/ico/sico_96.svg);}
+      // 원거리 m8
+      &-ptz:before {background-image: url(../images/ico/sico_98.svg);}
+      // PTZ
+    }
+    /*
+
+
+    .ico-spe 스피커 (sico_59)
+    .ico-lig 경광등 (sico_60)
+    .ico-hld 근거리 HLDS (sico_87)
+    .ico-cam 고정카메라 (sico_88)
+    .ico-com 통신 (sico_91)
+    .ico-env 환경센서 NHR (sico_92)
+    .ico-dis 원거리 M8 (sico_96)
+    .ico-ptz PTZ (sico_98)
+
+    */
+
+
+    @mixin deviceissue {
+      animation-name: deviceissue;
+      -webkit-animation-name: deviceissue;
+      @include infinite;
+
+      -webkit-animation-duration: 0.8s;
+      animation-duration: 0.8s;
+
+      @-webkit-keyframes deviceissue {
+        0%   { opacity: 0; }
+        10%  { opacity: 1; }
+        100% { opacity: 0; width:($devi_width + 20px); height:($devi_width + 20px); left:-5px; }
+      }
+      @keyframes deviceissue {
+        0%   { opacity: 0; }
+        10%  { opacity: 1; }
+        100% { opacity: 0; width:($devi_width + 20px); height:($devi_width + 20px); left:-5px; }
+      }
+    } // ex) @include deviceissue;
+
+
+
+    //-- 임계치 시작
+    &.level {
+      &-caution{
+        &:before {background-color: $color-gray-03;}
+        &:after {border-color:$color-gray-03;}
+      }
+      &-warning{
+        &:before {background-color: $color-orange-01;}
+        &:after {border-color:$color-orange-01;}
+      }
+      &-danger{
+        &:before {background-color: $color-red-01;}
+        &:after {border-color:$color-red-01;}
+      }
+      &-die{
+        position: relative; opacity: 0.4;
+        &:before {background-color: $color-gray-09;}
+        &:after {border-color:$color-gray-09;}
+      }
+
+      &-caution, &-warning, &-danger, &-die {
+        @include issue02;
+        &:after { content:""; z-index: -1; border-style:solid; border-width:2px; @include deviceissue;}
+      }
+    }
+    //-- 임계치 끝
+  }
+}
+/////..... device section End
+
 /////..... 구역 Start
 .watch_area {
 
@@ -548,7 +652,7 @@ body.dashboard_mode {
   &.area01, &.area02 { & > div {min-height:50%;} }
   &.area04, &.area06, &.area08 { & > div {min-height:50%; max-height:50%; height:50%;} }
   &.area09 { & > div {height:calc(100% / 3);} }
-  &.area12, &.area16, &.area00 { & > div {min-height:25%; max-height:calc(100% / 3);} }
+  &.area12, &.area16, &.area00 { & > div {min-height:25%; height:calc(100% / 3);} }
 
 
   &.area01 {
@@ -610,9 +714,9 @@ body.dashboard_mode {
     .personnel_set {
       .s_lbox.blinker_set {
         @include flex-width-one(2);
-        h3 + div:before { font-size:($se_bsize / 1.7); line-height:6rem; }
+        h3 + div:before { font-size:($se_bsize / 2); line-height:6rem; }
         & > div {
-          & > p {font-size:$bs_bsize_ss; line-height:($bs_bsize_ss - 1rem); letter-spacing: -0.2rem;}
+          & > p {font-size:($bs_bsize_ss);  letter-spacing: -0.2rem; }
           & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
         }
       }
@@ -620,7 +724,7 @@ body.dashboard_mode {
       .s_rbox .blinker_set {
         h3 {font-size:1rem; letter-spacing: -0.1rem;}
         & > div {
-          & > p {font-size:2.6rem; line-height:3rem; letter-spacing: -0.2rem;}
+          & > p {font-size:2.2rem; line-height:3rem; letter-spacing: -0.2rem;}
           & > div > p { font-size:1rem; line-height:1.4rem;}
         }
       }
@@ -787,24 +891,58 @@ body.dashboard_mode {
 /////...... button base 정의 Start
 .btnbase {@include btnbase;}
 .dim {pointer-events: none; opacity: 0.5;}
-.icon {
-  &-login:before   {content:"\e900";} // 로그인
-  &-admin:before   {content:"\e909";} // 관리자
-  &-user:before    {content:"\e90e";} // 사용자
-  &-update:before  {content:"\e961";} // 업데이트
-  &-confirm:before {content:"\e941";} // 확인
-  &-cancle:before  {content:"\e937";} // 알림해지
-  &-more:before    {content:"\e95c";} // 더보기
-  &-zoom:before    {content:"\e925";} // 더보기
-  &-area:before    {content:"\e91b";} // 장소
-  &-tof:before     {content:"\e962";} // TOF 센서
-  &-ptz:before     {content:"\e964";} // PTZ 카메라
-  &-light:before   {content:"\e93b";} // 경광등
-  &-speak:before   {content:"\e93a";} // 스피커
-  &-chart:before   {content:"\e908";} // 차트
-  &-four:before    {content:"\e938";} // 4분할
-}
+
 /////...... button base 정의 End
+
+
+////// ----------------- ONNLE MAP 설정 Start
+.device > * {
+  &:before, &:after {}
+
+  &:before, &:after {
+    @include flex-midddle;
+    width:100%; height:100%; font-size:1.5rem; color:$color-white-01; background-color: transparent;
+    @include border-radius(200px); @include transition(400ms); cursor: pointer;
+  }
+  &:before {position:absolute; }
+}
+
+.icon-tof, .icon-ptz {
+  position: absolute; width:$devi_w; height:$devi_w; @include border-radius(200px); background-color: $bas-color;
+  &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
+  & > span {
+    @include flex-midddle; position: absolute; height:20px; bottom:-($devi_w - 10px);
+    padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
+    background-color:$color-gray-09; @include border-radius(200px);
+  }
+
+  /////..... 임계치 적용 표시 Start
+  &.level {
+    &-caution,&-warning,&-danger {@include pOn; }
+
+    &-caution:after {@include border01(2px,$color-gray-05,1);  }
+    &-warning:after {@include border01(2px,$color-orange-01,1);}
+    &-danger:after  {@include border01(2px,$color-red-01,1);   }
+    &-die:after {}
+
+    &-caution { &,& > span {background-color:$color-gray-05;   } }
+    &-warning { &,& > span {background-color:$color-orange-01; } }
+    &-danger  { &,& > span {background-color:$color-red-01;    } }
+    &-die     {
+      @include issue02; background-color:$color-gray-09;
+      &:before {opacity: 0.6;}
+      &:after {
+        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+      }
+    }
+  }
+  /////..... 임계치 적용 표시 End
+}
+
+
+
+
 
 /////.......... 디바이스 보기 Popup Start
 .device_popup {

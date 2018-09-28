@@ -117,15 +117,15 @@
                 }
             });
 
-            $(".popupbase").on('show', function(e){
-                if(e.target==this){
-                    $("body").addClass("bodyohidden");
-                }
-            }).on('hide', function(e){
-                if(e.target==this){
-                    $("body").removeClass("bodyohidden");
-                }
-            });
+//            $(".popupbase").on('show', function(e){
+//                if(e.target==this){
+//                    $("body").addClass("bodyohidden");
+//                }
+//            }).on('hide', function(e){
+//                if(e.target==this){
+//                    $("body").removeClass("bodyohidden");
+//                }
+//            });
 
             // 타이틀에 텍스트 맵핑
             $.each($("table.t_type01 > tbody > tr > td"),function(){

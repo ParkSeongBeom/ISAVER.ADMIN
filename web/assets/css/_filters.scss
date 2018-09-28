@@ -126,6 +126,9 @@ $margin:20px; // root article 상하좌우 마진값
 $m_lr:15px; // 감시구역 상하좌우 마진값
 $m_slr:($m_lr - 10px);
 
+$devi_w:25px;
+$resi_w:8px;
+
 //.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
 // display
 $display-table:table;
@@ -790,6 +793,28 @@ $bbl01:100%; $bbl02:1px;
 
 
 
+@mixin issue07 {
+  animation-name: issue07;
+  -webkit-animation-name: issue07;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue07 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:15%}
+  }
+  @keyframes issue07 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:15%}
+  }
+} // ex) @include issue07;
+
+
+
 @mixin list {
   animation-name: list;
   -webkit-animation-name: list;
@@ -1043,11 +1068,11 @@ $mt_btn_w:40px;
   {@include tree-line; }
   ul:before, li:before, .dynatree-expander:before {width:10px; height:1px;}
 
-  ul:before {top:20px; left:-20px;}
-  li:before {top:20px; left:-10px;}
+  ul:before {top:25px; left:-20px;}
+  li:before {top:25px; left:-10px;}
 
   li {
-    &:after {top:20px; left:-10px; bottom:-21px; width:1px;}
+    &:after {top:25px; left:-10px; bottom:-26px; width:1px;}
     &:last-of-type:after {display: none;}
   }
 

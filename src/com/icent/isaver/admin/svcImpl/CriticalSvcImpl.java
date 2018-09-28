@@ -3,16 +3,16 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.CriticalSvc;
-import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.repository.bean.AlarmBean;
 import com.icent.isaver.repository.bean.CriticalBean;
-import com.icent.isaver.repository.bean.CriticalInfoBean;
+import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.bean.EventBean;
-import com.icent.isaver.repository.dao.base.AlarmDao;
+import com.icent.isaver.repository.bean.FileBean;
 import com.icent.isaver.repository.dao.base.CriticalDao;
-import com.icent.isaver.repository.dao.base.CriticalInfoDao;
+import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.EventDao;
+import com.icent.isaver.repository.dao.base.FileDao;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -21,26 +21,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 이벤트 Service Implements
- *
- * @author : dhj
+ * 임계치 Service Implements
+ * @author : psb
  * @version : 1.0
- * @since : 2016. 6. 1.
+ * @since : 2018. 9. 21.
  * <pre>
  *
  * == 개정이력(Modification Information) ====================
  *
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
- *  2016. 6. 1.     dhj           최초 생성
- * </pe>
+ *  2018. 9. 21.     psb           최초 생성
+ * </pre>
  */
 @Service
 public class CriticalSvcImpl implements CriticalSvc {
@@ -52,23 +49,26 @@ public class CriticalSvcImpl implements CriticalSvc {
     private CriticalDao criticalDao;
 
     @Inject
-    private CriticalInfoDao criticalInfoDao;
-
-    @Inject
     private EventDao eventDao;
 
     @Inject
-    private AlarmDao alarmDao;
+    private DeviceDao deviceDao;
+
+    @Inject
+    private FileDao fileDao;
 
     @Override
     public ModelAndView findListCritical(Map<String, String> parameters) {
-        List<CriticalBean> criticals = criticalDao.findListCritical(parameters);
-        Integer totalCount = criticalDao.findCountCritical(parameters);
-
-        AdminHelper.setPageTotalCount(parameters, totalCount);
+        List<EventBean> eventList = criticalDao.findListCritical(parameters);
+        List<DeviceBean> deviceList = deviceDao.findListDeviceForCritical(null);
+        List<FileBean> alarmFileList = fileDao.findListFile(new HashMap<String, String>(){{put("fileType",AdminResource.FILE_TYPE.get("alarm"));}});
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("criticals", criticals);
+        modelAndView.addObject("eventList", eventList);
+        modelAndView.addObject("detectDeviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("target"));
+        modelAndView.addObject("targetDeviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("alarm"));
+        modelAndView.addObject("alarmFileList", alarmFileList);
+        modelAndView.addObject("deviceList", deviceList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
@@ -76,108 +76,47 @@ public class CriticalSvcImpl implements CriticalSvc {
     @Override
     public ModelAndView findByCritical(Map<String, String> parameters) {
         CriticalBean critical = criticalDao.findByCritical(parameters);
-        List<CriticalInfoBean> criticalInfos = criticalInfoDao.findListCriticalInfo(parameters);
-
-        List<EventBean> events = eventDao.findListNotInCriticalList(parameters);
-        List<AlarmBean> alarmList = alarmDao.findListAlarm(new HashMap<String,String>(){{put("useYn", AdminResource.YES);}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("critical", critical);
-        modelAndView.addObject("alarmList", alarmList);
-        modelAndView.addObject("criticalInfos", criticalInfos);
-        modelAndView.addObject("events", events);
-
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView addCritical(HttpServletRequest request, Map<String, String> parameters) {
-        String criticalInfo = parameters.get("criticalInfo");
-        String rangeYn = parameters.get("rangeYn");
-
-        List<CriticalInfoBean> criticalInfoList = new ArrayList<>();;
-
-        if (!criticalInfo.equals("") && criticalInfo != null) {
-            String[] criticalInfos = criticalInfo.split(",");
-
-            for (String info : criticalInfos) {
-                String[] infos = info.split("\\|");
-                CriticalInfoBean criticalInfoBean = new CriticalInfoBean();
-                criticalInfoBean.setEventId(parameters.get("eventId"));
-                criticalInfoBean.setStartValue(Float.parseFloat(infos[0]));
-                criticalInfoBean.setEndValue(Float.parseFloat(infos[1]));
-                criticalInfoBean.setCriticalLevel(infos[2]);
-                if(infos.length == 4){
-                    criticalInfoBean.setAlarmId(infos[3]);
-                }
-                criticalInfoList.add(criticalInfoBean);
-            }
-        }else{
-            criticalInfoList = null;
-        }
-
+    public ModelAndView addCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
+        parameters.put("criticalId", StringUtils.getGUID32());
         try {
             criticalDao.addCritical(parameters);
-            if(criticalInfoList!=null){
-                criticalInfoDao.addCriticalInfo(criticalInfoList);
-            }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
-
         return new ModelAndView();
     }
 
     @Override
-    public ModelAndView saveCritical(HttpServletRequest request, Map<String, String> parameters) {
-        String criticalInfo = parameters.get("criticalInfo");
-        String rangeYn = parameters.get("rangeYn");
-
-        List<CriticalInfoBean> criticalInfoList = new ArrayList<>();
-
-        if (!criticalInfo.equals("") && criticalInfo != null) {
-            String[] criticalInfos = criticalInfo.split(",");
-
-            for (String info : criticalInfos) {
-                String[] infos = info.split("\\|");
-                CriticalInfoBean criticalInfoBean = new CriticalInfoBean();
-                criticalInfoBean.setEventId(parameters.get("eventId"));
-                criticalInfoBean.setStartValue(Float.parseFloat(infos[0]));
-                criticalInfoBean.setEndValue(Float.parseFloat(infos[1]));
-                criticalInfoBean.setCriticalLevel(infos[2]);
-                if(infos.length == 4){
-                    criticalInfoBean.setAlarmId(infos[3]);
-                }
-                criticalInfoList.add(criticalInfoBean);
-            }
-        }else{
-            criticalInfoList = null;
-        }
-
+    public ModelAndView saveCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
         try {
-            criticalInfoDao.removeCriticalInfo(parameters);
             criticalDao.saveCritical(parameters);
-            if(criticalInfoList!=null){
-                criticalInfoDao.addCriticalInfo(criticalInfoList);
-            }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
             throw new IcentException("");
         }
-
         return new ModelAndView();
     }
 
     @Override
     public ModelAndView removeCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+
         try{
-            criticalInfoDao.removeCriticalInfo(parameters);
             criticalDao.removeCritical(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

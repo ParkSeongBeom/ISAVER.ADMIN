@@ -14,6 +14,8 @@ section.container {
   &.on {
     padding-left:40px; padding-right:40px; width:$noticecenter-onwidth;
     /*padding-right:(40px + $noticecenter-width);*/
+
+    .popupbase {right:($noticecenter-width + 40px);}
   }
 }
 ///// ----------------- container END
@@ -42,6 +44,7 @@ section.container {
   & > span > input.hasDatepicker {width:110px;}
   & > span > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
 }
+
 
 .tree_box .search_contents > * {
   display: inline-block; width:100%; padding:0;
@@ -540,6 +543,86 @@ ul.u_defalut {
   }
 
 }
+
+$critical_w01 : 350px;
+$critical_w02 : 200px;
+$critical_w03 : 150px;
+.critical_title {
+  @include flexbase; width:100%; padding:10px 0;
+  * {margin:0 20px 0 0; width:$critical_w02;}
+  *:nth-of-type(1) {width:$critical_w01;}
+  *:nth-of-type(2) {width:$critical_w03;}
+}
+.critical_tree_set {
+  @include treebase;
+
+  margin:10px 0 50px 0;
+
+  li {
+    @include flexbase; @include flex-align-items-start; margin:0 0 5px 0;
+    &:after {bottom: -30px;}
+
+    div {
+      @include tree-button; @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+      width:$critical_w02; height:$mt_btn_h;
+
+      &.level {
+        &-caution { background-color: rgba($color-gray-03,1) !important;   }    // &-caution 주의
+        &-warning { background-color: rgba($color-orange-01,1) !important; }    // &-warning 경고
+        &-danger  { background-color: rgba($color-red-01,1) !important; }    // &-danger  위험
+        &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
+
+        &-caution, &-warning, &-danger, &-die {
+          color:$color-white-01; opacity: 1; border:none !important;
+          width:$critical_w03 !important;
+        }
+      }
+
+      button {
+        height:100%;
+        &:hover {background-color: $color-blue-01; color:$color-white-01;}
+
+        &:first-of-type {
+          @include flex-option(0, 1, 100%); padding:0 10px; text-align: left;
+        }
+        &:last-of-type  {
+          width:$mt_btn_h;  min-width:$mt_btn_h;
+          &:before {content:"\e92c";}
+        }
+      }
+
+    }
+
+    & > button {
+      @include flex-midddle; width:30px; height:$mt_btn_h;
+
+      @include btnbase_type01;
+      &:after, &:before {overflow: hidden; width:100%; @include border-radius(200px); }
+      &:after  {height:30px;  background-color: $color-gray-07; }
+      &:before {content:"\e92b"; color:$color-white-01; height:100%; font-size:1rem;}
+    }
+  }
+
+  & > li {
+    width:100%;
+    & > div {width:$critical_w01; font-weight:bold;}
+    ul {margin:0 0 0 20px}
+    &:before, &:after {display: none;}
+  }
+
+}
+.critical_set_list {
+  @include flex-column;
+  input, select {width:100%;}
+  & > * {
+    @include flexbase; @include flex-align-items-center; width:100%; height:40px; margin:0 0 10px 0;
+    & > * {}
+    & > *:first-child {width:200px; max-width:200px; min-width:200px;}
+    & > *:last-child  { @include flex-option(0, 1, 100%);}
+  }
+}
+
+
 //구역 디바이스 관리
 .area_tree_set {
   @include treebase;
@@ -1026,7 +1109,6 @@ a.fc-more {position: relative; z-index: 2;}
 
 
 /////......  구역 / 장치 관리 MAP 설정 시작
-
 .map_sett_area {
   td {border-width:0px 1px 1px 1px !important;}
 }
@@ -1419,199 +1501,9 @@ a.fc-more {position: relative; z-index: 2;}
   }
 }
 
-////// ----------------- OFFINLE MAP 설정 Start
-$devi_w:25px;
-$resi_w:8px;
-@mixin resize {
-  .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
-    display: none !important; position: absolute; width:$resi_w; height:$resi_w;
-
-    &:before {
-      content:"";
-      @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
-      background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
-      background-position: 50% 50%; background-color: $color-blue-01;
-      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
-
-    }
-    &:hover:before {
-      /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;
-    }
-  }
-  .ui-resizable-e:before  {@include rotate(180deg);  }
-  .ui-resizable-s:before  {@include rotate(-90deg);  }
-  .ui-resizable-se:before {@include rotate(-135deg); }
-} // @include resize;
-
-.map_images {
-  position: absolute; width:2500px !important; height:2500px !important; cursor:move;
-  background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
-
-  & > * {position: absolute !important;}
-}
-
-.g {
-
-  &-m8, &-camera  {z-index: 50;}
-  &-camera {}
-  &-tracking {z-index: 100;}
-  &-area {z-index:10;}
-  &-fence {z-index: 5;}
-
-  &-m8, &-camera, &-tracking, &-area, &-fence {position: absolute !important;}
-
-  // 감시, 감지 디바이스 공통
-  &-m8, &-camera, &-area {
-    //@include scale(0.5);
-    &, & > * {cursor: pointer;}
-    @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
 
 
-
-    // 디바이스, 구역 이름표
-    & > span {
-      @include flex-midddle; position: absolute; width: max-content; bottom:-15px;
-      padding:3px 10px; font-size:0.9rem;
-      /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
-      background-color:$color-gray-09; @include border-radius(200px);
-      @include scale(0.4);
-    }
-
-    &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
-    &.on {&, & > span {background-color: $color-blue-01;}}
-
-  }
-
-  // MAP 설정 시 크기, 위치 버튼 표시
-  &-m8, &-camera {
-    width:$devi_w; height:$devi_w;
-    .ui-resizable-e, .ui-resizable-s {display: none !important;}
-    .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
-
-    &.on {
-      background-color: $color-blue-01;
-      &:hover { .ui-resizable-se {display: block !important;} }
-    }
-
-    @at-root {.dashboard_mode & {pointer-events: none; } }
-    &:before {font-size:1.4rem; }
-    &:before, &:after {}
-  }
-
-  // 감시, 감지 디바이스, 트레킹 아이콘 공통
-  &-m8, &-camera, &-tracking {
-    background-color: $bas-color;
-    &, &:before {@include flex-midddle;}
-    &, &:after  {@include border-radius(500px);}
-
-    &:before, &:after {
-      content:""; width:100%; height:100%; background-color: transparent; @include transition(400ms);
-    }
-
-    &:before {
-      content:""; position: absolute;
-      background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
-    }
-  }
-
-  &-m8:before     {background-image: url(../images/map/sico_96.svg); /*content:"\e962";*/ }
-  &-camera:before {background-image: url(../images/map/sico_98.svg); /*content:"\e964";*/ }
-
-  &-tracking {
-    width:$resi_w; height:$resi_w; background-color: transparent;
-    &:before {
-      /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-      background-image: url(../images/map/tracking.svg); background-size: 100%;
-    }
-    &:after {display: none;}
-  }
-
-  &-area {
-    z-index: 5; width:70px; height:70px; background-color: rgba(255,255,255,0.2);
-    border-style:dashed; border-width:1px; border-color:$color-white-01;
-
-    .ui-resizable-e  {bottom: ($resi_w); right:-($resi_w / 2); }
-    .ui-resizable-s  {bottom:-($resi_w / 2); right: ($resi_w); }
-    .ui-resizable-se {bottom:-($resi_w / 2); right:-($resi_w / 2); }
-
-    &.on {
-      background-color: rgba($color-blue-01,0.4); border-color:$color-blue-01;
-      &:hover  { .ui-resizable-se, .ui-resizable-e, .ui-resizable-s {display: block !important;} }
-    }
-  }
-
-
-
-  &-fence {
-    /*width:auto !important; height:auto !important;*/
-    //background-color: transparent !important;
-    //@include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-    background-color: transparent !important;
-
-    width:100% !important; height:100% !important;
-
-    polygon, path {
-      fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01; stroke-width:1px;
-      text {font-size:5px !important; letter-spacing: 0;}
-      /*&:after {display: none !important;}
-      &:before {
-        content:""; position: absolute; width:100%; height:100%;
-        @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-      }*/
-
-      &.level {
-        &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
-        &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
-        &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
-        &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }
-
-        /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
-        &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
-        &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }
-
-        &-caution { & > span {background-color:$color-gray-05;   } }
-        &-warning { & > span {background-color:$color-orange-01; } }
-        &-danger  { & > span {background-color:$color-red-01;    } }*/
-      }
-    }
-
-  }
-  // 임계치 적용 표시
-  &-m8, &-camera, &-tracking {
-    &.level {
-      &-caution,&-warning,&-danger  {
-        @include pOn;
-        &:after {display: block;}
-        &:before {color:$color-white-01 !important;}
-      }
-
-      &-caution {
-        &,& > span {background-color:$color-gray-05;   }
-        &:after {@include border01(1px,$color-gray-05,1);  }
-      }
-
-      &-warning {
-        &,& > span {background-color:$color-orange-01; }
-        &:after {@include border01(1px,$color-orange-01,1);}
-      }
-
-      &-danger  {
-        &,& > span {background-color:$color-red-01;    }
-        &:after  {@include border01(1px,$color-red-01,1);   }
-      }
-
-      &-die     {
-        @include issue02; background-color:$color-gray-09; opacity: 0.5;
-        &:after {
-          content:""; z-index: 10; position: absolute; left:calc(50% - 1px); top:0; width:1px; height:100%;
-          @include rotate(45deg); background-color:rgba($color-gray-09,1); @include loding;
-        }
-      }
-    }
-  }
-}
-////// ----------------- OFFINLE MAP 설정  End
-
+/*
 
 ////// ----------------- ONNLE MAP 설정 Start
 .device, .device > div, .icon-tof, .icon-ptz {
@@ -1653,8 +1545,6 @@ $resi_w:8px;
         @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
       }
     }
-
-
   }
   /////..... 임계치 적용 표시 End
 }
@@ -1691,6 +1581,7 @@ $resi_w:8px;
   /////..... 임계치 적용 표시 End
 }
 ////// ----------------- ONNLE MAP 설정  End
+*/
 
 /////......  구역 / 장치 관리 MAP 설정 End
 

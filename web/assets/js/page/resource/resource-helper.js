@@ -318,10 +318,10 @@ var ResourceHelper = (
                     var targetTag = null;
                     var parentTag = _areaList[area['parentAreaId']];
                     if(parentTag!=null && parentTag['element']!=null){
-                        if(parentTag['element'].find("ul").length==0){
+                        if(parentTag['element'].find("> ul").length==0){
                             parentTag['element'].append($("<ul/>"));
                         }
-                        targetTag = parentTag['element'].find("ul");
+                        targetTag = parentTag['element'].find("> ul");
                     }else{
                         targetTag = $("#areaList");
                     }
@@ -366,10 +366,10 @@ var ResourceHelper = (
                     var targetTag = null;
                     var parentTag = _deviceList[device['parentDeviceId']];
                     if(parentTag!=null && parentTag['element']!=null){
-                        if(parentTag['element'].find("ul").length==0){
+                        if(parentTag['element'].find("> ul").length==0){
                             parentTag['element'].append($("<ul/>"));
                         }
-                        targetTag = parentTag['element'].find("ul");
+                        targetTag = parentTag['element'].find("> ul");
                     }else{
                         targetTag = $("#deviceList");
                     }

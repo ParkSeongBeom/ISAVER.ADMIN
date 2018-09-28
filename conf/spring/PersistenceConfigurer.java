@@ -4,6 +4,7 @@ import com.icent.dhj.util.FindSystemUtil;
 import com.icent.dhj.util.ResultSystemBean;
 import com.icent.isaver.admin.common.PropertyManager;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,7 @@ public class PersistenceConfigurer {
 //        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 //        encryptor.setAlgorithm("PBEWithMD5AndDES");
 //        encryptor.setPassword("isaverPassKey");
+//        System.out.println(encryptor.encrypt("jdbc:postgresql://isaver.dbms:5432/isaver?loggerLevel=DEBUG&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8"));
 //        System.out.println(encryptor.encrypt("jdbc:postgresql://172.16.110.200:5432/isaver?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8"));
 //        System.out.println(encryptor.encrypt("isaveruser"));
 

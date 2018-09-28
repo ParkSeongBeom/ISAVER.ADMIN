@@ -45,11 +45,6 @@
 
     <root level="INFO">
         <appender-ref ref="consoleAppender"/>
-    </root>
-
-    <root level="INFO">
-        <appender-ref ref="consoleAppender"/>
         <appender-ref ref="projectAppender"/>
     </root>
-
 </configuration>

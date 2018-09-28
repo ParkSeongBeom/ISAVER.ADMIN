@@ -2,11 +2,10 @@ package com.icent.isaver.admin.svc;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * 임계치 Service
+ * 임계치별 대상장치 Service
  * @author : psb
  * @version : 1.0
  * @since : 2018. 9. 21.
@@ -19,50 +18,41 @@ import java.util.Map;
  *  2018. 9. 21.     psb           최초 생성
  * </pre>
  */
-public interface CriticalSvc {
+public interface CriticalTargetSvc {
 
     /**
-     * 임계치 목록을 가져온다.
+     * 임계치별 대상장치 상세를 가져온다.
      *
      * @author psb
      * @param parameters
      * @return
      */
-    ModelAndView findListCritical(Map<String, String> parameters);
+    ModelAndView findByCriticalTarget(Map<String, String> parameters);
 
     /**
-     * 임계치 상세를 가져온다.
+     * 임계치별 대상장치를 등록한다.
      *
      * @author psb
      * @param parameters
      * @return
      */
-    ModelAndView findByCritical(Map<String, String> parameters);
+    ModelAndView addCriticalTarget(Map<String, String> parameters);
 
     /**
-     * 임계치를 등록한다.
+     * 임계치별 대상장치를 수정한다.
      *
      * @author psb
      * @param parameters
      * @return
      */
-    ModelAndView addCritical(Map<String, String> parameters);
+    ModelAndView saveCriticalTarget(Map<String, String> parameters);
 
     /**
-     * 임계치를 수정한다.
+     * 임계치별 대상장치를 제거한다
      *
      * @author psb
      * @param parameters
      * @return
      */
-    ModelAndView saveCritical(Map<String, String> parameters);
-
-    /**
-     * 임계치를 제거한다
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    ModelAndView removeCritical(Map<String, String> parameters);
+    ModelAndView removeCriticalTarget(Map<String, String> parameters);
 }

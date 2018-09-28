@@ -224,20 +224,6 @@
     <definition name="criticalList" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/critical/list.jsp" />
     </definition>
-    <definition name="criticalDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/critical/detail.jsp" />
-    </definition>
-
-    <!--
-        임계치 알림 설정 관리
-        @author psb
-    -->
-    <definition name="alarmList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alarm/list.jsp" />
-    </definition>
-    <definition name="alarmDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/alarm/detail.jsp" />
-    </definition>
 
     <!--
         고객사 관리
