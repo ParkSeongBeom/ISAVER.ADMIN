@@ -69,16 +69,72 @@ form-bg-effect :
   content: "\e908"; }
 .ico-four:before {
   content: "\e938"; }
+.ico-gate:before {
+  content: "\e92f"; }
+.ico-temp:before {
+  content: "\e949"; }
+.ico-humi:before {
+  content: "\e947"; }
+.ico-co2:before {
+  content: "\e955"; }
+.ico-co:before {
+  content: "\e956"; }
+.ico-plug:before {
+  content: "\e933"; }
+.ico-smok:before {
+  content: "\e963"; }
+.ico-gas:before {
+  content: "\e910"; }
+.ico-hlds:before {
+  content: "\e959"; }
+.ico-device:before {
+  content: "\e92f"; }
+.ico-led:before {
+  content: "\e966"; }
+.ico-sioc:before {
+  content: "\e96e"; }
 
 /*
-sico_59 스피커
-sico_60 경광등
-sico_87 HLDS
-sico_88 고정카메라
-sico_91 통신
-sico_92 환경센서
-sico_96 M8
-sico_98 PTZ
+.ico-safeeye :   -safeeye
+.ico-blinker :   -blinker
+.ico-tracker :   -tracker
+.ico-function :  설정새로고침
+.ico-pool :      수영장
+.ico-health :    의료
+.ico-nhr :       detector
+.ico-invasion :  침입
+.ico-exhibit :   전시물보호
+.ico-speaker :   스피커
+.ico-wlight :    경광등
+.ico-mobile :    모바일
+.ico-close :     닫기
+.ico-plus :      더보기
+.ico-minus :     빼기
+.ico-login :     로그인
+.ico-admin :     관리자
+.ico-user :      사용자
+.ico-update :    업데이트
+.ico-confirm :   확인
+.ico-cancle :    알림해지
+.ico-more :      더보기
+.ico-zoom :      자세히보기
+.ico-area :      장소
+.ico-tof :       TOF 센서
+.ico-ptz :       PTZ 카메라
+.ico-chart :     차트
+.ico-four :      4분할
+.ico-gate :      게이트 웨이 센서
+.ico-temp :      온도
+.ico-humi :      습도
+.ico-co2 :       CO2
+.ico-co :        CO
+.ico-plug :      스마트 플러그
+.ico-smok :      연기
+.ico-gas :       가스
+.ico-hlds :      근거리 HLDS 센서
+.ico-device :    근거리 HLDS 센서
+.ico-led :       LED
+.ico-sioc :      sioc
 */
 .datetime_set {
   display: -webkit-box;
@@ -1569,19 +1625,13 @@ input.datepicker + button + .in-timepicker {
     .g-area.on:hover .ui-resizable-se, .g-area.on:hover .ui-resizable-e, .g-area.on:hover .ui-resizable-s {
       display: block !important; }
 .g-fence {
-  /*width:auto !important; height:auto !important;*/
-  background-color: transparent !important;
   width: 100% !important;
-  height: 100% !important; }
+  height: 100% !important;
+  background-color: transparent !important; }
   .g-fence polygon, .g-fence path {
-    fill: rgba(246, 185, 0, 0.2);
-    stroke: #f6b900;
     stroke-width: 1px;
-    /*&:after {display: none !important;}
-    &:before {
-      content:""; position: absolute; width:100%; height:100%;
-      @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-    }*/ }
+    fill: rgba(246, 185, 0, 0.2);
+    stroke: #f6b900; }
     .g-fence polygon text, .g-fence path text {
       font-size: 5px !important;
       letter-spacing: 0; }
@@ -1634,6 +1684,9 @@ input.datepicker + button + .in-timepicker {
       .g-fence polygon.level-danger, .g-fence path.level-danger {
         fill: rgba(190, 30, 30, 0.2);
         stroke: #be1e1e; }
+.g-ignore_fence {
+  fill: rgba(117, 117, 117, 0.2) !important;
+  stroke: #757575 !important; }
 .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;

@@ -200,6 +200,29 @@
             }
         });
 
+        $("#areaId").on("change",function(){
+            $(".add_p > span").remove();
+            $("#eventSelect option").not("[value='']").prop("disabled",true);
+
+            switch ($(this).find("option:selected").attr("templateCode")){
+                case 'TMP001': // 신호등 (default)
+                    $("#eventSelect option").prop("disabled",false);
+                    break;
+                case 'TMP002': // Safe-Eye
+                    $("#eventSelect option[value='EVT013'], option[value='EVT014']").prop("disabled",false);
+                    break;
+                case 'TMP003': // Blinker
+                    $("#eventSelect option[value='EVT300'], option[value='EVT301']").prop("disabled",false);
+                    break;
+                case 'TMP004': // Detector
+                    $("#eventSelect option[value='EVT302'], option[value='EVT303'], option[value='EVT304'], option[value='EVT305'], option[value='EVT306'], option[value='EVT307'], option[value='EVT308'], option[value='EVT309'], option[value='EVT310'], option[value='EVT311'], option[value='EVT312'], option[value='EVT313']").prop("disabled",false);
+                    break;
+                case 'TMP005': // Safe-Guard
+                    $("#eventSelect option[value='EVT314'], option[value='EVT315']").prop("disabled",false);
+                    break;
+            }
+        });
+
         $("#eventSelect").on("change",function(){
             var eventId = $(this).val();
             var eventName = $(this).find("option:selected").text();
@@ -216,11 +239,11 @@
                     var parentSpan = $(this).parent();
                     var eventId = parentSpan.find("input[name='eventId']").attr("eventId");
                     parentSpan.remove();
-                    $("#eventSelect option[value='"+eventId+"']").attr("disabled",false);
+                    $("#eventSelect option[value='"+eventId+"']").prop("disabled",false);
                 });
                 $(".add_p").append(eventTag);
 
-                $(this).find("option:selected").attr("disabled","disabled");
+                $(this).find("option:selected").prop("disabled",true);
             }
 
             $(this).val("");

@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "filters";
 
+
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {
 
@@ -15,7 +16,7 @@ body.dashboard_mode {
 
   .wrap > article {
 
-    position:absolute; top:($headerHeight + $margin); left:$margin; bottom:$margin; right:$margin; min-width:800px;
+    position:absolute; top:($headerHeight + 10px); left:$margin; bottom:$margin; right:$margin; min-width:800px;
 
     &:before,&:after {content:""; position: absolute; z-index:-1; right:0; left:0; top:$headerHeight;}
     &:before {bottom:0;}
@@ -49,10 +50,13 @@ body.dashboard_mode {
 
         header,article {position: relative; width:100%; @include transition(200ms);}
 
+
         header {
-          z-index: 0; background-color: transparent; padding:0 $m_lr; min-width:0;
-          @include flex-option(1, 0, $headerHeight);
-          @include flex-justify-content-start;
+
+          z-index: 0; background-color: rgba(0,0,0,0.06); padding:0 0 0 $m_lr; min-width:0;
+          @include flex-option(1, 0, ($headerHeight - 10px)); @include flex-justify-content-start;
+
+
 
           &:before {
             @include box-shadow01(0px, 0px, 0px, 0px, #000, 0.0); opacity: 1;
@@ -61,7 +65,7 @@ body.dashboard_mode {
 
           h3 {
             @include text-overflow-ellipsis;
-            letter-spacing: -0.1rem; font-size:1.3rem; margin: -3px auto 0 0; padding:0 5px 0 0;
+            letter-spacing:0; font-size:1rem; margin: -3px auto 0 0; padding:0 5px 0 0;
           }
 
           &.wid > h3:hover {
@@ -89,14 +93,40 @@ body.dashboard_mode {
           ///// ----------------- 설치센서   End
 
           button {
-            min-width: 40px; height:40px; right:-5px;
-            &:before, &:after {@include transition(200ms); font-size:1.8rem;}
+            min-width: ($headerHeight - 10px); height:($headerHeight - 10px);
+            &:before, &:after {@include transition(200ms); font-size:1.4rem;}
             &.area:before   {content:"\e91b";}
-            &.device:before {content:"\e935"; font-size:1.6rem;}
-            &.ioset:before, &.date_select:before  {content:"\e909"; font-size:2rem;}
-            &.chart_select:before {content:"\e908"; font-size:1.7rem;}
-            &.on {background-color: $adm-color;}
-            &:hover:before, &:hover:after, &.on:before {color:$color-blue-01;}
+            &.device:before {content:"\e935"; }
+            &.ioset:before, &.date_select:before  {content:"\e909"; }
+            &.chart_select:before {content:"\e908";  }
+            &.on {background-color: $color-blue-01;}
+            &:hover:before, &:hover:after {color:$color-blue-01;}
+
+            &.device_view {order: 10; &:before {content:"\e92f";} }
+            &.level-die {
+              @mixin notice-die {
+                animation-name: notice-die;
+                -webkit-animation-name: notice-die;
+                @include infinite;
+
+                -webkit-animation-duration: 0.8s;
+                animation-duration: 0.8s;
+
+                @-webkit-keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+                @keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+              } // ex) @include notice-die;
+              &:before {@include  notice-die;}
+            }
           }
 
         }
@@ -121,14 +151,15 @@ body.dashboard_mode {
 
 
 /////..... .watch_area > div > article > * >  좌 / 우
-.s_lbox {@include flex-width-one(2); overflow: hidden; height:100%; }
+.s_lbox {@include flex-width-one(2); overflow: hidden; height:100%; order:1;}
 .s_rbox {
-  @include flex-align-items-center; @include flex-width-one(1);
-  overflow-y: auto; overflow-x: hidden !important;
-  right:0; height:100%; min-width:150px; padding: 0 $m_lr 0 0; margin:0 0 0 20px;
-
+  @include flex-align-items-center; @include flex-width-one(1); order:2;
+  overflow-y: auto; overflow-x: hidden !important; position: relative;
+  right:0; height:100%; min-width:150px; padding: 0 $m_lr 0 0;
+  background-color: rgba(0,0,0,0.2);
+  @include line_left;
   & > * {
-    position: absolute; left:0; right:$m_lr; max-height:100%;
+    position: absolute; left:0; right:0; max-height:100%;
     li {
       @include flexbase; @include flex-align-items-center; position: relative;
       margin:0 0 15px 0; padding:0 8px;
@@ -282,10 +313,10 @@ body.dashboard_mode {
   }
 
   .s_lbox.blinker_set {
-    height:auto;
+    height:auto; @include flex-justify-content-center; padding:0 40px !important;
     h3 { display: none;}
     h3 + div {
-      @include flex-row-wrap;
+      @include flex-row-wrap; max-width:900px;
       &:before {
         content:"\e944"; font-size:14rem; text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
       }
@@ -303,7 +334,11 @@ body.dashboard_mode {
     }
   }
 
-  .s_rbox {opacity: 0.6; padding:15px 15px 15px 0; margin:0 0 0 50px;}
+  .s_rbox {
+    padding:15px 0; max-width:250px;
+
+    & > ul {opacity: 0.6; }
+  }
 
   li {@include flex-row-wrap;}
 
@@ -350,65 +385,9 @@ body.dashboard_mode {
   $nh_lhe:52px;
   $nh_lhe_s:($nh_lhe - 12px);
 
-  @include flex-column;
-  & > * {@include flex-option(0, 1, 100%); width:100%;}
-
-
+  & > * { }
   .s_lbox:hover .chart_select_set {top:10px;}
-
-  .s_rbox {
-    //order: 1; margin: 0 0 20px 0;
-    width:98%; padding:0 !important; margin: 20px 0 0 0; right:0; @include flex-align-items-start;
-    @include border01(0 0 1px 0,$color-gray-08,1 );
-    ul {
-      @include flexbase; @include flex-row-wrap; @include flex-justify-content-start;
-      @include flex-align-items-start; @include flex-align-content-start;
-      overflow: auto; z-index:1; right:0; height:100%; @include transition(400ms);
-      //&:hover {height:200%; background-color: rgba($color-gray-08, 0.9);}
-    }
-
-    li {
-      @include flex-row-wrap;
-      $l-h:55px;
-      overflow: hidden; opacity: 0.7; position: relative; z-index: 1; width:50%; height:$l-h;
-      padding:4px 30px 9px $l-h; margin:0; cursor: pointer; background-color: transparent;
-
-      &, &:before, &:after {@include transition01(200ms);}
-      & * {cursor:pointer;}
-      &:before, &:after {content:""; position: absolute;}
-      &:after {
-        z-index: -1; top:3px; left:3px; width:calc(100% - 6px); height:calc(100% - 6px);
-        background-color: $color-gray-08; border-color:$color-gray-09;
-      }
-      &:before {
-        display: none; z-index: 1; content:"\e901"; right:10px; font-weight:bold; font-size:1.2rem;
-      }
-
-      &.on {
-        opacity: 1;
-        &:after {border-color:$color-gray-06;}
-        &:before {display: block;}
-      }
-
-      span {
-        &:nth-of-type(1) {
-          @include flex-option(0, 1, 100%); font-size:0.9rem; @include text-overflow-ellipsis;
-
-          &:before {@include flex-midddle; position: absolute; font-size:2rem; width:$l-h; height:100%; top:0; left:0;}
-          &.co2:before, &.co:before {font-size:2.4rem;}
-          &.gate:before {content:"\e92f";} // 게이트 웨이 센서
-          &.temp:before {content:"\e949";} // 온도
-          &.humi:before {content:"\e947";} // 습도
-          &.co2:before  {content:"\e955";} // CO2
-          &.co:before   {content:"\e956";} // CO
-          &.plug:before {content:"\e933";} // 스마트 플러그
-          &.smok:before {content:"\e963";} // 연기
-          &.gas:before  {content:"\e910";} // 가스
-        }
-        &:nth-of-type(2) {font-weight:bold; font-size:1.4rem; line-height: 1.2rem;}
-      }
-    }
-  }
+  .s_rbox {}
 }
 /////..... NHR section End
 
@@ -480,7 +459,7 @@ body.dashboard_mode {
         &.level {
           &-caution,&-warning,&-danger {
             & > div:before {border-style:solid; border-width:4px; @include issue02;}
-            span:before {@include notice03;}
+            //span:before {@include notice03;}
           }
 
           &-caution { & > div:before {border-color:$color-gray-05;  } span {background-color:$color-gray-05;}    }
@@ -505,7 +484,80 @@ body.dashboard_mode {
 
 
 /////..... device section Start
+
+$ds-sw:50px; $ds-w:150px;
+.device_box {
+  @include flexbase; @include flex-align-items-start; order:3; @include transition(400ms);
+
+  overflow-y: auto; overflow-x: hidden; position: absolute !important; top:0; right:-($ds-w * 2);
+  background-color: rgba(0,0,0,0.7);  @include box-shadow02(-30px, 0, 50px, -30px, 0, 0, 0, 0.8);
+  max-width:$ds-w; min-width:$ds-w; width:$ds-w; height: 100%;
+
+  @include line_left;
+
+  &.on { right:0; }
+
+  //.nhr_set & {max-width:100%;}
+}
 .device_set {
+  /*
+  <div class="device_set">
+    <div class="ico-? level-?">
+      <p>디바이스아이디 or 이름</p>
+      <p></p>
+    </div>
+  </div>
+   */
+
+
+  @include flexbase; @include flex-column;
+
+  width:100%; @include flex-width-one(1); max-height: 100%;
+  //padding: 15px 15px 15px 0; margin: 0 0 0 50px;
+
+  & > * {
+    order:10; opacity: 0.8; cursor: pointer;
+    @include flexbase; @include flex-justify-content-center; @include flex-column;
+    overflow: hidden; position: relative; width:calc(100% - 1px); min-height:$ds-sw; padding:0 0 0 50px; margin:0 0 1px 0;
+    background-color: $color-gray-08; @include border01(0 0 1px 0 ,$color-gray-09,1 );
+
+    &:after, &:before {
+      @include flex-midddle; position: absolute; z-index:  1; top:0; left:0; width:$ds-sw; height:100%;
+      color:$color-white-01;
+    }
+
+    &:before {font-size: 1.8rem; }
+
+    p {
+      cursor: pointer; font-size:0.9rem; height:100%; @include text-overflow-ellipsis;
+      &:nth-of-type(2) {font-size:1.2rem;}
+    }
+
+    &.level {
+      &-caution {background-color: $color-gray-03; order: 4}
+      &-warning {background-color: $color-orange-01; order: 3}
+      &-danger  {background-color: $color-red-01; order: 2}
+      &-die {color:rgba($color-white-01,0.7); background-color: #000; &:after {@include die;}}
+      &-caution, &-warning, &-danger, &-die { opacity: 1;}
+    }
+
+
+    &.on {background-color: $color-blue-01 !important;}
+    &.issue {order: 1 !important;}
+
+  }
+  /*
+  .nhr_set & {
+    @include flex-column-none; @include flex-row-wrap; @include flex-align-items-start;
+    @include flex-justify-content-start; @include flex-align-content-start;
+
+    & > * {width:calc(20% - 4px); margin:0 2px 4px 2px;}
+  }
+  */
+
+}
+
+/*.device_set {
   $devi_width:60px;
   & > * {
     @include flexbase; @include flex-align-items-center;
@@ -524,7 +576,7 @@ body.dashboard_mode {
     }
 
     &.ico {
-      &-spe:before {background-image: url(../images/ico/sico_59.svg);}
+      &-spe:before {background-image: url(../images/ico/sico_59.svg); fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05;}
       // 스피커
       &-lig:before {background-image: url(../images/ico/sico_60.svg);}
       // 경광등
@@ -541,19 +593,6 @@ body.dashboard_mode {
       &-ptz:before {background-image: url(../images/ico/sico_98.svg);}
       // PTZ
     }
-    /*
-
-
-    .ico-spe 스피커 (sico_59)
-    .ico-lig 경광등 (sico_60)
-    .ico-hld 근거리 HLDS (sico_87)
-    .ico-cam 고정카메라 (sico_88)
-    .ico-com 통신 (sico_91)
-    .ico-env 환경센서 NHR (sico_92)
-    .ico-dis 원거리 M8 (sico_96)
-    .ico-ptz PTZ (sico_98)
-
-    */
 
 
     @mixin deviceissue {
@@ -575,8 +614,6 @@ body.dashboard_mode {
         100% { opacity: 0; width:($devi_width + 20px); height:($devi_width + 20px); left:-5px; }
       }
     } // ex) @include deviceissue;
-
-
 
     //-- 임계치 시작
     &.level {
@@ -605,7 +642,7 @@ body.dashboard_mode {
     }
     //-- 임계치 끝
   }
-}
+}*/
 /////..... device section End
 
 /////..... 구역 Start
@@ -659,10 +696,10 @@ body.dashboard_mode {
     .personnel_set {
       width:80%;
       .s_lbox.blinker_set {
-        @include flex-width-one(4); max-width:none; margin:0 80px 0 0;
+        @include flex-width-one(4); max-width:none;
         & > div {
           &:before {font-size:$se_bsize;}
-          & > p {font-size:($bs_bsize * 2); line-height:($bs_bsize - 1rem); letter-spacing: -0.2rem;}
+          & > p {font-size:($bs_bsize * 2); letter-spacing: -0.2rem;}
           & > div > p { font-size:($bs_psize * 2); line-height:($bs_psize + 0.4rem); }
         }
       }
@@ -675,10 +712,7 @@ body.dashboard_mode {
         }
       }
     }
-    .nhr_set {
-      .s_lbox {@include flex-width-one(2); margin:50px 0;}
-      .s_rbox {@include flex-width-one(1); li {width:20%;} }
-    }
+
   }
 
   &.area02 {
@@ -698,7 +732,7 @@ body.dashboard_mode {
     .treffic_set {@include scale(0.6);}
     .safeeye_set .s_lbox {@include scale(0.7);}
     .s_lbox.blinker_set  {@include scale(0.7);}
-    .nhr_set .s_rbox { li {width:33.333%; } }
+
   }
 
 
@@ -710,7 +744,7 @@ body.dashboard_mode {
     .treffic_set {@include scale(0.4);}
   }
 
-  &.area06, &.area09, &.area08, &.area12, &.area16, &.area00 {
+  &.area06, &.area09, &.area08, &.area12, &.area00 {
     .personnel_set {
       .s_lbox.blinker_set {
         @include flex-width-one(2);
@@ -720,7 +754,7 @@ body.dashboard_mode {
           & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
         }
       }
-      .s_rbox {margin:0 0 0 10px !important;}
+
       .s_rbox .blinker_set {
         h3 {font-size:1rem; letter-spacing: -0.1rem;}
         & > div {
@@ -732,15 +766,10 @@ body.dashboard_mode {
     .safeeye_set .s_lbox {@include scale(0.55);}
   }
 
-  &.area09, &.area08, &.area12, &.area16, &.area00 {
-  }
+  &.area09, &.area08, &.area12, &.area16, &.area00 {}
 
   &.area12, &.area16, &.area00 {
-    .m_marqueebox {display: none;}
-    .nhr_set {
-      & > .s_rbox {max-height:100px !important; margin:5px 0 0 0;}
-      & > .s_lbox {max-height:120px !important;}
-    }
+    .m_marqueebox {display: none !important;}
   }
 
   &.area02 ,&.area08 {
@@ -766,7 +795,7 @@ body.dashboard_mode {
   &.area04, &.area06 { .guard_set .s_rbox ul li {min-width: 200px; max-width: 200px;} }
   &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
 
-  &.area09 {
+  &.area09, &.area12, &.area00 {
     .guard_set .s_rbox  {
       max-width:250px;
       ul {
@@ -840,7 +869,7 @@ body.dashboard_mode {
   }
 }
 .chart_select_set {
-  position: absolute !important; z-index:1; top:-50px; right:15px; height:40px; text-align: right;
+  position: absolute !important; z-index:1; top:-50px; left:15px; height:40px; text-align: right;
   @include transition(400ms);
   button {
     float: left; @include line_btn02; border-width:1px; width:40px; height:40px; right:0; margin:0 0 0 5px;

@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
@@ -62,6 +63,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         modelAndView.addObject("navList", navList);
         modelAndView.addObject("childAreas", childAreas);
         modelAndView.addObject("area", area);
+        modelAndView.addObject("deviceCodeCss", AdminResource.DEVICE_CODE_CSS);
         modelAndView.addObject("paramBean",parameters);
         try{
             InetAddress address = InetAddress.getByName(fileAddress);

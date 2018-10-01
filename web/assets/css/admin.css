@@ -1028,6 +1028,8 @@ ul.u_defalut {
     background-color: transparent;
     cursor: pointer;
     opacity: 0; }
+  .critical_tree_set > li > div > button:before {
+    display: none !important; }
   .critical_tree_set li {
     display: -webkit-box;
     display: -moz-box;
@@ -1117,8 +1119,7 @@ ul.u_defalut {
       .critical_tree_set li div.level-caution, .critical_tree_set li div.level-warning, .critical_tree_set li div.level-danger, .critical_tree_set li div.level-die {
         color: #fff;
         opacity: 1;
-        border: none !important;
-        width: 150px !important; }
+        border: none !important; }
       .critical_tree_set li div button {
         height: 100%; }
         .critical_tree_set li div button:hover {

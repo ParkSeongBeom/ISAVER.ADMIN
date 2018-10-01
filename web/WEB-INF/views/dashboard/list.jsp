@@ -86,71 +86,15 @@
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
                         <!-- Default 신호등 -->
-                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
+                        <div mainArea templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <c:set var="inSensorYn" value="0"/>
-                                    <c:set var="safeeye" value="0"/>
-                                    <c:set var="blinker" value="0"/>
-                                    <c:set var="nhr" value="0"/>
-                                    <!-- 하위 구역에 설치된 센서 아이콘 삽입 -->
-                                    <c:forEach var="device" items="${childArea.devices}">
-                                        <!--
-                                            Template Code 분기
-                                            safeeye : DEV001, DEv002, DEv003, DEv004
-                                            blinker : DEV009
-                                            nhr : DEV900, DEV901, DEV902, DEV903, DEV904, DEV905, DEV906
-                                        -->
-                                        <c:choose>
-                                            <c:when test="${device.deviceCode=='DEV001'
-                                                            or device.deviceCode=='DEV002'
-                                                            or device.deviceCode=='DEV003'
-                                                            or device.deviceCode=='DEV004'}">
-                                                <c:if test="${safeeye==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="safeeye" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                            <c:when test="${device.deviceCode=='DEV900'
-                                                            or device.deviceCode=='DEV901'
-                                                            or device.deviceCode=='DEV902'
-                                                            or device.deviceCode=='DEV903'
-                                                            or device.deviceCode=='DEV904'
-                                                            or device.deviceCode=='DEV905'
-                                                            or device.deviceCode=='DEV906'}">
-                                                <c:if test="${nhr==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="nhr" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                            <c:when test="${device.deviceCode=='DEV009'}">
-                                                <c:if test="${blinker==0}">
-                                                    <c:set var="inSensorYn" value="1"/>
-                                                    <c:set var="blinker" value="1"/>
-                                                </c:if>
-                                            </c:when>
-                                        </c:choose>
-                                    </c:forEach>
-                                    <c:if test="${inSensorYn==1}">
-                                        <div class="in_sensor">
-                                            <div>
-                                                <c:if test="${safeeye==1}">
-                                                    <span class="ico-safeeye"></span>
-                                                </c:if>
-                                                <c:if test="${nhr==1}">
-                                                    <span class="ico-nhr"></span>
-                                                </c:if>
-                                                <c:if test="${blinker==1}">
-                                                    <span class="ico-blinker"></span>
-                                                </c:if>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:if>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
                                 </c:if>
                             </header>
                             <article>
@@ -159,6 +103,18 @@
                                         <div criticalLevel="${critical.codeId}"><p></p></div>
                                     </c:forEach>
                                 </section>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <div class="device_box">
+                                        <div class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                    <p>${device.deviceName}</p>
+                                                    <p></p>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -169,25 +125,33 @@
 
                     <c:if test="${childArea.templateCode=='TMP002'}">
                         <!-- Safe-Eye -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
+                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
                                 </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
+                                </c:if>
                             </header>
                             <article>
                                 <section class="safeeye_set">
                                     <div class="s_lbox ico-invasion"></div>
-                                    <%--<div class="s_rbox">--%>
-                                        <%--<ul>--%>
-                                            <%--<li class="ico-speaker"></li>--%>
-                                            <%--<li class="ico-wlight"></li>--%>
-                                            <%--<li class="ico-mobile"></li>--%>
-                                        <%--</ul>--%>
-                                    <%--</div>--%>
                                 </section>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <div class="device_box">
+                                        <div class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                    <p>${device.deviceName}</p>
+                                                    <p></p>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -198,13 +162,16 @@
 
                     <c:if test="${childArea.templateCode=='TMP003'}">
                         <!-- Blinker -->
-                        <div class="type-list">
+                        <div mainArea class="type-list">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}'); return false;"></button>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
                                 </c:if>
                             </header>
                             <article>
@@ -280,6 +247,18 @@
                                             </c:when>
                                         </c:choose>
                                     </section>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                        <p>${device.deviceName}</p>
+                                                        <p></p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </c:if>
                                     <div class="m_marqueebox">
                                         <!-- <span>에 내용 삽입 -->
                                         <p messageBox></p>
@@ -291,12 +270,15 @@
 
                     <c:if test="${childArea.templateCode=='TMP004'}">
                         <!-- Detector -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
+                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
                                 </c:if>
                             </header>
                             <article>
@@ -310,59 +292,26 @@
                                         </div>
                                         <div class="chart_box chart01" chartAreaId="${childArea.areaId}"></div>
                                     </div>
-                                    <c:choose>
-                                        <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
-                                            <div class="s_rbox">
-                                                <!--
-                                                .unit-per = 퍼센트
-                                                .unit-tem = 온도
-                                                .unit-ppm = ppm
-                                                .unit-kwh = 킬로와트
-                                                 -->
-                                                <ul detectorDeviceList data-duplicated='true' data-direction='up'>
-                                                    <c:forEach var="device" items="${childArea.devices}">
-                                                        <c:set var="deviceClass" value=""/>
-                                                        <c:choose>
-                                                            <c:when test="${device.deviceCode=='DEV900'}">
-                                                                <c:set var="deviceClass" value="gate"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV901'}">
-                                                                <c:set var="deviceClass" value="temp"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV902'}">
-                                                                <c:set var="deviceClass" value="co2"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV903'}">
-                                                                <c:set var="deviceClass" value="gas"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV904'}">
-                                                                <c:set var="deviceClass" value="smok"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV905'}">
-                                                                <c:set var="deviceClass" value="co"/>
-                                                            </c:when>
-                                                            <c:when test="${device.deviceCode=='DEV906'}">
-                                                                <c:set var="deviceClass" value="plug"/>
-                                                            </c:when>
-                                                        </c:choose>
-
-                                                        <li deviceId="${device.deviceId}" areaId="${childArea.areaId}" <c:if test="${device.deviceStat=='N'}">class="level-die"</c:if>>
-                                                            <span class="${deviceClass}">${device.deviceCodeName}</span>
-                                                            <span evtValue>
-                                                                <c:if test="${device.evtValue!=null}">
-                                                                    <fmt:formatNumber value="${device.evtValue}" type="pattern" pattern="0.00" />
-                                                                </c:if>
-                                                                <c:if test="${device.evtValue==null}">
-                                                                    -
-                                                                </c:if>
-                                                            </span>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </c:when>
-                                    </c:choose>
                                 </section>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <div class="device_box">
+                                        <div detectorDeviceList class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div deviceId="${device.deviceId}" areaId="${childArea.areaId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                    <p>${device.deviceName}</p>
+                                                    <p evtValue>
+                                                        <c:if test="${device.evtValue!=null}">
+                                                            <fmt:formatNumber value="${device.evtValue}" type="pattern" pattern="0.00" />
+                                                        </c:if>
+                                                        <c:if test="${device.evtValue==null}">
+                                                            -
+                                                        </c:if>
+                                                    </p>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -373,7 +322,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Safe-Guard -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -650,6 +599,17 @@
         };
     }
 
+    function openDeviceList(_this){
+        var target = $(_this).parent().parent().find(".device_box");
+        if($(_this).hasClass("on")){
+            $(_this).removeClass("on");
+            $(target).removeClass("on");
+        }else{
+            $(_this).addClass("on");
+            $(target).addClass("on");
+        }
+    }
+
     /**
      * Google Map Initialize
      * @param message
@@ -663,9 +623,9 @@
     }
 
     function initChartList(){
-        $(".watch_area ul[detectorDeviceList] li[deviceId]").on("click",function(){
+        $(".watch_area div[detectorDeviceList] div[deviceId]").on("click",function(){
             if(!$(this).hasClass("on")){
-                $(this).parent().find("li").removeClass("on");
+                $(this).parent().find("> div").removeClass("on");
                 $(this).addClass("on");
                 findListChart($(this).attr("areaId"), $(this).attr("deviceId"));
             }
@@ -695,8 +655,8 @@
         });
 
         // Detector 초기 로딩시 처음 Device 선택
-        $(".watch_area ul[detectorDeviceList]").each(function(){
-            $(this).find("li:eq(0)").trigger("click");
+        $(".watch_area div[detectorDeviceList]").each(function(){
+            $(this).find("> div:eq(0)").trigger("click");
         });
 
         // Blinker Chart 초기 로딩시 데이터 로드

@@ -89,49 +89,6 @@ public class AdminResource {
     public final static String[] ADMIN_LOG_TYPE = new String[]{"1","0"};
 
     /**
-     * admin log type</br>
-     * - login : 1</br>
-     * - logout : 0</br>
-     *
-     * @author psb
-     */
-    public final static String ALARM_TARGET_ID = "DASHBOARD";
-
-    /**
-     * 그룹코드 타입 정의
-     * - S : SYSTEM
-     * - C : CUSTOM
-     */
-    public final static Map<String, String> GROUP_CODE_TYPE = new HashMap<String, String>(){
-        {
-            put("SYSTEM", "SYSTEM");// 시스템코드
-            put("CUSTOM", "CUSTOM");// 커스텀코드
-        }
-    };
-
-    public final static String PROTOCOL_SUBPIX = "://";
-
-    /**
-     * 서버유형 코드정의
-     * @author kst
-     */
-    public final static Map<String, String> SERVER_TYPE = new HashMap<String, String>(){
-        {
-            put("was","0001");
-            put("api","0002");
-            put("file","0003");
-            put("mail","0004");
-            put("cup","1000");
-            put("cucm","2000");
-            put("cuc","3000");
-            put("ad","4000");
-            put("tms","5000");
-            put("webex","6000");
-            put("ldap","7000");
-        }
-    };
-
-    /**
      * 장치유형 코드정의
      * @author psb
      */
@@ -180,6 +137,36 @@ public class AdminResource {
     };
 
     /**
+     * 장치코드별 css정의
+     * @author psb
+     */
+    public final static Map<String, String> DEVICE_CODE_CSS = new HashMap<String, String>(){
+        {
+            put("DEV001",""); // IVAS
+            put("DEV002","ico-ptz"); // IP카메라
+            put("DEV003","ico-sioc"); // SIOC
+            put("DEV004",""); // IR센서 제어기
+            put("DEV005",""); // 레이저스캐너
+            put("DEV006","ico-led"); // LED
+            put("DEV007","ico-speaker"); // 사운드
+            put("DEV008","ico-wlight"); // 경광등
+            put("DEV009","ico-tof"); // 피플카운트
+            put("DEV010",""); // CCTV
+            put("DEV011",""); // 세탁기
+            put("DEV012",""); // 건조기
+            put("DEV013",""); // M8
+            put("DEV014","ico-hlds"); // 감지구역침입 감지기
+            put("DEV900","ico-gate"); // 게이트웨이
+            put("DEV901","ico-temp"); // 온도/습도 감지기
+            put("DEV902","ico-co2"); // CO2(이산화탄소) 감지기
+            put("DEV903","ico-gas"); // 가스 감지기
+            put("DEV904","ico-smok"); // 연기 감지기
+            put("DEV905","ico-co"); // CO(일산화탄소) 감지기
+            put("DEV906","ico-plug"); // S/P(스마트 플러그)
+        }
+    };
+
+    /**
      * 파일 타입
      * @author psb
      */
@@ -194,13 +181,11 @@ public class AdminResource {
      * 통계메뉴 상위 ID
      * @author psb
      */
-    public final static String[] STATISTICS_PARENT_MENU_ID = new String[]{"200000", "2A0000","2B0000"};
+    public final static String[] STATISTICS_PARENT_MENU_ID = new String[]{"200000","2A0000","2B0000"};
 
     /**
      * Dashboard Template 환경설정
      * @author psb
      */
     public static Hashtable<String, String> TEMPLATE_SETTING;
-
-    public final static String PEOPLE_COUNT_DEVICE_ID = "DEV009";
 }

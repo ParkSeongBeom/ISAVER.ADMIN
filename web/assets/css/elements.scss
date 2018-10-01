@@ -23,33 +23,75 @@ form-bg-effect :
   &-close:before    {content:"\e91a";} // 닫기
   &-plus:before     {content:"\e92b";} // 더보기
   &-minus:before    {content:"\e92c";} // 빼기
-  &-login:before   {content:"\e900";} // 로그인
-  &-admin:before   {content:"\e909";} // 관리자
-  &-user:before    {content:"\e90e";} // 사용자
-  &-update:before  {content:"\e961";} // 업데이트
-  &-confirm:before {content:"\e941";} // 확인
-  &-cancle:before  {content:"\e937";} // 알림해지
-  &-more:before    {content:"\e95c";} // 더보기
-  &-zoom:before    {content:"\e925";} // 더보기
-  &-area:before    {content:"\e91b";} // 장소
-  &-tof:before     {content:"\e962";} // TOF 센서
-  &-ptz:before     {content:"\e964";} // PTZ 카메라
-  &-chart:before   {content:"\e908";} // 차트
-  &-four:before    {content:"\e938";} // 4분할
+  &-login:before    {content:"\e900";} // 로그인
+  &-admin:before    {content:"\e909";} // 관리자
+  &-user:before     {content:"\e90e";} // 사용자
+  &-update:before   {content:"\e961";} // 업데이트
+  &-confirm:before  {content:"\e941";} // 확인
+  &-cancle:before   {content:"\e937";} // 알림해지
+  &-more:before     {content:"\e95c";} // 더보기
+  &-zoom:before     {content:"\e925";} // 자세히보기
+  &-area:before     {content:"\e91b";} // 장소
+  &-tof:before      {content:"\e962";} // TOF 센서
+  &-ptz:before      {content:"\e964";} // PTZ 카메라
+  &-chart:before    {content:"\e908";} // 차트
+  &-four:before     {content:"\e938";} // 4분할
+  &-gate:before     {content:"\e92f";} // 게이트 웨이 센서
+  &-temp:before     {content:"\e949";} // 온도
+  &-humi:before     {content:"\e947";} // 습도
+  &-co2:before      {content:"\e955";} // CO2
+  &-co:before       {content:"\e956";} // CO
+  &-plug:before     {content:"\e933";} // 스마트 플러그
+  &-smok:before     {content:"\e963";} // 연기
+  &-gas:before      {content:"\e910";} // 가스
+  &-hlds:before     {content:"\e959";} // 근거리 HLDS 센서
+  &-device:before   {content:"\e92f";} // 근거리 HLDS 센서
+  &-led:before      {content:"\e966";} // LED
+  &-sioc:before      {content:"\e96e";} // sioc
 }
 
-
 /*
-sico_59 스피커
-sico_60 경광등
-sico_87 HLDS
-sico_88 고정카메라
-sico_91 통신
-sico_92 환경센서
-sico_96 M8
-sico_98 PTZ
+.ico-safeeye :   -safeeye
+.ico-blinker :   -blinker
+.ico-tracker :   -tracker
+.ico-function :  설정새로고침
+.ico-pool :      수영장
+.ico-health :    의료
+.ico-nhr :       detector
+.ico-invasion :  침입
+.ico-exhibit :   전시물보호
+.ico-speaker :   스피커
+.ico-wlight :    경광등
+.ico-mobile :    모바일
+.ico-close :     닫기
+.ico-plus :      더보기
+.ico-minus :     빼기
+.ico-login :     로그인
+.ico-admin :     관리자
+.ico-user :      사용자
+.ico-update :    업데이트
+.ico-confirm :   확인
+.ico-cancle :    알림해지
+.ico-more :      더보기
+.ico-zoom :      자세히보기
+.ico-area :      장소
+.ico-tof :       TOF 센서
+.ico-ptz :       PTZ 카메라
+.ico-chart :     차트
+.ico-four :      4분할
+.ico-gate :      게이트 웨이 센서
+.ico-temp :      온도
+.ico-humi :      습도
+.ico-co2 :       CO2
+.ico-co :        CO
+.ico-plug :      스마트 플러그
+.ico-smok :      연기
+.ico-gas :       가스
+.ico-hlds :      근거리 HLDS 센서
+.ico-device :    근거리 HLDS 센서
+.ico-led :       LED
+.ico-sioc :      sioc
 */
-
 
 ////// 시계 Start
 .datetime_set {
@@ -779,7 +821,6 @@ div[contenteditable] {}
     @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
 
 
-
     // 디바이스, 구역 이름표
     & > span {
       @include flex-midddle; position: absolute; width: max-content; bottom:-15px;
@@ -853,24 +894,13 @@ div[contenteditable] {}
   }
 
 
-
   &-fence {
-    /*width:auto !important; height:auto !important;*/
-    //background-color: transparent !important;
-    //@include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-    background-color: transparent !important;
-
-    width:100% !important; height:100% !important;
-
+    width:100% !important; height:100% !important; background-color: transparent !important;
     polygon, path {
-      fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01; stroke-width:1px;
+      stroke-width:1px;
       text {font-size:5px !important; letter-spacing: 0;}
-      /*&:after {display: none !important;}
-      &:before {
-        content:""; position: absolute; width:100%; height:100%;
-        @include border01(2px,$color-yellow-01,1 ); background-color: rgba($color-yellow-01,0.2);
-      }*/
 
+      fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01;
       &.level {
         &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
         &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
@@ -888,6 +918,11 @@ div[contenteditable] {}
     }
 
   }
+
+  &-ignore_fence {
+    fill: rgba($color-gray-05, 0.2) !important;  stroke: $color-gray-05 !important;
+  }
+
   // 임계치 적용 표시
   &-m8, &-camera, &-tracking {
     &.level {

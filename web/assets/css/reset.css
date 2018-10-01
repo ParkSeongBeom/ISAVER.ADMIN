@@ -282,13 +282,20 @@ section:before,*/
 .sico_70:before {content: "\e945";}    .sico_81:before {content: "\e953";}    .sico_91:before {content: "\e95d";}
 
 
-.sico_92:before {content: "\e95e";}
-.sico_93:before {content: "\e95f";}
-.sico_94:before {content: "\e960";}
-.sico_95:before {content: "\e961";}
-.sico_96:before {content: "\e962";}
-.sico_97:before {content: "\e963";}
-.sico_98:before {content: "\e964";}
+.sico_92:before {content: "\e95e";}    .sico_99:before {content: "\e965";}    .sico_106:before {content: "\e96c";}
+.sico_93:before {content: "\e95f";}    .sico_100:before {content: "\e966";}   .sico_107:before {content: "\e96d";}
+.sico_94:before {content: "\e960";}    .sico_101:before {content: "\e967";}   .sico_108:before {content: "\e96e";}
+.sico_95:before {content: "\e961";}    .sico_102:before {content: "\e968";}   .sico_109:before {content: "\e96f";}
+.sico_96:before {content: "\e962";}    .sico_103:before {content: "\e969";}   .sico_110:before {content: "\e970";}
+.sico_97:before {content: "\e963";}    .sico_104:before {content: "\e96a";}   .sico_111:before {content: "\e971";}
+.sico_98:before {content: "\e964";}    .sico_105:before {content: "\e96b";}   .sico_112:before {content: "\e972";}
+
+
+.sico_112:before {content: "\e972";}
+.sico_113:before {content: "\e973";}
+.sico_114:before {content: "\e974";}
+.sico_115:before {content: "\e975";}
+.sico_116:before {content: "\e976";}
 
 
 .flexbase {

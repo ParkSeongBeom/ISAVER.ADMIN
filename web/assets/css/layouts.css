@@ -14,14 +14,25 @@ body {
   min-width: 1450px;
   min-height: 768px; }
   body.dashboard_mode ::-webkit-scrollbar {
-    width: 10px;
+    width: 12px;
     height: 10px; }
   body.dashboard_mode ::-webkit-scrollbar, body.dashboard_mode ::-webkit-scrollbar-corner {
     height: 8px;
-    width: 8px;
+    width: 11px;
     background-color: #111; }
   body.dashboard_mode ::-webkit-scrollbar-track {
     background-color: #111; }
+  body.dashboard_mode ::-webkit-scrollbar-button {
+    display: inline-block;
+    width: 12px;
+    height: 7px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px; }
+  body.dashboard_mode ::-webkit-scrollbar-button:start:decrement {
+    background-image: url("../images/ico/select_allow_upw.svg"); }
+  body.dashboard_mode ::-webkit-scrollbar-button:end:decrement {
+    background-image: url("../images/ico/select_allow_w.svg"); }
   body.dashboard_mode ::-webkit-scrollbar-thumb {
     min-height: 30px;
     background-clip: content-box;
@@ -271,7 +282,7 @@ header {
   width: 100%;
   min-width: 1450px;
   height: 40px;
-  padding: 0 20px;
+  padding: 0 15px;
   background-color: #f5f5f5; }
   header:before {
     content: "";
@@ -2298,7 +2309,7 @@ body.adaptive_mobile, body.adaptive_mobile header {
   min-width: 0 !important; }
 body.adaptive_mobile.dashboard_mode .wrap > article {
   min-width: 0 !important;
-  right: 20px; }
+  right: 15px; }
 body.adaptive_mobile.dashboard_mode button.issue_btn.issue {
   width: 40px !important; }
 
@@ -2322,7 +2333,7 @@ body.admin_mode.taekwon_mode .header_btn_set {
 body.dashboard_mode.taekwon_mode .wrap > article,
 body.login_mode.taekwon_mode .wrap > article,
 body.admin_mode.taekwon_mode .wrap > article {
-  right: 20px;
+  right: 15px;
   top: 50px; }
   body.dashboard_mode.taekwon_mode .wrap > article > section,
   body.login_mode.taekwon_mode .wrap > article > section,

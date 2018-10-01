@@ -423,6 +423,10 @@ var CustomMapMediator = (
                         _fenceSvg.polygon(points, {fenceId:data['id']});
                         _fenceSvg.text(latMin+((latMax-latMin)/2),lngMin+((lngMax-lngMin)/2),data['fenceName']?data['fenceName']:data['id'], $.extend({"fenceId":data['id']}, _options[_MARKER_TYPE[1]]['text']));
 
+                        if(data['fenceType']=='ignore'){
+                            _element.find("polygon[fenceId='"+data['id']+"']").addClass('g-ignore_fence');
+                        }
+
                         _marker[messageType][data['id']] = {
                             'element' : _element.find("polygon[fenceId='"+data['id']+"']")
                             ,'textElement' : _element.find("text[fenceId='"+data['id']+"']")
@@ -685,34 +689,6 @@ var CustomMapMediator = (
         var _alertMessage = function(type){
             alert(_messageConfig[type]);
         };
-
-        var validateLat = function( jsonData ) {
-            if(jsonData instanceof Array){
-                for(var key in jsonData) {
-                    for(var i in jsonData[key]) {
-                        if( typeof jsonData[key][i] === 'object' || typeof jsonData[key][i] === 'array' ) {
-                            jsonData[key][i] = typeCheck( jsonData[key][i] );
-                        } else {
-                            if( /^(0|[1-9][0-9].*)$/.test( jsonData[key][i] ) ) {
-                                jsonData[key][i] = Number( jsonData[key][i] );
-                            }
-                        }
-                    }
-                }
-            }else{
-                for(var key in jsonData) {
-                    if( typeof jsonData[key] === 'object' || typeof jsonData[key] === 'array' ) {
-                        jsonData[key] = typeCheck( jsonData[key] );
-                    } else {
-                        if( /^(0|[1-9][0-9].*)$/.test( jsonData[key] ) ) {
-                            jsonData[key] = Number( jsonData[key] );
-                        }
-                    }
-                }
-            }
-            return jsonData;
-        };
-
         _initialize(rootPath, version);
     }
 );

@@ -33,6 +33,7 @@ var DashboardHelper = (
             for(var index in _urlConfig){
                 _urlConfig[index] = _rootPath + _urlConfig[index];
             }
+            updateDeviceStatus();
             console.log('[DashboardHelper] initialize complete');
         };
 
@@ -107,7 +108,7 @@ var DashboardHelper = (
                     ,'childAreaIds' : $(this).attr("childAreaIds")
                 };
 
-                $.each($(this).find("li[deviceId]"),function(){
+                $.each($(this).find("div[deviceId]"),function(){
                     _areaList[areaId]['childDevice'][$(this).attr("deviceId")] = {
                         'element' : $(this)
                         ,'notification' : $.extend(true,{},criticalList)
@@ -244,6 +245,7 @@ var DashboardHelper = (
                     }
                     break;
                 case "editDeviceStatus": // 장치 상태
+                    _self.setDeviceStatusList(data['deviceStatusList']);
                     for(var index in _guardList){
                         _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
                         _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
@@ -353,6 +355,38 @@ var DashboardHelper = (
          */
         var _alertMessage = function(type){
             alert(_messageConfig[type]);
+        };
+
+        /**
+         * 장치상태
+         * @author psb
+         */
+        this.setDeviceStatusList = function(deviceStatusList){
+            for(var index in deviceStatusList){
+                var deviceStatus = deviceStatusList[index];
+
+                for(var index in _areaList){
+                    var _area = _areaList[index];
+                    if(_area['childDevice'][deviceStatus['deviceId']]!=null){
+                        if(deviceStatus['deviceStat']=='Y'){
+                            _area['childDevice'][deviceStatus['deviceId']]['element'].removeClass('level-die');
+                        }else{
+                            _area['childDevice'][deviceStatus['deviceId']]['element'].addClass('level-die');
+                        }
+                    }
+                }
+            }
+            updateDeviceStatus();
+        };
+
+        var updateDeviceStatus = function(){
+            $.each($("div[mainArea]"),function(){
+                if($(this).find(".device_box div.level-die").length>0){
+                    $(this).find(".device_view").addClass("level-die");
+                }else{
+                    $(this).find(".device_view").removeClass("level-die");
+                }
+            });
         };
 
         /**
@@ -669,9 +703,9 @@ var DashboardHelper = (
                     if(info['key']=="value"){
                         eventValue = info['value'];
                         try{
-                            deviceElement.find("span[evtValue]").text(Number(eventValue).toFixed(2));
+                            deviceElement.find("p[evtValue]").text(Number(eventValue).toFixed(2));
                         }catch(e){
-                            deviceElement.find("span[evtValue]").text(eventValue);
+                            deviceElement.find("p[evtValue]").text(eventValue);
                             console.error("[DashboardHelper][detectorUpdate] parse error - "+ e.message);
                         }
                         updateFlag = true;
