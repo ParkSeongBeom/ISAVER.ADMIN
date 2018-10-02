@@ -380,7 +380,7 @@ var DashboardHelper = (
         };
 
         var updateDeviceStatus = function(){
-            $.each($("div[mainArea]"),function(){
+            $.each($(".watch_area > div"),function(){
                 if($(this).find(".device_box div.level-die").length>0){
                     $(this).find(".device_view").addClass("level-die");
                 }else{

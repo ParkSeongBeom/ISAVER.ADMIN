@@ -86,7 +86,7 @@
                 <c:forEach var="childArea" items="${childAreas}">
                     <c:if test="${childArea.templateCode=='TMP001'}">
                         <!-- Default 신호등 -->
-                        <div mainArea templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
+                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -125,7 +125,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP002'}">
                         <!-- Safe-Eye -->
-                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -162,7 +162,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP003'}">
                         <!-- Blinker -->
-                        <div mainArea class="type-list">
+                        <div class="type-list">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}'); return false;"></button>
@@ -202,7 +202,7 @@
                                         s_rbox : 오른쪽 컨텐츠 리스트 삽입영역
                                         -->
                                         <!-- 대표 지정 진출입 -->
-                                        <div class="s_lbox blinker_set ">
+                                        <div class="s_lbox blinker_set">
                                             <h3></h3>
                                             <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}">
                                                 <p gap>0</p>
@@ -270,7 +270,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP004'}">
                         <!-- Detector -->
-                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -322,7 +322,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Safe-Guard -->
-                        <div mainArea templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -331,31 +331,6 @@
                                 </c:if>
                             </header>
                             <article>
-                                <section style="display: none;">
-                                    <c:choose>
-                                        <c:when test="${childArea.devices != null and fn:length(childArea.devices) > 0}">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <!-- quanergy_m8 : DEV013 / IP카메라 : DEV002 -->
-                                                <c:if test="${device.deviceCode=='DEV002' or device.deviceCode=='DEV013'}">
-                                                    <div childDevice>
-                                                        <input type="text" name="cDeviceId" value="${device.deviceId}"/>
-                                                        <input type="text" name="cDeviceCode" value="${device.deviceCode}"/>
-                                                        <input type="text" name="cIpAddress" value="${device.ipAddress}"/>
-                                                        <input type="text" name="cPort" value="${device.port}"/>
-                                                        <input type="text" name="cDeviceUserId" value="${device.deviceUserId}"/>
-                                                        <input type="password" name="cDevicePassword" value="${device.devicePassword}"/>
-                                                        <input type="text" name="cSubUrl" value="${device.subUrl}"/>
-                                                        <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
-                                                        <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
-                                                        <input type="text" name="cDeviceStat" value="${device.deviceStat}"/>
-                                                        <input type="text" name="cDeviceName" value="${device.deviceName}"/>
-                                                    </div>
-                                                </c:if>
-                                            </c:forEach>
-                                        </c:when>
-                                    </c:choose>
-                                </section>
-
                                 <section class="guard_set">
                                     <div class="s_lbox">
                                         <%--<div name="map-canvas" class="map_images"></div>--%>
@@ -366,6 +341,27 @@
                                     </div>
                                 </section>
                                 <div guardInfo class="copybox_area"></div>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <div class="device_box d_none">
+                                        <div class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div childDevice>
+                                                    <input type="text" name="cDeviceId" value="${device.deviceId}"/>
+                                                    <input type="text" name="cDeviceCode" value="${device.deviceCode}"/>
+                                                    <input type="text" name="cIpAddress" value="${device.ipAddress}"/>
+                                                    <input type="text" name="cPort" value="${device.port}"/>
+                                                    <input type="text" name="cDeviceUserId" value="${device.deviceUserId}"/>
+                                                    <input type="password" name="cDevicePassword" value="${device.devicePassword}"/>
+                                                    <input type="text" name="cSubUrl" value="${device.subUrl}"/>
+                                                    <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
+                                                    <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
+                                                    <input type="text" name="cDeviceStat" value="${device.deviceStat}"/>
+                                                    <input type="text" name="cDeviceName" value="${device.deviceName}"/>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>

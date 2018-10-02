@@ -157,12 +157,13 @@ public class AdminResource {
             put("DEV013",""); // M8
             put("DEV014","ico-hlds"); // 감지구역침입 감지기
             put("DEV900","ico-gate"); // 게이트웨이
-            put("DEV901","ico-temp"); // 온도/습도 감지기
+            put("DEV901","ico-temp"); // 온도 감지기
             put("DEV902","ico-co2"); // CO2(이산화탄소) 감지기
             put("DEV903","ico-gas"); // 가스 감지기
             put("DEV904","ico-smok"); // 연기 감지기
             put("DEV905","ico-co"); // CO(일산화탄소) 감지기
             put("DEV906","ico-plug"); // S/P(스마트 플러그)
+            put("DEV907","ico-humi"); // 습도 감지기
         }
     };
 
