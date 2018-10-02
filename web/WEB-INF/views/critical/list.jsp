@@ -472,24 +472,24 @@
                 case 'critical':
                     param = {
                         'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel']").val()
+                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel'] option:selected").val()
                         ,'criticalValue' : targetElement.find("input[name='criticalValue']").val()
-                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId']").val()
+                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId'] option:selected").val()
                     };
                     break;
                 case 'detect':
                     param = {
                         'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId']").val()
+                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
                     };
                     break;
                 case 'target':
                     param = {
                         'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId']").val()
-                        ,'alarmType' : targetElement.find("select[name='alarmType']").val()
-                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage']").val()
-                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId']").val()
+                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId'] option:selected").val()
+                        ,'alarmType' : targetElement.find("select[name='alarmType'] option:selected").val()
+                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage'] option:selected").val()
+                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId'] option:selected").val()
                     };
                     break;
             }
