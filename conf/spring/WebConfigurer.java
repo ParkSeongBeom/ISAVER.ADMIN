@@ -264,6 +264,12 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public HaspLicenseUtil haspLicenseUtil() {
+        HaspLicenseUtil haspLicenseUtil=new HaspLicenseUtil();
+        return haspLicenseUtil;
+    }
+
+    @Bean
     public String printVersion() {
         String version = null;
         StringBuilder loggerBuiler = new StringBuilder();

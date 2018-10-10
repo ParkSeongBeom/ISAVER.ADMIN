@@ -1,12 +1,9 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.svc.VideoHistorySvc;
-import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.DeviceBean;
-import com.icent.isaver.repository.bean.NotificationBean;
 import com.icent.isaver.repository.bean.VideoHistoryBean;
 import com.icent.isaver.repository.dao.base.DeviceDao;
-import com.icent.isaver.repository.dao.base.NotificationDao;
 import com.icent.isaver.repository.dao.base.VideoHistoryDao;
 import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;

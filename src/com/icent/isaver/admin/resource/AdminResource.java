@@ -168,6 +168,37 @@ public class AdminResource {
     };
 
     /**
+     * 장치코드별 css정의
+     * @author psb
+     */
+    public final static Map<String, Integer> DEVICE_CODE_LICENSE = new HashMap<String, Integer>(){
+        {
+            put("DEV001",0); // IVAS
+            put("DEV002",2); // IP카메라
+            put("DEV003",4); // SIOC
+            put("DEV004",6); // IR센서 제어기
+            put("DEV005",8); // 레이저스캐너
+            put("DEV006",10); // LED
+            put("DEV007",12); // 사운드
+            put("DEV008",14); // 경광등
+            put("DEV009",16); // 피플카운트
+            put("DEV010",18); // CCTV
+            put("DEV011",20); // 세탁기
+            put("DEV012",22); // 건조기
+            put("DEV013",24); // M8
+            put("DEV014",26); // 감지구역침입 감지기
+            put("DEV900",28); // 게이트웨이
+            put("DEV901",30); // 온도 감지기
+            put("DEV902",32); // CO2(이산화탄소) 감지기
+            put("DEV903",34); // 가스 감지기
+            put("DEV904",36); // 연기 감지기
+            put("DEV905",38); // CO(일산화탄소) 감지기
+            put("DEV906",40); // S/P(스마트 플러그)
+            put("DEV907",42); // 습도 감지기
+        }
+    };
+
+    /**
      * 파일 타입
      * @author psb
      */

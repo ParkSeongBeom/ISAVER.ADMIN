@@ -155,6 +155,43 @@ h4 {
   .language select, .language input[type="date"] {
     background-image: url(../images/ico/select_allow_w.svg) !important; }
 
+.license_notice {
+  display: none;
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  height: 25px;
+  font-size: 0.8rem;
+  color: #fff !important; }
+  .admin_mode .license_notice {
+    background-color: #be1e1e; }
+  .license_notice.on {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: -webkit-linear-gradient(top, #be1e1e 36%, rgba(190, 30, 30, 0.676) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
+    .license_notice.on:before {
+      content: "\e90f";
+      padding: 0 10px 0 0;
+      font-size: 1.4rem; }
+
 .login_area {
   position: absolute;
   display: -webkit-box;
@@ -255,6 +292,16 @@ h4 {
       border-color: rgba(255, 255, 255, 0.5); }
     .login_area article .caps {
       color: #be1e1e; }
+    .login_area article .license_notice {
+      position: relative;
+      width: 100%;
+      height: auto;
+      font-size: 1rem;
+      float: left;
+      padding: 10px;
+      margin: 10px 0 30px 0; }
+      .login_area article .license_notice:before {
+        font-size: 1rem; }
 
 header {
   display: -webkit-box;
@@ -355,14 +402,49 @@ header {
           width: 40px;
           min-width: 40px;
           float: left; }
+          header .header_area .header_right_area .header_btn_set button:before {
+            font-size: 1.6rem; }
           header .header_area .header_right_area .header_btn_set button.issue_btn:before {
             content: "\e907"; }
           header .header_area .header_right_area .header_btn_set button.loginout_btn:before {
             content: "\e900"; }
           header .header_area .header_right_area .header_btn_set button.user_btn:before {
             content: "\e90e"; }
-          header .header_area .header_right_area .header_btn_set button:before {
-            font-size: 1.6rem; }
+          header .header_area .header_right_area .header_btn_set button.info_btn {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: flexbox;
+            display: box;
+            box-align: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center; }
+            header .header_area .header_right_area .header_btn_set button.info_btn:before {
+              content: "i";
+              font-size: 1rem;
+              font-weight: bold; }
+            header .header_area .header_right_area .header_btn_set button.info_btn:after {
+              content: "";
+              position: absolute;
+              width: 22px;
+              height: 22px;
+              border-style: solid;
+              border-width: 2px;
+              border-color: white;
+              -moz-border-radius: 200px;
+              -webkit-border-radius: 200px;
+              border-radius: 200px;
+              -khtml-border-radius: 200px; }
           header .header_area .header_right_area .header_btn_set button:hover, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn) {
             background-color: #109dcb; }
             header .header_area .header_right_area .header_btn_set button:hover:before, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn):before {
@@ -644,25 +726,6 @@ menu {
         color: #fff;
         opacity: 1; }
 
-.tpopupbase, .personal_popup, .popupbase > div > div {
-  padding: 20px;
-  padding-top: 15px;
-  box-shadow: 0px 60px 100px -50px black;
-  -webkit-box-shadow: 0px 60px 100px -50px black;
-  -moz-box-shadow: 0px 60px 100px -50px black;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #3c3c3c;
-  transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .tpopupbase *:not(button), .personal_popup *:not(button), .popupbase > div > div *:not(button) {
-    color: #3c3c3c; }
-  .tpopupbase, .tpopupbase header, .personal_popup, .personal_popup header, .popupbase > div > div, .popupbase > div > div header {
-    background-color: #f5f5f5; }
-
 .bodyohidden {
   overflow: hidden !important; }
 
@@ -939,7 +1002,26 @@ menu {
           .popupbase.iocount_popup > div > div > article .iotime_set li:last-of-type {
             padding: 0; }
 
-.tpopupbase, .personal_popup {
+.tpopupbase, .personal_popup, .info_popup, .popupbase > div > div {
+  padding: 20px;
+  padding-top: 15px;
+  box-shadow: 0px 60px 100px -50px black;
+  -webkit-box-shadow: 0px 60px 100px -50px black;
+  -moz-box-shadow: 0px 60px 100px -50px black;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #3c3c3c;
+  transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+  -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
+  .tpopupbase *:not(button), .personal_popup *:not(button), .info_popup *:not(button), .popupbase > div > div *:not(button) {
+    color: #3c3c3c; }
+  .tpopupbase, .tpopupbase header, .personal_popup, .personal_popup header, .info_popup, .info_popup header, .popupbase > div > div, .popupbase > div > div header {
+    background-color: #f5f5f5; }
+
+.tpopupbase, .personal_popup, .info_popup {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -954,26 +1036,79 @@ menu {
   flex-direction: column;
   z-index: 101;
   position: fixed;
-  top: 38px;
+  top: 40px;
   right: -400px;
   width: 300px; }
-  .tpopupbase h2, .personal_popup h2 {
+  .tpopupbase h2, .personal_popup h2, .info_popup h2 {
     padding: 0 0 30px 0; }
-  .tpopupbase > section, .personal_popup > section {
+  .tpopupbase > section, .personal_popup > section, .info_popup > section {
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
     flexbox: 0 1 100%;
     -webkit-box-flex: 1;
     -ms-flex: 0 1 100%;
     padding: 0 0 20px 0; }
-  .tpopupbase > div, .personal_popup > div {
+  .tpopupbase > div, .personal_popup > div, .info_popup > div {
     flex: 1 0 40px;
     -webkit-flex: 1 0 40px;
     flexbox: 1 0 40px;
     -webkit-box-flex: 0;
     -ms-flex: 1 0 40px; }
-  .tpopupbase.on, .personal_popup.on {
-    right: 20px; }
+  .tpopupbase.on, .personal_popup.on, .info_popup.on {
+    right: 15px; }
+
+.info_popup {
+  padding: 15px 0 15px 0 !important; }
+  .info_popup h2 {
+    width: 100%;
+    padding: 0 20px 30px 20px !important; }
+    .info_popup h2:before, .info_popup h2:after {
+      position: absolute;
+      bottom: 8px;
+      font-size: 0.8rem;
+      opacity: 0.6; }
+    .info_popup h2:before {
+      content: "Type";
+      left: 20px; }
+    .info_popup h2:after {
+      content: "Quantity";
+      right: 20px; }
+  .info_popup section {
+    position: relative;
+    width: 100%;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 20px !important; }
+    .info_popup section:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background-color: rgba(153, 153, 153, 0.4); }
+    .info_popup section div {
+      width: 100%;
+      padding: 10px 0;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: justify;
+      -moz-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between; }
 
 .toast_popup {
   display: none;

@@ -1,5 +1,7 @@
 package com.icent.isaver.admin.util;
 
+import Aladdin.HaspStatus;
+import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.repository.bean.UsersBean;
@@ -56,6 +58,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Inject
     private IsaverTargetUtil isaverTargetUtil;
 
+    @Inject
+    private HaspLicenseUtil haspLicenseUtil;
+
     /**
      * 인자절차가 필요없는 path</br>
      * - properties/config.properties 참조
@@ -107,6 +112,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
             if(usersBean == null || usersBean.getUserId() == null) { // 비인가 접근
                 response.sendRedirect(redirectUrl);
+            }else{
+                License license = haspLicenseUtil.login();
+                if (HaspStatus.HASP_STATUS_OK != license.getStatus()) { // 라이센스 로그인 실패
+                    AdminHelper.removeAdminInfo(request);
+                    response.sendRedirect(redirectUrl);
+                }
             }
         }
 
@@ -128,6 +139,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
         modelAndView.addObject("majorVersion", majorVersion);
+        modelAndView.addObject("licenseList", haspLicenseUtil.readAll());
         super.postHandle(request, response, handler, modelAndView);
     }
 

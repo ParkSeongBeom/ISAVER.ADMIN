@@ -23,6 +23,14 @@ import java.util.Map;
 public interface AuthorizationSvc {
 
     /**
+     * index.
+     *
+     * @author psb
+     * @return
+     */
+    public ModelAndView index();
+
+    /**
      * 관리자 로그인 처리를 한다.
      *
      * @author kst

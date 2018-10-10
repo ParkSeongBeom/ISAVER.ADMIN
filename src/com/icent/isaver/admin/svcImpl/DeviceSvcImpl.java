@@ -1,10 +1,13 @@
 package com.icent.isaver.admin.svcImpl;
 
+import Aladdin.HaspStatus;
+import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
@@ -78,6 +81,9 @@ public class DeviceSvcImpl implements DeviceSvc {
     @Inject
     private DeviceSyncRequestSvc deviceSyncRequestSvc;
 
+    @Inject
+    private HaspLicenseUtil haspLicenseUtil;
+
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
         List<DeviceBean> deviceTreeList = deviceDao.findListDevice(null);
@@ -90,23 +96,35 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView addDevice(HttpServletRequest request, Map<String, String> parameters) {
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        License license = haspLicenseUtil.read(parameters.get("deviceCode"));
 
-        try {
-            parameters.put("deviceId", generatorFunc());
-            deviceDao.addDevice(parameters);
+        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+            int licenseCnt = deviceDao.findCountDeviceLicense(parameters);
+            if(licenseCnt < Integer.parseInt(license.getMessage())){
+                TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+                try {
+                    parameters.put("deviceId", generatorFunc());
+                    deviceDao.addDevice(parameters);
 
-            Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
-            addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
-            addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("add"));
-            deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+                    Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                    addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
+                    addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("add"));
+                    deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
+                    transactionManager.commit(transactionStatus);
+                }catch(DataAccessException e){
+                    transactionManager.rollback(transactionStatus);
+                    throw new IcentException("");
+                }
+                deviceSync(parameters.get("deviceId"));
+            }else{
+                license.setMessage("licensed quantity exceeded");
+                license.setStatus(-4);
+            }
         }
-        deviceSync(parameters.get("deviceId"));
-        return new ModelAndView();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("license",license);
+        return modelAndView;
     }
 
     @Override

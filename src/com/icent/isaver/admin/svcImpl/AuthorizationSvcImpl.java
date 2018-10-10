@@ -1,9 +1,12 @@
 package com.icent.isaver.admin.svcImpl;
 
+import Aladdin.HaspStatus;
+import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AuthorizationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.repository.bean.LoginHistoryBean;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.LoginHistoryDao;
@@ -45,23 +48,36 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Inject
     private LoginHistoryDao loginHistoryDao;
 
+    @Inject
+    private HaspLicenseUtil haspLicenseUtil;
+
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
     @Override
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("license", haspLicenseUtil.login());
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView login(HttpServletRequest request, Map<String, String> parameters) {
+        License license = haspLicenseUtil.login();
 
-        UsersBean usersBean = usersDao.findByUsersForLogin(parameters);
+        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+            UsersBean usersBean = usersDao.findByUsersForLogin(parameters);
 
-        if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){
-            AdminHelper.setAdminInfo(request, usersBean);
-            addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
-        }else{
-            throw new IcentException("");
+            if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){
+                AdminHelper.setAdminInfo(request, usersBean);
+                addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
+            }else{
+                throw new IcentException("");
+            }
         }
 
-
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("license",license);
         return modelAndView;
     }
 

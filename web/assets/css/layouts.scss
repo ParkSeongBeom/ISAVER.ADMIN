@@ -70,6 +70,17 @@ h4 {
 .language {@include dark_select;}
 
 
+/////..... 라이센스 만료 경고   Start
+.license_notice {
+  display: none;
+  position: fixed; top:($headerHeight + 1px); left:0; right:0; height:25px;
+  font-size: 0.8rem; color:#fff !important;
+  .admin_mode & {background-color: $color-red-01;}
+  &.on {@include licenseBg; @include flex-justify-content-center;}
+}
+/////..... 라이센스 만료 경고  End
+
+
 ////// ----------------- 로그인 영역 Start
 .login_area {
   position: absolute; @include flex-midddle; width:100%; height:100%;
@@ -97,6 +108,11 @@ h4 {
 
     button {float:right;  @include border01(1px,#fff,0.5 );}
     .caps {color:$color-red-01; }
+
+    .license_notice {
+      position: relative; width:100%; height:auto; font-size: 1rem; float: left; padding:10px; margin:10px 0 30px 0;
+      &:before {font-size: 1rem; }
+    }
   }
 
 }
@@ -139,11 +155,20 @@ header {
         & > * {position: relative;}
         button {
           width:40px; min-width:40px; float: left;
-
+          &:before {font-size:1.6rem;}
           &.issue_btn:before     {content: "\e907";}
           &.loginout_btn:before  {content: "\e900";}
           &.user_btn:before      {content: "\e90e";}
-          &:before {font-size:1.6rem;}
+          &.info_btn{
+            @include flex-midddle;
+            &:before {content:"i"; font-size:1rem; font-weight:bold;}
+            &:after  {content:"";
+              position: absolute; width:22px; height:22px; @include border01(2px,$color-white-01,1 );
+              @include border-radius(200px);
+            }
+          }
+
+
           &:hover, &.on:not(.issue_btn) {
             background-color: $color-blue-01;
             &:before {color:#fff !important;}
@@ -293,14 +318,7 @@ menu {
 
 
 /////..... 팝업 공통 효과 START
-.tpopupbase, .personal_popup, .popupbase > div > div  {
-  & *:not(button) {color:#3c3c3c;}
-  &, header {background-color: $adm-color; }
-  padding:$popup-margin; padding-top:15px;
-  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
-  @include border01(2px,$bas-color,1 );
-  @include transition(400ms);
-}
+
 
 .bodyohidden {overflow: hidden !important;;}
 .popupbase {
@@ -475,21 +493,55 @@ menu {
 }
 /////..... 팝업 공통 효과 END
 
-
+.tpopupbase, .personal_popup, .info_popup, .popupbase > div > div  {
+  & *:not(button) {color:#3c3c3c;}
+  &, header {background-color: $adm-color; }
+  padding:$popup-margin; padding-top:15px;
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+  @include border01(2px,$bas-color,1 );
+  @include transition(400ms);
+}
 /////..... 사용자 보기 팝업 popup_type_01 Start
-.tpopupbase , .personal_popup {
+.tpopupbase , .personal_popup, .info_popup {
   @include flexbase; @include flex-column; z-index:101;
-  position: fixed; top:($headerHeight - 2px); right:-($noticecenter-width + 100px);
+  position: fixed; top:($headerHeight); right:-($noticecenter-width + 100px);
   width:$noticecenter-width;
 
   h2 {padding:0 0 30px 0;}
   & > section {@include flex-option(0, 1, 100%); padding:0 0 20px 0;}
   & > div {@include flex-option(1, 0, 40px);}
 
-  &.on {right:20px;}
+  &.on {right:$m_lr;}
+
+
 }
 /////..... 사용자 보기 팝업 popup_type_01 End
 
+
+/////..... 라이센스 정보 보기 팝업 Start
+.info_popup {
+  padding:15px 0 15px 0 !important;
+
+  h2 {
+    width:100%;  padding:0 20px 30px 20px !important;
+    &:before, &:after {position: absolute; bottom:8px; font-size: 0.8rem; opacity: 0.6;}
+    &:before {content:"Type"; left:20px;}
+    &:after  {content:"Quantity"; right:20px;}
+  }
+  section {
+    position: relative; width:100%; max-height:600px; overflow-y: auto; overflow-x: hidden; padding:0 20px !important;
+    &:before {
+      content:""; position: absolute; top:0; left:20px; right:20px;  height:1px;
+      background-color: rgba($color-gray-03,0.4);
+    }
+    div {
+      width:100%; padding:10px 0;
+      @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+    }
+  }
+
+}
+/////..... 라이센스 정보 보기 팝업 End
 
 /////..... 토스트 팝업 시작
 .toast_popup {

@@ -119,6 +119,7 @@ var ResourceHelper = (
 
             if(actionType=='add'){
                 var serialNo = form.find("input[name=serialNo]").val().trim();
+                var deviceCode = form.find("select[name=deviceCode]").val().trim();
                 if(serialNo==null && serialNo.length==0){
                     _alertMessage('requiredSerialNo');
                     return false;
@@ -126,7 +127,7 @@ var ResourceHelper = (
 
                 for(var index in _deviceList){
                     var _data = _deviceList[index]['data'];
-                    if(_data['serialNo']==serialNo){
+                    if(_data['serialNo']==serialNo && _data['deviceCode']==deviceCode){
                         _alertMessage('existsSerialNo');
                         return false;
                     }
@@ -427,6 +428,8 @@ var ResourceHelper = (
          * @author psb
          */
         var _successHandler = function(data, dataType, actionType){
+            var refreshFlag = false;
+
             switch(actionType){
                 case 'areaList':
                     areaRender(data['areas']);
@@ -434,7 +437,7 @@ var ResourceHelper = (
                 case 'deviceList':
                     deviceRender(data['devices']);
                     break;
-                default :
+                case 'addArea':
                     if(data['resultCode']!=null){
                         switch (data['resultCode']){
                             case "ERR000":
@@ -442,11 +445,34 @@ var ResourceHelper = (
                                 break;
                         }
                     }else{
-                        _alertMessage(actionType + 'Complete');
-                        $("div[detail]").removeClass("on");
-                        $(".ment").addClass("on");
-                        _self.refreshList();
+                        refreshFlag = true;
                     }
+                    break;
+                case 'addDevice':
+                    var license = data['license'];
+                    switch (license['status']){
+                        case 0:
+                            refreshFlag = true;
+                            break;
+                        case -1: // 기한만료
+                            _alertMessage('expireLicense');
+                            break;
+                        case -4: // 라이센스 수량 초과
+                            _alertMessage('excessLicense');
+                            break;
+                        default : // 기타 오류
+                            alert("status code : "+license['status']+"\n("+license['message']+")");
+                    }
+                    break;
+                default :
+                    refreshFlag = true;
+            }
+
+            if(refreshFlag){
+                _alertMessage(actionType + 'Complete');
+                $("div[detail]").removeClass("on");
+                $(".ment").addClass("on");
+                _self.refreshList();
             }
         };
 

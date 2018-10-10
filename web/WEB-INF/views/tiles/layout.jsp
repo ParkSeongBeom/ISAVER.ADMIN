@@ -77,6 +77,8 @@
             , confirmNotificationSuccess  :'<spring:message code="dashboard.message.confirmNotificationSuccess"/>'
             , confirmNotificationFailure    :'<spring:message code="dashboard.message.confirmNotificationFailure"/>'
             , cancelNotificationSuccess  :'<spring:message code="dashboard.message.cancelNotificationSuccess"/>'
+            , emptyLicense :'<spring:message code="common.message.emptyLicense"/>'
+            , expireLicense :'<spring:message code="common.message.expireLicense"/>'
         };
 
         var alarmPlayer;
@@ -202,6 +204,24 @@
                 case "editDeviceStatus": // 장치 상태 변경
                     notificationHelper.callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
                     break;
+                case "licenseStatus": // 라이센스 상태
+                    var license = resultData['license'];
+                    switch (license['status']){
+                        case 0:
+                            $(".info_btn").removeClass("level-danger");
+                            $(".license_notice").removeClass("on");
+                            break;
+                        case -1: // 기한만료
+                            $(".info_btn").addClass("level-danger");
+                            $(".license_notice > p").text(layoutMessageConfig['expireLicense']);
+                            $(".license_notice").addClass("on");
+                            break;
+                        default : // 기타 오류
+                            $(".info_btn").addClass("level-danger");
+                            $(".license_notice > p").text(layoutMessageConfig['emptyLicense']);
+                            $(".license_notice").addClass("on");
+                    }
+                    break;
             }
         }
 
@@ -267,6 +287,18 @@
                 layerShowHide('profile','hide');
             }else{
                 layoutAjaxCall('profile',{userId:"${sessionScope.authAdminInfo.userId}"});
+            }
+        }
+
+        /**
+         * get License
+         * @author psb
+         */
+        function getLicense(_this){
+            if($(_this).hasClass("on")){
+                layerShowHide('license','hide');
+            }else{
+                layerShowHide('license','show');
             }
         }
 
@@ -402,6 +434,15 @@
                         modifyElementClass($(".personal_popup"),'on','remove');
                     }
                     break;
+                case "license":
+                    if(_action == 'show'){
+                        modifyElementClass($(".info_btn"),'on','add');
+                        modifyElementClass($(".info_popup"),'on','add');
+                    }else if(_action == 'hide'){
+                        modifyElementClass($(".info_btn"),'on','remove');
+                        modifyElementClass($(".info_popup"),'on','remove');
+                    }
+                    break;
                 case "notificationCancel":
                     if(_action == 'show'){
                         var notificationIdList = $("#notificationList li.check").map(function(){return $(this).attr("notificationId")}).get();
@@ -501,6 +542,7 @@
                 <div class="header_btn_set">
                     <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
                     <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
+                    <button class="info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"></button>
                     <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
                     <!-- 다국어 지원 추가 -->
                     <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
@@ -608,6 +650,26 @@
             <button class="btn" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
         </div>
     </div>
+
+    <!-- 라이센스 정보 팝업-->
+    <div class="info_popup">
+        <h2><spring:message code="dashboard.title.license"/></h2>
+        <section>
+            <c:forEach var="license" items="${licenseList}">
+                <div>
+                    <span>${license.deviceCodeName}</span>
+                    <p>${license.licenseCnt}</p>
+                </div>
+            </c:forEach>
+        </section>
+    </div>
+    <!-- 라이센스 정보 팝업 End -->
+
+    <!-- 라이센스 만료 경고 팝업 -->
+    <div class="license_notice">
+        <p></p>
+    </div>
+    <!-- 라이센스 만료 경고 End -->
 
     <audio controls style="display: none">
         <source id="alarmSource" type="audio/mpeg">

@@ -462,7 +462,8 @@
         ,   requiredSerialNo      :"<spring:message code='device.message.requiredSerialNo'/>"
         ,   requiredDeviceName    :"<spring:message code='device.message.requiredDeviceName'/>"
         ,   existsSerialNo        :"<spring:message code='device.message.existsSerialNo'/>"
-
+        ,   expireLicense         :"<spring:message code='common.message.expireLicense'/>"
+        ,   excessLicense         :"<spring:message code='common.message.excessLicense'/>"
     };
 
     var templateSettingMessageConfig = {

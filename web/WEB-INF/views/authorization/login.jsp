@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html>
 <head>
@@ -51,6 +52,22 @@
                 </form>
                 <!-- 로그인 입력 폼 End -->
                 <button href="#" alt="Login" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>
+
+                <div class='license_notice <c:if test="${license.status != 0}">on</c:if>'>
+                    <p>
+                        <c:choose>
+                            <c:when test="${license.status == -1}">
+                                <spring:message code='common.message.expireLicense'/>
+                            </c:when>
+                            <c:when test="${license.status == -4}">
+                                <spring:message code='common.message.emptyLicense'/>
+                            </c:when>
+                            <c:otherwise>
+                                <spring:message code='common.message.emptyLicense'/>
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
+                </div>
             </article>
         </section>
         <!-- section End -->
@@ -73,6 +90,8 @@
         'requiredAdminId':'<spring:message code="common.message.requestId"/>'
         ,'requiredPassword':'<spring:message code="common.message.requiredPassword"/>'
         ,'loginFailure':'<spring:message code="common.message.loginFailure"/>'
+        ,'emptyLicense':'<spring:message code="common.message.emptyLicense"/>'
+        ,'expireLicense':'<spring:message code="common.message.expireLicense"/>'
     };
 
     $(document).ready(function(){
@@ -151,7 +170,17 @@
     }
 
     function login_successHandler(data, dataType, actionType){
-        location.href=urlConfig['mainUrl'];
+        var license = data['license'];
+        switch (license['status']){
+            case 0:
+                location.href=urlConfig['mainUrl'];
+                break;
+            case -1: // 기한만료
+                alertMessage('expireLicense');
+                break;
+            default : // 기타 오류
+                alertMessage('emptyLicense');
+        }
     }
 
     function login_failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){

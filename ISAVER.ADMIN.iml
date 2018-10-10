@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 7.0.50" level="application_server_libraries" />
     <orderEntry type="library" name="logback" level="project" />
     <orderEntry type="module" module-name="ISAVER.ADMIN.RESPOSIORY" />
+    <orderEntry type="library" exported="" name="hasp" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">

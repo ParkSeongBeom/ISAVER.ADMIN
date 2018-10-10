@@ -41,7 +41,7 @@ public class AuthorizationCtrl {
 
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/index")
     public ModelAndView index(){
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = authorizationSvc.index();
         modelAndView.setViewName("login");
         return modelAndView;
     }

@@ -1263,3 +1263,10 @@ $cslwidth:80px;
     &, & ~ p {}
   }
 } // @include listbase;
+
+
+@mixin licenseBg {
+  @include flexbase; @include flex-align-items-center;
+  &:before {content:"\e90f"; padding:0 10px 0 0; font-size:1.4rem;}
+  background: -webkit-linear-gradient(top, rgba($color-red-01,1) 36%,rgba($color-red-01,0.676) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+} // @include licenseBg;7
