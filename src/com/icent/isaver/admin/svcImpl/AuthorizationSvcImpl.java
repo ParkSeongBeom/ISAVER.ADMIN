@@ -13,6 +13,7 @@ import com.icent.isaver.repository.dao.base.LoginHistoryDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ import java.util.Map;
 @Service
 public class AuthorizationSvcImpl implements AuthorizationSvc {
 
+    @Value("${cnf.server.majorVersion}")
+    private String majorVersion = null;
+
     @Inject
     private UsersDao usersDao;
 
@@ -58,6 +62,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());
+        modelAndView.addObject("majorVersion", majorVersion);
         return modelAndView;
     }
 

@@ -403,11 +403,14 @@ header {
           min-width: 40px;
           float: left; }
           header .header_area .header_right_area .header_btn_set button:before {
-            font-size: 1.6rem; }
+            font-size: 1.6rem;
+            position: relative; }
           header .header_area .header_right_area .header_btn_set button.issue_btn:before {
             content: "\e907"; }
           header .header_area .header_right_area .header_btn_set button.loginout_btn:before {
-            content: "\e900"; }
+            content: "\e900";
+            font-size: 1.8rem;
+            top: 2px; }
           header .header_area .header_right_area .header_btn_set button.user_btn:before {
             content: "\e90e"; }
           header .header_area .header_right_area .header_btn_set button.info_btn {
@@ -436,10 +439,10 @@ header {
             header .header_area .header_right_area .header_btn_set button.info_btn:after {
               content: "";
               position: absolute;
-              width: 22px;
-              height: 22px;
+              width: 24px;
+              height: 24px;
               border-style: solid;
-              border-width: 2px;
+              border-width: 3px;
               border-color: white;
               -moz-border-radius: 200px;
               -webkit-border-radius: 200px;
@@ -1073,6 +1076,34 @@ menu {
     .info_popup h2:after {
       content: "Quantity";
       right: 20px; }
+    .info_popup h2 div {
+      padding: 5px 10px !important;
+      background-color: #111; }
+      .info_popup h2 div * {
+        color: #fff;
+        font-size: 1rem;
+        letter-spacing: 0; }
+  .info_popup div {
+    width: 100%;
+    padding: 10px 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
   .info_popup section {
     position: relative;
     width: 100%;
@@ -1088,27 +1119,6 @@ menu {
       right: 20px;
       height: 1px;
       background-color: rgba(153, 153, 153, 0.4); }
-    .info_popup section div {
-      width: 100%;
-      padding: 10px 0;
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      display: flexbox;
-      display: box;
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: justify;
-      -moz-box-pack: justify;
-      -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-      justify-content: space-between; }
 
 .toast_popup {
   display: none;

@@ -3,7 +3,6 @@ package com.icent.isaver.admin.util;
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
-import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,9 +30,6 @@ import java.util.Date;
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("${cnf.server.majorVersion}")
-    private String majorVersion = null;
-
     @Value("${ws.server.address}")
     private String wsAddress = null;
 
@@ -46,14 +42,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${ws.server.eventUrlConnect}")
     private String wsEventUrlConnect = null;
 
-    @Value("${ws.server.mapUrlConnect}")
-    private String wsMapUrlConnect = null;
-
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
-
-    @Inject
-    private TemplateSettingSvc templateSettingSvc;
 
     @Inject
     private IsaverTargetUtil isaverTargetUtil;
@@ -85,7 +75,6 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         String path = request.getServletPath();
         path = path.substring(0,path.lastIndexOf("."));
         boolean authorTargetFlag = true;
@@ -126,20 +115,18 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
         Date serverDatetime = new Date();
         modelAndView.addObject("serverDatetime", serverDatetime.getTime());
-        InetAddress address = InetAddress.getByName(wsAddress);
-        modelAndView.addObject("eventWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
-        modelAndView.addObject("mapWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsMapUrlConnect);
         modelAndView.addObject("rootPath", request.getContextPath());
         modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
-        modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
         modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
-        modelAndView.addObject("majorVersion", majorVersion);
-        modelAndView.addObject("licenseList", haspLicenseUtil.readAll());
+
+        InetAddress address = InetAddress.getByName(wsAddress);
+        modelAndView.addObject("eventWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
+        modelAndView.addObject("licenseList", haspLicenseUtil.readDeviceList());
+        modelAndView.addObject("licenseExpireDate", haspLicenseUtil.getExpireDate());
         super.postHandle(request, response, handler, modelAndView);
     }
 

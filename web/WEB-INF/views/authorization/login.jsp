@@ -48,7 +48,6 @@
                         <label></label>
                         <span><spring:message code="login.column.saveId"/></span>
                     </div>
-
                 </form>
                 <!-- 로그인 입력 폼 End -->
                 <button href="#" alt="Login" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>

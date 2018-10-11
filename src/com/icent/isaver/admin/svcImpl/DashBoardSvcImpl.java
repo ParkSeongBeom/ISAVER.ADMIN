@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
+import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
@@ -39,11 +40,26 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Value("${cnf.fileAttachedUploadPath}")
     private String fileAttachedUploadPath = null;
 
+    @Value("${ws.server.address}")
+    private String wsAddress = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.mapUrlConnect}")
+    private String wsMapUrlConnect = null;
+
     @Inject
     private AreaDao areaDao;
 
     @Inject
     private DeviceDao deviceDao;
+
+    @Inject
+    private TemplateSettingSvc templateSettingSvc;
 
     @Override
     public ModelAndView findListDashBoard(Map<String, String> parameters) {
@@ -65,9 +81,18 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         modelAndView.addObject("area", area);
         modelAndView.addObject("deviceCodeCss", AdminResource.DEVICE_CODE_CSS);
         modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
+
         try{
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            InetAddress address = InetAddress.getByName(wsAddress);
+            modelAndView.addObject("mapWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsMapUrlConnect);
         }catch(Exception e){
             e.printStackTrace();
         }

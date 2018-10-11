@@ -7,6 +7,8 @@ import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
  * Created by icent on 16. 6. 27..
  */
 public class test01 {
-    private long feature = 2;
+    private long feature = 5;
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
                     "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
@@ -35,17 +37,36 @@ public class test01 {
 
     @Test
     public void test() {
-        License license = read("DEV002");
-
-        Map licenseMap = new HashMap<>();
-        licenseMap.put("messageType","licenseStatus");
-        licenseMap.put("license",license);
-
-        String licenseJsonTxt = new Gson().toJson(licenseMap);
-
-        System.out.println(licenseJsonTxt);
-        System.out.println("status code : " + license.getStatus());
-        System.out.println("message : " + license.getMessage());
+        System.out.println(hasp.getLastError());
+//        License license = read("DEV002");
+//
+//        String licenseJsonTxt = new Gson().toJson(license);
+//        System.out.println(licenseJsonTxt);
+//        License login = login();
+//
+//        if (HaspStatus.HASP_STATUS_OK == login.getStatus()) {
+//            License license = read("DEV002");
+//
+//            Map licenseMap = new HashMap<>();
+//            licenseMap.put("messageType","licenseStatus");
+//            licenseMap.put("license",license);
+//            String licenseJsonTxt = new Gson().toJson(licenseMap);
+//            System.out.println(licenseJsonTxt);
+//
+//            // Expire Date
+//            byte[] dtMembuffer = new byte[8];
+//            hasp.read(Hasp.HASP_FILEID_RO, 0, dtMembuffer);
+//            int dtStatus = hasp.getLastError();
+//            license.setStatus(dtStatus);
+//
+//            if(dtStatus==HaspStatus.HASP_STATUS_OK){
+//                Map<String,String> resultMap = new HashMap<>();
+//                resultMap.put("licenseType","expireDt");
+//                resultMap.put("expireDt", new String(dtMembuffer));
+//                String txt = new Gson().toJson(resultMap);
+//                System.out.println(txt);
+//            }
+//        }
     }
 
     public License login() {
@@ -85,39 +106,37 @@ public class test01 {
     }
 
     public License read(String deviceCode) {
-        License license = login();
+        License license = new License();
 
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
-                byte[] membuffer = new byte[BASE_LENGTH];
-                hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(deviceCode), membuffer);
-                int status = hasp.getLastError();
-                license.setStatus(status);
+        if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
+            byte[] membuffer = new byte[BASE_LENGTH];
+            hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(deviceCode), membuffer);
+            int status = hasp.getLastError();
+            license.setStatus(status);
 
-                switch (status) {
-                    case HaspStatus.HASP_STATUS_OK:
-                        license.setMessage(new String(membuffer));
-                        break;
-                    case HaspStatus.HASP_INV_HND:
-                        license.setMessage("handle not active");
-                        break;
-                    case HaspStatus.HASP_INV_FILEID:
-                        license.setMessage("invalid file id");
-                        break;
-                    case HaspStatus.HASP_MEM_RANGE:
-                        license.setMessage("beyond memory range of attached Sentinel key");
-                        break;
-                    case HaspStatus.HASP_HASP_NOT_FOUND:
-                        license.setMessage("hasp not found");
-                        break;
-                    default:
-                        license.setMessage("read memory failed");
-                        license.setStatus(-1);
-                }
-            }else{
-                license.setMessage("Undefined device code");
-                license.setStatus(-2);
+            switch (status) {
+                case HaspStatus.HASP_STATUS_OK:
+                    license.setMessage(new String(membuffer));
+                    break;
+                case HaspStatus.HASP_INV_HND:
+                    license.setMessage("handle not active");
+                    break;
+                case HaspStatus.HASP_INV_FILEID:
+                    license.setMessage("invalid file id");
+                    break;
+                case HaspStatus.HASP_MEM_RANGE:
+                    license.setMessage("beyond memory range of attached Sentinel key");
+                    break;
+                case HaspStatus.HASP_HASP_NOT_FOUND:
+                    license.setMessage("hasp not found");
+                    break;
+                default:
+                    license.setMessage("read memory failed");
+                    license.setStatus(-1);
             }
+        }else{
+            license.setMessage("Undefined device code");
+            license.setStatus(-2);
         }
         return license;
     }

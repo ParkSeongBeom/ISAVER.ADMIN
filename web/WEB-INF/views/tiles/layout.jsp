@@ -653,12 +653,21 @@
 
     <!-- 라이센스 정보 팝업-->
     <div class="info_popup">
-        <h2><spring:message code="dashboard.title.license"/></h2>
+        <h2>
+            <spring:message code="dashboard.title.license"/>
+            <div>
+                <span><spring:message code="dashboard.column.expireDate"/></span>
+                <p>
+                    <fmt:parseDate value="${licenseExpireDate}" var="expireDt" pattern="yyyyMMdd"/>
+                    <fmt:formatDate value="${expireDt}" pattern="yyyy-MM-dd"/>
+                </p>
+            </div>
+        </h2>
         <section>
             <c:forEach var="license" items="${licenseList}">
                 <div>
                     <span>${license.deviceCodeName}</span>
-                    <p>${license.licenseCnt}</p>
+                    <p>${license.deviceCnt}/${license.licenseCnt}</p>
                 </div>
             </c:forEach>
         </section>

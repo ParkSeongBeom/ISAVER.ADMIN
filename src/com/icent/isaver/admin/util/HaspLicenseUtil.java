@@ -6,7 +6,7 @@ import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.repository.bean.CodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
-import com.kst.common.resource.CommonResource;
+import com.kst.common.util.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,9 @@ import java.util.Map;
 public class HaspLicenseUtil {
     static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
-    private long feature = 2;
+    private long feature = 4;
+    // test용
+//    private long feature = 5;
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
                     "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
@@ -132,31 +134,40 @@ public class HaspLicenseUtil {
         return license;
     }
 
-    public List<Map<String,String>> readAll() {
+    public List<Map<String,String>> readDeviceList() {
         List<Map<String,String>> resultList = new LinkedList<>();
 
         License license = login();
-
         if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            List<CodeBean> codeList = codeDao.findListCode(new HashMap<String, String>(){{put("groupCodeId","DEV"); put("useYn", CommonResource.YES);}});
+            List<CodeBean> codeList = codeDao.findListCodeDevice();
             for(CodeBean code : codeList){
                 if(AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId())!=null){
                     byte[] membuffer = new byte[BASE_LENGTH];
                     hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId()), membuffer);
-                    int status = hasp.getLastError();
-                    license.setStatus(status);
-
-                    if(status==HaspStatus.HASP_STATUS_OK){
+                    if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
                         Map<String,String> resultMap = new HashMap<>();
                         resultMap.put("deviceCodeName",code.getCodeName());
-                        resultMap.put("licenseCnt",new String(membuffer));
+                        resultMap.put("deviceCnt",String.valueOf(code.getDeviceCnt()));
+                        resultMap.put("licenseCnt", new String(membuffer).replaceFirst("^0+(?!$)", ""));
                         resultList.add(resultMap);
                     }
                 }
             }
-        }else{
-            logger.info(license.getMessage());
         }
         return resultList;
+    }
+
+    public String getExpireDate(){
+        String result = "";
+
+        License license = login();
+        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+            byte[] membuffer = new byte[8];
+            hasp.read(Hasp.HASP_FILEID_RO, 0, membuffer);
+            if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
+                result = new String(membuffer);
+            }
+        }
+        return result;
     }
 }
