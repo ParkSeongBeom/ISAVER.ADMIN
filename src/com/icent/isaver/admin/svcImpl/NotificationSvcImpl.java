@@ -5,6 +5,7 @@ import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.CommonUtil;
 import com.icent.isaver.repository.bean.NotificationBean;
 import com.icent.isaver.repository.dao.base.NotificationDao;
 import com.kst.common.spring.TransactionUtil;
@@ -120,11 +121,13 @@ public class NotificationSvcImpl implements NotificationSvc {
          * @date 2018.1.11
          */
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("notification", parameterList);
-            websocketParam.put("messageType","updateNotification");
-
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            List<List<Map<String, String>>> ret = CommonUtil.splitList(parameterList, 200);
+            for (List<Map<String, String>> param : ret) {
+                Map websocketParam = new HashMap();
+                websocketParam.put("notification", param);
+                websocketParam.put("messageType","updateNotification");
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

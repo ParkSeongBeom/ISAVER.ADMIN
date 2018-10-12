@@ -34,9 +34,9 @@ import java.util.Map;
 public class HaspLicenseUtil {
     static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
-    private long feature = 4;
+//    private long feature = 4;
     // test용
-//    private long feature = 5;
+    private long feature = 5;
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
                     "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
