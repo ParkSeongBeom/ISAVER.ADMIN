@@ -243,21 +243,24 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><spring:message code='area.column.subUrl'/></th>
+                                <th><spring:message code='device.column.subUrl'/></th>
                                 <td colspan="3">
                                     <input type="text" name="subUrl" maxlength="200"/>
                                 </td>
                             </tr>
                             <tr>
-                                <th><spring:message code='area.column.streamServerUrl'/></th>
+                                <th><spring:message code='device.column.streamServerUrl'/></th>
                                 <td colspan="3">
                                     <input type="text" name="streamServerUrl" readonly="readonly"/>
                                 </td>
                             </tr>
                             <tr>
-                                <th><spring:message code='area.column.linkUrl'/></th>
-                                <td colspan="3">
-                                    <input type="text" name="linkUrl" maxlength="200"/>
+                                <th><spring:message code='device.column.linkUrl'/></th>
+                                <td colspan="3" class="intd">
+                                    <div>
+                                        <input type="text" name="linkUrl" maxlength="200"/>
+                                        <button class="btn" style="" onclick="javascript:window.open($(this).prev().val(), '_blank'); return false;"><spring:message code='device.button.move'/></button>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
