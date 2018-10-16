@@ -34,8 +34,6 @@ public class HaspLicenseUtil {
     static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
     private long feature = 4;
-    // test용
-//    private long feature = 5;
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
             "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
@@ -51,8 +49,14 @@ public class HaspLicenseUtil {
             "tLEApXYvLvz6PEJdj4TegCZugj7c8bIOEqLXmloZ6EgVnjQ7/ttys7VFITB3mazzFiyQuKf4J6+b/a/Y";
 
     public static final int BASE_LENGTH = 2;
+    private Hasp hasp;
 
-    private Hasp hasp = new Hasp(feature);
+    public HaspLicenseUtil() {
+        if(CommonUtil.getIpAddressFunc().equals("172.16.101.250")){
+            feature = 5;
+        }
+        hasp = new Hasp(feature);
+    }
 
     @Inject
     private CodeDao codeDao;

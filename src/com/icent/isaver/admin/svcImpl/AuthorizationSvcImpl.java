@@ -107,6 +107,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         }catch(Exception e){
         }
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("license", haspLicenseUtil.login());
         return modelAndView;
     }
 

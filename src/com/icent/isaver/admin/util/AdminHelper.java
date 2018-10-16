@@ -320,6 +320,42 @@ public class AdminHelper {
         return dateLists;
     }
 
+    /**
+     * 새로고침시 기존 파라미터 유지
+     * @param request
+     * @param response
+     * @param type
+     * @param parameters
+     * @return
+     */
+    public static Map<String, String> reloadDashboasrd(HttpServletRequest request, HttpServletResponse response, String type, Map<String, String> parameters){
+        if(StringUtils.notNullCheck(parameters.get("refreshFlag")) && !Boolean.valueOf(parameters.get("refreshFlag"))){
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String key : parameters.keySet()){
+                stringBuilder.append(key);
+                stringBuilder.append("|");
+                stringBuilder.append(parameters.get(key));
+                stringBuilder.append(CommonResource.COMMA_STRING);
+            }
+            CookieUtils.addCookie(request, response, type, stringConverter(0, stringBuilder.toString()), 60 * 60);
+        }else if(StringUtils.nullCheck(parameters.get("refreshFlag"))){
+            String value = stringConverter(1, CookieUtils.getCookieValue(request, type));
+
+            if(StringUtils.nullCheck(value)){
+                return parameters;
+            }
+
+            String[] values = value.split(CommonResource.COMMA_STRING);
+            for(String temp : values){
+                String[] tempArr = temp.split("\\|");
+                if(tempArr != null && tempArr.length > 1){
+                    parameters.put(tempArr[0],tempArr[1]);
+                }
+            }
+        }
+        return parameters;
+    }
+
     public static Map<String, String> checkReloadList(HttpServletRequest request, HttpServletResponse response, String type, Map<String, String> parameters){
         if(StringUtils.nullCheck(parameters.get("reloadList"))){
             StringBuilder stringBuilder = new StringBuilder();

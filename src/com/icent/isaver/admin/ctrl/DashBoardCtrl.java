@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.DashBoardSvc;
+import com.icent.isaver.admin.util.AdminHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -44,7 +47,9 @@ public class DashBoardCtrl {
      * @return
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
-    public ModelAndView findListDashBoard(@RequestParam Map<String, String> parameters){
+    public ModelAndView findListDashBoard(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters = AdminHelper.reloadDashboasrd(request, response, "dashboardList", parameters);
+
         ModelAndView modelAndView = dashBoardSvc.findListDashBoard(parameters);
         modelAndView.setViewName("dashboardList");
         return modelAndView;

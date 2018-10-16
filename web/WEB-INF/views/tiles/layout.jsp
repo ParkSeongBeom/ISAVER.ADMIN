@@ -513,10 +513,9 @@
         /* 대쉬보드 전체 페이지 이동*/
         function moveDashboard(areaId, subAreaId) {
             var dashboardForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashboardUrl']);
+            dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','refreshFlag').attr('value','false'));
             dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','areaId').attr('value',areaId));
-            if(subAreaId!=null && subAreaId!=''){
-                dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','subAreaId').attr('value',subAreaId));
-            }
+            dashboardForm.append($('<INPUT>').attr('type','hidden').attr('name','subAreaId').attr('value',subAreaId));
             dashboardForm.appendTo(document.body);
             dashboardForm.submit();
         }
