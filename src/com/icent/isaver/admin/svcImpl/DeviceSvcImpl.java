@@ -9,10 +9,8 @@ import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.repository.bean.DeviceBean;
-import com.icent.isaver.repository.dao.base.AreaDao;
-import com.icent.isaver.repository.dao.base.DeviceDao;
-import com.icent.isaver.repository.dao.base.EventDao;
-import com.icent.isaver.repository.dao.base.LicenseDao;
+import com.icent.isaver.repository.dao.base.*;
+import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +71,9 @@ public class DeviceSvcImpl implements DeviceSvc {
     private AreaDao areaDao;
 
     @Inject
+    private FenceDao fenceDao;
+
+    @Inject
     private EventDao eventDao;
 
     @Inject
@@ -104,6 +105,10 @@ public class DeviceSvcImpl implements DeviceSvc {
                 TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
                 try {
                     parameters.put("deviceId", generatorFunc());
+                    if(parameters.get("mainFlag").equals(CommonResource.YES)){
+                        fenceDao.removeFence(parameters);
+                        deviceDao.saveDeviceMainFlag(parameters);
+                    }
                     deviceDao.addDevice(parameters);
 
                     Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
@@ -136,6 +141,10 @@ public class DeviceSvcImpl implements DeviceSvc {
             addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
             addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
             deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
+            if(parameters.get("mainFlag").equals(CommonResource.YES)){
+                fenceDao.removeFence(parameters);
+                deviceDao.saveDeviceMainFlag(parameters);
+            }
             deviceDao.saveDevice(parameters);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){

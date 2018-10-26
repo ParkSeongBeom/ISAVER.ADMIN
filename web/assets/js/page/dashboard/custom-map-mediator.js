@@ -48,14 +48,19 @@ var CustomMapMediator = (
                 , 'onLoad': null // List load eventHandler
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
                 , 'click': null // click eventHandler
+                , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
             }
         };
         var _targetClass = {
             'area' : "g-area"
             ,'object' : "g-tracking"
             ,'fence' : "g-fence"
-            ,"DEV013" : "g-m8"
-            ,"DEV002" : "g-camera"
+            ,"DEV002" : "g-ico g-camera"
+            ,"DEV006" : "g-ico g-led"
+            ,"DEV007" : "g-ico g-speaker"
+            ,"DEV008" : "g-ico g-wlight"
+            ,"DEV013" : "g-ico g-m8"
+            ,"DEV015" : "g-ico g-qguard"
         };
         var _scale=1.0;
         var _element;
@@ -258,12 +263,12 @@ var CustomMapMediator = (
 
         /**
          * 기준 설정
-         * 장치코드 DEV013(M8) 일 경우 object, fence의 기준장치로 설정함
+         * 장치코드 DEV013(M8)이고 메인여부가 Y일 경우 object, fence의 기준장치로 설정함
          * Custom-map-popup에서 m8장치 이동 및 사이즈 변경시 fence를 새로그림
          * @author psb
          */
         var setTranslate = function (targetData, targetElement){
-            if(targetData['deviceCode']=='DEV013'){
+            if(targetData['deviceCode']=='DEV013' && targetData['mainFlag']=='Y'){
                 targetData['translate'] = {
                     'x' : parseInt(targetElement.css("left")) + targetElement.width()/2
                     ,'y' : parseInt(targetElement.css("top")) + targetElement.height()/2
@@ -271,7 +276,9 @@ var CustomMapMediator = (
 
                 if(targetData.hasOwnProperty("setFenceList")){
                     for(var index in _marker[_MARKER_TYPE[1]]){
-                        _self.saveFence(index, targetData['targetId']);
+                        if(targetData['targetId']==_marker[_MARKER_TYPE[1]][index]['data']['deviceId']){
+                            _self.saveFence(index, _marker[_MARKER_TYPE[1]][index]['data']['deviceId']);
+                        }
                     }
                 }else if(_options['custom']['fenceView']){
                     targetData['setFenceList'] = true;
@@ -305,12 +312,17 @@ var CustomMapMediator = (
          */
         this.targetRender = function(data){
             if(_marker[_MARKER_TYPE[4]][data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode'],class:_targetClass[data['deviceCode']]});
+                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode'],linkUrl:data['linkUrl'],class:_targetClass[data['deviceCode']]});
                 targetElement.on("click",function(){
                     if(_options['custom']['click']!=null && typeof _options['custom']['click'] == "function"){
                         _options['custom']['click']($(this).attr("targetId"),$(this).attr("deviceCode"));
                     }else{
                         positionChangeEventHandler($(this).attr("targetId"));
+                    }
+
+                    var linkUrl = $(this).attr("linkUrl");
+                    if(_options['custom']['openLinkFlag'] && linkUrl!=null && linkUrl!=''){
+                        openLink(linkUrl);
                     }
                 });
                 setDeviceStatus(targetElement, data['deviceStat']);
@@ -363,6 +375,7 @@ var CustomMapMediator = (
                 _marker[_MARKER_TYPE[4]][data['targetId']] = {
                     'data' : {
                         'targetId' : data['targetId']
+                        ,'mainFlag' : data['mainFlag']
                         ,'deviceCode' : data['deviceCode']
                         ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']+(_element.width()/2)
                         ,'x2' : data['useYn']?data['x2']:_element.width()-targetElement.position()['left']-(_element.width()/2)-(targetElement.width()/2)

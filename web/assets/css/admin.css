@@ -2497,7 +2497,9 @@ a.fc-more {
       height: 100%;
       padding: 0 20px 0 15px; }
       .map_sett_box .list ul li {
-        min-height: 60px; }
+        min-height: 60px;
+        /*.m8:before {content:"\e962" !important;}
+        .camera:before {content:"\e964" !important;}*/ }
         .map_sett_box .list ul li > div > button {
           transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
           -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -2517,8 +2519,6 @@ a.fc-more {
             position: absolute;
             left: 0;
             width: 20px; }
-          .map_sett_box .list ul li > div > button:before {
-            content: "\e91b"; }
         .map_sett_box .list ul li > div > div {
           position: relative;
           width: auto !important;
@@ -2699,10 +2699,6 @@ a.fc-more {
         .map_sett_box .list ul li button.on:after {
           content: "\e901";
           font-size: 1.2rem; }
-        .map_sett_box .list ul li .m8:before {
-          content: "\e962" !important; }
-        .map_sett_box .list ul li .camera:before {
-          content: "\e964" !important; }
         .map_sett_box .list ul li .fence_list > p:before {
           content: "\e904" !important; }
     .map_sett_box .list > div, .map_sett_box .list ul li > div {

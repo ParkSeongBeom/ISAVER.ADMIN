@@ -243,15 +243,23 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><spring:message code='device.column.subUrl'/></th>
-                                <td colspan="3">
-                                    <input type="text" name="subUrl" maxlength="200"/>
+                                <th><spring:message code='device.column.mainFlag'/></th>
+                                <td>
+                                    <div class="checkbox_set csl_style03">
+                                        <input type="hidden" name="mainFlag" value="N"/>
+                                        <input type="checkbox" id="mainFlagCB" onchange="setCheckBoxYn(this,'mainFlag')"/>
+                                        <label></label>
+                                    </div>
+                                </td>
+                                <th><spring:message code='device.column.streamServerUrl'/></th>
+                                <td>
+                                    <input type="text" name="streamServerUrl" readonly="readonly"/>
                                 </td>
                             </tr>
                             <tr>
-                                <th><spring:message code='device.column.streamServerUrl'/></th>
+                                <th><spring:message code='device.column.subUrl'/></th>
                                 <td colspan="3">
-                                    <input type="text" name="streamServerUrl" readonly="readonly"/>
+                                    <input type="text" name="subUrl" maxlength="200"/>
                                 </td>
                             </tr>
                             <tr>
@@ -465,6 +473,9 @@
         ,   requiredSerialNo      :"<spring:message code='device.message.requiredSerialNo'/>"
         ,   requiredDeviceName    :"<spring:message code='device.message.requiredDeviceName'/>"
         ,   existsSerialNo        :"<spring:message code='device.message.existsSerialNo'/>"
+        ,   requiredM8            :"<spring:message code='device.message.requiredM8'/>"
+        ,   requiredQnServer      :"<spring:message code='device.message.requiredQnServer'/>"
+        ,   onlyOneServer         :"<spring:message code='device.message.onlyOneServer'/>"
         ,   expireLicense         :"<spring:message code='common.message.expireLicense'/>"
         ,   excessLicense         :"<spring:message code='common.message.excessLicense'/>"
     };
@@ -480,7 +491,7 @@
         listFailure             :'<spring:message code="resource.message.listFailure"/>'
         ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
         ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
-        ,   saveFailure         :'<spring:message code="area.message.saveFailure"/>'
+        ,   saveFailure         :'<spring:message code="common.message.saveFailure"/>'
     };
 
     $(document).ready(function(){

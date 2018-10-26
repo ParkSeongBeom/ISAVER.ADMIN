@@ -182,13 +182,21 @@
                         <div>
                             <p><spring:message code="critical.column.detectDevice"/></p>
                             <div>
-                                <select name="detectDeviceId">
+                                <select name="detectDeviceId" onchange="javascript:detectDeviceChangeHandler('detect',this);">
                                     <option value=""><spring:message code="common.selectbox.select"/></option>
                                     <c:forEach var="device" items="${deviceList}">
                                         <c:if test="${device.deviceTypeCode==detectDeviceTypeCode}">
-                                            <option value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
+                                            <option deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                                         </c:if>
                                     </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div fenceDiv>
+                            <p><spring:message code="critical.column.fenceId"/></p>
+                            <div>
+                                <select name="fenceId">
+                                    <option value=""><spring:message code="common.selectbox.select"/></option>
                                 </select>
                             </div>
                         </div>
@@ -320,6 +328,7 @@
         ,'criticalRemoveComplete':'<spring:message code="critical.message.criticalRemoveComplete"/>'
         /** 감지장치 */
         ,'requireDetectDeviceId':'<spring:message code="critical.message.requireDetectDeviceId"/>'
+        ,'requireFenceId':'<spring:message code="critical.message.requireFenceId"/>'
         ,'detectDetailFailure':'<spring:message code="critical.message.detectDetailFailure"/>'
         ,'detectAddConfirm':'<spring:message code="critical.message.detectAddConfirm"/>'
         ,'detectSaveConfirm':'<spring:message code="critical.message.detectSaveConfirm"/>'
@@ -364,6 +373,26 @@
     $(document).ready(function(){
     });
 
+    function detectDeviceChangeHandler(actionType, _this){
+        var deviceId = $(_this).val();
+        var deviceCode = $(_this).find("option:selected").attr("deviceCode");
+        var targetElement = $(".popupbase[popupType='"+actionType+"']");
+        targetElement.find("select[name='fenceId'] option").not("[value='']").remove();
+
+        if(deviceCode!="DEV013"){
+            targetElement.find("div[fenceDiv]").addClass("d_none");
+        }else{
+            targetElement.find("div[fenceDiv]").removeClass("d_none");
+            var fenceList = notificationHelper.getFenceList('deviceId',deviceId);
+            for(var index in fenceList){
+                var fence = fenceList[index];
+                targetElement.find("select[name='fenceId']").append(
+                    $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
+                );
+            }
+        }
+    }
+
     function openPopup(actionType, data){
         if(data['mode']=='modify'){
             callAjax(actionType+"Detail",data);
@@ -389,24 +418,30 @@
     function validate(targetElement, actionType){
         switch(actionType) {
             case 'critical':
-                if(targetElement.find("select[name='criticalLevel']").val()==''){
+                if(targetElement.find("select[name='criticalLevel'] option:selected").val()==''){
                     alertMessage('requireCriticalLevel');
                     return false;
                 }
                 break;
             case 'detect':
-                if(targetElement.find("select[name='detectDeviceId']").val()==''){
+                if(targetElement.find("select[name='detectDeviceId'] option:selected").val()==''){
                     alertMessage('requireDetectDeviceId');
+                    return false;
+                }
+
+                if(targetElement.find("select[name='detectDeviceId'] option:selected").attr("deviceCode")=='DEV013'
+                    && targetElement.find("select[name='fenceId'] option:selected").val()==''){
+                    alertMessage('requireFenceId');
                     return false;
                 }
                 break;
             case 'target':
-                if(targetElement.find("select[name='targetDeviceId']").val()==''){
+                if(targetElement.find("select[name='targetDeviceId'] option:selected").val()==''){
                     alertMessage('requireTargetDeviceId');
                     return false;
                 }
 
-                if(targetElement.find("select[name='alarmType']").val()=='file' && targetElement.find("select[name='alarmFileId']").val()==''){
+                if(targetElement.find("select[name='alarmType'] option:selected").val()=='file' && targetElement.find("select[name='alarmFileId'] option:selected").val()==''){
                     alertMessage('requireAlarmFileId');
                     return false;
                 }
@@ -416,10 +451,6 @@
     }
 
     function add(actionType){
-        if(!confirm(messageConfig[actionType+'AddConfirm'])){
-            return false;
-        }
-
         var targetElement = $(".popupbase[popupType='"+actionType+"']");
 
         if(targetElement.length>0){
@@ -429,40 +460,40 @@
                 case 'critical':
                     param = {
                         'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'eventId' : targetElement.find("select[name='eventId']").val()
-                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel']").val()
+                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
+                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel'] option:selected").val()
                         ,'criticalValue' : targetElement.find("input[name='criticalValue']").val()
-                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId']").val()
+                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId'] option:selected").val()
                     };
                     break;
                 case 'detect':
                     param = {
                         'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId']").val()
+                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
+                        ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
                     };
                     break;
                 case 'target':
                     param = {
                         'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId']").val()
-                        ,'alarmType' : targetElement.find("select[name='alarmType']").val()
-                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage']").val()
-                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId']").val()
+                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId'] option:selected").val()
+                        ,'alarmType' : targetElement.find("select[name='alarmType'] option:selected").val()
+                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage'] option:selected").val()
+                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId'] option:selected").val()
                     };
                     break;
             }
 
             if(validate(targetElement,actionType) && param!=null){
+                if(!confirm(messageConfig[actionType+'AddConfirm'])){
+                    return false;
+                }
                 callAjax(actionType+'Add',param);
             }
         }
     }
 
     function save(actionType){
-        if(!confirm(messageConfig[actionType+'SaveConfirm'])){
-            return false;
-        }
-
         var targetElement = $(".popupbase[popupType='"+actionType+"']");
 
         if(targetElement.length>0){
@@ -479,8 +510,10 @@
                     break;
                 case 'detect':
                     param = {
-                        'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
+                        'criticalId' : targetElement.find("input[name='criticalId']").val()
+                        ,'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
                         ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
+                        ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
                     };
                     break;
                 case 'target':
@@ -495,6 +528,9 @@
             }
 
             if(validate(targetElement,actionType) && param!=null){
+                if(!confirm(messageConfig[actionType+'SaveConfirm'])){
+                    return false;
+                }
                 callAjax(actionType+'Save',param);
             }
         }
@@ -567,7 +603,8 @@
             targetElement.find("input[name='criticalDetectId']").val(data['criticalDetectId']);
             targetElement.find("select[name='eventId']").val(data['eventId']);
             targetElement.find("select[name='criticalLevel']").val(data['criticalLevel']);
-            targetElement.find("select[name='detectDeviceId']").val(data['detectDeviceId']?data['detectDeviceId']:'');
+            targetElement.find("select[name='detectDeviceId']").val(data['detectDeviceId']?data['detectDeviceId']:'').trigger('change');
+            targetElement.find("select[name='fenceId']").val(data['fenceId']);
 
             switch(data['mode']){
                 case 'new':

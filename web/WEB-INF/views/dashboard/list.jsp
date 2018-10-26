@@ -345,18 +345,19 @@
                                     <div class="device_box d_none">
                                         <div class="device_set">
                                             <c:forEach var="device" items="${childArea.devices}">
-                                                <div childDevice>
-                                                    <input type="text" name="cDeviceId" value="${device.deviceId}"/>
-                                                    <input type="text" name="cDeviceCode" value="${device.deviceCode}"/>
-                                                    <input type="text" name="cIpAddress" value="${device.ipAddress}"/>
-                                                    <input type="text" name="cPort" value="${device.port}"/>
-                                                    <input type="text" name="cDeviceUserId" value="${device.deviceUserId}"/>
-                                                    <input type="password" name="cDevicePassword" value="${device.devicePassword}"/>
-                                                    <input type="text" name="cSubUrl" value="${device.subUrl}"/>
-                                                    <input type="text" name="cLinkUrl" value="${device.linkUrl}"/>
-                                                    <input type="text" name="cStreamServerUrl" value="${device.streamServerUrl}"/>
-                                                    <input type="text" name="cDeviceStat" value="${device.deviceStat}"/>
-                                                    <input type="text" name="cDeviceName" value="${device.deviceName}"/>
+                                                <div childDevice
+                                                     data-deviceId="${device.deviceId}"
+                                                     data-deviceCode="${device.deviceCode}"
+                                                     data-ipAddress="${device.ipAddress}"
+                                                     data-port="${device.port}"
+                                                     data-deviceUserId="${device.deviceUserId}"
+                                                     data-devicePassword="${device.devicePassword}"
+                                                     data-subUrl="${device.subUrl}"
+                                                     data-linkUrl="${device.linkUrl}"
+                                                     data-streamServerUrl="${device.streamServerUrl}"
+                                                     data-deviceStat="${device.deviceStat}"
+                                                     data-deviceName="${device.deviceName}"
+                                                        >
                                                 </div>
                                             </c:forEach>
                                         </div>

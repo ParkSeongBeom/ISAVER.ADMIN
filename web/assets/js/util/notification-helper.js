@@ -93,14 +93,14 @@ var NotificationHelper = (
             _element = element;
         };
 
-        this.getFenceList = function(areaId){
+        this.getFenceList = function(type, id){
             var resultList = [];
-            if(areaId==null || areaId==""){
+            if(id==null || id==""){
                 resultList = _fenceList;
             }else{
                 for(var index in _fenceList){
                     var fence = _fenceList[index];
-                    if(fence['areaId']==areaId){
+                    if(fence[type]==id){
                         resultList.push(fence);
                     }
                 }
@@ -230,7 +230,7 @@ var NotificationHelper = (
                 $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
                 $("section[alarm_detail] .dbi_cctv").hide();
                 //if(data['device']!=null && data['device']['linkUrl']!=null){
-                //    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:cctvOpen('"+data['device']['linkUrl']+"'); event.stopPropagation();");
+                //    $("section[alarm_detail] .dbi_cctv button").attr("onclick","javascript:openLink('"+data['device']['linkUrl']+"'); event.stopPropagation();");
                 //    $("section[alarm_detail] .dbi_cctv").show();
                 //}else{
                 //    $("section[alarm_detail] .dbi_cctv button").removeAttr("onclick");
@@ -368,7 +368,7 @@ var NotificationHelper = (
                 try {
                     setTimeout(function() {
                         $(".issue_btn").addClass("on");
-                    }, 150);
+                    }, 10);
                 } catch(e) {}
 
                 /* 싸이렌 */
@@ -640,7 +640,7 @@ var NotificationHelper = (
                     console.error("[selectBoxChangeHandler] error - " + e );
                 }
                 setLoading('noti', false);
-            },50);
+            },10);
         };
 
         var checkNotificationData = function(notification){
@@ -656,7 +656,6 @@ var NotificationHelper = (
             });
 
             if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || areaIds.indexOf(notification['areaId'])>-1)){
-            //if((criticalLevel=="" || notification['criticalLevel']==criticalLevel) && (areaId=="" || notification['areaId']==areaId)){
                 return true;
             }else{
                 return false;

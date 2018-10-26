@@ -1194,7 +1194,7 @@ a.fc-more {position: relative; z-index: 2;}
             @include transition(200ms); @include flex-option(0, 1, 100%);
             position: relative; height:100%; padding:0 0 0 20px;
             &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
-            &:before {content:"\e91b";  }
+            //&:before {content:"\e91b";  }
           }
 
           & > div {@include checkbox_set; @include csl_style02; @include csl_style03_noyes; margin:0 0 0 10px;}
@@ -1254,8 +1254,9 @@ a.fc-more {position: relative; z-index: 2;}
           &:after {content:"\e901"; font-size:1.2rem; }
         }
 
-        .m8:before {content:"\e962" !important;}
-        .camera:before {content:"\e964" !important;}
+        /*.m8:before {content:"\e962" !important;}
+        .camera:before {content:"\e964" !important;}*/
+
         .fence_list > p {
           &:before {content:"\e904" !important;}
           //&:after  {content:"-" !important; margin:0 10px;}

@@ -9,7 +9,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/reset.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/layouts.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/elements.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
     <title>iSaver Admin</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js?version=${version}"></script>
@@ -59,6 +63,7 @@
             ,'dashboardUrl':'${rootPath}/dashboard/list.html'
             ,'profileUrl':'${rootPath}/user/profile.json'
             ,'saveProfileUrl':'${rootPath}/user/save.json'
+            ,'licenseUrl':'${rootPath}/license/list.json'
         };
 
         var commonMessageConfig = {
@@ -116,6 +121,7 @@
                 if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
                     layerShowHide('detail','hide');
                     layerShowHide('profile','hide');
+                    layerShowHide('license','hide');
                 }
             });
 
@@ -206,22 +212,33 @@
                     break;
                 case "licenseStatus": // 라이센스 상태
                     var license = resultData['license'];
-                    switch (license['status']){
-                        case 0:
-                            $(".info_btn").removeClass("level-danger");
-                            $(".license_notice").removeClass("on");
-                            break;
-                        case -1: // 기한만료
-                            $(".info_btn").addClass("level-danger");
-                            $(".license_notice > p").text(layoutMessageConfig['expireLicense']);
-                            $(".license_notice").addClass("on");
-                            break;
-                        default : // 기타 오류
-                            $(".info_btn").addClass("level-danger");
-                            $(".license_notice > p").text(layoutMessageConfig['emptyLicense']);
-                            $(".license_notice").addClass("on");
-                    }
+                    licenseStatusChangeHandler(license['status']);
                     break;
+            }
+        }
+
+        function licenseStatusChangeHandler(status) {
+            var redirectFlag = true;
+
+            switch (status) {
+                case 0:
+                    $(".info_btn").removeClass("level-danger");
+                    $(".license_notice").removeClass("on");
+                    redirectFlag = false;
+                    break;
+                case -1: // 기한만료
+                    $(".info_btn").addClass("level-danger");
+                    $(".license_notice > p").text(layoutMessageConfig['expireLicense']);
+                    $(".license_notice").addClass("on");
+                    break;
+                default : // 기타 오류
+                    $(".info_btn").addClass("level-danger");
+                    $(".license_notice > p").text(layoutMessageConfig['emptyLicense']);
+                    $(".license_notice").addClass("on");
+            }
+
+            if(redirectFlag){
+                logout();
             }
         }
 
@@ -296,9 +313,10 @@
          */
         function getLicense(_this){
             if($(_this).hasClass("on")){
+                $(".info_popup #licenseList").empty();
                 layerShowHide('license','hide');
             }else{
-                layerShowHide('license','show');
+                layoutAjaxCall('license');
             }
         }
 
@@ -359,6 +377,26 @@
                     }else{
                         layoutAlertMessage('profileFailure');
                     }
+                    break;
+                case 'license':
+                    var popupElement = $(".info_popup");
+                    if(data['licenseExpireDate']!=null){
+                        popupElement.find("#expireDate").text(data['licenseExpireDate']);
+                    }
+
+                    var licenseList = data['licenseList'];
+                    for(var index in licenseList){
+                        var license = licenseList[index];
+                        popupElement.find("#licenseList").append(
+                            $("<div/>").append(
+                                $("<span/>").text(license['deviceCodeName'])
+                            ).append(
+                                $("<p/>").text(license['deviceCnt']+"/"+license['licenseCnt'])
+                            )
+                        );
+                    }
+                    licenseStatusChangeHandler(data['license']['status']);
+                    layerShowHide('license','show');
                     break;
                 case 'saveProfile':
                     layerShowHide('profile','hide');
@@ -462,8 +500,8 @@
             }
         }
 
-        function cctvOpen(linkUrl){
-            window.open(linkUrl);
+        function openLink(url){
+            window.open(url);
         }
 
         function logout(){
@@ -635,9 +673,9 @@
                     <span><spring:message code="dashboard.column.userName"/></span>
                     <input type="text" id="userName" />
                     <span><spring:message code="dashboard.column.password"/></span>
-                    <input type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                    <input autocomplete="off" type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
                     <span><spring:message code="dashboard.column.passwordConfirm"/></span>
-                    <input type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                    <input autocomplete="off" type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
                     <span><spring:message code="dashboard.column.telephone"/></span>
                     <input type="text" id="telephone" />
                     <span><spring:message code="dashboard.column.email"/></span>
@@ -656,20 +694,10 @@
             <spring:message code="dashboard.title.license"/>
             <div>
                 <span><spring:message code="dashboard.column.expireDate"/></span>
-                <p>
-                    <fmt:parseDate value="${licenseExpireDate}" var="expireDt" pattern="yyyyMMdd"/>
-                    <fmt:formatDate value="${expireDt}" pattern="yyyy-MM-dd"/>
-                </p>
+                <p id="expireDate"></p>
             </div>
         </h2>
-        <section>
-            <c:forEach var="license" items="${licenseList}">
-                <div>
-                    <span>${license.deviceCodeName}</span>
-                    <p>${license.deviceCnt}/${license.licenseCnt}</p>
-                </div>
-            </c:forEach>
-        </section>
+        <section id="licenseList"></section>
     </div>
     <!-- 라이센스 정보 팝업 End -->
 

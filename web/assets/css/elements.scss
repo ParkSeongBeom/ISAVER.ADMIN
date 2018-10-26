@@ -33,6 +33,7 @@ form-bg-effect :
   &-zoom:before     {content:"\e925";} // 자세히보기
   &-area:before     {content:"\e91b";} // 장소
   &-tof:before      {content:"\e962";} // TOF 센서
+  &-m8:before       {content:"\e962";} // m8 센서
   &-ptz:before      {content:"\e964";} // PTZ 카메라
   &-chart:before    {content:"\e908";} // 차트
   &-four:before     {content:"\e938";} // 4분할
@@ -47,7 +48,9 @@ form-bg-effect :
   &-hlds:before     {content:"\e959";} // 근거리 HLDS 센서
   &-device:before   {content:"\e92f";} // 근거리 HLDS 센서
   &-led:before      {content:"\e966";} // LED
-  &-sioc:before      {content:"\e96e";} // sioc
+  &-sioc:before     {content:"\e96e";} // sioc
+  &-qguard:before   {content:"\e96c";} // q가드 서버
+
 }
 
 /*
@@ -806,16 +809,16 @@ div[contenteditable] {}
 
 .g {
 
-  &-m8, &-camera  {z-index: 50;}
-  &-camera {}
+  &-m8, &-camera, &-wlight, &-led, &-speaker, &-qguard, &-ico  {z-index: 50;}
+
   &-tracking {z-index: 100;}
-  &-area {z-index:10;}
+  &-area  {z-index:10;}
   &-fence {z-index: 5;}
 
-  &-m8, &-camera, &-tracking, &-area, &-fence {position: absolute !important;}
+  &-ico, &-m8, &-camera, &-tracking, &-area, &-fence {position: absolute !important;}
 
   // 감시, 감지 디바이스 공통
-  &-m8, &-camera, &-area {
+  &-ico, &-m8, &-camera, &-area {
     //@include scale(0.5);
     &, & > * {cursor: pointer;}
     @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
@@ -836,7 +839,7 @@ div[contenteditable] {}
   }
 
   // MAP 설정 시 크기, 위치 버튼 표시
-  &-m8, &-camera {
+  &-ico, &-m8, &-camera {
     width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
@@ -846,13 +849,13 @@ div[contenteditable] {}
       &:hover { .ui-resizable-se {display: block !important;} }
     }
 
-    @at-root {.dashboard_mode & {pointer-events: none; } }
+    //@at-root {.dashboard_mode & {pointer-events: none; } }
     &:before {font-size:1.4rem; }
     &:before, &:after {}
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
-  &-m8, &-camera, &-tracking {
+  &-ico, &-m8, &-camera, &-tracking {
     background-color: $bas-color;
     &, &:before {@include flex-midddle;}
     &, &:after  {@include border-radius(500px);}
@@ -865,10 +868,17 @@ div[contenteditable] {}
       content:""; position: absolute;
       background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
     }
+
   }
 
-  &-m8:before     {background-image: url(../images/map/sico_96.svg); /*content:"\e962";*/ }
-  &-camera:before {background-image: url(../images/map/sico_98.svg); /*content:"\e964";*/ }
+  &-ico:before     {font-size:0.6rem;}
+  &-m8:before      {content:"\e962"; /*background-image: url(../images/map/sico_96.svg);*/ } // M8 센서
+  &-camera:before  {content:"\e964"; /*background-image: url(../images/map/sico_98.svg);*/ } // PTZ 카메라
+  &-wlight:before  {content:"\e93b";} // 경광등
+  &-led:before     {content:"\e966";} // LED
+  &-speaker:before {content:"\e93a";} // 스피커
+  &-qguard:before  {content:"\e96c";} // Q가드
+
 
   &-tracking {
     width:$resi_w; height:$resi_w; background-color: transparent;
@@ -924,7 +934,7 @@ div[contenteditable] {}
   }
 
   // 임계치 적용 표시
-  &-m8, &-camera, &-tracking {
+  &-ico, &-m8, &-camera, &-tracking {
     &.level {
       &-caution,&-warning,&-danger  {
         @include pOn;

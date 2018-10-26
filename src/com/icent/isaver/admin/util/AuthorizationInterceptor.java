@@ -125,8 +125,6 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         InetAddress address = InetAddress.getByName(wsAddress);
         modelAndView.addObject("eventWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
-        modelAndView.addObject("licenseList", haspLicenseUtil.readDeviceList());
-        modelAndView.addObject("licenseExpireDate", haspLicenseUtil.getExpireDate());
         super.postHandle(request, response, handler, modelAndView);
     }
 

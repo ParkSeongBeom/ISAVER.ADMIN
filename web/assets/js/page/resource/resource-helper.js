@@ -20,6 +20,7 @@ var ResourceHelper = (
         var _messageConfig;
         var _areaList = {};
         var _deviceList = {};
+        var _parentDeviceCode = ['DEV001','DEV003','DEV900','DEV015'];
         var _self = this;
 
         /**
@@ -54,6 +55,14 @@ var ResourceHelper = (
                     $(".onvif_sett_btn").show();
                 }else{
                     $(".onvif_sett_btn").hide();
+                }
+
+                var form = $("#deviceForm");
+                // 장치구분이 M8일경우에만 메인여부 활성화
+                if($(this).val()=='DEV013'){
+                    form.find("#mainFlagCB").prop("disabled",false);
+                }else{
+                    form.find("#mainFlagCB").prop("disabled",true).prop("checked",false).trigger("change");
                 }
             });
         };
@@ -99,7 +108,7 @@ var ResourceHelper = (
                     //    form.find("input[name='allTemplate']").val("Y");
                     //}
                     break;
-                case "add" :
+                case "remove" :
                     break;
             }
             return true;
@@ -112,14 +121,16 @@ var ResourceHelper = (
         var deviceVaild = function(actionType){
             var form = $("#deviceForm");
             var deviceName = form.find("input[name=deviceName]").val().trim();
+            var deviceCode = form.find("select[name=deviceCode]").val().trim();
+            var parentDeviceId = form.find("select[name=parentDeviceId]").val().trim();
+            var serialNo = form.find("input[name=serialNo]").val().trim();
+
             if(deviceName==null && deviceName.length==0){
                 _alertMessage('requiredDeviceName');
                 return false;
             }
 
             if(actionType=='add'){
-                var serialNo = form.find("input[name=serialNo]").val().trim();
-                var deviceCode = form.find("select[name=deviceCode]").val().trim();
                 if(serialNo==null && serialNo.length==0){
                     _alertMessage('requiredSerialNo');
                     return false;
@@ -130,6 +141,31 @@ var ResourceHelper = (
                     if(_data['serialNo']==serialNo && _data['deviceCode']==deviceCode){
                         _alertMessage('existsSerialNo');
                         return false;
+                    }
+                }
+            }
+
+            if(deviceCode=='DEV013'){
+                if(parentDeviceId==null || parentDeviceId=='' || _deviceList[parentDeviceId]['data']['deviceCode']!='DEV015'){
+                    _alertMessage('requiredConfiguredM8');
+                    return false;
+                }
+            }
+
+            if(deviceCode=='DEV015'){
+                if(parentDeviceId!=''){
+                    var parentData = _deviceList[parentDeviceId]['data'];
+                    if(parentData['deviceCode']!="DEV003"){
+                        _alertMessage('requiredQnServer');
+                        return false;
+                    }
+
+                    for(var index in _deviceList){
+                        var _data = _deviceList[index]['data'];
+                        if(_data['parentDeviceId']==parentDeviceId && _data['deviceCode']==deviceCode){
+                            _alertMessage('onlyOneServer');
+                            return false;
+                        }
                     }
                 }
             }
@@ -254,7 +290,7 @@ var ResourceHelper = (
             // 부모장치명 셀렉트박스 리로드
             form.find("select[name='parentDeviceId'] option").not(":eq(0)").remove();
             for(var index in _deviceList){
-                if(index!=deviceId){
+                if(index!=deviceId && _parentDeviceCode.indexOf(_deviceList[index]['data']['deviceCode'])>-1){
                     form.find("select[name='parentDeviceId']").append(
                         $("<option/>",{value:index}).text(_deviceList[index]['data']['path'])
                     );
@@ -281,6 +317,7 @@ var ResourceHelper = (
                 form.find("input[name='subUrl']").val(data['subUrl']!=null?data['subUrl']:'');
                 form.find("input[name='streamServerUrl']").val(data['streamServerUrl']!=null?data['streamServerUrl']:'');
                 form.find("input[name='linkUrl']").val(data['linkUrl']!=null?data['linkUrl']:'');
+                form.find("#mainFlagCB").prop("checked",data['mainFlag']=='Y'?true:false).trigger("change");
                 form.find("textarea[name='deviceDesc']").val(data['deviceDesc']!=null?data['deviceDesc']:'');
                 form.find("td[name='insertUserName']").text(data['insertUserName']);
                 form.find("td[name='insertDatetime']").text(new Date(data['insertDatetime']).format("yyyy-MM-dd HH:mm:ss"));
@@ -302,6 +339,8 @@ var ResourceHelper = (
                     form.find("select[name='areaId']").val(selAreaId).prop("selected", true);
                 }
                 form.find("input[name='serialNo']").prop("readonly",false);
+                form.find("#mainFlagCB").prop("checked",false).trigger("change");
+                form.find("select[name='deviceCode']").trigger("change");
                 form.find("tr[modifyTag]").hide();
                 form.find("button[name='saveBtn']").hide();
                 form.find("button[name='removeBtn']").hide();

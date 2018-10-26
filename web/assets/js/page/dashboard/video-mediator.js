@@ -14,11 +14,12 @@ var VideoMediator = (
         var _element;
         var _areaId;
         var _urlConfig = {
-            fenceDeviceListUrl : "/fenceDevice/list.json"
+            'fenceDeviceListUrl' : "/fenceDevice/list.json"
         };
         var _options = {
             'useDeviceCode' : "DEV002"
             ,'webrtcConnect' : "rtptransport=tcp&timeout=60"
+            ,'openLinkFlag' : true
         };
         var _self = this;
 
@@ -75,6 +76,10 @@ var VideoMediator = (
                     ).append(
                         $("<div/>",{id:"videoDiv"})
                     );
+
+                    if(_options['openLinkFlag'] && deviceList[index]['linkUrl']!=null && deviceList[index]['linkUrl']!=''){
+                        ptzElement.find("span").attr("onclick","javascript:openLink('"+deviceList[index]['linkUrl']+"');");
+                    }
                     _element.append(ptzElement);
 
                     // register webrtc streamer connection

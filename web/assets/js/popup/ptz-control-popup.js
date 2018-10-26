@@ -147,7 +147,7 @@ var PtzControlPopup = (
                 webSocketHelper.wsConnect("ptz");
             }
 
-            var fenceList = notificationHelper.getFenceList(_device['areaId']);
+            var fenceList = notificationHelper.getFenceList('areaId',_device['areaId']);
             _fenceElement = $("<select/>");
             for(var index in fenceList){
                 var fence = fenceList[index];

@@ -133,17 +133,17 @@ var DashboardHelper = (
                 $.each($(this).find("div[childDevice]"),function(){
                     deviceList.push({
                         'areaId' : _areaId
-                        ,'deviceId' : $(this).find("input[name='cDeviceId']").val()
-                        ,'deviceCode' : $(this).find("input[name='cDeviceCode']").val()
-                        ,'ipAddress' : $(this).find("input[name='cIpAddress']").val()
-                        ,'port' : $(this).find("input[name='cPort']").val()
-                        ,'deviceUserId' : $(this).find("input[name='cDeviceUserId']").val()
-                        ,'devicePassword' : $(this).find("input[name='cDevicePassword']").val()
-                        ,'subUrl' : $(this).find("input[name='cSubUrl']").val()
-                        ,'linkUrl' : $(this).find("input[name='cLinkUrl']").val()
-                        ,'streamServerUrl' : $(this).find("input[name='cStreamServerUrl']").val()
-                        ,'deviceName' : $(this).find("input[name='cDeviceName']").val()
-                        ,'deviceStat' : $(this).find("input[name='cDeviceStat']").val()
+                        ,'deviceId' : $(this).data("deviceid")
+                        ,'deviceCode' : $(this).data("devicecode")
+                        ,'ipAddress' : $(this).data("ipaddress")
+                        ,'port' : $(this).data("port")
+                        ,'deviceUserId' : $(this).data("deviceuserid")
+                        ,'devicePassword' : $(this).data("devicepassword")
+                        ,'subUrl' : $(this).data("suburl")
+                        ,'linkUrl' : $(this).data("linkurl")
+                        ,'streamServerUrl' : $(this).data("streamserverurl")
+                        ,'deviceName' : $(this).data("devicename")
+                        ,'deviceStat' : $(this).data("devicestat")
                     });
                 });
 

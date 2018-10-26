@@ -8,12 +8,19 @@ import com.icent.isaver.repository.bean.CodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Hasp USB Lock License Util
@@ -33,7 +40,24 @@ import java.util.Map;
 public class HaspLicenseUtil {
     static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
-    private long feature = 4;
+    private long feature = 6;
+    private String scope =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
+                    "<haspscope/>";
+
+    private String format =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
+                    "<haspformat root=\"hasp_info\">" +
+                    "    <feature>" +
+                    "        <attribute name=\"id\" />" +
+                    "        <element name=\"license\" />" +
+                    "        <hasp>" +
+                    "          <attribute name=\"id\" />" +
+                    "          <attribute name=\"type\" />" +
+                    "        </hasp>" +
+                    "    </feature>" +
+                    "</haspformat>" +
+                    "";
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
             "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
@@ -137,39 +161,64 @@ public class HaspLicenseUtil {
         return license;
     }
 
-    public List<Map<String,String>> readDeviceList() {
-        List<Map<String,String>> resultList = new LinkedList<>();
+    public ModelAndView getLicenseList(){
+        ModelAndView modelAndView = new ModelAndView();
 
         License license = login();
         if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            List<CodeBean> codeList = codeDao.findListCodeDevice();
-            for(CodeBean code : codeList){
-                if(AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId())!=null){
-                    byte[] membuffer = new byte[BASE_LENGTH];
-                    hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId()), membuffer);
-                    if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
-                        Map<String,String> resultMap = new HashMap<>();
-                        resultMap.put("deviceCodeName",code.getCodeName());
-                        resultMap.put("deviceCnt",String.valueOf(code.getDeviceCnt()));
-                        resultMap.put("licenseCnt", new String(membuffer).replaceFirst("^0+(?!$)", ""));
-                        resultList.add(resultMap);
-                    }
+            modelAndView.addObject("licenseList", readDeviceList());
+            modelAndView.addObject("licenseExpireDate", getExpireDate());
+        }
+        modelAndView.addObject("license", license);
+        return modelAndView;
+    }
+
+    private List<Map<String,String>> readDeviceList() {
+        List<Map<String,String>> resultList = new LinkedList<>();
+        List<CodeBean> codeList = codeDao.findListCodeDevice();
+        for(CodeBean code : codeList){
+            if(AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId())!=null){
+                byte[] membuffer = new byte[BASE_LENGTH];
+                hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(code.getCodeId()), membuffer);
+                if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
+                    Map<String,String> resultMap = new HashMap<>();
+                    resultMap.put("deviceCodeName",code.getCodeName());
+                    resultMap.put("deviceCnt",String.valueOf(code.getDeviceCnt()));
+                    resultMap.put("licenseCnt", new String(membuffer).replaceFirst("^0+(?!$)", ""));
+                    resultList.add(resultMap);
                 }
             }
         }
         return resultList;
     }
 
-    public String getExpireDate(){
+    private String getExpireDate(){
         String result = "";
-
-        License license = login();
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            byte[] membuffer = new byte[8];
-            hasp.read(Hasp.HASP_FILEID_RO, 0, membuffer);
-            if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
-                result = new String(membuffer);
+        String info = hasp.getInfo(scope, format, vendorCode);
+        try{
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            InputSource is = new InputSource(new StringReader(info));
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(is);
+            NodeList nodeList = doc.getElementsByTagName("feature");
+            for(int i=0; i<nodeList.getLength(); i++){
+                Node node = nodeList.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE){
+                    Element element = (Element) node;
+                    if(element.getAttribute("id").equals(String.valueOf(feature))){
+                        Node expDtNode = element.getElementsByTagName("exp_date").item(0);
+                        if(expDtNode!=null){
+                            long expDate = Long.parseLong(expDtNode.getTextContent()) * 1000;
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date date = new Date(expDate);
+                            result = sdf.format(date);
+                        }
+                    }
+                }
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return result;
     }

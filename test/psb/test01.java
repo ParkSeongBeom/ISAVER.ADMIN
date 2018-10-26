@@ -2,21 +2,47 @@ package psb;
 
 import Aladdin.Hasp;
 import Aladdin.HaspStatus;
-import com.google.gson.Gson;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.*;
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by icent on 16. 6. 27..
  */
 public class test01 {
-    private long feature = 5;
+    private long feature = 6;
+
+    private String scope =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
+                    "<haspscope/>";
+
+    private String format =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
+                    "<haspformat root=\"hasp_info\">" +
+                    "    <feature>" +
+                    "        <attribute name=\"id\" />" +
+                    "        <element name=\"license\" />" +
+                    "        <hasp>" +
+                    "          <attribute name=\"id\" />" +
+                    "          <attribute name=\"type\" />" +
+                    "        </hasp>" +
+                    "    </feature>" +
+                    "</haspformat>" +
+                    "";
+
     private String vendorCode =
             "AzIceaqfA1hX5wS+M8cGnYh5ceevUnOZIzJBbXFD6dgf3tBkb9cvUF/Tkd/iKu2fsg9wAysYKw7RMAsV" +
                     "vIp4KcXle/v1RaXrLVnNBJ2H2DmrbUMOZbQUFXe698qmJsqNpLXRA367xpZ54i8kC5DTXwDhfxWTOZrB" +
@@ -37,7 +63,54 @@ public class test01 {
 
     @Test
     public void test() {
-        System.out.println(hasp.getLastError());
+        String info = hasp.getInfo(scope, format, vendorCode);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder;
+        Document doc = null;
+        try{
+            InputSource is = new InputSource(new StringReader(info));
+            builder = factory.newDocumentBuilder();
+            doc = builder.parse(is);
+            NodeList nodeList = doc.getElementsByTagName("feature");
+            for(int i=0; i<nodeList.getLength(); i++){
+                Node node = nodeList.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE){
+                    Element element = (Element) node;
+                    if(element.getAttribute("id").equals(String.valueOf(feature))){
+                        long expDate = Long.parseLong(element.getElementsByTagName("exp_date").item(0).getTextContent()) * 1000;
+                        System.out.println(expDate);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date date = new Date(expDate);
+                        System.out.println(date.toString());
+                        System.out.println(sdf.format(date));
+                    }
+                }
+            }
+
+//            XPathFactory xPathFactory = XPathFactory.newInstance();
+//            XPath xPath = xPathFactory.newXPath();
+//            XPathExpression expr = xPath.compile("//items/item");
+//            NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+//            for(int i=0; i<nodeList.getLength(); i++){
+//                NodeList child = nodeList.item(i).getChildNodes();
+//                for(int j=0; j<child.getLength(); j++){
+//                    Node node = child.item(j);
+//
+//                    if (node.getNodeType() == Node.ELEMENT_NODE){
+//                        Element element = (Element) node;
+//                        System.out.println(element.getAttribute("id"));
+//                    }
+//
+////                        if(node.getNodeName().equals("feature")){
+////                        System.out.println(eElement.getAttribute("rollno"));
+////                        System.out.println(node.getPrefix());
+////                    }
+//                }
+//            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 //        License license = read("DEV002");
 //
 //        String licenseJsonTxt = new Gson().toJson(license);

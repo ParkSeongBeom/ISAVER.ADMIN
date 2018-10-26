@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.LicenseSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.LicenseDao;
 import com.kst.common.spring.TransactionUtil;
@@ -43,18 +44,27 @@ public class LicenseSvcImpl implements LicenseSvc {
     @Inject
     private LicenseDao licenseDao;
 
+    @Inject
+    private HaspLicenseUtil haspLicenseUtil;
+
     @Override
     public ModelAndView findListLicense(Map<String, String> parameters) {
-        List<LicenseBean> licenses = licenseDao.findListLicense(parameters);
-        Integer totalCount = licenseDao.findCountLicense(parameters);
-
-        AdminHelper.setPageTotalCount(parameters, totalCount);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("licenses", licenses);
-        modelAndView.addObject("paramBean",parameters);
+        ModelAndView modelAndView = haspLicenseUtil.getLicenseList();
         return modelAndView;
     }
+
+//    @Override
+//    public ModelAndView findListLicense(Map<String, String> parameters) {
+//        List<LicenseBean> licenses = licenseDao.findListLicense(parameters);
+//        Integer totalCount = licenseDao.findCountLicense(parameters);
+//
+//        AdminHelper.setPageTotalCount(parameters, totalCount);
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("licenses", licenses);
+//        modelAndView.addObject("paramBean",parameters);
+//        return modelAndView;
+//    }
 
     @Override
     public ModelAndView findByLicense(Map<String, String> parameters) {

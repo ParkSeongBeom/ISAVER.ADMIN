@@ -16,8 +16,10 @@
     <meta http-equiv="imagetoolbar" content="no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${rootPath}/assets/test/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/test/css/reset.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/test/css/gs.css?version=${version}" rel="stylesheet" type="text/css" />
     <title>iSaver Simulator</title>
+
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/common-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js?version=${version}"></script>

@@ -13,7 +13,11 @@
     <meta http-equiv="imagetoolbar" content="no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${rootPath}/assets/css/base.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/reset.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/layouts.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/elements.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
     <!--[endif] -->
     <title>i-Saver Login</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>

@@ -15,9 +15,13 @@ var CustomMapPopup = (
             ,fenceDeviceListUrl : "/fenceDevice/list.json"
         };
         var _markerClass = {
-            'area' : "area"
-            ,"DEV013" : "m8"
-            ,"DEV002" : "camera"
+            'area' : "ico-area"
+            ,"DEV002" : "ico-ptz"
+            ,"DEV006" : "ico-led"
+            ,"DEV007" : "ico-speaker"
+            ,"DEV008" : "ico-wlight"
+            ,"DEV013" : "ico-m8"
+            ,"DEV015" : "ico-qguard"
         };
         var _areaId = null;
         var _customMapMediator;
@@ -130,6 +134,7 @@ var CustomMapPopup = (
                     ,'resizable' : true
                     ,'fenceView' : true
                     ,'allView' : true
+                    ,'openLinkFlag': false
                     ,'onLoad' : function(actionType,data,param){
                         switch (actionType){
                             case 'childList' :

@@ -641,12 +641,12 @@ $bbl01:100%; $bbl02:1px;
   animation-iteration-count: 50;
 
   @-webkit-keyframes notice {
-    0%   {margin:0 3px 0 0;}
-    100%  {margin:0 -3px 0 0;}
+    0%   {margin:0 2px 0 0;}
+    100%  {margin:0 -2px 0 0;}
   }
   @keyframes notice {
-    0%   {margin:0 3px 0 0;}
-    100%  {margin:0 -3px 0 0;}
+    0%   {margin:0 2px 0 0;}
+    100%  {margin:0 -2px 0 0;}
   }
 } // ex) @include notice;
 
@@ -659,12 +659,12 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice02 {
-    0%    {margin:0 3px 0 0;   }
-    100%  {margin:0 -3px 0 0;  opacity: 0.7;}
+    0%    {margin:0 2px 0 0;   }
+    100%  {margin:0 -2px 0 0;  opacity: 0.7;}
   }
   @keyframes notice02 {
-    0%    {margin:0 3px 0 0;    }
-    100%  {margin:0 -3px 0 0;   opacity: 0.7;}
+    0%    {margin:0 2px 0 0;    }
+    100%  {margin:0 -2px 0 0;   opacity: 0.7;}
   }
 } // ex) @include notice02;
 
@@ -677,11 +677,11 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice03 {
-    0%    {left:2px;}
+    0%    {left:1px;}
     100%  {left:-1px; opacity: 0.7;}
   }
   @keyframes notice03 {
-    0%    {left:2px;}
+    0%    {left:1px;}
     100%  {left:-1px; opacity: 0.7;}
   }
 } // ex) @include notice03;
