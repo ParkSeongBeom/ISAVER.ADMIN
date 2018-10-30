@@ -35,6 +35,7 @@ form-bg-effect :
   &-tof:before      {content:"\e962";} // TOF 센서
   &-m8:before       {content:"\e962";} // m8 센서
   &-ptz:before      {content:"\e964";} // PTZ 카메라
+  &-camera:before   {content:"\e964";} // PTZ 카메라
   &-chart:before    {content:"\e908";} // 차트
   &-four:before     {content:"\e938";} // 4분할
   &-gate:before     {content:"\e92f";} // 게이트 웨이 센서
@@ -801,7 +802,7 @@ div[contenteditable] {}
 } // @include resize;
 
 .map_images {
-  position: absolute; width:2500px !important; height:2500px !important; cursor:move;
+  position: absolute; width:5000px !important; height:5000px !important; cursor:move;
   background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
 
   & > * {position: absolute !important;}
@@ -850,7 +851,7 @@ div[contenteditable] {}
     }
 
     //@at-root {.dashboard_mode & {pointer-events: none; } }
-    &:before {font-size:1.4rem; }
+    //&:before {font-size:1.4rem; }
     &:before, &:after {}
   }
 
@@ -868,10 +869,9 @@ div[contenteditable] {}
       content:""; position: absolute;
       background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
     }
-
   }
 
-  &-ico:before     {font-size:0.6rem;}
+  &-ico:before     {font-size:1.2rem !important;}
   &-m8:before      {content:"\e962"; /*background-image: url(../images/map/sico_96.svg);*/ } // M8 센서
   &-camera:before  {content:"\e964"; /*background-image: url(../images/map/sico_98.svg);*/ } // PTZ 카메라
   &-wlight:before  {content:"\e93b";} // 경광등
@@ -938,30 +938,35 @@ div[contenteditable] {}
     &.level {
       &-caution,&-warning,&-danger  {
         @include pOn;
-        &:after {display: block;}
-        &:before {color:$color-white-01 !important;}
+        &:after {display: block; border-style:solid; border-width:2px;}
+        &:before {color:$color-white-01 !important;  }
       }
 
       &-caution {
         &,& > span {background-color:$color-gray-05;   }
-        &:after {@include border01(1px,$color-gray-05,1);  }
+        &:after { border-color:$color-gray-05; }
       }
 
       &-warning {
         &,& > span {background-color:$color-orange-01; }
-        &:after {@include border01(1px,$color-orange-01,1);}
+        &:after { border-color:$color-orange-01;}
       }
 
       &-danger  {
         &,& > span {background-color:$color-red-01;    }
-        &:after  {@include border01(1px,$color-red-01,1);   }
+        &:after  { border-color:$color-red-01; }
       }
 
       &-die     {
-        @include issue02; background-color:$color-gray-09; opacity: 0.5;
+
+        &, span {background-color:#000;}
         &:after {
-          content:""; z-index: 10; position: absolute; left:calc(50% - 1px); top:0; width:1px; height:100%;
-          @include rotate(45deg); background-color:rgba($color-gray-09,1); @include loding;
+
+          @include die02;
+          /*
+          left:calc(50% - 1px); top:0; width:2px; height:100%;
+          @include rotate(-45deg); background-color:rgba($color-yellow-01,1);
+          */
         }
       }
     }

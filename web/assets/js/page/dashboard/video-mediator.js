@@ -58,8 +58,13 @@ var VideoMediator = (
          * fenceList init
          * @author psb
          */
-        this.init = function(areaId){
+        this.init = function(areaId,options){
             _areaId = areaId;
+            for(var index in options){
+                if(_options.hasOwnProperty(index)){
+                    _options[index] = options[index];
+                }
+            }
             _ajaxCall('fenceDeviceList',{areaId:_areaId});
         };
 

@@ -121,13 +121,17 @@ public class NotificationSvcImpl implements NotificationSvc {
          * @date 2018.1.11
          */
         try {
-            List<List<Map<String, String>>> ret = CommonUtil.splitList(parameterList, 200);
-            for (List<Map<String, String>> param : ret) {
-                Map websocketParam = new HashMap();
-                websocketParam.put("notification", param);
-                websocketParam.put("messageType","updateNotification");
-                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
-            }
+//            List<List<Map<String, String>>> ret = CommonUtil.splitList(parameterList, 200);
+//            for (List<Map<String, String>> param : ret) {
+//                Map websocketParam = new HashMap();
+//                websocketParam.put("notification", param);
+//                websocketParam.put("messageType","updateNotification");
+//                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+//            }
+            Map websocketParam = new HashMap();
+            websocketParam.put("notification", parameterList);
+            websocketParam.put("messageType","updateNotification");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (IOException e) {
             e.printStackTrace();
         }

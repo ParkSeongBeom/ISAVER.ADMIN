@@ -487,14 +487,14 @@ header {
                 animation-iteration-count: 50; }
 @-webkit-keyframes notice {
   0% {
-    margin: 0 3px 0 0; }
+    margin: 0 1px 0 0; }
   100% {
-    margin: 0 -3px 0 0; } }
+    margin: 0 -1px 0 0; } }
 @keyframes notice {
   0% {
-    margin: 0 3px 0 0; }
+    margin: 0 1px 0 0; }
   100% {
-    margin: 0 -3px 0 0; } }
+    margin: 0 -1px 0 0; } }
       header .header_area .header_right_area .issue_board {
         display: -webkit-box;
         display: -moz-box;
@@ -2272,14 +2272,14 @@ menu {
       animation-iteration-count: 50; }
 @-webkit-keyframes notice {
   0% {
-    margin: 0 3px 0 0; }
+    margin: 0 1px 0 0; }
   100% {
-    margin: 0 -3px 0 0; } }
+    margin: 0 -1px 0 0; } }
 @keyframes notice {
   0% {
-    margin: 0 3px 0 0; }
+    margin: 0 1px 0 0; }
   100% {
-    margin: 0 -3px 0 0; } }
+    margin: 0 -1px 0 0; } }
 .issue_board.level-caution > div.caution, .issue_board.level-caution > div.caution:before {
   color: #fff; }
 .issue_board.level-caution > div.caution:after {

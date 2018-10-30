@@ -180,6 +180,7 @@
          */
         function notificationMessageEventHandler(message) {
             var resultData;
+            var status = 0;
             try{
                 resultData = JSON.parse(message.data);
             }catch(e){
@@ -212,9 +213,13 @@
                     break;
                 case "licenseStatus": // 라이센스 상태
                     var license = resultData['license'];
-                    licenseStatusChangeHandler(license['status']);
+                    if(license!=null){
+                        status = license['status'];
+                    }
                     break;
             }
+
+            licenseStatusChangeHandler(status);
         }
 
         function licenseStatusChangeHandler(status) {

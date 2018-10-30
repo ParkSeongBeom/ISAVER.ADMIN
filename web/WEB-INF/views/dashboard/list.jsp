@@ -329,6 +329,9 @@
                                     <!-- 구역에 구역이 존재할 때 area -->
                                     <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
                                 </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
+                                </c:if>
                             </header>
                             <article>
                                 <section class="guard_set">
@@ -340,12 +343,11 @@
                                         <ul ptzPlayers></ul>
                                     </div>
                                 </section>
-                                <div guardInfo class="copybox_area"></div>
                                 <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box d_none">
+                                    <div class="device_box">
                                         <div class="device_set">
                                             <c:forEach var="device" items="${childArea.devices}">
-                                                <div childDevice
+                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
                                                      data-deviceId="${device.deviceId}"
                                                      data-deviceCode="${device.deviceCode}"
                                                      data-ipAddress="${device.ipAddress}"
@@ -358,11 +360,14 @@
                                                      data-deviceStat="${device.deviceStat}"
                                                      data-deviceName="${device.deviceName}"
                                                         >
+                                                    <p>${device.deviceName}</p>
+                                                    <p></p>
                                                 </div>
                                             </c:forEach>
                                         </div>
                                     </div>
                                 </c:if>
+                                <div guardInfo class="copybox_area"></div>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>

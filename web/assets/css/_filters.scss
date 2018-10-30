@@ -641,12 +641,12 @@ $bbl01:100%; $bbl02:1px;
   animation-iteration-count: 50;
 
   @-webkit-keyframes notice {
-    0%   {margin:0 2px 0 0;}
-    100%  {margin:0 -2px 0 0;}
+    0%   {margin:0 1px 0 0;}
+    100%  {margin:0 -1px 0 0;}
   }
   @keyframes notice {
-    0%   {margin:0 2px 0 0;}
-    100%  {margin:0 -2px 0 0;}
+    0%   {margin:0 1px 0 0;}
+    100%  {margin:0 -1px 0 0;}
   }
 } // ex) @include notice;
 
@@ -659,12 +659,12 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice02 {
-    0%    {margin:0 2px 0 0;   }
-    100%  {margin:0 -2px 0 0;  opacity: 0.7;}
+    0%    {margin:0 1px 0 0;   }
+    100%  {margin:0 -1px 0 0;  opacity: 0.7;}
   }
   @keyframes notice02 {
-    0%    {margin:0 2px 0 0;    }
-    100%  {margin:0 -2px 0 0;   opacity: 0.7;}
+    0%    {margin:0 1px 0 0;    }
+    100%  {margin:0 -1px 0 0;   opacity: 0.7;}
   }
 } // ex) @include notice02;
 
@@ -856,6 +856,38 @@ $bbl01:100%; $bbl02:1px;
   }
 
 } // ex) @include die;
+
+
+@mixin die02 {
+
+  content:"\e93d";
+  z-index: 10; position: absolute; top:0; left:0; width:100%; height:100%;  @include flex-midddle;
+  background-color:$color-yellow-01; color:#000; font-size:1.4rem;
+
+  animation-name: die02;
+  -webkit-animation-name: die02;
+  @include infinite;
+
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+
+  @-webkit-keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+  @keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+
+} // ex) @include die02;
+
 
 
 @mixin list {

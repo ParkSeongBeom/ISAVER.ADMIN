@@ -21,6 +21,10 @@ var NotificationHelper = (
         var _element;
 
         var _callBackEventHandler = null;
+        var _SAVE_NOTIFICATION = {
+            'loadFlag':false
+            ,'delay':1000
+        };
         var _CALL_BACK_RETRY = {
             'cnt' : 10
             , 'delay' : 1000
@@ -133,8 +137,11 @@ var NotificationHelper = (
                     break;
                 case 'confirmNotification':
                 case 'cancelNotification':
-                    layerShowHide('notificationCancel','hide');
-                    _alertMessage(actionType+'Success');
+                    if(!_SAVE_NOTIFICATION['loadFlag']){
+                        setLoading('noti', false);
+                        layerShowHide('notificationCancel','hide');
+                        _alertMessage(actionType+'Success');
+                    }
                     break;
                 case 'notificationDetail':
                     notificationDetailRender(data);
@@ -396,6 +403,24 @@ var NotificationHelper = (
          * @author psb
          */
         this.saveNotification = function(actionType){
+            function saveNoti(actionType, data, cancelDesc){
+                var param = {
+                    'paramData' : data.splice(0,100).join(",")
+                    ,'actionType' : actionType
+                    ,'cancelDesc' : cancelDesc
+                };
+
+                if(data.length>0){
+                    setTimeout(function(){
+                        saveNoti(actionType, data, cancelDesc);
+                    },_SAVE_NOTIFICATION['delay']);
+                }else{
+                    _SAVE_NOTIFICATION['loadFlag'] = false;
+                }
+                _ajaxCall(actionType+'Notification',param);
+            }
+
+            var cancelDesc = $("#cancelDesc").val();
             var paramData = _element.find("li.check").map(function(){
                 var notificationData = _self.getNotification('data',$(this).attr("notificationId"));
                 return notificationData["notificationId"]+"|"+notificationData["areaId"]+"|"+notificationData["criticalLevel"]
@@ -404,16 +429,9 @@ var NotificationHelper = (
             if(paramData.length==0){
                 return false;
             }
-
-            var cancelDesc = $("#cancelDesc").val();
-
-            var param = {
-                'paramData' : paramData.join(",")
-                ,'actionType' : actionType
-                ,'cancelDesc' : cancelDesc
-            };
-
-            _ajaxCall(actionType+'Notification',param);
+            _SAVE_NOTIFICATION['loadFlag'] = true;
+            setLoading('noti', true);
+            saveNoti(actionType, paramData, cancelDesc);
         };
 
         /**

@@ -228,37 +228,91 @@ body.dashboard_mode {
               order: 10; }
               body.dashboard_mode .wrap > article > section > div header button.device_view:before, body.dashboard_mode .wrap > article .watch_area > div header button.device_view:before {
                 content: "\e92f"; }
-            body.dashboard_mode .wrap > article > section > div header button.level-die:before, body.dashboard_mode .wrap > article .watch_area > div header button.level-die:before {
-              animation-name: notice-die;
-              -webkit-animation-name: notice-die;
-              -webkit-animation-duration: 0.5s;
-              animation-duration: 0.5s;
-              animation-iteration-count: infinite;
-              -webkit-animation-iteration-count: infinite;
-              animation-timing-function: linear;
-              -webkit-animation-timing-function: linear;
-              animation-fill-mode: forwards;
-              -webkit-animation-fill-mode: forwards;
-              -webkit-animation-duration: 0.8s;
-              animation-duration: 0.8s; }
-@-webkit-keyframes notice-die {
+            body.dashboard_mode .wrap > article > section > div header button.level-die, body.dashboard_mode .wrap > article .watch_area > div header button.level-die {
+              /*@mixin notice-die {
+                animation-name: notice-die;
+                -webkit-animation-name: notice-die;
+                @include infinite;
+
+                -webkit-animation-duration: 0.8s;
+                animation-duration: 0.8s;
+
+                @-webkit-keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+                @keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+              } // ex) @include notice-die;*/ }
+              body.dashboard_mode .wrap > article > section > div header button.level-die:after, body.dashboard_mode .wrap > article .watch_area > div header button.level-die:after {
+                content: "\e93d";
+                z-index: 10;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                display: flexbox;
+                display: box;
+                box-align: center;
+                -webkit-box-align: center;
+                -moz-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -moz-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                background-color: #f6b900;
+                color: #000;
+                font-size: 1.4rem;
+                animation-name: die02;
+                -webkit-animation-name: die02;
+                -webkit-animation-duration: 0.5s;
+                animation-duration: 0.5s;
+                animation-iteration-count: infinite;
+                -webkit-animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                -webkit-animation-timing-function: linear;
+                animation-fill-mode: forwards;
+                -webkit-animation-fill-mode: forwards;
+                -webkit-animation-duration: 2s;
+                animation-duration: 2s; }
+@-webkit-keyframes die02 {
   0% {
-    color: #000; }
+    opacity: 0.2; }
   10% {
-    color: #f6b900; }
-  40% {
-    color: #f6b900; }
+    opacity: 1; }
+  30% {
+    opacity: 1; }
+  80% {
+    opacity: 0.2; }
   100% {
-    color: #000; } }
-@keyframes notice-die {
+    opacity: 0.2; } }
+@keyframes die02 {
   0% {
-    color: #000; }
+    opacity: 0.2; }
   10% {
-    color: #f6b900; }
-  40% {
-    color: #f6b900; }
+    opacity: 1; }
+  30% {
+    opacity: 1; }
+  80% {
+    opacity: 0.2; }
   100% {
-    color: #000; } }
+    opacity: 0.2; } }
         body.dashboard_mode .wrap > article > section > div article, body.dashboard_mode .wrap > article .watch_area > div article {
           flex: 0 1 100%;
           -webkit-flex: 0 1 100%;
@@ -1842,13 +1896,13 @@ body.dashboard_mode {
     animation-duration: 0.1s !important; }
 @-webkit-keyframes notice03 {
   0% {
-    left: 2px; }
+    left: 1px; }
   100% {
     left: -1px;
     opacity: 0.7; } }
 @keyframes notice03 {
   0% {
-    left: 2px; }
+    left: 1px; }
   100% {
     left: -1px;
     opacity: 0.7; } }

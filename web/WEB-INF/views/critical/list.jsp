@@ -185,9 +185,7 @@
                                 <select name="detectDeviceId" onchange="javascript:detectDeviceChangeHandler('detect',this);">
                                     <option value=""><spring:message code="common.selectbox.select"/></option>
                                     <c:forEach var="device" items="${deviceList}">
-                                        <c:if test="${device.deviceTypeCode==detectDeviceTypeCode}">
-                                            <option deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
-                                        </c:if>
+                                        <option deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -369,7 +367,6 @@
         ,'targetSaveUrl':'${rootPath}/criticalTarget/save.json'
         ,'targetRemoveUrl':'${rootPath}/criticalTarget/remove.json'
     };
-
     $(document).ready(function(){
     });
 
@@ -429,10 +426,12 @@
                     return false;
                 }
 
-                if(targetElement.find("select[name='detectDeviceId'] option:selected").attr("deviceCode")=='DEV013'
-                    && targetElement.find("select[name='fenceId'] option:selected").val()==''){
-                    alertMessage('requireFenceId');
-                    return false;
+                if(targetElement.find("select[name='eventId'] option:selected").val()!='EVT999'){
+                    if(targetElement.find("select[name='detectDeviceId'] option:selected").attr("deviceCode")=='DEV013'
+                            && targetElement.find("select[name='fenceId'] option:selected").val()==''){
+                        alertMessage('requireFenceId');
+                        return false;
+                    }
                 }
                 break;
             case 'target':

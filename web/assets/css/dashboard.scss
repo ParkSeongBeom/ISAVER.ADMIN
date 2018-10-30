@@ -103,8 +103,10 @@ body.dashboard_mode {
             &:hover:before, &:hover:after {color:$color-blue-01;}
 
             &.device_view {order: 10; &:before {content:"\e92f";} }
+
+
             &.level-die {
-              @mixin notice-die {
+              /*@mixin notice-die {
                 animation-name: notice-die;
                 -webkit-animation-name: notice-die;
                 @include infinite;
@@ -124,8 +126,10 @@ body.dashboard_mode {
                   40%  { color:$color-yellow-01; }
                   100% { color:#000 }
                 }
-              } // ex) @include notice-die;
-              &:before {@include  notice-die;}
+              } // ex) @include notice-die;*/
+
+              &:after {@include die02;}
+              //&:before {@include  notice-die;}
             }
           }
 

@@ -204,6 +204,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
             ,"classpath:properties/message/target"
             ,"classpath:properties/message/deviceStatusHistory"
             ,"classpath:properties/message/videoHistory"
+            ,"classpath:properties/message/fileSetting"
         );
         return messageSource;
     }

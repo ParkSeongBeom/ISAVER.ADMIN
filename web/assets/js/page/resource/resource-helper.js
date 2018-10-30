@@ -120,6 +120,7 @@ var ResourceHelper = (
          */
         var deviceVaild = function(actionType){
             var form = $("#deviceForm");
+            var deviceId = form.find("input[name=deviceId]").val().trim();
             var deviceName = form.find("input[name=deviceName]").val().trim();
             var deviceCode = form.find("select[name=deviceCode]").val().trim();
             var parentDeviceId = form.find("select[name=parentDeviceId]").val().trim();
@@ -162,7 +163,7 @@ var ResourceHelper = (
 
                     for(var index in _deviceList){
                         var _data = _deviceList[index]['data'];
-                        if(_data['parentDeviceId']==parentDeviceId && _data['deviceCode']==deviceCode){
+                        if(_data['parentDeviceId']==parentDeviceId && _data['deviceCode']==deviceCode && _data['deviceId']!=deviceId){
                             _alertMessage('onlyOneServer');
                             return false;
                         }

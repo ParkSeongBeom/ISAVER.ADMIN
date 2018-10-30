@@ -15,6 +15,7 @@ var DashboardHelper = (
         var _options ={
             marquee : true
             ,guardInfo : true
+            ,deviceStatusChangeSound : true
         };
         var _messageConfig;
         var _fileUploadPath;
@@ -127,10 +128,10 @@ var DashboardHelper = (
                 _guardList[_areaId] = {};
                 _guardList[_areaId][_MEDIATOR_TYPE[0]] = new VideoMediator(_rootPath);
                 _guardList[_areaId][_MEDIATOR_TYPE[1]] = templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath, _version);
-                _guardList[_areaId]['deviceIds'] = $(this).find("div[childDevice]").map(function(){return $(this).attr("deviceId")}).get();
+                _guardList[_areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
 
                 var deviceList = [];
-                $.each($(this).find("div[childDevice]"),function(){
+                $.each($(this).find("div[deviceId]"),function(){
                     deviceList.push({
                         'areaId' : _areaId
                         ,'deviceId' : $(this).data("deviceid")
@@ -149,7 +150,7 @@ var DashboardHelper = (
 
                 // Video Mediator
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId);
+                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId,{'openLinkFlag': false});
                 _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayerList(deviceList);
 
                 // Map Mediator
@@ -162,6 +163,7 @@ var DashboardHelper = (
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
                         'websocketSend':false
                         ,'fenceView':true
+                        ,'openLinkFlag': false
                         ,'click':function(targetId,deviceCode){
                             if(deviceCode=='area'){ moveDashboard(_areaId,targetId); }
                         }
@@ -372,6 +374,10 @@ var DashboardHelper = (
                             _area['childDevice'][deviceStatus['deviceId']]['element'].removeClass('level-die');
                         }else{
                             _area['childDevice'][deviceStatus['deviceId']]['element'].addClass('level-die');
+
+                            if(_options['deviceStatusChangeSound']){
+                                playSegment();
+                            }
                         }
                     }
                 }

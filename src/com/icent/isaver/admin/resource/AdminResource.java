@@ -208,6 +208,7 @@ public class AdminResource {
         {
             put("alarm","alarm"); // 알람파일
             put("map","map"); // Map파일
+            put("video","video"); // Map파일
         }
     };
 
