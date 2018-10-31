@@ -53,29 +53,39 @@ public class CriticalDetectSvcImpl implements CriticalDetectSvc {
     public ModelAndView addCriticalDetect(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        parameters.put("criticalDetectId", StringUtils.getGUID32());
-        try {
-            criticalDetectDao.addCriticalDetect(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+        ModelAndView modelAndView = new ModelAndView();
+        if(criticalDetectDao.findExistCriticalDetect(parameters)!=null){
+            modelAndView.addObject("resultCode", "ERR101");
+        }else{
+            parameters.put("criticalDetectId", StringUtils.getGUID32());
+            try {
+                criticalDetectDao.addCriticalDetect(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
         }
-        return new ModelAndView();
+        return modelAndView;
     }
 
     @Override
     public ModelAndView saveCriticalDetect(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try {
-            criticalDetectDao.saveCriticalDetect(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+        ModelAndView modelAndView = new ModelAndView();
+        if(criticalDetectDao.findExistCriticalDetect(parameters)!=null){
+            modelAndView.addObject("resultCode", "ERR101");
+        }else {
+            try {
+                criticalDetectDao.saveCriticalDetect(parameters);
+                transactionManager.commit(transactionStatus);
+            } catch (DataAccessException e) {
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
         }
-        return new ModelAndView();
+        return modelAndView;
     }
 
     @Override

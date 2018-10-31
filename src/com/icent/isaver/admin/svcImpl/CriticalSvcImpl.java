@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CriticalSvc;
 import com.icent.isaver.repository.bean.CriticalBean;
 import com.icent.isaver.repository.bean.DeviceBean;
@@ -87,29 +88,39 @@ public class CriticalSvcImpl implements CriticalSvc {
     public ModelAndView addCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        parameters.put("criticalId", StringUtils.getGUID32());
-        try {
-            criticalDao.addCritical(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+        ModelAndView modelAndView = new ModelAndView();
+        if(criticalDao.findExistCritical(parameters)!=null){
+            modelAndView.addObject("resultCode", "ERR100");
+        }else{
+            parameters.put("criticalId", StringUtils.getGUID32());
+            try {
+                criticalDao.addCritical(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
         }
-        return new ModelAndView();
+        return modelAndView;
     }
 
     @Override
     public ModelAndView saveCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
 
-        try {
-            criticalDao.saveCritical(parameters);
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+        ModelAndView modelAndView = new ModelAndView();
+        if(criticalDao.findExistCritical(parameters)!=null){
+            modelAndView.addObject("resultCode", "ERR100");
+        }else{
+            try {
+                criticalDao.saveCritical(parameters);
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
         }
-        return new ModelAndView();
+        return modelAndView;
     }
 
     @Override

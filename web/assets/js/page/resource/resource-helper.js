@@ -477,17 +477,6 @@ var ResourceHelper = (
                 case 'deviceList':
                     deviceRender(data['devices']);
                     break;
-                case 'addArea':
-                    if(data['resultCode']!=null){
-                        switch (data['resultCode']){
-                            case "ERR000":
-                                _alertMessage('addOverflowFailure');
-                                break;
-                        }
-                    }else{
-                        refreshFlag = true;
-                    }
-                    break;
                 case 'addDevice':
                     var license = data['license'];
                     switch (license['status']){
@@ -505,7 +494,15 @@ var ResourceHelper = (
                     }
                     break;
                 default :
-                    refreshFlag = true;
+                    if(data['resultCode']!=null){
+                        switch (data['resultCode']){
+                            case "ERR200":
+                                _alertMessage('addOverflowFailure');
+                                break;
+                        }
+                    }else{
+                        refreshFlag = true;
+                    }
             }
 
             if(refreshFlag){

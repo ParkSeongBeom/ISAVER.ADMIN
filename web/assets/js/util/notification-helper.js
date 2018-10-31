@@ -22,8 +22,7 @@ var NotificationHelper = (
 
         var _callBackEventHandler = null;
         var _SAVE_NOTIFICATION = {
-            'loadFlag':false
-            ,'delay':1000
+            'delay':1000
         };
         var _CALL_BACK_RETRY = {
             'cnt' : 10
@@ -137,7 +136,7 @@ var NotificationHelper = (
                     break;
                 case 'confirmNotification':
                 case 'cancelNotification':
-                    if(!_SAVE_NOTIFICATION['loadFlag']){
+                    if(data['paramBean']['remainCnt']==0){
                         setLoading('noti', false);
                         layerShowHide('notificationCancel','hide');
                         _alertMessage(actionType+'Success');
@@ -311,10 +310,17 @@ var NotificationHelper = (
                 notificationCancelBtnAction();
             });
 
+            var eventAppend = null;
+            if(notification['fenceName']!=null){
+                eventAppend = '('+notification['fenceName']+')';
+            }else if(notification['value']!=null){
+                eventAppend = '('+notification['value']+')';
+            }
+
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
             notificationTag.attr("notificationId",notification['notificationId']);
-            notificationTag.find("#areaName").text(notification['areaName'] + (notification['fenceName']!=null?' - '+notification['fenceName']:''));
-            notificationTag.find("#eventName").text(notification['eventName'] + (notification['value']!=null?'('+notification['value']+')':''));
+            notificationTag.find("#areaName").text(notification['areaName'] + ' - '+notification['deviceName']);
+            notificationTag.find("#eventName").text(notification['eventName'] + (eventAppend!=null?eventAppend:''));
             notificationTag.find("#eventDatetime").text(new Date(notification['eventDatetime']).format("MM/dd HH:mm:ss"));
             notificationTag.find(".infor_btn").on("click",function(){
                 _self.getNotificationDetail(this);
@@ -408,16 +414,18 @@ var NotificationHelper = (
                     'paramData' : data.splice(0,100).join(",")
                     ,'actionType' : actionType
                     ,'cancelDesc' : cancelDesc
+                    ,'remainCnt' : 0
                 };
 
+                param['remainCnt'] = data.length;
+                _ajaxCall(actionType+'Notification',param);
+
                 if(data.length>0){
+                    param['remainCnt'] = data.length;
                     setTimeout(function(){
                         saveNoti(actionType, data, cancelDesc);
                     },_SAVE_NOTIFICATION['delay']);
-                }else{
-                    _SAVE_NOTIFICATION['loadFlag'] = false;
                 }
-                _ajaxCall(actionType+'Notification',param);
             }
 
             var cancelDesc = $("#cancelDesc").val();
@@ -429,7 +437,6 @@ var NotificationHelper = (
             if(paramData.length==0){
                 return false;
             }
-            _SAVE_NOTIFICATION['loadFlag'] = true;
             setLoading('noti', true);
             saveNoti(actionType, paramData, cancelDesc);
         };

@@ -83,21 +83,16 @@ public class AreaSvcImpl implements AreaSvc {
 
     @Override
     public ModelAndView addArea(HttpServletRequest request, Map<String, String> parameters) {
-        boolean addFlag = true;
         ModelAndView modelAndView = new ModelAndView();
 
-        Map<String, String> deviceCheckParam = new HashMap<>();
-        deviceCheckParam.put("delYn","N");
-        deviceCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
+        Map<String, String> areaCheckParam = new HashMap<>();
+        areaCheckParam.put("delYn","N");
+        areaCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
 
-        if(areaDao.findCountArea(deviceCheckParam)>=9){
-            addFlag = false;
-            modelAndView.addObject("resultCode", "ERR000");
-        }
-
-        if(addFlag){
+        if(areaDao.findCountArea(areaCheckParam)>=9){
+            modelAndView.addObject("resultCode", "ERR200");
+        }else{
             TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
             try {
                 parameters.put("areaId", generatorFunc());
                 areaDao.addArea(parameters);
@@ -107,53 +102,58 @@ public class AreaSvcImpl implements AreaSvc {
                 throw new IcentException("");
             }
         }
-
         return modelAndView;
     }
 
     @Override
     public ModelAndView saveArea(HttpServletRequest request, Map<String, String> parameters) {
-
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
-        AreaBean area = areaDao.findByArea(parameters);
-
-        try {
-            areaDao.saveArea(parameters);
-            if(StringUtils.notNullCheck(parameters.get("allTemplate"))){
-                areaDao.saveAreaTemplate(parameters);
-            }
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
-        }
-
-        transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-        try {
-            if(!parameters.get("areaName").equals(area.getAreaName())){
-                Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
-                String deviceIds = "";
-
-                List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
-                for(DeviceBean deviceBean : deviceBeanList){
-                    deviceIds += deviceBean.getDeviceId() + ",";
-                }
-
-                if(StringUtils.notNullCheck(deviceIds)){
-                    deviceIds = deviceIds.substring(0, deviceIds.length()-1);
-                    addDeviceSyncRequestParam.put("deviceIds",deviceIds);
-                    addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
-                    deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
-                }
-            }
-            transactionManager.commit(transactionStatus);
-        }catch(DataAccessException e){
-            transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
-        }
-
         ModelAndView modelAndView = new ModelAndView();
+
+        Map<String, String> areaCheckParam = new HashMap<>();
+        areaCheckParam.put("delYn","N");
+        areaCheckParam.put("areaId",parameters.get("areaId"));
+        areaCheckParam.put("parentAreaId",parameters.get("parentAreaId"));
+
+        if(areaDao.findCountArea(areaCheckParam)>=9){
+            modelAndView.addObject("resultCode", "ERR200");
+        }else{
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+            AreaBean area = areaDao.findByArea(parameters);
+            try {
+                areaDao.saveArea(parameters);
+                if(StringUtils.notNullCheck(parameters.get("allTemplate"))){
+                    areaDao.saveAreaTemplate(parameters);
+                }
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
+
+            transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+            try {
+                if(!parameters.get("areaName").equals(area.getAreaName())){
+                    Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
+                    String deviceIds = "";
+
+                    List<DeviceBean> deviceBeanList = deviceDao.findListDeviceArea(parameters);
+                    for(DeviceBean deviceBean : deviceBeanList){
+                        deviceIds += deviceBean.getDeviceId() + ",";
+                    }
+
+                    if(StringUtils.notNullCheck(deviceIds)){
+                        deviceIds = deviceIds.substring(0, deviceIds.length()-1);
+                        addDeviceSyncRequestParam.put("deviceIds",deviceIds);
+                        addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
+                        deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
+                    }
+                }
+                transactionManager.commit(transactionStatus);
+            }catch(DataAccessException e){
+                transactionManager.rollback(transactionStatus);
+                throw new IcentException("");
+            }
+        }
         return modelAndView;
     }
 

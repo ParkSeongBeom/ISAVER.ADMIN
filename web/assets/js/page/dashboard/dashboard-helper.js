@@ -15,8 +15,8 @@ var DashboardHelper = (
         var _options ={
             marquee : true
             ,guardInfo : true
-            ,deviceStatusChangeSound : true
         };
+        var _noneAddEvents = ['EVT999'];
         var _messageConfig;
         var _fileUploadPath;
         var _defaultTemplateCode = "TMP001";
@@ -222,10 +222,14 @@ var DashboardHelper = (
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null && data['status']!="C"){
                             _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
                             _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
-                            notificationGuardInfoUpdate(messageType, data['criticalLevel'], data);
+                            if(_noneAddEvents.indexOf(data['eventId'])<0){
+                                notificationGuardInfoUpdate(messageType, data['criticalLevel'], data);
+                            }
                         }
-                        notificationUpdate(messageType, data);
-                        notificationMarqueeUpdate(data['areaId'], data);
+                        if(_noneAddEvents.indexOf(data['eventId'])<0){
+                            notificationUpdate(messageType, data);
+                            notificationMarqueeUpdate(data['areaId'], data);
+                        }
                     }
                     break;
                 case "removeNotification": // 알림이벤트 해제
@@ -374,10 +378,6 @@ var DashboardHelper = (
                             _area['childDevice'][deviceStatus['deviceId']]['element'].removeClass('level-die');
                         }else{
                             _area['childDevice'][deviceStatus['deviceId']]['element'].addClass('level-die');
-
-                            if(_options['deviceStatusChangeSound']){
-                                playSegment();
-                            }
                         }
                     }
                 }

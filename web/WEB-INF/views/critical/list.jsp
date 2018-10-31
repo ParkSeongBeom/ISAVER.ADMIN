@@ -324,6 +324,7 @@
         ,'criticalAddComplete':'<spring:message code="critical.message.criticalAddComplete"/>'
         ,'criticalSaveComplete':'<spring:message code="critical.message.criticalSaveComplete"/>'
         ,'criticalRemoveComplete':'<spring:message code="critical.message.criticalRemoveComplete"/>'
+        ,'criticalExist':'<spring:message code="critical.message.criticalExist"/>'
         /** 감지장치 */
         ,'requireDetectDeviceId':'<spring:message code="critical.message.requireDetectDeviceId"/>'
         ,'requireFenceId':'<spring:message code="critical.message.requireFenceId"/>'
@@ -337,6 +338,7 @@
         ,'detectAddComplete':'<spring:message code="critical.message.detectAddComplete"/>'
         ,'detectSaveComplete':'<spring:message code="critical.message.detectSaveComplete"/>'
         ,'detectRemoveComplete':'<spring:message code="critical.message.detectRemoveComplete"/>'
+        ,'detectExist':'<spring:message code="critical.message.detectExist"/>'
         /** 대상장치 */
         ,'requireTargetDeviceId':'<spring:message code="critical.message.requireTargetDeviceId"/>'
         ,'requireAlarmFileId':'<spring:message code="critical.message.requireAlarmFileId"/>'
@@ -468,6 +470,7 @@
                 case 'detect':
                     param = {
                         'criticalId' : targetElement.find("input[name='criticalId']").val()
+                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
                         ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
                         ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
                     };
@@ -566,8 +569,19 @@
                 targetRender(data['criticalTarget']);
                 break;
             default :
-                alertMessage(actionType + 'Complete');
-                cancel();
+                if(data['resultCode']!=null){
+                    switch (data['resultCode']){
+                        case "ERR100":
+                            alertMessage('criticalExist');
+                            break;
+                        case "ERR101":
+                            alertMessage('detectExist');
+                            break;
+                    }
+                }else{
+                    alertMessage(actionType + 'Complete');
+                    cancel();
+                }
         }
     }
 

@@ -13,4 +13,9 @@ public class ResultState {
     public final static String ERROR_DISABLE_INTERFACE = "ERR002";
     public final static String ERROR_DISABLE_ACTION = "ERR003";
     public final static String ERROR_WRONG_ACCESS = "ERR004";
+
+    public final static String ERROR_EXIST_CRITICAL = "ERR100";
+    public final static String ERROR_EXIST_CRITICAL_DETECT = "ERR101";
+
+    public final static String ERROR_OVERFLOW_AREA = "ERR200";
 }
