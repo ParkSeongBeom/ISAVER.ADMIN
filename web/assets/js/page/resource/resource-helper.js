@@ -148,7 +148,7 @@ var ResourceHelper = (
 
             if(deviceCode=='DEV013'){
                 if(parentDeviceId==null || parentDeviceId=='' || _deviceList[parentDeviceId]['data']['deviceCode']!='DEV015'){
-                    _alertMessage('requiredConfiguredM8');
+                    _alertMessage('requiredM8');
                     return false;
                 }
             }
