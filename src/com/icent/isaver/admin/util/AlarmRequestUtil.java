@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.util;
 
 
+import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.kst.common.util.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,72 +42,77 @@ public class AlarmRequestUtil {
      * @return
      * @throws IOException
      */
-    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, String contentType, String jsonName) throws IOException {
-
+    public static Object sendAlarmRequestFunc(Map<String, String> parameters, String requestHttpUrl, String contentType, String jsonName) throws Exception {
         CloseableHttpClient commonHttpClient = null;
+        commonHttpClient = CommonUtil.getHttpClientFunc(commonHttpClient, timeout* 1000);
         HttpPost httpPost = null;
         HttpResponse response = null;
         HttpEntity httpEntity =  null;
 
-        commonHttpClient = CommonUtil.getHttpClientFunc(commonHttpClient, timeout* 1000);
+        try{
+            httpPost = new HttpPost(requestHttpUrl);
+            final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout* 1000).setSocketTimeout(timeout* 1000).build();
+            httpPost.setConfig(params);
+            httpPost.addHeader("charset", "UTF-8");
 
-        httpPost = new HttpPost(requestHttpUrl);
-        final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout* 1000).setSocketTimeout(timeout* 1000).build();
-        httpPost.setConfig(params);
-        httpPost.addHeader("charset", "UTF-8");
+            switch (contentType) {
+                case "json" :
+                    StringEntity stringEntity = new StringEntity(new ObjectMapper().writeValueAsString(parameters));
 
-        switch (contentType) {
-            case "json" :
-                StringEntity stringEntity = new StringEntity(new ObjectMapper().writeValueAsString(parameters));
-
-                httpPost.addHeader("content-type", "application/json");
-                httpPost.setEntity(stringEntity);
-                break;
-            case "form" :
-                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-                if(StringUtils.notNullCheck(jsonName)){
-                    nvps.add(new BasicNameValuePair(jsonName, new ObjectMapper().writeValueAsString(parameters)));
-                }else{
-                    for(String key : parameters.keySet()){
-                        nvps.add(new BasicNameValuePair(key, parameters.get(key)));
+                    httpPost.addHeader("content-type", "application/json");
+                    httpPost.setEntity(stringEntity);
+                    break;
+                case "form" :
+                    List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+                    if(StringUtils.notNullCheck(jsonName)){
+                        nvps.add(new BasicNameValuePair(jsonName, new ObjectMapper().writeValueAsString(parameters)));
+                    }else{
+                        for(String key : parameters.keySet()){
+                            nvps.add(new BasicNameValuePair(key, parameters.get(key)));
+                        }
                     }
-                }
 
-                httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
-                httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-                break;
-            default:
-                return null;
+                    httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+                    httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+                    break;
+                default:
+                    return null;
+            }
+
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setSocketTimeout(timeout * 1000)
+                    .setConnectTimeout(timeout * 1000)
+                    .setConnectionRequestTimeout(timeout * 1000)
+                    .build();
+
+            httpPost.setConfig(requestConfig);
+
+            response = commonHttpClient.execute(httpPost);
+            httpEntity = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+
+            String output;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((output = br.readLine()) != null) {
+                stringBuilder.append(output);
+            }
+
+            logger.info(requestHttpUrl + "/" + contentType + "/" + jsonName);
+            logger.info(stringBuilder.toString());
+
+            if (httpEntity != null) {
+                httpEntity.getContent().close();
+            }
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+        } finally {
+            if (commonHttpClient != null && commonHttpClient.getConnectionManager() != null) {
+                commonHttpClient.getConnectionManager().shutdown();
+                commonHttpClient = null;
+            }
         }
-
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setSocketTimeout(timeout * 1000)
-                .setConnectTimeout(timeout * 1000)
-                .setConnectionRequestTimeout(timeout * 1000)
-                .build();
-
-        httpPost.setConfig(requestConfig);
-
-        response = commonHttpClient.execute(httpPost);
-        httpEntity = response.getEntity();
-
-        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-
-        String output;
-        StringBuilder stringBuilder = new StringBuilder();
-
-        while ((output = br.readLine()) != null) {
-            stringBuilder.append(output);
-        }
-
-        logger.info(requestHttpUrl + "/" + contentType + "/" + jsonName);
-        logger.info(stringBuilder.toString());
-
-        if (httpEntity != null) {
-            httpEntity.getContent().close();
-        }
-        commonHttpClient.close();
-
         return null;
     }
 

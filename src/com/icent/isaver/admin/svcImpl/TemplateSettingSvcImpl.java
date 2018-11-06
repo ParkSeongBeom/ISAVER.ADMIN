@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.common.util.TransactionUtil;
 import com.icent.isaver.admin.resource.AdminResource;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.TemplateSettingBean;
@@ -117,8 +118,8 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             websocketParam.put("settingId","safeGuardMapView");
             websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", "jsonData");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
     }
 }

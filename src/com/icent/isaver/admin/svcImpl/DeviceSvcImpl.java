@@ -4,6 +4,7 @@ import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.resource.AdminResource;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -187,8 +188,8 @@ public class DeviceSvcImpl implements DeviceSvc {
                 websocketParam.put("messageType","deviceSync");
 
                 AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
             }
         }else{
             logger.error("[deviceSync] error - parent device is null");

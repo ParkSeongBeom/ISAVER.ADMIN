@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.InoutConfigurationBean;
@@ -107,8 +108,8 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             websocketParam.put("messageType","refreshBlinker");
             websocketParam.put("areaId", parameters.get("areaId"));
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

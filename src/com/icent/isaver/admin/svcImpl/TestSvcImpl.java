@@ -1,5 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.AreaBean;
@@ -88,8 +90,8 @@ public class TestSvcImpl implements TestSvc {
 
         try {
             AlarmRequestUtil.sendAlarmRequestFunc(parameters, "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl, "form", null);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

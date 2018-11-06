@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -132,8 +133,8 @@ public class NotificationSvcImpl implements NotificationSvc {
             websocketParam.put("notification", parameterList);
             websocketParam.put("messageType","updateNotification");
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -205,8 +206,8 @@ public class FileSvcImpl implements FileSvc {
             websocketParam.put("messageType","alarmFileSync");
 
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
     }
 
