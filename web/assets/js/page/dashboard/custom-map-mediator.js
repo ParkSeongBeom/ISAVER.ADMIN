@@ -101,7 +101,7 @@ var CustomMapMediator = (
 
             var unknownHideFlag = $.cookie(areaId+"unknownHideFlag");
             if(unknownHideFlag != null && unknownHideFlag.length > 0){
-                _unknownHideFlag = unknownHideFlag=="true"?true:false;
+                _unknownHideFlag = unknownHideFlag == "true";
                 _element.find("input[name='humanCkb']").prop("checked",_unknownHideFlag);
             }
 
