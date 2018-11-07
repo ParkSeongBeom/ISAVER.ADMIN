@@ -73,7 +73,6 @@ public class EventActionCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
         if(MapUtils.nullCheckMap(parameters, saveEventParam)){
             throw new IcentException("");
         }

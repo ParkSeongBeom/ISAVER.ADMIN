@@ -1434,8 +1434,8 @@ input.datepicker + button + .in-timepicker {
   .g-ico .ui-resizable-e, .g-ico .ui-resizable-s, .g-ico .ui-resizable-se, .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
     display: none !important;
     position: absolute;
-    width: 8px;
-    height: 8px; }
+    width: 10px;
+    height: 10px; }
     .g-ico .ui-resizable-e:before, .g-ico .ui-resizable-s:before, .g-ico .ui-resizable-se:before, .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
       content: "";
       display: -webkit-box;
@@ -1540,8 +1540,8 @@ input.datepicker + button + .in-timepicker {
   .g-ico .ui-resizable-e, .g-ico .ui-resizable-s, .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
     display: none !important; }
   .g-ico .ui-resizable-se, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
-    right: -4px;
-    bottom: -4px; }
+    right: -5px;
+    bottom: -5px; }
   .g-ico.on, .g-m8.on, .g-camera.on {
     background-color: #109dcb; }
     .g-ico.on:hover .ui-resizable-se, .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
@@ -1605,13 +1605,32 @@ input.datepicker + button + .in-timepicker {
 .g-qguard:before {
   content: "\e96c"; }
 .g-tracking {
-  width: 8px;
-  height: 8px;
-  background-color: transparent; }
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  box-shadow: 0 0 0 0px transparent;
+  -webkit-box-shadow: 0 0 0 0px transparent;
+  -moz-box-shadow: 0 0 0 0px transparent; }
   .g-tracking:before {
-    /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-    background-image: url(../images/map/tracking.svg);
-    background-size: 100%; }
+    content: "\e953";
+    font-size: 0.4rem !important;
+    transform: scale(0.8);
+    ms-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    color: #49dbff !important; }
+  .g-tracking.object:before {
+    content: "\e906";
+    color: #fff !important;
+    opacity: 0.7;
+    transform: scale(0.6);
+    ms-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    -moz-transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    -o-transform: scale(0.6); }
   .g-tracking:after {
     display: none; }
 .g-area {
@@ -1623,14 +1642,14 @@ input.datepicker + button + .in-timepicker {
   border-width: 1px;
   border-color: #fff; }
   .g-area .ui-resizable-e {
-    bottom: 8px;
-    right: -4px; }
+    bottom: 10px;
+    right: -5px; }
   .g-area .ui-resizable-s {
-    bottom: -4px;
-    right: 8px; }
+    bottom: -5px;
+    right: 10px; }
   .g-area .ui-resizable-se {
-    bottom: -4px;
-    right: -4px; }
+    bottom: -5px;
+    right: -5px; }
   .g-area.on {
     background-color: rgba(16, 157, 203, 0.4);
     border-color: #109dcb; }
@@ -1713,16 +1732,10 @@ input.datepicker + button + .in-timepicker {
   -webkit-animation-duration: 0.1s !important;
   animation-duration: 0.1s !important; }
 @-webkit-keyframes notice03 {
-  0% {
-    left: 1px; }
   100% {
-    left: -1px;
     opacity: 0.7; } }
 @keyframes notice03 {
-  0% {
-    left: 1px; }
   100% {
-    left: -1px;
     opacity: 0.7; } }
 .g-ico.level-caution:after, .g-ico.level-warning:after, .g-ico.level-danger:after, .g-m8.level-caution:after, .g-m8.level-warning:after, .g-m8.level-danger:after, .g-camera.level-caution:after, .g-camera.level-warning:after, .g-camera.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
   content: "";

@@ -8,7 +8,7 @@ var DashboardHelper = (
     function(rootPath, version){
         var _rootPath;
         var _version;
-        var _MEDIATOR_TYPE = ['video','map'];
+        var _MEDIATOR_TYPE = ['video','map','toiletRoom'];
         var _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
         };
@@ -22,6 +22,7 @@ var DashboardHelper = (
         var _defaultTemplateCode = "TMP001";
         var _areaList = {};
         var _guardList = {};
+        var _toiletRoomList = {};
         var _self = this;
 
         /**
@@ -58,15 +59,25 @@ var DashboardHelper = (
          * set websocket
          * @author psb
          */
-        this.setWebsocket = function(_webSocketHelper, _mapWebSocketUrl){
-            if($("div[templateCode='TMP005']").length>0){
-                _webSocketHelper.addWebSocketList("device", _mapWebSocketUrl, null, mapMessageEventHandler);
-                _webSocketHelper.wsConnect("device");
+        this.setWebsocket = function(_type, _webSocketHelper, _webSocketUrl){
+            switch (_type) {
+                case "map":
+                    if($("div[templateCode='TMP005']").length>0){
+                        _webSocketHelper.addWebSocketList(_type, _webSocketUrl, null, mapMessageEventHandler);
+                        _webSocketHelper.wsConnect(_type);
+                    }
+                    break;
+                case "toiletRoom":
+                    if($("div[templateCode='TMP008']").length>0){
+                        _webSocketHelper.addWebSocketList(_type, _webSocketUrl, null, toiletRoomMessageEventHandler);
+                        _webSocketHelper.wsConnect(_type);
+                    }
+                    break;
             }
         };
 
         /**
-         * 웹소켓 메세지 리스너
+         * Map 웹소켓 메세지 리스너
          * @param message
          */
         var mapMessageEventHandler = function(message) {
@@ -91,6 +102,24 @@ var DashboardHelper = (
                         _mapMediator.removeMarker(resultData['messageType'], resultData);
                         break;
                 }
+            }
+        };
+
+        /**
+         * 화장실재실 웹소켓 메세지 리스너
+         * @param message
+         */
+        var toiletRoomMessageEventHandler = function(message) {
+            var resultData;
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                console.warn("[toiletRoomMessageEventHandler] json parse error - " + message.data);
+                return false;
+            }
+
+            if(resultData['areaId']!=null && _toiletRoomList[resultData['areaId']]!=null && resultData['imageData']!=null){
+                _toiletRoomList[resultData['areaId']].saveCanvasImage(resultData['imageData']);
             }
         };
 
@@ -127,7 +156,7 @@ var DashboardHelper = (
                 var _areaId = $(this).attr("areaId");
                 _guardList[_areaId] = {};
                 _guardList[_areaId][_MEDIATOR_TYPE[0]] = new VideoMediator(_rootPath);
-                _guardList[_areaId][_MEDIATOR_TYPE[1]] = templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath, _version);
+                _guardList[_areaId][_MEDIATOR_TYPE[1]] = templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath);
                 _guardList[_areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
 
                 var deviceList = [];
@@ -158,7 +187,7 @@ var DashboardHelper = (
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].addImage();
                 }else if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this).find("div[name='map-canvas']"));
+                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this));
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
                         'websocketSend':false
@@ -190,6 +219,25 @@ var DashboardHelper = (
         };
 
         /**
+         * set ToiletRoom list
+         */
+        this.setToiletRoomList = function(){
+            var initFlag = false;
+            $.each($("div[templateCode='TMP008']"),function(){
+                var _areaId = $(this).attr("areaId");
+                _toiletRoomList[_areaId] = {};
+                _toiletRoomList[_areaId] = new ToiletRoomMediator(_rootPath);
+                _toiletRoomList[_areaId].setElement($(this));
+                _toiletRoomList[_areaId].init(_areaId);
+                initFlag = true;
+            });
+
+            if(initFlag){
+                console.log("[DashboardHelper] initialize Toilet Room");
+            }
+        };
+
+        /**
          * websocket callback append event handler
          */
         this.appendEventHandler = function(messageType, data){
@@ -210,6 +258,11 @@ var DashboardHelper = (
                             detectorUpdate(data['eventLog']);
                             break;
                         case "TMP005": // guard
+                            break;
+                        case "TMP008": // 화장실재실
+                            if(data['eventLog']['areaId']!=null && _toiletRoomList[data['eventLog']['areaId']]!=null){
+                                _toiletRoomList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
+                            }
                             break;
                     }
                     break;
@@ -257,6 +310,16 @@ var DashboardHelper = (
                         _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
                     }
                     break;
+            }
+        };
+
+        /**
+         * set unknownShowFlag
+         * @author psb
+         */
+        this.setUnknownFlag = function(areaId, _this){
+            if(_guardList[areaId]!=null){
+                _guardList[areaId][_MEDIATOR_TYPE[1]].setUnknownFlag($(_this).is(":checked"));
             }
         };
 

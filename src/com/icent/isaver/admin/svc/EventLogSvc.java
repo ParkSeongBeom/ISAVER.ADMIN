@@ -50,6 +50,15 @@ public interface EventLogSvc {
     ModelAndView findListEventLogBlinkerForArea(Map<String, String> parameters);
 
     /**
+     * 이벤트 로그 목록을 가져온다. (화장실재실)
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findByEventLogToiletRoomForArea(Map<String, String> parameters);
+
+    /**
      * 이벤트 로그 상세을 가져온다.
      *
      * @author dhj

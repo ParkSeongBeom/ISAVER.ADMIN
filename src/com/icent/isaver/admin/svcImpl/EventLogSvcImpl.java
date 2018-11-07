@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.EventLogBean;
@@ -83,6 +84,23 @@ public class EventLogSvcImpl implements EventLogSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventLog", eventLogList);
         modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findByEventLogToiletRoomForArea(Map<String, String> parameters) {
+        EventLogBean lastStatus = eventLogDao.findByEventLogToiletRoomForArea(parameters);
+        parameters.put("status", AdminResource.TOILET_ROOM_STATUS[1]);
+        EventLogBean normalDatetime = eventLogDao.findByEventLogToiletRoomForArea(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        if(lastStatus!=null){
+            modelAndView.addObject("status", lastStatus.getStatus());
+        }
+        if(normalDatetime!=null){
+            modelAndView.addObject("eventDatetime", normalDatetime.getEventDatetime());
+        }
+        modelAndView.addObject("paramBean", parameters);
         return modelAndView;
     }
 

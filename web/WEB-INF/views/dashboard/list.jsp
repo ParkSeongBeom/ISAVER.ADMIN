@@ -336,6 +336,10 @@
                             <article>
                                 <section class="guard_set">
                                     <div class="s_lbox">
+                                        <div class="human_check">
+                                            <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setUnknownFlag('${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
                                         <%--<div name="map-canvas" class="map_images"></div>--%>
                                         <div name="map-canvas"></div>
                                     </div>
@@ -368,6 +372,63 @@
                                     </div>
                                 </c:if>
                                 <div guardInfo class="copybox_area"></div>
+                                <div class="m_marqueebox">
+                                    <!-- <span>에 내용 삽입 -->
+                                    <p messageBox></p>
+                                </div>
+                            </article>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${childArea.templateCode=='TMP008'}">
+                        <!-- Safe-Guard -->
+                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
+                            <header>
+                                <h3>${childArea.areaName}</h3>
+                                <c:if test="${childArea.childAreaIds!=null}">
+                                    <!-- 구역에 구역이 존재할 때 area -->
+                                    <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                                </c:if>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
+                                </c:if>
+                            </header>
+                            <article>
+                                <section class="entrance_set">
+                                    <!-- 클라우드 이미지-->
+                                    <div class="s_lbox">
+                                        <canvas name="toiletRoom-canvas"></canvas>
+                                    </div>
+                                    <!-- 재실정보 이미지-->
+                                    <div class="s_rbox">
+                                        <div id="statusIco" class="entrance_ico"></div>
+                                        <p id="eventDatetime">00:00:00</p>
+                                    </div>
+                                </section>
+                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                    <div class="device_box">
+                                        <div class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
+                                                     data-deviceId="${device.deviceId}"
+                                                     data-deviceCode="${device.deviceCode}"
+                                                     data-ipAddress="${device.ipAddress}"
+                                                     data-port="${device.port}"
+                                                     data-deviceUserId="${device.deviceUserId}"
+                                                     data-devicePassword="${device.devicePassword}"
+                                                     data-subUrl="${device.subUrl}"
+                                                     data-linkUrl="${device.linkUrl}"
+                                                     data-streamServerUrl="${device.streamServerUrl}"
+                                                     data-deviceStat="${device.deviceStat}"
+                                                     data-deviceName="${device.deviceName}"
+                                                        >
+                                                    <p>${device.deviceName}</p>
+                                                    <p></p>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -475,6 +536,7 @@
 </c:if>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/map-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/toilet-room-mediator.js?version=${version}"></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
@@ -528,16 +590,18 @@
 
         dashboardHelper.setFileUploadPath(fileUploadPath);
         dashboardHelper.setMessageConfig(messageConfig);
-        dashboardHelper.setWebsocket(webSocketHelper, "${mapWebSocketUrl}");
+        dashboardHelper.setWebsocket('map', webSocketHelper, "${mapWebSocketUrl}");
+        dashboardHelper.setWebsocket('toiletRoom', webSocketHelper, "${toiletRoomWebSocketUrl}");
         dashboardHelper.setAreaList();
         dashboardHelper.getBlinkerList();
         if(templateSetting['safeGuardMapView']=='offline'){
             dashboardHelper.setGuardList();
         }
+        dashboardHelper.setToiletRoomList();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
         /* 이벤트 callback (websocket 리스너) */
-        setRefreshTimeCallBack(refreshInoutSetting);
+        addRefreshTimeCallBack(refreshInoutSetting);
         initInoutConfigAreaDynatree();
         initChartList();
     });
@@ -723,7 +787,6 @@
                     findListChart($(this).attr("areaId"), $(this).attr("deviceId"));
                 }
             });
-
             renderDatetime = new Date(_serverDatetime);
         }
     }

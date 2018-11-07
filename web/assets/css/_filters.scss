@@ -323,8 +323,6 @@ $display-inline-block:inline-block;
 // ex) @include text-shadow(0, 0, 8px, #000, 0.5);
 
 
-
-
 @mixin box-blur ($xpx) {
   -webkit-filter: blur($xpx);
   -moz-filter:    blur($xpx);
@@ -830,6 +828,26 @@ $bbl01:100%; $bbl02:1px;
     100% { opacity: 0; padding:15%}
   }
 } // ex) @include issue07;
+
+@mixin issue08 {
+  animation-name: issue08;
+  -webkit-animation-name: issue08;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue08 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2);}
+  }
+  @keyframes issue08 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2);}
+  }
+} // ex) @include issue08;
 
 @mixin die {
   content:"Not Connected!"; z-index: 10; opacity: 1; font-size: 1rem; color:$color-yellow-01;

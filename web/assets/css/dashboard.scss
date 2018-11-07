@@ -354,7 +354,6 @@ body.dashboard_mode {
 
 
 /////..... safeeye section Start
-
 .safeeye_set {
 
   .s_lbox {
@@ -407,7 +406,32 @@ body.dashboard_mode {
 
   .s_lbox {
     overflow: hidden;
-    & > div {width:100%; height:100%; @include flex-midddle;}
+    & > .human_check {
+      position: absolute; z-index: 100; top:0; right:0;  width:60px; height:70px;
+
+      input, label {width:100%; height:100%;}
+      input {
+        opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
+        cursor:pointer; padding:0; margin:0;
+      }
+      label {
+        @include flex-midddle; position: relative; opacity: 0.7;
+        &:before {content:"\e943"; font-size:3.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
+        &:after {
+          content:"VIEW ALL OBJECT "; letter-spacing: 0; line-height: 0.9rem;
+          position: absolute; left:-50px; width:50px; text-align: right; font-size:0.8rem;
+        }
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        opacity: 1;
+        &:before, &:after {color:$color-blue-01;}
+        &:before {content:"\e953"; }
+        &:after {content:"VIEW ONLY HUMAN"; }
+      }
+    }
+    & > .map_images {width:100%; height:100%; @include flex-midddle;}
 
     .gm-style {
       &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }
@@ -486,9 +510,49 @@ body.dashboard_mode {
 .vxgplayer-error  {margin:-60px 0 0 0 !important;}
 /////.......................................... Guard End
 
+/////.....  section Start
+
+
+/////..... entrance section Start
+.entrance_set {
+  .s_lbox {
+    canvas {position: absolute; z-index: 1; top:0; left:0;  width:100%; height:100%;}
+  }
+  .s_rbox {
+    @include flex-column; padding:0;
+    &:before {left:0;}
+    & > * {@include flex-midddle; position: relative !important; width:100%; max-height: none;}
+
+    p {overflow: hidden; @include flex-width-one(0); font-size:5rem;}
+
+    .entrance_ico {
+       @include flex-width-one(2);
+      &:before, &:after {
+        @include flex-midddle; padding:20%; @include border-radius(1000px);
+        @include transition(400ms);
+      }
+
+      &:after {content:""; position: absolute;}
+      &:before {content:"\e953"; font-size:18rem; opacity: 0.5; @include text-shadow(0, 0, 30px, #000, 1);}
+
+      &.enter:before {content:"\e932"; opacity: 1;}
+      &.fall:before {content:"\e952";}
+      &.enter, &.fall {& + p {@include flex-width-one(1);}}
+    }
+
+  }
+}
+.level-danger .entrance_ico {
+  &.enter, &.fall {
+    & + p {color:$color-red-01;}
+    &:before {color:$color-red-01; @include issue02;}
+    &:after { @include issue08; @include border01(2px,$color-red-01,1 );}
+  }
+}
+/////..... entrance section End
+
 
 /////..... device section Start
-
 $ds-sw:50px; $ds-w:150px;
 .device_box {
   @include flexbase; @include flex-align-items-start; order:3; @include transition(400ms);

@@ -1,7 +1,9 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.common.resource.IcentException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,26 @@ public class EventLogCtrl {
     public ModelAndView findListEventLogBlinkerForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = eventLogSvc.findListEventLogBlinkerForArea(parameters);
+        return modelAndView;
+    }
+
+    private final static String[] findByEventLogToiletRoomForAreaParam = new String[]{"areaId"};
+
+    /**
+     * 이벤트 로그 목록을 가져온다. (toilet room)
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/toiletRoom")
+    public ModelAndView findByEventLogToiletRoomForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        if(MapUtils.nullCheckMap(parameters, findByEventLogToiletRoomForAreaParam)){
+            throw new IcentException("");
+        }
+
+        ModelAndView modelAndView = eventLogSvc.findByEventLogToiletRoomForArea(parameters);
         return modelAndView;
     }
 

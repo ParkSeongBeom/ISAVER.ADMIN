@@ -52,6 +52,9 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Value("${ws.server.mapUrlConnect}")
     private String wsMapUrlConnect = null;
 
+    @Value("${ws.server.toiletRoomUrlConnect}")
+    private String wsToiletRoomUrlConnect = null;
+
     @Inject
     private AreaDao areaDao;
 
@@ -93,6 +96,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         try{
             InetAddress address = InetAddress.getByName(wsAddress);
             modelAndView.addObject("mapWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsMapUrlConnect);
+            modelAndView.addObject("toiletRoomWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsToiletRoomUrlConnect);
         }catch(Exception e){
             e.printStackTrace();
         }

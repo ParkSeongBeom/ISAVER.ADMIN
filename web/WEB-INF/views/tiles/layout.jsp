@@ -89,7 +89,7 @@
         var alarmPlayer;
         var alarmDefaultSource = '${rootPath}/assets/library/sound/alarm.mp3';
         var segmentEnd;
-        var refreshTimeCallBack;
+        var refreshTimeCallBack = [];
 
         var criticalCss = {
             <c:forEach var="criticalLevel" items="${criticalLevelCss}">
@@ -247,9 +247,9 @@
             }
         }
 
-        function setRefreshTimeCallBack(_function){
+        function addRefreshTimeCallBack(_function){
             if(_function!=null && typeof _function == "function"){
-                refreshTimeCallBack = _function;
+                refreshTimeCallBack.push(_function);
             }
         }
 
@@ -276,8 +276,10 @@
                 $("section[alarm_detail] p[currentDatetime]").text((negative?"-":"") + hour + ":" + minute + ":" + second);
             }
 
-            if(refreshTimeCallBack!=null && typeof refreshTimeCallBack == "function"){
-                refreshTimeCallBack(serverDatetime);
+            for(var index in refreshTimeCallBack){
+                if(refreshTimeCallBack[index]!=null && typeof refreshTimeCallBack[index] == "function"){
+                    refreshTimeCallBack[index](serverDatetime);
+                }
             }
 
             setTimeout(function(){

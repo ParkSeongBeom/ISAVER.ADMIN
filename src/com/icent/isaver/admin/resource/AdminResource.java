@@ -125,6 +125,15 @@ public class AdminResource {
     };
 
     /**
+     * 화장실재실 상태 코드정의
+     * - 비어있음 : empty
+     * - 정상 : normal
+     * - 쓰러짐 : fall
+     * @author psb
+     */
+    public final static String[] TOILET_ROOM_STATUS = new String[]{"empty","normal","fall"};
+
+    /**
      * 임계치 레벨별 css정의
      * @author psb
      */

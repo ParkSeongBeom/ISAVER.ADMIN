@@ -882,10 +882,13 @@ div[contenteditable] {}
 
   &-tracking {
     width:$resi_w; height:$resi_w; background-color: transparent;
+    @include box-shadow01(0, 0, 0, 0px, #000, 0);
     &:before {
-      /*content:"\e91b"; font-size:1rem; color:$color-blue-03 !important;*/
-      background-image: url(../images/map/tracking.svg); background-size: 100%;
+      content:"\e953"; font-size:0.4rem !important; @include scale(0.8); color:$color-blue-03 !important;
+      //color:$color-blue-03 !important;
+      ///background-image: url(../images/map/tracking.svg); background-size: 60% !important;
     }
+    &.object:before {content:"\e906"; color:$color-white-01 !important;  opacity: 0.7; @include scale(0.6);}
     &:after {display: none;}
   }
 
