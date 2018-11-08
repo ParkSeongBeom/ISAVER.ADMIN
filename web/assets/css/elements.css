@@ -1605,8 +1605,8 @@ input.datepicker + button + .in-timepicker {
 .g-qguard:before {
   content: "\e96c"; }
 .g-tracking {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   background-color: transparent;
   box-shadow: 0 0 0 0px transparent;
   -webkit-box-shadow: 0 0 0 0px transparent;
@@ -1614,12 +1614,7 @@ input.datepicker + button + .in-timepicker {
   .g-tracking:before {
     content: "\e953";
     font-size: 0.4rem !important;
-    transform: scale(0.8);
-    ms-transform: scale(0.8);
-    -ms-transform: scale(0.8);
-    -moz-transform: scale(0.8);
-    -webkit-transform: scale(0.8);
-    -o-transform: scale(0.8);
+    /*@include scale(0.8);*/
     color: #49dbff !important; }
   .g-tracking.object:before {
     content: "\e906";

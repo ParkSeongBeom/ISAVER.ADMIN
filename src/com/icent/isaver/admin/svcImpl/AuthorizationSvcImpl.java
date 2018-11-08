@@ -70,7 +70,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     public ModelAndView login(HttpServletRequest request, Map<String, String> parameters) {
         License license = haspLicenseUtil.login();
 
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+        if (HaspStatus.HASP_STATUS_OK == license.getStatus() || AdminResource.NONE_LICENSE_TARGET == license.getStatus()) {
             UsersBean usersBean = usersDao.findByUsersForLogin(parameters);
 
             if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){

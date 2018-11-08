@@ -25,7 +25,7 @@ var CustomMapMediator = (
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
                 ,'zoom' : {  // 10 = scale(1,1) and 5 = scale(0.5,0.5)
-                    'init' : 30
+                    'init' : 10
                     ,'min' : 5
                     ,'max' : 50
                 }
@@ -61,7 +61,9 @@ var CustomMapMediator = (
             ,"DEV013" : "g-ico g-m8"
             ,"DEV015" : "g-ico g-qguard"
         };
-        var _unknownHideFlag=true;
+        // true :사람만보기
+        // false:전체보기
+        var _objectViewFlag=false;
         var _scale=1.0;
         var _rotate=0;
         var _element;
@@ -99,10 +101,11 @@ var CustomMapMediator = (
         this.init = function(areaId,options){
             _areaId = areaId;
 
-            var unknownHideFlag = $.cookie(areaId+"unknownHideFlag");
-            if(unknownHideFlag != null && unknownHideFlag.length > 0){
-                _unknownHideFlag = unknownHideFlag == "true";
-                _element.find("input[name='humanCkb']").prop("checked",_unknownHideFlag);
+            var objectViewFlag = $.cookie(areaId+"objectViewFlag");
+            if(objectViewFlag != null && objectViewFlag.length > 0){
+                _objectViewFlag = objectViewFlag == "true";
+                _element.find("input[name='humanCkb']").prop("checked",_objectViewFlag);
+                _mapCanvas.addClass("onlyhuman");
             }
 
             for(var index in options){
@@ -117,9 +120,9 @@ var CustomMapMediator = (
          * set element
          * @author psb
          */
-        this.setElement = function(element){
+        this.setElement = function(element, canvas){
             _element = element;
-            _mapCanvas = _element.find("div[name='map-canvas']");
+            _mapCanvas = canvas;
             _mapCanvas.addClass("map_images");
             _mapCanvas.empty();
             if(_mapCanvas.data('svgwrapper')){
@@ -208,16 +211,16 @@ var CustomMapMediator = (
         };
 
         /**
-         * set UnknownFlag
+         * set object view (전체보기/사람만보기)
          * @author psb
          */
-        this.setUnknownFlag = function(flag){
-            _unknownHideFlag = flag;
-            $.cookie(_areaId+'unknownHideFlag',_unknownHideFlag);
-            if(_unknownHideFlag){
-                _mapCanvas.find("."+_targetClass[_MARKER_TYPE[2]]+" .object").hide();
+        this.setObjectViewFlag = function(flag){
+            _objectViewFlag = flag;
+            $.cookie(_areaId+'objectViewFlag',_objectViewFlag);
+            if(_objectViewFlag){
+                _mapCanvas.addClass("onlyhuman");
             }else{
-                _mapCanvas.find("."+_targetClass[_MARKER_TYPE[2]]+" .object").show();
+                _mapCanvas.removeClass("onlyhuman");
             }
         };
 
@@ -502,11 +505,6 @@ var CustomMapMediator = (
                         _mapCanvas.append(_marker[messageType][data['id']]);
                         if(data['objectType']=='unknown'){
                             _marker[messageType][data['id']].addClass("object");
-                            if(_unknownHideFlag){
-                                _marker[messageType][data['id']].hide();
-                            }
-                        }else{
-                            _marker[messageType][data['id']].removeClass("object");
                         }
                         _marker[messageType][data['id']].css("left",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+Number(data['location'][0]['lat'])-(_marker[messageType][data['id']].width()/2),2));
                         _marker[messageType][data['id']].css("top",toRound(Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+Number(data['location'][0]['lng'])-_marker[messageType][data['id']].height(),2));
@@ -537,6 +535,11 @@ var CustomMapMediator = (
                     break;
                 case _MARKER_TYPE[2] : // Object
                     if(_marker[messageType][data['id']]!=null){
+                        if(data['objectType']=='unknown'){
+                            _marker[messageType][data['id']].addClass("object");
+                        }else{
+                            _marker[messageType][data['id']].removeClass("object");
+                        }
                         if(data['location'] instanceof Array){
                             data['location'] = data['location'][0];
                         }

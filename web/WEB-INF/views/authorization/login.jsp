@@ -56,7 +56,7 @@
                 <!-- 로그인 입력 폼 End -->
                 <button href="#" alt="Login" class="btn" onclick="javascript:login(); return false;"><spring:message code="login.button.login"/></button>
 
-                <div class='license_notice <c:if test="${license.status != 0}">on</c:if>'>
+                <div class='license_notice <c:if test="${license.status != 0 and license.status != -99}">on</c:if>'>
                     <p>
                         <c:choose>
                             <c:when test="${license.status == -1}">
@@ -176,6 +176,7 @@
         var license = data['license'];
         switch (license['status']){
             case 0:
+            case -99: // 라이센스 인가 체크 안함
                 location.href=urlConfig['mainUrl'];
                 break;
             case -1: // 기한만료

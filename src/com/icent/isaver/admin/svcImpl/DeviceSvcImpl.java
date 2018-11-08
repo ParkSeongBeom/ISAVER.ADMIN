@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.util.StringUtils;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSvc;
@@ -13,6 +14,7 @@ import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
+import org.apache.poi.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -100,9 +102,9 @@ public class DeviceSvcImpl implements DeviceSvc {
     public ModelAndView addDevice(HttpServletRequest request, Map<String, String> parameters) {
         License license = haspLicenseUtil.read(parameters.get("deviceCode"));
 
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+        if (HaspStatus.HASP_STATUS_OK == license.getStatus() || AdminResource.NONE_LICENSE_TARGET == license.getStatus()) {
             int licenseCnt = deviceDao.findCountDeviceLicense(parameters);
-            if(licenseCnt < Integer.parseInt(license.getMessage())){
+            if(AdminResource.NONE_LICENSE_TARGET==license.getStatus() || licenseCnt < Integer.parseInt(license.getMessage())){
                 TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
                 try {
                     parameters.put("deviceId", generatorFunc());

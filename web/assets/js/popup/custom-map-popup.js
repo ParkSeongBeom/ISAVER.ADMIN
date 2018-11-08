@@ -127,7 +127,7 @@ var CustomMapPopup = (
             _areaId = areaId;
             _customMapMediator = new CustomMapMediator(_rootPath,_version);
             try{
-                _customMapMediator.setElement(_element.find("#mapElement"));
+                _customMapMediator.setElement(_element, _element.find("#mapElement"));
                 _customMapMediator.setMessageConfig(_messageConfig);
                 _customMapMediator.init(areaId,{
                     'draggable' : true

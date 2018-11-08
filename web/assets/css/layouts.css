@@ -1125,7 +1125,7 @@ menu {
   position: fixed;
   z-index: 40;
   top: 30px;
-  right: 100px;
+  right: 135px;
   width: 220px; }
   .toast_popup.on {
     display: block; }
@@ -1134,7 +1134,6 @@ menu {
     width: 100%;
     padding: 20px;
     margin: 10px 0 0 0;
-    background-color: #be1e1e;
     box-shadow: 0px 30px 50px -20px black;
     -webkit-box-shadow: 0px 30px 50px -20px black;
     -moz-box-shadow: 0px 30px 50px -20px black; }
@@ -1161,6 +1160,12 @@ menu {
         .toast_popup > div .tp_contents span:last-of-type {
           font-size: 1.3rem;
           font-weight: bold; }
+    .toast_popup > div.level-caution {
+      background-color: #999999 !important; }
+    .toast_popup > div.level-warning {
+      background-color: #ff8400 !important; }
+    .toast_popup > div.level-danger {
+      background-color: #be1e1e !important; }
 
 .db_area {
   position: fixed;

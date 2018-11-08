@@ -6,6 +6,7 @@ import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.repository.bean.CodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
+import com.kst.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,7 +42,9 @@ import java.util.*;
 public class HaspLicenseUtil {
     static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
-    private long feature = 6;
+    private long[] featureArr = {5,6};
+    private long feature;
+    private boolean authorLicenseFlag = true;
     private String scope =
             "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
                     "<haspscope/>";
@@ -75,100 +79,148 @@ public class HaspLicenseUtil {
     public static final int BASE_LENGTH = 2;
     private Hasp hasp;
 
-    public HaspLicenseUtil() {
-        if(CommonUtil.getIpAddressFunc().equals("172.16.101.250")){
-            feature = 5;
-        }
-        hasp = new Hasp(feature);
-    }
-
     @Inject
     private CodeDao codeDao;
 
+    public void setHasp(String hostAddress, String noneLicenseTargets){
+        String hostIp = null;
+        if(hostAddress != null && hostAddress.length() > 1){
+            try{
+                InetAddress address = InetAddress.getByName(hostAddress);
+                hostIp = address.getHostAddress();
+            }catch (Exception e){
+                logger.error(e.getMessage());
+            }
+        }
+        if(noneLicenseTargets != null && noneLicenseTargets.length() > 0){
+            for(String target : noneLicenseTargets.split(",")){
+                if(StringUtils.notNullCheck(hostIp) && (target.equals(hostIp) || target.equals(CommonUtil.getIpAddressFunc()))){ // 라이센스 체크 대상이 아님.
+                    authorLicenseFlag = false;
+                    break;
+                }else{ // 라이센스 유효성 체크 대상.
+                    authorLicenseFlag = true;
+                }
+            }
+        }
+        if(authorLicenseFlag){
+            for(long ft : featureArr){
+                hasp = new Hasp(ft);
+                hasp.login(vendorCode);
+
+                if(hasp.getLastError()==HaspStatus.HASP_STATUS_OK){
+                    feature = ft;
+                    break;
+                }
+            }
+        }
+    }
+
     public License login() {
         License license = new License();
-        hasp.login(vendorCode);
+        if(authorLicenseFlag){
+            hasp.login(vendorCode);
 
-        int status = hasp.getLastError();
-        license.setStatus(status);
+            int status = hasp.getLastError();
+            license.setStatus(status);
 
-        switch (status) {
-            case HaspStatus.HASP_STATUS_OK:
-                break;
-            case HaspStatus.HASP_FEATURE_NOT_FOUND:
-                license.setMessage("no Sentinel DEMOMA key found");
-                break;
-            case HaspStatus.HASP_HASP_NOT_FOUND:
-                license.setMessage("Sentinel key not found");
-                break;
-            case HaspStatus.HASP_OLD_DRIVER:
-                license.setMessage("outdated driver version or no driver installed");
-                break;
-            case HaspStatus.HASP_NO_DRIVER:
-                license.setMessage("Sentinel key not found");
-                break;
-            case HaspStatus.HASP_INV_VCODE:
-                license.setMessage("invalid vendor code");
-                break;
-            case HaspStatus.HASP_FEATURE_EXPIRED:
-                license.setMessage("Sentinel key is expired");
-                license.setStatus(-1);
-                break;
-            default:
-                license.setMessage("login to default feature failed");
-                license.setStatus(-99);
+            switch (status) {
+                case HaspStatus.HASP_STATUS_OK:
+                    break;
+                case HaspStatus.HASP_FEATURE_NOT_FOUND:
+                    license.setMessage("no Sentinel DEMOMA key found");
+                    break;
+                case HaspStatus.HASP_HASP_NOT_FOUND:
+                    license.setMessage("Sentinel key not found");
+                    break;
+                case HaspStatus.HASP_OLD_DRIVER:
+                    license.setMessage("outdated driver version or no driver installed");
+                    break;
+                case HaspStatus.HASP_NO_DRIVER:
+                    license.setMessage("Sentinel key not found");
+                    break;
+                case HaspStatus.HASP_INV_VCODE:
+                    license.setMessage("invalid vendor code");
+                    break;
+                case HaspStatus.HASP_FEATURE_EXPIRED:
+                    license.setMessage("Sentinel key is expired");
+                    license.setStatus(-1);
+                    break;
+                default:
+                    license.setMessage("login to default feature failed");
+                    license.setStatus(-2);
+            }
+        }else{
+            license.setMessage("none authorize license");
+            license.setStatus(AdminResource.NONE_LICENSE_TARGET);
         }
         return license;
     }
 
     public License read(String deviceCode) {
-        License license = login();
+        License license = new License();
+        if(authorLicenseFlag){
+            license = login();
+            if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+                if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
+                    byte[] membuffer = new byte[BASE_LENGTH];
+                    hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(deviceCode), membuffer);
+                    int status = hasp.getLastError();
+                    license.setStatus(status);
 
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
-                byte[] membuffer = new byte[BASE_LENGTH];
-                hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(deviceCode), membuffer);
-                int status = hasp.getLastError();
-                license.setStatus(status);
-
-                switch (status) {
-                    case HaspStatus.HASP_STATUS_OK:
-                        license.setMessage(new String(membuffer));
-                        break;
-                    case HaspStatus.HASP_INV_HND:
-                        license.setMessage("handle not active");
-                        break;
-                    case HaspStatus.HASP_INV_FILEID:
-                        license.setMessage("invalid file id");
-                        break;
-                    case HaspStatus.HASP_MEM_RANGE:
-                        license.setMessage("beyond memory range of attached Sentinel key");
-                        break;
-                    case HaspStatus.HASP_HASP_NOT_FOUND:
-                        license.setMessage("hasp not found");
-                        break;
-                    default:
-                        license.setMessage("read memory failed");
-                        license.setStatus(-2);
+                    switch (status) {
+                        case HaspStatus.HASP_STATUS_OK:
+                            license.setMessage(new String(membuffer));
+                            break;
+                        case HaspStatus.HASP_INV_HND:
+                            license.setMessage("handle not active");
+                            break;
+                        case HaspStatus.HASP_INV_FILEID:
+                            license.setMessage("invalid file id");
+                            break;
+                        case HaspStatus.HASP_MEM_RANGE:
+                            license.setMessage("beyond memory range of attached Sentinel key");
+                            break;
+                        case HaspStatus.HASP_HASP_NOT_FOUND:
+                            license.setMessage("hasp not found");
+                            break;
+                        default:
+                            license.setMessage("read memory failed");
+                            license.setStatus(-2);
+                    }
+                }else{
+                    license.setMessage("Undefined device code");
+                    license.setStatus(-3);
                 }
             }else{
-                license.setMessage("Undefined device code");
-                license.setStatus(-3);
+                logger.info(license.getMessage());
             }
         }else{
-            logger.info(license.getMessage());
+            license.setMessage("none authorize license");
+            license.setStatus(AdminResource.NONE_LICENSE_TARGET);
         }
+
         return license;
     }
 
     public ModelAndView getLicenseList(){
         ModelAndView modelAndView = new ModelAndView();
 
-        License license = login();
-        if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-            modelAndView.addObject("licenseList", readDeviceList());
-            modelAndView.addObject("licenseExpireDate", getExpireDate());
+        License license = new License();
+        List<Map<String,String>> resultList = new LinkedList<>();
+        String result = "";
+
+        if(authorLicenseFlag) {
+            license = login();
+            if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
+                resultList = readDeviceList();
+                result = getExpireDate();
+            }
+        }else{
+            license.setMessage("none authorize license");
+            license.setStatus(AdminResource.NONE_LICENSE_TARGET);
         }
+        modelAndView.addObject("licenseList", resultList);
+        modelAndView.addObject("licenseExpireDate", result);
         modelAndView.addObject("license", license);
         return modelAndView;
     }

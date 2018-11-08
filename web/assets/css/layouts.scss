@@ -555,14 +555,14 @@ menu {
 /////..... 토스트 팝업 시작
 .toast_popup {
   display: none;
-  position: fixed; @include z-index-toast; top:($headerHeight - 10px); right:100px;
+  position: fixed; @include z-index-toast; top:($headerHeight - 10px); right:135px;
   width:($noticecenter-width - 80px);
 
   &.on {display: block;}
 
   & > div {
     position: relative; width:100%; padding:$popup-margin; margin:10px 0 0 0;
-    background-color: $color-red-01; @include box-shadow02(0px, 30px, 50px, -20px, 0, 0, 0, 1);
+    @include box-shadow02(0px, 30px, 50px, -20px, 0, 0, 0, 1);
     & * {color:$color-white-01; @include text-shadow(0, 1px, 2px, #000, 0.7);}
     .btn_x {
       position: absolute; top:10px; right:10px;
@@ -576,6 +576,13 @@ menu {
         &:last-of-type  {font-size:1.3rem; font-weight:bold;}
       }
     }
+
+    &.level {
+      &-caution { background-color: rgba($color-gray-03,1) !important;  }    // &-caution 주의
+      &-warning { background-color: rgba($color-orange-01,1) !important;}    // &-warning 경고
+      &-danger  { background-color: rgba($color-red-01,1) !important;   }    // &-danger  위험
+    }
+
   }
 
 }

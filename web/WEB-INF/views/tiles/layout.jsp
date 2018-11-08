@@ -227,6 +227,7 @@
 
             switch (status) {
                 case 0:
+                case -99: // 라이센스 인가 체크 제외대상
                     $(".info_btn").removeClass("level-danger");
                     $(".license_notice").removeClass("on");
                     redirectFlag = false;
@@ -551,6 +552,7 @@
                 //Not playing...maybe paused, stopped or never played.
                 segmentEnd = endTime;
                 alarmPlayer.currentTime = startTime;
+                alarmPlayer.pause();
                 alarmPlayer.play();
             }
         }

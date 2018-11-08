@@ -68,10 +68,30 @@ var ToiletRoomMediator = (
         };
 
         this.saveCanvasImage = function(imageData){
-            var context = _canvas.getContext('2d');
+            var canvas = _canvas.get(0);
+            var context = canvas.getContext('2d');
             var image = new Image();
             image.onload = function () {
-                context.drawImage(image, 0, 0, 640, 480);
+                var imgWidth = image.naturalWidth;
+                var screenWidth  = canvas.width;
+                var scaleX = 1;
+                if (imgWidth > screenWidth)
+                    scaleX = screenWidth/imgWidth;
+                var imgHeight = image.naturalHeight;
+                var screenHeight = canvas.height;
+                var scaleY = 1;
+                if (imgHeight > screenHeight)
+                    scaleY = screenHeight/imgHeight;
+                var scale = scaleY;
+                if(scaleX < scaleY)
+                    scale = scaleX;
+                if(scale < 1){
+                    imgHeight = imgHeight*scale;
+                    imgWidth = imgWidth*scale;
+                }
+                canvas.height = imgHeight;
+                canvas.width = imgWidth;
+                context.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight, 0,0, imgWidth, imgHeight);
             };
             image.src = 'data:image/jpeg;base64,' + imageData;
         };
@@ -96,7 +116,7 @@ var ToiletRoomMediator = (
 
                 _element.find("#eventDatetime").text((negative?"-":"") + hour + ":" + minute + ":" + second);
             }else{
-
+                _element.find("#eventDatetime").text("00:00:00");
             }
         };
 

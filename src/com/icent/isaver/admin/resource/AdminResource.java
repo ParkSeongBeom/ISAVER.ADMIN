@@ -73,6 +73,8 @@ public class AdminResource {
      */
     public final static String OK = "OK";
 
+    public final static int NONE_LICENSE_TARGET = -99;
+
     /**
      * session attribute key
      * @author kst

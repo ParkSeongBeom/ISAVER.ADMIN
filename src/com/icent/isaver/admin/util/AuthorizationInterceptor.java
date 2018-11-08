@@ -103,7 +103,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
                 response.sendRedirect(redirectUrl);
             }else{
                 License license = haspLicenseUtil.login();
-                if (HaspStatus.HASP_STATUS_OK != license.getStatus()) { // 라이센스 로그인 실패
+                if (HaspStatus.HASP_STATUS_OK != license.getStatus() && AdminResource.NONE_LICENSE_TARGET != license.getStatus()) { // 라이센스 로그인 실패
                     AdminHelper.removeAdminInfo(request);
                     response.sendRedirect(redirectUrl);
                 }

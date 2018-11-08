@@ -187,7 +187,7 @@ var DashboardHelper = (
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].addImage();
                 }else if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this));
+                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"));
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
                     _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
                         'websocketSend':false
@@ -314,12 +314,12 @@ var DashboardHelper = (
         };
 
         /**
-         * set unknownShowFlag
+         * set ObjectViewFlag
          * @author psb
          */
-        this.setUnknownFlag = function(areaId, _this){
+        this.setObjectViewFlag = function(areaId, _this){
             if(_guardList[areaId]!=null){
-                _guardList[areaId][_MEDIATOR_TYPE[1]].setUnknownFlag($(_this).is(":checked"));
+                _guardList[areaId][_MEDIATOR_TYPE[1]].setObjectViewFlag($(_this).is(":checked"));
             }
         };
 
