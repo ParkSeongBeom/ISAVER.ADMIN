@@ -258,8 +258,12 @@
                             </tr>
                             <tr>
                                 <th><spring:message code='device.column.subUrl'/></th>
-                                <td colspan="3">
+                                <td>
                                     <input type="text" name="subUrl" maxlength="200"/>
+                                </td>
+                                <th><spring:message code='device.column.etcConfig'/></th>
+                                <td>
+                                    <input type="text" name="etcConfig" maxlength="50"/>
                                 </td>
                             </tr>
                             <tr>

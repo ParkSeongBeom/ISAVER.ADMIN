@@ -13,6 +13,7 @@ import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.EventDao;
 import com.icent.isaver.repository.dao.base.FileDao;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.ListUtils;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -86,12 +87,11 @@ public class CriticalSvcImpl implements CriticalSvc {
 
     @Override
     public ModelAndView addCritical(Map<String, String> parameters) {
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         ModelAndView modelAndView = new ModelAndView();
-        if(criticalDao.findExistCritical(parameters)!=null){
+        if(ListUtils.notNullCheck(criticalDao.findExistCritical(parameters))){
             modelAndView.addObject("resultCode", "ERR100");
         }else{
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
             parameters.put("criticalId", StringUtils.getGUID32());
             try {
                 criticalDao.addCritical(parameters);
@@ -106,12 +106,11 @@ public class CriticalSvcImpl implements CriticalSvc {
 
     @Override
     public ModelAndView saveCritical(Map<String, String> parameters) {
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         ModelAndView modelAndView = new ModelAndView();
-        if(criticalDao.findExistCritical(parameters)!=null){
+        if(ListUtils.notNullCheck(criticalDao.findExistCritical(parameters))){
             modelAndView.addObject("resultCode", "ERR100");
         }else{
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
             try {
                 criticalDao.saveCritical(parameters);
                 transactionManager.commit(transactionStatus);
@@ -126,7 +125,6 @@ public class CriticalSvcImpl implements CriticalSvc {
     @Override
     public ModelAndView removeCritical(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try{
             criticalDao.removeCritical(parameters);
             transactionManager.commit(transactionStatus);

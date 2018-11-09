@@ -385,9 +385,11 @@
             var fenceList = notificationHelper.getFenceList('deviceId',deviceId);
             for(var index in fenceList){
                 var fence = fenceList[index];
-                targetElement.find("select[name='fenceId']").append(
-                    $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
-                );
+                if(fence['fenceType']!='ignore'){
+                    targetElement.find("select[name='fenceId']").append(
+                        $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
+                    );
+                }
             }
         }
     }
@@ -513,6 +515,7 @@
                 case 'detect':
                     param = {
                         'criticalId' : targetElement.find("input[name='criticalId']").val()
+                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
                         ,'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
                         ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
                         ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
@@ -550,6 +553,7 @@
      @author psb
      */
     function callAjax(actionType, data){
+        console.log(actionType, data);
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,critical_successHandler,critical_errorHandler,actionType);
     }
 

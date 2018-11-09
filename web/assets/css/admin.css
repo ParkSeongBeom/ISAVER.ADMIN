@@ -1720,7 +1720,7 @@ ul.u_defalut {
   width: 350px !important;
   float: left;
   margin: 20px 0 0 0;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.02);
   -webkit-box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.02);
   -moz-box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.02);
@@ -2057,14 +2057,14 @@ ul.u_defalut {
       .table_btn_set.type02 button:before {
         font-size: 1.2rem; }
   .table_btn_set.type03 {
-    margin: 20px 0;
-    padding: 20px 0; }
+    margin: 15px 0;
+    padding: 15px 0; }
     .table_btn_set.type03:before {
       content: "";
       position: absolute;
       top: 0;
-      left: -20px;
-      right: -20px;
+      left: -15px;
+      right: -15px;
       height: 1px;
       background-color: #bcbcbc; }
     .table_btn_set.type03 button {
@@ -3512,7 +3512,7 @@ a.fc-more {
   display: flex;
   display: flexbox;
   display: box;
-  margin: 20px 0 0 0;
+  margin: 5px 0 0 0;
   height: 750px;
   max-height: 750px; }
   .video_area > * {

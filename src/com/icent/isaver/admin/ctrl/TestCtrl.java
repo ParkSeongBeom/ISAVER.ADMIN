@@ -40,7 +40,7 @@ public class TestCtrl {
         return modelAndView;
     }
 
-    public final static String[] eventAddParam = new String[]{"eventId","eventName","areaId","areaName","deviceId"};
+    public final static String[] eventAddParam = new String[]{"eventId","areaId","areaName","deviceId"};
 
     @RequestMapping(method={RequestMethod.POST}, value="/event")
     public ModelAndView eventSend(HttpServletRequest request, @RequestParam Map<String, String> parameters){

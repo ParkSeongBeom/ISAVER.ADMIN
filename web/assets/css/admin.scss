@@ -1591,7 +1591,7 @@ a.fc-more {position: relative; z-index: 2;}
 ////// 영상이력 레이아웃 Start
 #videoHistoryForm select[name="areaId"] {width:250px;}
 .video_area {
-  @include flexbase; margin:20px 0 0 0; height:750px; max-height: 750px;
+  @include flexbase; margin:5px 0 0 0; height:750px; max-height: 750px;
 
   & > * {overflow: hidden; height:100%;}
 

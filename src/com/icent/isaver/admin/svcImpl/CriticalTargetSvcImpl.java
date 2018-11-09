@@ -51,7 +51,6 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
     @Override
     public ModelAndView addCriticalTarget(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try {
             criticalTargetDao.addCriticalTarget(parameters);
             transactionManager.commit(transactionStatus);
@@ -65,7 +64,6 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
     @Override
     public ModelAndView saveCriticalTarget(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try {
             criticalTargetDao.saveCriticalTarget(parameters);
             transactionManager.commit(transactionStatus);
@@ -79,7 +77,6 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
     @Override
     public ModelAndView removeCriticalTarget(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try{
             criticalTargetDao.removeCriticalTarget(parameters);
             transactionManager.commit(transactionStatus);

@@ -128,7 +128,7 @@ $m_lr:15px; // 감시구역 상하좌우 마진값
 $m_slr:($m_lr - 10px);
 
 $devi_w:25px;
-$resi_w:8px;
+$resi_w:10px;
 
 //.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
 // display
@@ -657,12 +657,12 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice02 {
-    0%    {margin:0 1px 0 0;   }
-    100%  {margin:0 -1px 0 0;  opacity: 0.7;}
+    0%    {}
+    100%  {opacity: 0.7;}
   }
   @keyframes notice02 {
-    0%    {margin:0 1px 0 0;    }
-    100%  {margin:0 -1px 0 0;   opacity: 0.7;}
+    0%    {}
+    100%  { opacity: 0.7;}
   }
 } // ex) @include notice02;
 
@@ -675,12 +675,12 @@ $bbl01:100%; $bbl02:1px;
 
 
   @-webkit-keyframes notice03 {
-    0%    {left:1px;}
-    100%  {left:-1px; opacity: 0.7;}
+    0%    {}
+    100%  { opacity: 0.7;}
   }
   @keyframes notice03 {
-    0%    {left:1px;}
-    100%  {left:-1px; opacity: 0.7;}
+    0%    {}
+    100%  { opacity: 0.7;}
   }
 } // ex) @include notice03;
 

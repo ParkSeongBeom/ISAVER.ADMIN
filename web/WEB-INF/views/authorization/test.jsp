@@ -30,12 +30,6 @@
     <article>
         <section class="Safe-Eye">
             <h2>Safe-Eye</h2>
-            <%--<div>--%>
-                <%--<video width="1920" height="1080" controls>--%>
-                    <%--<source src="http://172.16.120.242/upload/file/sample.mp4" type="video/mp4">--%>
-                    <%--Your browser does not support the video tag.--%>
-                <%--</video>--%>
-            <%--</div>--%>
             <div>
                 <div class="set">
                     <div class="select_set">
@@ -245,7 +239,7 @@
                 <div class="set">
                     <div class="select_set">
                         <p>거수자감지</p>
-                        <select area eventType="guard">
+                        <select area eventType="guardIn">
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
                                 <c:if test="${area.templateCode == 'TMP005'}">
@@ -253,28 +247,107 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <select device eventType="guard">
+                        <select device eventType="guardIn">
                             <option value="">감시장치선택</option>
                             <c:forEach items="${deviceList}" var="device">
                                 <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
                             </c:forEach>
                         </select>
+                        <select fence eventType="guardIn">
+                            <option value="">펜스 선택</option>
+                            <c:forEach items="${fenceList}" var="fence">
+                                <c:if test="${fence.fenceType!='ignore'}">
+                                    <option style="display:none;" deviceId="${fence.deviceId}" value="${fence.fenceId}">${fence.fenceName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="guardInValue" placeholder="ObjectID 입력" onkeypress="javascript:isNumberWithPoint();"/>
                     </div>
                     <div class="button_set">
-                        <button class="level-start" onclick="javascript:addEventGuard('start')"></button>
-                        <button class="reset" onclick="javascript:addEventGuard('stop')"></button>
+                        <button class="level-start" onclick="javascript:addEvent('guardIn')"></button>
                     </div>
                 </div>
+                <div class="set">
+                    <div class="select_set">
+                        <p>거수자감지 해제</p>
+                        <select area eventType="guardOut">
+                            <option value="">감시구역선택</option>
+                            <c:forEach items="${areaList}" var="area">
+                                <c:if test="${area.templateCode == 'TMP005'}">
+                                    <option value="${area.areaId}">${area.areaName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select device eventType="guardOut">
+                            <option value="">감시장치선택</option>
+                            <c:forEach items="${deviceList}" var="device">
+                                <option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
+                            </c:forEach>
+                        </select>
+                        <select fence eventType="guardOut">
+                            <option value="">펜스 선택</option>
+                            <c:forEach items="${fenceList}" var="fence">
+                                <c:if test="${fence.fenceType!='ignore'}">
+                                    <option style="display:none;" deviceId="${fence.deviceId}" value="${fence.fenceId}">${fence.fenceName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="guardOutValue" placeholder="ObjectID 입력" onkeypress="javascript:isNumberWithPoint();"/>
+                    </div>
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:addEvent('guardOut')"></button>
+                    </div>
+                </div>
+                <%--<div class="set">--%>
+                    <%--<div class="select_set">--%>
+                        <%--<p>거수자감지</p>--%>
+                        <%--<select area eventType="guard">--%>
+                            <%--<option value="">감시구역선택</option>--%>
+                            <%--<c:forEach items="${areaList}" var="area">--%>
+                                <%--<c:if test="${area.templateCode == 'TMP005'}">--%>
+                                    <%--<option value="${area.areaId}">${area.areaName}</option>--%>
+                                <%--</c:if>--%>
+                            <%--</c:forEach>--%>
+                        <%--</select>--%>
+                        <%--<select device eventType="guard">--%>
+                            <%--<option value="">감시장치선택</option>--%>
+                            <%--<c:forEach items="${deviceList}" var="device">--%>
+                                <%--<option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>--%>
+                            <%--</c:forEach>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                    <%--<div class="button_set">--%>
+                        <%--<button class="level-start" onclick="javascript:addEventGuard('start')"></button>--%>
+                        <%--<button class="reset" onclick="javascript:addEventGuard('stop')"></button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
             </div>
         </section>
     </article>
 
-    <aside id="logArea"></aside>
+    <aside>
+        <div>
+            <select id="intervalTime">
+                <option value="1000">1초</option>
+                <option value="3000">3초</option>
+                <option value="5000">5초</option>
+                <option value="10000">10초</option>
+            </select>
+            <button class="level-start" onclick="javascript:startInterval(this);"></button>
+        </div>
+        <div id="logArea"></div>
+    </aside>
 
 <script type="text/javascript">
     var urlConfig = {
         'eventUrl':'${rootPath}/test/event.json'
         ,'guardUrl':'${rootPath}/test/guard.json'
+    };
+
+    var _intervalInfo = {
+        'interval' : null
+        ,'param' : null
+        ,'actionType' : null
     };
 
     $(document).ready(function(){
@@ -288,8 +361,10 @@
 
             switch($(this).attr("eventType")){
                 case 'guard':
+                case 'guardIn':
+                case 'guardOut':
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']").show();
-                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']:eq(0)").prop("selected",true);
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']:eq(0)").prop("selected",true).trigger("change");
                     break;
                 case 'co':
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV905']").show();
@@ -323,6 +398,20 @@
             }
         });
 
+        $("select[device]").on("change",function() {
+            var fenceTag = $(this).next();
+            $(fenceTag).val("");
+            $(fenceTag).find("option").not("option[value='']").hide();
+
+            switch($(this).attr("eventType")){
+                case 'guardIn':
+                case 'guardOut':
+                    $(fenceTag).find("option[deviceId='"+$(this).val()+"']").show();
+                    $(fenceTag).find("option[deviceId='"+$(this).val()+"']:eq(0)").prop("selected",true);
+                    break;
+            }
+        });
+
         $.each($("select[area]"),function(){
             $(this).find("option:eq(1)").prop("selected",true).trigger("change");
         });
@@ -335,15 +424,17 @@
     function addEvent(actionType){
         var areaTag = $("select[area][eventType='"+actionType+"'] option:selected");
         var deviceTag = $("select[device][eventType='"+actionType+"'] option:selected");
+        var fenceTag = $("select[fence][eventType='"+actionType+"'] option:selected");
         var valueTag = $("input[name='"+actionType+"Value']");
+
+        var valueValidateFlag = false;
+        var fenceValidateFlag = false;
+
         if(areaTag.val()==""){
             alert("선택된 구역이 없습니다.");
             return false;
         }else if(deviceTag.val()==""){
             alert("선택된 장치가 없습니다.");
-            return false;
-        }else if(valueTag.val()==""){
-            alert("수치값을 입력해 주세요.");
             return false;
         }
 
@@ -352,57 +443,84 @@
             ,'areaName' : areaTag.text()
             ,'deviceId' : deviceTag.val()
             ,'deviceName' : deviceTag.attr("deviceName")
-            ,'value' : valueTag.val()
         };
 
         switch(actionType){
             case 'co':
                 data['eventId'] = "EVT302";
                 data['eventName'] = "CO(일산화탄소)";
+                valueValidateFlag = true;
                 break;
             case 'co2':
                 data['eventId'] = "EVT303";
                 data['eventName'] = "CO2(이산화탄소)";
+                valueValidateFlag = true;
                 break;
             case 'gas':
                 data['eventId'] = "EVT304";
                 data['eventName'] = "가스";
+                valueValidateFlag = true;
                 break;
             case 'smoke':
                 data['eventId'] = "EVT305";
                 data['eventName'] = "연기";
+                valueValidateFlag = true;
                 break;
             case 'temp':
                 data['eventId'] = "EVT306";
                 data['eventName'] = "온도";
+                valueValidateFlag = true;
                 break;
             case 'in' :
                 data['eventId'] = "EVT300";
-                data['eventName'] = "피플카운터 진입자 감지";
                 data['inCount'] = valueTag.val();
                 data['outCount'] = 0;
                 data['value'] = 0;
                 data['direction'] = "test";
+                valueValidateFlag = true;
                 break;
             case 'out':
                 data['eventId'] = "EVT301";
-                data['eventName'] = "피플카운터 진출자 감지";
                 data['inCount'] = 0;
                 data['outCount'] = valueTag.val();
                 data['value'] = 0;
                 data['direction'] = "test";
+                valueValidateFlag = true;
                 break;
             case 'worker':
                 data['eventId'] = "EVT013";
-                data['eventName'] = "위험지역.작업자감지";
                 data['riskFlag'] = 0;
                 data['targetCount'] = valueTag.val();
+                break;
+            case 'guardIn':
+                data['eventId'] = "EVT314";
+                fenceValidateFlag = true;
+                break;
+            case 'guardOut':
+                data['eventId'] = "EVT315";
+                fenceValidateFlag = true;
                 break;
             default :
                 alert("알수 없는 타입의 요청 입니다.");
                 return false;
         }
 
+        if(valueValidateFlag){
+            if(valueTag.val()==""){
+                alert("수치값을 입력해 주세요.");
+                return false;
+            }
+            data['value'] = valueTag.val();
+        }
+
+        if(fenceValidateFlag){
+            if(fenceTag.val()==""){
+                alert("펜스를 선택해 주세요.");
+                return false;
+            }
+            data['fenceId'] = fenceTag.val();
+            data['objectId'] = valueTag.val();
+        }
         ajaxCall(actionType, data);
     }
 
@@ -427,20 +545,38 @@
                     $("<div/>").text("구역명 : "+data['paramBean']['areaName'])
                 ).append(
                     $("<div/>").text("장치구분 : "+data['paramBean']['deviceName'])
-                ).append(
-                    $("<div/>").text("이벤트명 : "+data['paramBean']['eventName'])
-                ).append(
-                    $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
                 );
+                if(data['paramBean']['value']!=null){
+                    logTag.append(
+                        $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
+                    )
+                }
+                if(data['paramBean']['fenceId']!=null){
+                    logTag.append(
+                        $("<div/>").text("펜스ID : "+data['paramBean']['fenceId'])
+                    )
+                }
+                if(data['paramBean']['objectId']!=null){
+                    logTag.append(
+                        $("<div/>").text("ObjectId : "+data['paramBean']['objectId'])
+                    )
+                }
+                _intervalInfo['param'] = data['paramBean'];
+                _intervalInfo['actionType'] = actionType;
                 break;
         }
-
         addLog(logTag);
     }
 
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
         var logTag = $("<div/>");
         switch(actionType){
+            case 'guardIn':
+                logTag.text("거수자감지 전송 실패!");
+                break;
+            case 'guardOut':
+                logTag.text("거수자감지 해제 전송 실패!");
+                break;
             case 'startGuard':
                 logTag.text("거수자감지 시작 실패!");
                 break;
@@ -484,6 +620,38 @@
         );
     }
 
+
+    /**
+     * interval start
+     * @author psb
+     */
+    function startInterval(_this){
+        if($(_this).hasClass("reset")){
+            stopInterval();
+            $(_this).removeClass("reset");
+            $(_this).addClass("level-start");
+        }else{
+            if(_intervalInfo['actionType']==null || _intervalInfo['param']==null){
+                alert("실행된 이력이 없습니다.");
+                return false;
+            }
+            $(_this).removeClass("level-start");
+            $(_this).addClass("reset");
+            _intervalInfo['interval'] = setInterval(function() {
+                ajaxCall(_intervalInfo['actionType'], _intervalInfo['param']);
+            }, eval($("#intervalTime option:selected").val()));
+        }
+    }
+
+    /**
+     * interval stop
+     * @author psb
+     */
+    function stopInterval(){
+        if(_intervalInfo['interval']!=null){
+            clearInterval(_intervalInfo['interval']);
+        }
+    }
 </script>
 </body>
 </html>

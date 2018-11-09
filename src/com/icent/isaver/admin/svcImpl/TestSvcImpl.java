@@ -6,8 +6,10 @@ import com.icent.isaver.admin.svc.TestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.DeviceBean;
+import com.icent.isaver.repository.bean.FenceBean;
 import com.icent.isaver.repository.dao.base.AreaDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
+import com.icent.isaver.repository.dao.base.FenceDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,13 +74,18 @@ public class TestSvcImpl implements TestSvc {
     @Inject
     private AreaDao areaDao;
 
+    @Inject
+    private FenceDao fenceDao;
+
     @Override
     public ModelAndView testList(HttpServletRequest request, Map<String, String> parameters) {
         List<AreaBean> areaList = areaDao.findListAreaForTest();
         List<DeviceBean> deviceList = deviceDao.findListDeviceForTest();
+        List<FenceBean> fenceList = fenceDao.findListFenceForTest();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("areaList",areaList);
         modelAndView.addObject("deviceList",deviceList);
+        modelAndView.addObject("fenceList",fenceList);
         return modelAndView;
     }
 

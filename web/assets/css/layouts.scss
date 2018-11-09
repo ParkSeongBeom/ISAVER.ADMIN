@@ -599,7 +599,7 @@ menu {
   }
 
   position: fixed; @include z-index-notice;
-  top:($headerHeight + 20px); bottom:$dash-margin; right:-($noticecenter-width * 2); width:$noticecenter-width;
+  top:($headerHeight + 10px); bottom:$dash-margin; right:-($noticecenter-width * 2); width:$noticecenter-width;
 
   &.on {right:$dash-margin;}
 

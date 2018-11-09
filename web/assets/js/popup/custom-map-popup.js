@@ -175,40 +175,42 @@ var CustomMapPopup = (
                                 _element.find("#childList section").remove();
                                 for(var index in data){
                                     var fence = data[index];
-                                    var targetTag = _element.find("#childList > li[targetId='"+fence['deviceId']+"']");
-                                    var fenceName = fence['fenceName']!=null?fence['fenceName']:fence['fenceId'];
-                                    var cameraSelectTag = _cameraSelectTag.clone();
-                                    cameraSelectTag.attr("uuid",fence['uuid']).on("change",function(){
-                                        var selectedOption = $(this).find("option:selected");
-                                        if(selectedOption.val()!=""){
-                                            $(this).after(
-                                                $("<div/>").append(
-                                                    $("<button/>",{class:"camera"}).text(selectedOption.text())
+                                    if(fence['fenceType']!='ignore'){
+                                        var targetTag = _element.find("#childList > li[targetId='"+fence['deviceId']+"']");
+                                        var fenceName = fence['fenceName']!=null?fence['fenceName']:fence['fenceId'];
+                                        var cameraSelectTag = _cameraSelectTag.clone();
+                                        cameraSelectTag.attr("uuid",fence['uuid']).on("change",function(){
+                                            var selectedOption = $(this).find("option:selected");
+                                            if(selectedOption.val()!=""){
+                                                $(this).after(
+                                                    $("<div/>").append(
+                                                        $("<button/>",{class:"camera"}).text(selectedOption.text())
+                                                    ).append(
+                                                        $("<button/>",{name:"fenceDevice",uuid:$(this).attr("uuid"),deviceId:selectedOption.val()}).on("click",function(){
+                                                            $(this).parent().parent().find("select option[value='"+$(this).attr("deviceId")+"']").prop("disabled",false);
+                                                            $(this).parent().remove();
+                                                        })
+                                                    )
+                                                );
+                                                selectedOption.prop("disabled",true);
+                                            }
+                                            $(this).val("");
+                                        });
+
+                                        targetTag.append(
+                                            $("<section/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
+                                                $("<div/>",{class:"fence_list"}).append(
+                                                    $("<p/>").text(fence['fenceId'])
                                                 ).append(
-                                                    $("<button/>",{name:"fenceDevice",uuid:$(this).attr("uuid"),deviceId:selectedOption.val()}).on("click",function(){
-                                                        $(this).parent().parent().find("select option[value='"+$(this).attr("deviceId")+"']").prop("disabled",false);
-                                                        $(this).parent().remove();
+                                                    $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
+                                                        _customMapMediator.saveFence($(this).parent().parent().attr("fenceId"), $(this).parent().parent().attr("deviceId"), $(this).val());
                                                     })
                                                 )
-                                            );
-                                            selectedOption.prop("disabled",true);
-                                        }
-                                        $(this).val("");
-                                    });
-
-                                    targetTag.append(
-                                        $("<section/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
-                                            $("<div/>",{class:"fence_list"}).append(
-                                                $("<p/>").text(fence['fenceId'])
                                             ).append(
-                                                $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
-                                                    _customMapMediator.saveFence($(this).parent().parent().attr("fenceId"), $(this).parent().parent().attr("deviceId"), $(this).val());
-                                                })
+                                                $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
                                             )
-                                        ).append(
-                                            $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
-                                        )
-                                    );
+                                        );
+                                    }
                                 }
                                 _ajaxCall("fenceDeviceList",{areaId:_areaId});
                                 break;

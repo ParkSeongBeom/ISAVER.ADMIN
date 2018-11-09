@@ -43,8 +43,19 @@ header {
 article {overflow: auto; padding:50px ($logowidth + 50px) 50px 0;}
 
 aside {
-  overflow: auto; position: fixed; top:$headerHeight; right:50px; bottom:20px; width:$logowidth; padding:20px;
-  @include border01(1px,#000,1 ); background-color: #000; color:$color-white-01; opacity: 0.5;
+   position: fixed; top:$headerHeight; right:50px; bottom:20px; width:$logowidth; padding:20px;
+  @include flexbase; @include flex-column;
+
+  & > div {width:100%;}
+  & > div:nth-of-type(1) {
+    @include flexbase; @include flex-justify-content-between; @include flex-align-items-center;
+    min-height:90px; margin:0 0 10px 0;
+    button {margin:0;}
+  }
+  & > div:nth-of-type(2) {
+    overflow: auto;  @include flex-option(0, 1, 100%);  @include border01(1px,#000,1 );
+    background-color: #000; color:$color-white-01; opacity: 0.5; padding:10px;
+  }
 }
 
 button {
@@ -108,8 +119,7 @@ article {
     .button_set {@include flexbase; @include flex-align-items-center;}
     .select_set {
       width:500px; margin:0 100px 0 0;
-      select {width:calc(50% - 5px);}
-      input {width:calc(100% - 5px);}
+      select, input {width:calc(50% - 5px);}
     }
 
   }

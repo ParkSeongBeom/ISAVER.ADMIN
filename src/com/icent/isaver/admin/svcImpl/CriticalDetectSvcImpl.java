@@ -5,6 +5,7 @@ import com.icent.isaver.admin.svc.CriticalDetectSvc;
 import com.icent.isaver.repository.bean.CriticalDetectBean;
 import com.icent.isaver.repository.dao.base.CriticalDetectDao;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.ListUtils;
 import com.kst.common.util.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -51,12 +52,11 @@ public class CriticalDetectSvcImpl implements CriticalDetectSvc {
 
     @Override
     public ModelAndView addCriticalDetect(Map<String, String> parameters) {
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         ModelAndView modelAndView = new ModelAndView();
-        if(criticalDetectDao.findExistCriticalDetect(parameters)!=null){
+        if(ListUtils.notNullCheck(criticalDetectDao.findExistCriticalDetect(parameters))){
             modelAndView.addObject("resultCode", "ERR101");
         }else{
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
             parameters.put("criticalDetectId", StringUtils.getGUID32());
             try {
                 criticalDetectDao.addCriticalDetect(parameters);
@@ -71,12 +71,11 @@ public class CriticalDetectSvcImpl implements CriticalDetectSvc {
 
     @Override
     public ModelAndView saveCriticalDetect(Map<String, String> parameters) {
-        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         ModelAndView modelAndView = new ModelAndView();
-        if(criticalDetectDao.findExistCriticalDetect(parameters)!=null){
+        if(ListUtils.notNullCheck(criticalDetectDao.findExistCriticalDetect(parameters))){
             modelAndView.addObject("resultCode", "ERR101");
         }else {
+            TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
             try {
                 criticalDetectDao.saveCriticalDetect(parameters);
                 transactionManager.commit(transactionStatus);

@@ -1170,8 +1170,8 @@ menu {
 .db_area {
   position: fixed;
   z-index: 20;
-  top: 60px;
-  bottom: 20px;
+  top: 50px;
+  bottom: 15px;
   right: -600px;
   width: 300px; }
   body.admin_mode .db_area {
@@ -1179,7 +1179,7 @@ menu {
     body.admin_mode .db_area h2 {
       color: #3c3c3c; }
   .db_area.on {
-    right: 20px; }
+    right: 15px; }
   .db_area > * {
     width: 100%; }
   .db_area, .db_area h2, .db_area section, .db_area section > div {
