@@ -105,7 +105,9 @@ var CustomMapMediator = (
             if(objectViewFlag != null && objectViewFlag.length > 0){
                 _objectViewFlag = objectViewFlag == "true";
                 _element.find("input[name='humanCkb']").prop("checked",_objectViewFlag);
-                _mapCanvas.addClass("onlyhuman");
+                if(_objectViewFlag){
+                    _mapCanvas.addClass("onlyhuman");
+                }
             }
 
             for(var index in options){
@@ -620,10 +622,12 @@ var CustomMapMediator = (
             if(fenceMarker!=null){
                 switch (actionType){
                     case "add" :
-                        fenceMarker['notification'][criticalLevel].push(data['objectId']);
+                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
+                            fenceMarker['notification'][criticalLevel].push(data['objectId']);
+                        }
                         break;
                     case "remove" :
-                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']) > -1){
+                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){
                             fenceMarker['notification'][criticalLevel].splice(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']),1);
                         }
                         break;

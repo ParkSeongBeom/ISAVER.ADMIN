@@ -304,7 +304,7 @@ var MapMediator = (
             if(fenceMarker!=null && fenceMarker['objects'] instanceof Array){
                 switch (actionType){
                     case "add" :
-                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(data['objectId'])==-1){
+                        if(fenceMarker['objects'].length == 0 || fenceMarker['objects'].indexOf(data['objectId'])<0){
                             fenceMarker['objects'].push(data['objectId']);
                         }
                         break;

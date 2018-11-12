@@ -169,7 +169,9 @@ var VideoMediator = (
                     if(video!=null){
                         switch (actionType){
                             case "add" :
-                                video['notification'][criticalLevel].push(data['objectId']);
+                                if(video['notification'][criticalLevel].indexOf(data['objectId'])<0){
+                                    video['notification'][criticalLevel].push(data['objectId']);
+                                }
                                 break;
                             case "remove" :
                                 if(video['notification'][criticalLevel].indexOf(data['objectId']) > -1){

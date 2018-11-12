@@ -165,7 +165,7 @@ public class AdminResource {
             put("DEV010",""); // CCTV
             put("DEV011",""); // 세탁기
             put("DEV012",""); // 건조기
-            put("DEV013",""); // M8
+            put("DEV013","ico-m8"); // M8
             put("DEV014","ico-hlds"); // 감지구역침입 감지기
             put("DEV015","ico-qguard"); // Quanergy Server
             put("DEV900","ico-gate"); // 게이트웨이
