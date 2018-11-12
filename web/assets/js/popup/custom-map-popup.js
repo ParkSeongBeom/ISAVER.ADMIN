@@ -27,6 +27,7 @@ var CustomMapPopup = (
         var _customMapMediator;
         var _messageConfig;
         var _cameraSelectTag;
+        var _fenceList = {};
         var _element;
         var _self = this;
 
@@ -85,10 +86,10 @@ var CustomMapPopup = (
                 customParamList.push(customMap);
             }
 
-            var fenceList = _customMapMediator.getMarkerList('fence');
             var fenceParamList = [];
-            for(var index in fenceList){
-                fenceParamList.push({uuid:fenceList[index]['data']['uuid'],fenceName:fenceList[index]['data']['fenceName']});
+            for(var index in _fenceList){
+                var fenceElement = _fenceList[index];
+                fenceParamList.push({uuid:index,fenceName:fenceElement.find("input[name='fenceName']").val()});
             }
 
             var fenceDeviceParamList = [];
@@ -197,19 +198,20 @@ var CustomMapPopup = (
                                             $(this).val("");
                                         });
 
-                                        targetTag.append(
-                                            $("<section/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
-                                                $("<div/>",{class:"fence_list"}).append(
-                                                    $("<p/>").text(fence['fenceId'])
-                                                ).append(
-                                                    $("<input/>",{type:'text',name:'fenceName',value:fenceName}).on("change",function(){
-                                                        _customMapMediator.saveFence($(this).parent().parent().attr("fenceId"), $(this).parent().parent().attr("deviceId"), $(this).val());
-                                                    })
-                                                )
+                                        var fenceElement = $("<section/>",{fenceId:fence['fenceId'],deviceId:param['deviceId']}).append(
+                                            $("<div/>",{class:"fence_list"}).append(
+                                                $("<p/>").text(fence['fenceId'])
                                             ).append(
-                                                $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
+                                                $("<input/>",{type:'text',name:'fenceName',value:fenceName,maxlength:"50"}).on("change",function(){
+                                                    _customMapMediator.saveFence($(this).parent().parent().attr("fenceId"), $(this).parent().parent().attr("deviceId"), $(this).val());
+                                                })
                                             )
+                                        ).append(
+                                            $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
                                         );
+
+                                        _fenceList[fence['uuid']] = fenceElement;
+                                        targetTag.append(fenceElement);
                                     }
                                 }
                                 _ajaxCall("fenceDeviceList",{areaId:_areaId});

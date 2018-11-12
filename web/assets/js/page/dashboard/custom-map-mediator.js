@@ -497,6 +497,8 @@ var CustomMapMediator = (
                                 'location' : data['location']
                                 ,'uuid' : data['uuid']
                                 ,'deviceId' : data['deviceId']
+                                ,'fenceType' : data['fenceType']
+                                ,'fenceId' : data['id']
                                 ,'fenceName' : data['fenceName']?data['fenceName']:data['id']
                             }
                             ,'notification' : $.extend(true,{},criticalList)
