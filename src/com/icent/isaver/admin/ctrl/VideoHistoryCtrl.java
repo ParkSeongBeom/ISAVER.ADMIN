@@ -50,6 +50,10 @@ public class VideoHistoryCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListVideoHistory(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkSearchDate(parameters,0);
+        if(StringUtils.nullCheck(parameters.get("mode")) && StringUtils.nullCheck(parameters.get("videoType"))){
+            parameters.put("videoType","event");
+        }
+
         ModelAndView modelAndView = videoHistorySvc.findListVideoHistory(parameters);
         if(StringUtils.nullCheck(parameters.get("mode"))){
             modelAndView.setViewName("videoHistoryList");

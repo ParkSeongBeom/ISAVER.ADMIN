@@ -214,11 +214,15 @@
 
     function addVideoHistory(videoHistory){
         var videoTag = videoElementTag.clone();
+        var fenceName = '';
+        if(videoHistory['fenceName']!=null){
+            fenceName = "("+videoHistory['fenceName']+")";
+        }
         videoTag.attr("onclick","openVideo(this,'"+videoHistory['videoType']+"/"+videoHistory['videoFileName']+"');");
         videoTag.find("#thumbnail").attr("src","${videoUrl}"+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']);
         videoTag.find("#areaName").text(videoHistory['areaName']?videoHistory['areaName']:'');
         videoTag.find("#deviceName").text(videoHistory['deviceName']?videoHistory['deviceName']:'');
-        videoTag.find("#eventName").text(videoHistory['eventName']?videoHistory['eventName']:'');
+        videoTag.find("#eventName").text((videoHistory['eventName']?videoHistory['eventName']:'')+fenceName);
         videoTag.find("#videoDatetime").text(new Date(videoHistory['videoDatetime']).format("MM/dd HH:mm:ss"));
         $("#videoList").append(videoTag)
     }
