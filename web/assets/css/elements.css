@@ -1605,27 +1605,27 @@ input.datepicker + button + .in-timepicker {
 .g-qguard:before {
   content: "\e96c"; }
 .g-tracking {
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   background-color: transparent;
   box-shadow: 0 0 0 0px transparent;
   -webkit-box-shadow: 0 0 0 0px transparent;
   -moz-box-shadow: 0 0 0 0px transparent; }
   .g-tracking:before {
     content: "\e953";
-    font-size: 0.4rem !important;
+    font-size: 1.2rem !important;
     /*@include scale(0.8);*/
     color: #49dbff !important; }
   .g-tracking.object:before {
-    content: "\e906";
+    content: "\e953";
     color: #fff !important;
     opacity: 0.7;
-    transform: scale(0.6);
-    ms-transform: scale(0.6);
-    -ms-transform: scale(0.6);
-    -moz-transform: scale(0.6);
-    -webkit-transform: scale(0.6);
-    -o-transform: scale(0.6); }
+    transform: scale(0.8);
+    ms-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    -o-transform: scale(0.8); }
   .g-tracking:after {
     display: none; }
 .g-area {

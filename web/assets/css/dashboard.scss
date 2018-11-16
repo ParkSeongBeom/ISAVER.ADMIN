@@ -522,14 +522,37 @@ body.dashboard_mode {
   .s_lbox {
     @include flex-align-items-center; @include flex-justify-content-center;
     background-color: #000;
-    canvas {/*position: absolute; z-index: 1; top:0; left:0;  */ width:80%;/* height:80%;*/}
+    button {
+      @include flex-midddle;  @include flex-column; opacity: 0.7;
+      z-index:1; position: absolute; top:10px; left:10px;
+
+      &:hover {&:after,&:before {color:$color-blue-01;} }
+
+      &:after  {content:"TOF";}
+      &:before {content: "\e941"; font-size:2rem;}
+
+      &.on {
+        &:after  {content:"IR";}
+        &:before {content: "\e921";}
+      }
+    }
+    canvas {/*position: absolute; z-index: 1; top:0; left:0;  */ width:640px;/* height:80%;*/}
   }
   .s_rbox {
     @include flex-column; padding:0;
     &:before {left:0;}
     & > * {@include flex-midddle; position: relative !important; width:100%; max-height: none;}
 
-    p {overflow: hidden; @include flex-width-one(0); font-size:5rem;}
+    .c_time {
+      overflow: hidden; @include flex-midddle; @include flex-width-one(0);
+      p {font-size:5rem;}
+      button {
+
+        width:60px; height:60px; margin:10px 0 0 20px; @include line_btn; @include border-radius(500px);
+        @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
+        &:before {content:"Reset";}
+      }
+    }
 
     .entrance_ico {
        @include flex-width-one(2);
@@ -543,14 +566,14 @@ body.dashboard_mode {
 
       &.enter:before {content:"\e932"; opacity: 1;}
       &.fall:before {content:"\e952";}
-      &.enter, &.fall {& + p {@include flex-width-one(1);}}
+      &.enter, &.fall {& + .c_time {@include flex-width-one(1);} }
     }
 
   }
 }
 .level-danger .entrance_ico {
   &.enter, &.fall {
-    & + p {color:$color-red-01;}
+    & + .c_time > p {color:$color-red-01;}
     &:before {color:$color-red-01; @include issue02;}
     &:after { @include issue08; @include border01(2px,$color-red-01,1 );}
   }

@@ -59,18 +59,18 @@ var DashboardHelper = (
          * set websocket
          * @author psb
          */
-        this.setWebsocket = function(_type, _webSocketHelper, _webSocketUrl){
-            switch (_type) {
+        this.setWebsocket = function(type, webSocketHelper, webSocketUrl){
+            switch (type) {
                 case "map":
                     if($("div[templateCode='TMP005']").length>0){
-                        _webSocketHelper.addWebSocketList(_type, _webSocketUrl, null, mapMessageEventHandler);
-                        _webSocketHelper.wsConnect(_type);
+                        webSocketHelper.addWebSocketList(type, webSocketUrl, null, mapMessageEventHandler);
+                        webSocketHelper.wsConnect(type);
                     }
                     break;
                 case "toiletRoom":
                     if($("div[templateCode='TMP008']").length>0){
-                        _webSocketHelper.addWebSocketList(_type, _webSocketUrl, null, toiletRoomMessageEventHandler);
-                        _webSocketHelper.wsConnect(_type);
+                        webSocketHelper.addWebSocketList(type, webSocketUrl, null, toiletRoomMessageEventHandler);
+                        webSocketHelper.wsConnect(type);
                     }
                     break;
             }
@@ -118,8 +118,16 @@ var DashboardHelper = (
                 return false;
             }
 
-            if(resultData['areaId']!=null && _toiletRoomList[resultData['areaId']]!=null && resultData['imageData']!=null){
-                _toiletRoomList[resultData['areaId']].saveCanvasImage(resultData['imageData']);
+            var _toiletRoomMediator = _toiletRoomList[resultData['areaId']];
+            if(resultData['areaId']!=null && _toiletRoomMediator!=null){
+                switch (resultData['messageType']) {
+                    case "imageMode":
+                        _toiletRoomMediator.updateImageMode(resultData['imageMode']);
+                        break;
+                    case "imageStream":
+                        _toiletRoomMediator.saveCanvasImage(resultData['imageData']);
+                        break;
+                }
             }
         };
 
@@ -221,19 +229,31 @@ var DashboardHelper = (
         /**
          * set ToiletRoom list
          */
-        this.setToiletRoomList = function(){
+        this.setToiletRoomList = function(webSocketHelper){
             var initFlag = false;
             $.each($("div[templateCode='TMP008']"),function(){
-                var _areaId = $(this).attr("areaId");
-                _toiletRoomList[_areaId] = {};
-                _toiletRoomList[_areaId] = new ToiletRoomMediator(_rootPath);
-                _toiletRoomList[_areaId].setElement($(this));
-                _toiletRoomList[_areaId].init(_areaId);
+                var areaId = $(this).attr("areaId");
+                _toiletRoomList[areaId] = {};
+                _toiletRoomList[areaId] = new ToiletRoomMediator(_rootPath);
+                _toiletRoomList[areaId].setElement($(this));
+                _toiletRoomList[areaId].init(areaId,webSocketHelper);
                 initFlag = true;
             });
 
             if(initFlag){
                 console.log("[DashboardHelper] initialize Toilet Room");
+            }
+        };
+
+        /**
+         * sendMessage websocket
+         * @author psb
+         */
+        this.wsToiletRoomSendMessage = function(areaId, type){
+            if(areaId!=null && _toiletRoomList[areaId]!=null){
+                _toiletRoomList[areaId].wsSendMessage(type);
+            }else{
+                console.log("[DashboardHelper] toiletRoom mediator is empty - areaId:"+areaId);
             }
         };
 

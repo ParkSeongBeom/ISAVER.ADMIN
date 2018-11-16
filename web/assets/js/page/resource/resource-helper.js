@@ -482,6 +482,7 @@ var ResourceHelper = (
                     var license = data['license'];
                     switch (license['status']){
                         case 0:
+                        case -99:
                             refreshFlag = true;
                             break;
                         case -1: // 기한만료

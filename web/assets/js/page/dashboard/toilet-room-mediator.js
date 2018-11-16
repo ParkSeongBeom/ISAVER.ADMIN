@@ -15,7 +15,7 @@ var ToiletRoomMediator = (
         var _urlConfig = {
             'toiletRoomUrl' : "/eventLog/toiletRoom.json"
         };
-        var _options = {};
+        var _webSocketHelper;
         var _statusCss = {
             'empty' : ''
             ,'normal' : 'enter'
@@ -42,16 +42,37 @@ var ToiletRoomMediator = (
          * fenceList init
          * @author psb
          */
-        this.init = function(areaId,options){
+        this.init = function(areaId,webSocketHelper){
             _areaId = areaId;
-            for(var index in options){
-                if(_options.hasOwnProperty(index)){
-                    _options[index] = options[index];
-                }
-            }
+            _webSocketHelper = webSocketHelper;
+            _self.wsSendMessage('getImageMode');
 
             addRefreshTimeCallBack(refreshEventTime);
             _ajaxCall('toiletRoom',{areaId:_areaId});
+        };
+
+        /**
+         * websocket sendMessage
+         * @author psb
+         */
+        this.wsSendMessage = function(type){
+            var message = {
+                "messageType": type,
+                "areaId": _areaId
+            };
+
+            switch (type){
+                case "getImageMode" :
+                    webSocketHelper.sendMessage('toiletRoom', message);
+                    break;
+                case "setImageMode" :
+                    message['imageMode'] = _element.find("button[name='imageModeBtn']").hasClass("on")?'tof':'ir';
+                    webSocketHelper.sendMessage('toiletRoom',message);
+                    break;
+                case "resetEvent" :
+                    webSocketHelper.sendMessage('toiletRoom', message);
+                    break;
+            }
         };
 
         /**
@@ -60,11 +81,22 @@ var ToiletRoomMediator = (
          */
         this.setElement = function(element){
             if(element==null || element.length==0){
-                console.error("[VideoMediator][_initialize] _element is null or not found");
+                console.error("[ToiletRoomMediator][setElement] _element is null or not found");
                 return false;
             }
             _element = element;
             _canvas = _element.find("canvas[name='toiletRoom-canvas']");
+        };
+
+        this.updateImageMode = function(imageMode){
+            switch (imageMode){
+                case "tof" :
+                    _element.find("button[name='imageModeBtn']").removeClass("on");
+                    break;
+                case "ir" :
+                    _element.find("button[name='imageModeBtn']").addClass("on");
+                    break;
+            }
         };
 
         this.saveCanvasImage = function(imageData){

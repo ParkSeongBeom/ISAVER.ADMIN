@@ -267,7 +267,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public HaspLicenseUtil haspLicenseUtil() {
         HaspLicenseUtil haspLicenseUtil=new HaspLicenseUtil();
-        haspLicenseUtil.setHasp(propertyManager.getProperty("cnf.fileAddress"), propertyManager.getProperty("cnf.noneLicenseTargets"));
+        haspLicenseUtil.setHasp(propertyManager.getProperty("cnf.hostIp"), propertyManager.getProperty("cnf.noneLicenseTargets"));
         return haspLicenseUtil;
     }
 

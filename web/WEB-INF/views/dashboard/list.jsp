@@ -397,12 +397,16 @@
                                 <section class="entrance_set">
                                     <!-- 클라우드 이미지-->
                                     <div class="s_lbox">
+                                        <button name="imageModeBtn" onclick="javascript:dashboardHelper.wsToiletRoomSendMessage('${childArea.areaId}','setImageMode');"></button>
                                         <canvas name="toiletRoom-canvas"></canvas>
                                     </div>
                                     <!-- 재실정보 이미지-->
                                     <div class="s_rbox">
                                         <div id="statusIco" class="entrance_ico"></div>
-                                        <p id="eventDatetime">00:00:00</p>
+                                        <div class="c_time">
+                                            <p id="eventDatetime">00:00:00</p>
+                                            <button name="resetEventBtn" onclick="javascript:dashboardHelper.wsToiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>
+                                        </div>
                                     </div>
                                 </section>
                                 <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
@@ -597,7 +601,7 @@
         if(templateSetting['safeGuardMapView']=='offline'){
             dashboardHelper.setGuardList();
         }
-        dashboardHelper.setToiletRoomList();
+        dashboardHelper.setToiletRoomList(webSocketHelper);
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
         /* 이벤트 callback (websocket 리스너) */

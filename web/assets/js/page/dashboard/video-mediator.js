@@ -40,7 +40,7 @@ var VideoMediator = (
          */
         this.setElement = function(element){
             if(element==null || element.length==0){
-                console.error("[VideoMediator][_initialize] _element is null or not found");
+                console.error("[VideoMediator][setElement] _element is null or not found");
                 return false;
             }
             _element = element;
