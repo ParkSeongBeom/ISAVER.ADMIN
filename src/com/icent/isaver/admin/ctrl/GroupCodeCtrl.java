@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.GroupCodeSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -61,7 +61,7 @@ public class GroupCodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addGroupCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, addGroupCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -77,7 +77,7 @@ public class GroupCodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveGroupCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, saveGroupCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -90,7 +90,7 @@ public class GroupCodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeGroupCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, removeGroupCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

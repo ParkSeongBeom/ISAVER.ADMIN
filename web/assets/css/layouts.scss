@@ -168,7 +168,6 @@ header {
             }
           }
 
-
           &:hover, &.on:not(.issue_btn) {
             background-color: $color-blue-01;
             &:before {color:#fff !important;}
@@ -186,44 +185,7 @@ header {
           }
         }
       }
-      .issue_board {
-        @include flexbase; @include flex-justify-content-end; width:$noticecenter-width;
-        margin:0 0 0 20px; background-color: $not-color;
-        & > div {
 
-          @include flex-option(0, 1, 100%); @include flexbase; @include flex-align-items-center;
-          @include perspective(150px);
-
-          p, &:before {z-index: 2;}
-
-          p {@include flex-option(0, 1, 100%); font-size:1.8rem; text-align: center;}
-
-          &:before {
-            @include flex-midddle; @include flex-option(1, 0, 30px); height:30px; font-size:.8rem; padding:0 0 0 5px;
-          }
-
-          &:after {content:""; position: absolute; width:100%; height:100%;}
-
-          &.caution {
-            //background-color:$color-gray-03;
-            &,&:before {color:$color-gray-03;}
-            &:before {content:"주의"; }
-          }
-
-          &.warning {
-            //background-color:$color-orange-01;
-            &,&:before {color:$color-orange-01;}
-            &:before {content:"경고";}
-          }
-
-          &.danger  {
-            //background-color:$color-red-01;
-            &,&:before {color:$color-red-01;}
-            &:before {content:"위험";}
-          }
-        }
-        & > * {position: relative; height:100%;}
-      }
     }
   }
 }
@@ -634,6 +596,59 @@ menu {
 
   }
 
+  // 알림센터 이슈보드 시작
+  .issue_board {
+
+  /*
+  <section criticallevelcnt class="issue_board level-danger ">
+    <p class="caution" lev001>0</p>
+    <p class="warning" lev002>0</p>
+    <p class="danger"  lev003>1</p>
+  </section>
+  */
+
+    @include flexbase; @include flex-justify-content-around; @include flex-column-none;
+    width:100%; height:$issueWidth; min-height:$issueWidth; max-height:$issueWidth; margin:10px 0;
+    background-color: transparent !important;
+
+    & > p {
+
+      position: relative; @include flex-midddle; @include flex-column;
+      @include flex-option(1, 0, $issueWidth); width:$issueWidth; max-width:$issueWidth; height:$issueWidth;
+      font-size:1.4rem; padding:4px; background-color:$color-gray-09;  @include box-inset-shadow(0px, 5px, 10px, #000, 0.4);
+
+      &, &:before {z-index: 2;}
+      &, &:after {@include border-radius(500px);}
+      &:before {
+        display: inline-block; text-align: center; text-transform:uppercase; width:100%; font-size:.7rem; padding:5px 0;
+      }
+      &:after {
+        content:""; position: absolute; z-index: -1; width:100%; height:100%;
+        @include border01(2px,$color-gray-09,1 );
+
+      }
+      &.caution {
+        //background-color:$color-gray-03;
+        &,&:before {color:$color-gray-03;}
+        &:before {content:"caution"; }
+      }
+
+      &.warning {
+        //background-color:$color-orange-01;
+        &,&:before {color:$color-orange-01;}
+        &:before {content:"warning";}
+      }
+
+      &.danger  {
+        //background-color:$color-red-01;
+        &,&:before {color:$color-red-01;}
+        &:before {content:"danger";}
+      }
+    }
+
+
+  }
+
   // 알림센터
   .db_list_box {
     $db_filter_h:41px;
@@ -667,40 +682,17 @@ menu {
     }
 
     .db_filter_set {
+      @include flex-row-wrap; @include flex-justify-content-end;
+      min-height:$db_filter_h; background-color: $bas-color;
 
-      @include flexbase; @include flex-option(1, 0, $db_filter_h); max-height:$db_filter_h;
-      background-color: $bas-color;
+      //& > * {float: right;}
+      //.checkbox_set, button {@include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;}
 
-      & > * {
-        @include flex-option(0, 1, 100%); width:100%;
-        @include border01( 0 1px 0 0,$color-gray-09,1);
-      }
-
-      .checkbox_set, button {@include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;}
       .checkbox_set {
+        margin-right:auto;
         @include screenbg;
         label:before {font-size:1.4rem; }
         label:after {width:100%; height:100%; @include border-radius(0px);}
-      }
-
-      button {
-
-        @include flex-option(1, 0, $btnarea-height); max-width:$btnarea-height;
-        margin-left: auto;
-        &:before {font-size: 1.5rem;}
-        &:last-of-type {border:none !important;}
-        &.on.active {background-color: $color-blue-01;}
-
-        &.dbc_open_btn{
-          pointer-events: none; opacity: 0.5;
-          &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
-          &:before {content:"\e937"; }
-        }
-        &.dbc_close_btn:before {content:"\e91a";}
-        &.notice_fix_btn {
-          &:before {content:"\e903";}
-          &.on:before {content:"\e904";}
-        }
       }
 
       h3 {@include flexbase; @include flex-align-items-center; padding:10px;}
@@ -708,9 +700,51 @@ menu {
     }
 
 
+
+    button {
+
+      width:$btnarea-height; height:$btnarea-height;
+
+      &:before {font-size: 1.5rem;}
+      //&:last-of-type {border:none !important;}
+
+      opacity: 0.7;
+      &:hover {opacity: 1;}
+
+      &.dbc_open_btn {
+        pointer-events: none; opacity: 0.5;
+        &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
+        &:before {content:"\e937"; font-size: 1.6rem;}
+      }
+
+      &.dbc_dele_btn:before {content: "\e977";}
+
+      &.dbc_close_btn:before {content:"\e91a";}
+
+      &.dbc_sera_btn {
+        &.on {opacity: 1; background-color: $color-blue-01;}
+        &.on ~ .search_box { height:auto;}
+        &:before {content:"\e925";}
+      }
+
+      &.dbc_more {
+        width:100%; max-height:$btnarea-height; min-height:$btnarea-height;
+        background-color: $bas-color; color:$color-white-01;
+        @include flex-option(1, 0, $btnarea-height);
+        &:after  {content:"More"; padding:0 0 0 10px;}
+        &:before {content:"\e92b"; font-size: 1.2rem;}
+        &:hover {background-color: $color-gray-09}
+      }
+    }
+
+    .search_box {
+      overflow: hidden; width:100%; height:0;
+      & > * {width:100%; @include border01(1px 0 0 0,$color-gray-09,1 );}
+    }
+
     // 알림이력
     & > ul {
-      @include flex-option(0, 1, 100%);
+      @include flex-width-one(1);
 
       overflow: auto;
       li {
@@ -760,16 +794,15 @@ menu {
       }
     }
 
-    // 더보기
-    & > button  {
-      @include list_more_btn;
-    }
 
     // 알림해지 사유
     .db_cancel_set {
-      position: absolute; z-index: 1; top:0; bottom:0; left:100%;
+      position: absolute; z-index: 50; top:0; bottom:0; left:100%;
       width:100%; background-color: $color-gray-09;
 
+      .title {
+        @include flexbase; @include flex-align-items-center;  @include flex-justify-content-between; padding:8px;
+      }
 
       textarea, div[contenteditable] {
         @include flex-option(0, 1, 100%); position: relative;

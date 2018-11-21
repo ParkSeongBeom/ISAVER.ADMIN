@@ -45,7 +45,7 @@ var ToiletRoomMediator = (
         this.init = function(areaId,webSocketHelper){
             _areaId = areaId;
             _webSocketHelper = webSocketHelper;
-            _self.wsSendMessage('getImageMode');
+            //_self.wsSendMessage('getImageMode');
 
             addRefreshTimeCallBack(refreshEventTime);
             _ajaxCall('toiletRoom',{areaId:_areaId});
@@ -100,6 +100,10 @@ var ToiletRoomMediator = (
         };
 
         this.saveCanvasImage = function(imageData){
+            if(!_element.find(".ir_btn").hasClass("on")){
+                return false;
+            }
+
             var canvas = _canvas.get(0);
             var context = canvas.getContext('2d');
             var image = new Image();

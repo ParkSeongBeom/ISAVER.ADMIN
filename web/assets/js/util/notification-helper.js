@@ -7,29 +7,31 @@
  */
 var NotificationHelper = (
     function(rootPath){
-        var _rootPath;
-        var _urlConfig = {
+        const _self = this;
+        const _SAVE_NOTIFICATION = {
+            'delay':1000
+        };
+        const _CALL_BACK_RETRY = {
+            'cnt' : 10
+            , 'delay' : 1000
+        };
+
+        let _rootPath;
+        let _urlConfig = {
             'notificationListUrl':'/notification/dashboard.json'
             ,'notificationDetailUrl':'/action/eventDetail.json'
             ,'confirmNotificationUrl':'/notification/save.json'
             ,'cancelNotificationUrl':'/notification/save.json'
+            ,'allCancelNotificationUrl':'/notification/allCancel.json'
             ,'fenceListUrl' : "/fence/list.json"
         };
-        var _messageConfig;
-        var _fenceList = {};
-        var _notificationList = {};
-        var _element;
-
-        var _callBackEventHandler = null;
-        var _SAVE_NOTIFICATION = {
-            'delay':1000
-        };
-        var _CALL_BACK_RETRY = {
-            'cnt' : 10
-            , 'delay' : 1000
-        };
-        var _self = this;
-        var _notiPageObj = {
+        let _webSocketHelper;
+        let _messageConfig;
+        let _fenceList = {};
+        let _notificationList = {};
+        let _element;
+        let _callBackEventHandler = null;
+        let _notiPageObj = {
             viewMaxCnt : 20
             ,pageIndex : 1
             ,elementArr : []
@@ -96,6 +98,102 @@ var NotificationHelper = (
             _element = element;
         };
 
+        /**
+         * set websocket
+         * @author psb
+         */
+        this.setWebsocket = function(webSocketHelper, param){
+            _webSocketHelper = webSocketHelper;
+            for(let index in param){
+                switch (index) {
+                    case "notification":
+                        _webSocketHelper.addWebSocketList(index, param[index], null, notificationMessageEventHandler);
+                        _webSocketHelper.wsConnect(index);
+                        break;
+                }
+            }
+        };
+
+        /**
+         * 웹소켓 메세지 리스너
+         * @param message
+         */
+        var notificationMessageEventHandler = function(message) {
+            var resultData;
+            var status = 0;
+            try{
+                resultData = JSON.parse(message.data);
+            }catch(e){
+                return false;
+            }
+
+            switch (resultData['messageType']) {
+                case "refreshBlinker": // 진출입 갱신
+                    callBackEvent(resultData['messageType'], {'areaId':resultData['areaId']});
+                    break;
+                case "addNotification": // 알림센터 이벤트 등록
+                    if(resultData['dashboardAlarmFileUrl']!=null){
+                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
+                    }else{
+                        setAlarmAudio();
+                    }
+                    addNotification(resultData['notification'], true, true);
+                    break;
+                case "allCancelNotification": // 알림센터 이벤트 전체 해제
+                    for(let index in _notificationList){
+                        _notificationList[index]['data']['actionType']='cancel';
+                        updateNotification(_notificationList[index]['data']);
+                    }
+                    break;
+                case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
+                    updateNotificationList(resultData['notification']);
+                    break;
+                case "cancelDetection": // 감지 해제
+                    callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
+                    break;
+                case "addEvent": // 일반이벤트 등록
+                    callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
+                    break;
+                case "editDeviceStatus": // 장치 상태 변경
+                    callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
+                    break;
+                case "licenseStatus": // 라이센스 상태
+                    var license = resultData['license'];
+                    if(license!=null){
+                        status = license['status'];
+                    }
+                    break;
+            }
+
+            licenseStatusChangeHandler(status);
+        };
+
+        var licenseStatusChangeHandler = function(status) {
+            var redirectFlag = true;
+
+            switch (status) {
+                case 0:
+                case -99: // 라이센스 인가 체크 제외대상
+                    $(".info_btn").removeClass("level-danger");
+                    $(".license_notice").removeClass("on");
+                    redirectFlag = false;
+                    break;
+                case -1: // 기한만료
+                    $(".info_btn").addClass("level-danger");
+                    $(".license_notice > p").text(layoutMessageConfig['expireLicense']);
+                    $(".license_notice").addClass("on");
+                    break;
+                default : // 기타 오류
+                    $(".info_btn").addClass("level-danger");
+                    $(".license_notice > p").text(layoutMessageConfig['emptyLicense']);
+                    $(".license_notice").addClass("on");
+            }
+
+            if(redirectFlag){
+                logout();
+            }
+        };
+
         this.getFenceList = function(type, id){
             var resultList = [];
             if(id==null || id==""){
@@ -132,7 +230,7 @@ var NotificationHelper = (
                     }
                     break;
                 case 'notificationList':
-                    notificationHelper.addNotificationList(data['notifications'], data['notiCountList']);
+                    addNotificationList(data['notifications'], data['notiCountList']);
                     break;
                 case 'confirmNotification':
                 case 'cancelNotification':
@@ -141,6 +239,10 @@ var NotificationHelper = (
                         layerShowHide('notificationCancel','hide');
                         _alertMessage(actionType+'Success');
                     }
+                    break;
+                case 'allCancelNotification':
+                    setLoading('noti', false);
+                    _alertMessage(actionType+'Success');
                     break;
                 case 'notificationDetail':
                     notificationDetailRender(data);
@@ -264,13 +366,13 @@ var NotificationHelper = (
          * @author psb
          * @param notifications
          */
-        this.addNotificationList = function(notifications, notiCountList){
+        var addNotificationList = function(notifications, notiCountList){
             setLoading('noti', true);
             setLoading('area', true);
 
             if(notifications!=null){
                 for(var index in notifications){
-                    _self.addNotification(notifications[index], false, (notifications.length-_notiPageObj['viewMaxCnt'])<=index?true:false);
+                    addNotification(notifications[index], false, (notifications.length-_notiPageObj['viewMaxCnt'])<=index?true:false);
                 }
 
                 if(notifications.length<=_notiPageObj['viewMaxCnt']){
@@ -292,7 +394,7 @@ var NotificationHelper = (
             setLoading('noti', false);
 
             setTimeout(function () {
-                _self.callBackEvent('addNotification', {'notification':notifications});
+                callBackEvent('addNotification', {'notification':notifications});
                 setLoading('area', false);
             }, 10);
         };
@@ -351,7 +453,7 @@ var NotificationHelper = (
          * @param newFlag
          * @param viewFlag
          */
-        this.addNotification = function(notification, newFlag, viewFlag){
+        var addNotification = function(notification, newFlag, viewFlag){
             if(_self.getNotification('element',notification['notificationId'])!=null){
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
@@ -387,20 +489,24 @@ var NotificationHelper = (
                 /* 싸이렌 */
                 playSegment();
 
-                var toastTag = templateHelper.getTemplate("toast");
-                toastTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
-                toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
-                toastTag.find("#toastAreaName").text(notification['areaName']);
-                toastTag.find("#toastEventDesc").text(notification['eventName']);
-                $(".toast_popup").append(toastTag);
+                if(dashboardHelper instanceof DashboardHelper){
+                    if(dashboardHelper.getArea("templateCode", notification['areaId'])!='TMP005'){
+                        var toastTag = templateHelper.getTemplate("toast");
+                        toastTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
+                        toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
+                        toastTag.find("#toastAreaName").text(notification['areaName']);
+                        toastTag.find("#toastEventDesc").text(notification['eventName']);
+                        $(".toast_popup").append(toastTag);
 
-                removeToastTag(toastTag);
-                function removeToastTag(_tag){
-                    setTimeout(function(){
-                        _tag.remove();
-                    },3000);
+                        removeToastTag(toastTag);
+                        function removeToastTag(_tag){
+                            setTimeout(function(){
+                                _tag.remove();
+                            },3000);
+                        }
+                    }
                 }
-                _self.callBackEvent('addNotification', notification);
+                callBackEvent('addNotification', notification);
             }
         };
 
@@ -441,15 +547,27 @@ var NotificationHelper = (
             saveNoti(actionType, paramData, cancelDesc);
         };
 
+
+        /**
+         * cancel notification all
+         * @author psb
+         */
+        this.allCancelNotification = function(){
+            if(confirm(_messageConfig['confirmAllCancelNotification'])){
+                setLoading('noti', true);
+                _ajaxCall('allCancelNotification');
+            }
+        };
+
         /**
          * update notification List
          * @author psb
          * @param notifications
          */
-        this.updateNotificationList = function(notifications){
+        var updateNotificationList = function(notifications){
             if(notifications!=null){
                 for(var index in notifications){
-                    _self.updateNotification(notifications[index]);
+                    updateNotification(notifications[index]);
                 }
 
                 notificationCancelBtnAction();
@@ -466,15 +584,15 @@ var NotificationHelper = (
          * @author psb
          * @private
          */
-        this.updateNotification = function(notification){
+        var updateNotification = function(notification){
             var notificationTag = _self.getNotification('element',notification['notificationId']);
+            var notificationData = _self.getNotification('data',notification['notificationId']);
             if(notificationTag==null){
                 console.warn("[NotificationHelper][updateNotification] empty notification - "+notification['notificationId']);
             }
 
             switch (notification['actionType']){
                 case "confirm" :
-                    var notificationData = _self.getNotification('data',notification['notificationId']);
                     if(notificationData!=null){
                         notificationData['confirmUserId'] = notification['updateUserId'];
                         notificationData['confirmUserName'] = notification['updateUserName'];
@@ -492,7 +610,6 @@ var NotificationHelper = (
                     }
                     break;
                 case "cancel" :
-                    var notificationData = _self.getNotification('data',notification['notificationId']);
                     var levelTag = $("div[criticalLevelCnt] span["+notificationData['criticalLevel']+"]");
                     var levelCtn = Number(levelTag.text())-1;
                     levelTag.text(levelCtn);
@@ -510,7 +627,7 @@ var NotificationHelper = (
                     }
                     delete _notificationList[notification['notificationId']];
 
-                    _self.callBackEvent('removeNotification', {'notification':notificationData});
+                    callBackEvent('removeNotification', {'notification':notificationData});
                     break;
             }
         };
@@ -520,7 +637,7 @@ var NotificationHelper = (
          * WS에서 이벤트 수신시 DB거치지 않고 실시간 대쉬보드 반영을 위함
          * @author psb
          */
-        this.callBackEvent = function(messageType, data, count){
+        var callBackEvent = function(messageType, data, count){
             if(dashboardFlag){
                 if(_callBackEventHandler!=null){
                     _callBackEventHandler(messageType, data);
@@ -532,7 +649,7 @@ var NotificationHelper = (
 
                     if(count > 0){
                         setTimeout(function(){
-                            _self.callBackEvent(messageType, data, count - 1);
+                            callBackEvent(messageType, data, count - 1);
                         },_CALL_BACK_RETRY['deley']);
                     }else{
                         console.error('[NotificationHelper] callBackEvent failure - callback event handler is null');

@@ -1,8 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
-import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CriticalSvc;
 import com.icent.isaver.repository.bean.CriticalBean;
 import com.icent.isaver.repository.bean.DeviceBean;
@@ -98,7 +97,7 @@ public class CriticalSvcImpl implements CriticalSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new IcentException("");
+                throw new IsaverException("");
             }
         }
         return modelAndView;
@@ -116,7 +115,7 @@ public class CriticalSvcImpl implements CriticalSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new IcentException("");
+                throw new IsaverException("");
             }
         }
         return modelAndView;
@@ -130,7 +129,7 @@ public class CriticalSvcImpl implements CriticalSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         return new ModelAndView();
     }

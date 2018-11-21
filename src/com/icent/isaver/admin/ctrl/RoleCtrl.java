@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.RoleSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -84,7 +84,7 @@ public class RoleCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addRole(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, addRoleParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -106,7 +106,7 @@ public class RoleCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveRole(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, saveRoleParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -128,7 +128,7 @@ public class RoleCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeRole(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, removeRoleParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = roleSvc.removeRole(parameters);

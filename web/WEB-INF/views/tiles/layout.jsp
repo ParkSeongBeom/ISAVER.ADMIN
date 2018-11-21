@@ -78,10 +78,13 @@
             , notEqualPassword    :'<spring:message code="dashboard.message.notEqualPassword"/>'
             , emptyAction  :'<spring:message code="dashboard.message.emptyAction"/>'
             , emptyNotification    :'<spring:message code="dashboard.message.emptyNotification"/>'
+            , confirmAllCancelNotification  :'<spring:message code="dashboard.message.confirmAllCancelNotification"/>'
+            , allCancelNotificationSuccess  :'<spring:message code="dashboard.message.cancelNotificationSuccess"/>'
+            , allCancelNotificationFailure    :'<spring:message code="dashboard.message.cancelNotificationFailure"/>'
+            , cancelNotificationSuccess  :'<spring:message code="dashboard.message.cancelNotificationSuccess"/>'
             , cancelNotificationFailure    :'<spring:message code="dashboard.message.cancelNotificationFailure"/>'
             , confirmNotificationSuccess  :'<spring:message code="dashboard.message.confirmNotificationSuccess"/>'
             , confirmNotificationFailure    :'<spring:message code="dashboard.message.confirmNotificationFailure"/>'
-            , cancelNotificationSuccess  :'<spring:message code="dashboard.message.cancelNotificationSuccess"/>'
             , emptyLicense :'<spring:message code="common.message.emptyLicense"/>'
             , expireLicense :'<spring:message code="common.message.expireLicense"/>'
         };
@@ -118,7 +121,7 @@
 
             // 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase, .info_popup").length) {
                     layerShowHide('detail','hide');
                     layerShowHide('profile','hide');
                     layerShowHide('license','hide');
@@ -155,9 +158,7 @@
             notificationHelper.setElement($("#notificationList"));
             notificationHelper.createEventListener();
             notificationHelper.getNotificationList();
-
-            webSocketHelper.addWebSocketList("notification", "${eventWebSocketUrl}", null, notificationMessageEventHandler);
-            webSocketHelper.wsConnect("notification");
+            notificationHelper.setWebsocket(webSocketHelper, {'notification':"${eventWebSocketUrl}"});
             aliveSend(900000);
 
             alarmPlayer = document.getElementsByTagName("audio")[0];
@@ -173,80 +174,6 @@
                 layerShowHide('list');
             }
         });
-
-        /**
-         * 웹소켓 메세지 리스너
-         * @param message
-         */
-        function notificationMessageEventHandler(message) {
-            var resultData;
-            var status = 0;
-            try{
-                resultData = JSON.parse(message.data);
-            }catch(e){
-                return false;
-            }
-
-            switch (resultData['messageType']) {
-                case "refreshBlinker": // 진출입 갱신
-                    notificationHelper.callBackEvent(resultData['messageType'], {'areaId':resultData['areaId']});
-                    break;
-                case "addNotification": // 알림센터 이벤트 등록
-                    if(resultData['dashboardAlarmFileUrl']!=null){
-                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
-                    }else{
-                        setAlarmAudio();
-                    }
-                    notificationHelper.addNotification(resultData['notification'], true, true);
-                    break;
-                case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
-                    notificationHelper.updateNotificationList(resultData['notification']);
-                    break;
-                case "cancelDetection": // 감지 해제
-                    notificationHelper.callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
-                    break;
-                case "addEvent": // 일반이벤트 등록
-                    notificationHelper.callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
-                    break;
-                case "editDeviceStatus": // 장치 상태 변경
-                    notificationHelper.callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
-                    break;
-                case "licenseStatus": // 라이센스 상태
-                    var license = resultData['license'];
-                    if(license!=null){
-                        status = license['status'];
-                    }
-                    break;
-            }
-
-            licenseStatusChangeHandler(status);
-        }
-
-        function licenseStatusChangeHandler(status) {
-            var redirectFlag = true;
-
-            switch (status) {
-                case 0:
-                case -99: // 라이센스 인가 체크 제외대상
-                    $(".info_btn").removeClass("level-danger");
-                    $(".license_notice").removeClass("on");
-                    redirectFlag = false;
-                    break;
-                case -1: // 기한만료
-                    $(".info_btn").addClass("level-danger");
-                    $(".license_notice > p").text(layoutMessageConfig['expireLicense']);
-                    $(".license_notice").addClass("on");
-                    break;
-                default : // 기타 오류
-                    $(".info_btn").addClass("level-danger");
-                    $(".license_notice > p").text(layoutMessageConfig['emptyLicense']);
-                    $(".license_notice").addClass("on");
-            }
-
-            if(redirectFlag){
-                logout();
-            }
-        }
 
         function addRefreshTimeCallBack(_function){
             if(_function!=null && typeof _function == "function"){
@@ -387,21 +314,24 @@
                     }
                     break;
                 case 'license':
-                    var popupElement = $(".info_popup");
-                    if(data['licenseExpireDate']!=null){
-                        popupElement.find("#expireDate").text(data['licenseExpireDate']);
-                    }
-
-                    var licenseList = data['licenseList'];
-                    for(var index in licenseList){
-                        var license = licenseList[index];
-                        popupElement.find("#licenseList").append(
-                            $("<div/>").append(
-                                $("<span/>").text(license['deviceCodeName'])
-                            ).append(
-                                $("<p/>").text(license['deviceCnt']+"/"+license['licenseCnt'])
-                            )
-                        );
+                    const popupElement = $(".info_popup");
+                    if(data['license']['status']==-99){
+                        popupElement.find("#expireDate").text("none authorize license");
+                    }else{
+                        if(data['licenseExpireDate']!=null){
+                            popupElement.find("#expireDate").text(data['licenseExpireDate']);
+                        }
+                        var licenseList = data['licenseList'];
+                        for(var index in licenseList){
+                            var license = licenseList[index];
+                            popupElement.find("#licenseList").append(
+                                $("<div/>").append(
+                                    $("<span/>").text(license['deviceCodeName'])
+                                ).append(
+                                    $("<p/>").text(license['deviceCnt']+"/"+license['licenseCnt'])
+                                )
+                            );
+                        }
                     }
                     licenseStatusChangeHandler(data['license']['status']);
                     layerShowHide('license','show');
@@ -623,10 +553,14 @@
                     <input type="checkbox" class="check_input" onclick="javascript:notificationHelper.notificationAllCheck(this);"/>
                     <label></label>
                 </div>
-                <spring:message code="common.selectbox.select" var="allSelectText"/>
-                <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true" allText="${allSelectText}"/>
-                <isaver:areaSelectBox htmlTagId="areaType" allModel="true" allText="${allSelectText}"/>
-                <button class="btn dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');"></button>
+                <button class="dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');" title="<spring:message code="dashboard.title.alarmAction"/>"></button> <!-- 선택 이력 알림해지, 알림확인 박스 열기 -->
+                <button class="dbc_dele_btn" onclick="javascript:notificationHelper.allCancelNotification();" title="<spring:message code="dashboard.title.allCancel"/>"></button> <!-- 이력 모두 지우기 -->
+                <button class="dbc_sera_btn" onclick="javascript:$(this).toggleClass('on');" title="<spring:message code="dashboard.title.search"/>"></button> <!-- 찾기 필터 보기 -->
+                <div class="search_box">
+                    <spring:message code="common.selectbox.select" var="allSelectText"/>
+                    <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true" allText="${allSelectText}"/>
+                    <isaver:areaSelectBox htmlTagId="areaType" allModel="true" allText="${allSelectText}"/>
+                </div>
             </div>
 
             <!-- 알림 이력-->
@@ -636,13 +570,13 @@
             <div id="notiLoading" class="loding_bar"></div>
 
             <!-- 더보기 버튼 -->
-            <button id="notiMoreBtn" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
+            <button id="notiMoreBtn" class="dbc_more" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
 
             <!-- 알림해지 영역 -->
             <div class="db_cancel_set">
-                <div class="db_filter_set">
+                <div class="title">
                     <h3><spring:message code='dashboard.title.alarmAction'/></h3>
-                    <button class="btn dbc_close_btn" onclick="javascript:layerShowHide('notificationCancel','hide');"></button>
+                    <button class="dbc_close_btn" onclick="javascript:layerShowHide('notificationCancel','hide');"></button>
                 </div>
 
                 <textarea id="cancelDesc" placeholder="<spring:message code='dashboard.placeholder.notificationAction'/>"></textarea>

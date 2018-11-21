@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.GroupCodeSvc;
 import com.icent.isaver.repository.bean.GroupCodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
@@ -72,7 +72,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -87,7 +87,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -103,7 +103,7 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.commit(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

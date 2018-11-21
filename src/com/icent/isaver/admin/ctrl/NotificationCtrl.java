@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -79,7 +79,7 @@ public class NotificationCtrl {
         return modelAndView;
     }
 
-    private final static String[] cancelEventLogParam = new String[]{"paramData","actionType"};
+    private final static String[] saveNotificationParam = new String[]{"paramData","actionType"};
 
     /**
      * 알림센터를 저장한다. (해제, 확인)
@@ -90,13 +90,26 @@ public class NotificationCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/save")
     public ModelAndView saveNotification(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        if(MapUtils.nullCheckMap(parameters, cancelEventLogParam)){
-            throw new IcentException("");
+        if(MapUtils.nullCheckMap(parameters, saveNotificationParam)){
+            throw new IsaverException("");
         }
-
         parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
         parameters.put("updateUserName", AdminHelper.getAdminNameFromSession(request));
         ModelAndView modelAndView = notificationSvc.saveNotification(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 알림센터 전체를 해제한다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/allCancel")
+    public ModelAndView allCancelNotification(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
+        ModelAndView modelAndView = notificationSvc.allCancelNotification(parameters);
         return modelAndView;
     }
 }

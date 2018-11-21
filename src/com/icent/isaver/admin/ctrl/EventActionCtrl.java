@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -74,7 +74,7 @@ public class EventActionCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveEventParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

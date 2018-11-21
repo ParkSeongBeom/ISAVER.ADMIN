@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -98,7 +97,7 @@ public class TestSvcImpl implements TestSvc {
         try {
             AlarmRequestUtil.sendAlarmRequestFunc(parameters, "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl, "form", null);
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

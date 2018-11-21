@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -105,7 +105,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value = "/exist")
     public ModelAndView findByUserCheckExist(@RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByUserCheckExistParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = usersSvc.findByUserCheckExist(parameters);
@@ -126,7 +126,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addUserParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -148,7 +148,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveUserParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -170,7 +170,7 @@ public class UsersCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeUserParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

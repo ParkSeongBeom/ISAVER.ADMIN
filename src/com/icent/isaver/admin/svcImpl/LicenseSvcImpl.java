@@ -1,8 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.LicenseSvc;
-import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.repository.bean.LicenseBean;
 import com.icent.isaver.repository.dao.base.LicenseDao;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,7 +88,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -109,7 +107,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -125,7 +123,7 @@ public class LicenseSvcImpl implements LicenseSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

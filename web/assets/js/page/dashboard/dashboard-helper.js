@@ -6,24 +6,28 @@
  */
 var DashboardHelper = (
     function(rootPath, version){
-        var _rootPath;
-        var _version;
-        var _MEDIATOR_TYPE = ['video','map','toiletRoom'];
-        var _urlConfig = {
+        const _MEDIATOR_TYPE = ['video','map','toiletRoom'];
+        const _noneAddEvents = ['EVT999'];
+        const _defaultTemplateCode = "TMP001";
+        const _self = this;
+
+        let _rootPath;
+        let _version;
+        let _webSocketHelper;
+        let _messageConfig;
+        let _fileUploadPath;
+        let _templateSetting;
+        let _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
         };
-        var _options ={
+        let _options ={
             marquee : true
             ,guardInfo : true
         };
-        var _noneAddEvents = ['EVT999'];
-        var _messageConfig;
-        var _fileUploadPath;
-        var _defaultTemplateCode = "TMP001";
-        var _areaList = {};
-        var _guardList = {};
-        var _toiletRoomList = {};
-        var _self = this;
+
+        let _areaList = {};
+        let _guardList = {};
+        let _toiletRoomList = {};
 
         /**
          * initialize
@@ -32,7 +36,7 @@ var DashboardHelper = (
             _rootPath = rootPath;
             _version = version;
 
-            for(var index in _urlConfig){
+            for(let index in _urlConfig){
                 _urlConfig[index] = _rootPath + _urlConfig[index];
             }
             updateDeviceStatus();
@@ -40,39 +44,36 @@ var DashboardHelper = (
         };
 
         /**
-         * set message config
+         * set config
          * @author psb
          */
-        this.setMessageConfig = function(messageConfig){
+        this.setConfig = function(messageConfig, fileUploadPath, templateSetting){
             _messageConfig = messageConfig;
-        };
-
-        /**
-         * set message config
-         * @author psb
-         */
-        this.setFileUploadPath = function(fileUploadPath){
             _fileUploadPath = fileUploadPath;
+            _templateSetting = templateSetting;
         };
 
         /**
          * set websocket
          * @author psb
          */
-        this.setWebsocket = function(type, webSocketHelper, webSocketUrl){
-            switch (type) {
-                case "map":
-                    if($("div[templateCode='TMP005']").length>0){
-                        webSocketHelper.addWebSocketList(type, webSocketUrl, null, mapMessageEventHandler);
-                        webSocketHelper.wsConnect(type);
-                    }
-                    break;
-                case "toiletRoom":
-                    if($("div[templateCode='TMP008']").length>0){
-                        webSocketHelper.addWebSocketList(type, webSocketUrl, null, toiletRoomMessageEventHandler);
-                        webSocketHelper.wsConnect(type);
-                    }
-                    break;
+        this.setWebsocket = function(webSocketHelper, param){
+            _webSocketHelper = webSocketHelper;
+            for(let index in param){
+                switch (index) {
+                    case "map":
+                        if($("div[templateCode='TMP005']").length>0){
+                            _webSocketHelper.addWebSocketList(index, param[index], null, mapMessageEventHandler);
+                            _webSocketHelper.wsConnect(index);
+                        }
+                        break;
+                    case "toiletRoom":
+                        if($("div[templateCode='TMP008']").length>0){
+                            _webSocketHelper.addWebSocketList(index, param[index], null, toiletRoomMessageEventHandler);
+                            _webSocketHelper.wsConnect(index);
+                        }
+                        break;
+                }
             }
         };
 
@@ -102,6 +103,8 @@ var DashboardHelper = (
                         _mapMediator.removeMarker(resultData['messageType'], resultData);
                         break;
                 }
+            }else{
+                console.warn("[mapMessageEventHandler] areaId or mapMediator is null  - " + resultData['areaId'] + ","+_mapMediator);
             }
         };
 
@@ -110,7 +113,7 @@ var DashboardHelper = (
          * @param message
          */
         var toiletRoomMessageEventHandler = function(message) {
-            var resultData;
+            let resultData;
             try{
                 resultData = JSON.parse(message.data);
             }catch(e){
@@ -118,7 +121,7 @@ var DashboardHelper = (
                 return false;
             }
 
-            var _toiletRoomMediator = _toiletRoomList[resultData['areaId']];
+            const _toiletRoomMediator = _toiletRoomList[resultData['areaId']];
             if(resultData['areaId']!=null && _toiletRoomMediator!=null){
                 switch (resultData['messageType']) {
                     case "imageMode":
@@ -132,15 +135,18 @@ var DashboardHelper = (
         };
 
         /**
-         * set Area List
+         * set Area Template List
          */
-        this.setAreaList = function(){
+        this.initAreaTemplate = function(){
+            let areaIds = "";
+
             $.each($(".watch_area div[areaId]"), function(){
-                var areaId = $(this).attr("areaId");
+                const areaId = $(this).attr("areaId");
+                const templateCode = $(this).attr("templateCode");
                 _areaList[areaId] = {
                     'element' : $(this)
                     ,'detect' : {}
-                    ,'templateCode' : $(this).attr("templateCode")
+                    ,'templateCode' : templateCode
                     ,'notification' : $.extend(true,{},criticalList)
                     ,'childDevice' : {}
                     ,'childAreaIds' : $(this).attr("childAreaIds")
@@ -152,96 +158,69 @@ var DashboardHelper = (
                         ,'notification' : $.extend(true,{},criticalList)
                     };
                 });
-            });
-        };
 
-        /**
-         * set Guard List
-         */
-        this.setGuardList = function(){
-            var initFlag = false;
-            $.each($("div[templateCode='TMP005']"),function(){
-                var _areaId = $(this).attr("areaId");
-                _guardList[_areaId] = {};
-                _guardList[_areaId][_MEDIATOR_TYPE[0]] = new VideoMediator(_rootPath);
-                _guardList[_areaId][_MEDIATOR_TYPE[1]] = templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath);
-                _guardList[_areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
+                switch (templateCode){
+                    case "TMP003" :
+                        if(areaIds!=""){ areaIds += ",";}
+                        areaIds += areaId;
+                        break;
+                    case "TMP005" :
+                        _guardList[areaId] = {};
+                        _guardList[areaId][_MEDIATOR_TYPE[0]] = new VideoMediator(_rootPath);
+                        _guardList[areaId][_MEDIATOR_TYPE[1]] = _templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath);
+                        _guardList[areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
 
-                var deviceList = [];
-                $.each($(this).find("div[deviceId]"),function(){
-                    deviceList.push({
-                        'areaId' : _areaId
-                        ,'deviceId' : $(this).data("deviceid")
-                        ,'deviceCode' : $(this).data("devicecode")
-                        ,'ipAddress' : $(this).data("ipaddress")
-                        ,'port' : $(this).data("port")
-                        ,'deviceUserId' : $(this).data("deviceuserid")
-                        ,'devicePassword' : $(this).data("devicepassword")
-                        ,'subUrl' : $(this).data("suburl")
-                        ,'linkUrl' : $(this).data("linkurl")
-                        ,'streamServerUrl' : $(this).data("streamserverurl")
-                        ,'deviceName' : $(this).data("devicename")
-                        ,'deviceStat' : $(this).data("devicestat")
-                    });
-                });
+                        let deviceList = [];
+                        $.each($(this).find("div[deviceId]"),function(){
+                            deviceList.push({
+                                'areaId' : areaId
+                                ,'deviceId' : $(this).data("deviceid")
+                                ,'deviceCode' : $(this).data("devicecode")
+                                ,'ipAddress' : $(this).data("ipaddress")
+                                ,'port' : $(this).data("port")
+                                ,'deviceUserId' : $(this).data("deviceuserid")
+                                ,'devicePassword' : $(this).data("devicepassword")
+                                ,'subUrl' : $(this).data("suburl")
+                                ,'linkUrl' : $(this).data("linkurl")
+                                ,'streamServerUrl' : $(this).data("streamserverurl")
+                                ,'deviceName' : $(this).data("devicename")
+                                ,'deviceStat' : $(this).data("devicestat")
+                            });
+                        });
 
-                // Video Mediator
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].init(_areaId,{'openLinkFlag': false});
-                _guardList[_areaId][_MEDIATOR_TYPE[0]].createPlayerList(deviceList);
+                        // Video Mediator
+                        _guardList[areaId][_MEDIATOR_TYPE[0]].setElement($(this).find("ul[ptzPlayers]"));
+                        _guardList[areaId][_MEDIATOR_TYPE[0]].init(areaId,{'openLinkFlag': false});
+                        _guardList[areaId][_MEDIATOR_TYPE[0]].createPlayerList(deviceList);
 
-                // Map Mediator
-                if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof MapMediator){
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].addImage();
-                }else if(_guardList[_areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"));
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
-                    _guardList[_areaId][_MEDIATOR_TYPE[1]].init(_areaId,{
-                        'websocketSend':false
-                        ,'fenceView':true
-                        ,'openLinkFlag': false
-                        ,'click':function(targetId,deviceCode){
-                            if(deviceCode=='area'){ moveDashboard(_areaId,targetId); }
+                        // Map Mediator
+                        if(_guardList[areaId][_MEDIATOR_TYPE[1]] instanceof MapMediator){
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].addImage();
+                        }else if(_guardList[areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"));
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
+                                'websocketSend':false
+                                ,'fenceView':true
+                                ,'openLinkFlag': false
+                                ,'click':function(targetId,deviceCode){
+                                    if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
+                                }
+                            });
                         }
-                    });
+                        break;
+                    case "TMP008" :
+                        _toiletRoomList[areaId] = {};
+                        _toiletRoomList[areaId] = new ToiletRoomMediator(_rootPath);
+                        _toiletRoomList[areaId].setElement($(this));
+                        _toiletRoomList[areaId].init(areaId,_webSocketHelper);
+                        break;
                 }
-                initFlag = true;
             });
 
-            if(initFlag){
-                console.log("[DashboardHelper] initialize Safe-Guard - "+templateSetting['safeGuardMapView']);
-            }
-        };
-
-        /**
-         * get blinker list
-         */
-        this.getBlinkerList = function(){
-            var areaIds = "";
-            $.each($(".watch_area div[inoutArea]"), function(){
-                if(areaIds!=""){ areaIds += ",";}
-                areaIds += $(this).attr("areaId");
-            });
-            _self.getBlinker(areaIds);
-        };
-
-        /**
-         * set ToiletRoom list
-         */
-        this.setToiletRoomList = function(webSocketHelper){
-            var initFlag = false;
-            $.each($("div[templateCode='TMP008']"),function(){
-                var areaId = $(this).attr("areaId");
-                _toiletRoomList[areaId] = {};
-                _toiletRoomList[areaId] = new ToiletRoomMediator(_rootPath);
-                _toiletRoomList[areaId].setElement($(this));
-                _toiletRoomList[areaId].init(areaId,webSocketHelper);
-                initFlag = true;
-            });
-
-            if(initFlag){
-                console.log("[DashboardHelper] initialize Toilet Room");
+            if(areaIds!=""){
+                _self.getBlinker(areaIds);
             }
         };
 
@@ -249,7 +228,7 @@ var DashboardHelper = (
          * sendMessage websocket
          * @author psb
          */
-        this.wsToiletRoomSendMessage = function(areaId, type){
+        this.toiletRoomSendMessage = function(areaId, type){
             if(areaId!=null && _toiletRoomList[areaId]!=null){
                 _toiletRoomList[areaId].wsSendMessage(type);
             }else{
@@ -288,7 +267,7 @@ var DashboardHelper = (
                     break;
                 case "addNotification": // 알림이벤트 등록
                     if(Array.isArray(data['notification'])){
-                        for(var index in data['notification']){
+                        for(let index in data['notification']){
                             _self.appendEventHandler(messageType, data['notification'][index]);
                         }
                     }else{
@@ -316,7 +295,7 @@ var DashboardHelper = (
                     break;
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
-                        for(var index in data['cancel']){
+                        for(let index in data['cancel']){
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             notificationGuardInfoUpdate(messageType, data['cancel'][index]['criticalLevel'], data['notification']);
@@ -325,7 +304,7 @@ var DashboardHelper = (
                     break;
                 case "editDeviceStatus": // 장치 상태
                     _self.setDeviceStatusList(data['deviceStatusList']);
-                    for(var index in _guardList){
+                    for(let index in _guardList){
                         _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
                         _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
                     }
@@ -358,7 +337,7 @@ var DashboardHelper = (
          * @author psb
          */
         this.getArea = function(type, areaId){
-            var result = null;
+            let result = null;
             switch (type){
                 case "all" :
                     if(_areaList[areaId]!=null){
@@ -369,10 +348,10 @@ var DashboardHelper = (
                     result = _areaList;
                     break;
                 case "child" :
-                    for(var index in _areaList){
-                        var _area = _areaList[index];
+                    for(let index in _areaList){
+                        const _area = _areaList[index];
                         if(_area['childAreaIds']!=null && _area['childAreaIds']!="" && _area['childAreaIds'].split(",").indexOf(areaId)>-1){
-                            result = _areaList[index];
+                            result = _area;
                         }
                     }
                     break;
@@ -389,7 +368,7 @@ var DashboardHelper = (
          * get guard obj
          */
         this.getGuard = function(type, areaId){
-            var result = null;
+            let result = null;
             switch (type){
                 case "all" :
                     if(_guardList[areaId]!=null){
@@ -451,11 +430,11 @@ var DashboardHelper = (
          * @author psb
          */
         this.setDeviceStatusList = function(deviceStatusList){
-            for(var index in deviceStatusList){
-                var deviceStatus = deviceStatusList[index];
+            for(let index in deviceStatusList){
+                const deviceStatus = deviceStatusList[index];
 
-                for(var index in _areaList){
-                    var _area = _areaList[index];
+                for(let index in _areaList){
+                    const _area = _areaList[index];
                     if(_area['childDevice'][deviceStatus['deviceId']]!=null){
                         if(deviceStatus['deviceStat']=='Y'){
                             _area['childDevice'][deviceStatus['deviceId']]['element'].removeClass('level-die');
@@ -486,12 +465,12 @@ var DashboardHelper = (
                 return false;
             }
 
-            for(var index in data){
-                var inout = data[index];
-                var inoutTag = _self.getArea("element", inout['areaId']);
+            for(let index in data){
+                const inout = data[index];
+                const inoutTag = _self.getArea("element", inout['areaId']);
                 if(inoutTag!=null){
-                    var inCount = inout['inCount']!=null?inout['inCount']:0;
-                    var outCount = inout['outCount']!=null?inout['outCount']:0;
+                    const inCount = inout['inCount']!=null?inout['inCount']:0;
+                    const outCount = inout['outCount']!=null?inout['outCount']:0;
                     inoutTag.find("p[in]").text(inCount);
                     inoutTag.find("p[out]").text(outCount);
                     inoutTag.find("p[gap]").text(inCount-outCount);
@@ -509,17 +488,17 @@ var DashboardHelper = (
                 return false;
             }
 
-            var areaComponent = _self.getArea("all", data['areaId']);
+            const areaComponent = _self.getArea("all", data['areaId']);
 
             if(areaComponent==null || data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
                 return false;
             }
-            var detect = areaComponent['detect'];
-            var detectText = null;
+            const detect = areaComponent['detect'];
+            let detectText = null;
 
             if(detect[data['fenceId']] == null){
-                var element = areaComponent['element'];
-                var detectTag = $("<div/>",{class:'copybox'}).append(
+                const element = areaComponent['element'];
+                const detectTag = $("<div/>",{class:'copybox'}).append(
                     $("<p/>",{name:'detectText'}).text(data['eventName']+' - '+data['fenceName'])
                 ).append(
                     $("<span/>",{name:'detectCnt'})
@@ -534,7 +513,7 @@ var DashboardHelper = (
                 }
             }
 
-            var fenceTarget = detect[data['fenceId']];
+            const fenceTarget = detect[data['fenceId']];
             switch (messageType) {
                 case "addNotification": // 알림센터 이벤트 등록
                     detectText = data['eventName']+' - '+data['fenceName'];
@@ -550,8 +529,8 @@ var DashboardHelper = (
                     break;
             }
 
-            var detectCnt = 0;
-            for(var index in fenceTarget['notification']){
+            let detectCnt = 0;
+            for(let index in fenceTarget['notification']){
                 detectCnt += fenceTarget['notification'][index].length;
                 if(fenceTarget['notification'][index].length > 0){
                     fenceTarget['element'].addClass("level-"+criticalCss[index]);
@@ -581,19 +560,19 @@ var DashboardHelper = (
             }
 
             function setMarquee(areaComponent, _data){
-                var element = areaComponent['element'];
-                var lastNoti = null;
+                const element = areaComponent['element'];
+                let lastNoti = null;
 
                 if(_data!=null){
                     lastNoti = _data;
                 }else{
-                    var notification = areaComponent['notification'];
-                    for(var index in notification){
-                        var noti = notification[index];
-                        var notiLen = noti.length;
+                    const notification = areaComponent['notification'];
+                    for(let index in notification){
+                        const noti = notification[index];
+                        let notiLen = noti.length;
                         if(notiLen > 0){
-                            var notiData = null;
-                            var roop = true;
+                            let notiData = null;
+                            let roop = true;
                             while(roop){
                                 if(notiLen<0){
                                     roop = false;
@@ -610,7 +589,7 @@ var DashboardHelper = (
                     }
                 }
                 if(lastNoti!=null){
-                    var marqueeText = lastNoti['areaName']+" "+lastNoti['deviceName']+" "+lastNoti['eventName']+" "+new Date(lastNoti['eventDatetime']).format("yyyy.MM.dd HH:mm:ss");
+                    const marqueeText = lastNoti['areaName']+" "+lastNoti['deviceName']+" "+lastNoti['eventName']+" "+new Date(lastNoti['eventDatetime']).format("yyyy.MM.dd HH:mm:ss");
                     if(element.find("p[messageBox] span").length > 0){
                         element.find("p[messageBox] span").attr("notificationId",lastNoti['notificationId']).text(marqueeText);
                     }else{
@@ -622,12 +601,12 @@ var DashboardHelper = (
             }
 
 
-            var areaComponent = _self.getArea("all", areaId);
+            const areaComponent = _self.getArea("all", areaId);
             if(areaComponent!=null){
                 setMarquee(areaComponent, data);
             }else{
-                var component = _self.getArea("full");
-                for(var key in component){
+                const component = _self.getArea("full");
+                for(let key in component){
                     setMarquee(component[key]);
                 }
             }
@@ -637,7 +616,7 @@ var DashboardHelper = (
          * Notification update
          */
         var notificationUpdate = function(messageType, data){
-            var areaComponent = _self.getArea("all", data['areaId']);
+            let areaComponent = _self.getArea("all", data['areaId']);
 
             if(areaComponent==null){
                 areaComponent = _self.getArea("child", data['areaId']);
@@ -646,10 +625,10 @@ var DashboardHelper = (
                     return false;
                 }
             }
-            var element = areaComponent['element'];
-            var notification = areaComponent['notification'];
-            var childDevice = areaComponent['childDevice'];
-            var templateCode = areaComponent['templateCode'];
+            const element = areaComponent['element'];
+            const notification = areaComponent['notification'];
+            const childDevice = areaComponent['childDevice'];
+            const templateCode = areaComponent['templateCode'];
 
             switch (messageType){
                 case "addNotification" :
@@ -672,7 +651,7 @@ var DashboardHelper = (
                     break;
             }
 
-            for(var index in notification){
+            for(let index in notification){
                 if(notification[index].length > 0){
                     element.addClass("level-"+criticalCss[index]);
                 }else{
@@ -684,10 +663,10 @@ var DashboardHelper = (
                 }
             }
 
-            for(var i in childDevice){
-                var childElement = childDevice[i]['element'];
-                var childNotification = childDevice[i]['notification'];
-                for(var index in childNotification){
+            for(let i in childDevice){
+                const childElement = childDevice[i]['element'];
+                const childNotification = childDevice[i]['notification'];
+                for(let index in childNotification){
                     if(childNotification[index].length > 0){
                         childElement.addClass("ts-"+criticalCss[index]);
                     }else{
@@ -701,20 +680,19 @@ var DashboardHelper = (
          * inout update
          */
         var blinkerUpdate = function(data){
-            var element = _self.getArea("element", data['areaId']);
-            var notification = _self.getArea("notification", data['areaId']);
-            var childDevice = _self.getArea("childDevice", data['areaId']);
+            const element = _self.getArea("element", data['areaId']);
+            const notification = _self.getArea("notification", data['areaId']);
+            const childDevice = _self.getArea("childDevice", data['areaId']);
 
-            var startDatetime = new Date(Number(element.attr("startDatetime")));
-            var endDatetime = new Date(Number(element.attr("endDatetime")));
-            var eventDatetime = new Date(data['eventDatetime']);
+            const startDatetime = new Date(Number(element.attr("startDatetime")));
+            const endDatetime = new Date(Number(element.attr("endDatetime")));
+            const eventDatetime = new Date(data['eventDatetime']);
 
             if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
-                var inCount = 0;
-                var outCount = 0;
-                for(var index in data['infos']){
-                    var info = data['infos'][index];
-
+                let inCount = 0;
+                let outCount = 0;
+                for(let index in data['infos']){
+                    const info = data['infos'][index];
                     if(info['key']=="inCount"){
                         inCount = info['value'];
                     }else if(info['key']=="outCount"){
@@ -723,8 +701,8 @@ var DashboardHelper = (
                 }
 
                 if(inCount>0 || outCount>0){
-                    var inTag = element.find("[in]");
-                    var outTag = element.find("[out]");
+                    const inTag = element.find("[in]");
+                    const outTag = element.find("[out]");
                     inTag.text(Number(inCount) + Number(inTag.text()));
                     outTag.text(Number(outCount) + Number(outTag.text()));
                     element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
@@ -733,9 +711,9 @@ var DashboardHelper = (
                 }
 
                 if(chartList[data['areaId']]!=null && outCount>0) {
-                    var _eventDate = new Date();
+                    let _eventDate = new Date();
                     _eventDate.setTime(data['eventDatetime']);
-                    var _eventDateStr;
+                    let _eventDateStr;
                     switch ($("div[dateSelType='"+data['areaId']+"'] button.on").attr("value")){
                         case 'day':
                             _eventDateStr = _eventDate.format("HH");
@@ -751,9 +729,9 @@ var DashboardHelper = (
                             break;
                     }
 
-                    var _labels = chartList[data['areaId']].data.labels;
-                    var seriesIndex = null;
-                    for(var i=0; i<_labels.length; i++){
+                    const _labels = chartList[data['areaId']].data.labels;
+                    let seriesIndex = null;
+                    for(let i=0; i<_labels.length; i++){
                         if(_labels[i]==_eventDateStr){
                             seriesIndex = i;
                             break;
@@ -784,16 +762,16 @@ var DashboardHelper = (
                 return false;
             }
 
-            var element = _self.getArea("element", data['areaId']);
-            var notification = _self.getArea("notification", data['areaId']);
-            var childDevice = _self.getArea("childDevice", data['areaId']);
+            const element = _self.getArea("element", data['areaId']);
+            const notification = _self.getArea("notification", data['areaId']);
+            const childDevice = _self.getArea("childDevice", data['areaId']);
 
             if(childDevice[data['deviceId']] != null){
-                var deviceElement = childDevice[data['deviceId']]['element'];
-                var updateFlag = false;
-                var eventValue;
-                for(var index in data['infos']){
-                    var info = data['infos'][index];
+                const deviceElement = childDevice[data['deviceId']]['element'];
+                let updateFlag = false;
+                let eventValue;
+                for(let index in data['infos']){
+                    const info = data['infos'][index];
 
                     if(info['key']=="value"){
                         eventValue = info['value'];
@@ -813,9 +791,9 @@ var DashboardHelper = (
                         return false;
                     }
 
-                    var _eventDate = new Date();
+                    let _eventDate = new Date();
                     _eventDate.setTime(data['eventDatetime']);
-                    var _eventDateStr;
+                    let _eventDateStr;
                     switch (element.find("div[dateSelType] button.on").attr("value")){
                         case 'day':
                             _eventDateStr = _eventDate.format("HH");
@@ -831,9 +809,9 @@ var DashboardHelper = (
                             break;
                     }
 
-                    var _labels = chartList[data['areaId']].data.labels;
-                    var seriesIndex = null;
-                    for(var i=0; i<_labels.length; i++){
+                    const _labels = chartList[data['areaId']].data.labels;
+                    let seriesIndex = null;
+                    for(let i=0; i<_labels.length; i++){
                         if(_labels[i]==_eventDateStr){
                             seriesIndex = i;
                             break;

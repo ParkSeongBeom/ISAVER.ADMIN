@@ -3,18 +3,18 @@ package com.icent.isaver.admin.common.resource;
 /**
  * Created by icent on 2017. 2. 1..
  */
-public class IcentException extends  RuntimeException {
+public class IsaverException extends  RuntimeException {
 
     private String code = null;
 
     private String message = null;
 
-    public IcentException(String code) {
+    public IsaverException(String code) {
         //super(message);
         this.code = code;
     }
 
-    public IcentException(String code, String message) {
+    public IsaverException(String code, String message) {
         //super(message);
         this.code = code;
         this.message = message;

@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.common.util.TransactionUtil;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -91,7 +90,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         setTemplateSetting();
         sendTemplateSetting();
@@ -119,7 +118,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", "jsonData");
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
     }
 }

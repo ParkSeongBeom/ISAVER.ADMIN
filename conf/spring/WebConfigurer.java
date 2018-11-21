@@ -14,12 +14,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -141,19 +143,19 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-//    @Bean
-//    public HandlerExceptionResolver exceptionResolver() {
-//        ExceptionResolver exceptionResolver = new ExceptionResolver();
-//
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setDefaultEncoding(CommonResource.CHARSET_UTF8);
-//        messageSource.setBasenames(
-//            "properties/message/error"
-//        );
-//
-//        exceptionResolver.setMessageSource(messageSource);
-//        return exceptionResolver;
-//    }
+    @Bean
+    public HandlerExceptionResolver exceptionResolver() {
+        ExceptionResolver exceptionResolver = new ExceptionResolver();
+
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding(CommonResource.CHARSET_UTF8);
+        messageSource.setBasenames(
+            "properties/message/error"
+        );
+
+        exceptionResolver.setMessageSource(messageSource);
+        return exceptionResolver;
+    }
 
     @Bean
     public UrlBasedViewResolver viewResolver() {

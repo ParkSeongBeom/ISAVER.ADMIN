@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.ActionSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -92,7 +92,7 @@ public class ActionCtrl {
     public ModelAndView addAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, addActionParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = actionSvc.addAction(request, parameters);
@@ -113,7 +113,7 @@ public class ActionCtrl {
     public ModelAndView saveAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, saveActionParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = actionSvc.saveAction(request, parameters);
@@ -134,7 +134,7 @@ public class ActionCtrl {
     public ModelAndView removeAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, removeActionParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

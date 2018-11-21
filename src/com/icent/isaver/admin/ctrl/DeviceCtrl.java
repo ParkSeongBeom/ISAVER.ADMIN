@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.DeviceSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -57,7 +57,7 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addDevice(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addDeviceParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.addDevice(request, parameters);
@@ -77,7 +77,7 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveDevice(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveDeviceParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.saveDevice(request, parameters);
@@ -97,7 +97,7 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeDevice(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeDeviceParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = deviceSvc.removeDevice(request, parameters);

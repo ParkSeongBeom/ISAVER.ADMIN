@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -141,7 +141,7 @@ public class FileCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addFile(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addFileParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -161,7 +161,7 @@ public class FileCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveFile(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveFileParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -182,7 +182,7 @@ public class FileCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeFile(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeFileParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -195,7 +195,7 @@ public class FileCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="download")
     public ModelAndView downloadFile(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, downloadFileParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = fileSvc.downloadFile(parameters, request, response);

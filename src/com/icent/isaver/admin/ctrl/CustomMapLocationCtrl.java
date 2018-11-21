@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -62,7 +62,7 @@ public class CustomMapLocationCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveCustomMapLocation(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveCustomMapLocationParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = customMapLocationSvc.saveCustomMapLocation(parameters);

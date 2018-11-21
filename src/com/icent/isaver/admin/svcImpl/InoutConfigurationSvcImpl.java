@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +93,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
                 transactionManager.commit(transactionStatus);
             }catch(DataAccessException e){
                 transactionManager.rollback(transactionStatus);
-                throw new IcentException("");
+                throw new IsaverException("");
             }
         }
 
@@ -109,7 +108,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             websocketParam.put("areaId", parameters.get("areaId"));
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.repository.bean.RoleBean;
@@ -102,7 +102,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
@@ -122,7 +122,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;
@@ -137,7 +137,7 @@ public class UsersSvcImpl implements UsersSvc {
             transactionManager.commit(transactionStatus);
         }catch(Exception e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;

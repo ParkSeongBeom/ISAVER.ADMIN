@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.TargetSvc;
 import com.icent.isaver.admin.util.IsaverTargetUtil;
 import com.icent.isaver.repository.bean.TargetBean;
@@ -62,7 +62,7 @@ public class TargetSvcImpl implements TargetSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         isaverTargetUtil.reset();
         return new ModelAndView();

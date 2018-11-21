@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CriticalSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -64,7 +64,7 @@ public class CriticalCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByCritical(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByCriticalParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalSvc.findByCritical(parameters);
@@ -84,7 +84,7 @@ public class CriticalCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addCritical(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addCriticalParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalSvc.addCritical(parameters);
         return modelAndView;
@@ -103,7 +103,7 @@ public class CriticalCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveCritical(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveCriticalParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalSvc.saveCritical(parameters);
         return modelAndView;
@@ -122,7 +122,7 @@ public class CriticalCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeCritical(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeCriticalParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalSvc.removeCritical(parameters);

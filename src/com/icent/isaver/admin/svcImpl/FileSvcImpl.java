@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.CommonResource;
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.svc.FileSvc;
@@ -118,7 +118,7 @@ public class FileSvcImpl implements FileSvc {
             if(file != null){
                 file.delete();
             }
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         if(file != null){
@@ -126,7 +126,7 @@ public class FileSvcImpl implements FileSvc {
             parameters.put("fileSize", String.valueOf(file.length()));
             parameters.put("filePath", file.getAbsolutePath());
         }else{
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
@@ -137,7 +137,7 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         deviceSync();
@@ -154,7 +154,7 @@ public class FileSvcImpl implements FileSvc {
             if(file != null){
                 file.delete();
             }
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         if(file != null){
@@ -176,7 +176,7 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         deviceSync();
@@ -192,7 +192,7 @@ public class FileSvcImpl implements FileSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         deviceSync();
@@ -207,7 +207,7 @@ public class FileSvcImpl implements FileSvc {
 
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
     }
 
@@ -221,7 +221,7 @@ public class FileSvcImpl implements FileSvc {
 //                    CommonUtil.download(request, response, fileUploadPath + file.getPhysicalFileName(), "\"" + file.getLogicalFileName() + "\"", 1024);
 //                }
 //            } catch(IOException | ServletException e) {
-//                throw new IcentException("");
+//                throw new IsaverException("");
 //            }
 //        }
 //        ModelAndView modelAndView = new ModelAndView();
@@ -236,7 +236,7 @@ public class FileSvcImpl implements FileSvc {
             try {
                 FileUtil.fileDown(request, response, fileUploadPath, file.getPhysicalFileName(), file.getLogicalFileName());
             } catch(IOException e) {
-                throw new IcentException("");
+                throw new IsaverException("");
             }
         }
         return new ModelAndView();

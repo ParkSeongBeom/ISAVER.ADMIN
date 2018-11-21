@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.LicenseSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -112,7 +112,7 @@ public class LicenseCtrl {
     public ModelAndView addLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, addLicenseParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -134,7 +134,7 @@ public class LicenseCtrl {
     public ModelAndView saveLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, saveLicenseParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -156,7 +156,7 @@ public class LicenseCtrl {
     public ModelAndView removeLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, removeLicenseParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

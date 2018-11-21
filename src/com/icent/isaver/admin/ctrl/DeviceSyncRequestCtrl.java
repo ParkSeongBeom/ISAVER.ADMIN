@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -65,7 +65,7 @@ public class DeviceSyncRequestCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveDeviceSyncRequest(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveDeviceSyncRequestParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = deviceSyncRequestSvc.saveDeviceSyncRequest(request, parameters);

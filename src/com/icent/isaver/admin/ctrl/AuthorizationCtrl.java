@@ -50,7 +50,6 @@ public class AuthorizationCtrl {
     public ModelAndView login(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = authorizationSvc.login(request, parameters);
         modelAndView.setViewName("main");
-
         return modelAndView;
     }
 
@@ -58,7 +57,6 @@ public class AuthorizationCtrl {
     public ModelAndView logout(HttpServletRequest request){
         ModelAndView modelAndView = authorizationSvc.logout(request);
         modelAndView.setViewName("login");
-
         return modelAndView;
     }
 

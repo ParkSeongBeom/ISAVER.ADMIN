@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -72,7 +72,7 @@ public class EventLogCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/toiletRoom")
     public ModelAndView findByEventLogToiletRoomForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByEventLogToiletRoomForAreaParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = eventLogSvc.findByEventLogToiletRoomForArea(parameters);

@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CriticalTargetSvc;
 import com.icent.isaver.repository.bean.CriticalTargetBean;
 import com.icent.isaver.repository.dao.base.CriticalTargetDao;
@@ -56,7 +56,7 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         return new ModelAndView();
     }
@@ -69,7 +69,7 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         return new ModelAndView();
     }
@@ -82,7 +82,7 @@ public class CriticalTargetSvcImpl implements CriticalTargetSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         return new ModelAndView();
     }

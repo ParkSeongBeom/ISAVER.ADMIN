@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CriticalTargetSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -49,7 +49,7 @@ public class CriticalTargetCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByCriticalTarget(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByCriticalTargetParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalTargetSvc.findByCriticalTarget(parameters);
@@ -69,7 +69,7 @@ public class CriticalTargetCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addCriticalTarget(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addCriticalTargetParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalTargetSvc.addCriticalTarget(parameters);
         return modelAndView;
@@ -88,7 +88,7 @@ public class CriticalTargetCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveCriticalTarget(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveCriticalTargetParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalTargetSvc.saveCriticalTarget(parameters);
         return modelAndView;
@@ -107,7 +107,7 @@ public class CriticalTargetCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeCriticalTarget(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeCriticalTargetParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalTargetSvc.removeCriticalTarget(parameters);

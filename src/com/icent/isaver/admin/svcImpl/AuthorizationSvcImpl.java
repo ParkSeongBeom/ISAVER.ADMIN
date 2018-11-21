@@ -2,7 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AuthorizationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -77,7 +77,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
                 AdminHelper.setAdminInfo(request, usersBean);
                 addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
             }else{
-                throw new IcentException("");
+                throw new IsaverException("");
             }
         }
 
@@ -151,7 +151,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
     }
 }

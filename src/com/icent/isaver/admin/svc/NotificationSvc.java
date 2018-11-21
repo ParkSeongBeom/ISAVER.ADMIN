@@ -55,4 +55,13 @@ public interface NotificationSvc {
      * @return
      */
     ModelAndView saveNotification(Map<String, String> parameters);
+
+    /**
+     * 알림센터 전체를 해제한다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView allCancelNotification(Map<String, String> parameters);
 }

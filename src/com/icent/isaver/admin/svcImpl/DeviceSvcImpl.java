@@ -2,8 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
-import com.icent.isaver.admin.common.resource.IcentException;
-import com.icent.isaver.admin.common.util.StringUtils;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSvc;
@@ -14,7 +13,6 @@ import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.resource.CommonResource;
 import com.kst.common.spring.TransactionUtil;
-import org.apache.poi.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +118,7 @@ public class DeviceSvcImpl implements DeviceSvc {
                     transactionManager.commit(transactionStatus);
                 }catch(DataAccessException e){
                     transactionManager.rollback(transactionStatus);
-                    throw new IcentException("");
+                    throw new IsaverException("");
                 }
                 deviceSync(parameters.get("deviceId"));
             }else{
@@ -152,7 +149,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         deviceSync(parameters.get("deviceId"));
         return new ModelAndView();
@@ -172,7 +169,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         deviceSync(parameters.get("deviceId"));
         return new ModelAndView();
@@ -191,7 +188,7 @@ public class DeviceSvcImpl implements DeviceSvc {
 
                 AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
             } catch (Exception e) {
-                throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+                throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
             }
         }else{
             logger.error("[deviceSync] error - parent device is null");

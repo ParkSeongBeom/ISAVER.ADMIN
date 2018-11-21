@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.icent.isaver.repository.bean.CodeBean;
 import com.icent.isaver.repository.dao.base.CodeDao;
@@ -72,7 +72,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -87,7 +87,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -102,7 +102,7 @@ public class CodeSvcImpl implements CodeSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();

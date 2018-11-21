@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CriticalDetectSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -49,7 +49,7 @@ public class CriticalDetectCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByCriticalDetect(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByCriticalDetectParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalDetectSvc.findByCriticalDetect(parameters);
@@ -69,7 +69,7 @@ public class CriticalDetectCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addCriticalDetect(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addCriticalDetectParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalDetectSvc.addCriticalDetect(parameters);
         return modelAndView;
@@ -88,7 +88,7 @@ public class CriticalDetectCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveCriticalDetect(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveCriticalDetectParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = criticalDetectSvc.saveCriticalDetect(parameters);
         return modelAndView;
@@ -107,7 +107,7 @@ public class CriticalDetectCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeCriticalDetect(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, removeCriticalDetectParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = criticalDetectSvc.removeCriticalDetect(parameters);

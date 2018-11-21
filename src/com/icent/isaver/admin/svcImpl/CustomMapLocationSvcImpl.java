@@ -2,7 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.repository.bean.AreaBean;
 import com.icent.isaver.repository.bean.CustomMapLocationBean;
@@ -121,7 +121,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;

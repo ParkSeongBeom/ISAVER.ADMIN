@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -50,7 +50,7 @@ public class CodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/list")
     public ModelAndView findListCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findListCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = codeSvc.findListCode(parameters);
@@ -69,7 +69,7 @@ public class CodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, findByCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = codeSvc.findByCode(parameters);
@@ -90,7 +90,7 @@ public class CodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/add")
     public ModelAndView addCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, addCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         parameters.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = codeSvc.addCode(parameters);
@@ -110,7 +110,7 @@ public class CodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, saveCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -131,7 +131,7 @@ public class CodeCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/remove")
     public ModelAndView removeCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, removeCodeParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

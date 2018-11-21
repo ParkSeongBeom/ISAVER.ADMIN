@@ -1,12 +1,11 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.CommonResource;
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
-import com.icent.isaver.admin.util.CommonUtil;
 import com.icent.isaver.repository.bean.NotificationBean;
 import com.icent.isaver.repository.dao.base.NotificationDao;
 import com.kst.common.spring.TransactionUtil;
@@ -22,7 +21,6 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -113,7 +111,7 @@ public class NotificationSvcImpl implements NotificationSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         /**
@@ -134,7 +132,36 @@ public class NotificationSvcImpl implements NotificationSvc {
             websocketParam.put("messageType","updateNotification");
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView allCancelNotification(Map<String, String> parameters) {
+        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        try{
+            notificationDao.allCancelNotification(parameters);
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new IsaverException("");
+        }
+
+        /**
+         * = 웹소켓 서버로 알림 전송
+         * @author psb
+         * @date 2018.1.11
+         */
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("messageType","allCancelNotification");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+        } catch (Exception e) {
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();

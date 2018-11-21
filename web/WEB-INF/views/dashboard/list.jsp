@@ -177,7 +177,7 @@
                             <article>
                                 <c:if test="${mainTarget.targetId=='taekwon'}">
                                     <section class="personnel_set">
-                                        <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}" class="kblinker_set">
+                                        <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" class="kblinker_set">
                                             <p class="title">
                                                 <em>${childArea.areaName}</em>
                                                 <em><spring:message code="dashboard.title.taekwonOutCount"/></em>
@@ -204,7 +204,7 @@
                                         <!-- 대표 지정 진출입 -->
                                         <div class="s_lbox blinker_set">
                                             <h3></h3>
-                                            <div templateCode="${childArea.templateCode}" inoutArea areaId="${childArea.areaId}">
+                                            <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
                                                 <p gap>0</p>
                                                 <div>
                                                     <p in>0</p>
@@ -229,7 +229,7 @@
                                                     <c:if test="${area.templateCode=='TMP003'}">
                                                         <li class="blinker_set">
                                                             <h3>${area.areaName}</h3>
-                                                            <div templateCode="${area.templateCode}" inoutArea areaId="${area.areaId}">
+                                                            <div templateCode="${area.templateCode}" areaId="${area.areaId}">
                                                                 <p gap>0</p>
                                                                 <div>
                                                                     <p in>0</p>
@@ -396,8 +396,8 @@
                             <article>
                                 <section class="entrance_set">
                                     <!-- 클라우드 이미지-->
+                                    <button class="ir_btn" onclick="javascript:$(this).toggleClass('on');"></button>
                                     <div class="s_lbox">
-                                        <button name="imageModeBtn" onclick="javascript:dashboardHelper.wsToiletRoomSendMessage('${childArea.areaId}','setImageMode');"></button>
                                         <canvas name="toiletRoom-canvas"></canvas>
                                     </div>
                                     <!-- 재실정보 이미지-->
@@ -405,7 +405,7 @@
                                         <div id="statusIco" class="entrance_ico"></div>
                                         <div class="c_time">
                                             <p id="eventDatetime">00:00:00</p>
-                                            <button name="resetEventBtn" onclick="javascript:dashboardHelper.wsToiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>
+                                            <button name="resetEventBtn" onclick="javascript:dashboardHelper.toiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>
                                         </div>
                                     </div>
                                 </section>
@@ -537,6 +537,19 @@
 
 <c:if test="${templateSetting['safeGuardMapView']=='online'}">
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOCPKPcMLaU1bYIP5QsO7HauSHTqGO6M&callback=initMap"></script>
+    <script type="text/javascript">
+        /**
+         * Google Map Initialize
+         * @param message
+         */
+        function initMap() {
+            addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/richmarker.js?version=${version}");
+            addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/maplabel.js?version=${version}");
+            addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/jquery_easing.js?version=${version}");
+            addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/markerAnimate.js?version=${version}");
+            dashboardHelper.initAreaTemplate();
+        }
+    </script>
 </c:if>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/map-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}"></script>
@@ -592,16 +605,9 @@
             updateInoutSettingDatetime();
         });
 
-        dashboardHelper.setFileUploadPath(fileUploadPath);
-        dashboardHelper.setMessageConfig(messageConfig);
-        dashboardHelper.setWebsocket('map', webSocketHelper, "${mapWebSocketUrl}");
-        dashboardHelper.setWebsocket('toiletRoom', webSocketHelper, "${toiletRoomWebSocketUrl}");
-        dashboardHelper.setAreaList();
-        dashboardHelper.getBlinkerList();
-        if(templateSetting['safeGuardMapView']=='offline'){
-            dashboardHelper.setGuardList();
-        }
-        dashboardHelper.setToiletRoomList(webSocketHelper);
+        dashboardHelper.setConfig(messageConfig, fileUploadPath, templateSetting);
+        dashboardHelper.setWebsocket(webSocketHelper, {'map':"${mapWebSocketUrl}",'toiletRoom':"${toiletRoomWebSocketUrl}"});
+        dashboardHelper.initAreaTemplate();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
         /* 이벤트 callback (websocket 리스너) */
@@ -619,25 +625,25 @@
         }
 
         if(templateSetting['safeGuardMapView']=='online'){
-            webSocketHelper.sendMessage("device",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
-            webSocketHelper.sendMessage("device",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
+            webSocketHelper.sendMessage("map",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
+            webSocketHelper.sendMessage("map",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
                 {"lat" : "37.495463","lng" : "127.030996"},
                 {"lat" : "37.495473","lng" : "127.031013"},
                 {"lat" : "37.495503","lng" : "127.030998"},
                 {"lat" : "37.495493","lng" : "127.030984"}
             ]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
+            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
+            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
         }else{
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"deviceId":_deviceId,"id":"1235","location":[{"lat": "-50","lng": "-190"}]});
-            webSocketHelper.sendMessage("device",{"messageType":"object","actionType":"add","areaId":_areaId,"deviceId":_deviceId,"id":"1234","location":[{"lat": "10","lng": "-40"}]});
+            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","objectType":"human","areaId":_areaId,"deviceId":_deviceId,"id":"1235","location":[{"lat": "100","lng": "100"}]});
+            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","objectType":"human","areaId":_areaId,"deviceId":_deviceId,"id":"1234","location":[{"lat": "-100","lng": "-100"}]});
         }
     }
 
     var id = 1;
     function testObject(_type, _lat){
         var gps = getGps();
-        webSocketHelper.sendMessage("device",{"messageType":_type!=null?_type:"object","actionType":"add","areaId":gps['areaId'],"id":id++,"location":[_lat!=null?_lat:gps['center']]});
+        webSocketHelper.sendMessage("map",{"messageType":_type!=null?_type:"object","actionType":"add","areaId":gps['areaId'],"id":id++,"location":[_lat!=null?_lat:gps['center']]});
     }
 
     function getGps(_areaId){
@@ -678,18 +684,6 @@
             $(_this).addClass("on");
             $(target).addClass("on");
         }
-    }
-
-    /**
-     * Google Map Initialize
-     * @param message
-     */
-    function initMap() {
-        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/richmarker.js?version=${version}");
-        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/maplabel.js?version=${version}");
-        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/jquery_easing.js?version=${version}");
-        addAsynchronousScript("${pageContext.request.contextPath}/assets/library/googlemap/markerAnimate.js?version=${version}");
-        dashboardHelper.setGuardList();
     }
 
     function initChartList(){
@@ -778,7 +772,7 @@
     }
 
     function refreshInoutSetting(_serverDatetime){
-        $.each($(".watch_area div[inoutArea]"),function(){
+        $.each($(".watch_area div[templateCode='TMP003']"),function(){
             if(_serverDatetime.getTime() > $(this).attr("endDatetime")){
                 dashboardHelper.getBlinker($(this).attr("areaId"));
             }

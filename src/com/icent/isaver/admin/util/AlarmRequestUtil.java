@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.util;
 
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.kst.common.util.StringUtils;
 import org.apache.http.HttpEntity;
@@ -106,7 +106,7 @@ public class AlarmRequestUtil {
                 httpEntity.getContent().close();
             }
         } catch (Exception e) {
-            throw new IcentException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         } finally {
             if (commonHttpClient != null && commonHttpClient.getConnectionManager() != null) {
                 commonHttpClient.getConnectionManager().shutdown();

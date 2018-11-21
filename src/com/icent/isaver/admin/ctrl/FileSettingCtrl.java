@@ -1,9 +1,8 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.FileSettingSvc;
-import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
 import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -69,7 +68,7 @@ public class FileSettingCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/save")
     public ModelAndView saveFileSetting(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, saveFileSettingParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = fileSettingSvc.saveFileSetting(parameters);

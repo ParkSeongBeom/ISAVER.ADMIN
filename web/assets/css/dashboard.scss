@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 @import "filters";
 
 
@@ -103,6 +103,8 @@ body.dashboard_mode {
             &:hover:before, &:hover:after {color:$color-blue-01;}
 
             &.device_view {order: 10; &:before {content:"\e92f";} }
+
+            &.screen_view { &:before {content:"\e90a";} }
 
 
             &.level-die {
@@ -407,7 +409,7 @@ body.dashboard_mode {
   .s_lbox {
     overflow: hidden;
     & > .human_check {
-      position: absolute; z-index: 100; bottom:25px; left:0;  width:60px; height:70px;
+      position: absolute; z-index: 100; bottom:25px; left:25px;  width:60px; height:70px;
 
       input, label {width:100%; height:100%;}
       input {
@@ -518,25 +520,30 @@ body.dashboard_mode {
 
 
 /////..... entrance section Start
+
 .entrance_set {
-  .s_lbox {
-    @include flex-align-items-center; @include flex-justify-content-center;
-    background-color: #000;
-    button {
-      @include flex-midddle;  @include flex-column; opacity: 0.7;
-      z-index:1; position: absolute; top:10px; left:10px;
 
-      &:hover {&:after,&:before {color:$color-blue-01;} }
+  & > * {@include transition(200ms); overflow: hidden !important;}
 
-      &:after  {content:"TOF";}
-      &:before {content: "\e941"; font-size:2rem;}
+  .ir_btn {
+    @include flex-midddle;  @include flex-column; opacity: 0.5;
+    z-index: 100; position: absolute !important; bottom:25px; left:15px; width:50px; height:50px;
 
-      &.on {
-        &:after  {content:"IR";}
-        &:before {content: "\e921";}
-      }
+    &:after  {content:"IR";}
+    &:before {content: "\e921"; font-size:2.5rem; line-height: 2rem;}
+
+    &:hover, &.on {&:after,&:before {color:$color-blue-01;} }
+
+    &.on {
+      opacity: 1;
+      & ~ .s_lbox {@include flex-width-one(2);}
     }
-    canvas {/*position: absolute; z-index: 1; top:0; left:0;  */ width:640px;/* height:80%;*/}
+  }
+
+  .s_lbox {
+    @include flex-width-one(0);
+    @include flex-align-items-center; @include flex-justify-content-center; background-color: #000;
+    canvas {width:50%; /*position: absolute; z-index: 1; top:0; left:0; height:80%;*/}
   }
   .s_rbox {
     @include flex-column; padding:0;
@@ -544,11 +551,12 @@ body.dashboard_mode {
     & > * {@include flex-midddle; position: relative !important; width:100%; max-height: none;}
 
     .c_time {
-      overflow: hidden; @include flex-midddle; @include flex-width-one(0);
+      overflow: hidden; @include flex-column; @include flex-width-one(0); max-height:0;
       p {font-size:5rem;}
       button {
 
-        width:60px; height:60px; margin:10px 0 0 20px; @include line_btn; @include border-radius(500px);
+        width:60px; height:60px; min-width:60px; min-height:60px;
+        margin:10px 0 0 0; @include line_btn; @include border-radius(500px);
         @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
         &:before {content:"Reset";}
       }
@@ -566,24 +574,57 @@ body.dashboard_mode {
 
       &.enter:before {content:"\e932"; opacity: 1;}
       &.fall:before {content:"\e952";}
-      &.enter, &.fall {& + .c_time {@include flex-width-one(1);} }
+      &.enter, &.fall {
+        & + .c_time {@include flex-width-one(1); max-height:none;}
+      }
     }
-
   }
 }
-.level-danger .entrance_ico {
-  &.enter, &.fall {
-    & + .c_time > p {color:$color-red-01;}
-    &:before {color:$color-red-01; @include issue02;}
-    &:after { @include issue08; @include border01(2px,$color-red-01,1 );}
+
+.level-danger, .level-warning, .level-caution {
+  .entrance_ico {
+    &.enter, &.fall {
+      &:before {@include issue02;}
+      &:after  {@include issue08; border-style:solid; border-width:2px;}
+    }
+  }
+}
+
+.level-danger {
+  .entrance_ico {
+    &.enter, &.fall {
+      & + .c_time > p, &:before {color: $color-red-01;}
+      &:after {border-color:$color-red-01;}
+    }
+  }
+}
+
+.level-warning {
+  .entrance_ico {
+    &.enter, &.fall {
+      & + .c_time > p, &:before {color: $color-orange-01;}
+      &:after {border-color:$color-orange-01;}
+    }
+  }
+}
+
+.level-caution {
+  .entrance_ico {
+    &.enter, &.fall {
+      & + .c_time > p, &:before {color: $color-gray-03;}
+      &:after {border-color:$color-gray-03;}
+    }
   }
 }
 /////..... entrance section End
 
 
+/////..... entrance section End
+
+
 /////..... device section Start
 $ds-sw:50px; $ds-w:150px;
-.device_box {
+.device_box, .screen_box {
   @include flexbase; @include flex-align-items-start; order:3; @include transition(400ms);
 
   overflow-y: auto; overflow-x: hidden; position: absolute !important; top:0; right:-($ds-w * 2);
@@ -594,7 +635,7 @@ $ds-sw:50px; $ds-w:150px;
 
   &.on { right:0; }
 
-  //.nhr_set & {max-width:100%;}
+
 }
 .device_set {
   /*
@@ -809,12 +850,18 @@ $ds-sw:50px; $ds-w:150px;
         }
       }
     }
-
   }
 
   &.area02 {
     .treffic_set {@include scale(0.7);}
     .safeeye_set .s_lbox {@include scale(0.9);}
+
+    .entrance_set {
+      .s_rbox {
+        .entrance_ico:before {font-size:16rem;}
+        .c_time { p {font-size:4rem;} }
+      }
+    }
   }
   &.area02, &.area04 {
     .kblinker_set {
@@ -829,6 +876,17 @@ $ds-sw:50px; $ds-w:150px;
     .treffic_set {@include scale(0.6);}
     .safeeye_set .s_lbox {@include scale(0.7);}
     .s_lbox.blinker_set  {@include scale(0.7);}
+
+    .entrance_set {
+      canvas {}
+      .s_rbox {
+        .entrance_ico:before {font-size:10rem;}
+        .c_time {
+          p {font-size:3rem;}
+          button {margin: 0 0 30px 0;}
+        }
+      }
+    }
 
   }
 
@@ -861,6 +919,18 @@ $ds-sw:50px; $ds-w:150px;
       }
     }
     .safeeye_set .s_lbox {@include scale(0.55);}
+
+    .entrance_set {
+      canvas {width:70%;}
+      .s_rbox {
+        .entrance_ico:before {font-size:8rem;}
+        .c_time {
+          @include flex-width-one(2);
+          p {font-size:2.5rem;}
+          button {margin: 0 0 30px 0;}
+        }
+      }
+    }
   }
 
   &.area09, &.area08, &.area12, &.area16, &.area00 {}

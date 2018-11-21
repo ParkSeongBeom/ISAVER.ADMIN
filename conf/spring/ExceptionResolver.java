@@ -4,7 +4,7 @@ package spring;
 import com.icent.isaver.admin.bean.Result;
 import com.icent.isaver.admin.common.resource.ApiResource;
 import com.icent.isaver.admin.common.resource.CommonResource;
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +32,8 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         Result<String> result = new Result<>();
         String errorMessage = null;
         try {
-            if (exception != null && exception instanceof IcentException) {
-                IcentException iException = (IcentException) exception;
+            if (exception != null && exception instanceof IsaverException) {
+                IsaverException iException = (IsaverException) exception;
                 result.setState(iException.getCode());
                 errorMessage = messageSource.getMessage(iException.getCode(), null, request.getLocale());
                 result.setMessage(errorMessage);
@@ -64,6 +64,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         }
 
         modelAndView.addObject(ApiResource.RESULT_NODE_NAME, result);
+        modelAndView.setViewName("login");
         return modelAndView;
     }
 
@@ -75,6 +76,4 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         }
         return stringBuilder.toString();
     }
-
-
 }

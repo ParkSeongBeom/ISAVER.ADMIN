@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.TestSvc;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class TestCtrl {
     @RequestMapping(method={RequestMethod.POST}, value="/event")
     public ModelAndView eventSend(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, eventAddParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = testSvc.eventSend(request, parameters);

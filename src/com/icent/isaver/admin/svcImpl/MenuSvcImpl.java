@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.repository.bean.AreaBean;
@@ -105,7 +105,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -121,7 +121,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -139,7 +139,7 @@ public class MenuSvcImpl implements MenuSvc {
             transactionManager.commit(transactionStatus);
         } catch(DataAccessException e) {
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         ModelAndView modelAndView = new ModelAndView();
         return modelAndView;

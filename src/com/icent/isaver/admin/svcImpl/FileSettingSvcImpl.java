@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.FileSettingSvc;
 import com.icent.isaver.repository.bean.FileSettingBean;
 import com.icent.isaver.repository.dao.base.FileSettingDao;
@@ -57,7 +57,7 @@ public class FileSettingSvcImpl implements FileSettingSvc {
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
-            throw new IcentException("");
+            throw new IsaverException("");
         }
         return new ModelAndView();
     }

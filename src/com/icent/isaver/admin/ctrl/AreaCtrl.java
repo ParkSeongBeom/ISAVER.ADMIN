@@ -1,6 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -58,7 +58,7 @@ public class AreaCtrl {
     public ModelAndView addArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, addAreaParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -80,7 +80,7 @@ public class AreaCtrl {
     public ModelAndView saveArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, saveAreaParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -102,7 +102,7 @@ public class AreaCtrl {
     public ModelAndView removeArea(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, removeAreaParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));

@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.ctrl;
 
 
-import com.icent.isaver.admin.common.resource.IcentException;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -92,7 +92,7 @@ public class MenuCtrl {
     public ModelAndView findByMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters, findByMenuParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = menuSvc.findByMenu(parameters);
@@ -112,7 +112,7 @@ public class MenuCtrl {
     @RequestMapping(method={RequestMethod.POST},value="/add")
     public ModelAndView addMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         if(MapUtils.nullCheckMap(parameters, addMenuParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
@@ -132,7 +132,7 @@ public class MenuCtrl {
     public ModelAndView saveMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters,saveMenuParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
@@ -152,7 +152,7 @@ public class MenuCtrl {
     public ModelAndView removeMenu(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
         if(MapUtils.nullCheckMap(parameters,removeMenuParam)){
-            throw new IcentException("");
+            throw new IsaverException("");
         }
 
         ModelAndView modelAndView = menuSvc.removeMenu(parameters);
