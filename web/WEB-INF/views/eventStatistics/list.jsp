@@ -218,7 +218,10 @@
                     $("#eventSelect option[value='EVT302'], option[value='EVT303'], option[value='EVT304'], option[value='EVT305'], option[value='EVT306'], option[value='EVT307'], option[value='EVT308'], option[value='EVT309'], option[value='EVT310'], option[value='EVT311'], option[value='EVT312'], option[value='EVT313']").prop("disabled",false);
                     break;
                 case 'TMP005': // Safe-Guard
-                    $("#eventSelect option[value='EVT314'], option[value='EVT315']").prop("disabled",false);
+                    $("#eventSelect option[value='EVT314'], option[value='EVT315'], option[value='EVT316'], option[value='EVT317']").prop("disabled",false);
+                    break;
+                case 'TMP008': // 화장실재실
+                    $("#eventSelect option[value='EVT017'], option[value='EVT018'], option[value='EVT019'], option[value='EVT020']").prop("disabled",false);
                     break;
             }
         });
