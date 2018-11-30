@@ -403,6 +403,7 @@
                                     <!-- 재실정보 이미지-->
                                     <div class="s_rbox">
                                         <div id="statusIco" class="entrance_ico"></div>
+                                        <h3>${childArea.areaName}</h3>
                                         <div class="c_time">
                                             <p id="eventDatetime">00:00:00</p>
                                             <button name="resetEventBtn" onclick="javascript:dashboardHelper.toiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>

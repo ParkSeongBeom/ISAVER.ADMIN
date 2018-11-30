@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.ActionSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ public class ActionCtrl {
 
     @Inject
     private ActionSvc actionSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     /**
      * 대응 목록을 가져온다.
@@ -94,7 +98,7 @@ public class ActionCtrl {
         if(MapUtils.nullCheckMap(parameters, addActionParam)){
             throw new IsaverException("");
         }
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = actionSvc.addAction(request, parameters);
         return modelAndView;
     }
@@ -115,7 +119,7 @@ public class ActionCtrl {
         if(MapUtils.nullCheckMap(parameters, saveActionParam)){
             throw new IsaverException("");
         }
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = actionSvc.saveAction(request, parameters);
         return modelAndView;
     }
@@ -137,7 +141,7 @@ public class ActionCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = actionSvc.removeAction(parameters);
         return modelAndView;
     }

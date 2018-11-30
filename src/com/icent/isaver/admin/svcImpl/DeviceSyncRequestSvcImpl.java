@@ -6,6 +6,7 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.icent.isaver.repository.bean.DeviceSyncRequestBean;
 import com.icent.isaver.repository.dao.base.DeviceSyncRequestDao;
 import com.kst.common.spring.TransactionUtil;
@@ -60,6 +61,9 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
 
+    @Inject
+    private SessionUtil sessionUtil;
+
     @Override
     public ModelAndView findListDeviceSyncRequest(Map<String, String> parameters) {
         List<DeviceSyncRequestBean> deviceSyncRequestList = deviceSyncRequestDao.findListDeviceSyncRequest(parameters);
@@ -86,7 +90,7 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
             addParam.put("deviceId", deviceId);
             addParam.put("type", parameters.get("type"));
             addParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
-            addParam.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
+            addParam.put("insertUserId", sessionUtil.getSession(request.getSession()).getUserId());
             addParamList.add(addParam);
         }
 
@@ -113,7 +117,7 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
             Map<String, String> saveParam = new HashMap<>();
             saveParam.put("deviceSyncRequestId", deviceSyncRequestId);
             saveParam.put("status", AdminResource.SYNC_STATUS.get("wait"));
-            saveParam.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
+            saveParam.put("updateUserId", sessionUtil.getSession(request.getSession()).getUserId());
             saveParamList.add(saveParam);
         }
 

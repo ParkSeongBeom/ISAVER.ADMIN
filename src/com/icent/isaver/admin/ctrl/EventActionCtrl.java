@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class EventActionCtrl {
 
     @Inject
     private EventSvc eventSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
     /**
      * 이벤트 대응 목록을 가져온다.
      *
@@ -77,8 +81,8 @@ public class EventActionCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = eventSvc.saveEventAction(request, parameters);
         return modelAndView;
     }

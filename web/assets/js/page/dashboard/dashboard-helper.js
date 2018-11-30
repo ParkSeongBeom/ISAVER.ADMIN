@@ -21,7 +21,7 @@ var DashboardHelper = (
             blinkerListUrl : "/eventLog/blinkerList.json"
         };
         let _options ={
-            marquee : true
+            marquee : false
             ,guardInfo : true
         };
 
@@ -151,6 +151,10 @@ var DashboardHelper = (
                     ,'childDevice' : {}
                     ,'childAreaIds' : $(this).attr("childAreaIds")
                 };
+
+                if(!_options['marquee']) {
+                    $(this).find(".m_marqueebox").attr("style","display: none !important;");
+                }
 
                 $.each($(this).find("div[deviceId]"),function(){
                     _areaList[areaId]['childDevice'][$(this).attr("deviceId")] = {

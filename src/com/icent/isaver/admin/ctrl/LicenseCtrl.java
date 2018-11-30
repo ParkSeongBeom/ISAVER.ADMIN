@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.LicenseSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class LicenseCtrl {
 
     @Inject
     private LicenseSvc licenseSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     /**
      * 라이센스 목록을 가져온다.(USB Lock용)
@@ -115,7 +119,7 @@ public class LicenseCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = licenseSvc.addLicense(request, parameters);
         return modelAndView;
     }
@@ -137,7 +141,7 @@ public class LicenseCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = licenseSvc.saveLicense(request, parameters);
         return modelAndView;
     }
@@ -159,7 +163,7 @@ public class LicenseCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = licenseSvc.removeLicense(parameters);
         return modelAndView;
     }

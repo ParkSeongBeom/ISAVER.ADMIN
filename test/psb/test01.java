@@ -13,8 +13,6 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.*;
-import java.io.BufferedReader;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;

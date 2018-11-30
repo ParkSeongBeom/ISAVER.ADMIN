@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.RoleMenuSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import com.kst.common.util.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,9 @@ public class RoleMenuCtrl {
     @Inject
     private RoleMenuSvc roleMenuSvc;
 
+    @Inject
+    private SessionUtil sessionUtil;
+
     /**
      * 권한 목록을 가져온다.
      * @author psb
@@ -67,7 +71,7 @@ public class RoleMenuCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = roleMenuSvc.saveRoleMenu(parameters);
         return modelAndView;
     }

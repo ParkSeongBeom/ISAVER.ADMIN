@@ -484,10 +484,11 @@ var CustomMapMediator = (
                             return false;
                         }
                         _fenceSvg.polygon(points, {fenceId:data['id']});
-                        _fenceSvg.text(latMin+((latMax-latMin)/2),lngMin+((lngMax-lngMin)/2),data['fenceName']?data['fenceName']:data['id'], $.extend({"fenceId":data['id']}, _options[_MARKER_TYPE[1]]['text']));
 
                         if(data['fenceType']=='ignore'){
                             _mapCanvas.find("polygon[fenceId='"+data['id']+"']").addClass('g-ignore_fence');
+                        }else{
+                            _fenceSvg.text(latMin+((latMax-latMin)/2),lngMin+((lngMax-lngMin)/2),data['fenceName']?data['fenceName']:data['id'], $.extend({"fenceId":data['id']}, _options[_MARKER_TYPE[1]]['text']));
                         }
 
                         _marker[messageType][data['id']] = {

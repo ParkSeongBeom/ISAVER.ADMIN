@@ -526,13 +526,21 @@ body.dashboard_mode {
   & > * {@include transition(200ms); overflow: hidden !important;}
 
   .ir_btn {
-    @include flex-midddle;  @include flex-column; opacity: 0.5;
-    z-index: 100; position: absolute !important; bottom:25px; left:15px; width:50px; height:50px;
+    @include flex-midddle; @include flex-column;
+    overflow:hidden; opacity: 0.5;
+    position: absolute !important; z-index: 100; bottom:15px; left:15px; width:50px; height:50px;
 
-    &:after  {content:"IR";}
-    &:before {content: "\e921"; font-size:2.5rem; line-height: 2rem;}
+    &:after  {
+      /*content:"IR";*/
+      content:"";
+      position: absolute; width:90%; height:90%; @include border01(2px,#fff,1 );
+      @include border-radius(200px); @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
+    }
+    &:before {/*content: "\e921";*/ content:"IR"; /*font-size:2.5rem; line-height: 2rem;*/}
 
-    &:hover, &.on {&:after,&:before {color:$color-blue-01;} }
+    &:hover, &.on {
+      &:after,&:before {color:$color-blue-01; border-color:$color-blue-01; }
+    }
 
     &.on {
       opacity: 1;
@@ -543,58 +551,75 @@ body.dashboard_mode {
   .s_lbox {
     @include flex-width-one(0);
     @include flex-align-items-center; @include flex-justify-content-center; background-color: #000;
-    canvas {width:50%; /*position: absolute; z-index: 1; top:0; left:0; height:80%;*/}
+    canvas {width:100%; height:100%; /*position: absolute; z-index: 1; top:0; left:0; height:80%;*/}
   }
   .s_rbox {
     @include flex-column; padding:0;
-    &:before {left:0;}
+    &:before {display: none;}
     & > * {@include flex-midddle; position: relative !important; width:100%; max-height: none;}
 
+    h3 {
+      width:auto; font-size:3rem; font-weight:bold; opacity: 0.7; @include border01(0 0 3px 0,#000,1 );
+      @include flex-width-one(1); order:1;
+    }
+
+    .entrance_ico {
+      @include flex-width-one(1.5); order:2;
+
+      &:before, &:after {
+        @include flex-midddle; padding:10%; @include border-radius(1000px);
+        @include transition(400ms);
+      }
+
+      &:after {content:""; position: absolute; min-width:130px; min-height:130px; }
+      &:before {content:"\e978"; font-size:16rem; opacity: 0.5; @include text-shadow(0, 0, 30px, #000, 1);}
+
+      &.ico-ex01:before {content:"\e969";}
+      &.ico-ex02:before {content:"\e904";}
+
+      &.enter:before {content:"\e932"; opacity: 1;}
+      &.fall:before {content:"\e952";}
+      &.enter, &.fall {
+        & {@include flex-width-one(1.5); }
+        & ~ h3 {@include flex-width-one(0.6); }
+        & ~ .c_time {@include flex-width-one(0.9); max-height:none;}
+      }
+    }
+
     .c_time {
-      overflow: hidden; @include flex-column; @include flex-width-one(0); max-height:0;
+      @include flex-width-one(0); order:3;
+      overflow: hidden; @include flex-column; max-height:0;
+
       p {font-size:5rem;}
       button {
-
-        width:60px; height:60px; min-width:60px; min-height:60px;
-        margin:10px 0 0 0; @include line_btn; @include border-radius(500px);
+        width:100px; height:40px; min-width:100px; min-height:40px;
+        margin:0 0 20px 0; @include line_btn; @include border-radius(500px);
         @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
         &:before {content:"Reset";}
       }
     }
 
-    .entrance_ico {
-       @include flex-width-one(2);
-      &:before, &:after {
-        @include flex-midddle; padding:20%; @include border-radius(1000px);
-        @include transition(400ms);
-      }
-
-      &:after {content:""; position: absolute;}
-      &:before {content:"\e953"; font-size:18rem; opacity: 0.5; @include text-shadow(0, 0, 30px, #000, 1);}
-
-      &.enter:before {content:"\e932"; opacity: 1;}
-      &.fall:before {content:"\e952";}
-      &.enter, &.fall {
-        & + .c_time {@include flex-width-one(1); max-height:none;}
-      }
-    }
   }
 }
 
 .level-danger, .level-warning, .level-caution {
+
   .entrance_ico {
     &.enter, &.fall {
       &:before {@include issue02;}
       &:after  {@include issue08; border-style:solid; border-width:2px;}
     }
+
+    & ~ h3 {}
   }
 }
 
 .level-danger {
   .entrance_ico {
     &.enter, &.fall {
-      & + .c_time > p, &:before {color: $color-red-01;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-red-01;}
       &:after {border-color:$color-red-01;}
+
     }
   }
 }
@@ -602,7 +627,7 @@ body.dashboard_mode {
 .level-warning {
   .entrance_ico {
     &.enter, &.fall {
-      & + .c_time > p, &:before {color: $color-orange-01;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-orange-01;}
       &:after {border-color:$color-orange-01;}
     }
   }
@@ -611,7 +636,7 @@ body.dashboard_mode {
 .level-caution {
   .entrance_ico {
     &.enter, &.fall {
-      & + .c_time > p, &:before {color: $color-gray-03;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-gray-03;}
       &:after {border-color:$color-gray-03;}
     }
   }
@@ -851,7 +876,7 @@ $ds-sw:50px; $ds-w:150px;
       }
     }
   }
-
+  &.area01,&.area04 { .entrance_ico:after {padding:8%;} }
   &.area02 {
     .treffic_set {@include scale(0.7);}
     .safeeye_set .s_lbox {@include scale(0.9);}
@@ -862,6 +887,11 @@ $ds-sw:50px; $ds-w:150px;
         .c_time { p {font-size:4rem;} }
       }
     }
+  }
+
+  &.area01,&.area02 {
+    h3 {font-size:6rem;}
+    .entrance_ico:after {min-width:300px; min-height:300px;}
   }
   &.area02, &.area04 {
     .kblinker_set {
@@ -881,10 +911,7 @@ $ds-sw:50px; $ds-w:150px;
       canvas {}
       .s_rbox {
         .entrance_ico:before {font-size:10rem;}
-        .c_time {
-          p {font-size:3rem;}
-          button {margin: 0 0 30px 0;}
-        }
+        .c_time { p {font-size:3rem;} }
       }
     }
 
@@ -924,16 +951,28 @@ $ds-sw:50px; $ds-w:150px;
       canvas {width:70%;}
       .s_rbox {
         .entrance_ico:before {font-size:8rem;}
-        .c_time {
-          @include flex-width-one(2);
-          p {font-size:2.5rem;}
-          button {margin: 0 0 30px 0;}
-        }
+        .c_time {p {font-size:2.5rem;} }
       }
     }
   }
 
-  &.area09, &.area08, &.area12, &.area16, &.area00 {}
+  &.area09, &.area12, &.area16, &.area00  {
+    .entrance_set {
+
+      .s_rbox {
+        .entrance_ico:before {font-size:5.5rem;}
+        .entrance_ico {
+          &.enter, &.fall {
+            & {@include flex-width-one(1.4); }
+            & ~ h3 {@include flex-width-one(0.6);}
+            & ~ .c_time {@include flex-width-one(1);}
+          }
+        }
+        h3 {font-size:2rem;}
+        .c_time {p {font-size:1.8rem;} }
+      }
+    }
+  }
 
   &.area12, &.area16, &.area00 {
     .m_marqueebox {display: none !important;}

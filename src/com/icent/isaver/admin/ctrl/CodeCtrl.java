@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,9 @@ public class CodeCtrl {
 
     @Inject
     private CodeSvc codeSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     private final static String[] findListCodeParam = new String[]{"groupCodeId"};
 
@@ -92,7 +96,7 @@ public class CodeCtrl {
         if(MapUtils.nullCheckMap(parameters, addCodeParam)){
             throw new IsaverException("");
         }
-        parameters.put("insertUserId", AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId", sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = codeSvc.addCode(parameters);
         return modelAndView;
     }
@@ -113,7 +117,7 @@ public class CodeCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = codeSvc.saveCode(parameters);
         return modelAndView;
     }
@@ -134,7 +138,7 @@ public class CodeCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = codeSvc.removeCode(parameters);
         return modelAndView;
     }

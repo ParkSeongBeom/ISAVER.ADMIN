@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.util;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.kst.common.util.StringUtils;
@@ -14,7 +15,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

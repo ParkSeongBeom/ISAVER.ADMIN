@@ -1,13 +1,13 @@
 package com.icent.isaver.admin.util;
 
 
+import com.fasterxml.jackson.core.SerializableString;
+import com.fasterxml.jackson.core.io.CharacterEscapes;
+import com.fasterxml.jackson.core.io.SerializedString;
 import org.apache.commons.lang3.text.translate.AggregateTranslator;
 import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
 import org.apache.commons.lang3.text.translate.EntityArrays;
 import org.apache.commons.lang3.text.translate.LookupTranslator;
-import org.codehaus.jackson.SerializableString;
-import org.codehaus.jackson.io.CharacterEscapes;
-import org.codehaus.jackson.io.SerializedString;
 
 public class HTMLCharacterEscapes extends CharacterEscapes {
 

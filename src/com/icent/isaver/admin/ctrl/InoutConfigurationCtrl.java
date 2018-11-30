@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,9 @@ public class InoutConfigurationCtrl {
     @Inject
     private InoutConfigurationSvc inoutConfigurationSvc;
 
+    @Inject
+    private SessionUtil sessionUtil;
+
     private final static String[] saveInoutConfigurationParam = new String[]{"areaId","inoutDatetimes"};
 
     /**
@@ -49,7 +53,7 @@ public class InoutConfigurationCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListInoutConfiguration(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
+        parameters.put("userId", sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = inoutConfigurationSvc.findListInoutConfiguration(parameters);
         return modelAndView;
     }
@@ -67,7 +71,7 @@ public class InoutConfigurationCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("userId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("userId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = inoutConfigurationSvc.saveInoutConfiguration(parameters);
         return modelAndView;
     }

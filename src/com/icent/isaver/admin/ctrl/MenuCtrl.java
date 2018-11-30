@@ -4,6 +4,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.MenuSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,9 @@ public class MenuCtrl {
 
     @Inject
     private MenuSvc menuSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     private final static String[] findAllMenuTreeParam = new String[]{"menuId"};
     /**
@@ -75,7 +79,7 @@ public class MenuCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/menuBarList")
     public ModelAndView menuBarList(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
 
-        parameters.put("id",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("id",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = menuSvc.findAllMenuTopBar(parameters);
         return modelAndView;
     }
@@ -115,7 +119,7 @@ public class MenuCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = menuSvc.addMenu(parameters);
         return modelAndView;
     }
@@ -135,7 +139,7 @@ public class MenuCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = menuSvc.saveMenu(parameters);
         return modelAndView;
     }

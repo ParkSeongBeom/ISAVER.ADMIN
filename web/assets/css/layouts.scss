@@ -705,7 +705,7 @@ menu {
 
       width:$btnarea-height; height:$btnarea-height;
 
-      &:before {font-size: 1.5rem;}
+      &:before {font-size: 1.5rem; color:$color-white-01 !important;}
       //&:last-of-type {border:none !important;}
 
       opacity: 0.7;
@@ -714,7 +714,7 @@ menu {
       &.dbc_open_btn {
         pointer-events: none; opacity: 0.5;
         &.on {pointer-events: auto; opacity: 1; background-color: $bas-color;}
-        &:before {content:"\e937"; font-size: 1.6rem;}
+        &:before {content:"\e937"; }
       }
 
       &.dbc_dele_btn:before {content: "\e977";}

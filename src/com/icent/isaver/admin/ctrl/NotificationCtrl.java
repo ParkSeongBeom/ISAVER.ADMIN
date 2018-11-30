@@ -3,6 +3,8 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
+import com.icent.isaver.repository.bean.UsersBean;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -39,6 +41,9 @@ public class NotificationCtrl {
 
     @Inject
     private NotificationSvc notificationSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     /**
      * 알림센터 이력 목록을 가져온다.
@@ -93,8 +98,9 @@ public class NotificationCtrl {
         if(MapUtils.nullCheckMap(parameters, saveNotificationParam)){
             throw new IsaverException("");
         }
-        parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
-        parameters.put("updateUserName", AdminHelper.getAdminNameFromSession(request));
+        UsersBean usersBean = sessionUtil.getSession(request.getSession());
+        parameters.put("updateUserId", usersBean.getUserId());
+        parameters.put("updateUserName", usersBean.getUserName());
         ModelAndView modelAndView = notificationSvc.saveNotification(parameters);
         return modelAndView;
     }
@@ -108,7 +114,23 @@ public class NotificationCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/allCancel")
     public ModelAndView allCancelNotification(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId", sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("cancelDesc", "all cancel");
+        ModelAndView modelAndView = notificationSvc.allCancelNotification(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 알림센터 전체를 해제한다. crontab용
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/allCancelCron")
+    public ModelAndView allCancelNotificationForCron(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        parameters.put("updateUserId", "crontab");
+        parameters.put("cancelDesc", "crontab all cancel");
         ModelAndView modelAndView = notificationSvc.allCancelNotification(parameters);
         return modelAndView;
     }

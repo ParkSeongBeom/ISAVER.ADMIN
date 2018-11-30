@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,9 @@ public class UsersCtrl {
     @Inject
     private UsersSvc usersSvc;
 
+    @Inject
+    private SessionUtil sessionUtil;
+
     /**
      * 사용자 목록을 가져온다.
      *
@@ -53,7 +57,7 @@ public class UsersCtrl {
     public ModelAndView findListUser(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
-        parameters.put("roleId", AdminHelper.getAdminInfo(request).getRoleId());
+        parameters.put("roleId", sessionUtil.getSession(request.getSession()).getRoleId());
 
         ModelAndView modelAndView = usersSvc.findListUser(parameters);
         modelAndView.setViewName("userList");
@@ -71,7 +75,7 @@ public class UsersCtrl {
      */
     @RequestMapping(method={RequestMethod.POST}, value="/detail")
     public ModelAndView findByUser(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        parameters.put("roleId", AdminHelper.getAdminInfo(request).getRoleId());
+        parameters.put("roleId", sessionUtil.getSession(request.getSession()).getRoleId());
         ModelAndView modelAndView = usersSvc.findByUser(parameters);
         modelAndView.setViewName("userDetail");
 
@@ -129,7 +133,7 @@ public class UsersCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
 
         ModelAndView modelAndView = usersSvc.addUser(parameters);
         return modelAndView;
@@ -151,7 +155,7 @@ public class UsersCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
 
         ModelAndView modelAndView = usersSvc.saveUser(parameters);
         return modelAndView;
@@ -173,7 +177,7 @@ public class UsersCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
 
         ModelAndView modelAndView = usersSvc.removeUser(parameters);
         return modelAndView;

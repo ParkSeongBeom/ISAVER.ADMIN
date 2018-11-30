@@ -7,6 +7,7 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.AuthorizationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.HaspLicenseUtil;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.icent.isaver.repository.bean.LoginHistoryBean;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.LoginHistoryDao;
@@ -55,6 +56,9 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Inject
     private HaspLicenseUtil haspLicenseUtil;
 
+    @Inject
+    private SessionUtil sessionUtil;
+
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
 
@@ -74,7 +78,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             UsersBean usersBean = usersDao.findByUsersForLogin(parameters);
 
             if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){
-                AdminHelper.setAdminInfo(request, usersBean);
+                sessionUtil.addSession(request, usersBean);
                 addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
             }else{
                 throw new IsaverException("");
@@ -91,7 +95,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         UsersBean usersBean = usersDao.findByUsers(parameters);
 
         if(usersBean != null && StringUtils.notNullCheck(usersBean.getUserId())){
-            AdminHelper.setAdminInfo(request, usersBean);
+            sessionUtil.addSession(request, usersBean);
             addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
         }
 
@@ -103,7 +107,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     public ModelAndView logout(HttpServletRequest request) {
         try{
             addLogAuthAdminUser(request, null, AdminResource.ADMIN_LOG_TYPE[1]);
-            AdminHelper.removeAdminInfo(request);
+            sessionUtil.removeSession(request);
         }catch(Exception e){
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -121,7 +125,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     private void addLogAuthAdminUser(HttpServletRequest request, String adminId, String type){
         LoginHistoryBean loginHistoryBean = new LoginHistoryBean();
         loginHistoryBean.setLogId(StringUtils.getGUID32());
-        String id = adminId == null ? AdminHelper.getAdminIdFromSession(request) : adminId;
+        String id = adminId == null ? sessionUtil.getSession(request.getSession()).getUserId() : adminId;
         loginHistoryBean.setUserId(id);
         loginHistoryBean.setLoginFlag(type);
 

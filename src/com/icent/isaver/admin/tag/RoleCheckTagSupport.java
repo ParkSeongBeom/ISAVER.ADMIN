@@ -2,12 +2,14 @@ package com.icent.isaver.admin.tag;
 
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.util.AppContextUtil;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.icent.isaver.repository.bean.RoleMenuBean;
 import com.icent.isaver.repository.bean.UsersBean;
 import com.icent.isaver.repository.dao.base.RoleMenuDao;
 import com.kst.common.util.StringUtils;
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 /**
@@ -45,12 +47,13 @@ public class RoleCheckTagSupport extends ParamTag {
     public int doEndTag() {
         StringBuilder sb = new StringBuilder();
         RoleMenuDao roleMenuDao = AppContextUtil.getInstance().getBean(RoleMenuDao.class);
+        SessionUtil sessionUtil = AppContextUtil.getInstance().getBean(SessionUtil.class);
 
         UsersBean usersBean = null;
         try{
-            usersBean = (UsersBean) pageContext.getSession().getAttribute(AdminResource.AUTHORIZATION_ADMIN);
+            usersBean = sessionUtil.getSession(pageContext.getSession());
         }catch(Exception e){
-
+            e.printStackTrace();
         }
 
         Boolean pagePermissionFlag = false;

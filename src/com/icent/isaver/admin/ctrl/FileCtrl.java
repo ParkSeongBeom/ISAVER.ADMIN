@@ -4,6 +4,7 @@ import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,9 @@ public class FileCtrl {
 
     @Inject
     private FileSvc fileSvc;
+
+    @Inject
+    private SessionUtil sessionUtil;
 
     /**
      * 알람 파일 목록을 가져온다.
@@ -144,7 +148,7 @@ public class FileCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = fileSvc.addFile(request, parameters);
         return modelAndView;
     }
@@ -164,7 +168,7 @@ public class FileCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = fileSvc.saveFile(request, parameters);
         return modelAndView;
     }
@@ -185,7 +189,7 @@ public class FileCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
         ModelAndView modelAndView = fileSvc.removeFile(request, parameters);
         return modelAndView;
     }
