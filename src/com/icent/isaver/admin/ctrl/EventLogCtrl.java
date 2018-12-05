@@ -3,7 +3,6 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,9 +25,6 @@ public class EventLogCtrl {
 
     @Inject
     private EventLogSvc eventLogSvc;
-
-    @Inject
-    private SessionUtil sessionUtil;
 
     /**
      * 이벤트 로그 목록을 가져온다.
@@ -58,7 +54,7 @@ public class EventLogCtrl {
      */
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/blinkerList")
     public ModelAndView findListEventLogBlinkerForArea(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters.put("userId", sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = eventLogSvc.findListEventLogBlinkerForArea(parameters);
         return modelAndView;
     }

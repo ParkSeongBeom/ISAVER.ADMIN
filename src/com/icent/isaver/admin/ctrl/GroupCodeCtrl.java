@@ -3,7 +3,6 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.GroupCodeSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +34,6 @@ public class GroupCodeCtrl {
     @Inject
     private GroupCodeSvc groupCodeSvc;
 
-    @Inject
-    private SessionUtil sessionUtil;
-
     /**
      * 그룹코드 목록을 가져온다.
      *
@@ -68,7 +64,7 @@ public class GroupCodeCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = groupCodeSvc.addGroupCode(parameters);
         modelAndView.setViewName("groupCodeDetail");
 
@@ -84,7 +80,7 @@ public class GroupCodeCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = groupCodeSvc.saveGroupCode(parameters);
         return modelAndView;
     }
@@ -97,7 +93,7 @@ public class GroupCodeCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = groupCodeSvc.removeGroupCode(parameters);
         return modelAndView;
     }

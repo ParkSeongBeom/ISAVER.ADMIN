@@ -3,7 +3,6 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.AreaSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,6 @@ public class AreaCtrl {
 
     @Inject
     private AreaSvc areaSvc;
-
-    @Inject
-    private SessionUtil sessionUtil;
 
     /**
      * 구역 목록을 가져온다.
@@ -65,7 +61,7 @@ public class AreaCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = areaSvc.addArea(request, parameters);
         return modelAndView;
     }
@@ -87,7 +83,7 @@ public class AreaCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView =areaSvc.saveArea(request, parameters);
         return modelAndView;
     }
@@ -109,7 +105,7 @@ public class AreaCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = areaSvc.removeArea(request, parameters);
         return modelAndView;
     }

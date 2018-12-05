@@ -3,8 +3,6 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.SessionUtil;
-import com.icent.isaver.repository.bean.UsersBean;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -41,9 +39,6 @@ public class NotificationCtrl {
 
     @Inject
     private NotificationSvc notificationSvc;
-
-    @Inject
-    private SessionUtil sessionUtil;
 
     /**
      * 알림센터 이력 목록을 가져온다.
@@ -98,9 +93,8 @@ public class NotificationCtrl {
         if(MapUtils.nullCheckMap(parameters, saveNotificationParam)){
             throw new IsaverException("");
         }
-        UsersBean usersBean = sessionUtil.getSession(request.getSession());
-        parameters.put("updateUserId", usersBean.getUserId());
-        parameters.put("updateUserName", usersBean.getUserName());
+        parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
+        parameters.put("updateUserName", AdminHelper.getAdminNameFromSession(request));
         ModelAndView modelAndView = notificationSvc.saveNotification(parameters);
         return modelAndView;
     }
@@ -114,7 +108,7 @@ public class NotificationCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/allCancel")
     public ModelAndView allCancelNotification(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        parameters.put("updateUserId", sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId", AdminHelper.getAdminIdFromSession(request));
         parameters.put("cancelDesc", "all cancel");
         ModelAndView modelAndView = notificationSvc.allCancelNotification(parameters);
         return modelAndView;

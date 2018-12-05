@@ -152,6 +152,70 @@ public class AdminHelper {
     }
 
     /**
+     * 세션에서 로그인한 관리자 정보를 가져온다.
+     *
+     * @author kst
+     * @param request
+     * @return
+     */
+    public static UsersBean getAdminInfo(HttpServletRequest request){
+        return (UsersBean)request.getSession().getAttribute(AdminResource.AUTHORIZATION_ADMIN);
+    }
+
+    /**
+     * 세션에 로그인정보를 등록한다.
+     *
+     * @author kst
+     * @param request
+     * @param usersBean
+     */
+    public static void setAdminInfo(HttpServletRequest request, UsersBean usersBean){
+        request.getSession().setAttribute(AdminResource.AUTHORIZATION_ADMIN, usersBean);
+    }
+
+    /**
+     * 세션에서 로그인정보를 제거한다.
+     *
+     * @author kst
+     * @param request
+     */
+    public static void removeAdminInfo(HttpServletRequest request){
+        request.getSession().removeAttribute(AdminResource.AUTHORIZATION_ADMIN);
+    }
+
+    /**
+     * 세션에서 로그인한 관리자의 ID를 가져온다.
+     *
+     * @author kst
+     * @param request
+     * @return
+     */
+    public static String getAdminIdFromSession(HttpServletRequest request){
+        String adminId = null;
+        try{
+            UsersBean usersBean = getAdminInfo(request);
+            adminId = usersBean.getUserId();
+        }catch(Exception e){}
+        return adminId;
+    }
+
+    /**
+     * 세션에서 로그인한 관리자의 이름을 가져온다.
+     *
+     * @author kst
+     * @param request
+     * @return
+     */
+    public static String getAdminNameFromSession(HttpServletRequest request){
+        String adminName = null;
+        try{
+            UsersBean usersBean = getAdminInfo(request);
+            adminName = usersBean.getUserName();
+        }catch(Exception e){}
+        return adminName;
+    }
+
+    /**
      * 일자별 검색이 필요한 페이지 초기 진입시 날짜 기본값 셋팅</br>
      * - FindBean에 맞춰짐.
      *

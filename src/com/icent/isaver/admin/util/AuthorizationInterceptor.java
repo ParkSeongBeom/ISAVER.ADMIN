@@ -51,9 +51,6 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Inject
     private HaspLicenseUtil haspLicenseUtil;
 
-    @Inject
-    private SessionUtil sessionUtil;
-
     /**
      * 인자절차가 필요없는 path</br>
      * - properties/config.properties 참조
@@ -96,7 +93,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             UsersBean usersBean;
             String redirectUrl = null;
 
-            usersBean = sessionUtil.getSession(request.getSession());
+            usersBean = AdminHelper.getAdminInfo(request);
             redirectUrl = request.getContextPath();
             if(this.redirectPath != null){
                 redirectUrl += this.redirectPath;
@@ -107,7 +104,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             }else{
                 License license = haspLicenseUtil.login();
                 if (HaspStatus.HASP_STATUS_OK != license.getStatus() && AdminResource.NONE_LICENSE_TARGET != license.getStatus()) { // 라이센스 로그인 실패
-                    sessionUtil.removeSession(request);
+                    AdminHelper.removeAdminInfo(request);
                     response.sendRedirect(redirectUrl);
                 }
             }

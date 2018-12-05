@@ -3,7 +3,6 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.RoleSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.SessionUtil;
 import com.kst.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -43,9 +42,6 @@ public class RoleCtrl {
 
     @Value("${cnf.defaultPageSize}")
     private String defaultPageSize;
-
-    @Inject
-    private SessionUtil sessionUtil;
 
     /**
      * 권한 목록을 가져온다.
@@ -91,7 +87,7 @@ public class RoleCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("insertUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = roleSvc.addRole(parameters);
 
         return modelAndView;
@@ -113,7 +109,7 @@ public class RoleCtrl {
             throw new IsaverException("");
         }
 
-        parameters.put("updateUserId",sessionUtil.getSession(request.getSession()).getUserId());
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = roleSvc.saveRole(parameters);
 
         return modelAndView;

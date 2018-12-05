@@ -274,11 +274,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public SessionUtil sessionUtil() {
-        return new SessionUtil();
-    }
-
-    @Bean
     public String printVersion() {
         String version = null;
         StringBuilder loggerBuiler = new StringBuilder();
