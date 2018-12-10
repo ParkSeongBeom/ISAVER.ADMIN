@@ -952,6 +952,13 @@
             $("#authrizeAreaId").val(_areaId);
             $("#authrizePassword").val('');
             $(".ir_popup").fadeIn(200);
+
+            $("#authrizePassword").bind("keyup", function(evt){
+                var code = evt.keyCode || evt.which;
+                if(code == 13){
+                    confirmAuthorize();
+                }
+            });
         }
     }
 
