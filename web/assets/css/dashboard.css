@@ -930,7 +930,7 @@ body.dashboard_mode {
     color: #fff !important; }
   .guard_set .s_lbox .map_images .gm-style > div > div:first-of-type > div:last-of-type > div > div img {
     opacity: 0; }
-  .guard_set .s_lbox .map_images.onlyhuman .g-tracking.object {
+  .guard_set .s_lbox .map_images.onlyhuman .object {
     display: none; }
 .guard_set .s_rbox {
   right: 0;
@@ -1128,7 +1128,7 @@ body.dashboard_mode {
   overflow: hidden;
   opacity: 0.5;
   position: absolute !important;
-  z-index: 100;
+  z-index: 10;
   bottom: 15px;
   left: 15px;
   width: 50px;

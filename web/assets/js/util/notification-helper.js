@@ -489,7 +489,7 @@ var NotificationHelper = (
                 /* 싸이렌 */
                 playSegment();
 
-                if(dashboardHelper instanceof DashboardHelper){
+                if(typeof dashboardHelper!="undefined" && dashboardHelper instanceof DashboardHelper){
                     if(dashboardHelper.getArea("templateCode", notification['areaId'])!='TMP005'){
                         var toastTag = templateHelper.getTemplate("toast");
                         toastTag.addClass("level-"+criticalCss[notification['criticalLevel']]);

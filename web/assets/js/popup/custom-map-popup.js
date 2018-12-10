@@ -123,6 +123,7 @@ var CustomMapPopup = (
                 return false;
             }
             _element.find("#areaName").text(areaName);
+            _element.find("#childList section").remove();
             _element.fadeIn();
 
             _areaId = areaId;
@@ -173,7 +174,6 @@ var CustomMapPopup = (
                                 }
                                 break;
                             case 'fenceList' :
-                                _element.find("#childList section").remove();
                                 for(var index in data){
                                     var fence = data[index];
                                     if(fence['fenceType']!='ignore'){

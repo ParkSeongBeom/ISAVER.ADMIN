@@ -92,15 +92,26 @@ var DashboardHelper = (
 
             var _mapMediator = _self.getGuard('map', resultData['areaId']);
             if(resultData['areaId']!=null && _mapMediator!=null){
-                switch (resultData['actionType']) {
-                    case "add":
-                        _mapMediator.addMarker(resultData['messageType'], resultData);
-                        break;
-                    case "save":
-                        _mapMediator.saveMarker(resultData['messageType'], resultData);
-                        break;
-                    case "remove":
-                        _mapMediator.removeMarker(resultData['messageType'], resultData);
+                switch (resultData['messageType']) {
+                    case "object":
+                        if(resultData['markerList']!=null && resultData['markerList'] instanceof Array){
+                            for(var index in resultData['markerList']){
+                                var marker = resultData['markerList'][index];
+                                marker['areaId'] = resultData['areaId'];
+                                marker['deviceId'] = resultData['deviceId'];
+                                switch (marker['actionType']) {
+                                    case "add":
+                                        _mapMediator.addMarker(resultData['messageType'], marker);
+                                        break;
+                                    case "save":
+                                        _mapMediator.saveMarker(resultData['messageType'], marker);
+                                        break;
+                                    case "remove":
+                                        _mapMediator.removeMarker(resultData['messageType'], marker);
+                                        break;
+                                }
+                            }
+                        }
                         break;
                 }
             }else{

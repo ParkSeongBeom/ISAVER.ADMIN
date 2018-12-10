@@ -812,11 +812,12 @@ div[contenteditable] {}
 
   &-m8, &-camera, &-wlight, &-led, &-speaker, &-qguard, &-ico  {z-index: 50;}
 
-  &-tracking {z-index: 100;}
+  &-tracking,&-line {z-index: 100;}
+
   &-area  {z-index:10;}
   &-fence {z-index: 5;}
 
-  &-ico, &-m8, &-camera, &-tracking, &-area, &-fence {position: absolute !important;}
+  &-ico, &-m8, &-camera, &-tracking,&-line, &-area, &-fence {position: absolute !important;}
 
   // 감시, 감지 디바이스 공통
   &-ico, &-m8, &-camera, &-area {
@@ -906,7 +907,6 @@ div[contenteditable] {}
     }
   }
 
-
   &-fence {
     width:100% !important; height:100% !important; background-color: transparent !important;
     polygon, path {
@@ -919,18 +919,26 @@ div[contenteditable] {}
         &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
         &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
         &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }
-
-        /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
-        &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
-        &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }
-
-        &-caution { & > span {background-color:$color-gray-05;   } }
-        &-warning { & > span {background-color:$color-orange-01; } }
-        &-danger  { & > span {background-color:$color-red-01;    } }*/
       }
     }
 
   }
+
+  &-line {
+    polyline {fill: transparent !important; stroke: $color-blue-01; stroke-width:3px;}
+    marker {overflow: visible;}
+    image  {width:20px; height:20px; }
+
+    polyline.object {stroke: $color-gray-05;}
+    polyline.level {
+      &-caution, &-warning, &-danger { @include issue02;}
+      &-caution { stroke: $color-gray-05; }
+      &-warning { stroke: $color-orange-01; }
+      &-danger  { stroke: $color-red-01; }
+    }
+
+  }
+
 
   &-ignore_fence {
     fill: rgba($color-gray-05, 0.2) !important;  stroke: $color-gray-05 !important;

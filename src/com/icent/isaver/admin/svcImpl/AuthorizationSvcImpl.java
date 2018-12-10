@@ -13,6 +13,8 @@ import com.icent.isaver.repository.dao.base.LoginHistoryDao;
 import com.icent.isaver.repository.dao.base.UsersDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
+import com.kst.digest.resource.DigestAlgorithm;
+import com.kst.digest.util.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -83,6 +85,17 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license",license);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView authorizeCheck(HttpServletRequest request, Map<String, String> parameters) {
+        parameters.put("userId", AdminHelper.getAdminIdFromSession(request));
+        parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
+
+        boolean result = usersDao.findByUsersForLogin(parameters)!=null;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("result",result);
         return modelAndView;
     }
 

@@ -396,7 +396,7 @@
                             <article>
                                 <section class="entrance_set">
                                     <!-- 클라우드 이미지-->
-                                    <button class="ir_btn" onclick="javascript:$(this).toggleClass('on');"></button>
+                                    <button class="ir_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}');"></button>
                                     <div class="s_lbox">
                                         <canvas name="toiletRoom-canvas"></canvas>
                                     </div>
@@ -523,6 +523,28 @@
         </div>
         <div class="bg" onclick="javascript:closeInoutConfigListPopup();"></div>
     </div>
+
+    <div class="popupbase ir_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="dashboard.title.userAuthorize"/></h2>
+                    <button class="close_btn" onclick="javascript:closeAuthorizePopup();"></button>
+                </header>
+                <article>
+                    <section>
+                        <input type="hidden" id="authrizeAreaId" />
+                        <p><spring:message code="dashboard.column.password"/></p>
+                        <input type="password" id="authrizePassword" />
+                    </section>
+                </article>
+                <footer>
+                    <button class="btn" onclick="javascript:confirmAuthorize();"><spring:message code="common.button.confirm"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg" onclick="javascript:closeAuthorizePopup();"></div>
+    </div>
 </article>
 
 <%-- VXG Player를 통한 RTSP Stream --%>
@@ -576,6 +598,7 @@
         ,chartUrl : "${rootPath}/eventLog/chart.json"
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
         ,inoutConfigAreaTreeUrl : "${rootPath}/area/list.json"
+        ,authorizeCheckUrl : "${rootPath}/authCheck.json"
     };
 
     var messageConfig = {
@@ -586,6 +609,8 @@
         , saveInoutConfigurationComplete : '<spring:message code="dashboard.message.saveInoutConfigurationComplete"/>'
         , saveInoutConfigurationFailure : '<spring:message code="dashboard.message.saveInoutConfigurationFailure"/>'
         , customMapListFailure :'<spring:message code="resource.message.customMapListFailure"/>'
+        , emptyPassword : '<spring:message code="dashboard.message.emptyPassword"/>'
+        , authorizeCheckFailure : '<spring:message code="dashboard.message.authorizeCheckFailure"/>'
     };
 
     $(document).ready(function(){
@@ -916,6 +941,43 @@
         callAjax('saveInoutConfiguration',param);
     }
 
+    /**
+     * 사용자 인증 팝업 열기
+     * @author psb
+     */
+    function openAuthorizePopup(_this, _areaId){
+        if($(_this).hasClass("on")){
+            $(_this).removeClass("on");
+        }else{
+            $("#authrizeAreaId").val(_areaId);
+            $("#authrizePassword").val('');
+            $(".ir_popup").fadeIn(200);
+        }
+    }
+
+    /**
+     * 사용자 인증 팝업 닫기
+     * @author psb
+     */
+    function closeAuthorizePopup(){
+        $('.ir_popup').fadeOut(200);
+    }
+
+    /**
+     * 사용자 인증
+     * @author psb
+     */
+    function confirmAuthorize(){
+        if($("#authrizePassword").val().trim().length==0){
+            alertMessage('emptyPassword');
+            return false;
+        }
+        var param = {
+            'userPassword' : $("#authrizePassword").val()
+        };
+        callAjax('authorizeCheck',param);
+    }
+
     function callAjax(actionType, data){
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,dashBoardSuccessHandler,dashBoardFailureHandler,actionType);
     }
@@ -927,6 +989,14 @@
      */
     function dashBoardSuccessHandler(data, dataType, actionType){
         switch(actionType){
+            case 'authorizeCheck':
+                if(data['result']!=null && Boolean(data['result'])){
+                    $(".watch_area div[areaId='"+$("#authrizeAreaId").val()+"'] .ir_btn").addClass("on");
+                    closeAuthorizePopup();
+                }else{
+                    alertMessage(actionType+'Failure');
+                }
+                break;
             case 'chart':
                 chartRender(data);
                 break;

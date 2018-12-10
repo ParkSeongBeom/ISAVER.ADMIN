@@ -116,7 +116,6 @@ public class UsersSvcImpl implements UsersSvc {
             parameters.put("userPassword", DigestUtils.digest(DigestAlgorithm.MD5, parameters.get("userPassword")));
         }
 
-
         try {
             usersDao.saveUsers(parameters);
             transactionManager.commit(transactionStatus);

@@ -1417,13 +1417,13 @@ input.datepicker + button + .in-timepicker {
 
 .g-m8, .g-camera, .g-wlight, .g-led, .g-speaker, .g-qguard, .g-ico {
   z-index: 50; }
-.g-tracking {
+.g-tracking, .g-line {
   z-index: 100; }
 .g-area {
   z-index: 10; }
 .g-fence {
   z-index: 5; }
-.g-ico, .g-m8, .g-camera, .g-tracking, .g-area, .g-fence {
+.g-ico, .g-m8, .g-camera, .g-tracking, .g-line, .g-area, .g-fence {
   position: absolute !important; }
 .g-ico, .g-m8, .g-camera, .g-area {
   box-shadow: 0 3px 8px 0px black;
@@ -1661,28 +1661,20 @@ input.datepicker + button + .in-timepicker {
     .g-fence polygon text, .g-fence path text {
       font-size: 5px !important;
       letter-spacing: 0; }
-    .g-fence polygon.level, .g-fence path.level {
-        /*&-caution {@include border01(3px,$color-gray-05,1);   background-color: rgba($color-gray-05,0.7  ); }
-        &-warning {@include border01(3px,$color-orange-01,1); background-color: rgba($color-orange-01,0.7); }
-        &-danger  {@include border01(3px,$color-red-01,1);    background-color: rgba($color-red-01,0.7   ); }
-
-        &-caution { & > span {background-color:$color-gray-05;   } }
-        &-warning { & > span {background-color:$color-orange-01; } }
-        &-danger  { & > span {background-color:$color-red-01;    } }*/ }
-      .g-fence polygon.level-caution, .g-fence polygon.level-warning, .g-fence polygon.level-danger, .g-fence path.level-caution, .g-fence path.level-warning, .g-fence path.level-danger {
-        animation-name: issue02;
-        -webkit-animation-name: issue02;
-        -webkit-animation-duration: 0.5s;
-        animation-duration: 0.5s;
-        animation-iteration-count: infinite;
-        -webkit-animation-iteration-count: infinite;
-        animation-timing-function: linear;
-        -webkit-animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        -webkit-animation-fill-mode: forwards;
-        -webkit-animation-duration: 0.8s;
-        animation-duration: 0.8s;
-        stroke-width: 1px; }
+    .g-fence polygon.level-caution, .g-fence polygon.level-warning, .g-fence polygon.level-danger, .g-fence path.level-caution, .g-fence path.level-warning, .g-fence path.level-danger {
+      animation-name: issue02;
+      -webkit-animation-name: issue02;
+      -webkit-animation-duration: 0.5s;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      -webkit-animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -webkit-animation-duration: 0.8s;
+      animation-duration: 0.8s;
+      stroke-width: 1px; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -1701,15 +1693,63 @@ input.datepicker + button + .in-timepicker {
     opacity: 1; }
   100% {
     opacity: 0.5; } }
-      .g-fence polygon.level-caution, .g-fence path.level-caution {
-        fill: rgba(117, 117, 117, 0.2);
-        stroke: #757575; }
-      .g-fence polygon.level-warning, .g-fence path.level-warning {
-        fill: rgba(255, 132, 0, 0.2);
-        stroke: #ff8400; }
-      .g-fence polygon.level-danger, .g-fence path.level-danger {
-        fill: rgba(190, 30, 30, 0.2);
-        stroke: #be1e1e; }
+    .g-fence polygon.level-caution, .g-fence path.level-caution {
+      fill: rgba(117, 117, 117, 0.2);
+      stroke: #757575; }
+    .g-fence polygon.level-warning, .g-fence path.level-warning {
+      fill: rgba(255, 132, 0, 0.2);
+      stroke: #ff8400; }
+    .g-fence polygon.level-danger, .g-fence path.level-danger {
+      fill: rgba(190, 30, 30, 0.2);
+      stroke: #be1e1e; }
+.g-line polyline {
+  fill: transparent !important;
+  stroke: #109dcb;
+  stroke-width: 3px; }
+.g-line marker {
+  overflow: visible; }
+.g-line image {
+  width: 20px;
+  height: 20px; }
+.g-line polyline.object {
+  stroke: #757575; }
+.g-line polyline.level-caution, .g-line polyline.level-warning, .g-line polyline.level-danger {
+  animation-name: issue02;
+  -webkit-animation-name: issue02;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s; }
+@-webkit-keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+@keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+.g-line polyline.level-caution {
+  stroke: #757575; }
+.g-line polyline.level-warning {
+  stroke: #ff8400; }
+.g-line polyline.level-danger {
+  stroke: #be1e1e; }
 .g-ignore_fence {
   fill: rgba(117, 117, 117, 0.2) !important;
   stroke: #757575 !important; }

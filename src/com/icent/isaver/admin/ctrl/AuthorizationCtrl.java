@@ -46,6 +46,12 @@ public class AuthorizationCtrl {
         return modelAndView;
     }
 
+    @RequestMapping(method={RequestMethod.POST}, value="/authCheck")
+    public ModelAndView authorizeCheck(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = authorizationSvc.authorizeCheck(request, parameters);
+        return modelAndView;
+    }
+
     @RequestMapping(method={RequestMethod.POST}, value="/login")
     public ModelAndView login(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = authorizationSvc.login(request, parameters);
