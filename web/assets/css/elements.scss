@@ -925,9 +925,9 @@ div[contenteditable] {}
   }
 
   &-line {
-    polyline {fill: transparent !important; stroke: $color-blue-01; stroke-width:3px;}
+    polyline {fill: transparent !important; stroke: $color-blue-01; stroke-width:2px;}
     marker {overflow: visible;}
-    image  {width:20px; height:20px; }
+    image  {width:6px; height:6px;}
 
     polyline.object {stroke: $color-gray-05;}
     polyline.level {

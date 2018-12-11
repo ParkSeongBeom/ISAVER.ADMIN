@@ -1705,12 +1705,12 @@ input.datepicker + button + .in-timepicker {
 .g-line polyline {
   fill: transparent !important;
   stroke: #109dcb;
-  stroke-width: 3px; }
+  stroke-width: 2px; }
 .g-line marker {
   overflow: visible; }
 .g-line image {
-  width: 20px;
-  height: 20px; }
+  width: 6px;
+  height: 6px; }
 .g-line polyline.object {
   stroke: #757575; }
 .g-line polyline.level-caution, .g-line polyline.level-warning, .g-line polyline.level-danger {
