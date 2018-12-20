@@ -3,11 +3,64 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="ISAVER.ADMIN:war" />
+      <artifact name="ISAVER.ADMIN:war exploded" />
+      <artifact name="ISAVER.ADMIN:war_install" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="" />
-    <list id="5b7b42a5-4b20-405c-9945-df78f172c70b" name="config" comment="">
+    <list default="true" readonly="true" id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceLocationDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceLocationMapper.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/WEB-INF/views/authorization/error.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/bg/gbg.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_39_cau.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_39_war.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_81_cau.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_81_war.svg" />
+      <change type="DELETED" beforePath="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\src\com\icent\isaver\admin\common\resource\ApiResource.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/CustomMapLocationDao.java" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/CustomMapLocationDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/CustomMapLocationMapper.xml" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/CustomMapLocationMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/CustomMapLocationSvcImpl.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/CustomMapLocationSvcImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSvcImpl.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSvcImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/spring/ExceptionResolver.java" afterPath="$PROJECT_DIR$/conf/spring/ExceptionResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceDao.java" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/_filters.scss" afterPath="$PROJECT_DIR$/web/assets/css/_filters.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css.map" afterPath="$PROJECT_DIR$/web/assets/css/admin.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css" afterPath="$PROJECT_DIR$/web/assets/css/admin.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.scss" afterPath="$PROJECT_DIR$/web/assets/css/admin.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/util/common-util.js" afterPath="$PROJECT_DIR$/web/assets/js/util/common-util.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/message/common_en.properties" afterPath="$PROJECT_DIR$/conf/properties/message/common_en.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/message/common_ko.properties" afterPath="$PROJECT_DIR$/conf/properties/message/common_ko.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/config.properties" afterPath="$PROJECT_DIR$/conf/properties/config.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/util/consolelog-helper.js" afterPath="$PROJECT_DIR$/web/assets/js/util/consolelog-helper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js" afterPath="$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/popup/custom-map-popup.js" afterPath="$PROJECT_DIR$/web/assets/js/popup/custom-map-popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js" afterPath="$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.css.map" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.css" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/dashboard.scss" afterPath="$PROJECT_DIR$/web/assets/css/dashboard.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.css.map" afterPath="$PROJECT_DIR$/web/assets/css/elements.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.css" afterPath="$PROJECT_DIR$/web/assets/css/elements.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/elements.scss" afterPath="$PROJECT_DIR$/web/assets/css/elements.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.css.map" afterPath="$PROJECT_DIR$/web/assets/css/layouts.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.css" afterPath="$PROJECT_DIR$/web/assets/css/layouts.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/layouts.scss" afterPath="$PROJECT_DIR$/web/assets/css/layouts.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/critical/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/critical/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/views/resource/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/views/resource/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js" afterPath="$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/js/util/notification-helper.js" afterPath="$PROJECT_DIR$/web/assets/js/util/notification-helper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/message/resource_en.properties" afterPath="$PROJECT_DIR$/conf/properties/message/resource_en.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/properties/message/resource_ko.properties" afterPath="$PROJECT_DIR$/conf/properties/message/resource_ko.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/tiles/tiles.xml" afterPath="$PROJECT_DIR$/conf/tiles/tiles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js" afterPath="$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/library/webrtc-streamer/webrtcstreamer.js" afterPath="$PROJECT_DIR$/web/assets/library/webrtc-streamer/webrtcstreamer.js" />
+    </list>
+    <list id="bfd984ae-440a-4918-a3ff-4deb8a509023" name="config" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ISAVER.ADMIN.ipr" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ISAVER.ADMIN.iws" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.iws" />
     </list>
     <ignored path="JABBER.ADMIN.iws" />
@@ -93,14 +146,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="list.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
+      <file leaf-file-name="custom-map-mediator.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.071429">
-              <caret line="868" column="45" selection-start-line="868" selection-start-column="45" selection-end-line="868" selection-end-column="45" />
-              <folding>
-                <marker date="1522740998770" expanded="true" signature="45040:45058" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="0.46108663">
+              <caret line="222" column="41" selection-start-line="222" selection-start-column="41" selection-end-line="227" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,28 +160,40 @@
         <entry file="file://$PROJECT_DIR$/conf/properties/config.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AuthorizationInterceptor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/AuthorizationInterceptor.java">
+      <file leaf-file-name="notification-helper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/util/notification-helper.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="122" column="5" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+              <caret line="603" column="77" selection-start-line="603" selection-start-column="77" selection-end-line="603" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="map-mediator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js">
+      <file leaf-file-name="custom-map-popup.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/popup/custom-map-popup.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="20" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="20" />
+              <caret line="288" column="70" selection-start-line="288" selection-start-column="70" selection-end-line="288" selection-end-column="70" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.384615">
+              <caret line="341" column="63" selection-start-line="341" selection-start-column="63" selection-end-line="341" selection-end-column="63" />
+              <folding>
+                <marker date="1545271617247" expanded="true" signature="56178:56196" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,27 +202,17 @@
         <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="99" column="41" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+              <caret line="346" column="97" selection-start-line="346" selection-start-column="97" selection-end-line="346" selection-end-column="97" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layout.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp">
+      <file leaf-file-name="list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/resource/list.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6768489">
-              <caret line="216" column="13" selection-start-line="216" selection-start-column="13" selection-end-line="216" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/login.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.607142">
-              <caret line="44" column="58" selection-start-line="44" selection-start-column="58" selection-end-line="44" selection-end-column="58" />
+            <state vertical-scroll-proportion="-12.538462">
+              <caret line="497" column="33" selection-start-line="497" selection-start-column="33" selection-end-line="497" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -171,6 +224,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -187,57 +241,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/googlemap-helper.js" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/video-helper.js" />
-        <option value="$PROJECT_DIR$/web/assets/js/util/notification-helper.js" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/LicenseCtrl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/MenuCtrl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/RoleCtrl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/RoleMenuCtrl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSyncRequestSvcImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/tag/RoleCheckTagSupport.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svc/AuthorizationSvc.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/AuthorizationCtrl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/AuthorizationSvcImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/UsersSvcImpl.java" />
         <option value="$PROJECT_DIR$/conf/properties/message/dashboard_ko.properties" />
+        <option value="$PROJECT_DIR$/conf/properties/message/dashboard_en.properties" />
+        <option value="$PROJECT_DIR$/web/assets/library/svg/svg.js" />
+        <option value="$PROJECT_DIR$/web/assets/library/svg/jquery.svg.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/consolelog-helper.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js" />
+        <option value="$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js" />
+        <option value="$PROJECT_DIR$/web/assets/library/webrtc-streamer/webrtcstreamer.js" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/critical/list.jsp" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/CustomMapLocationDao.java" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/CustomMapLocationMapper.xml" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceLocationMapper.xml" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceLocationDao.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/CustomMapLocationSvcImpl.java" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceDao.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSvcImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/AlarmRequestUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/ajax-util.js" />
+        <option value="$PROJECT_DIR$/conf/tiles/tiles.xml" />
         <option value="$PROJECT_DIR$/conf/properties/message/common_ko.properties" />
         <option value="$PROJECT_DIR$/conf/properties/message/common_en.properties" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/AuthorizationCtrl.java" />
-        <option value="$PROJECT_DIR$/conf/tiles/tiles.xml" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/AreaMapper.xml" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/AreaDao.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/DeviceDao.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/DeviceMapper.xml" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svc/TestSvc.java" />
-        <option value="$PROJECT_DIR$/web/assets/css/gsbase.css" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/area/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/notification/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/authorization/test.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/video-mediator.js" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/TestCtrl.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/TestSvcImpl.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/device/DeviceCtrl.js" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FileMapper.xml" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/FileBean.java" />
-        <option value="$PROJECT_DIR$/conf/properties/message/file_ko.properties" />
-        <option value="$PROJECT_DIR$/conf/properties/message/file_en.properties" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/AlarmMapper.xml" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/AlarmBean.java" />
-        <option value="$PROJECT_DIR$/conf/properties/message/alarm_ko.properties" />
-        <option value="$PROJECT_DIR$/conf/properties/message/alarm_en.properties" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/alarm/detail.jsp" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventLogSvcImpl.java" />
-        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventLogMapper.xml" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSInterceptor.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSRequestWrapper.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/HTMLCharactreEscapes.java" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/HTMLCharacterEscapes.java" />
-        <option value="$PROJECT_DIR$/conf/spring/WebConfigurer.java" />
-        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp" />
+        <option value="$PROJECT_DIR$/conf/properties/message/error_ko.properties" />
+        <option value="$PROJECT_DIR$/conf/properties/message/error_en.properties" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml" />
         <option value="$PROJECT_DIR$/web/assets/js/util/common-util.js" />
-        <option value="$PROJECT_DIR$/web/assets/js/template/template-helper.js" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp" />
-        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/AuthorizationInterceptor.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/authorization/login.jsp" />
+        <option value="$PROJECT_DIR$/conf/spring/WebConfigurer.java" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/authorization/error.jsp" />
+        <option value="$PROJECT_DIR$/conf/spring/ExceptionResolver.java" />
+        <option value="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/DeviceStatusHistoryMapper.xml" />
+        <option value="$PROJECT_DIR$/src/com/icent/isaver/admin/util/HaspLicenseUtil.java" />
+        <option value="$PROJECT_DIR$/conf/properties/message/resource_ko.properties" />
+        <option value="$PROJECT_DIR$/conf/properties/message/resource_en.properties" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/views/resource/list.jsp" />
         <option value="$PROJECT_DIR$/conf/properties/config.properties" />
         <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js" />
         <option value="$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/util/notification-helper.js" />
+        <option value="$PROJECT_DIR$/web/assets/js/popup/custom-map-popup.js" />
       </list>
     </option>
   </component>
@@ -267,10 +321,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="-1928" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -280,12 +334,36 @@
             <id />
           </State>
           <State>
-            <id>JBoss Seam issues</id>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+          <State>
+            <id>DOM issuesJavaScript</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>SQL</id>
+          </State>
+          <State>
+            <id>Spring</id>
+          </State>
+          <State>
+            <id>Spring MVCSpring</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Android</id>
+            <id>JSUnfilteredForInLoop</id>
           </State>
         </selected-state>
       </profile-state>
@@ -317,31 +395,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -490,7 +543,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
+              <option name="myItemId" value="videoHistory" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -516,111 +569,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tiles" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="file" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventStatistics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventLog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
+              <option name="myItemId" value="resource" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -647,32 +596,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="dashboard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="critical" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -716,137 +639,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alarm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vxg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="googlemap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="googlemap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -894,7 +687,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="template" />
+              <option name="myItemId" value="popup" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -924,7 +717,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
+              <option name="myItemId" value="resource" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -951,10 +744,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="page" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1006,15 +795,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="page" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="area" />
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1036,47 +817,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ISAVER.ADMIN" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
+              <option name="myItemId" value="bg" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1091,6 +836,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="conf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tiles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1130,8 +879,87 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="properties" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="message" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ISAVER.ADMIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="context" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="ISAVER.ADMIN">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1141,7 +969,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/commons-lang3-3.7.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../admin_v1.7.4" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -1150,33 +978,33 @@
     <property name="FullScreen" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="302" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="304" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="300" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="304" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="309" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="57" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="120" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="117" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="750" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="746" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="231" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="230" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="231" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="234" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="227" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="231" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="235" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="242" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="679" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="665" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/DEV/01.projects/jabber_admin_v1.4/JABBER.ADMIN/web/WEB-INF/views/user/detail.jsp" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/DEV/01.Projects/2.isaver/0.isaver_admin/trunk/ISAVER.ADMIN/src/com/icent/isaver/admin/svcImpl/VideoHistorySvcImpl.java" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -1188,31 +1016,63 @@
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="isaver.admin" />
+    <property name="JavaScriptLanguageLevel" value="JSX" />
+    <property name="js.eslint.nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="js.eslint.eslintPackage" value="" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\css" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\lib" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\src\com\icent\isaver\admin\util" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\library\googlemap\images" />
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN\web\assets\test\css" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\web\assets\css" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\web\assets\images\bg" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\conf\properties\message" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\web\WEB-INF\views\authorization" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY\src\com\icent\isaver\repository\mapper\base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin_v1.6\ISAVER.ADMIN\web\assets\fonts" />
-      <recent name="$PROJECT_DIR$/lib" />
-      <recent name="D:\DEV\01.projects\jabber_admin_v1.4\JABBER.ADMIN\web\WEB-INF\views\popup" />
-      <recent name="D:\DEV\01.projects\jabber_admin_v1.4\JABBER.ADMIN\web\WEB-INF\views\organization" />
-      <recent name="D:\DEV\01.projects\jabber_admin_v1.2\JABBER.ADMIN\web\assets\css\jqueryui\images" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY\lib\jackson-2.9.7" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\lib" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\lib\tiles" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\lib\redis" />
+      <recent name="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\lib\hasp" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.icent.isaver.repository.dao.base" />
       <recent name="com.icent.isaver.admin.util" />
       <recent name="com.icent.isaver.admin.svcImpl" />
       <recent name="com.icent.isaver.admin.svc" />
-      <recent name="com.icent.isaver.admin.ctrl" />
       <recent name="com.icent.isaver.repository.bean" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7.0.67">
+    <configuration default="false" name="test02" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="psb.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="ISAVER.ADMIN" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="psb" />
+      <option name="MAIN_CLASS_NAME" value="psb.test02" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea -Dfile.encoding=UTF-8" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
       <deployment />
       <server-settings />
@@ -1478,9 +1338,35 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
+    <configuration default="false" name="test01" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="psb.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="ISAVER.ADMIN" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="psb" />
+      <option name="MAIN_CLASS_NAME" value="psb.test01" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea -Dfile.encoding=UTF-8" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
     <configuration default="false" name="Tomcat 7.0.67" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.50" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="OPEN_IN_BROWSER" value="false" />
-      <option name="COMMON_VM_ARGUMENTS" value="-Dweb.execute.mode=dev" />
+      <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=UTF-8" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
@@ -1493,7 +1379,7 @@
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="Tomcat_7_0_54_JABBER_ADMIN_3" />
         <option name="HTTP_PORT" value="80" />
-        <option name="JNDI_PORT" value="1106" />
+        <option name="JNDI_PORT" value="1107" />
       </server-settings>
       <predefined_log_file id="Tomcat" enabled="true" />
       <predefined_log_file id="Tomcat Catalina" enabled="true" />
@@ -1559,9 +1445,16 @@
         </option>
       </method>
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7.0.67" />
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.test01" />
+      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7.0.67" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.test02" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.test02" />
+      </list>
+    </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -1581,24 +1474,24 @@
     <option name="myMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN" />
-          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN" />
+          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN" />
+          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN" />
         </SvnCopyRootSimple>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN.RESPOSIORY" />
-          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN.RESPOSIORY" />
+          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY" />
+          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY" />
         </SvnCopyRootSimple>
       </list>
     </option>
     <option name="myMoreRealMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN" />
-          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN" />
+          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN" />
+          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN" />
         </SvnCopyRootSimple>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN.RESPOSIORY" />
-          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\admin_v1.7_trunk\ISAVER.ADMIN.RESPOSIORY" />
+          <option name="myVcsRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY" />
+          <option name="myCopyRoot" value="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN.RESPOSIORY" />
         </SvnCopyRootSimple>
       </list>
     </option>
@@ -1606,7 +1499,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="" />
-      <changelist id="5b7b42a5-4b20-405c-9945-df78f172c70b" name="config" comment="" />
+      <changelist id="bfd984ae-440a-4918-a3ff-4deb8a509023" name="config" comment="" />
       <created>1406254347802</created>
       <option name="number" value="Default" />
       <updated>1406254347802</updated>
@@ -2318,307 +2211,601 @@
       <workItem from="1522382638460" duration="69000" />
       <workItem from="1522728819647" duration="3092000" />
       <workItem from="1522734269612" duration="2618000" />
-      <workItem from="1522737129734" duration="3979000" />
+      <workItem from="1522737129734" duration="4774000" />
+      <workItem from="1522800462133" duration="9332000" />
+      <workItem from="1522887009005" duration="2998000" />
+      <workItem from="1522892262436" duration="13000" />
+      <workItem from="1522892444794" duration="105000" />
+      <workItem from="1522892566580" duration="1722000" />
+      <workItem from="1522894314859" duration="578000" />
+      <workItem from="1522894915021" duration="110000" />
+      <workItem from="1522895050735" duration="3915000" />
+      <workItem from="1523233736045" duration="1843000" />
+      <workItem from="1523238801463" duration="344000" />
+      <workItem from="1523246300868" duration="5855000" />
+      <workItem from="1523255344523" duration="57000" />
+      <workItem from="1523334280097" duration="191000" />
+      <workItem from="1523334993752" duration="17000" />
+      <workItem from="1523410959567" duration="192000" />
+      <workItem from="1523411596756" duration="614000" />
+      <workItem from="1523437506261" duration="144000" />
+      <workItem from="1523495416422" duration="666000" />
+      <workItem from="1523606317977" duration="3713000" />
+      <workItem from="1523840096442" duration="25501000" />
+      <workItem from="1523924932125" duration="6747000" />
+      <workItem from="1523932377828" duration="10389000" />
+      <workItem from="1524011790954" duration="5835000" />
+      <workItem from="1524023495829" duration="601000" />
+      <workItem from="1524473472685" duration="349000" />
+      <workItem from="1524636199373" duration="1237000" />
+      <workItem from="1524637557152" duration="127000" />
+      <workItem from="1524703482699" duration="5196000" />
+      <workItem from="1524709668697" duration="17000" />
+      <workItem from="1524734490696" duration="2039000" />
+      <workItem from="1524792835043" duration="735000" />
+      <workItem from="1524794745315" duration="6451000" />
+      <workItem from="1524812289746" duration="5099000" />
+      <workItem from="1525053790725" duration="1205000" />
+      <workItem from="1525308369282" duration="1320000" />
+      <workItem from="1525314325978" duration="1710000" />
+      <workItem from="1525322355481" duration="7591000" />
+      <workItem from="1525392989648" duration="1400000" />
+      <workItem from="1525416496150" duration="2794000" />
+      <workItem from="1525739094308" duration="12690000" />
+      <workItem from="1525759342438" duration="32000" />
+      <workItem from="1525759699923" duration="603000" />
+      <workItem from="1525824307549" duration="3036000" />
+      <workItem from="1525912603647" duration="175000" />
+      <workItem from="1525912819222" duration="1000000" />
+      <workItem from="1525914056807" duration="1059000" />
+      <workItem from="1525999859257" duration="59000" />
+      <workItem from="1526450356304" duration="1225000" />
+      <workItem from="1526451796138" duration="1096000" />
+      <workItem from="1526454355642" duration="314000" />
+      <workItem from="1526517645026" duration="6227000" />
+      <workItem from="1526602616115" duration="591000" />
+      <workItem from="1526622115353" duration="87000" />
+      <workItem from="1526971883806" duration="779000" />
+      <workItem from="1527036239869" duration="4102000" />
+      <workItem from="1527125958534" duration="2018000" />
+      <workItem from="1527138869961" duration="2633000" />
+      <workItem from="1527552806070" duration="1990000" />
+      <workItem from="1527572112288" duration="7179000" />
+      <workItem from="1527638318310" duration="10622000" />
+      <workItem from="1527670451677" duration="705000" />
+      <workItem from="1527726604689" duration="14492000" />
+      <workItem from="1527835275421" duration="2918000" />
+      <workItem from="1528332088624" duration="1580000" />
+      <workItem from="1528352035186" duration="2836000" />
+      <workItem from="1528417021172" duration="11701000" />
+      <workItem from="1528675534829" duration="4621000" />
+      <workItem from="1528680501361" duration="15411000" />
+      <workItem from="1528762088120" duration="7589000" />
+      <workItem from="1528770837259" duration="12308000" />
+      <workItem from="1528936291127" duration="14800000" />
+      <workItem from="1529021744830" duration="13394000" />
+      <workItem from="1529281927437" duration="25353000" />
+      <workItem from="1529366302794" duration="13513000" />
+      <workItem from="1529453187413" duration="21792000" />
+      <workItem from="1529482493971" duration="2064000" />
+      <workItem from="1529539660645" duration="23636000" />
+      <workItem from="1529625659281" duration="13593000" />
+      <workItem from="1529972727626" duration="13259000" />
+      <workItem from="1530058232482" duration="2271000" />
+      <workItem from="1530062320126" duration="7084000" />
+      <workItem from="1530075334537" duration="8515000" />
+      <workItem from="1530144916708" duration="2805000" />
+      <workItem from="1530230495380" duration="3038000" />
+      <workItem from="1530239779191" duration="2433000" />
+      <workItem from="1530251894275" duration="12008000" />
+      <workItem from="1530490404290" duration="1906000" />
+      <workItem from="1530498362775" duration="10769000" />
+      <workItem from="1530521714708" duration="646000" />
+      <workItem from="1530582061166" duration="547000" />
+      <workItem from="1530591186416" duration="76000" />
+      <workItem from="1530591329598" duration="53000" />
+      <workItem from="1530592129454" duration="1401000" />
+      <workItem from="1530662393311" duration="12071000" />
+      <workItem from="1530694003434" duration="693000" />
+      <workItem from="1530749389364" duration="8056000" />
+      <workItem from="1530768093574" duration="3743000" />
+      <workItem from="1530854749499" duration="956000" />
+      <workItem from="1531094617778" duration="797000" />
+      <workItem from="1531097037754" duration="1815000" />
+      <workItem from="1531100451121" duration="19772000" />
+      <workItem from="1531181397057" duration="20126000" />
+      <workItem from="1531215270207" duration="151000" />
+      <workItem from="1531267418763" duration="14351000" />
+      <workItem from="1531291065357" duration="8429000" />
+      <workItem from="1531353723868" duration="1343000" />
+      <workItem from="1531359938511" duration="10839000" />
+      <workItem from="1531699327227" duration="1312000" />
+      <workItem from="1531702894185" duration="119000" />
+      <workItem from="1531703580644" duration="1453000" />
+      <workItem from="1531723042662" duration="5057000" />
+      <workItem from="1531787344576" duration="4647000" />
+      <workItem from="1531801728889" duration="425000" />
+      <workItem from="1531812504162" duration="2178000" />
+      <workItem from="1531872317332" duration="1952000" />
+      <workItem from="1531879720515" duration="5384000" />
+      <workItem from="1531960202787" duration="5254000" />
+      <workItem from="1532046099515" duration="3793000" />
+      <workItem from="1532051274395" duration="6911000" />
+      <workItem from="1532304394503" duration="11703000" />
+      <workItem from="1532390727665" duration="2776000" />
+      <workItem from="1532411565003" duration="7095000" />
+      <workItem from="1532476989303" duration="13327000" />
+      <workItem from="1532563296178" duration="5844000" />
+      <workItem from="1532650208827" duration="923000" />
+      <workItem from="1532664487213" duration="887000" />
+      <workItem from="1532665824790" duration="7319000" />
+      <workItem from="1532681642119" duration="6000" />
+      <workItem from="1532681769479" duration="51000" />
+      <workItem from="1533012030719" duration="361000" />
+      <workItem from="1533012885834" duration="917000" />
+      <workItem from="1533018063827" duration="165000" />
+      <workItem from="1533019038193" duration="1720000" />
+      <workItem from="1533021253436" duration="1204000" />
+      <workItem from="1533083229982" duration="13813000" />
+      <workItem from="1533169048680" duration="16011000" />
+      <workItem from="1533255164420" duration="6968000" />
+      <workItem from="1533514646668" duration="6634000" />
+      <workItem from="1533600648371" duration="7464000" />
+      <workItem from="1533686470440" duration="1935000" />
+      <workItem from="1533773037624" duration="3662000" />
+      <workItem from="1533859220993" duration="2134000" />
+      <workItem from="1534119165272" duration="624000" />
+      <workItem from="1534133775614" duration="932000" />
+      <workItem from="1534144076652" duration="181000" />
+      <workItem from="1534205848353" duration="1200000" />
+      <workItem from="1534208074805" duration="1233000" />
+      <workItem from="1534228725483" duration="1425000" />
+      <workItem from="1534378828268" duration="9455000" />
+      <workItem from="1534400220922" duration="305000" />
+      <workItem from="1534464503469" duration="3003000" />
+      <workItem from="1534484581096" duration="815000" />
+      <workItem from="1534731688470" duration="79000" />
+      <workItem from="1534731849511" duration="1383000" />
+      <workItem from="1534824620798" duration="215000" />
+      <workItem from="1534914793238" duration="354000" />
+      <workItem from="1534984290819" duration="9111000" />
+      <workItem from="1535328602249" duration="1225000" />
+      <workItem from="1535332940037" duration="737000" />
+      <workItem from="1535502516286" duration="1544000" />
+      <workItem from="1535508792975" duration="161000" />
+      <workItem from="1535509417355" duration="427000" />
+      <workItem from="1535509888352" duration="6502000" />
+      <workItem from="1535592709494" duration="9722000" />
+      <workItem from="1535612112288" duration="2509000" />
+      <workItem from="1535673751133" duration="7129000" />
+      <workItem from="1535697287107" duration="1684000" />
+      <workItem from="1535935786576" duration="3554000" />
+      <workItem from="1536106174099" duration="6233000" />
+      <workItem from="1536225036167" duration="1542000" />
+      <workItem from="1536283342305" duration="2778000" />
+      <workItem from="1536294199532" duration="260000" />
+      <workItem from="1536655279437" duration="1362000" />
+      <workItem from="1536715612308" duration="469000" />
+      <workItem from="1536716806912" duration="3293000" />
+      <workItem from="1536738460436" duration="2759000" />
+      <workItem from="1536742653923" duration="1107000" />
+      <workItem from="1536883806923" duration="10810000" />
+      <workItem from="1537143944224" duration="10474000" />
+      <workItem from="1537245020456" duration="1946000" />
+      <workItem from="1537259083252" duration="1053000" />
+      <workItem from="1537315421400" duration="407000" />
+      <workItem from="1537320469345" duration="500000" />
+      <workItem from="1537321482039" duration="1440000" />
+      <workItem from="1537403184818" duration="7928000" />
+      <workItem from="1537488619349" duration="19378000" />
+      <workItem from="1538094581343" duration="8544000" />
+      <workItem from="1538106212668" duration="6056000" />
+      <workItem from="1538113704519" duration="6505000" />
+      <workItem from="1538120621208" duration="714000" />
+      <workItem from="1538352856191" duration="9159000" />
+      <workItem from="1538375391486" duration="117000" />
+      <workItem from="1538375971574" duration="8385000" />
+      <workItem from="1538439260770" duration="2474000" />
+      <workItem from="1538461390921" duration="393000" />
+      <workItem from="1538614770436" duration="1012000" />
+      <workItem from="1538616776718" duration="1361000" />
+      <workItem from="1538697559462" duration="14961000" />
+      <workItem from="1538958539763" duration="15111000" />
+      <workItem from="1539131293782" duration="1924000" />
+      <workItem from="1539135374399" duration="2476000" />
+      <workItem from="1539151540976" duration="5103000" />
+      <workItem from="1539216432059" duration="15588000" />
+      <workItem from="1539304684458" duration="79000" />
+      <workItem from="1539310376874" duration="2838000" />
+      <workItem from="1539319995967" duration="649000" />
+      <workItem from="1539321702670" duration="1068000" />
+      <workItem from="1539326906917" duration="1789000" />
+      <workItem from="1539561820091" duration="6561000" />
+      <workItem from="1539592377009" duration="1340000" />
+      <workItem from="1539647800125" duration="8514000" />
+      <workItem from="1539734726404" duration="1215000" />
+      <workItem from="1539755780343" duration="390000" />
+      <workItem from="1540256804687" duration="2242000" />
+      <workItem from="1540428170657" duration="15230000" />
+      <workItem from="1540513778394" duration="972000" />
+      <workItem from="1540514917308" duration="277000" />
+      <workItem from="1540515361745" duration="7269000" />
+      <workItem from="1540525580701" duration="12108000" />
+      <workItem from="1540540292324" duration="3573000" />
+      <workItem from="1540771647733" duration="1408000" />
+      <workItem from="1540774352175" duration="254000" />
+      <workItem from="1540775730804" duration="41000" />
+      <workItem from="1540778056298" duration="206000" />
+      <workItem from="1540796790093" duration="5192000" />
+      <workItem from="1540862048270" duration="42000" />
+      <workItem from="1540862328213" duration="1175000" />
+      <workItem from="1540863762735" duration="3470000" />
+      <workItem from="1540876686208" duration="4854000" />
+      <workItem from="1540886845890" duration="3169000" />
+      <workItem from="1540890563562" duration="15000" />
+      <workItem from="1540949087998" duration="7943000" />
+      <workItem from="1541033541383" duration="1212000" />
+      <workItem from="1541051358242" duration="1658000" />
+      <workItem from="1541139970412" duration="668000" />
+      <workItem from="1541462708689" duration="539000" />
+      <workItem from="1541479041016" duration="3163000" />
+      <workItem from="1541492910140" duration="887000" />
+      <workItem from="1541549654706" duration="19767000" />
+      <workItem from="1541577208193" duration="1796000" />
+      <workItem from="1541636396952" duration="18062000" />
+      <workItem from="1541721891466" duration="10230000" />
+      <workItem from="1541741388590" duration="1222000" />
+      <workItem from="1541747797073" duration="665000" />
+      <workItem from="1541752803476" duration="486000" />
+      <workItem from="1541753425788" duration="46000" />
+      <workItem from="1541824609082" duration="302000" />
+      <workItem from="1541824973628" duration="203000" />
+      <workItem from="1541826474502" duration="1554000" />
+      <workItem from="1541828860972" duration="2247000" />
+      <workItem from="1541905357018" duration="451000" />
+      <workItem from="1541981912309" duration="1646000" />
+      <workItem from="1541995629187" duration="4286000" />
+      <workItem from="1542001509937" duration="1542000" />
+      <workItem from="1542003312489" duration="869000" />
+      <workItem from="1542005848680" duration="23000" />
+      <workItem from="1542006047976" duration="2407000" />
+      <workItem from="1542179832420" duration="1086000" />
+      <workItem from="1542185684441" duration="25000" />
+      <workItem from="1542259459485" duration="978000" />
+      <workItem from="1542260496495" duration="222000" />
+      <workItem from="1542328440147" duration="4954000" />
+      <workItem from="1542333816707" duration="2021000" />
+      <workItem from="1542342049204" duration="2280000" />
+      <workItem from="1542347090797" duration="138000" />
+      <workItem from="1542354317533" duration="1493000" />
+      <workItem from="1542586082954" duration="7854000" />
+      <workItem from="1542672787270" duration="10537000" />
+      <workItem from="1542758612893" duration="14529000" />
+      <workItem from="1542847044227" duration="6273000" />
+      <workItem from="1542932164094" duration="3141000" />
+      <workItem from="1543277635556" duration="3628000" />
+      <workItem from="1543370001433" duration="8093000" />
+      <workItem from="1543451715584" duration="7971000" />
+      <workItem from="1543470473894" duration="4304000" />
+      <workItem from="1543474839643" duration="6110000" />
+      <workItem from="1543537070373" duration="18682000" />
+      <workItem from="1543905784403" duration="23000" />
+      <workItem from="1543990406068" duration="2813000" />
+      <workItem from="1544055585474" duration="22638000" />
+      <workItem from="1544140897789" duration="9684000" />
+      <workItem from="1544400736213" duration="11550000" />
+      <workItem from="1544486941304" duration="20740000" />
+      <workItem from="1544573220278" duration="5139000" />
+      <workItem from="1544581298681" duration="691000" />
+      <workItem from="1544588643902" duration="401000" />
+      <workItem from="1544598085356" duration="6942000" />
+      <workItem from="1544660110229" duration="864000" />
+      <workItem from="1544661013566" duration="12497000" />
+      <workItem from="1544758167846" duration="13823000" />
+      <workItem from="1545005245165" duration="15638000" />
+      <workItem from="1545091562544" duration="26219000" />
+      <workItem from="1545177813619" duration="18575000" />
+      <workItem from="1545264969899" duration="7755000" />
     </task>
-    <task id="LOCAL-00265">
-      <created>1503981873103</created>
-      <option name="number" value="00265" />
+    <task id="LOCAL-00368">
+      <created>1533529513119</created>
+      <option name="number" value="00368" />
       <option name="project" value="LOCAL" />
-      <updated>1503981873103</updated>
+      <updated>1533529513122</updated>
     </task>
-    <task id="LOCAL-00266">
-      <created>1504510205107</created>
-      <option name="number" value="00266" />
+    <task id="LOCAL-00369">
+      <created>1533603194117</created>
+      <option name="number" value="00369" />
       <option name="project" value="LOCAL" />
-      <updated>1504510205120</updated>
+      <updated>1533603194118</updated>
     </task>
-    <task id="LOCAL-00267">
-      <created>1504665693110</created>
-      <option name="number" value="00267" />
+    <task id="LOCAL-00370">
+      <created>1533618298100</created>
+      <option name="number" value="00370" />
       <option name="project" value="LOCAL" />
-      <updated>1504665693117</updated>
+      <updated>1533618298100</updated>
     </task>
-    <task id="LOCAL-00268">
-      <created>1504854304100</created>
-      <option name="number" value="00268" />
+    <task id="LOCAL-00371">
+      <created>1534134481211</created>
+      <option name="number" value="00371" />
       <option name="project" value="LOCAL" />
-      <updated>1504854304103</updated>
+      <updated>1534134481212</updated>
     </task>
-    <task id="LOCAL-00269">
-      <created>1505201295105</created>
-      <option name="number" value="00269" />
+    <task id="LOCAL-00372">
+      <created>1534144225105</created>
+      <option name="number" value="00372" />
       <option name="project" value="LOCAL" />
-      <updated>1505201295107</updated>
+      <updated>1534144225108</updated>
     </task>
-    <task id="LOCAL-00270">
-      <created>1505365789101</created>
-      <option name="number" value="00270" />
+    <task id="LOCAL-00373">
+      <created>1534378990141</created>
+      <option name="number" value="00373" />
       <option name="project" value="LOCAL" />
-      <updated>1505365789101</updated>
+      <updated>1534378990144</updated>
     </task>
-    <task id="LOCAL-00271">
-      <created>1505452299100</created>
-      <option name="number" value="00271" />
+    <task id="LOCAL-00374">
+      <created>1534480200100</created>
+      <option name="number" value="00374" />
       <option name="project" value="LOCAL" />
-      <updated>1505452299100</updated>
+      <updated>1534480200100</updated>
     </task>
-    <task id="LOCAL-00272">
-      <created>1506059422101</created>
-      <option name="number" value="00272" />
+    <task id="LOCAL-00375">
+      <created>1534824834126</created>
+      <option name="number" value="00375" />
       <option name="project" value="LOCAL" />
-      <updated>1506059422101</updated>
+      <updated>1534824834129</updated>
     </task>
-    <task id="LOCAL-00273" summary="알림센터 전체선택 버그 수정">
-      <created>1509429257104</created>
-      <option name="number" value="00273" />
+    <task id="LOCAL-00376">
+      <created>1535502674119</created>
+      <option name="number" value="00376" />
       <option name="project" value="LOCAL" />
-      <updated>1509429257104</updated>
+      <updated>1535502674120</updated>
     </task>
-    <task id="LOCAL-00274" summary="-사용자관리 수정&#10; : Super 계정 Hide처리">
-      <created>1512620682100</created>
-      <option name="number" value="00274" />
+    <task id="LOCAL-00377">
+      <created>1535521599126</created>
+      <option name="number" value="00377" />
       <option name="project" value="LOCAL" />
-      <updated>1512620682103</updated>
+      <updated>1535521599127</updated>
     </task>
-    <task id="LOCAL-00275">
-      <created>1517448512100</created>
-      <option name="number" value="00275" />
+    <task id="LOCAL-00378">
+      <created>1535619338109</created>
+      <option name="number" value="00378" />
       <option name="project" value="LOCAL" />
-      <updated>1517448512100</updated>
+      <updated>1535619338114</updated>
     </task>
-    <task id="LOCAL-00276">
-      <created>1517448520100</created>
-      <option name="number" value="00276" />
+    <task id="LOCAL-00379">
+      <created>1535697449118</created>
+      <option name="number" value="00379" />
       <option name="project" value="LOCAL" />
-      <updated>1517448520100</updated>
+      <updated>1535697449121</updated>
     </task>
-    <task id="LOCAL-00277">
-      <created>1517448544100</created>
-      <option name="number" value="00277" />
+    <task id="LOCAL-00380">
+      <created>1536225328121</created>
+      <option name="number" value="00380" />
       <option name="project" value="LOCAL" />
-      <updated>1517448544100</updated>
+      <updated>1536225328125</updated>
     </task>
-    <task id="LOCAL-00278">
-      <created>1517450242182</created>
-      <option name="number" value="00278" />
+    <task id="LOCAL-00381">
+      <created>1536718542100</created>
+      <option name="number" value="00381" />
       <option name="project" value="LOCAL" />
-      <updated>1517450242191</updated>
+      <updated>1536718542100</updated>
     </task>
-    <task id="LOCAL-00279">
-      <created>1517450249102</created>
-      <option name="number" value="00279" />
+    <task id="LOCAL-00382">
+      <created>1536738618100</created>
+      <option name="number" value="00382" />
       <option name="project" value="LOCAL" />
-      <updated>1517450249102</updated>
+      <updated>1536738618100</updated>
     </task>
-    <task id="LOCAL-00280">
-      <created>1517450503100</created>
-      <option name="number" value="00280" />
+    <task id="LOCAL-00383">
+      <created>1536743701111</created>
+      <option name="number" value="00383" />
       <option name="project" value="LOCAL" />
-      <updated>1517450503100</updated>
+      <updated>1536743701113</updated>
     </task>
-    <task id="LOCAL-00281">
-      <created>1517452921100</created>
-      <option name="number" value="00281" />
+    <task id="LOCAL-00384">
+      <created>1536887955104</created>
+      <option name="number" value="00384" />
       <option name="project" value="LOCAL" />
-      <updated>1517452921100</updated>
+      <updated>1536887955105</updated>
     </task>
-    <task id="LOCAL-00282">
-      <created>1517462452100</created>
-      <option name="number" value="00282" />
+    <task id="LOCAL-00385">
+      <created>1536888793100</created>
+      <option name="number" value="00385" />
       <option name="project" value="LOCAL" />
-      <updated>1517462452100</updated>
+      <updated>1536888793100</updated>
     </task>
-    <task id="LOCAL-00283">
-      <created>1517462467100</created>
-      <option name="number" value="00283" />
+    <task id="LOCAL-00386">
+      <created>1537259532113</created>
+      <option name="number" value="00386" />
       <option name="project" value="LOCAL" />
-      <updated>1517462467100</updated>
+      <updated>1537259532115</updated>
     </task>
-    <task id="LOCAL-00284">
-      <created>1517560041130</created>
-      <option name="number" value="00284" />
+    <task id="LOCAL-00387">
+      <created>1538120395107</created>
+      <option name="number" value="00387" />
       <option name="project" value="LOCAL" />
-      <updated>1517560041136</updated>
+      <updated>1538120395109</updated>
     </task>
-    <task id="LOCAL-00285">
-      <created>1517908000103</created>
-      <option name="number" value="00285" />
+    <task id="LOCAL-00388" summary="* Dashboard&#10; - 센서정보 표시 (센서상태 표시)&#10; - 무시영역 펜스 적용&#10;* 이벤트통계&#10; - 구역선택시 사용 이벤트외 숨김처리">
+      <created>1538383694102</created>
+      <option name="number" value="00388" />
       <option name="project" value="LOCAL" />
-      <updated>1517908000105</updated>
+      <updated>1538383694103</updated>
     </task>
-    <task id="LOCAL-00286">
-      <created>1517908018100</created>
-      <option name="number" value="00286" />
+    <task id="LOCAL-00389">
+      <created>1538441293112</created>
+      <option name="number" value="00389" />
       <option name="project" value="LOCAL" />
-      <updated>1517908018100</updated>
+      <updated>1538441293113</updated>
     </task>
-    <task id="LOCAL-00287" summary="UI 수정사항 반영">
-      <created>1517987115107</created>
-      <option name="number" value="00287" />
+    <task id="LOCAL-00390">
+      <created>1538461801130</created>
+      <option name="number" value="00390" />
       <option name="project" value="LOCAL" />
-      <updated>1517987115109</updated>
+      <updated>1538461801131</updated>
     </task>
-    <task id="LOCAL-00288" summary="- 임계치알림 관리 상세 수정&#10; : 알림대상 장치 설정에 감지장치, 대상장치의 selectbox 리스트 변경">
-      <created>1517991502100</created>
-      <option name="number" value="00288" />
+    <task id="LOCAL-00391" summary="* 라이센스 적용">
+      <created>1539137723116</created>
+      <option name="number" value="00391" />
       <option name="project" value="LOCAL" />
-      <updated>1517991502100</updated>
+      <updated>1539137723119</updated>
     </task>
-    <task id="LOCAL-00289">
-      <created>1517992797102</created>
-      <option name="number" value="00289" />
+    <task id="LOCAL-00392">
+      <created>1539241666110</created>
+      <option name="number" value="00392" />
       <option name="project" value="LOCAL" />
-      <updated>1517992797105</updated>
+      <updated>1539241666111</updated>
     </task>
-    <task id="LOCAL-00290">
-      <created>1518065522100</created>
-      <option name="number" value="00290" />
+    <task id="LOCAL-00393">
+      <created>1539314565106</created>
+      <option name="number" value="00393" />
       <option name="project" value="LOCAL" />
-      <updated>1518065522100</updated>
+      <updated>1539314565107</updated>
     </task>
-    <task id="LOCAL-00291">
-      <created>1518151592103</created>
-      <option name="number" value="00291" />
+    <task id="LOCAL-00394">
+      <created>1539593129119</created>
+      <option name="number" value="00394" />
       <option name="project" value="LOCAL" />
-      <updated>1518151592104</updated>
+      <updated>1539593129120</updated>
     </task>
-    <task id="LOCAL-00292">
-      <created>1518157090103</created>
-      <option name="number" value="00292" />
+    <task id="LOCAL-00395">
+      <created>1539655562117</created>
+      <option name="number" value="00395" />
       <option name="project" value="LOCAL" />
-      <updated>1518157090104</updated>
+      <updated>1539655562119</updated>
     </task>
-    <task id="LOCAL-00293">
-      <created>1519621255115</created>
-      <option name="number" value="00293" />
+    <task id="LOCAL-00396">
+      <created>1540540649111</created>
+      <option name="number" value="00396" />
       <option name="project" value="LOCAL" />
-      <updated>1519621255118</updated>
+      <updated>1540540649113</updated>
     </task>
-    <task id="LOCAL-00294">
-      <created>1519691513113</created>
-      <option name="number" value="00294" />
+    <task id="LOCAL-00397">
+      <created>1540890255107</created>
+      <option name="number" value="00397" />
       <option name="project" value="LOCAL" />
-      <updated>1519691513114</updated>
+      <updated>1540890255107</updated>
     </task>
-    <task id="LOCAL-00295">
-      <created>1519779188105</created>
-      <option name="number" value="00295" />
+    <task id="LOCAL-00398">
+      <created>1540971532118</created>
+      <option name="number" value="00398" />
       <option name="project" value="LOCAL" />
-      <updated>1519779188119</updated>
+      <updated>1540971532119</updated>
     </task>
-    <task id="LOCAL-00296">
-      <created>1519785779774</created>
-      <option name="number" value="00296" />
+    <task id="LOCAL-00399">
+      <created>1541462953242</created>
+      <option name="number" value="00399" />
       <option name="project" value="LOCAL" />
-      <updated>1519785779775</updated>
+      <updated>1541462953250</updated>
     </task>
-    <task id="LOCAL-00297">
-      <created>1519808905190</created>
-      <option name="number" value="00297" />
+    <task id="LOCAL-00400">
+      <created>1541491954100</created>
+      <option name="number" value="00400" />
       <option name="project" value="LOCAL" />
-      <updated>1519808905190</updated>
+      <updated>1541491954100</updated>
     </task>
-    <task id="LOCAL-00298">
-      <created>1519808978104</created>
-      <option name="number" value="00298" />
+    <task id="LOCAL-00401">
+      <created>1541577150106</created>
+      <option name="number" value="00401" />
       <option name="project" value="LOCAL" />
-      <updated>1519808978104</updated>
+      <updated>1541577150108</updated>
     </task>
-    <task id="LOCAL-00299">
-      <created>1519968385100</created>
-      <option name="number" value="00299" />
+    <task id="LOCAL-00402">
+      <created>1541577246100</created>
+      <option name="number" value="00402" />
       <option name="project" value="LOCAL" />
-      <updated>1519968385100</updated>
+      <updated>1541577246100</updated>
     </task>
-    <task id="LOCAL-00300">
-      <created>1519973308100</created>
-      <option name="number" value="00300" />
+    <task id="LOCAL-00403">
+      <created>1541662265101</created>
+      <option name="number" value="00403" />
       <option name="project" value="LOCAL" />
-      <updated>1519973308100</updated>
+      <updated>1541662265104</updated>
     </task>
-    <task id="LOCAL-00301">
-      <created>1519976707100</created>
-      <option name="number" value="00301" />
+    <task id="LOCAL-00404">
+      <created>1541742632109</created>
+      <option name="number" value="00404" />
       <option name="project" value="LOCAL" />
-      <updated>1519976707100</updated>
+      <updated>1541742632111</updated>
     </task>
-    <task id="LOCAL-00302">
-      <created>1520212421100</created>
-      <option name="number" value="00302" />
+    <task id="LOCAL-00405">
+      <created>1541983810114</created>
+      <option name="number" value="00405" />
       <option name="project" value="LOCAL" />
-      <updated>1520212421100</updated>
+      <updated>1541983810115</updated>
     </task>
-    <task id="LOCAL-00303">
-      <created>1520212434100</created>
-      <option name="number" value="00303" />
+    <task id="LOCAL-00406">
+      <created>1542003050100</created>
+      <option name="number" value="00406" />
       <option name="project" value="LOCAL" />
-      <updated>1520212434100</updated>
+      <updated>1542003050100</updated>
     </task>
-    <task id="LOCAL-00304">
-      <created>1520399797140</created>
-      <option name="number" value="00304" />
+    <task id="LOCAL-00407">
+      <created>1542011298374</created>
+      <option name="number" value="00407" />
       <option name="project" value="LOCAL" />
-      <updated>1520399797145</updated>
+      <updated>1542011298376</updated>
     </task>
-    <task id="LOCAL-00305">
-      <created>1520581914106</created>
-      <option name="number" value="00305" />
+    <task id="LOCAL-00408">
+      <created>1542354377100</created>
+      <option name="number" value="00408" />
       <option name="project" value="LOCAL" />
-      <updated>1520581914110</updated>
+      <updated>1542354377100</updated>
     </task>
-    <task id="LOCAL-00306">
-      <created>1520832514245</created>
-      <option name="number" value="00306" />
+    <task id="LOCAL-00409">
+      <created>1542354414109</created>
+      <option name="number" value="00409" />
       <option name="project" value="LOCAL" />
-      <updated>1520832514246</updated>
+      <updated>1542354414109</updated>
     </task>
-    <task id="LOCAL-00307">
-      <created>1520836920100</created>
-      <option name="number" value="00307" />
+    <task id="LOCAL-00410">
+      <created>1542788932100</created>
+      <option name="number" value="00410" />
       <option name="project" value="LOCAL" />
-      <updated>1520836920100</updated>
+      <updated>1542788932100</updated>
     </task>
-    <task id="LOCAL-00308">
-      <created>1520899707132</created>
-      <option name="number" value="00308" />
+    <task id="LOCAL-00411">
+      <created>1542853570161</created>
+      <option name="number" value="00411" />
       <option name="project" value="LOCAL" />
-      <updated>1520899707148</updated>
+      <updated>1542853570163</updated>
     </task>
-    <task id="LOCAL-00309">
-      <created>1521596151119</created>
-      <option name="number" value="00309" />
+    <task id="LOCAL-00412">
+      <created>1543550065106</created>
+      <option name="number" value="00412" />
       <option name="project" value="LOCAL" />
-      <updated>1521596151121</updated>
+      <updated>1543550065108</updated>
     </task>
-    <task id="LOCAL-00310">
-      <created>1521695374117</created>
-      <option name="number" value="00310" />
+    <task id="LOCAL-00413">
+      <created>1543990538169</created>
+      <option name="number" value="00413" />
       <option name="project" value="LOCAL" />
-      <updated>1521695374118</updated>
+      <updated>1543990538170</updated>
     </task>
-    <task id="LOCAL-00311">
-      <created>1521699767100</created>
-      <option name="number" value="00311" />
+    <task id="LOCAL-00414">
+      <created>1544420696121</created>
+      <option name="number" value="00414" />
       <option name="project" value="LOCAL" />
-      <updated>1521699767100</updated>
+      <updated>1544420696124</updated>
     </task>
-    <task id="LOCAL-00312">
-      <created>1521778556130</created>
-      <option name="number" value="00312" />
+    <task id="LOCAL-00415">
+      <created>1544426016100</created>
+      <option name="number" value="00415" />
       <option name="project" value="LOCAL" />
-      <updated>1521778556133</updated>
+      <updated>1544426016100</updated>
     </task>
-    <task id="LOCAL-00313" summary="GS 인증 결함 사항 수정&#10;- xss filter 적용&#10;- sql injection&#10;- 입력필드 제한&#10;- 이벤트 통계 엑셀 저장 버그 수정&#10;- 로그인 페이지 서버 버전 표기">
-      <created>1522741544112</created>
-      <option name="number" value="00313" />
+    <task id="LOCAL-00416">
+      <created>1544495184357</created>
+      <option name="number" value="00416" />
       <option name="project" value="LOCAL" />
-      <updated>1522741544114</updated>
+      <updated>1544495184370</updated>
     </task>
-    <option name="localTasksCounter" value="314" />
+    <option name="localTasksCounter" value="417" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2958593000" />
+    <option name="totallyTimeSpent" value="4348576000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2630,42 +2817,46 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24864864" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3437838" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36216217" sideWeight="0.49413645" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3362162" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3654054" sideWeight="0.49840087" order="14" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33513513" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26594594" sideWeight="0.5063966" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32772493" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31567568" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32937366" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18176973" sideWeight="0.4992272" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1716418" sideWeight="0.5007728" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38206786" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31243244" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38206786" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14605543" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946696" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30984455" sideWeight="0.50159913" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35243243" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2642487" sideWeight="0.50159913" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3145946" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1924307" sideWeight="0.4992272" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1716418" sideWeight="0.5007728" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26594594" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1716418" sideWeight="0.5007728" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3827027" sideWeight="0.50586355" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3315335" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18230277" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32919255" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32919255" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2805383" sideWeight="0.5143923" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2805383" sideWeight="0.5143923" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="92" y="92" width="1736" height="856" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32953367" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32953367" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2689,7 +2880,19 @@
     <MESSAGE value="UI 수정사항 반영" />
     <MESSAGE value="- 임계치알림 관리 상세 수정&#10; : 알림대상 장치 설정에 감지장치, 대상장치의 selectbox 리스트 변경" />
     <MESSAGE value="GS 인증 결함 사항 수정&#10;- xss filter 적용&#10;- sql injection&#10;- 입력필드 제한&#10;- 이벤트 통계 엑셀 저장 버그 수정&#10;- 로그인 페이지 서버 버전 표기" />
-    <option name="LAST_COMMIT_MESSAGE" value="GS 인증 결함 사항 수정&#10;- xss filter 적용&#10;- sql injection&#10;- 입력필드 제한&#10;- 이벤트 통계 엑셀 저장 버그 수정&#10;- 로그인 페이지 서버 버전 표기" />
+    <MESSAGE value="GS인증 수정사항&#10;- 장치 포트,ID,PW 추가&#10;- 대쉬보드 Detector 차트 수정&#10;- 이벤트통계 제약조건 추가&#10;- 로그인페이지 버전 명시" />
+    <MESSAGE value="GS인증 수정사항&#10;- 이벤트통계 년별조회 버그 수정&#10;- 알림센터 페이징 처리&#10;- xss 필터&#10;- 구역 등록 갯수 제한" />
+    <MESSAGE value=" - 알림센터 해지시 무한로딩 현상 수정&#10; - 시뮬레이터 추가(Safe-Eye, Blinker)" />
+    <MESSAGE value="- 코드 분리&#10; : 진출입 목록 불러오기, 진출입 환경설정&#10;- 진출입 환경설정 script 수정&#10;- 진출입 실시간 반영 script 수정" />
+    <MESSAGE value="- Version정보 추가" />
+    <MESSAGE value="* 태권도원 Target Custom 적용&#10;* 구역/장치관리 통합&#10;* 기타 버그 수정" />
+    <MESSAGE value="* 구역/장치 관리의 Map 설정" />
+    <MESSAGE value="* Dashboard Offline Map 적용" />
+    <MESSAGE value="* Dashboard Offline Map 설정 적용&#10; - 장치위치, 구역위치" />
+    <MESSAGE value="* Da" />
+    <MESSAGE value="* Dashboard&#10; - 센서정보 표시 (센서상태 표시)&#10; - 무시영역 펜스 적용&#10;* 이벤트통계&#10; - 구역선택시 사용 이벤트외 숨김처리" />
+    <MESSAGE value="* 라이센스 적용" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2718,14 +2921,25 @@
           <properties />
           <option name="timeStamp" value="451" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/FileSettingCtrl.java</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="776" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="682" />
+      <option name="time" value="850" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-        <watch expression="request" language="JAVA" custom="" />
-        <watch expression="osName.toLowerCase().indexOf(&quot;windows&quot;)" language="JAVA" custom="" />
-        <watch expression="address.getHostAddress()" language="JAVA" custom="" />
+        <watch expression="data[i]" language="JAVA" custom="" />
+        <watch expression="messageSource.getMessage(iException.getCode(), null, request.getLocale());" language="JAVA" custom="" />
+        <watch expression="iException.getCode()" language="JAVA" custom="" />
+        <watch expression="request.getServletPath()" language="JAVA" custom="" />
+      </configuration>
+      <configuration name="JUnit">
+        <watch expression="data[i]" language="JAVA" custom="" />
+        <watch expression="Integer.parseInt(license.getMessage())" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -2734,393 +2948,384 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/CustomMapLocationMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0049261083">
+          <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-webmvc-4.3.18.RELEASE.jar!/org/springframework/web/servlet/handler/SimpleMappingExceptionResolver.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35443038">
+          <caret line="69" column="45" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/tiles/tiles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4174107">
+          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/common_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4699769">
+          <caret line="85" column="27" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/conf/properties/message/common_ko.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33275563">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/device/DeviceCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="149" column="65" selection-start-line="149" selection-start-column="65" selection-end-line="149" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/alarmRequestHistoryMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33278418">
-          <caret line="40" column="68" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/FileSvcImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64983714">
-          <caret line="93" column="31" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/AlarmSvcImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="34" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FileMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="96" selection-start-line="81" selection-start-column="96" selection-end-line="81" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/AlarmInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/FileBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/AlarmBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6188925">
-          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/AlarmMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="50" selection-start-line="61" selection-start-column="41" selection-end-line="61" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/file_en.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.666667">
-          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/file_ko.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.7">
-          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/alarm_en.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.566667">
-          <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/message/alarm_ko.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.2">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/file/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.357142">
-          <caret line="203" column="36" selection-start-line="203" selection-start-column="36" selection-end-line="207" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/alarm/detail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.071428">
-          <caret line="524" column="72" selection-start-line="524" selection-start-column="72" selection-end-line="524" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/menu/MenuView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/test.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.857142">
-          <caret line="222" column="44" selection-start-line="222" selection-start-column="44" selection-end-line="222" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/library/googlemap/richmarker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/video-mediator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.80369514">
+          <caret line="103" column="27" selection-start-line="103" selection-start-column="27" selection-end-line="110" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSyncRequestSvcImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/AuthorizationSvcImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/EventLogCtrl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="91" column="47" selection-start-line="91" selection-start-column="36" selection-end-line="91" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/org/springframework/web/servlet/DispatcherServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6284047">
-          <caret line="475" column="46" selection-start-line="475" selection-start-column="46" selection-end-line="475" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/spring-web_2.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33268481">
-          <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventLogMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="200" column="32" selection-start-line="200" selection-start-column="32" selection-end-line="200" selection-end-column="32" />
+        <state vertical-scroll-proportion="-0.5691964">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceSvcImpl.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.184514">
-          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="11" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.6091954">
+          <caret line="60" column="49" selection-start-line="60" selection-start-column="49" selection-end-line="60" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/HTMLCharacterEscapes.java">
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-web-4.3.18.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="-6.892857">
+          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-webmvc-4.3.18.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321859">
+          <caret line="426" column="0" selection-start-line="426" selection-start-column="0" selection-end-line="426" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-webmvc-4.3.18.RELEASE.jar!/org/springframework/web/servlet/handler/AbstractHandlerExceptionResolver.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68330467">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/common/resource/IsaverException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1907#1908#0" expanded="true" />
-            <element signature="e#1942#1943#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/spring/WebConfigurer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="50" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSRequestWrapper.java">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/toilet-room-mediator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="64" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
-          <folding>
-            <element signature="e#1415#1416#0" expanded="true" />
-            <element signature="e#1443#1444#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/XSSInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="9" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.6541471">
+          <caret line="224" column="13" selection-start-line="224" selection-start-column="13" selection-end-line="224" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventLogSvcImpl.java">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/resource/resource-helper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="72" selection-start-line="86" selection-start-column="72" selection-end-line="86" selection-end-column="72" />
+        <state vertical-scroll-proportion="0.4147105">
+          <caret line="520" column="13" selection-start-line="520" selection-start-column="13" selection-end-line="520" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventLog/list.jsp">
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/error_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="36" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.2642487">
+          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/html5/core-scripting.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3321033">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/error_ko.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/user/detail.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.214286">
-          <caret line="67" column="126" selection-start-line="67" selection-start-column="90" selection-end-line="67" selection-end-column="126" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/util/common-util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/EventStatisticsDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/device/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.607143">
-          <caret line="187" column="179" selection-start-line="187" selection-start-column="179" selection-end-line="192" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/template/template-helper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/EventStatisticsSvcImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/EventStatisticsMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-          <folding>
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT A.st_..." />
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT A.st_..." />
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT A.st_..." />
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT A.st_..." />
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT A.st_..." />
-            <marker date="1519620470851" expanded="true" signature="-1:-1" placeholder="SELECT a.st_..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/EventStatisticsCtrl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.571428">
-          <caret line="540" column="47" selection-start-line="540" selection-start-column="47" selection-end-line="540" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/properties/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.2642487">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/login.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.607142">
-          <caret line="44" column="58" selection-start-line="44" selection-start-column="58" selection-end-line="44" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.5591767">
+          <caret line="176" column="35" selection-start-line="176" selection-start-column="35" selection-end-line="176" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/test.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34991422">
+          <caret line="420" column="81" selection-start-line="420" selection-start-column="81" selection-end-line="420" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/eventStatistics/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36535162">
+          <caret line="563" column="13" selection-start-line="563" selection-start-column="13" selection-end-line="563" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/ajax-util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="181" column="46" selection-start-line="181" selection-start-column="46" selection-end-line="181" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-webmvc-4.3.18.RELEASE.jar!/org/springframework/web/servlet/HandlerExceptionResolver.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17555939">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/CustomMapLocationCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.72085387">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/bean/FenceBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55829227">
+          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/elements-util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.11737089">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/data-util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.82472616">
+          <caret line="101" column="53" selection-start-line="101" selection-start-column="45" selection-end-line="101" selection-end-column="53" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/common-util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="182" column="16" selection-start-line="182" selection-start-column="9" selection-end-line="182" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/ResourceCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/DeviceStatusHistoryCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="58" selection-start-line="52" selection-start-column="36" selection-end-line="52" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceLocationMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07818182">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SPRING-MVC-4.3.18/spring-web-4.3.18.RELEASE.jar!/org/springframework/web/util/UrlPathHelper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3493976">
+          <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="243" column="0" selection-start-line="58" selection-start-column="31" selection-end-line="243" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/ctrl/AuthorizationCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="82" selection-start-line="61" selection-start-column="76" selection-end-line="61" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/authorization/error.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3882545">
+          <caret line="38" column="63" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52545154">
+          <caret line="277" column="35" selection-start-line="277" selection-start-column="35" selection-end-line="277" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DeviceStatusHistorySvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74876845">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/spring/ExceptionResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/DeviceStatusHistoryMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33497536">
+          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/CustomMapLocationSvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5353038">
+          <caret line="114" column="34" selection-start-line="114" selection-start-column="34" selection-end-line="114" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/AuthorizationInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="122" column="5" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.45561138">
+          <caret line="92" column="32" selection-start-line="92" selection-start-column="32" selection-end-line="92" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/map-mediator.js">
+    <entry file="file://$PROJECT_DIR$/conf/spring/WebConfigurer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="20" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="20" />
+          <caret line="146" column="13" selection-start-line="146" selection-start-column="11" selection-end-line="146" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/svcImpl/DashBoardSvcImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="96" column="67" selection-start-line="96" selection-start-column="67" selection-end-line="96" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/icent/isaver/admin/util/HaspLicenseUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="100" column="45" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/resource_ko.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.6">
+          <caret line="24" column="62" selection-start-line="24" selection-start-column="62" selection-end-line="25" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/message/resource_en.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.166667">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/resource/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.538462">
+          <caret line="497" column="33" selection-start-line="497" selection-start-column="33" selection-end-line="497" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -3128,25 +3333,49 @@
     <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/dashboard-helper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="41" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+          <caret line="346" column="97" selection-start-line="346" selection-start-column="97" selection-end-line="346" selection-end-column="97" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/dashboard/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.071429">
-          <caret line="868" column="45" selection-start-line="868" selection-start-column="45" selection-end-line="868" selection-end-column="45" />
+        <state vertical-scroll-proportion="-13.384615">
+          <caret line="341" column="63" selection-start-line="341" selection-start-column="63" selection-end-line="341" selection-end-column="63" />
           <folding>
-            <marker date="1522740998770" expanded="true" signature="45040:45058" placeholder="..." />
+            <marker date="1545271617247" expanded="true" signature="56178:56196" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/views/tiles/layout.jsp">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/util/notification-helper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6768489">
-          <caret line="216" column="13" selection-start-line="216" selection-start-column="13" selection-end-line="216" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="603" column="77" selection-start-line="603" selection-start-column="77" selection-end-line="603" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/popup/custom-map-popup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="288" column="70" selection-start-line="288" selection-start-column="70" selection-end-line="288" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/properties/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46108663">
+          <caret line="222" column="41" selection-start-line="222" selection-start-column="41" selection-end-line="227" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -3163,6 +3392,18 @@
               <list>
                 <option value="0.2045977" />
                 <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="Copyright.UI">
+        <settings>
+          <last-edited>icent</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2045977" />
               </list>
             </option>
           </splitter-proportions>
@@ -3211,7 +3452,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2045977" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -3231,7 +3471,18 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>lib</last-edited>
+          <last-edited>Spring-4.3.18.RELEASE</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2045977" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
