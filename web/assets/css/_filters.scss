@@ -94,11 +94,11 @@ $hov-color:#040404;   //rgba(20,20,20,1) 구분라인
 
 // 길이지정
 $body-minwidth:1450px;
-$dash-margin:20px;
+$dash-margin:15px;
 $popup-margin:20px;
 $admin-margin : 150px;
 $video-width:400px;
-
+$issueWidth:80px;
 
 $noticecenter-width:300px;
 $noticecenter-onwidth:calc(100% - 340px);
@@ -530,7 +530,7 @@ $bbl01:100%; $bbl02:1px;
 
 
 @mixin list_more_btn {
-  background-color: $bas-color; color:$color-white-01;
+  width:100%; background-color: $bas-color; color:$color-white-01;
   @include flex-option(1, 0, $btnarea-height);
   &:after  {content:"More"; padding:0 0 0 10px;}
   &:before {content:"\e92b";}
@@ -572,12 +572,10 @@ $bbl01:100%; $bbl02:1px;
 
 // line Bar
 @mixin line_bar{
-  &:after, &:before {content:""; position: absolute; z-index:12;}
-  &:before {background-color: rgba(0,0,0,0.8);}
-  &:after  {background-color: rgba(255,255,255,0.12);}
+  &:after, &:before {content:""; position: absolute; z-index:12; background-color: $bas-color;}
 }
-@mixin line_bar_h{@include line_bar; &:after, &:before {width:auto; height:1px;  left:5px; right:5px;} }
-@mixin line_bar_v{@include line_bar; &:after, &:before {width:1px; height:auto;  top:5px; bottom:5px;} }
+@mixin line_bar_h{@include line_bar; &:after, &:before {width:100%; height:1px; left:0; } }
+@mixin line_bar_v{@include line_bar; &:after, &:before {width:1px; height:100%; left:0; } }
 
 @mixin line_bar_top($before,$after)    { @include line_bar_h; &:before {top:$before;} &:after {top:$after;} }
 // ex) @include line_bar_top( 1px, 0);
@@ -589,11 +587,24 @@ $bbl01:100%; $bbl02:1px;
 // ex) @include line_bar_right(1px, 0);
 
 
+@mixin line_bas{
+  content:""; position: absolute; z-index:12;  background-color: $bas-color;
+} // @include line_bas;
+
 @mixin line_left {
   &:before {
-    content:""; position: absolute; z-index: 5; width:1px; height:100%; background-color: rgba($color-gray-09,0.5);
+    @include line_bas; top:0;  left:0; width:1px; height:100%;
   }
 } // @include line_left;
+
+@mixin line_bottom {
+  &:after {
+    @include line_bas; bottom:0; left:0; width:100%; height:1px;
+  }
+} // @include line_bottom;
+
+
+
 
 // 이벤트 감지 아이콘 애니메이션
 @mixin infinite {
@@ -840,12 +851,12 @@ $bbl01:100%; $bbl02:1px;
   @-webkit-keyframes issue08 {
     0%   { opacity: 0; }
     10%  { opacity: 1; }
-    100% { opacity: 0; @include scale(2);}
+    100% { opacity: 0; @include scale(1.5);}
   }
   @keyframes issue08 {
     0%   { opacity: 0; }
     10%  { opacity: 1; }
-    100% { opacity: 0; @include scale(2);}
+    100% { opacity: 0; @include scale(1.5);}
   }
 } // ex) @include issue08;
 
@@ -1301,8 +1312,6 @@ $cslwidth:80px;
 } // @include csl_style04_showhide;
 
 
-
-
 @mixin listbase {
   @include flex-option(0, 1, 100%);
   p {font-size:0.9rem; opacity: 0.8; letter-spacing: 0; @include text-shadow(0, 1px, 2px, #000, 0.7);}
@@ -1318,5 +1327,5 @@ $cslwidth:80px;
 @mixin licenseBg {
   @include flexbase; @include flex-align-items-center;
   &:before {content:"\e90f"; padding:0 10px 0 0; font-size:1.4rem;}
-  background: -webkit-linear-gradient(top, rgba($color-red-01,1) 36%,rgba($color-red-01,0.676) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-} // @include licenseBg;7
+  background: -webkit-linear-gradient(top, rgba($color-red-01,0.7) 36%,rgba($color-red-01,0.4) 100%);
+} // @include licenseBg;

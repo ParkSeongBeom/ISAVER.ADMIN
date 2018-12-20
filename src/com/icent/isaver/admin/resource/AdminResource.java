@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public class AdminResource {
 
+    public final static String RESULT_NODE_NAME = "result";
+
     /**
      * deploy datetime
      * @author psb
@@ -46,11 +48,15 @@ public class AdminResource {
      */
     public final static String JSON_VIEW = "json";
 
+    public final static String HTML_VIEW = "html";
+
     /**
      * XML VIEW EXTENTION
      * @author kst
      */
     public final static String XML_VIEW = "xml";
+
+    public final static String PERIOD_STRING = ".";
 
     /**
      * useable || delete flag</br>

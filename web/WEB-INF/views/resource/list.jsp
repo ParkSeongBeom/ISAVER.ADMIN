@@ -489,6 +489,7 @@
 
     var customMapMessageConfig = {
         listFailure             :'<spring:message code="resource.message.listFailure"/>'
+        ,   customMapSupport    :'<spring:message code="resource.message.customMapSupport"/>'
         ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
         ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
         ,   saveFailure         :'<spring:message code="common.message.saveFailure"/>'

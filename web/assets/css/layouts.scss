@@ -72,11 +72,11 @@ h4 {
 
 /////..... 라이센스 만료 경고   Start
 .license_notice {
-  display: none;
-  position: fixed; top:($headerHeight + 1px); left:0; right:0; height:25px;
+  display: none; position: fixed; top:auto; bottom:0; left:0; right:0; height:20px;
   font-size: 0.8rem; color:#fff !important;
-  .admin_mode & {background-color: $color-red-01;}
-  &.on {@include licenseBg; @include flex-justify-content-center;}
+
+  &.on {@include licenseBg;}
+
 }
 /////..... 라이센스 만료 경고  End
 
@@ -143,7 +143,10 @@ header {
 
     & > * {display: inline-block; height: 100%;}
 
-    h1 { a {width:100%; height:100%;} }
+    h1 {
+      margin:0 0 0 $margin;
+      a {width:100%; height:100%; }
+    }
 
     .header_right_area {
       margin:0 0 0 auto;
@@ -175,7 +178,7 @@ header {
 
           &.level-caution, &.level-warning, &.level-danger {
             &.issue_btn {
-              width:220px; /*background-color:$color-red-01;*/
+              width:180px; /*background-color:$color-red-01;*/
               &:before {color:#fff !important;}
               &.on {
                 @include issue;
@@ -192,7 +195,7 @@ header {
 
 
 .wrap > header {
-  background-color: $bas-color; color:$color-white-02; overflow-x: hidden;
+  padding:0; background-color:#2c2c2c; color:$color-white-02; overflow-x: hidden;
   &:after {
     content:""; position: absolute; left:0; top:($headerHeight - 2px); width:100%; height:2px;
     background: -webkit-linear-gradient(left, rgba($color-blue-01,0) 0%,rgba($color-blue-01,1) 50%,rgba($color-blue-01,0) 100%);
@@ -312,7 +315,7 @@ menu {
    */
 
   display: none; position: fixed; @include z-index-popup;
-  right:0; bottom:0; left:0; width:auto !important; @include transition(400ms);
+  right:0; bottom:0; left:0; width:auto !important; @include transition(200ms);
 
 
   & > div {
@@ -325,18 +328,18 @@ menu {
       overflow: hidden; z-index: 10;
       position: relative; height:100%; max-width:70%; min-width:40%; max-height:50%; min-height:50%;
 
-      & > * { position: relative; width:100%;}
+      & > * { position: relative; width:100%; margin: 20px 0 0 0;}
 
       & > header {
         max-height:50px; height:50px;
-        min-width:0; background-color: transparent; padding:0;
+        min-width:0; background-color: transparent; padding:0; margin:0;
         h2 , h3  {@include title_icon; margin:0 auto 0 0;}
         button:before {content:"\e91a"; font-size: 1.8rem;}
         &:before {display: none !important;}
       }
 
       & > article {
-        overflow: auto; max-height: 600px; height:100%; margin:20px 0 0 0;
+        overflow: auto; max-height: 600px; height:100%;
         @include flex-column;
 
         &.map_sett_box, &.onvif_sett_box {@include flex-column-row;} // MAP 설정 팝업
@@ -349,6 +352,7 @@ menu {
       }
     }
   }
+
   & > .bg {
     display: inline-block !important; position:absolute !important;
     left:0; top:0; width:100% !important; height:100% !important;
@@ -358,18 +362,21 @@ menu {
   &.map_pop , &.onvif_pop {
     //&.on {right:($noticecenter-width + $dash-margin + 10px);}
     & > div > div {
-      position: absolute;  max-width:none; max-height:none; top:40px; bottom:0; left:0; right:0;
+      position: absolute;  max-width:none; max-height:none; top:0; bottom:0; left:0; right:0;
       & > article {
         max-height: none; height:100%;
         @include flex-column-row;
       }
+      & > footer {}
     }
   }
+
+
   &.critical_pop {& > div > div {width:570px; max-width:570px; min-width: 570px;} }
 
   /////..... 레이어 팝업 Start
   &.admin_popup, body.admin_mode & {
-    top:0;
+    top:40px;
     & > div > div { form {width:100%;} }
   }
   /////..... 레이어 팝업 End
@@ -451,8 +458,8 @@ menu {
   }
   /////.......... 진출입 조회주기설정 팝업 끝
   &.ir_popup {
-    & > div > div {max-width:250%; min-width:25%; max-height:30%; min-height:30%; }
-    article { @include flex-midddle; margin:0; }
+    & > div > div {max-width:250%; min-width:25%; max-height:30%; min-height:30%;}
+    article { @include flex-midddle; }
     input {width:300px;}
   }
   /////.......... 구역 / 장치 관리 설정 옵션 팝업 시작
@@ -569,7 +576,7 @@ menu {
   }
 
   position: fixed; @include z-index-notice;
-  top:($headerHeight + 10px); bottom:$dash-margin; right:-($noticecenter-width * 2); width:$noticecenter-width;
+  top:$headerHeight; bottom:$dash-margin; right:-($noticecenter-width * 2); width:$noticecenter-width;
 
   &.on {right:$dash-margin;}
 
@@ -580,7 +587,7 @@ menu {
 
   h2 {
     @include flex-align-items-center; @include flex-option(1, 0, $btnarea-height);
-    @include flex-justify-content-between; margin:0 0 10px 0;
+    @include flex-justify-content-between; margin:5px 0;
 
     // 알림카운트
     & > div {
@@ -931,9 +938,7 @@ menu {
 /////...... sub_title_area 정의 시작
 .sub_title_area {
 
-  body.admin_mode & {margin: 0 0 10px 0 !important;}
-
-  @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 0 0 10px 0;
+  @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 5px 0;
 
   &, .navigation, .navigation span {position: relative;}
 
@@ -956,7 +961,7 @@ menu {
         &:after {display: block;}
       }
     }
-    .admin_mode & span {    pointer-events: none;}
+    .admin_mode & span { pointer-events: none;}
   }
 
 }

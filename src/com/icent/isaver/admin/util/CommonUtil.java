@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.util;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -25,6 +26,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import javax.net.ssl.SSLContext;
 import javax.servlet.ServletException;
@@ -269,5 +271,18 @@ public class CommonUtil {
             }
         }
         return ret;
+    }
+
+
+    /**
+     * request에 따른 View Type을 가져온다.
+     *
+     * @author psb
+     * @since 2018. 12. 18.
+     * @return View
+     */
+    public static String getViewFromRequest(HttpServletRequest request){
+        String requestPath = request.getServletPath();
+        return requestPath.substring(requestPath.lastIndexOf(AdminResource.PERIOD_STRING) + 1, requestPath.length());
     }
 }

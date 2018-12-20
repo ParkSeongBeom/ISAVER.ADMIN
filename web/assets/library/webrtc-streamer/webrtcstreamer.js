@@ -30,7 +30,7 @@ WebRtcStreamer.prototype.connect = function(videourl, audiourl, options, localst
 	
 	// getIceServers is not already received
 	if (!this.iceServers) {
-		//console.log("Get IceServers");
+		console.debug("Get IceServers");
 
 		var bind = this;
 		request("GET" , this.srvurl + "/api/getIceServers")
@@ -99,7 +99,7 @@ WebRtcStreamer.prototype.onReceiveGetIceServers = function(iceServers, videourl,
 		// create Offer
 		var bind = this;
 		this.pc.createOffer(this.mediaConstraints).then(function(sessionDescription) {
-			//console.log("Create offer:" + JSON.stringify(sessionDescription));
+			console.debug("Create offer:" + JSON.stringify(sessionDescription));
 
 			bind.pc.setLocalDescription(sessionDescription
 				, function() {
@@ -130,13 +130,13 @@ WebRtcStreamer.prototype.onReceiveGetIceServers = function(iceServers, videourl,
 * create RTCPeerConnection
 */
 WebRtcStreamer.prototype.createPeerConnection = function() {
-	//console.log("createPeerConnection  config: " + JSON.stringify(this.pcConfig) + " option:"+  JSON.stringify(this.pcOptions));
+	console.debug("createPeerConnection  config: " + JSON.stringify(this.pcConfig) + " option:"+  JSON.stringify(this.pcOptions));
 	var pc = new RTCPeerConnection(this.pcConfig, this.pcOptions);
 	var streamer = this;
 	pc.onicecandidate = function(evt) { streamer.onIceCandidate.call(streamer, evt); };
 	pc.onaddstream    = function(evt) { streamer.onAddStream.call(streamer,evt); };
 	pc.oniceconnectionstatechange = function(evt) {
-		//console.log("oniceconnectionstatechange  state: " + pc.iceConnectionState);
+		console.debug("oniceconnectionstatechange  state: " + pc.iceConnectionState);
 		var videoElement = document.getElementById(streamer.videoElement);
 		if (videoElement) {
 			if (pc.iceConnectionState === "connected") {
@@ -151,31 +151,31 @@ WebRtcStreamer.prototype.createPeerConnection = function() {
 		}
 	};
 	pc.ondatachannel = function(evt) {
-		//console.log("remote datachannel created:"+JSON.stringify(evt));
+		console.debug("remote datachannel created:"+JSON.stringify(evt));
 
 		evt.channel.onopen = function () {
-			//console.log("remote datachannel open");
+			console.debug("remote datachannel open");
 			this.send("remote channel openned");
 		}
 		evt.channel.onmessage = function (event) {
-			//console.log("remote datachannel recv:"+JSON.stringify(event.data));
+			console.debug("remote datachannel recv:"+JSON.stringify(event.data));
 		}
 	};
 
 	try {
 		var dataChannel = pc.createDataChannel("ClientDataChannel");
 		dataChannel.onopen = function() {
-			//console.log("local datachannel open");
+			console.debug("local datachannel open");
 			this.send("local channel openned");
 		}
 		dataChannel.onmessage = function(evt) {
-			//console.log("local datachannel recv:"+JSON.stringify(evt.data));
+			console.debug("local datachannel recv:"+JSON.stringify(evt.data));
 		}
 	} catch (e) {
 		console.error("Cannor create datachannel error: " + e);
 	}
 
-	//console.log("Created RTCPeerConnnection with config: " + JSON.stringify(this.pcConfig) + "option:"+  JSON.stringify(this.pcOptions) );
+	console.debug("Created RTCPeerConnnection with config: " + JSON.stringify(this.pcConfig) + "option:"+  JSON.stringify(this.pcOptions) );
 	return pc;
 };
 
@@ -190,7 +190,7 @@ WebRtcStreamer.prototype.onIceCandidate = function (event) {
 			request("POST" , this.srvurl + "/api/addIceCandidate?peerid="+this.pc.peerid, { body: JSON.stringify(event.candidate) })
 				.done( function (response) {
 					if (response.statusCode === 200) {
-						//console.log("addIceCandidate ok:" + response.body);
+						console.debug("addIceCandidate ok:" + response.body);
 					}
 					else {
 						bind.onError(response.statusCode);
@@ -202,7 +202,7 @@ WebRtcStreamer.prototype.onIceCandidate = function (event) {
 		}
 	}
 	else {
-		//console.log("End of candidates.");
+		console.debug("End of candidates.");
 	}
 };
 
@@ -210,7 +210,7 @@ WebRtcStreamer.prototype.onIceCandidate = function (event) {
 * RTCPeerConnection AddTrack callback
 */
 WebRtcStreamer.prototype.onAddStream = function(event) {
-	//console.log("Remote track added:" +  JSON.stringify(event));
+	console.debug("Remote track added:" +  JSON.stringify(event));
 
 	var videoElement = document.getElementById(this.videoElement);
 	videoElement.srcObject = event.stream;
@@ -223,17 +223,17 @@ WebRtcStreamer.prototype.onAddStream = function(event) {
 */
 WebRtcStreamer.prototype.onReceiveCall = function(dataJson) {
 	var bind = this;
-	//console.log("offer: " + JSON.stringify(dataJson));
+	console.debug("offer: " + JSON.stringify(dataJson));
 	this.pc.setRemoteDescription(new RTCSessionDescription(dataJson)
 		, function()      {
-                        //console.log ("setRemoteDescription ok");
+                        console.debug ("setRemoteDescription ok");
                         while (bind.earlyCandidates.length) {
 				var candidate = bind.earlyCandidates.shift();
 
 				request("POST" , bind.srvurl + "/api/addIceCandidate?peerid=" + bind.pc.peerid, { body: JSON.stringify(candidate) })
 					.done( function (response) {
 						if (response.statusCode === 200) {
-							//console.log("addIceCandidate ok:" + response.body);
+							console.debug("addIceCandidate ok:" + response.body);
 						}
 						else {
 							bind.onError(response.statusCode);
@@ -263,15 +263,15 @@ WebRtcStreamer.prototype.onReceiveCall = function(dataJson) {
 * AJAX /getIceCandidate callback
 */
 WebRtcStreamer.prototype.onReceiveCandidate = function(dataJson) {
-	//console.log("candidate: " + JSON.stringify(dataJson));
+	console.debug("candidate: " + JSON.stringify(dataJson));
 	if (dataJson) {
 		for (var i=0; i<dataJson.length; i++) {
 			var candidate = new RTCIceCandidate(dataJson[i]);
 
-			//console.log("Adding ICE candidate :" + JSON.stringify(candidate) );
+			console.debug("Adding ICE candidate :" + JSON.stringify(candidate) );
 			this.pc.addIceCandidate(candidate
 				, function()      {
-					//console.log ("addIceCandidate OK");
+					console.debug ("addIceCandidate OK");
 				}
 				, function(error) {
 					console.error ("addIceCandidate error:" + JSON.stringify(error));

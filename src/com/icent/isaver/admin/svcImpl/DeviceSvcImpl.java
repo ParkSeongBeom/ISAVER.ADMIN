@@ -105,11 +105,11 @@ public class DeviceSvcImpl implements DeviceSvc {
                 TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
                 try {
                     parameters.put("deviceId", generatorFunc());
+                    deviceDao.addDevice(parameters);
                     if(parameters.get("mainFlag").equals(CommonResource.YES)){
-                        fenceDao.removeFence(parameters);
+                        fenceDao.saveFence(parameters);
                         deviceDao.saveDeviceMainFlag(parameters);
                     }
-                    deviceDao.addDevice(parameters);
 
                     Map<String, String> addDeviceSyncRequestParam = new HashMap<>();
                     addDeviceSyncRequestParam.put("deviceIds", parameters.get("deviceId"));
@@ -142,7 +142,7 @@ public class DeviceSvcImpl implements DeviceSvc {
             addDeviceSyncRequestParam.put("type", AdminResource.SYNC_TYPE.get("save"));
             deviceSyncRequestSvc.addDeviceSyncRequest(request, addDeviceSyncRequestParam);
             if(parameters.get("mainFlag").equals(CommonResource.YES)){
-                fenceDao.removeFence(parameters);
+                fenceDao.saveFence(parameters);
                 deviceDao.saveDeviceMainFlag(parameters);
             }
             deviceDao.saveDevice(parameters);

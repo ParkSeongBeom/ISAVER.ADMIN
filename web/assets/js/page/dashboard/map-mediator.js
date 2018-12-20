@@ -210,7 +210,7 @@ var MapMediator = (
                         });
                         break;
                 }
-                console.log("[MapMediator][addMarker] complete - [" + messageType + "][" + data['id'] + "]");
+                console.debug("[MapMediator][addMarker] complete - [" + messageType + "][" + data['id'] + "]");
             }catch(e){
                 console.error("[MapMediator][addMarker] error- [" + messageType + "][" + data['id'] + "] - " + e.message);
             }
@@ -267,7 +267,7 @@ var MapMediator = (
                     if(marker[messageType][data['id']]!=null){
                         marker[messageType][data['id']].setMap(null);
                         delete marker[messageType][data['id']];
-                        console.log("[MapMediator][removeMarker] complete - [" + messageType + "][" + data['id'] + "]");
+                        console.debug("[MapMediator][removeMarker] complete - [" + messageType + "][" + data['id'] + "]");
                     }
                     break;
             }

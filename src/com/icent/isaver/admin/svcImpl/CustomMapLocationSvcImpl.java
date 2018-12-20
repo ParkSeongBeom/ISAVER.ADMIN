@@ -2,16 +2,13 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
-import com.icent.isaver.repository.bean.AreaBean;
-import com.icent.isaver.repository.bean.CustomMapLocationBean;
-import com.icent.isaver.repository.bean.FenceBean;
-import com.icent.isaver.repository.bean.FenceDeviceBean;
-import com.icent.isaver.repository.dao.base.AreaDao;
-import com.icent.isaver.repository.dao.base.CustomMapLocationDao;
-import com.icent.isaver.repository.dao.base.FenceDao;
-import com.icent.isaver.repository.dao.base.FenceDeviceDao;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.repository.bean.*;
+import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.net.InetAddress;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Custom Map Service Implements
@@ -58,6 +53,18 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     @Value("${cnf.fileAttachedUploadPath}")
     private String fileAttachedUploadPath = null;
 
+    @Value("${ws.server.domain}")
+    private String wsDomain = null;
+
+    @Value("${ws.server.port}")
+    private String wsPort = null;
+
+    @Value("${ws.server.projectName}")
+    private String wsProjectName = null;
+
+    @Value("${ws.server.urlSync}")
+    private String wsUrlSync = null;
+
     @Inject
     private CustomMapLocationDao customMapLocationDao;
 
@@ -65,10 +72,16 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     private FenceDeviceDao fenceDeviceDao;
 
     @Inject
+    private FenceLocationDao fenceLocationDao;
+
+    @Inject
     private FenceDao fenceDao;
 
     @Inject
     private AreaDao areaDao;
+
+    @Inject
+    private DeviceDao deviceDao;
 
     @Override
     public ModelAndView findListCustomMapLocation(Map<String, String> parameters) {
@@ -106,24 +119,45 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try {
+            // 구역 Bg File 업데이트
             areaDao.saveAreaFileId(saveAreaParam);
+
+            // 장치 위치 Update
             customMapLocationDao.removeCustomMapLocation(removeCustomParam);
-            fenceDeviceDao.removeFenceDevice(removeCustomParam);
             if(customList.size()>0){
-                customMapLocationDao.insertCustomMapLocation(customList);
+                customMapLocationDao.addCustomMapLocation(customList);
             }
+
+            // 펜스 Update
+            fenceDeviceDao.removeFenceDevice(removeCustomParam);
+            fenceLocationDao.removeFenceLocation(removeCustomParam);
+            fenceDao.removeFence(removeCustomParam);
             if(fenceList.size()>0){
-                fenceDao.saveFence(fenceList);
-            }
-            if(fenceDeviceList.size()>0){
-                fenceDeviceDao.addFenceDevice(fenceDeviceList);
+                fenceDao.addFence(fenceList);
+                for(FenceBean fenceBean : fenceList){
+                    fenceLocationDao.addFenceLocation(fenceBean.getLocation());
+                }
+                if(fenceDeviceList.size()>0){
+                    fenceDeviceDao.addFenceDevice(fenceDeviceList);
+                }
             }
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
             throw new IsaverException("");
         }
-        ModelAndView modelAndView = new ModelAndView();
-        return modelAndView;
+        locationSync();
+        return new ModelAndView();
+    }
+
+    private void locationSync(){
+        try {
+            Map websocketParam = new HashMap();
+            websocketParam.put("allFlag", CommonResource.YES);
+            websocketParam.put("messageType","locationSync");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+        } catch (Exception e) {
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+        }
     }
 }

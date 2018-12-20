@@ -2444,7 +2444,7 @@ a.fc-more {
       -ms-flex: 1 0 40px;
       min-height: 40px;
       max-height: 40px; }
-    .map_sett_box .list > div, .map_sett_box .list ul li > div, .map_sett_box .list ul li button, .map_sett_box .list .camera_list ul li, .map_sett_box .list .fence_list, .map_sett_box .list .fence_list p, .map_sett_box .list .camera_list > div {
+    .map_sett_box .list > div, .map_sett_box .list ul li > div, .map_sett_box .list ul li button, .map_sett_box .list .camera_list ul li, .map_sett_box .list .fence_list > div, .map_sett_box .list .fence_list p, .map_sett_box .list .camera_list > div {
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -2497,9 +2497,7 @@ a.fc-more {
       height: 100%;
       padding: 0 20px 0 15px; }
       .map_sett_box .list ul li {
-        min-height: 60px;
-        /*.m8:before {content:"\e962" !important;}
-        .camera:before {content:"\e964" !important;}*/ }
+        min-height: 60px; }
         .map_sett_box .list ul li > div > button {
           transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
           -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -2610,7 +2608,7 @@ a.fc-more {
           flexbox: 0 1 100%;
           -webkit-box-flex: 1;
           -ms-flex: 0 1 100%;
-          margin: 10px 0 10px 55px;
+          margin: 10px 0 10px 50px;
           position: relative; }
           .map_sett_box .list ul li > section:before, .map_sett_box .list ul li > section:after {
             content: "";
@@ -2632,7 +2630,102 @@ a.fc-more {
               bottom: auto;
               top: -10px;
               height: 28px; }
+          .map_sett_box .list ul li > section > div {
+            padding: 0 0 0 40px; }
+            .map_sett_box .list ul li > section > div select, .map_sett_box .list ul li > section > div input {
+              width: 100%;
+              margin-top: 10px; }
+            .map_sett_box .list ul li > section > div * {
+              width: 100%;
+              height: 40px; }
+          .map_sett_box .list ul li > section button {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: flexbox;
+            display: box;
+            box-align: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center; }
+            .map_sett_box .list ul li > section button:before {
+              font-size: 1.3rem; }
+            .map_sett_box .list ul li > section button.on {
+              font-weight: bold;
+              color: #ff8400; }
+            .map_sett_box .list ul li > section button:hover {
+              color: #109dcb; }
+          .map_sett_box .list ul li > section button.btn-del, .map_sett_box .list ul li > section button.btn-edi {
+            width: 30px;
+            min-width: 30px;
+            max-width: 30px;
+            -webkit-box-pack: end;
+            -moz-box-pack: flex-end;
+            -webkit-justify-content: flex-end;
+            -ms-flex-pack: flex-end;
+            justify-content: flex-end;
+            padding: 0 4px 0 0; }
+          .map_sett_box .list ul li > section button.btn-del:before {
+            content: "\e91a"; }
+          .map_sett_box .list ul li > section button.btn-edi:before {
+            content: "\e905"; }
+          .map_sett_box .list ul li > section button.btn-cam {
+            width: 100%;
+            padding: 0 0 0 20px;
+            -webkit-box-pack: start;
+            -moz-box-pack: flex-start;
+            -webkit-justify-content: flex-start;
+            -ms-flex-pack: flex-start;
+            justify-content: flex-start; }
+            .map_sett_box .list ul li > section button.btn-cam:before {
+              content: "ㆍ";
+              position: absolute;
+              left: 0;
+              width: 20px; }
+          .map_sett_box .list ul li > section button.btn-add {
+            overflow: hidden;
+            width: 40px;
+            height: 40px;
+            color: #fff;
+            background-color: #4c4c4c;
+            -moz-border-radius: 400px;
+            -webkit-border-radius: 400px;
+            border-radius: 400px;
+            -khtml-border-radius: 400px; }
+            .map_sett_box .list ul li > section button.btn-add:before {
+              content: "\e92b"; }
+            .map_sett_box .list ul li > section button.btn-add:hover {
+              background-color: #109dcb; }
           .map_sett_box .list ul li > section .fence_list {
+            /*
+            <div class="fence_list">
+
+              <div class="fence_title">
+                <p>fence1 ID 삽입</p>
+                <button class="btn-edi"></button>
+                <button class="btn-del"></button>
+              </div>
+
+              <div class="fence_name">
+                <input type="text" placeholder="펜스명을 입력하세요" />
+                <select>
+                  <option selected disabled>선택</option>
+                  <option>선택01</option>
+                  <option>선택02</option>
+                </select>
+              </div>
+
+            </div>
+            */
             -webkit-box-orient: column;
             -webkit-box-direction: column;
             -webkit-flex-direction: column;
@@ -2643,64 +2736,61 @@ a.fc-more {
             -moz-box-align: flex-start;
             -webkit-align-items: flex-start;
             -ms-flex-align: flex-start;
-            align-items: flex-start;
-            margin: 0 0 10px 0; }
-            .map_sett_box .list ul li > section .fence_list * {
-              height: 40px; }
+            align-items: flex-start; }
             .map_sett_box .list ul li > section .fence_list > * {
-              flex: 0 1 100%;
-              -webkit-flex: 0 1 100%;
-              flexbox: 0 1 100%;
-              -webkit-box-flex: 1;
-              -ms-flex: 0 1 100%; }
-              .map_sett_box .list ul li > section .fence_list > *:nth-child(2) {
-                margin: 0 0 0 40px;
-                width: calc(100% - 40px); }
+              /*@include flex-option(0, 1, 100%);*/ }
+            .map_sett_box .list ul li > section .fence_list .fence_title:before {
+              content: "\e904" !important;
+              display: -webkit-box;
+              display: -moz-box;
+              display: -ms-flexbox;
+              display: -webkit-flex;
+              display: flex;
+              display: flexbox;
+              display: box;
+              box-align: center;
+              -webkit-box-align: center;
+              -moz-box-align: center;
+              -webkit-align-items: center;
+              -ms-flex-align: center;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 40px;
+              height: 40px;
+              font-size: 1.6rem; }
+            .map_sett_box .list ul li > section .fence_list .fence_name input {
+              flex: 2.5;
+              -webkit-flex: 2.5;
+              flexbox: 2.5;
+              -webkit-box-flex: 2.5;
+              -ms-flex: 2.5;
+              border-right-width: 0; }
+            .map_sett_box .list ul li > section .fence_list .fence_name select {
+              flex: 0.5;
+              -webkit-flex: 0.5;
+              flexbox: 0.5;
+              -webkit-box-flex: 0.5;
+              -ms-flex: 0.5; }
           .map_sett_box .list ul li > section .camera_list {
-            padding: 0 0 0 40px; }
-            .map_sett_box .list ul li > section .camera_list * {
-              width: 100%; }
-            .map_sett_box .list ul li > section .camera_list > select {
-              margin: 0 0 10px 0; }
+            /*
+            <div class="camera_list">
+                  <select>
+                      <option selected disabled>감시카메라 선택</option>
+                      <option>IP Camere 01</option>
+                      <option>IP Camere 01</option>
+                  </select>
+                  <div>
+                      <button class="btn-cam">IP Camere 01</button>
+                      <button class="btn-del"></button>
+                  </div>
+              </div> <!-- 카메라 목록 -->
+            */ }
             .map_sett_box .list ul li > section .camera_list > div {
               border-style: solid;
               border-width: 0 0 1px 0;
               border-color: darkgray; }
-              .map_sett_box .list ul li > section .camera_list > div > button:last-of-type {
-                width: 40px;
-                height: 40px;
-                -webkit-box-pack: end;
-                -moz-box-pack: flex-end;
-                -webkit-justify-content: flex-end;
-                -ms-flex-pack: flex-end;
-                justify-content: flex-end;
-                padding: 0; }
-                .map_sett_box .list ul li > section .camera_list > div > button:last-of-type:before {
-                  content: "\e91a";
-                  font-size: 1.2rem !important;
-                  padding: 0; }
-                .map_sett_box .list ul li > section .camera_list > div > button:last-of-type:after {
-                  display: none; }
-                .map_sett_box .list ul li > section .camera_list > div > button:last-of-type:hover:before {
-                  color: #be1e1e; }
-        .map_sett_box .list ul li *:before {
-          font-size: 1.8rem !important;
-          padding: 0 10px 0 0; }
-        .map_sett_box .list ul li button {
-          padding: 0 0 0 20px; }
-        .map_sett_box .list ul li button:after {
-          content: "ㆍ";
-          position: absolute;
-          left: 0;
-          width: 20px; }
-        .map_sett_box .list ul li button.on, .map_sett_box .list ul li button.on:after {
-          font-weight: bold;
-          color: #109dcb; }
-        .map_sett_box .list ul li button.on:after {
-          content: "\e901";
-          font-size: 1.2rem; }
-        .map_sett_box .list ul li .fence_list > p:before {
-          content: "\e904" !important; }
     .map_sett_box .list > div, .map_sett_box .list ul li > div {
       position: relative;
       width: 100%; }
@@ -3678,6 +3768,7 @@ a.fc-more {
             font-weight: bold;
             opacity: 1; }
     .video_area > *:last-of-type button {
+      width: 100%;
       background-color: #3c3c3c;
       color: #fff;
       flex: 1 0 40px;

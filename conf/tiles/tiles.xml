@@ -9,6 +9,12 @@
 
     <!--
         로그인페이지
+        @author psb
+    -->
+    <definition name="error" template="/WEB-INF/views/authorization/error.jsp" />
+
+    <!--
+        로그인페이지
         @author kst
     -->
     <definition name="login" template="/WEB-INF/views/authorization/login.jsp" />

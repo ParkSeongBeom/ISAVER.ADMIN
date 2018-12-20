@@ -218,7 +218,8 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'websocketSend':false
                                 ,'fenceView':true
-                                ,'openLinkFlag': false
+                                ,'openLinkFlag':false
+                                ,'moveFence':true
                                 ,'click':function(targetId,deviceCode){
                                     if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
                                 }
@@ -334,6 +335,16 @@ var DashboardHelper = (
         this.setObjectViewFlag = function(areaId, _this){
             if(_guardList[areaId]!=null){
                 _guardList[areaId][_MEDIATOR_TYPE[1]].setObjectViewFlag($(_this).is(":checked"));
+            }
+        };
+
+        /**
+         * set pointsUseFlag
+         * @author psb
+         */
+        this.setPointsHideFlag = function(areaId, _this){
+            if(_guardList[areaId]!=null){
+                _guardList[areaId][_MEDIATOR_TYPE[1]].setPointsHideFlag($(_this).is(":checked"));
             }
         };
 

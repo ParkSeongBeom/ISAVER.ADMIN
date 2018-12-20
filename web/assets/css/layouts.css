@@ -158,14 +158,13 @@ h4 {
 .license_notice {
   display: none;
   position: fixed;
-  top: 41px;
+  top: auto;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 25px;
+  height: 20px;
   font-size: 0.8rem;
   color: #fff !important; }
-  .admin_mode .license_notice {
-    background-color: #be1e1e; }
   .license_notice.on {
     display: -webkit-box;
     display: -moz-box;
@@ -180,13 +179,43 @@ h4 {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    background: -webkit-linear-gradient(top, #be1e1e 36%, rgba(190, 30, 30, 0.676) 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     -webkit-box-pack: center;
     -moz-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    justify-content: center; }
+    justify-content: center;
+    animation-name: issue02;
+    -webkit-animation-name: issue02;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    background-color: #be1e1e;
+    /*background: -webkit-linear-gradient(top, rgba($color-red-01,0.7) 36%,rgba($color-red-01,0.4) 100%);*/ }
+@-webkit-keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
+@keyframes issue02 {
+  0% {
+    opacity: 0.5; }
+  10% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0.5; } }
     .license_notice.on:before {
       content: "\e90f";
       padding: 0 10px 0 0;
@@ -372,9 +401,11 @@ header {
     header .header_area > * {
       display: inline-block;
       height: 100%; }
-    header .header_area h1 a {
-      width: 100%;
-      height: 100%; }
+    header .header_area h1 {
+      margin: 0 0 0 15px; }
+      header .header_area h1 a {
+        width: 100%;
+        height: 100%; }
     header .header_area .header_right_area {
       margin: 0 0 0 auto; }
       header .header_area .header_right_area * {
@@ -453,7 +484,7 @@ header {
             header .header_area .header_right_area .header_btn_set button:hover:before, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn):before {
               color: #fff !important; }
           header .header_area .header_right_area .header_btn_set button.level-caution.issue_btn, header .header_area .header_right_area .header_btn_set button.level-warning.issue_btn, header .header_area .header_right_area .header_btn_set button.level-danger.issue_btn {
-            width: 220px;
+            width: 180px;
             /*background-color:$color-red-01;*/ }
             header .header_area .header_right_area .header_btn_set button.level-caution.issue_btn:before, header .header_area .header_right_area .header_btn_set button.level-warning.issue_btn:before, header .header_area .header_right_area .header_btn_set button.level-danger.issue_btn:before {
               color: #fff !important; }
@@ -496,7 +527,8 @@ header {
   100% {
     margin: 0 -1px 0 0; } }
 .wrap > header {
-  background-color: #3c3c3c;
+  padding: 0;
+  background-color: #2c2c2c;
   color: #f5f5f5;
   overflow-x: hidden; }
   .wrap > header:after {
@@ -666,11 +698,11 @@ menu {
   bottom: 0;
   left: 0;
   width: auto !important;
-  transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
-  -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
+  transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+  -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+  -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+  -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
   .popupbase > div {
     display: -webkit-box;
     display: -moz-box;
@@ -721,13 +753,15 @@ menu {
       min-height: 50%; }
       .popupbase > div > div > * {
         position: relative;
-        width: 100%; }
+        width: 100%;
+        margin: 20px 0 0 0; }
       .popupbase > div > div > header {
         max-height: 50px;
         height: 50px;
         min-width: 0;
         background-color: transparent;
-        padding: 0; }
+        padding: 0;
+        margin: 0; }
         .popupbase > div > div > header h2, .popupbase > div > div > header h3 {
           padding: 0 0 0 15px;
           font-weight: bold;
@@ -749,7 +783,6 @@ menu {
         overflow: auto;
         max-height: 600px;
         height: 100%;
-        margin: 20px 0 0 0;
         -webkit-box-orient: column;
         -webkit-box-direction: column;
         -webkit-flex-direction: column;
@@ -780,7 +813,7 @@ menu {
     position: absolute;
     max-width: none;
     max-height: none;
-    top: 40px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0; }
@@ -797,7 +830,7 @@ menu {
     max-width: 570px;
     min-width: 570px; }
   .popupbase.admin_popup, body.admin_mode .popupbase {
-    top: 0; }
+    top: 40px; }
     .popupbase.admin_popup > div > div form, body.admin_mode .popupbase > div > div form {
       width: 100%; }
   .popupbase.iocount_popup, .popupbase.ir_popup {
@@ -928,8 +961,7 @@ menu {
     -moz-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    justify-content: center;
-    margin: 0; }
+    justify-content: center; }
   .popupbase.ir_popup input {
     width: 300px; }
 
@@ -1098,7 +1130,7 @@ menu {
 .db_area {
   position: fixed;
   z-index: 20;
-  top: 50px;
+  top: 40px;
   bottom: 15px;
   right: -600px;
   width: 300px; }
@@ -1146,7 +1178,7 @@ menu {
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    margin: 0 0 10px 0; }
+    margin: 5px 0; }
     .db_area h2 > div span {
       display: -webkit-box;
       display: -moz-box;
@@ -1812,9 +1844,7 @@ menu {
   flexbox: 1 0 40px;
   -webkit-box-flex: 0;
   -ms-flex: 1 0 40px;
-  margin: 0 0 10px 0; }
-  body.admin_mode .sub_title_area {
-    margin: 0 0 10px 0 !important; }
+  margin: 5px 0; }
   .sub_title_area, .sub_title_area .navigation, .sub_title_area .navigation span {
     position: relative; }
   .sub_title_area h2, .sub_title_area h3 {

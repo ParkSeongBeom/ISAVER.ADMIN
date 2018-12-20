@@ -13,10 +13,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceLocationMapper.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/WEB-INF/views/authorization/error.jsp" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/bg/gbg.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_39_cau.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_39_war.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_81_cau.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/assets/images/ico/sico_81_war.svg" />
       <change type="DELETED" beforePath="D:\DEV\01.Projects\2.isaver\0.isaver_admin\trunk\ISAVER.ADMIN\src\com\icent\isaver\admin\common\resource\ApiResource.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/resource/AdminResource.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java" afterPath="$PROJECT_DIR$/src/com/icent/isaver/admin/util/CommonUtil.java" />
@@ -27,6 +23,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/spring/ExceptionResolver.java" afterPath="$PROJECT_DIR$/conf/spring/ExceptionResolver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceDao.java" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/dao/base/FenceDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml" afterPath="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY/src/com/icent/isaver/repository/mapper/base/FenceMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ISAVER.ADMIN.iws" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/_filters.scss" afterPath="$PROJECT_DIR$/web/assets/css/_filters.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css.map" afterPath="$PROJECT_DIR$/web/assets/css/admin.css.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/admin.css" afterPath="$PROJECT_DIR$/web/assets/css/admin.css" />
@@ -59,10 +56,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js" afterPath="$PROJECT_DIR$/web/assets/library/vxg/vxgplayer-1.8.23.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/library/webrtc-streamer/webrtcstreamer.js" afterPath="$PROJECT_DIR$/web/assets/library/webrtc-streamer/webrtcstreamer.js" />
     </list>
-    <list id="bfd984ae-440a-4918-a3ff-4deb8a509023" name="config" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ISAVER.ADMIN.ipr" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ISAVER.ADMIN.iws" afterPath="$PROJECT_DIR$/ISAVER.ADMIN.iws" />
-    </list>
     <ignored path="JABBER.ADMIN.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -70,7 +63,6 @@
     <ignored path="$PROJECT_DIR$/../JABBER.ADMIN.RESPOSIORY/test/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <file path="$PROJECT_DIR$/ISAVER.ADMIN.iws" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,8 +141,8 @@
       <file leaf-file-name="custom-map-mediator.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46108663">
-              <caret line="222" column="41" selection-start-line="222" selection-start-column="41" selection-end-line="227" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.675507">
+              <caret line="229" column="19" selection-start-line="229" selection-start-column="19" selection-end-line="229" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -321,10 +313,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1928" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1499,7 +1491,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="17c7a581-2c43-4b90-9708-3818f2322f6b" name="Default" comment="" />
-      <changelist id="bfd984ae-440a-4918-a3ff-4deb8a509023" name="config" comment="" />
+      <changelist id="" name="config" comment="" />
       <created>1406254347802</created>
       <option name="number" value="Default" />
       <updated>1406254347802</updated>
@@ -2505,19 +2497,7 @@
       <workItem from="1545005245165" duration="15638000" />
       <workItem from="1545091562544" duration="26219000" />
       <workItem from="1545177813619" duration="18575000" />
-      <workItem from="1545264969899" duration="7755000" />
-    </task>
-    <task id="LOCAL-00368">
-      <created>1533529513119</created>
-      <option name="number" value="00368" />
-      <option name="project" value="LOCAL" />
-      <updated>1533529513122</updated>
-    </task>
-    <task id="LOCAL-00369">
-      <created>1533603194117</created>
-      <option name="number" value="00369" />
-      <option name="project" value="LOCAL" />
-      <updated>1533603194118</updated>
+      <workItem from="1545264969899" duration="9095000" />
     </task>
     <task id="LOCAL-00370">
       <created>1533618298100</created>
@@ -2801,11 +2781,23 @@
       <option name="project" value="LOCAL" />
       <updated>1544495184370</updated>
     </task>
-    <option name="localTasksCounter" value="417" />
+    <task id="LOCAL-00417">
+      <created>1545276236589</created>
+      <option name="number" value="00417" />
+      <option name="project" value="LOCAL" />
+      <updated>1545276236591</updated>
+    </task>
+    <task id="LOCAL-00418">
+      <created>1545276250109</created>
+      <option name="number" value="00418" />
+      <option name="project" value="LOCAL" />
+      <updated>1545276250109</updated>
+    </task>
+    <option name="localTasksCounter" value="419" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4348576000" />
+    <option name="totallyTimeSpent" value="4349916000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2817,7 +2809,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24864864" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
@@ -2837,7 +2829,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35243243" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2642487" sideWeight="0.50159913" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27567568" sideWeight="0.50159913" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3145946" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -3245,7 +3237,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3279,7 +3271,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="146" column="13" selection-start-line="146" selection-start-column="11" selection-end-line="146" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3374,8 +3366,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/page/dashboard/custom-map-mediator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46108663">
-          <caret line="222" column="41" selection-start-line="222" selection-start-column="41" selection-end-line="227" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.675507">
+          <caret line="229" column="19" selection-start-line="229" selection-start-column="19" selection-end-line="229" selection-end-column="19" />
           <folding />
         </state>
       </provider>

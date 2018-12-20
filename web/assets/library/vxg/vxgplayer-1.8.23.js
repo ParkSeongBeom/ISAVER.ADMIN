@@ -15,7 +15,7 @@ window.vxgplayer = function(id, options){
 		}
 
 		if(!vxgplayer.browserSupportsPluginPnacl()){
-			console.log("Not installed vxg_media_player");
+			console.debug("Not installed vxg_media_player");
 			vxgplayer.showNotInstalled(id);
 
 			var fs = window.RequestFileSystem || window.webkitRequestFileSystem;
@@ -28,25 +28,25 @@ window.vxgplayer = function(id, options){
 		// magic run app
 		var fs = window.RequestFileSystem || window.webkitRequestFileSystem;
 		if (!fs) {
-  			//console.log("RequestFileSystem failed");
+  			console.debug("RequestFileSystem failed");
 			window.location.href = "http://www.videoexpertsgroup.com/player_start/";
 		} else {
   			fs(window.TEMPORARY, 1, function(){
-			    //console.log("not in incognito mode");
+			    console.debug("not in incognito mode");
 			    if(!vxgplayer.isFrame()){
-					//console.log("Start Chrome App");
+					console.debug("Start Chrome App");
 					window.location.href = "http://www.videoexpertsgroup.com/player_start/";
 				}
   			},
   			function(){
-				console.log("Not installed vxg_media_player");
+				console.debug("Not installed vxg_media_player");
   			});
 		}
 
 		// check web socket server
 		if(window.location.protocol != "https:" && !vxgplayer.isFrame()){
 			vxgplayer.checkWebSocket().done(function(result){
-				//console.log('websocket: success');
+				console.debug('websocket: success');
 			}).fail(function(err){
 				// check incognito mode
 				fs(window.TEMPORARY,1,function(){ vxgplayer.showWebSocketFailed(id); },function(){ vxgplayer.showNotStartedInIncognitoMode(id); });
@@ -55,7 +55,7 @@ window.vxgplayer = function(id, options){
 
 		if(window.location.protocol != "https:" && vxgplayer.isFrame()){
 			vxgplayer.checkWebSocket().done(function(result){
-				//console.log('websocket: success');
+				console.debug('websocket: success');
 			}).fail(function(err){
 				vxgplayer.showNotStartedInIFrame(id);
 			});
@@ -68,7 +68,7 @@ window.vxgplayer = function(id, options){
 			self.player = document.getElementById(id);
 			self.m = {};
 			options = options || {};
-			//console.log(options);
+			console.debug(options);
 			var nmf_path = "media_player.nmf";
 			var nmf_src = "pnacl/Release/media_player.nmf";
 			var url = "";
@@ -150,7 +150,7 @@ window.vxgplayer = function(id, options){
 				}
 				
 				if(self.m.debug){
-					console.log('Player: ' + self.id + ' cmd=[' + cmd.join('] '));
+					console.debug('Player: ' + self.id + ' cmd=[' + cmd.join('] '));
 				}
 				self.module.postMessage(cmd);
 				// self.module.postMessage(arguments);
@@ -184,7 +184,7 @@ window.vxgplayer = function(id, options){
 			self.m.snapshotFile = "";
 
 			if(self.m.debug){
-				console.log("Player " + self.id + " - init new player");
+				console.debug("Player " + self.id + " - init new player");
 			}
 
 			self.set_controls_opacity = function(val){
@@ -253,7 +253,7 @@ window.vxgplayer = function(id, options){
 			self.loadSettings = function(){
 
 				if(self.m.debug){
-					console.log('Player ' + self.id + ' - loadSettings');
+					console.debug('Player ' + self.id + ' - loadSettings');
 				}
 
 				if(self.player.hasAttribute('useragent-prefix')){
@@ -321,7 +321,7 @@ window.vxgplayer = function(id, options){
 			
 			self.moduleDidLoad = function(){
 				if(self.m.debug){
-					console.log('Player ' + self.id + ' - moduleDidLoad');
+					console.debug('Player ' + self.id + ' - moduleDidLoad');
 				}
 
 				self.loadSettings();
@@ -336,7 +336,7 @@ window.vxgplayer = function(id, options){
 			}
 			self.playerDidLoad = function(){
 				if(self.m.debug){
-					console.log('Player ' + self.id + " - playerDidLoad");
+					console.debug('Player ' + self.id + " - playerDidLoad");
 				}
 				el_loader.style.display = "none";
 				if(self.onReadyStateCallback){
@@ -349,25 +349,25 @@ window.vxgplayer = function(id, options){
 
 			self.connectToApp = function(){
 				if(self.m.debug){
-					console.log('Player ' + self.id + ' connectToApp');
+					console.debug('Player ' + self.id + ' connectToApp');
 				}
 				self.m.port = chrome.runtime.connect("hncknjnnbahamgpjoafdebabmoamcnni");
 				//self.m.port = chrome.runtime.connect("invalid");
 				if(self.m.debug){
-					console.log('Player ' + self.id + ' connected port='+self.m.port);
+					console.debug('Player ' + self.id + ' connected port='+self.m.port);
 				}
 				self.m.port.name = ""+ new Date().getTime();
 
 				self.m.port.onDisconnect.addListener(function(){
 					if(self.m.debug)
-						console.log('disconnected port.name='+self.m.port.name);
+						console.debug('disconnected port.name='+self.m.port.name);
 					self.module.command( 'stopnativeclient', '@'+self.m.port.name);
 
 					self.m.port = undefined;
 				});
 
 				if(self.m.debug)
-					console.log('connected port.name='+self.m.port.name);
+					console.debug('connected port.name='+self.m.port.name);
 
 				self.m.port.onMessage.addListener(function(msg) {
 					if( msg != undefined && msg.id == undefined && msg[0].charAt(0) == '@'){
@@ -377,17 +377,17 @@ window.vxgplayer = function(id, options){
 						if(0 == msg.data.indexOf("VERSION_APP")){
 							self.m.versionapp = msg.data.split(' ')[1];
 							if(self.m.debug){
-								console.log('Player ' + self.id + ' =VERSION_APP '+self.m.versionapp);
+								console.debug('Player ' + self.id + ' =VERSION_APP '+self.m.versionapp);
 							}
 
 							self.module.command( 'setappversion', self.m.versionapp);
 							self.module.command( 'startnativeclient', '@'+self.m.port.name);
 							self.playerDidLoad();
 						}else{
-							console.log('Player ' + self.id + ' Invalid VERSION_APP msg.data='+msg.data);
+							console.debug('Player ' + self.id + ' Invalid VERSION_APP msg.data='+msg.data);
 						}
 					}else{
-						console.log('Player ' + self.id + 'getversionapp unknown msg='+msg);
+						console.debug('Player ' + self.id + 'getversionapp unknown msg='+msg);
 					}
 				});
 				self.m.port.postMessage({id: ""+self.m.port.name, cmd: "getversionapp", data: ""} );
@@ -429,7 +429,7 @@ window.vxgplayer = function(id, options){
 
 			self.handleMessage = function(msgEvent){
 				if(self.m.debug){
-					console.log('Player ' + self.id + ' handleMessage: ' + msgEvent.data);
+					console.debug('Player ' + self.id + ' handleMessage: ' + msgEvent.data);
 				}
 				if(msgEvent == undefined || msgEvent.data == undefined)
 					return;
@@ -443,7 +443,7 @@ window.vxgplayer = function(id, options){
 					str = "PLAYER_INIT_ERR ";
 					err = parseInt(msgEvent.data.split(' ')[1], 10);
 					err_type = (err >> 16)&0xffff;
-					console.log('err_type='+err_type);
+					console.debug('err_type='+err_type);
 					switch(err_type){
 					case 4:	
 						str += "Init audio output error ";		
@@ -464,7 +464,7 @@ window.vxgplayer = function(id, options){
 				if(0 == msgEvent.data.indexOf("VERSION_APP")){
 					self.m.versionapp = msgEvent.data.split(' ')[1];
 					if(self.m.debug)
-						console.log('=VERSION_APP '+self.m.versionapp);
+						console.debug('=VERSION_APP '+self.m.versionapp);
 					self.playerDidLoad();
 				}else if(0 == msgEvent.data.indexOf("TAKE_SNAPSHOT")){
 					snap_status = msgEvent.data.split(' ')[1];
@@ -541,7 +541,7 @@ window.vxgplayer = function(id, options){
 					var arr = msgEvent.data.split(' ');
 					self.m.lastErrorDecoder = (arr.length > 1) ? parseInt(arr[1],10) : 0;
 					if(self.m.debug)
-						console.log('=MEDIA_ERR_DECODER '+self.m.lastErrorDecoder + ' ' + (self.m.lastErrorDecoder == 0)?'Decoder resumed':'');
+						console.debug('=MEDIA_ERR_DECODER '+self.m.lastErrorDecoder + ' ' + (self.m.lastErrorDecoder == 0)?'Decoder resumed':'');
 					if(self.m.lastErrorDecoder == 0){
 						self.m.lastErrorCode = -1;
 						//self.hideerror();
@@ -659,10 +659,10 @@ window.vxgplayer = function(id, options){
 				self.hideerror();
 
 				if(self.m.debug)
-					console.log( 'self.play self.m.url='+self.m.url + ' self.m.is_opened='+self.m.is_opened);
+					console.debug( 'self.play self.m.url='+self.m.url + ' self.m.is_opened='+self.m.is_opened);
 
 				if(self.m.url.length < 1){
-					console.log("invalid url");
+					console.debug("invalid url");
 					return;
 				}
 				if(!self.m.is_opened){
@@ -836,13 +836,13 @@ window.vxgplayer = function(id, options){
 			};
 
 			self.changedFullscreen = function(){
-				console.log('changedFullscreen');
+				console.debug('changedFullscreen');
 				if (document.webkitIsFullScreen){
 					self.size('100%', '100%');
-					console.log('changedFullscreen -> fullscreen');
+					console.debug('changedFullscreen -> fullscreen');
 				}else{
 					self.size(self.playerWidth + 'px', self.playerHeight + 'px');
-					console.log('changedFullscreen -> NOT fullscreen');
+					console.debug('changedFullscreen -> NOT fullscreen');
 				}
 			};
 
@@ -854,7 +854,7 @@ window.vxgplayer = function(id, options){
 			}
 
 			self.fullscreen = function(){
-				console.log("fullscreen: clicked");
+				console.debug("fullscreen: clicked");
 				if(document.webkitIsFullScreen == true){
 					document.webkitCancelFullScreen();
 				}else{
@@ -880,7 +880,7 @@ window.vxgplayer = function(id, options){
 			self.src = function(url){
 				if(url != undefined){
 					self.m.url = url;
-					console.log('Player ' + self.id+' src='+self.m.url+' autostart='+self.m.autostart+' is_opened='+self.m.is_opened);
+					console.debug('Player ' + self.id+' src='+self.m.url+' autostart='+self.m.autostart+' is_opened='+self.m.is_opened);
 					if(self.m.url.length > 0 && self.m.autostart){
 						self.m.is_opened = true;
 						self.module.command('open', url);
@@ -1010,7 +1010,7 @@ window.vxgplayer = function(id, options){
 			}
 			
 			self.zoomCursorUp = function(e){
-				console.log("zoomCursorUp");
+				console.debug("zoomCursorUp");
 				self.zoomCursorDownBool = false;
 			}
 			
@@ -1111,7 +1111,7 @@ window.vxgplayer = function(id, options){
 			}
 			
 			self.zoomCursorUp = function(e){
-				console.log("zoomCursorUp");
+				console.debug("zoomCursorUp");
 				self.zoomCursorDownBool = false;
 			}
 			
@@ -1237,15 +1237,15 @@ window.vxgplayer.showNotStartedInIncognitoMode = function(id){
 }
 
 window.vxgplayer.startPlayerInNewTab = function(){
-	console.log('start player');
+	console.debug('start player');
 	var params = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes"
 	var win = window.open('http://www.videoexpertsgroup.com/player_start/', "_blank", params)
 	setTimeout(function(){
 		win.close();
 		location.reload();
-		/*for(var id in window.vxgplayer.players){
-			console.log("Restart player: " + id);
-		}*/
+		for(var id in window.vxgplayer.players){
+			console.debug("Restart player: " + id);
+		}
 	},1000);
 }
 
@@ -1311,7 +1311,7 @@ window.vxgplayer.checkWebSocket = function(){
 			p.reject();
 		}
 		testWebSocket.onmessage = function(evt){
-			console.log(evt);
+			console.debug(evt);
 		}
 		testWebSocket.onopen=function(){
 			testWebSocket.close();
@@ -1334,8 +1334,8 @@ window.vxgplayer.getAbsolutePosition = function(element){
 
 document.addEventListener('DOMContentLoaded', function() {
 
-	console.log("vxgplayer isFrame: " + window.vxgplayer.isFrame());
-	console.log("vxgplayer browserSupportsPluginPnacl: " + window.vxgplayer.browserSupportsPluginPnacl());
+	console.debug("vxgplayer isFrame: " + window.vxgplayer.isFrame());
+	console.debug("vxgplayer browserSupportsPluginPnacl: " + window.vxgplayer.browserSupportsPluginPnacl());
 
 	// search all vxgplayers
 	var els = document.getElementsByClassName("vxgplayer");

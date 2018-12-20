@@ -2,10 +2,12 @@ package spring;
 
 
 import com.icent.isaver.admin.bean.Result;
-import com.icent.isaver.admin.common.resource.ApiResource;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
+import com.icent.isaver.admin.util.CommonUtil;
+import com.kst.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -31,15 +33,26 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         ModelAndView modelAndView = new ModelAndView();
         Result<String> result = new Result<>();
         String errorMessage = null;
+
         try {
             if (exception != null && exception instanceof IsaverException) {
                 IsaverException iException = (IsaverException) exception;
-                result.setState(iException.getCode());
-                errorMessage = messageSource.getMessage(iException.getCode(), null, request.getLocale());
-                result.setMessage(errorMessage);
+
+                if(StringUtils.nullCheck(iException.getCode())){
+                    result.setState(ResultState.ERROR_UNKNOWN);
+                    result.setMessage(messageSource.getMessage(ResultState.ERROR_UNKNOWN, null, request.getLocale()));
+                }else{
+                    result.setState(iException.getCode());
+                    errorMessage = messageSource.getMessage(result.getState(), null, request.getLocale());
+                    result.setMessage(errorMessage);
+                }
 
                 if (iException.getMessage() != null) {
                     result.setData(iException.getMessage());
+                }else{
+                    if (exception.getStackTrace() != null) {
+                        result.setData(getExceptionStackTraceToString(exception.getStackTrace()));
+                    }
                 }
             } else if (exception != null && exception instanceof HttpRequestMethodNotSupportedException) { // http exception
                 result.setState(ResultState.ERROR_WRONG_ACCESS);
@@ -63,8 +76,12 @@ public class ExceptionResolver implements HandlerExceptionResolver {
             logger.error("EXCEPTION [Message : {}]", e.getMessage());
         }
 
-        modelAndView.addObject(ApiResource.RESULT_NODE_NAME, result);
-        modelAndView.setViewName("login");
+        modelAndView.addObject(AdminResource.RESULT_NODE_NAME, result);
+        if(CommonUtil.getViewFromRequest(request).toLowerCase().equals(AdminResource.HTML_VIEW)){
+            modelAndView.setViewName("login");
+        }else{
+            return null;
+        }
         return modelAndView;
     }
 

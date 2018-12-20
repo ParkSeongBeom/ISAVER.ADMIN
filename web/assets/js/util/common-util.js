@@ -93,14 +93,6 @@ function onlyNumberDown(_this){
         return;
     }
     _this.value = _this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g,'');
-
-    if (event.keyCode == 13) {
-        var _callNumberText = $(event.target).val();
-
-        if(_callNumberText.length > 2) {
-            callCommonCtrl.callDialPadFunc();
-        }
-    }
 }
 
 // 클래스 추가/삭제
@@ -203,4 +195,26 @@ function isPassive() {
         }));
     } catch(e) {}
     return supportsPassiveOption;
+}
+
+/**
+ * uuid 만들기
+ * @author psb
+ */
+function guid(separate) {
+    function s4() {
+        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+    }
+    if(separate==null){
+        separate = "";
+    }
+    return s4() + s4() + separate + s4() + separate + s4() + separate + s4() + separate + s4() + s4() + s4();
+}
+
+function uuid36() {
+    return guid('-');
+}
+
+function uuid32() {
+    return guid();
 }

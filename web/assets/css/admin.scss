@@ -1162,7 +1162,7 @@ a.fc-more {position: relative; z-index: 2;}
     @include flex-option(1, 0, $sec_l); max-width:$sec_l; min-width:$sec_l; width:$sec_l;
     & > div {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px; }
 
-    & > div, ul li > div , ul li button, .camera_list ul li, .fence_list, .fence_list p, .camera_list > div
+    & > div, ul li > div , ul li button, .camera_list ul li, .fence_list > div, .fence_list p, .camera_list > div
     {@include flexbase; @include flex-align-items-center;}
 
     & > div {
@@ -1202,7 +1202,7 @@ a.fc-more {position: relative; z-index: 2;}
 
 
         & > section {
-          @include flex-option(0, 1, 100%); margin: 10px 0 10px 55px; position: relative;
+          @include flex-option(0, 1, 100%); margin: 10px 0 10px 50px; position: relative;
 
           &:before, &:after {content:""; position: absolute; background-color:$color-gray-01}
           &:before {left:-20px; top:18px; width:18px; height:1px;}
@@ -1213,54 +1213,103 @@ a.fc-more {position: relative; z-index: 2;}
             &:after {bottom:auto; top:-10px; height:28px;}
           }
 
-          .fence_list {
-            @include flex-column; @include flex-align-items-start; margin:0 0 10px 0;
-            & * {height:40px;}
-            & > * {
-              @include flex-option(0, 1, 100%);
-              &:nth-child(1) {}
-              &:nth-child(2) {margin:0 0 0 40px; width:calc(100% - 40px);}
+          & > div {
+            padding: 0 0 0 40px;
+            select, input {width:100%; margin-top:10px;}
+            & * {width:100%; height:40px;}
+          }
+
+          button {
+            @include flex-midddle;
+            &:before {font-size:1.3rem; }
+            &.on {font-weight:bold; color:$color-orange-01;}
+            &:hover {color:$color-blue-01;}
+          }
+          button.btn {
+            &-del, &-edi {
+              width:30px; min-width:30px; max-width:30px; @include flex-justify-content-end; padding:0 4px 0 0;
             }
+            &-del { &:before {content:"\e91a";} }
+            &-edi { &:before {content:"\e905";} }
+
+            &-cam {
+              width:100%; padding:0 0 0 20px; @include flex-justify-content-start;
+              &:before {content:"ㆍ"; position: absolute; left:0; width:20px;}
+            }
+
+            &-add {
+              overflow: hidden; width:40px; height:40px; color:$color-white-01; background-color: $color-dark-01;
+              @include border-radius(400px);
+              &:before {content:"\e92b";}
+              &:hover {background-color: $color-blue-01;}
+            }
+          }
+
+          .fence_list {
+
+            /*
+            <div class="fence_list">
+
+              <div class="fence_title">
+                <p>fence1 ID 삽입</p>
+                <button class="btn-edi"></button>
+                <button class="btn-del"></button>
+              </div>
+
+              <div class="fence_name">
+                <input type="text" placeholder="펜스명을 입력하세요" />
+                <select>
+                  <option selected disabled>선택</option>
+                  <option>선택01</option>
+                  <option>선택02</option>
+                </select>
+              </div>
+
+            </div>
+            */
+
+
+            @include flex-column; @include flex-align-items-start;
+
+            & > * { /*@include flex-option(0, 1, 100%);*/ }
+
+            .fence_title {
+              &:before {
+                content:"\e904" !important; @include flexbase; @include flex-align-items-center;
+                position: absolute; top:0; left:0; width:40px; height:40px; font-size:1.6rem;
+              }
+
+            }
+            .fence_name {
+              input  {@include flex-width-one(2.5); border-right-width:0;}
+              select {@include flex-width-one(0.5);}
+            }
+
 
           }
 
           .camera_list {
-            padding: 0 0 0 40px;
 
-            & * {width:100%;}
-
-            & > select {margin:0 0 10px 0;}
+            /*
+            <div class="camera_list">
+                  <select>
+                      <option selected disabled>감시카메라 선택</option>
+                      <option>IP Camere 01</option>
+                      <option>IP Camere 01</option>
+                  </select>
+                  <div>
+                      <button class="btn-cam">IP Camere 01</button>
+                      <button class="btn-del"></button>
+                  </div>
+              </div> <!-- 카메라 목록 -->
+            */
 
             & > div {
               @include border01(0 0 1px 0,$color-gray-01,1 );
-              & > button {
-                &:last-of-type {
-                  width:40px; height:40px; @include flex-justify-content-end; padding:0;
-                  &:before {content:"\e91a"; font-size:1.2rem !important; padding:0;}
-                  &:after {display: none;}
-                  &:hover:before {color:$color-red-01;}
-                }
-              }
             }
           }
         }
 
-
-        *:before {font-size:1.8rem !important; padding:0 10px 0 0;}
-        button {padding:0 0 0 20px;}
-        button:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
-        button.on {
-          &, &:after {font-weight:bold; color:$color-blue-01;}
-          &:after {content:"\e901"; font-size:1.2rem; }
-        }
-
-        /*.m8:before {content:"\e962" !important;}
-        .camera:before {content:"\e964" !important;}*/
-
-        .fence_list > p {
-          &:before {content:"\e904" !important;}
-          //&:after  {content:"-" !important; margin:0 10px;}
-        }
       }
     }
 

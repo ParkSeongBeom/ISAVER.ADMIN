@@ -25,6 +25,9 @@ var NotificationHelper = (
             ,'allCancelNotificationUrl':'/notification/allCancel.json'
             ,'fenceListUrl' : "/fence/list.json"
         };
+        let _options ={
+            toastPopup : false
+        };
         let _webSocketHelper;
         let _messageConfig;
         let _fenceList = {};
@@ -489,20 +492,23 @@ var NotificationHelper = (
                 /* 싸이렌 */
                 playSegment();
 
-                if(typeof dashboardHelper!="undefined" && dashboardHelper instanceof DashboardHelper){
-                    if(dashboardHelper.getArea("templateCode", notification['areaId'])!='TMP005'){
-                        var toastTag = templateHelper.getTemplate("toast");
-                        toastTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
-                        toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
-                        toastTag.find("#toastAreaName").text(notification['areaName']);
-                        toastTag.find("#toastEventDesc").text(notification['eventName']);
-                        $(".toast_popup").append(toastTag);
 
-                        removeToastTag(toastTag);
-                        function removeToastTag(_tag){
-                            setTimeout(function(){
-                                _tag.remove();
-                            },3000);
+                if(_options['toastPopup']) {
+                    if(typeof dashboardHelper!="undefined" && dashboardHelper instanceof DashboardHelper){
+                        if(dashboardHelper.getArea("templateCode", notification['areaId'])!='TMP005'){
+                            var toastTag = templateHelper.getTemplate("toast");
+                            toastTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
+                            toastTag.attr("onclick","javascript:layerShowHide('list', 'show');");
+                            toastTag.find("#toastAreaName").text(notification['areaName']);
+                            toastTag.find("#toastEventDesc").text(notification['eventName']);
+                            $(".toast_popup").append(toastTag);
+
+                            removeToastTag(toastTag);
+                            function removeToastTag(_tag){
+                                setTimeout(function(){
+                                    _tag.remove();
+                                },3000);
+                            }
                         }
                     }
                 }
@@ -588,7 +594,7 @@ var NotificationHelper = (
             var notificationTag = _self.getNotification('element',notification['notificationId']);
             var notificationData = _self.getNotification('data',notification['notificationId']);
             if(notificationTag==null){
-                console.warn("[NotificationHelper][updateNotification] empty notification - "+notification['notificationId']);
+                console.debug("[NotificationHelper][updateNotification] empty notification - "+notification['notificationId']);
             }
 
             switch (notification['actionType']){
@@ -645,7 +651,7 @@ var NotificationHelper = (
                     if(count == null){
                         count = _CALL_BACK_RETRY['cnt'];
                     }
-                    console.log('[NotificationHelper] callBackEvent retry - ' + (_CALL_BACK_RETRY['cnt']-count));
+                    console.debug('[NotificationHelper] callBackEvent retry - ' + (_CALL_BACK_RETRY['cnt']-count));
 
                     if(count > 0){
                         setTimeout(function(){

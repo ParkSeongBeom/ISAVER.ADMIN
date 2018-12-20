@@ -553,7 +553,6 @@
      @author psb
      */
     function callAjax(actionType, data){
-        console.log(actionType, data);
         sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,critical_successHandler,critical_errorHandler,actionType);
     }
 

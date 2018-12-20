@@ -11,6 +11,7 @@ window.console=(
             console = {};
         }
         var flag=true;
+        var debugFlag=false;
         //var logArray = {
         //        logs: [],
         //        errors: [],
@@ -35,13 +36,19 @@ window.console=(
                 flag && original.info && original.info.apply(original,arguments);
             }
             ,debug: function(v){
-                flag && original.info && original.debug.apply(original,arguments);
+                debugFlag && flag && original.info && original.debug.apply(original,arguments);
             }
             ,on: function(){
                 flag = true;
             }
             ,off: function(){
                 flag = false;
+            }
+            ,debugOn: function(){
+                debugFlag = true;
+            }
+            ,debugOff: function(){
+                debugFlag = false;
             }
             ,useable: function(){
                 return flag;

@@ -336,11 +336,16 @@
                             <article>
                                 <section class="guard_set">
                                     <div class="s_lbox">
-                                        <div class="human_check">
-                                            <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setObjectViewFlag('${childArea.areaId}',this);">
-                                            <label></label>
+                                        <div class="check_btn_set">
+                                            <div class="human_check">
+                                                <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setObjectViewFlag('${childArea.areaId}',this);">
+                                                <label></label>
+                                            </div>
+                                            <div class="object_check">
+                                                <input type="checkbox" name="pointsCkb" onClick="javascript:dashboardHelper.setPointsHideFlag('${childArea.areaId}',this);">
+                                                <label></label>
+                                            </div>
                                         </div>
-                                        <%--<div name="map-canvas" class="map_images"></div>--%>
                                         <div name="map-canvas"></div>
                                     </div>
                                     <div class="s_rbox">
