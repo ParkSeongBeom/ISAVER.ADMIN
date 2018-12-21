@@ -175,23 +175,32 @@ var CustomMapPopup = (
                                         );
                                     }
 
-                                    _element.find("#childList").append(
-                                        $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                            $("<div/>",{name:"custom"}).append(
-                                                $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).click({targetId:target['targetId'],deviceCode:target['deviceCode']},function(evt){
-                                                    _customMapMediator.targetRender({targetId:evt.data.targetId, deviceCode:evt.data.deviceCode});
+                                    var targetElement = $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
+                                        $("<div/>",{name:"custom"}).append(
+                                            $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).click({targetId:target['targetId'],deviceCode:target['deviceCode']},function(evt){
+                                                _customMapMediator.targetRender({targetId:evt.data.targetId, deviceCode:evt.data.deviceCode});
+                                            })
+                                        ).append(
+                                            $("<div/>").append(
+                                                $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'}).click({targetId:target['targetId']},function(evt){
+                                                    _checkChildTarget(evt.data.targetId, $(this).is(":checked"));
                                                 })
                                             ).append(
-                                                $("<div/>").append(
-                                                    $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'}).click({targetId:target['targetId']},function(evt){
-                                                        _checkChildTarget(evt.data.targetId, $(this).is(":checked"));
-                                                    })
-                                                ).append(
-                                                    $("<label/>")
-                                                )
+                                                $("<label/>")
                                             )
                                         )
                                     );
+                                    _element.find("#childList").append(targetElement);
+
+                                    if(target['deviceCode']=="DEV013" && target['mainFlag']=="Y" && targetElement.find("#addSection").length==0){
+                                        targetElement.append(
+                                            $("<section/>",{id:"addSection"}).append(
+                                                $("<button/>",{class:"btn-add"}).click({deviceId:target['targetId']},function(evt){
+                                                    _self.addFence(null,evt.data.deviceId);
+                                                })
+                                            )
+                                        );
+                                    }
                                 }
                                 break;
                             case 'addFence' :
@@ -248,16 +257,6 @@ var CustomMapPopup = (
                                 ).append(
                                     $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
                                 );
-
-                                if(targetTag.find("#addSection").length==0){
-                                    targetTag.append(
-                                        $("<section/>",{id:"addSection"}).append(
-                                            $("<button/>",{class:"btn-add"}).click({deviceId:data['deviceId']},function(evt){
-                                                _self.addFence(null,evt.data.deviceId);
-                                            })
-                                        )
-                                    );
-                                }
                                 fenceElement.insertBefore(targetTag.find("#addSection"));
                                 _ajaxCall("fenceDeviceList",{areaId:_areaId});
                                 break;
