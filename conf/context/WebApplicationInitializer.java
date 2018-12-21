@@ -27,9 +27,7 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
 
         try {
             registerLogbackFunc();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JoranException e) {
+        } catch (FileNotFoundException | JoranException e) {
             e.printStackTrace();
         }
 

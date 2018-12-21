@@ -7,7 +7,10 @@ import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
-import com.icent.isaver.repository.bean.*;
+import com.icent.isaver.repository.bean.AreaBean;
+import com.icent.isaver.repository.bean.CustomMapLocationBean;
+import com.icent.isaver.repository.bean.FenceBean;
+import com.icent.isaver.repository.bean.FenceDeviceBean;
 import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
@@ -22,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.net.InetAddress;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Custom Map Service Implements
