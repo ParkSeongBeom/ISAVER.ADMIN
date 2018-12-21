@@ -159,7 +159,6 @@ var CustomMapMediator = (
         this.setElement = function(element, canvas){
             _element = element;
             _mapCanvas = canvas;
-            _mapCanvas.addClass("map_images");
             _mapCanvas.empty();
             if(_mapCanvas.data('svgwrapper')){
                 _mapCanvas.svg('destroy');

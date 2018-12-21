@@ -359,7 +359,11 @@
                 <article class="map_sett_box">
                     <section id="customMapSection" class="map">
                         <div>
-                            <div id="mapElement"></div>
+                            <div id="mapElement" class="map_images"></div>
+                            <div class="fencebtn_set">
+                                <button class="btn-pdel" onclick="javascript:customMapPopup.removePointFence();"></button>
+                                <button class="btn-canc" onclick="javascript:customMapPopup.resetAddFenceInfo();"></button>
+                            </div>
                         </div>
                         <div>
                             <select id="fileId">
@@ -382,6 +386,9 @@
                             <p><spring:message code="resource.column.useYn"/></p>
                         </div>
                         <ul id="childList"></ul>
+                        <div class="fenceset_popup">
+                            <div></div>
+                        </div>
                     </section>
                 </article>
                 <footer>
@@ -490,6 +497,8 @@
     var customMapMessageConfig = {
         listFailure             :'<spring:message code="resource.message.listFailure"/>'
         ,   customMapSupport    :'<spring:message code="resource.message.customMapSupport"/>'
+        ,   fenceNotEnough      :'<spring:message code="resource.message.fenceNotEnough"/>'
+        ,   settingsInUsed      :'<spring:message code="resource.message.settingsInUsed"/>'
         ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
         ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
         ,   saveFailure         :'<spring:message code="common.message.saveFailure"/>'

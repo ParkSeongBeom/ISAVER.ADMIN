@@ -92,16 +92,22 @@ public class HaspLicenseUtil {
                 logger.error(e.getMessage());
             }
         }
-        if(noneLicenseTargets != null && noneLicenseTargets.length() > 0){
-            for(String target : noneLicenseTargets.split(",")){
-                if(StringUtils.notNullCheck(hostIp) && (target.equals(hostIp) || target.equals(CommonUtil.getIpAddressFunc()))){ // 라이센스 체크 대상이 아님.
-                    authorLicenseFlag = false;
-                    break;
-                }else{ // 라이센스 유효성 체크 대상.
-                    authorLicenseFlag = true;
+
+        if(System.getProperty("deployMode")!=null && System.getProperty("deployMode").equals("localhost")){
+            authorLicenseFlag = false;
+        }else{
+            if(noneLicenseTargets != null && noneLicenseTargets.length() > 0){
+                for(String target : noneLicenseTargets.split(",")){
+                    if(StringUtils.notNullCheck(hostIp) && (target.equals(hostIp) || target.equals(CommonUtil.getIpAddressFunc()))){ // 라이센스 체크 대상이 아님.
+                        authorLicenseFlag = false;
+                        break;
+                    }else{ // 라이센스 유효성 체크 대상.
+                        authorLicenseFlag = true;
+                    }
                 }
             }
         }
+
         if(authorLicenseFlag){
             for(long ft : featureArr){
                 hasp = new Hasp(ft);

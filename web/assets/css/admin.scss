@@ -1119,7 +1119,7 @@ a.fc-more {position: relative; z-index: 2;}
 
   $sec_h:450px; $sec_m:800px; $sec_l:400px; $sec_c:500px; $ch_width:90px; $ch_margin:20px;
   & > section {
-    overflow: hidden; margin:0 0 0 20px; height:100%;
+    overflow: hidden; position: relative; margin:0 0 0 20px; height:100%;
     @include flexbase; @include flex-column; @include flex-option(0, 1, 100%); @include border01(1px,$color-gray-06,1 );
 
     & > * {width:100%; position: relative;  }
@@ -1136,11 +1136,42 @@ a.fc-more {position: relative; z-index: 2;}
   }
 
   .map {
+
     & > div {
+      position: relative;
       &:first-of-type {
-        @include flex-midddle; overflow: hidden; height:100%;
+        overflow: hidden; height:100%;
         background-color: $bas-color;
         &, & * {color:$color-white-02;}
+
+
+        .fencebtn_set {
+          display: none; position: absolute; z-index:10; bottom:10px; right:10px;
+
+          //&:before {content:"Fence Setting";}
+
+          & > button {
+            @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+            margin:5px 0;
+            &, & * {color:$color-yellow-01; }
+            &:before {
+              @include flex-midddle; width:30px; height:30px; @include border-radius(200px); @include border01(2px,$color-yellow-01,1 );
+              order:2;
+            }
+            &:after {order:1; font-size:0.9rem; opacity: 0.7; width:40px; text-align: left; margin:0 10px 0 0;}
+
+            &:hover {color:$color-blue-01; &:before {border-color:$color-blue-01;} }
+          }
+
+          .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";}}
+          .btn-canc { &:before {content:"\e91a";} &:after {content:"Cancle";}}
+        }
+
+        &.cursor_cros {
+          .fencebtn_set {@include flexbase; @include flex-column;}
+          svg, .g-fence {cursor:crosshair !important;}
+        }
+
       }
 
       &:last-of-type {
@@ -1155,7 +1186,10 @@ a.fc-more {position: relative; z-index: 2;}
         }
         input {max-width:80px;  }
       }
+
+
     }
+
   }
 
   .list {
@@ -1180,8 +1214,6 @@ a.fc-more {position: relative; z-index: 2;}
         @include border01(0 0 1px 0,$color-gray-06,1 );
       }
     }
-
-
 
     ul {
       overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
@@ -1281,8 +1313,8 @@ a.fc-more {position: relative; z-index: 2;}
 
             }
             .fence_name {
-              input  {@include flex-width-one(2.5); border-right-width:0;}
-              select {@include flex-width-one(0.5);}
+              input  {@include flex-option(0, 1, 100%); border-right-width:0;}
+              select {width:95px; min-width:95px; max-width:95px;}
             }
 
 
@@ -1319,6 +1351,27 @@ a.fc-more {position: relative; z-index: 2;}
         &:nth-child(1) {@include flex-option(0, 1, 100%); margin:0; text-align: left;}
         &:nth-child(2) {@include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;}
       }
+    }
+
+    .fenceset_popup {
+
+      display:none; position: absolute; z-index: 10; top:0; left:0;
+      width:100%; height:100%; min-height:100%; max-height: 100%; opacity: 1; margin:0; padding:0;
+      background-color: rgba($color-dark-01,0.8); @include transition01(200ms);
+
+      &.on {display: block;}
+
+      & > div {
+        @include issue02; @include flex-midddle; @include flex-column; width:100%; height:100%;
+        color:$color-white-01;
+        &:after, &:before {position: relative; }
+        &:after  {content:"Fence Setting"; padding:10px 0 0 0; font-size:1.2rem;}
+        &:before {
+          content:"\e905";
+          @include loding; font-size:4rem; border: none; bottom:auto; left:auto; right:auto;
+        }
+      }
+
     }
 
   }

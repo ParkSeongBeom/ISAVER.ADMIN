@@ -333,7 +333,7 @@
                             );
                         }
                     }
-                    licenseStatusChangeHandler(data['license']['status']);
+                    notificationHelper.licenseStatusChangeHandler(data['license']['status']);
                     layerShowHide('license','show');
                     break;
                 case 'saveProfile':

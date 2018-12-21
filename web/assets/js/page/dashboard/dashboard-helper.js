@@ -149,7 +149,7 @@ var DashboardHelper = (
          * set Area Template List
          */
         this.initAreaTemplate = function(){
-            let areaIds = "";
+            let blinkerAreaIds = "";
 
             $.each($(".watch_area div[areaId]"), function(){
                 const areaId = $(this).attr("areaId");
@@ -176,8 +176,8 @@ var DashboardHelper = (
 
                 switch (templateCode){
                     case "TMP003" :
-                        if(areaIds!=""){ areaIds += ",";}
-                        areaIds += areaId;
+                        if(blinkerAreaIds!=""){ blinkerAreaIds += ",";}
+                        blinkerAreaIds += areaId;
                         break;
                     case "TMP005" :
                         _guardList[areaId] = {};
@@ -219,7 +219,7 @@ var DashboardHelper = (
                                 'websocketSend':false
                                 ,'fenceView':true
                                 ,'openLinkFlag':false
-                                ,'moveFence':true
+                                ,'moveFence':false
                                 ,'click':function(targetId,deviceCode){
                                     if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
                                 }
@@ -235,8 +235,8 @@ var DashboardHelper = (
                 }
             });
 
-            if(areaIds!=""){
-                _self.getBlinker(areaIds);
+            if(blinkerAreaIds!=""){
+                _self.getBlinker(blinkerAreaIds);
             }
         };
 

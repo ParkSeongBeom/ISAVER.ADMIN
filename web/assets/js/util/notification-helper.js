@@ -168,10 +168,10 @@ var NotificationHelper = (
                     break;
             }
 
-            licenseStatusChangeHandler(status);
+            _self.licenseStatusChangeHandler(status);
         };
 
-        var licenseStatusChangeHandler = function(status) {
+        this.licenseStatusChangeHandler = function(status) {
             var redirectFlag = true;
 
             switch (status) {

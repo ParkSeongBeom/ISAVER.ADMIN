@@ -97,6 +97,12 @@ form-bg-effect :
 .ico-sioc :      sioc
 */
 
+.cursor_cros {cursor:crosshair !important;}
+.cursor_auto {cursor:auto !important;}
+.cursor_default {cursor:default !important;}
+.cursor_poin {cursor:pointer !important;}
+
+
 ////// 시계 Start
 .datetime_set {
   @include flex-midddle; opacity: 0.6;
@@ -148,10 +154,6 @@ form-bg-effect :
 
 
 //////...... 달력 datepicker Start
-
-
-
-
 input.datepicker {width:100px;}
 // datepicker Start
 button.ui-datepicker-trigger {
@@ -802,16 +804,21 @@ div[contenteditable] {}
 } // @include resize;
 
 .map_images {
-  position: absolute; width:5000px !important; height:5000px !important; cursor:move;
+  position: absolute; width:5000px !important; height:5000px !important;
 
+  background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
 
   & > * {position: absolute !important;}
+  &:before, &:after {content:""; position: absolute; z-index:-1; background-color: rgba(#fff,0.4); }
+  &:after  {width:100%; height:1px; left:0; top:50%;}
+  &:before {width:1px; height:100%; left:50%; top:0;
 
-  &:before {
-    content:""; position: absolute; z-index:-1; width:100%; height:100%; opacity: 0.7;
-    background-image: url("../images/bg/gbg.svg");
-    background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;
+    /*width:100%; height:100%;
+   background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
+  background-repeat: no-repeat; background-position: 50% 50%; background-size:contain;*/
   }
+
+  //&.cursor_cros {}
 }
 
 .g {
@@ -834,7 +841,7 @@ div[contenteditable] {}
 
     // 디바이스, 구역 이름표
     & > span {
-      @include flex-midddle; position: absolute; width: max-content; bottom:-15px;
+      @include flex-midddle; position: absolute; width: max-content; bottom:-17px;
       padding:3px 10px; font-size:0.9rem;
       /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
       background-color:$color-gray-09; @include border-radius(200px);
@@ -915,6 +922,8 @@ div[contenteditable] {}
 
   &-fence {
     width:100% !important; height:100% !important; background-color: transparent !important;
+    cursor:move;
+
     polygon, path {
       stroke-width:1px;
       text {font-size:5px !important; letter-spacing: 0;}

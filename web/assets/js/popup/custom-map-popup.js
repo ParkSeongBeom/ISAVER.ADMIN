@@ -75,10 +75,24 @@ var CustomMapPopup = (
         };
 
         /**
+         * 펜스 설정중 체크
+         * @author psb
+         */
+        var validate = function(){
+            if(_addFenceInfo['fence']!=null){
+                _alertMessage("settingsInUsed");
+                return false;
+            }
+            return true;
+        };
+
+        /**
          * save setting
          * @author psb
          */
         this.save = function(){
+            if(!validate()){ return false; }
+
             if(!_customMapMediator || !_customMapMediator instanceof CustomMapMediator){
                 console.error("[CustomMapPopup] save failure - customMapMediator is null or typeerror");
                 return false;
@@ -211,7 +225,8 @@ var CustomMapPopup = (
                                             })
                                         ).append(
                                             $("<button/>",{class:"btn-del"}).click({fenceId:data['fenceId']},function(evt){
-                                                resetAddFenceInfo();
+                                                if(!validate()){ return false; }
+                                                _self.resetAddFenceInfo();
                                                 _customMapMediator.removeMarker('fence',{id:evt.data.fenceId});
                                             })
                                         )
@@ -267,10 +282,7 @@ var CustomMapPopup = (
          * @author psb
          */
         this.addFence = function(fenceId, deviceId){
-            if(_addFenceInfo['fence']!=null){
-                return false;
-            }
-
+            if(!validate()){ return false; }
             if(_addFenceInfo['mapCanvas']==null){
                 _addFenceInfo['mapCanvas'] = _customMapMediator.getMapCanvas();
             }
@@ -296,6 +308,8 @@ var CustomMapPopup = (
             var fence = _addFenceInfo['canvasSvg'].polygon([],{"fenceId":fenceId});
             _addFenceInfo['fence'] = $(fence);
             var isDragging = false;
+            _addFenceInfo['mapCanvas'].parent().addClass("cursor_cros");
+            $(".fenceset_popup").addClass("on");
 
             _addFenceInfo['mapCanvas'].find("svg").on("mousedown", function(event){
                 isDragging = false;
@@ -312,7 +326,7 @@ var CustomMapPopup = (
                     _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
                 }
             }).on("mouseup", function(event){
-                if (!isDragging) {
+                if (!isDragging && event.which==1) {
                     const point = [event.offsetX,event.offsetY];
                     if(_addFenceInfo['points'].length>0){
                         _addFenceInfo['points'][_addFenceInfo['points'].length-1] = point;
@@ -327,7 +341,7 @@ var CustomMapPopup = (
                 isDragging = false;
             }).on("dblclick", function(event){
                 if(_addFenceInfo['points'].length<3){
-                    alert("More than 3 points must be set");
+                    _alertMessage("fenceNotEnough");
                     return false;
                 }
                 _customMapMediator.addMarker('fence',{
@@ -337,13 +351,26 @@ var CustomMapPopup = (
                     ,"fenceType":_addFenceInfo['fenceMarker']!=null?_addFenceInfo['fenceMarker']['data']['fenceType']:'normal'
                     ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,_addFenceInfo['points'])
                 });
-                resetAddFenceInfo();
+                _self.resetAddFenceInfo();
                 event.stopPropagation();
             });
         };
 
-        var resetAddFenceInfo = function(){
+        this.removePointFence = function(){
+            if(_addFenceInfo['points'][_addFenceInfo['points'].length-1]!=null){
+                _addFenceInfo['points'].splice(-1,1);
+                _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
+            }
+
+            if(_addFenceInfo['circleList'][_addFenceInfo['circleList'].length-1]!=null){
+                _addFenceInfo['circleList'][_addFenceInfo['circleList'].length-1].remove();
+                _addFenceInfo['circleList'].splice(-1,1);
+            }
+        };
+
+        this.resetAddFenceInfo = function(){
             if(_addFenceInfo['mapCanvas']!=null){
+                _addFenceInfo['mapCanvas'].parent().removeClass("cursor_cros");
                 _addFenceInfo['mapCanvas'].find("svg").off("mousedown mousemove mouseup dblclick");
             }
             for(var index in _addFenceInfo['circleList']){
@@ -356,11 +383,10 @@ var CustomMapPopup = (
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].show();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].show();
             }
-            _addFenceInfo = {
-                'fence' : null
-                , 'circleList' : []
-                , 'points' : []
-            };
+            $(".fenceset_popup").removeClass("on");
+            _addFenceInfo['fence'] = null;
+            _addFenceInfo['circleList'] = [];
+            _addFenceInfo['points'] = [];
         };
 
         /**
@@ -402,7 +428,7 @@ var CustomMapPopup = (
          * @author psb
          */
         this.setTargetValue = function(_this){
-            var targetId = _element.find("#childList button.on").parent().attr("targetId");
+            var targetId = _element.find("#childList button.on").parent().parent().attr("targetId");
             if(targetId==null){
                 return false;
             }

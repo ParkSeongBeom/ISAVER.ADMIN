@@ -346,7 +346,7 @@
                                                 <label></label>
                                             </div>
                                         </div>
-                                        <div name="map-canvas"></div>
+                                        <div name="map-canvas" class="map_images"></div>
                                     </div>
                                     <div class="s_rbox">
                                         <ul ptzPlayers></ul>
