@@ -201,20 +201,14 @@ function isPassive() {
  * uuid 만들기
  * @author psb
  */
-function guid(separate) {
-    function s4() {
-        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-    }
-    if(separate==null){
-        separate = "";
-    }
-    return s4() + s4() + separate + s4() + separate + s4() + separate + s4() + separate + s4() + s4() + s4();
-}
-
-function uuid36() {
-    return guid('-');
+function uuid38() {
+    return '{' + s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4() + '}';
 }
 
 function uuid32() {
-    return guid();
+    return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
+}
+
+function s4() {
+    return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
 }

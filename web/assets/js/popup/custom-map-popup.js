@@ -291,7 +291,7 @@ var CustomMapPopup = (
             }
             var uuid = null;
             if(fenceId==null){
-                fenceId = uuid36();
+                fenceId = uuid38();
             }
             var mouseOverUseFlag = false;
 
