@@ -202,25 +202,14 @@
     <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
 
     <!--
-        알람 파일 관리
+        파일 관리
         @author psb
     -->
-    <definition name="alarmFileList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/alarm/list.jsp" />
+    <definition name="fileList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/list.jsp" />
     </definition>
-    <definition name="alarmFileDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/alarm/detail.jsp" />
-    </definition>
-
-    <!--
-        Map 파일 관리
-        @author psb
-    -->
-    <definition name="mapFileList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/map/list.jsp" />
-    </definition>
-    <definition name="mapFileDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/file/map/detail.jsp" />
+    <definition name="fileDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/detail.jsp" />
     </definition>
 
     <!--

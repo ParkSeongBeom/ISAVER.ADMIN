@@ -113,6 +113,9 @@ var DashboardHelper = (
                             }
                         }
                         break;
+                    case "moveFence":
+                        _mapMediator.moveFence('fenceName',resultData);
+                        break;
                 }
             }else{
                 console.warn("[mapMessageEventHandler] areaId or mapMediator is null  - " + resultData['areaId'] + ","+_mapMediator);
@@ -187,20 +190,7 @@ var DashboardHelper = (
 
                         let deviceList = [];
                         $.each($(this).find("div[deviceId]"),function(){
-                            deviceList.push({
-                                'areaId' : areaId
-                                ,'deviceId' : $(this).data("deviceid")
-                                ,'deviceCode' : $(this).data("devicecode")
-                                ,'ipAddress' : $(this).data("ipaddress")
-                                ,'port' : $(this).data("port")
-                                ,'deviceUserId' : $(this).data("deviceuserid")
-                                ,'devicePassword' : $(this).data("devicepassword")
-                                ,'subUrl' : $(this).data("suburl")
-                                ,'linkUrl' : $(this).data("linkurl")
-                                ,'streamServerUrl' : $(this).data("streamserverurl")
-                                ,'deviceName' : $(this).data("devicename")
-                                ,'deviceStat' : $(this).data("devicestat")
-                            });
+                            deviceList.push($(this).data());
                         });
 
                         // Video Mediator
@@ -219,7 +209,7 @@ var DashboardHelper = (
                                 'websocketSend':false
                                 ,'fenceView':true
                                 ,'openLinkFlag':false
-                                ,'moveFence':false
+                                ,'moveFence':true
                                 ,'click':function(targetId,deviceCode){
                                     if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
                                 }

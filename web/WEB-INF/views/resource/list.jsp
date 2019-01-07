@@ -258,8 +258,12 @@
                             </tr>
                             <tr>
                                 <th><spring:message code='device.column.subUrl'/></th>
-                                <td colspan="3">
+                                <td>
                                     <input type="text" name="subUrl" maxlength="200"/>
+                                </td>
+                                <th><spring:message code='device.column.version'/></th>
+                                <td>
+                                    <input type="text" name="version" maxlength="50"/>
                                 </td>
                             </tr>
                             <tr>
@@ -335,6 +339,25 @@
                                     <option value="online">Online Map</option>
                                     <option value="offline">Offline Map</option>
                                 </select>
+                            </li>
+                            <li>
+                                <span>Map icon</span>
+                                <div>
+                                    <p>Human Icon</p>
+                                    <div>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human" allModel="true" fileType="${iConFileType}" allText="Normal"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV001" allModel="true" fileType="${iConFileType}" allText="Caution"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV002" allModel="true" fileType="${iConFileType}" allText="Warning"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV003" allModel="true" fileType="${iConFileType}" allText="Danger"/>
+                                    </div>
+                                    <p>Object Icon</p>
+                                    <div>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown" allModel="true" fileType="${iConFileType}" allText="Normal"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown-LEV001" allModel="true" fileType="${iConFileType}" allText="Caution"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown-LEV002" allModel="true" fileType="${iConFileType}" allText="Warning"/>
+                                        <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown-LEV003" allModel="true" fileType="${iConFileType}" allText="Danger"/>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

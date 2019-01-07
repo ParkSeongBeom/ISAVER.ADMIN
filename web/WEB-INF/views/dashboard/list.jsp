@@ -102,19 +102,19 @@
                                     <c:forEach var="critical" items="${criticalList}">
                                         <div criticalLevel="${critical.codeId}"><p></p></div>
                                     </c:forEach>
-                                </section>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box">
-                                        <div class="device_set">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
-                                                    <p>${device.deviceName}</p>
-                                                    <p></p>
-                                                </div>
-                                            </c:forEach>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                        <p>${device.deviceName}</p>
+                                                        <p></p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -139,19 +139,19 @@
                             <article>
                                 <section class="safeeye_set">
                                     <div class="s_lbox ico-invasion"></div>
-                                </section>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box">
-                                        <div class="device_set">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
-                                                    <p>${device.deviceName}</p>
-                                                    <p></p>
-                                                </div>
-                                            </c:forEach>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                        <p>${device.deviceName}</p>
+                                                        <p></p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -246,19 +246,19 @@
                                                 </c:if>
                                             </c:when>
                                         </c:choose>
-                                    </section>
-                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                        <div class="device_box">
-                                            <div class="device_set">
-                                                <c:forEach var="device" items="${childArea.devices}">
-                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
-                                                        <p>${device.deviceName}</p>
-                                                        <p></p>
-                                                    </div>
-                                                </c:forEach>
+                                        <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                            <div class="device_box">
+                                                <div class="device_set">
+                                                    <c:forEach var="device" items="${childArea.devices}">
+                                                        <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                            <p>${device.deviceName}</p>
+                                                            <p></p>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </c:if>
+                                        </c:if>
+                                    </section>
                                     <div class="m_marqueebox">
                                         <!-- <span>에 내용 삽입 -->
                                         <p messageBox></p>
@@ -292,26 +292,26 @@
                                         </div>
                                         <div class="chart_box chart01" chartAreaId="${childArea.areaId}"></div>
                                     </div>
-                                </section>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box">
-                                        <div detectorDeviceList class="device_set">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <div deviceId="${device.deviceId}" areaId="${childArea.areaId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
-                                                    <p>${device.deviceName}</p>
-                                                    <p evtValue>
-                                                        <c:if test="${device.evtValue!=null}">
-                                                            <fmt:formatNumber value="${device.evtValue}" type="pattern" pattern="0.00" />
-                                                        </c:if>
-                                                        <c:if test="${device.evtValue==null}">
-                                                            -
-                                                        </c:if>
-                                                    </p>
-                                                </div>
-                                            </c:forEach>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div detectorDeviceList class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" areaId="${childArea.areaId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'>
+                                                        <p>${device.deviceName}</p>
+                                                        <p evtValue>
+                                                            <c:if test="${device.evtValue!=null}">
+                                                                <fmt:formatNumber value="${device.evtValue}" type="pattern" pattern="0.00" />
+                                                            </c:if>
+                                                            <c:if test="${device.evtValue==null}">
+                                                                -
+                                                            </c:if>
+                                                        </p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>
@@ -351,31 +351,31 @@
                                     <div class="s_rbox">
                                         <ul ptzPlayers></ul>
                                     </div>
-                                </section>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box">
-                                        <div class="device_set">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
-                                                     data-deviceId="${device.deviceId}"
-                                                     data-deviceCode="${device.deviceCode}"
-                                                     data-ipAddress="${device.ipAddress}"
-                                                     data-port="${device.port}"
-                                                     data-deviceUserId="${device.deviceUserId}"
-                                                     data-devicePassword="${device.devicePassword}"
-                                                     data-subUrl="${device.subUrl}"
-                                                     data-linkUrl="${device.linkUrl}"
-                                                     data-streamServerUrl="${device.streamServerUrl}"
-                                                     data-deviceStat="${device.deviceStat}"
-                                                     data-deviceName="${device.deviceName}"
-                                                        >
-                                                    <p>${device.deviceName}</p>
-                                                    <p></p>
-                                                </div>
-                                            </c:forEach>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
+                                                         data-device-id="${device.deviceId}"
+                                                         data-device-code="${device.deviceCode}"
+                                                         data-ip-address="${device.ipAddress}"
+                                                         data-port="${device.port}"
+                                                         data-device-user-id="${device.deviceUserId}"
+                                                         data-device-password="${device.devicePassword}"
+                                                         data-sub-url="${device.subUrl}"
+                                                         data-link-url="${device.linkUrl}"
+                                                         data-stream-server-url="${device.streamServerUrl}"
+                                                         data-device-stat="${device.deviceStat}"
+                                                         data-device-name="${device.deviceName}"
+                                                            >
+                                                        <p>${device.deviceName}</p>
+                                                        <p></p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                </section>
                                 <div guardInfo class="copybox_area"></div>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
@@ -414,31 +414,31 @@
                                             <button name="resetEventBtn" onclick="javascript:dashboardHelper.toiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>
                                         </div>
                                     </div>
-                                </section>
-                                <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
-                                    <div class="device_box">
-                                        <div class="device_set">
-                                            <c:forEach var="device" items="${childArea.devices}">
-                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
-                                                     data-deviceId="${device.deviceId}"
-                                                     data-deviceCode="${device.deviceCode}"
-                                                     data-ipAddress="${device.ipAddress}"
-                                                     data-port="${device.port}"
-                                                     data-deviceUserId="${device.deviceUserId}"
-                                                     data-devicePassword="${device.devicePassword}"
-                                                     data-subUrl="${device.subUrl}"
-                                                     data-linkUrl="${device.linkUrl}"
-                                                     data-streamServerUrl="${device.streamServerUrl}"
-                                                     data-deviceStat="${device.deviceStat}"
-                                                     data-deviceName="${device.deviceName}"
-                                                        >
-                                                    <p>${device.deviceName}</p>
-                                                    <p></p>
-                                                </div>
-                                            </c:forEach>
+                                    <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                        <div class="device_box">
+                                            <div class="device_set">
+                                                <c:forEach var="device" items="${childArea.devices}">
+                                                    <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
+                                                         data-deviceId="${device.deviceId}"
+                                                         data-deviceCode="${device.deviceCode}"
+                                                         data-ipAddress="${device.ipAddress}"
+                                                         data-port="${device.port}"
+                                                         data-deviceUserId="${device.deviceUserId}"
+                                                         data-devicePassword="${device.devicePassword}"
+                                                         data-subUrl="${device.subUrl}"
+                                                         data-linkUrl="${device.linkUrl}"
+                                                         data-streamServerUrl="${device.streamServerUrl}"
+                                                         data-deviceStat="${device.deviceStat}"
+                                                         data-deviceName="${device.deviceName}"
+                                                            >
+                                                        <p>${device.deviceName}</p>
+                                                        <p></p>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                </section>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>

@@ -122,6 +122,86 @@
     </tag>
     <tag>
         <description>
+            파일용 SELECT BOX HTML TAG
+        </description>
+        <name>fileSelectBox</name>
+        <tag-class>com.icent.isaver.admin.tag.FileSelectBoxTagSupport</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                파일 타입
+            </description>
+            <name>fileType</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                파일 ID
+            </description>
+            <name>fileId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(ID)
+            </description>
+            <name>htmlTagId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(NAME)
+            </description>
+            <name>htmlTagName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                HTML TAG 명(class)
+            </description>
+            <name>htmlTagClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                전체여부
+            </description>
+            <name>allModel</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                활성화여부
+            </description>
+            <name>disabled</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                전체
+            </description>
+            <name>allText</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
             코드용 SELECT BOX HTML TAG
         </description>
         <name>codeSelectBox</name>

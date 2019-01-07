@@ -10,7 +10,7 @@ var CustomMapPopup = (
         var _rootPath;
         var _version;
         var _urlConfig = {
-            fileListUrl : "/file/mapList.json"
+            fileListUrl : "/file/list.json"
             ,saveUrl : "/customMapLocation/save.json"
             ,fenceDeviceListUrl : "/fenceDevice/list.json"
         };
@@ -55,7 +55,7 @@ var CustomMapPopup = (
          * @author psb
          */
         this.initFileList = function(){
-            _ajaxCall('fileList', {useYn:'Y'});
+            _ajaxCall('fileList', {'fileType':'FTA002','useYn':'Y'});
         };
 
         /**

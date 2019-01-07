@@ -8,6 +8,7 @@
 <c:set value="J00010" var="menuId"/>
 <c:set value="J00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
+<spring:message code="common.selectbox.notSelect" var="allSelectText"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <section class="container sub_area">
@@ -127,12 +128,7 @@
                         <div>
                             <p><spring:message code="critical.column.dashboardSoundSetting"/></p>
                             <div>
-                                <select name="dashboardFileId">
-                                    <option value=""><spring:message code="common.selectbox.notSelect"/></option>
-                                    <c:forEach var="file" items="${alarmFileList}">
-                                        <option value="${file.fileId}">${file.title}</option>
-                                    </c:forEach>
-                                </select>
+                                <isaver:fileSelectBox htmlTagName="dashboardFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
                             </div>
                         </div>
                     </section>
@@ -287,12 +283,7 @@
                         <div>
                             <p><spring:message code="critical.column.alarmFile"/></p>
                             <div>
-                                <select name="alarmFileId">
-                                    <option value=""><spring:message code="common.selectbox.notSelect"/></option>
-                                    <c:forEach var="file" items="${alarmFileList}">
-                                        <option value="${file.fileId}">${file.title}</option>
-                                    </c:forEach>
-                                </select>
+                                <isaver:fileSelectBox htmlTagName="alarmFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
                             </div>
                         </div>
                     </section>

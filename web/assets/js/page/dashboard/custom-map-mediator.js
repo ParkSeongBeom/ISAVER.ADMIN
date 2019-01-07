@@ -160,9 +160,6 @@ var CustomMapMediator = (
             _element = element;
             _mapCanvas = canvas;
             _mapCanvas.empty();
-            if(_mapCanvas.data('svgwrapper')){
-                _mapCanvas.svg('destroy');
-            }
             if(_mapCanvas.data('uiDraggable')){
                 _mapCanvas.draggable('destroy');
             }
@@ -214,21 +211,6 @@ var CustomMapMediator = (
                 , top:(_mapCanvas.parent().height()-_mapCanvas.height())/2
             });
             setTransform2d();
-
-            // canvas svg init
-            if($.fn.svg!=null){
-                _mapCanvas.svg({
-                    onLoad:function(svg){
-                        _canvasSvg = svg;
-                        let defs = _canvasSvg.defs();
-                        for(let i in _OBJECT_TYPE){
-                            let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],3,5,6,6,"0");
-                            _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
-                        }
-                    }
-                });
-                _mapCanvas.find("svg").addClass("g-fence g-line");
-            }
         };
 
         var setTransform2d = function(scale){
@@ -304,7 +286,46 @@ var CustomMapMediator = (
         };
 
         /**
-         * set image
+         * set icon image
+         * @author psb
+         */
+        var setDefsMarkerRef = function(templateSetting, iconFileList){
+            try{
+                for(var settingId in templateSetting){
+                    if(settingId.indexOf("safeGuardMapIcon") > -1){
+                        var objectType = settingId.split("safeGuardMapIcon-")[1];
+                        for(var index in iconFileList){
+                            let iconFile = iconFileList[index];
+                            if(iconFile['fileId'] == templateSetting[settingId] && _defsMarkerRef[objectType]!=null){
+                                _defsMarkerRef[objectType] = _fileUploadPath+iconFile['physicalFileName'];
+                            }
+                        }
+                    }
+                }
+            }catch(e){
+                console.error("[CustomMapMediator][setDefsMarkerRef] set error - "+e.message);
+            }
+            if(_mapCanvas.data('svgwrapper')){
+                _mapCanvas.svg('destroy');
+            }
+            // canvas svg init
+            if($.fn.svg!=null){
+                _mapCanvas.svg({
+                    onLoad:function(svg){
+                        _canvasSvg = svg;
+                        let defs = _canvasSvg.defs();
+                        for(let i in _OBJECT_TYPE){
+                            let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],3,5,6,6,"0");
+                            _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
+                        }
+                    }
+                });
+                _mapCanvas.find("svg").addClass("g-fence g-line");
+            }
+        };
+
+        /**
+         * set background image
          * @author psb
          */
         this.setBackgroundImage = function(physicalFileName){
@@ -785,6 +806,29 @@ var CustomMapMediator = (
             }
         };
 
+        this.moveFence = function(actionType, data){
+            if(!_options['custom']['moveFence']){
+                return false;
+            }
+
+            var fenceMarker = null;
+            switch (actionType) {
+                case "fenceName":
+                    fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceName']);
+                    break;
+                case "fenceId":
+                    fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceId']);
+                    break;
+                case "fenceMarker":
+                    fenceMarker = data;
+                    break;
+            }
+
+            if(fenceMarker!=null){
+                fenceMarker['element'].trigger('click');
+            }
+        };
+
         /**
          * animation
          * @author psb
@@ -801,9 +845,7 @@ var CustomMapMediator = (
                         if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                             fenceMarker['notification'][criticalLevel].push(data['objectId']);
                         }
-                        if(_options['custom']['moveFence']){
-                            fenceMarker['element'].trigger('click');
-                        }
+                        _self.moveFence('fenceMarker',fenceMarker);
                         break;
                     case "remove" :
                         if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){
@@ -884,6 +926,11 @@ var CustomMapMediator = (
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
                 case 'list':
+                    _fileUploadPath = data['fileUploadPath'];
+                    _self.setBackgroundImage(data['area']['physicalFileName']);
+                    if(data['templateSetting']!=null && data['iconFileList']!=null){
+                        setDefsMarkerRef(data['templateSetting'], data['iconFileList']);
+                    }
                     if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
                         _options['custom']['onLoad']('childList',data['childList']);
                     }
@@ -894,9 +941,6 @@ var CustomMapMediator = (
                             _self.targetRender(childList[index]);
                         }
                     }
-                    _fileUploadPath = data['fileUploadPath'];
-                    _self.setBackgroundImage(data['area']['physicalFileName']);
-
                     if(data['area']['rotate']!=null){
                         _rotate = data['area']['rotate'];
                     }

@@ -6,11 +6,9 @@ import com.icent.isaver.admin.svc.CriticalSvc;
 import com.icent.isaver.repository.bean.CriticalBean;
 import com.icent.isaver.repository.bean.DeviceBean;
 import com.icent.isaver.repository.bean.EventBean;
-import com.icent.isaver.repository.bean.FileBean;
 import com.icent.isaver.repository.dao.base.CriticalDao;
 import com.icent.isaver.repository.dao.base.DeviceDao;
 import com.icent.isaver.repository.dao.base.EventDao;
-import com.icent.isaver.repository.dao.base.FileDao;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.ListUtils;
 import com.kst.common.util.StringUtils;
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,22 +52,18 @@ public class CriticalSvcImpl implements CriticalSvc {
     @Inject
     private DeviceDao deviceDao;
 
-    @Inject
-    private FileDao fileDao;
-
     @Override
     public ModelAndView findListCritical(Map<String, String> parameters) {
         List<EventBean> eventList = criticalDao.findListCritical(parameters);
         List<DeviceBean> deviceList = deviceDao.findListDeviceForCritical(null);
-        List<FileBean> alarmFileList = fileDao.findListFile(new HashMap<String, String>(){{put("fileType",AdminResource.FILE_TYPE.get("alarm"));}});
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("eventList", eventList);
         modelAndView.addObject("detectDeviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("target"));
         modelAndView.addObject("targetDeviceTypeCode", AdminResource.DEVICE_TYPE_CODE.get("alarm"));
-        modelAndView.addObject("alarmFileList", alarmFileList);
         modelAndView.addObject("deviceList", deviceList);
         modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("alarmFileType", AdminResource.FILE_TYPE.get("alarm"));
         return modelAndView;
     }
 

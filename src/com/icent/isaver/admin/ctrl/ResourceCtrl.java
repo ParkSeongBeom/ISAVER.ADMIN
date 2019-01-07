@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.resource.AdminResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class ResourceCtrl {
     public ModelAndView findListResource(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("resourceList");
+        modelAndView.addObject("iConFileType", AdminResource.FILE_TYPE.get("icon"));
 
         try {
             InetAddress address = InetAddress.getByName(wsAddress);

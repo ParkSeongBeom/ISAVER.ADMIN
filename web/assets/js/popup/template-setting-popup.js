@@ -13,9 +13,6 @@ var TemplateSettingPopup = (
             ,saveUrl : "/templateSetting/save.json"
         };
         var _templateSetting = null;
-        var _settingList = [
-            'safeGuardMapView' // 온/오프라인 맵
-        ];
         var _messageConfig;
         var _element;
         var _self = this;
@@ -52,6 +49,8 @@ var TemplateSettingPopup = (
          * @author psb
          */
         this.reset = function(){
+            _element.find("input").val('');
+            _element.find("select").val('');
             _ajaxCall('list');
         };
 
@@ -73,13 +72,11 @@ var TemplateSettingPopup = (
          */
         this.save = function(){
             if(confirm(_messageConfig['saveConfirmMessage'])){
-                var paramData = "";
-                for(var index in _settingList){
-                    var targetName = _settingList[index];
-                    if(paramData!=""){paramData += ",";}
-                    paramData += targetName+"|"+_element.find("[name='"+targetName+"']").val();
-                }
-                _ajaxCall('save', {paramData:paramData});
+                var paramData = [];
+                $.each($(".option_pop").find("input[name], select[name]"), function(){
+                    paramData.push(this.name+"|"+this.value);
+                });
+                _ajaxCall('save', {paramData:paramData.join(",")});
             }
         };
 

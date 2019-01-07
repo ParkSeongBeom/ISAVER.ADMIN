@@ -316,9 +316,10 @@ var ResourceHelper = (
                 form.find("input[name='port']").val(data['port']!=null?data['port']:'');
                 form.find("input[name='deviceUserId']").val(data['deviceUserId']!=null?data['deviceUserId']:'');
                 form.find("input[name='subUrl']").val(data['subUrl']!=null?data['subUrl']:'');
+                form.find("input[name='version']").val(data['version']!=null?data['version']:'');
                 form.find("input[name='streamServerUrl']").val(data['streamServerUrl']!=null?data['streamServerUrl']:'');
                 form.find("input[name='linkUrl']").val(data['linkUrl']!=null?data['linkUrl']:'');
-                form.find("#mainFlagCB").prop("checked",data['mainFlag']=='Y'?true:false).trigger("change");
+                form.find("#mainFlagCB").prop("checked",data['mainFlag']=='Y').trigger("change");
                 form.find("textarea[name='deviceDesc']").val(data['deviceDesc']!=null?data['deviceDesc']:'');
                 form.find("td[name='insertUserName']").text(data['insertUserName']);
                 form.find("td[name='insertDatetime']").text(new Date(data['insertDatetime']).format("yyyy-MM-dd HH:mm:ss"));

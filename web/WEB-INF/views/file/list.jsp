@@ -15,7 +15,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.alarmFile"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -28,6 +28,7 @@
 
         <article class="search_area">
             <div class="search_contents">
+                <spring:message code="common.selectbox.all" var="allSelectText"/>
                 <!-- 일반 input 폼 공통 -->
                 <p class="itype_01">
                     <span><spring:message code="file.column.title" /></span>
@@ -39,6 +40,22 @@
                     <span><spring:message code="file.column.description" /></span>
                     <span>
                         <input type="text" name="description" value="${paramBean.description}"/>
+                    </span>
+                </p>
+                <p class="itype_01">
+                    <span><spring:message code="common.column.useYn" /></span>
+                    <span>
+                        <select name="useYn">
+                            <option value="" <c:if test="${paramBean.useYn == ''}">selected="selected"</c:if>><spring:message code="common.column.useAll"/></option>
+                            <option value="Y" <c:if test="${paramBean.useYn == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
+                            <option value="N" <c:if test="${paramBean.useYn == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
+                        </select>
+                    </span>
+                </p>
+                <p class="itype_01">
+                    <span><spring:message code="file.column.fileType" /></span>
+                    <span>
+                        <isaver:codeSelectBox groupCodeId="FTA" codeId="${paramBean.fileType}" htmlTagName="fileType" allModel="true" allText="${allSelectText}"/>
                     </span>
                 </p>
             </div>
@@ -66,6 +83,7 @@
                     <col style="width: 8%;" />
                     <col style="width: 8%;" />
                     <col style="width: 8%;" />
+                    <col style="width: 8%;" />
                     <col style="width: 13%;" />
                     <col style="width: 8%;" />
                     <col style="width: 13%;" />
@@ -74,6 +92,7 @@
                     <tr>
                         <th><spring:message code="file.column.title"/></th>
                         <th><spring:message code="file.column.fileName"/></th>
+                        <th><spring:message code="file.column.fileType"/></th>
                         <th><spring:message code="file.column.fileSize"/></th>
                         <th><spring:message code="file.column.useYn"/></th>
                         <th><spring:message code="common.column.insertUser"/></th>
@@ -89,6 +108,7 @@
                             <tr onclick="moveDetail(String('${file.fileId}'));">
                                 <td>${file.title}</td>
                                 <td>${file.logicalFileName}</td>
+                                <td>${file.fileTypeName}</td>
                                 <td><isaver:customTag bytes="${file.fileSize}"/></td>
                                 <td>
                                     <c:choose>
@@ -113,7 +133,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="8"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="9"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -133,8 +153,8 @@
     var form = $('#fileForm');
 
     var urlConfig = {
-        'listUrl':'${rootPath}/file/alarmList.html'
-        ,'detailUrl':'${rootPath}/file/alarmDetail.html'
+        'listUrl':'${rootPath}/file/list.html'
+        ,'detailUrl':'${rootPath}/file/detail.html'
     };
 
     var pageConfig = {

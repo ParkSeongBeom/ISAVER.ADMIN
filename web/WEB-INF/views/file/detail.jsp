@@ -5,8 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="L00021" var="menuId"/>
-<c:set value="L00020" var="subMenuId"/>
+<c:set value="L00011" var="menuId"/>
+<c:set value="L00010" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
@@ -14,7 +14,7 @@
     <!-- 2depth 타이틀 영역 Start -->
     <article class="sub_title_area">
         <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.mapFile"/></h3>
+        <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
         <!-- 2depth 타이틀 End -->
         <div class="navigation">
             <span><isaver:menu menuId="${menuId}" /></span>
@@ -24,7 +24,6 @@
 
     <form id="fileForm" method="POST">
         <input type="hidden" name="fileId" value="${file.fileId}" />
-        <input type="hidden" name="fileType" value="map"/>
         <input type="hidden" name="physicalFileName" value="${file.physicalFileName}" />
         <input type="hidden" name="logicalFileName" value="${file.logicalFileName}" />
 
@@ -54,8 +53,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <th class="point"><spring:message code="file.column.fileType"/></th>
+                        <td class="point">
+                            <isaver:codeSelectBox groupCodeId="FTA" codeId="${file.fileType}" htmlTagName="fileType"/>
+                        </td>
                         <th class="point"><spring:message code="file.column.fileName"/></th>
-                        <td class="point" colspan="3">
+                        <td class="point">
                             <!-- 파일 첨부 시작 -->
                             <div class="infile_set">
                                 <input type="text" readonly="readonly" title="File Route" id="file_route">
@@ -122,7 +125,7 @@
         'addUrl':'${rootPath}/file/add.json'
         ,'saveUrl':'${rootPath}/file/save.json'
         ,'removeUrl':'${rootPath}/file/remove.json'
-        ,'listUrl':'${rootPath}/file/mapList.html'
+        ,'listUrl':'${rootPath}/file/list.html'
     };
 
     var messageConfig = {
@@ -136,13 +139,10 @@
         ,'saveComplete':'<spring:message code="file.message.saveComplete"/>'
         ,'removeComplete':'<spring:message code="file.message.removeComplete"/>'
         ,'titleEmpty':'<spring:message code="file.message.titleEmpty"/>'
+        ,'fileTypeEmpty':'<spring:message code="file.message.fileTypeEmpty"/>'
         ,'fileEmpty':'<spring:message code="file.message.fileEmpty"/>'
         ,'usedFile':'<spring:message code="file.message.usedFile"/>'
     };
-
-    var emptyListTag = $("<tr/>").append(
-        $("<td/>", {colspan:"6"}).text('<spring:message code="common.message.emptyData"/>')
-    );
 
     $(document).ready(function() {
         $("input[name='file']").change(function(e) {
@@ -157,6 +157,11 @@
     function validate(){
         if(form.find('input[name=title]').val().length == 0){
             alertMessage('titleEmpty');
+            return false;
+        }
+
+        if(form.find('select[name=fileType] option:selected').val().length == 0){
+            alertMessage('fileTypeEmpty');
             return false;
         }
 

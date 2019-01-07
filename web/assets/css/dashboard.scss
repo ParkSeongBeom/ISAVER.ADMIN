@@ -408,7 +408,7 @@ body.dashboard_mode {
 
   .s_lbox {
     overflow: hidden;
-
+    @include flex-midddle;
     .check_btn_set {
       position: absolute; z-index: 100; left:15px; bottom:15px;
 
@@ -435,7 +435,6 @@ body.dashboard_mode {
           opacity: 1;
           &:before, &:after {color:$color-blue-01;}
         }
-
 
         &.object_check {
 

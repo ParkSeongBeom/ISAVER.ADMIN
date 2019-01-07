@@ -104,6 +104,7 @@ public class FileSvcImpl implements FileSvc {
 
         FileBean file = fileDao.findByFile(parameters);
         modelAndView.addObject("file", file);
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 

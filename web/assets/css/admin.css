@@ -3630,12 +3630,13 @@ a.fc-more {
       -ms-flex-pack: flex-start;
       justify-content: flex-start;
       width: 100%;
-      height: 40px; }
+      min-height: 40px; }
       .opatin_list > div > input:checked + ul li:before {
         content: "\e92a";
         padding: 0 10px 0 0; }
       .opatin_list > div > input:checked + ul li > span {
-        width: 120px; }
+        width: 120px;
+        min-width: 120px; }
   .opatin_list > div > ul {
     display: -webkit-box;
     display: -moz-box;
@@ -3702,7 +3703,7 @@ a.fc-more {
     .opatin_list > div > ul li {
       display: none;
       position: relative;
-      margin: 6px 0;
+      margin: 0 0 15px 0;
       /*
       &:first-of-type:after {display: none;}
       &:after {
@@ -3710,6 +3711,22 @@ a.fc-more {
         background-color: rgba($color-gray-01,0.5);
       }
       */ }
+      .opatin_list > div > ul li > div, .opatin_list > div > ul li > div > * {
+        width: 100%; }
+      .opatin_list > div > ul li > div p {
+        margin: 0 0 5px 0; }
+      .opatin_list > div > ul li > div > div {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        margin: 0 0 15px 0; }
+        .opatin_list > div > ul li > div > div input, .opatin_list > div > ul li > div > div select {
+          width: 100%;
+          margin: 0 5px 0 0; }
   .opatin_list > div.safeguard_option > ul:before {
     background-image: url(../images/logo/safeguard.svg); }
   .opatin_list > div.safeeye_option > ul:before {

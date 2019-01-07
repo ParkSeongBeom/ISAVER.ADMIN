@@ -77,35 +77,44 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
 
         List<Map<String, String>> addParamList = new ArrayList<>();
         String[] paramData = parameters.get("paramData").split(AdminResource.COMMA_STRING);
+        boolean guardViewModifyFlag = false;
 
         for (String data : paramData) {
             Map<String, String> addParam = new HashMap<>();
-            addParam.put("settingId", data.split("\\|")[0]);
-            addParam.put("value", data.split("\\|")[1]);
+            String[] addData = data.split("\\|");
+            addParam.put("settingId", addData[0]);
+            if(addData.length > 1){
+                addParam.put("value", addData[1]);
+                if(addData[0].equals("safeGuardMapView") && !addData[1].equals(findByTemplateSetting("safeGuardMapView"))){
+                    guardViewModifyFlag = true;
+                }
+            }
             addParamList.add(addParam);
         }
 
         try {
-            templateSettingDao.saveTemplateSetting(addParamList);
+            templateSettingDao.upsertTemplateSetting(addParamList);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
             throw new IsaverException("");
         }
         setTemplateSetting();
-        sendTemplateSetting();
+        if(guardViewModifyFlag){
+            sendGuardViewSetting();
+        }
         return new ModelAndView();
     }
 
     private void setTemplateSetting(){
         Hashtable<String, String> templateSettingMap = new Hashtable<>();
         for(TemplateSettingBean templateSetting : templateSettingDao.findListTemplateSetting()){
-            templateSettingMap.put(templateSetting.getSettingId(), templateSetting.getValue());
+            templateSettingMap.put(templateSetting.getSettingId(), templateSetting.getValue()!=null?templateSetting.getValue():"");
         }
         AdminResource.TEMPLATE_SETTING = templateSettingMap;
     }
 
-    private void sendTemplateSetting(){
+    private void sendGuardViewSetting(){
         /**
          * = 웹소켓 서버로 설정 전송
          * @author psb
@@ -116,7 +125,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
             websocketParam.put("messageType","setMode");
             websocketParam.put("settingId","safeGuardMapView");
             websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", "jsonData");
+            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", null);
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }

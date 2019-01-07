@@ -4,13 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
+import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
-import com.icent.isaver.repository.bean.AreaBean;
-import com.icent.isaver.repository.bean.CustomMapLocationBean;
-import com.icent.isaver.repository.bean.FenceBean;
-import com.icent.isaver.repository.bean.FenceDeviceBean;
+import com.icent.isaver.repository.bean.*;
 import com.icent.isaver.repository.dao.base.*;
 import com.kst.common.spring.TransactionUtil;
 import org.slf4j.Logger;
@@ -88,6 +87,12 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     @Inject
     private DeviceDao deviceDao;
 
+    @Inject
+    private FileDao fileDao;
+
+    @Inject
+    private TemplateSettingSvc templateSettingSvc;
+
     @Override
     public ModelAndView findListCustomMapLocation(Map<String, String> parameters) {
         List<CustomMapLocationBean> childList = customMapLocationDao.findListCustomMapLocation(parameters);
@@ -96,6 +101,12 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("childList", childList);
         modelAndView.addObject("area", area);
+
+        modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
+
+        List<FileBean> iconFileList = fileDao.findListFile(new HashMap<String, String>(){{put("fileType", AdminResource.FILE_TYPE.get("icon")); put("useYn", com.kst.common.resource.CommonResource.YES);}});
+        modelAndView.addObject("iconFileList", iconFileList);
+
         try{
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);

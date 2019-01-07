@@ -218,14 +218,15 @@ public class AdminResource {
     };
 
     /**
-     * 파일 타입
+     * 파일 타입 코드 정의
      * @author psb
      */
     public final static Map<String, String> FILE_TYPE = new HashMap<String, String>(){
         {
-            put("alarm","alarm"); // 알람파일
-            put("map","map"); // Map파일
-            put("video","video"); // Map파일
+            put("alarm","FTA001"); // 알람파일
+            put("map","FTA002"); // Map파일
+            put("video","FTA003"); // Video파일
+            put("icon","FTA004"); // Icon파일
         }
     };
 

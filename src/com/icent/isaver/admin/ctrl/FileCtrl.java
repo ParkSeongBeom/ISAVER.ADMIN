@@ -1,7 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.kst.common.util.MapUtils;
@@ -42,42 +41,34 @@ public class FileCtrl {
     private FileSvc fileSvc;
 
     /**
-     * 알람 파일 목록을 가져온다.
+     * 파일 목록을 가져온다.
      *
      * @author psb
      * @param request
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/alarmList")
-    public ModelAndView findListFileForAlarm(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "alarmFileList", parameters);
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
+    public ModelAndView findListFile(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        parameters = AdminHelper.checkReloadList(request, response, "fileList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
-        parameters.put("fileType", AdminResource.FILE_TYPE.get("alarm"));
-
         ModelAndView modelAndView = fileSvc.findListFile(parameters);
-        modelAndView.setViewName("alarmFileList");
-        modelAndView.addObject("paramBean",parameters);
+        modelAndView.setViewName("fileList");
         return modelAndView;
     }
 
     /**
-     * Map 파일 목록을 가져온다.
+     * 파일 정보를 가져온다.
      *
      * @author psb
      * @param request
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/mapList")
-    public ModelAndView findListFileForMap(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-        parameters = AdminHelper.checkReloadList(request, response, "mapFileList", parameters);
-        AdminHelper.setPageParam(parameters, defaultPageSize);
-        parameters.put("fileType", AdminResource.FILE_TYPE.get("map"));
-
-        ModelAndView modelAndView = fileSvc.findListFile(parameters);
-        modelAndView.setViewName("mapFileList");
-        modelAndView.addObject("paramBean",parameters);
+    @RequestMapping(method={RequestMethod.POST}, value="/detail")
+    public ModelAndView findByFileForAlarm(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        ModelAndView modelAndView = fileSvc.findByFile(parameters);
+        modelAndView.setViewName("fileDetail");
         return modelAndView;
     }
 
@@ -92,38 +83,6 @@ public class FileCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/deviceFileList")
     public ModelAndView findListFileForDevice(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = fileSvc.findListFileForDevice(parameters);
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    /**
-     * 알람 파일 정보를 가져온다.
-     *
-     * @author psb
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/alarmDetail")
-    public ModelAndView findByFileForAlarm(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = fileSvc.findByFile(parameters);
-        modelAndView.setViewName("alarmFileDetail");
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    /**
-     * Map 파일 정보를 가져온다.
-     *
-     * @author psb
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/mapDetail")
-    public ModelAndView findByFileForMap(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = fileSvc.findByFile(parameters);
-        modelAndView.setViewName("mapFileDetail");
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
