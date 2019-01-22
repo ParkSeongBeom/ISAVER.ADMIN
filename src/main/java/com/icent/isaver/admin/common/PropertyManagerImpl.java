@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common;
+package com.icent.isaver.admin.common;
 
 import org.jasypt.commons.CommonUtils;
 import org.jasypt.encryption.StringEncryptor;

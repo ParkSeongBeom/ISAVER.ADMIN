@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.bean;
+package com.icent.isaver.admin.bean;
 
 /**
  * [Bean] 진출입 환경설정

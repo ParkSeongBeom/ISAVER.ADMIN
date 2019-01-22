@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.tag;
+package com.icent.isaver.admin.tag;
 
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.icent.isaver.admin.bean.FileBean;

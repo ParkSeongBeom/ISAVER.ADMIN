@@ -1,4 +1,4 @@
-package main.java.spring;
+package spring;
 
 import com.icent.isaver.admin.common.util.ResourceFinder;
 import org.apache.ibatis.session.SqlSessionFactory;

@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.bean;
+package com.icent.isaver.admin.bean;
 
 /**
  * [Bean] 메뉴 권한

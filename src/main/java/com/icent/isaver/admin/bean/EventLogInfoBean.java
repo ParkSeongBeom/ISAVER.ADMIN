@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.bean;
+package com.icent.isaver.admin.bean;
 
 /**
  * 이벤트로그 상세 Bean

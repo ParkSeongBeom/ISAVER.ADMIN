@@ -1,4 +1,4 @@
-package main.java.spring;
+package spring;
 
 import com.icent.isaver.admin.common.PropertyManager;
 import org.apache.commons.dbcp2.BasicDataSource;

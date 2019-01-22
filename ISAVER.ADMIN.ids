@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="dataSourceStorage">
-  <data-source name="[DEV] 172.16.110.199" uuid="6010af3c-3bb8-447f-bcf6-36bca622b9fd">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-  <data-source name="[OPT] 172.16.110.198" uuid="c3c27a8d-c7af-4cd2-9ea1-63054df39e69">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-</component>

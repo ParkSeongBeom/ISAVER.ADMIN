@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.bean;
+package com.icent.isaver.admin.bean;
 
 /**
  * Dashboard Template 환경설정 Bean

@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.svc;
+package com.icent.isaver.admin.svc;
 
 import com.icent.isaver.admin.bean.MenuBean;
 import org.springframework.web.servlet.ModelAndView;

@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.svcImpl;
+package com.icent.isaver.admin.svcImpl;
 
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;

@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common;
+package com.icent.isaver.admin.common;
 
 import com.icent.isaver.admin.common.util.ListUtils;
 import com.icent.isaver.admin.common.util.ResourceFinder;

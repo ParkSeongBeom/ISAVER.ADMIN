@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.tag;
+package com.icent.isaver.admin.tag;
 
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
 

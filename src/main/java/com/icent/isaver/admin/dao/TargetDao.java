@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.dao;
+package com.icent.isaver.admin.dao;
 
 import com.icent.isaver.admin.bean.TargetBean;
 

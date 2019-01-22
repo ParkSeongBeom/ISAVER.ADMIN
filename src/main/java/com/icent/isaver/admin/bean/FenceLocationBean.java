@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.bean;
+package com.icent.isaver.admin.bean;
 
 /**
  * 펜스 좌표 Bean

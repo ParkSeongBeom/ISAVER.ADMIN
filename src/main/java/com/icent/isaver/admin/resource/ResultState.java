@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.resource;
+package com.icent.isaver.admin.resource;
 
 public class ResultState {
 

@@ -2,12 +2,103 @@
   <artifact type="war" name="ISAVER.ADMIN:war_install">
     <output-path>D:/업무/1.개발/1.isaver/설치패키지/isaver/was/isaver_web/webapps</output-path>
     <root id="archive" name="ISAVER.ADMIN.war">
-      <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
+      <element id="artifact" artifact-name="ISAVER.ADMIN:war_exploded" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="lib">
-          <element id="library" level="project" name="common" />
-          <element id="library" level="project" name="hasp" />
-          <element id="library" level="project" name="postgres" />
+          <element id="library" level="module" name="Gradle: commons-beanutils-1.8.0" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-codec-1.6" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-digester-2.0" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-fileupload-1.3.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-io-2.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-lang3-3.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: ganymed-ssh2-build210" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: gson-2.2.4" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: httpclient-4.3.5" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: httpcore-4.3.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: ISAVER.UTIL_v1.0.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jackson-annotations-2.9.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jackson-core-2.9.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jackson-databind-2.9.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: icu4j-3.4.4" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jasypt-1.9.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jasypt-spring31-1.9.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: javax.inject-1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: javax.mail" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: javax.websocket-api-1.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jstl-1.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: kstcu_lib_v0.943" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: kst_digest_lib_v0.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: libphonenumber-7.2.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: poi-3.8-20120326" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: poi-excelant-3.8-20120326" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: poi-ooxml-3.8-20120326" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: poi-ooxml-schemas-3.8-20120326" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: poi-scratchpad-3.8-20120326" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jcl-over-slf4j-1.7.6" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: slf4j-api-1.7.6" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-api-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-autotag-core-runtime-1.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-compat-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-core-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-el-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-extras-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-freemarker-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-jsp-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-mvel-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-ognl-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-api-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-freemarker-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-jsp-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-mustache-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-servlet-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-servlet-wildcard-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-request-velocity-1.0.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-servlet-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-template-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: tiles-velocity-3.0.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: xmlbeans" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: hasp-srm-api" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-compiler-2.7.6" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-logging-1.1.3" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: janino-2.7.8" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jcl-over-slf4j-1.7.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: jul-to-slf4j-1.7.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: log4j-core-2.5" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: logback-access-1.1.3" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: logback-classic-1.1.3" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: logback-core-1.1.3" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: logback-ext-spring-0.1.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: slf4j-api-1.7.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: slf4j-log4j12-1.7.7" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: antlr-3.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-dbcp2-2.1.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-pool2-2.4.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: dom4j-1.6.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: mybatis-3.2.4" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: mybatis-spring-1.2.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: postgresql-9.3-1104-jdbc41" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: aopalliance-1.0" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: commons-logging-1.2" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-aop-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-aspects-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-beans-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-context-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-context-support-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-core-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-expression-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-instrument-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-instrument-tomcat-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-jdbc-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-jms-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-messaging-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-orm-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-oxm-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-test-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-tx-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-web-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-webmvc-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-webmvc-portlet-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-websocket-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
         </element>
       </element>
     </root>

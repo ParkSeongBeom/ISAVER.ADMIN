@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.svcImpl;
+package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.UsersSvc;

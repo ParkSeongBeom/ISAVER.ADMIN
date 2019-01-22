@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.ctrl;
+package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;

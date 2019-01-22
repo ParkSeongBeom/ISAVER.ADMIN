@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.svcImpl;
+package com.icent.isaver.admin.svcImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

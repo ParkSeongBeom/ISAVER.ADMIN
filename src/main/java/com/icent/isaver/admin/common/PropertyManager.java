@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common;
+package com.icent.isaver.admin.common;
 
 /**
  * Created by icent on 2017. 2. 1..

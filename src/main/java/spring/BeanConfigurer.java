@@ -1,4 +1,4 @@
-package main.java.spring;
+package spring;
 
 import com.icent.isaver.admin.ApplicationContextManager;
 import com.icent.isaver.admin.common.PropertyManager;

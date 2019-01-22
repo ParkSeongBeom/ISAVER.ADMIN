@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common;
+package com.icent.isaver.admin.common;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common.util;
+package com.icent.isaver.admin.common.util;
 
 import com.icent.isaver.admin.common.CrossDomainFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;

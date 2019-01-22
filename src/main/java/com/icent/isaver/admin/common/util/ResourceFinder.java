@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin.common.util;
+package com.icent.isaver.admin.common.util;
 
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.BeanDefinition;

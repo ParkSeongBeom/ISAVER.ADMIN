@@ -1,4 +1,4 @@
-package main.java.context;
+package context;
 
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.ext.spring.LogbackConfigurer;

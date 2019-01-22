@@ -1,4 +1,4 @@
-package main.java.spring;
+package spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.common.PropertyManager;

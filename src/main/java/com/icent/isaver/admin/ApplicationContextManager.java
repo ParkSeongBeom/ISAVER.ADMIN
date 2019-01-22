@@ -1,4 +1,4 @@
-package main.java.com.icent.isaver.admin;
+package com.icent.isaver.admin;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
