@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.InoutConfigurationDao" >
+
+    <!--
+        진출입 환경설정 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListInoutConfiguration" parameterType="map" resultType="InoutConfigurationBean">
+        SELECT	area_id as areaId
+                ,inout_starttime as inoutStarttime
+                ,inout_endtime as inoutEndtime
+        FROM	isaver.inout_configuration
+        WHERE   user_id = #{userId}
+        AND		area_id = #{areaId}
+        ORDER BY inout_starttime
+    </select>
+
+    <!--
+        진출입환경설정을 등록한다.
+        @author psb
+    -->
+    <insert id="addInoutConfiguration" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            insert into isaver.inout_configuration(
+                config_id
+                ,user_id
+                ,area_id
+                ,inout_starttime
+                ,inout_endtime
+                ,insert_user_id
+                ,insert_datetime
+            ) values (
+                #{item.configId}
+                ,#{item.userId}
+                ,#{item.areaId}
+                ,#{item.inoutStarttime}
+                ,#{item.inoutEndtime}
+                ,#{item.insertUserId}
+                ,now()
+            )
+        </foreach>
+    </insert>
+
+    <!--
+        진출입환경설정을 제거한다.
+        @author psb
+    -->
+    <delete id="removeInoutConfigurationFromArea" parameterType="map" >
+        delete from isaver.inout_configuration
+        WHERE user_id =#{userId}
+        AND    area_id =#{areaId}
+    </delete>
+</mapper>

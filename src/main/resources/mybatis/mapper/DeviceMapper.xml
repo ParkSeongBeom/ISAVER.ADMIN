@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.DeviceDao" >
+
+  <!--
+    장치 목록을 가져온다.
+    @author psb
+  -->
+  <select id="findListDevice" resultType="DeviceBean" parameterType="map" >
+      WITH RECURSIVE DEVICE_HIERACHY(deviceId, path, parentDeviceId, sortOrder) AS (
+          SELECT  device_id
+                   ,'HOME > ' || DEV01.code_name || '(' || device_id || ')'
+                   ,parent_device_id
+                   ,array[device_id]
+          FROM    isaver.device
+          INNER JOIN (
+              SELECT  code_id, code_name FROM isaver.code
+              WHERE   group_code_id = 'DEV'
+          ) AS DEV01
+          ON      device_code = DEV01.code_id
+          WHERE   parent_device_id is NULL
+          UNION ALL
+          SELECT  a.device_id
+                   ,path || ' > ' || DEV01.code_name || '(' || a.device_id || ')'
+                   ,a.parent_device_id
+                   ,b.sortOrder
+          FROM    isaver.device a
+          JOIN    device_HIERACHY b
+          ON      a.parent_device_id = b.deviceId
+          INNER JOIN(
+              SELECT  code_id, code_name FROM isaver.code
+              WHERE   group_code_id = 'DEV'
+          ) AS DEV01
+          ON      a.device_code = DEV01.code_id
+      )
+      select   deviceId
+                , path
+                , parentDeviceId
+                , B.vendor_code as vendorCode
+                , B.area_id as areaId
+                , B.device_type_code as deviceTypeCode
+                , DEV01.code_name as deviceTypeCodeName
+                , B.device_code as deviceCode
+                , B.device_name as deviceName
+                , DEV02.code_name as deviceCodeName
+                , B.serial_no as serialNo
+                , B.ip_address as ipAddress
+                , B.port as port
+                , B.device_user_id as deviceUserId
+                , B.device_password as devicePassword
+                , B.device_desc as deviceDesc
+                , B.provision_flag as provisionFlag
+                , B.device_stat as deviceStat
+                , B.del_yn as delYn
+                , B.main_flag as mainFlag
+                , B.version as version
+                , (select user_name from isaver.users where user_id=B.insert_user_id) as insertUserName
+                , (select user_name from isaver.users where user_id=B.update_user_id) as updateUserName
+                , B.sub_url as subUrl
+                , B.stream_server_url as streamServerUrl
+                , B.link_url as linkUrl
+                , (
+                      SELECT value
+                      FROM  isaver.event_log c
+                      INNER JOIN isaver.event_log_info d
+                      ON    c.event_log_id = d.event_log_id
+                      AND	 d.key = 'value'
+                      WHERE c.device_id = b.device_id
+                      AND	c.event_datetime between (to_char(now(),'yyyy-mm-dd'))::timestamp and now()
+                      ORDER BY event_datetime DESC
+                      limit 1
+                ) as evtValue
+      FROM  DEVICE_HIERACHY A
+      INNER JOIN  isaver.device B
+      ON	A.deviceId = b.device_id
+      INNER JOIN (
+          SELECT    code_id, code_name FROM isaver.code
+          WHERE     group_code_id = 'D00'
+      ) AS DEV01
+      ON      B.device_type_code = DEV01.code_id
+      INNER JOIN (
+          SELECT    code_id, code_name FROM isaver.code
+          WHERE     group_code_id = 'DEV'
+      ) AS DEV02
+      ON      B.device_code = DEV02.code_id
+      <if test="delYn != null and delYn != ''">
+          AND     B.del_yn = #{delYn}
+      </if>
+      <if test="areaId != null and areaId != ''">
+          AND     B.area_id = #{areaId}
+      </if>
+      <if test="deviceTypeCode != null and deviceTypeCode != ''">
+          AND     B.device_type_code = #{deviceTypeCode}
+      </if>
+      ORDER BY sortOrder, path;
+  </select>
+
+    <!--
+      장치 라이센스의 갯수를 가져온다.
+      @author psb
+    -->
+    <select id="findCountDeviceLicense" parameterType="map" resultType="java.lang.Integer" >
+        SELECT  count(device_id)
+        FROM    isaver.device
+        WHERE   del_yn='N'
+        AND     device_code = #{deviceCode}
+    </select>
+
+  <!--
+    장치 상세를 가져온다.
+    @author dhj
+  -->
+  <select id="findByDevice" resultType="DeviceBean" parameterType="map" >
+    select  device_id as deviceId
+            , device_name as deviceName
+            , parent_device_id as parentDeviceId
+            , area_id as areaId
+            , device_type_code as deviceTypeCode
+            , device_code as deviceCode
+            , DEV02.code_name as deviceCodeName
+            , vendor_code as vendorCode
+            , DEV03.code_name as vendorCodeName
+            , serial_no as serialNo
+            , ip_address as ipAddress
+            , port as port
+            , device_user_id as deviceUserId
+            , device_password as devicePassword
+            , device_desc as deviceDesc
+            , provision_flag as provisionFlag
+            , device_stat as deviceStat
+            , del_yn as delYn
+            , main_flag as mainFlag
+            , version as version
+            , insert_user_id as insertUserId
+            , insert_datetime as insertDatetime
+            , update_user_id as updateUserId
+            , update_datetime as updateDatetime
+            , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+            , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+            , link_url as linkUrl
+    from isaver.device as A
+    INNER JOIN
+    (
+        SELECT    code_id, code_name FROM isaver.code
+        WHERE     group_code_id = 'DEV'
+    ) AS DEV02
+    ON      A.device_code = DEV02.code_id
+    LEFT OUTER JOIN
+    (
+        SELECT    code_id, code_name FROM isaver.code
+        WHERE     group_code_id = 'CA1'
+    ) AS DEV03
+    ON      A.vendor_code = DEV03.code_id
+    where A.device_id = #{deviceId,jdbcType=CHAR}
+  </select>
+
+  <!--
+   장치 갯수를 가져온다.
+   @author dhj
+ -->
+  <select id="findCountGenerator" parameterType="map" resultType="java.lang.Integer" >
+    select count(device_id)
+    from isaver.device
+  </select>
+
+    <!--
+        장치 추가
+        @author dhj
+    -->
+    <insert id="addDevice" parameterType="map" >
+        insert into isaver.device (
+            device_id
+            , device_name
+            <if test="parentDeviceId != null and parentDeviceId != ''">
+              , parent_device_id
+            </if>
+            <if test="vendorCode != null and vendorCode != ''">
+                , vendor_code
+            </if>
+            , area_id
+            , device_type_code
+            , device_code
+            , serial_no
+            <if test="ipAddress != null and ipAddress != ''">
+                , ip_address
+            </if>
+            <if test="port != null and port!=''">
+                , port
+            </if>
+            , device_user_id
+            , device_password
+            , device_desc
+            , provision_flag
+            , device_stat
+            , del_yn
+            <if test="mainFlag != null and mainFlag != ''">
+                , main_flag
+            </if>
+            <if test="version != null and version != ''">
+                , version
+            </if>
+            , insert_user_id
+            , insert_datetime
+            <if test="subUrl != null and subUrl != ''">
+                , sub_url
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                , link_url
+            </if>
+        ) values (
+            #{deviceId,jdbcType=CHAR}
+            , #{deviceName,jdbcType=VARCHAR}
+            <if test="parentDeviceId != null and parentDeviceId != ''">
+              , #{parentDeviceId,jdbcType=CHAR}
+            </if>
+            <if test="vendorCode != null and vendorCode != ''">
+                , #{vendorCode,jdbcType=CHAR}
+            </if>
+            , #{areaId,jdbcType=CHAR}
+            , #{deviceTypeCode,jdbcType=CHAR}
+            , #{deviceCode,jdbcType=CHAR}
+            , #{serialNo,jdbcType=VARCHAR}
+            <if test="ipAddress != null and ipAddress != ''">
+                , #{ipAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="port != null and port!=''">
+                , ${port}
+            </if>
+            , #{deviceUserId,jdbcType=VARCHAR}
+            , #{devicePassword,jdbcType=VARCHAR}
+            , #{deviceDesc,jdbcType=VARCHAR}
+            , 'N'
+            , 'N'
+            , 'N'
+            <if test="mainFlag != null and mainFlag != ''">
+                , #{mainFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="version != null and version != ''">
+                , #{version,jdbcType=VARCHAR}
+            </if>
+            , #{insertUserId,jdbcType=VARCHAR}
+            , NOW()
+            <if test="subUrl != null and subUrl != ''">
+                , #{subUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                , #{linkUrl,jdbcType=VARCHAR}
+            </if>
+        );
+    </insert>
+
+    <!--
+        장치 수정
+        @author dhj
+    -->
+    <update id="saveDevice" parameterType="map" >
+        update isaver.device
+        set
+            <if test="parentDeviceId != null and parentDeviceId != ''">
+              parent_device_id = #{parentDeviceId,jdbcType=CHAR},
+            </if>
+            <if test="parentDeviceId == null or parentDeviceId == ''">
+              parent_device_id = null,
+            </if>
+            <if test="areaId != null and areaId != ''">
+              area_id = #{areaId,jdbcType=CHAR},
+            </if>
+            <if test="areaId == null or areaId == ''">
+              area_id = null,
+            </if>
+            <if test="provisionFlag != null and provisionFlag != ''">
+              provision_flag = #{provisionFlag,jdbcType=CHAR},
+            </if>
+            <if test="port != null and port!=''">
+                port = ${port},
+            </if>
+            <if test="port == null or port==''">
+                port = null,
+            </if>
+            <if test="vendorCode != null and vendorCode != ''">
+                vendor_code = #{vendorCode,jdbcType=CHAR},
+            </if>
+            <if test="vendorCode == null or vendorCode == ''">
+                vendor_code = null,
+            </if>
+            device_name = #{deviceName,jdbcType=VARCHAR},
+            sub_url = #{subUrl,jdbcType=VARCHAR},
+            link_url = #{linkUrl,jdbcType=VARCHAR},
+            ip_address = #{ipAddress,jdbcType=VARCHAR},
+            device_user_id = #{deviceUserId,jdbcType=VARCHAR},
+            version = #{version,jdbcType=VARCHAR},
+            <if test="devicePassword != null and devicePassword != ''">
+                device_password = #{devicePassword,jdbcType=VARCHAR},
+            </if>
+            <if test="mainFlag != null and mainFlag != ''">
+                main_flag = #{mainFlag,jdbcType=VARCHAR},
+            </if>
+            device_type_code = #{deviceTypeCode,jdbcType=CHAR},
+            device_code = #{deviceCode,jdbcType=CHAR},
+            device_desc = #{deviceDesc,jdbcType=VARCHAR},
+            update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            update_datetime = NOW()
+        where device_id = #{deviceId,jdbcType=CHAR}
+    </update>
+
+    <!--
+        해당 장치 ID에 대한 하위 노드를 가져온다.
+        @author dhj
+    -->
+    <select id="findByDeviceTreeChildNodes" parameterType="map" resultType="DeviceBean">
+        WITH RECURSIVE DEVICE_HIERACHY(device_id, parent_device_id) AS (
+            SELECT
+                    device_id,
+                    parent_device_id,
+                    del_yn,
+                    provision_flag,
+                    device_stat
+            FROM    isaver.device
+            WHERE   device_id = #{deviceId}
+            UNION ALL
+            SELECT
+                    a.device_id,
+                    a.parent_device_id,
+                    a.del_yn,
+                    a.provision_flag,
+                    a.device_stat
+            FROM    isaver.device     AS a
+            JOIN    DEVICE_HIERACHY   AS b
+            ON      a.parent_device_id = b.device_id
+        )
+        SELECT  device_id           AS deviceId,
+		        provision_flag AS provisionFlag
+        FROM    DEVICE_HIERACHY
+        WHERE	del_yn = 'N';
+    </select>
+
+    <!--
+        장치 삭제 시 하위 장치 노드를 제거한다.
+        @author dhj
+    -->
+    <update id="removeListDeviceForTree" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE isaver.device
+            SET update_user_id = #{item.updateUserId}
+            , del_yn = 'Y'
+            , update_datetime = NOW()
+            <where>
+                device_id = #{item.deviceId}
+            </where>
+        </foreach>
+    </update>
+
+  <!--
+    장치 삭제
+    @author dhj
+  -->
+  <update id="removeDevice" parameterType="map" >
+    update isaver.device
+    set del_yn = 'Y'
+      , provision_flag = 'N'
+      , device_stat = 'N'
+      , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+      , update_datetime = NOW()
+    where device_id = #{deviceId,jdbcType=CHAR}
+  </update>
+
+    <!--
+        장치 구역 목록을 가져온다.
+        @author dhj
+    -->
+    <select id="findListDeviceArea" resultType="DeviceBean" parameterType="map">
+        WITH RECURSIVE DEVICE_HIERACHY(depth, path, deviceId, deviceCode, parentDeviceId, deviceTypeCode, delYn, deviceCodeName, serialNo, ipAddress, areaId) AS (
+            SELECT      1 as depth,
+                        'HOME > ' || '' || DEV01.code_name || '(' || device_id || ')',
+                        device_id,
+                        device_code,
+                        parent_device_id,
+                        device_type_code,
+                        del_yn,
+                        device_code,
+                        serial_no,
+                        ip_address,
+                        area_id
+            FROM        isaver.device
+            INNER JOIN
+            (
+                SELECT    code_id, code_name FROM isaver.code
+                WHERE     group_code_id = 'DEV'
+            ) AS DEV01
+            ON      device_code = DEV01.code_id
+            WHERE       parent_device_id is NULL
+            AND del_yn = 'N'
+            UNION ALL
+            SELECT      b.depth + 1 as depth,
+                        path || ' > ' || DEV02.code_name || '(' || a.device_id || ')',
+                        a.device_id,
+                        a.device_code,
+                        a.parent_device_id,
+                        a.device_type_code,
+                        a.del_yn,
+                        a.device_code,
+                        a.serial_no,
+                        a.ip_address,
+                        a.area_id
+            FROM        isaver.device      AS a
+            JOIN        device_HIERACHY                AS b
+            ON          a.parent_device_id = b.deviceId
+            INNER JOIN
+            (
+                SELECT    code_id, code_name FROM isaver.code
+                WHERE     group_code_id = 'DEV'
+            ) AS DEV02
+            ON      a.device_code = DEV02.code_id
+        )
+            SELECT      depth
+                        ,deviceId
+                        ,parentDeviceId
+                        ,DEV03.code_name as deviceTypeCode
+                        ,DEV04.code_name as deviceCode
+                        ,delYn
+                        ,serialNo
+                        ,ipAddress
+                        ,areaId
+                        ,path
+            FROM        DEVICE_HIERACHY
+            INNER JOIN
+            (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'DEV'
+            ) AS DEV03
+            ON      deviceCode = DEV03.code_id
+            INNER JOIN
+            (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'D00'
+            ) AS DEV04
+            ON      deviceTypeCode = DEV04.code_id
+            WHERE areaId = #{areaId}
+            AND delYn = 'N'
+            ORDER BY        deviceId ASC
+            <if test="pageIndex != null">
+                LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+            </if>;
+    </select>
+
+    <!--
+        장치 구역 목록의 갯수를 가져온다.
+        @author dhj
+    -->
+    <select id="findCountDeviceArea" resultType="Integer" parameterType="map">
+        WITH RECURSIVE DEVICE_HIERACHY(depth, path, deviceId, deviceCode, parentDeviceId, deviceTypeCode, delYn, deviceCodeName, serialNo, ipAddress, areaId) AS (
+            SELECT      1 as depth,
+                        'HOME > ' || '' || DEV01.code_name || '(' || device_id || ')',
+                        device_id,
+                        device_code,
+                        parent_device_id,
+                        device_type_code,
+                        del_yn,
+                        device_code,
+                        serial_no,
+                        ip_address,
+                        area_id
+            FROM        isaver.device
+            INNER JOIN
+            (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'DEV'
+            ) AS DEV01
+            ON      device_code = DEV01.code_id
+            WHERE       parent_device_id is NULL
+            AND del_yn = 'N'
+            UNION ALL
+            SELECT      b.depth + 1 as depth,
+                        path || ' > ' || DEV02.code_name || '(' || a.device_id || ')',
+                        a.device_id,
+                        a.device_code,
+                        a.parent_device_id,
+                        a.device_type_code,
+                        a.del_yn,
+                        a.device_code,
+                        a.serial_no,
+                        a.ip_address,
+                        a.area_id
+            FROM        isaver.device      AS a
+            JOIN        device_HIERACHY                AS b
+            ON          a.parent_device_id = b.deviceId
+            INNER JOIN
+            (
+                SELECT    code_id, code_name FROM isaver.code
+                WHERE     group_code_id = 'DEV'
+            ) AS DEV02
+            ON      a.device_code = DEV02.code_id
+        )
+        SELECT      COUNT(deviceId)
+        FROM        DEVICE_HIERACHY
+        <if test="areaId != null and areaId != ''">
+            WHERE areaId = #{areaId} AND delYn = 'N'
+        </if>
+    </select>
+
+    <!--
+      최상위 장치 ID 찾기
+      @author psb
+    -->
+    <select id="findByParentDevice" resultType="DeviceBean" parameterType="map" >
+        WITH RECURSIVE DEVICE_HIERACHY(device_id, parent_device_id) AS (
+            SELECT	device_id, parent_device_id
+            FROM	isaver.device
+            WHERE	device_id = #{deviceId}
+        UNION ALL
+            SELECT a.device_id, a.parent_device_id
+            FROM   isaver.device a
+            JOIN   device_HIERACHY b
+            ON     a.device_id = b.parent_device_id
+        )
+        SELECT  device_id as deviceId
+        FROM    DEVICE_HIERACHY
+        WHERE   parent_device_id is null
+    </select>
+
+    <!--
+      장치 목록을 가져온다. 임계치관리용
+      @author psb
+    -->
+    <select id="findListDeviceForCritical" resultType="DeviceBean">
+        select  device_id as deviceId
+                , area_id as areaId
+                , device_code as deviceCode
+                , device_type_code as deviceTypeCode
+                , device_name as deviceName
+        FROM    isaver.device
+        WHERE   del_yn='N'
+        AND	    device_code not in ('DEV001','DEV003','DEV015','DEV900')
+        ORDER BY area_id, device_name
+    </select>
+
+    <!--
+      장치 목록을 가져온다. 영상이력용
+      @author psb
+    -->
+    <select id="findListDeviceForHistory" resultType="DeviceBean">
+        select device_id as deviceId
+                , area_id as areaId
+                , device_code as deviceCode
+                , device_name as deviceName
+        FROM    isaver.device
+        WHERE   del_yn='N'
+        AND     device_code = 'DEV002'
+        ORDER BY device_id ASC
+    </select>
+
+    <!--
+      장치 목록을 가져온다. 시뮬레이터 테스트용
+      @author psb
+    -->
+    <select id="findListDeviceForTest" resultType="DeviceBean">
+        select device_id as deviceId
+                , area_id as areaId
+                , device_code as deviceCode
+                , device_name as deviceName
+                , DEV02.code_name as deviceCodeName
+        FROM    isaver.device A
+        INNER JOIN (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'DEV'
+        ) AS DEV02
+        ON      A.device_code = DEV02.code_id
+        WHERE   A.del_yn='N'
+        ORDER BY        A.device_id ASC
+    </select>
+
+    <!--
+        메인 여부 수정
+        @author psb
+    -->
+    <update id="saveDeviceMainFlag" parameterType="map">
+        UPDATE  isaver.device
+        SET     main_flag = 'N'
+        WHERE   parent_device_id = #{parentDeviceId}
+    </update>
+</mapper>

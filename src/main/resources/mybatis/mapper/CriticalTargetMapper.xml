@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.CriticalTargetDao">
+
+    <!--
+        임계치별 대상장치 상세를 가져온다.
+        @author psb
+    -->
+    <select id="findByCriticalTarget" resultType="CriticalTargetBean" parameterType="map">
+        SELECT  a.critical_detect_id as criticalDetectId
+                , a.target_device_id as targetDeviceId
+                , a.alarm_type as alarmType
+                , a.alarm_message as alarmMessage
+                , a.alarm_file_id as alarmFileId
+                , (SELECT device_name FROM isaver.device WHERE device_id = a.target_device_id) as targetDeviceName
+                , b.detect_device_id as detectDeviceId
+                , (SELECT device_name FROM isaver.device WHERE device_id = b.detect_device_id) as detectDeviceName
+                , d.event_id as eventId
+                , d.event_name as eventName
+                , c.critical_level as criticalLevel
+        FROM	isaver.critical_target a
+        INNER JOIN isaver.critical_detect b
+        ON	    a.critical_detect_id = b.critical_detect_id
+        INNER JOIN isaver.critical c
+        ON	    b.critical_id = c.critical_id
+        INNER JOIN isaver.event d
+        ON	    c.event_id = d.event_id
+        WHERE	a.critical_detect_id = #{criticalDetectId}
+        AND 	a.target_device_id = #{targetDeviceId}
+    </select>
+
+    <!--
+        임계치별 대상장치를 등록한다
+        @author psb
+    -->
+    <insert id="addCriticalTarget" parameterType="map">
+        INSERT INTO isaver.critical_target (
+            critical_detect_id
+            , target_device_id
+            , alarm_type
+            , alarm_message
+            , alarm_file_id
+        ) VALUES (
+            #{criticalDetectId}
+            , #{targetDeviceId}
+            , #{alarmType}
+            , #{alarmMessage}
+            , #{alarmFileId}
+        );
+    </insert>
+
+    <!--
+        임계치별 대상장치를 수정한다.
+        @author psb
+    -->
+    <update id="saveCriticalTarget" parameterType="map">
+        UPDATE  isaver.critical_target
+        SET     alarm_type = #{alarmType}
+                ,alarm_message = #{alarmMessage}
+                ,alarm_file_id = #{alarmFileId}
+        WHERE   critical_detect_id = #{criticalDetectId}
+        AND     target_device_id = #{targetDeviceId}
+    </update>
+
+    <!--
+        임계치별 대상장치를 제거한다
+        @author psb
+    -->
+    <delete id="removeCriticalTarget" parameterType="map">
+        DELETE FROM isaver.critical_target WHERE critical_detect_id = #{criticalDetectId} AND target_device_id = #{targetDeviceId};
+    </delete>
+</mapper>

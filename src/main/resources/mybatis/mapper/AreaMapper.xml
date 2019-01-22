@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.AreaDao" >
+
+    <!--
+      구역 목록
+      @author psb
+    -->
+    <select id="findListArea" resultType="AreaBean" parameterType="map" >
+        WITH RECURSIVE AREA_HIERACHY(areaId, path, parentAreaId, sortOrder, areaPath) AS
+        (
+            SELECT  area_id
+                    ,'HOME > ' || '' || area_name || '(' || area_id || ')'
+                    ,parent_area_id
+                    ,array[sort_order]
+                    ,area_id || ''
+            FROM    isaver.area A
+            where	A.parent_area_id is null
+            UNION ALL
+            SELECT  a.area_id
+                    ,b.path || ' > ' || a.area_name || '(' || a.area_id || ')'
+                    ,a.parent_area_id
+                    ,b.sortOrder
+                    ,b.areaPath || ',' || a.area_id
+            FROM    isaver.area a
+            JOIN    AREA_HIERACHY b
+            ON      a.parent_area_id = b.areaId
+        )
+        SELECT      areaId
+                    , areaPath
+                    , path
+                    , parentAreaId
+                    , B.file_id as fileId
+                    , C.physical_file_name as physicalFileName
+                    , B.area_name as areaName
+                    , B.area_desc as areaDesc
+                    , B.del_yn as delYn
+                    , B.sort_order as sortOrder
+                    , B.template_code as templateCode
+                    , B.insert_user_id as insertUserId
+                    , B.insert_datetime as insertDatetime
+                    , B.update_user_id as updateUserId
+                    , B.update_datetime as updateDatetime
+                    , (select user_name from isaver.users where user_id=B.insert_user_id) as insertUserName
+                    , (select user_name from isaver.users where user_id=B.update_user_id) as updateUserName
+        FROM        AREA_HIERACHY A
+        INNER JOIN  isaver.area B
+        ON	         A.areaId = B.area_id
+        LEFT OUTER JOIN  isaver.file C
+        ON	         B.file_id = C.file_id
+        AND         C.use_yn = 'Y'
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="delYn != null and delYn != ''">
+                AND     B.del_yn = #{delYn}
+            </if>
+        </trim>
+        ORDER BY    A.sortOrder, path;
+    </select>
+
+    <!--
+      구역 목록 갯수를 가져온다.
+      @author psb
+    -->
+    <select id="findCountArea" parameterType="map" resultType="java.lang.Integer" >
+        select count(*)
+        from  isaver.area
+        WHERE del_yn = #{delYn}
+        <if test="parentAreaId == null or parentAreaId == ''">
+            AND     parent_area_id is null
+        </if>
+        <if test="parentAreaId != null and parentAreaId != ''">
+            AND     parent_area_id = #{parentAreaId}
+        </if>
+        <if test="areaId != null and areaId != ''">
+            AND     area_id <![CDATA[<>]]> #{areaId}
+        </if>
+    </select>
+
+    <!--
+        구역 갯수를 가져온다.
+        @author dhj
+      -->
+    <select id="findCountGenerator" parameterType="map" resultType="java.lang.Integer" >
+        select count(area_id)
+        from isaver.area
+    </select>
+
+    <!--
+      구역 상세를 가져온다.
+      @author dhj
+    -->
+    <select id="findByArea" resultType="AreaBean" parameterType="map" >
+        select area_id as areaId
+                , parent_area_id as parentAreaId
+                , area_name as areaName
+                , area_desc as areaDesc
+                , del_yn as delYn
+                , sort_order as sortOrder
+                , template_code as templateCode
+                , insert_user_id as insertUserId
+                , insert_datetime as insertDatetime
+                , update_user_id as updateUserId
+                , update_datetime as updateDatetime
+                ,(SELECT physical_file_name FROM isaver.file b WHERE a.file_id = b.file_id) as physicalFileName
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+        from isaver.area as A
+        where area_id = #{areaId,jdbcType=CHAR}
+    </select>
+
+
+    <!--
+      구역을 등록한다.
+      @author dhj
+    -->
+    <insert id="addArea" parameterType="map" >
+
+        insert into isaver.area (
+        area_id
+        <if test="parentAreaId != null and parentAreaId != ''">
+            , parent_area_id
+        </if>
+        , area_name
+        , area_desc
+        , del_yn
+        , sort_order
+        , template_code
+        , insert_user_id
+        , insert_datetime
+        ) values (
+        #{areaId,jdbcType=CHAR}
+        <if test="parentAreaId != null and parentAreaId != ''">
+            , #{parentAreaId,jdbcType=CHAR}
+        </if>
+        , #{areaName,jdbcType=VARCHAR}
+        , #{areaDesc,jdbcType=VARCHAR}
+        , 'N'
+        <if test="sortOrder != null and sortOrder != ''">
+            , ${sortOrder}
+        </if>
+        <if test="sortOrder == null or sortOrder == ''">
+            , (
+                SELECT sort_order + 1
+                FROM isaver.area
+                WHERE del_yn = 'N'
+                <if test="parentAreaId != null and parentAreaId != ''">
+                    AND parent_area_id = #{parentAreaId,jdbcType=CHAR}
+                </if>
+                <if test="parentAreaId == null">
+                    AND parent_area_id is null
+                </if>
+                ORDER BY sort_order desc
+                LIMIT 1
+            )
+        </if>
+        , #{templateCode,jdbcType=CHAR}
+        , #{insertUserId,jdbcType=VARCHAR}
+        , NOW()
+        )
+    </insert>
+
+    <!--
+      구역을 저장한다.
+      @author dhj
+    -->
+    <update id="saveArea" parameterType="map" >
+
+        update isaver.area
+        set area_name = #{areaName,jdbcType=VARCHAR}
+        <if test="parentAreaId != null and parentAreaId != ''">
+            , parent_area_id = #{parentAreaId,jdbcType=CHAR}
+        </if>
+        <if test="parentAreaId == null or parentAreaId == ''">
+            , parent_area_id = null
+        </if>
+        , area_desc = #{areaDesc,jdbcType=VARCHAR}
+        <if test="sortOrder != null and sortOrder != ''">
+            , sort_order = ${sortOrder}
+        </if>
+        <if test="sortOrder == null or sortOrder == ''">
+            , sort_order = (
+                SELECT sort_order + 1
+                FROM isaver.area
+                WHERE del_yn = 'N'
+                <if test="parentAreaId != null and parentAreaId != ''">
+                    AND parent_area_id = #{parentAreaId,jdbcType=CHAR}
+                </if>
+                <if test="parentAreaId == null">
+                    AND parent_area_id is null
+                </if>
+                ORDER BY sort_order desc
+                LIMIT 1
+            )
+        </if>
+        , template_code = #{templateCode,jdbcType=CHAR}
+        , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+        , update_datetime = NOW()
+        where area_id = #{areaId,jdbcType=CHAR}
+    </update>
+
+    <!--
+      하위 구역의 템플릿을 일괄적용한다.
+      @author psb
+    -->
+    <update id="saveAreaTemplate" parameterType="map" >
+        update isaver.area
+        set template_code = #{templateCode,jdbcType=CHAR}
+            , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+            , update_datetime = NOW()
+        where area_id in (
+            WITH RECURSIVE AREA_HIERACHY(area_id, parent_area_id) AS (
+                SELECT  area_id, parent_area_id
+                FROM   isaver.area
+                WHERE   parent_area_id = #{areaId,jdbcType=CHAR}
+                AND	    del_yn = 'N'
+                UNION ALL
+                SELECT a.area_id,a.parent_area_id
+                FROM   isaver.area a
+                JOIN   AREA_HIERACHY b
+                ON     a.parent_area_id = b.area_id
+                AND	    del_yn = 'N'
+            )
+            SELECT  area_id as areaId
+            FROM    AREA_HIERACHY
+        )
+    </update>
+
+    <!--
+      구역을 제거한다.
+      @author dhj
+    -->
+    <update id="removeArea" parameterType="map" >
+        update isaver.area
+        set del_yn = 'Y'
+        , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+        , update_datetime = NOW()
+        where area_id = #{areaId,jdbcType=CHAR}
+    </update>
+
+    <!--
+        해당 구역 ID에 대한 하위 노드를 가져온다.
+        @author dhj
+    -->
+    <select id="findByAreaTreeChildNodes" parameterType="map" resultType="AreaBean">
+      WITH RECURSIVE AREA_HIERACHY(area_id, parent_area_id) AS (
+        SELECT
+                area_id,
+                parent_area_id,
+                del_yn
+        FROM    isaver.area
+        WHERE   area_id = #{areaId}
+        UNION ALL
+        SELECT
+                a.area_id,
+                a.parent_area_id,
+                a.del_yn
+        FROM    isaver.area       AS a
+        JOIN    AREA_HIERACHY     AS b
+        ON      a.parent_area_id = b.area_id )
+        SELECT  area_id           AS areaId
+        FROM    AREA_HIERACHY
+        WHERE	del_yn = 'N';
+    </select>
+
+    <!--
+        구역 삭제 시 하위 메뉴 노드를 제거한다.
+        @author dhj
+    -->
+    <update id="removeListAreaForTree" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE isaver.area
+            SET update_user_id = #{item.updateUserId}
+            , del_yn = 'Y'
+            , update_datetime = NOW()
+            <where>
+                area_id = #{item.areaId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--
+      구역 목록 상단메뉴용
+      @author psb
+    -->
+    <select id="findListAreaForMenuTopBar" resultType="AreaBean">
+        SELECT  a.area_id as areaId
+                ,a.area_name as areaName
+                ,a.template_code as templateCode
+                ,(
+                    WITH RECURSIVE AREA_HIERACHY(area_id, parentAreaId) AS (
+                        SELECT  b.area_id, b.parent_area_id
+                        FROM    isaver.area b
+                        where   area_id = a.area_id
+                        AND     b.del_yn = 'N'
+                        UNION ALL
+                        SELECT  c.area_id, c.parent_area_id
+                        FROM    isaver.area c
+                        JOIN    AREA_HIERACHY d
+                        ON      c.parent_area_id = d.area_id
+                        WHERE   c.del_yn = 'N'
+                    )
+                    SELECT  array_to_string(array_agg(e.area_id),',')
+                    FROM    AREA_HIERACHY e
+                    WHERE	 e.area_id <![CDATA[<>]]> a.area_id
+                ) as childAreaIds
+        FROM    isaver.area a
+        WHERE	a.del_yn = 'N'
+        AND     a.parent_area_id is null
+        ORDER BY a.sort_order, a.area_name
+    </select>
+
+    <!--
+      구역 목록 대쉬보드용
+      @author psb
+    -->
+    <select id="findListAreaForDashboard" resultType="AreaBean" parameterType="map" >
+        SELECT  a.area_id as areaId
+                ,a.area_name as areaName
+                ,a.template_code as templateCode
+                ,a.area_desc as areaDesc
+                ,(
+                    WITH RECURSIVE AREA_HIERACHY(area_id, parentAreaId) AS (
+                        SELECT  b.area_id, b.parent_area_id
+                        FROM    isaver.area b
+                        where   area_id = a.area_id
+                        AND     b.del_yn = 'N'
+                        UNION ALL
+                        SELECT  c.area_id, c.parent_area_id
+                        FROM    isaver.area c
+                        JOIN    AREA_HIERACHY d
+                        ON      c.parent_area_id = d.area_id
+                        WHERE   c.del_yn = 'N'
+                    )
+                    SELECT  array_to_string(array_agg(e.area_id),',')
+                    FROM    AREA_HIERACHY e
+                    WHERE	 e.area_id <![CDATA[<>]]> a.area_id
+                ) as childAreaIds
+        FROM    isaver.area a
+        WHERE	a.del_yn = 'N'
+        <if test="areaId == null or areaId == ''">
+            AND     a.parent_area_id is null
+        </if>
+        <if test="areaId != null and areaId != ''">
+            AND     a.parent_area_id = #{areaId}
+        </if>
+        <if test="subAreaId != null and subAreaId != ''">
+            AND     a.area_id = #{subAreaId}
+        </if>
+        ORDER BY a.sort_order, a.area_name
+    </select>
+
+    <!--
+      구역 네비게이션 대쉬보드용
+      @author psb
+    -->
+    <select id="findListAreaNav" resultType="AreaBean" parameterType="map" >
+        WITH RECURSIVE AREA_HIERACHY(depth, area_id, area_name, parent_area_id) AS (
+            SELECT 1,
+                    area_id,
+                    area_name,
+                    parent_area_id
+            FROM   isaver.area
+            WHERE	area_id = #{areaId}
+            AND	    del_yn = 'N'
+            UNION ALL
+            SELECT b.depth + 1,
+                    a.area_id,
+                    a.area_name,
+                    a.parent_area_id
+            FROM   isaver.area a
+            JOIN   AREA_HIERACHY b
+            ON     a.area_id = b.parent_area_id
+            AND	    del_yn = 'N'
+        )
+        SELECT  area_id as areaId
+                ,area_name as areaName
+        FROM    AREA_HIERACHY
+        ORDER BY depth DESC
+    </select>
+
+    <!--
+      구역 목록 시뮬레이터 테스트용
+      @author psb
+    -->
+    <select id="findListAreaForTest" resultType="AreaBean">
+        SELECT  a.area_id as areaId
+                ,a.area_name as areaName
+                ,a.template_code as templateCode
+                ,a.area_desc as areaDesc
+        FROM    isaver.area a
+        WHERE	a.del_yn = 'N'
+        ORDER BY a.sort_order, a.area_name
+    </select>
+
+    <!--
+      하위 구역 목록 Map관리용
+      @author psb
+    -->
+    <select id="findListAreaForCustomMap" resultType="AreaBean" parameterType="map">
+        SELECT	area_id,
+                area_name
+        FROM   isaver.area
+        WHERE  parent_area_id = #{areaId}
+        AND	    del_yn = 'N'
+        AND	    template_code = 'TMP005'
+        ORDER BY sort_order, area_name
+    </select>
+
+    <!--
+      구역을 수정한다. Custom Map FileId용
+      @author psb
+    -->
+    <update id="saveAreaFileId" parameterType="map" >
+        update isaver.area
+        SET
+        <if test="fileId == null or fileId == ''">
+            file_id = null
+        </if>
+        <if test="fileId != null and fileId != ''">
+            file_id = #{fileId}
+        </if>
+        where area_id = #{areaId,jdbcType=CHAR}
+    </update>
+</mapper>

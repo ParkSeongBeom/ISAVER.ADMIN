@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ISAVER.ADMIN:war_install">
+    <output-path>D:/업무/1.개발/1.isaver/설치패키지/isaver/was/isaver_web/webapps</output-path>
+    <root id="archive" name="ISAVER.ADMIN.war">
+      <element id="artifact" artifact-name="ISAVER.ADMIN:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="common" />
+          <element id="library" level="project" name="hasp" />
+          <element id="library" level="project" name="postgres" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

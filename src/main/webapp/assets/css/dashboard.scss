@@ -1,0 +1,1244 @@
+﻿@charset "utf-8";
+@import "filters";
+
+
+/////..... 데시보드 입력폼 스타일 시작
+body.dashboard_mode {
+
+  overflow: hidden; position: absolute; top:0; left:0; right:0; height:100%; min-height:0; padding:0 $dash-margin;
+  background-color: $bas-color; color:$color-white-02;
+
+  &, & *:not(personal_popup, popupbase)  {color:$color-white-02; }
+
+  .wrap {height:100%;}
+
+  .wrap article {@include flexbase; @include flex-column; @include transition(200ms);}
+
+  .wrap > article {
+
+    position:absolute; top:($headerHeight); left:$margin; bottom:$margin; right:$margin; min-width:800px;
+
+    &:before,&:after {content:""; position: absolute; z-index:-1; right:0; left:0; top:$headerHeight;}
+    &:before {bottom:0;}
+    &:after  {height:1px;}
+
+    &.on {right:($noticecenter-width + $margin);}
+
+    // .watch area
+    & > section, .watch_area {
+
+      @include flex-row-wrap; @include flex-option(0, 1, 100%); @include border01(1px 0 0 1px,$color-gray-09,1);
+      overflow-y: auto; margin:0 1px 1px 0 ;
+
+      &:before {content:""; position:absolute; z-index: -1; width:100%; height:100%;}
+
+      &, & > div {@include flexbase; position: relative;}
+
+      & > div {
+
+        @include flex-column; overflow: hidden;
+
+        &,&:before {background-color: transparent !important;}
+        &:before, &:after {content:""; position: absolute; left:-1px; top:-1px; right:0; bottom:0; }
+        &:before {@include border01(1px,$color-gray-09,1);}
+        &:after {z-index:-1; }
+
+        &.on {
+          & > article {opacity: 0;}
+          .device_popup {right:0;}
+        }
+
+        header,article {position: relative; width:100%; @include transition(200ms);}
+
+
+        header {
+
+          z-index: 0; background-color: rgba(0,0,0,0.06); padding:0 0 0 $m_lr; min-width:0;
+          @include flex-option(1, 0, ($headerHeight - 10px)); @include flex-justify-content-start;
+
+
+
+          &:before {
+            @include box-shadow01(0px, 0px, 0px, 0px, #000, 0.0); opacity: 1;
+            background-color: $color-gray-09; left:0; right:0; height:1px;
+          }
+
+          h3 {
+            @include text-overflow-ellipsis;
+            letter-spacing:0; font-size:1rem; margin: -3px auto 0 0; padding:0 5px 0 0;
+          }
+
+          &.wid > h3:hover {
+            font-size:1.1rem; line-height: 1.3rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height:100%; white-space: normal;
+            padding: 10px 0;
+          }
+
+          ///// ----------------- 설치센서   START
+          .in_sensor {
+            @include flexbase; @include flex-align-items-center;
+            position: relative; right:-5px; height:30px; margin:0 0 0 auto;
+            @include border-radius(200px); background-color: rgba(0,0,0,0.3);
+            color:$color-white-01;
+
+            & > div {
+              width:100%; max-width:110px; @include text-overflow-ellipsis; padding:0 10px;
+              span:before {font-size:1.2rem; }
+            }
+
+          }
+          ///// ----------------- 설치센서   End
+
+          button {
+            min-width: ($headerHeight); height:($headerHeight - 10px);
+            &:before, &:after {@include transition(200ms); font-size:1.4rem;}
+            &.area:before   {content:"\e91b";}
+            &.device:before {content:"\e935"; }
+            &.ioset:before, &.date_select:before  {content:"\e909"; }
+            &.chart_select:before {content:"\e908";  }
+            &.on {background-color: $color-blue-01;}
+            &:hover:before, &:hover:after {color:$color-blue-01;}
+
+            &.device_view {order: 10; &:before {content:"\e92f";} }
+
+            &.screen_view { &:before {content:"\e90a";} }
+
+
+            &.level-die {
+              /*@mixin notice-die {
+                animation-name: notice-die;
+                -webkit-animation-name: notice-die;
+                @include infinite;
+
+                -webkit-animation-duration: 0.8s;
+                animation-duration: 0.8s;
+
+                @-webkit-keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+                @keyframes notice-die {
+                  0%   { color:#000; }
+                  10%  { color:$color-yellow-01; }
+                  40%  { color:$color-yellow-01; }
+                  100% { color:#000 }
+                }
+              } // ex) @include notice-die;*/
+
+              &:after {@include die02;}
+              //&:before {@include  notice-die;}
+            }
+          }
+
+        }
+
+        article {
+          @include flex-option(0, 1, 100%); @include flex-align-items-center;
+
+          & > section {
+            position: relative; @include flex-midddle;  @include flex-option(0, 1, 100%); width:100%;
+            &, & > div {position: relative;}
+            & > * {@include flexbase;}
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+/////..... 데시보드 입력폼 스타일 끝
+
+
+/////..... .watch_area > div > article > * >  좌 / 우
+.s_lbox {@include flex-width-one(2); overflow: hidden; height:100%; order:1;}
+.s_rbox {
+  @include flex-align-items-center; @include flex-width-one(1); order:2;
+  overflow-y: auto; overflow-x: hidden !important; position: relative;
+  right:0; height:100%; min-width:150px; padding: 0 $m_lr 0 0;
+  background-color: rgba(0,0,0,0.2);
+  @include line_left;
+  & > * {
+    position: absolute; left:0; right:0; max-height:100%;
+    li {
+      @include flexbase; @include flex-align-items-center; position: relative;
+      margin:0 0 15px 0; padding:0 8px;
+      &:last-of-type {margin:0;}
+    }
+  }
+
+  &.marquee_box {
+    overflow: hidden;
+    & > * { max-height:none !important;}
+  }
+  &.marquee_h:hover {overflow: auto;}
+}
+/////..... .watch_area > div > article > * >
+
+
+/////.....신호등 상태 아이콘 일반, 경고, 감지 정의 section Start
+.treffic_set {
+  $treffic_b:10%; // 신호등 before 크기
+  $treffic_s:20%;
+  $treffic_c:40%;
+  $treffic_w:32%;
+  /*
+  <section class="treffic_set">
+      <div class="ts-caution"><p></p></div>
+      <div class="ts-warning"><p></p></div>
+      <div class="ts-danger "><p></p></div>
+  </section>
+  */
+
+  width:1000px !important;
+  &, & > div, & > div p {@include flex-midddle;}
+
+  & > div {
+    @include flex-option(0, 1, $treffic_w); padding:($treffic_w / 2) 0; position: relative;
+    opacity: 1; cursor: pointer;
+    &:before, &:after {content:""; position: absolute; @include border-radius(200px); @include transition(400ms);}
+
+    &:before {
+      top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b;
+      @include box-shadow01(0px, 20px, 15px, -8px, #000, 0.5); border-style:solid; border-width:0;
+    }
+    &:after {
+      top:($treffic_b * 2); right:($treffic_b * 2); bottom:($treffic_b * 2); left:($treffic_b * 2);
+      background-color: $color-white-01; @include box-shadow01(0px, 10px, 30px, -4px, #000, 0.3);
+    }
+
+    &.ts {
+      &-caution{
+        &:before {background-color: rgba($color-gray-03,1);   border-color:rgba($color-gray-03,  1);}
+        p {color:$color-gray-03;}
+      }   // &-caution 주의
+      &-warning{
+
+        &:before {background-color: rgba($color-orange-01,1); border-color:rgba($color-orange-01,1);}
+        p {color:$color-orange-01;}
+      }  // &-warning 경고
+      &-danger {
+        &:before {background-color: rgba($color-red-01,1);    border-color:rgba($color-red-01,1);}
+        p {color:$color-red-01;}
+      }  // &-danger  위험
+    }
+
+    p {position: absolute; z-index: 10; top:$treffic_b; right:$treffic_b; bottom:$treffic_b; left:$treffic_b; font-size:5rem;
+      &:before {content:""; position: absolute; padding:47%; @include border-radius(500px);}
+    }
+
+  }
+}
+
+/////.....  신호등 상태 아이콘 일반, 경고, 감지 정의 section End
+
+
+/////..... 진출입 section Start
+.personnel_set {
+  /*
+  <section class="personnel_set">
+      <div>
+          <p>1234</p>
+          <p>085</p>
+          <p>1234</p>
+          <p>21:00 ~ </p>
+      </div>
+
+      <div>
+          <p>45</p>
+          <p>85</p>
+          <p>40</p>
+          <p>15:00 ~ 20:59</p>
+      </div>
+  </section>
+  */
+  min-height:65px;
+
+
+  .kblinker_set {
+    @include flexbase; @include flex-justify-content-around; @include flex-align-items-center;
+    position: relative; width:100%;
+
+    & > * {@include text-shadow(1px, 2px, 10px, #000, 0.5);}
+    .out {
+      font-size:($ks_bsize + 5rem); line-height:($ks_ssize + 5rem);
+      color:$color-green-03; letter-spacing: -1rem; font-weight:bold;
+    }
+    .title {
+      color:$color-white-01; letter-spacing: 0 !important;
+      em {display: block;}
+      em:first-of-type {
+        font-size:$ks_ssize; @include border01(0 0 2px 0, $color-white-01, 0.5 ); padding:50px 0 10px 0;
+      }
+      em:last-of-type {font-size:($ks_ssize + 3rem); opacity: 0.5;}
+    }
+  }
+
+  .blinker_set {
+    /*
+    <h3>구역명 삽입</h3>
+    <div>
+      <p>40</p>
+      <div>
+        <p>85</p>
+        <p>45</p>
+      </div>
+    </div>
+    */
+
+    padding:0 15px;
+    h3 {
+      float:left; width:100%; padding:0 0 2px 0;
+      font-size:$bs_hsize; letter-spacing: -0.3rem;
+      @include text-overflow-ellipsis;
+      @include border01(0 0 1px 0,#000,1 );
+    }
+
+    & > div {
+      @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+      width:100%; background-color: transparent !important;
+
+      &:before  {@include text-shadow(0, 20px, 40px, #000, 0.5);}
+      & > p {font-size:$bs_bsize; line-height:-($bs_bsize - 1rem); letter-spacing: -0.2rem;}
+      & > div {
+        font-weight:bold; text-align:right;
+        & > p {
+          position: relative; font-size:$bs_psize; line-height:$bs_psize; font-weight:bold;
+          &:after {position: relative; top:2px; font-weight:normal; padding:0 0 0 10%;}
+          &:nth-of-type(1) {&:after {content:"\e922"; right:1px;} }
+          &:nth-of-type(2) {&:after {content:"\e923"; } opacity: 0.7;}
+        }
+      }
+    }
+  }
+
+  .s_lbox.blinker_set {
+    height:auto; @include flex-justify-content-center; padding:0 40px !important;
+    h3 { display: none;}
+    h3 + div {
+      @include flex-row-wrap; max-width:900px;
+      &:before {
+        content:"\e944"; font-size:14rem; text-align: center; width:100%; @include border01( 0 0 1px 0,#000,1 );
+      }
+    }
+  }
+  .s_rbox .blinker_set {
+    h3 {font-size: 1rem; letter-spacing: -0.1rem; }
+    & > div {
+      & > p {font-size:$bs_psize; line-height:($bs_psize + 0.2rem); }
+      & > div > p {
+        font-size: ($bs_psize / 2); line-height:1.2rem;
+        &:after {top:1px;}
+        &:nth-of-type(2) {top:-4px;}
+      }
+    }
+  }
+
+  .s_rbox {
+    padding:15px 0; max-width:250px;
+
+    & > ul {opacity: 0.6; }
+  }
+
+  li {@include flex-row-wrap;}
+
+  & + .chart_area {@include flex-option(1, 0, 35%);}
+}
+/////..... 진출입 section End
+//.marquee_h ul { @include marquee_h; cursor:pointer;}
+
+
+
+/////..... safeeye section Start
+.safeeye_set {
+
+  .s_lbox {
+    @include flex-midddle; overflow: visible;
+    &:before, &:after {position: absolute;  @include border-radius(500px);}
+    &:before {z-index: 1; font-size:20rem; @include text-shadow(0, 20px, 40px, #000, 0.5);}
+    &:after {display: none; content:""; width:290px; height:290px; @include content-box; border-style:solid; border-width:3px;}
+  }
+  .s_rbox {}
+  li {
+    //@include flex-justify-content-between;
+    position: relative; font-size:$se_fsize; opacity: 0.7;
+    &:before {
+      font-size:($se_fsize + 0.7rem); color:$color-white-01 !important; padding:8px; margin:0 20px 0 0;
+      background-color: rgba(0,0,0,0.4); @include border-radius(200px);
+
+    }
+    &:after  {content:"OFF"; font-weight:bold; color:$color-gray-03;}
+
+    &.on {
+      opacity: 1;
+      &:before {background-color:$color-red-01;}
+      &:after  {content:"ON"; letter-spacing: 0.08rem; color:$color-red-01; }
+    }
+  }
+}
+/////..... safeeye section End
+
+
+/////..... NHR section Start
+.nhr_set {
+  $nh_lhe:52px;
+  $nh_lhe_s:($nh_lhe - 12px);
+
+  & > * { }
+  .s_lbox:hover .chart_select_set {top:10px;}
+  .s_rbox {}
+}
+/////..... NHR section End
+
+
+/////..... Guard section Start
+.guard_set {
+  $watchpadding:115px;
+
+  .s_lbox, .s_rbox {height:100%; /*background-color: $bas-color;*/  @include transition(200ms);}
+
+  .s_lbox { @include flex-width-one(1);  }
+  .s_rbox { @include flex-option(0, 1, auto); min-width:auto;  @include flex-align-items-start; }
+
+  .s_lbox {
+    overflow: hidden;
+    @include flex-midddle;
+    .check_btn_set {
+      position: absolute; z-index: 100; left:15px; bottom:15px;
+
+      & > div {
+        position: relative; width:50px; height:60px;
+        input, label {width:100%; height:100%;}
+
+        input {
+          opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
+          cursor:pointer; padding:0; margin:0;
+        }
+
+        label {
+          @include flex-midddle; position: relative; opacity: 0.7;
+          &:before { font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
+          &:after {
+            letter-spacing: 0; line-height: 0.9rem;
+            position: absolute; left:55px;  text-align: left; font-size:0.8rem;
+          }
+        }
+
+        input:hover + label { opacity: 1;}
+        input:checked + label {
+          opacity: 1;
+          &:before, &:after {color:$color-blue-01;}
+          &:before {}
+        }
+
+        &.object_check {
+
+          label {
+            &:before {content:"\e943";  }
+            &:after  {content:"SHOW TRACKING";}
+          }
+
+          input:hover + label { opacity: 1;}
+          input:checked + label {
+            &:before {content:"\e926"; }
+            &:after {content:"HIDE TRACKING"; }
+          }
+        }
+
+        &.human_check {
+          label {
+            &:before {content:"\e906";  }
+            &:after  {content:"ALL OBJECT ";}
+          }
+
+          input:hover + label { opacity: 1;}
+          input:checked + label {
+            &:before {content:"\e950"; }
+            &:after {content:"ONLY HUMAN"; }
+          }
+        }
+
+        &.fence_check {
+          label {
+            &:before {content:"\e941";  }
+            &:after  {content:"FENCE TRACKING";}
+          }
+
+          input:hover + label { opacity: 1;}
+          input:checked + label {
+            &:before {content:"\e921"; }
+            &:after {content:"FENCE WATCH"; }
+          }
+        }
+
+      }
+
+    }
+
+    & > .map_images {width:100%; height:100%; @include flex-midddle;}
+
+    .gm-style {
+      &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }
+      iframe + div, .gmnoprint {display: none !important;}
+    }
+
+    .map_images {
+      .gm-style {
+        &-pbc { opacity: 0 !important;}
+        & > div {
+          &:after, &:before {content:""; position: absolute; width:100%; height:100%;}
+          &:after {background-color: $bas-color; z-index: -1;}
+          &:before {}
+
+          & > div:first-of-type {
+            canvas {color:$color-white-01 !important;}
+            & > div:last-of-type > div > div img { opacity: 0;}
+          }
+        }
+      }
+
+      &.onlyhuman .object {display:none;}
+             
+    }
+  }
+  .s_rbox {
+    right:0; background-color: #000;
+    &, & * {margin:0; padding:0;}
+    &:before {display: none;}
+
+    & > ul {
+      @include flexbase; @include flex-column; position: relative; height: 100%;
+      li {
+        overflow: hidden; position: relative; width:0; background-color: transparent !important;
+
+        @include transition(200ms); @include line_bottom;
+
+        & > span {
+          @include flexbase; @include flex-align-items-center;
+          position: absolute; z-index: 10; top:0; left:0; height:26px; padding:0 15px 0 35px;
+          background-color: rgba(0,0,0,0.7); opacity: 0.8;
+          &:before {content:"\e964"; position: absolute;  left:0; padding:0 0 0 7px; font-size:1.2rem;}
+        }
+
+        & > div {
+          position: relative; @include flex-midddle;
+          &, &:before {width:100%; height:100%;}
+          &:before {content:""; position: absolute; z-index: 1; top:0; left:0; }
+
+          & > video {width: 100%; height:100%;}
+        }
+
+        /////..... 임계치 적용 표시 Start
+        &.level {
+          &-caution,&-warning,&-danger,&-die {
+            $camerawidth:370px;
+            width:$camerawidth; max-width:$camerawidth; min-width:$camerawidth; height:25%; min-height:25%; max-height:25%;
+            & > div:before {border-style:solid; border-width:4px; @include issue02;}
+            //span:before {@include notice03;}
+          }
+
+          &-caution { & > div:before {border-color:$color-gray-05;  } span {background-color:$color-gray-05;}    }
+          &-warning { & > div:before {border-color:$color-orange-01;} span {background-color:$color-orange-01;}  }
+          &-danger  { & > div:before {border-color:$color-red-01;   } span {background-color:$color-red-01;}     }
+
+          &-die {
+            opacity: 0.3;
+            & > div:after {content:"\e90f"; font-size:3rem; position: absolute; z-index: -1;}
+            span {background-color:$color-gray-05;}
+          }
+        }
+        /////..... 임계치 적용 표시 End
+      }
+    }
+  }
+
+  &.bas {}
+
+  &.big {
+    .s_rbox {
+      @include flex-option(0, 1, 100%);
+      & > ul {
+
+        @include flex-column-none; @include flex-row-wrap;
+        width:100%;
+
+        $biglisize:50%;
+
+        li {
+          width:50%; max-width:$biglisize; min-width:$biglisize;
+          height:$biglisize; min-height:$biglisize; max-height:$biglisize;
+          @include line_left;
+        }
+
+      }
+    }
+  }
+
+  &.sma {
+    .s_rbox {@include flex-option(0, 0, 0);}
+  }
+
+}
+
+.vxgplayer-loader {margin:-25px 0 0 -25px !important;}
+.vxgplayer-error  {margin:-60px 0 0 0 !important;}
+/////.......................................... Guard End
+
+/////.....  section Start
+
+
+/////..... entrance section Start 재실감시
+.entrance_set {
+
+  & > * {@include transition(200ms); overflow: hidden !important;}
+
+  .ir_btn {
+    @include flex-midddle; @include flex-column;
+    overflow:hidden; opacity: 0.5;
+    position: absolute !important; z-index: 10; bottom:15px; left:15px; width:50px; height:50px;
+
+    &:after  {
+      /*content:"IR";*/
+      content:"";
+      position: absolute; width:90%; height:90%; @include border01(2px,#fff,1 );
+      @include border-radius(200px); @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
+    }
+    &:before {/*content: "\e921";*/ content:"IR"; /*font-size:2.5rem; line-height: 2rem;*/}
+
+    &:hover, &.on {
+      &:after,&:before {color:$color-blue-01; border-color:$color-blue-01; }
+    }
+
+    &.on {
+      opacity: 1;
+      & ~ .s_lbox {@include flex-width-one(2);}
+    }
+  }
+
+  .s_lbox {
+    @include flex-width-one(0);
+    @include flex-align-items-center; @include flex-justify-content-center; background-color: #000;
+    canvas {width:100%; height:100%; /*position: absolute; z-index: 1; top:0; left:0; height:80%;*/}
+  }
+  .s_rbox {
+    @include flex-column; padding:0;
+    &:before {display: none;}
+    & > * {@include flex-midddle; position: relative !important; width:100%; max-height: none;}
+
+    h3 {
+      width:auto; font-size:3rem; font-weight:bold; opacity: 0.7; @include border01(0 0 3px 0,#000,1 );
+      @include flex-width-one(1); order:1;
+    }
+
+    .entrance_ico {
+      @include flex-width-one(1.5); order:2;
+
+      &:before, &:after {
+        @include flex-midddle; padding:10%; @include border-radius(1000px);
+        @include transition(400ms);
+      }
+
+      &:after {content:""; position: absolute; min-width:130px; min-height:130px; }
+      &:before {content:"\e978"; font-size:16rem; opacity: 0.5; @include text-shadow(0, 0, 30px, #000, 1);}
+
+      &.ico-ex01:before {content:"\e969";}
+      &.ico-ex02:before {content:"\e904";}
+
+      &.enter:before {content:"\e932"; opacity: 1;}
+      &.fall:before {content:"\e952";}
+      &.enter, &.fall {
+        & {@include flex-width-one(1.5); }
+        & ~ h3 {@include flex-width-one(0.6); }
+        & ~ .c_time {@include flex-width-one(0.9); max-height:none;}
+      }
+    }
+
+    .c_time {
+      @include flex-width-one(0); order:3;
+      overflow: hidden; @include flex-column; max-height:0;
+
+      p {font-size:5rem;}
+      button {
+        width:100px; height:40px; min-width:100px; min-height:40px;
+        margin:0 0 20px 0; @include line_btn; @include border-radius(500px);
+        @include box-shadow01(0px, 0px, 8px, 0px, #000, 0.5);
+        &:before {content:"Reset";}
+      }
+    }
+
+  }
+}
+
+.level-danger, .level-warning, .level-caution {
+
+  .entrance_ico {
+    &.enter, &.fall {
+      &:before {@include issue02;}
+      &:after  {@include issue08; border-style:solid; border-width:2px;}
+    }
+
+    & ~ h3 {}
+  }
+}
+
+.level-danger {
+  .entrance_ico {
+    &.enter, &.fall {
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-red-01;}
+      &:after {border-color:$color-red-01;}
+
+    }
+  }
+}
+
+.level-warning {
+  .entrance_ico {
+    &.enter, &.fall {
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-orange-01;}
+      &:after {border-color:$color-orange-01;}
+    }
+  }
+}
+
+.level-caution {
+  .entrance_ico {
+    &.enter, &.fall {
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-gray-03;}
+      &:after {border-color:$color-gray-03;}
+    }
+  }
+}
+/////..... entrance section End
+
+
+/////..... device section Start
+$ds-sw:50px; $ds-w:150px;
+
+.device_box ,.screen_box {
+  @include flexbase; @include flex-align-items-start; @include transition(200ms);
+
+  overflow-y: auto; overflow-x: hidden; height:100%;
+  position: relative; @include flex-option(0, 0, 0); width:0;
+  background-color: rgba(0,0,0,0.7);
+
+
+
+  @include line_left;
+}
+
+.device_box { order:4; &.on {@include flex-option(0, 1, $ds-w); width:$ds-w; } }
+.screen_box { order:3; &.on {@include flex-option(0, 1, 40px);  width:40px; } }
+
+// 디바이스 상태 보기
+.device_set {
+  /*
+  <div class="device_set">
+    <div class="ico-? level-?">
+      <p>디바이스아이디 or 이름</p>
+      <p></p>
+    </div>
+  </div>
+   */
+
+  @include flexbase; @include flex-column;
+
+  width:100%; @include flex-width-one(1); max-height: 100%;
+  //padding: 15px 15px 15px 0; margin: 0 0 0 50px;
+
+  & > * {
+    order:10; opacity: 0.8; cursor: pointer;
+    @include flexbase; @include flex-justify-content-center; @include flex-column;
+    overflow: hidden; position: relative; width:calc(100% - 1px); min-height:$ds-sw; padding:0 0 0 50px; margin:0 0 1px 0;
+    background-color: $color-gray-08; @include border01(0 0 1px 0 ,$color-gray-09,1 );
+
+    &:after, &:before {
+      @include flex-midddle; position: absolute; z-index:  1; top:0; left:0; width:$ds-sw; height:100%;
+      color:$color-white-01;
+    }
+
+    &:before {font-size: 1.8rem; }
+
+    p {
+      cursor: pointer; font-size:0.9rem; height:100%; @include text-overflow-ellipsis;
+      &:nth-of-type(2) {font-size:1.2rem;}
+    }
+
+    &.level {
+      &-caution {background-color: $color-gray-03; order: 4}
+      &-warning {background-color: $color-orange-01; order: 3}
+      &-danger  {background-color: $color-red-01; order: 2}
+      &-die {color:rgba($color-white-01,0.7); background-color: #000; &:after {@include die;}}
+      &-caution, &-warning, &-danger, &-die { opacity: 1;}
+    }
+
+
+    &.on {background-color: $color-blue-01 !important;}
+    &.issue {order: 1 !important;}
+
+  }
+  /*
+  .nhr_set & {
+    @include flex-column-none; @include flex-row-wrap; @include flex-align-items-start;
+    @include flex-justify-content-start; @include flex-align-content-start;
+
+    & > * {width:calc(20% - 4px); margin:0 2px 4px 2px;}
+  }
+  */
+
+}
+
+// Guard 화면 분활
+.screen_box {
+  @include flex-column; @include flex-justify-content-between;
+   & > div {width:100%;}
+
+  .sb_top {}
+  .sb_bottom {}
+
+  button {
+    width:100%; height:40px;
+
+    &:before {font-size:1.2rem; display: inline-block;}
+    &.bas { &:before {content:""; width:10px; height:18px; @include border01(2px,#fff,1 );} }
+    &.big { &:before {content:"\e904"; } }
+    &.sma { &:before {content:"\e903"; } }
+
+    &.on:before {border-color: $color-blue-01; color:$color-blue-01;}
+    &:hover {background-color: $color-blue-01; &:before {border-color: #fff; color:#fff;} }
+  }
+}
+
+/////..... device section End
+
+/////..... 구역 Start
+.watch_area {
+
+  //// 구역개수에 따른 레이아웃 변동
+  /*
+  #1 .area01
+  w:100%, h:100%
+  #2 .area02
+  W:50%, h:100%
+  #3 .area04
+  w:50%, h:50%
+  #4 .area06
+  W:100/3, h:50%
+  #5 .arewa8
+  w:25%, h:50%
+  #6 .area09
+  w:100/3, h:100/3
+
+  #7 .area12
+  w:25%, h:100/3
+  #8 .area16
+  w:25%, h:25%
+
+  w:100% - .area01
+  w:50% - .area02, .area04
+  w:100/3 - .area06, .area09
+  w:25% - .area08, .area12, .area16
+
+  h:100% - .area01, .area02
+  h:50% - .area04, .area06, .area08
+  h:100/3 - .area09, .area12
+  h:25% - .area16
+
+  */
+  // 넓이
+  &.area01 { & > div {width:100%;} }
+  &.area02, &.area04 { & > div {width:50%;} }
+  &.area06, &.area09, &.area12 { & > div {width:calc(100% / 3);} }
+  &.area08, &.area16, &.area00 { & > div {width:25%;} }
+
+  //높이
+  &.area01, &.area02 { & > div {min-height:50%;} }
+  &.area04, &.area06, &.area08 { & > div {min-height:50%; max-height:50%; height:50%;} }
+  &.area09 { & > div {height:calc(100% / 3);} }
+  &.area12, &.area16, &.area00 { & > div {min-height:25%; height:calc(100% / 3);} }
+
+
+  &.area01 {
+    .personnel_set {
+      width:80%;
+      .s_lbox.blinker_set {
+        @include flex-width-one(4); max-width:none;
+        & > div {
+          &:before {font-size:$se_bsize;}
+          & > p {font-size:($bs_bsize * 2); letter-spacing: -0.2rem;}
+          & > div > p { font-size:($bs_psize * 2); line-height:($bs_psize + 0.4rem); }
+        }
+      }
+      .s_rbox .blinker_set {
+
+        h3 {font-size: 1rem; letter-spacing: -0.1rem; }
+        & > div {
+          & > p {font-size:$bs_psize; line-height:2.8rem; }
+          & > div > p { font-size: ($bs_psize / 2); line-height:1.2rem;}
+        }
+      }
+    }
+  }
+  &.area01,&.area04 { .entrance_ico:after {padding:8%;} }
+  &.area02 {
+    .treffic_set {@include scale(0.7);}
+    .safeeye_set .s_lbox {@include scale(0.9);}
+
+    .entrance_set {
+      .s_rbox {
+        .entrance_ico:before {font-size:16rem;}
+        .c_time { p {font-size:4rem;} }
+      }
+    }
+  }
+
+  &.area01,&.area02 {
+    h3 {font-size:6rem;}
+    .entrance_ico:after {min-width:300px; min-height:300px;}
+  }
+  &.area02, &.area04 {
+    .kblinker_set {
+      .out {font-size:($ks_bsize - 4rem); letter-spacing: 0;}
+      .title {
+        em:first-of-type {font-size:($ks_ssize - 2rem); padding:50px 0 10px 0;}
+        em:last-of-type  {font-size:($ks_ssize);}
+      }
+    }
+  }
+  &.area04 {
+    .treffic_set {@include scale(0.6);}
+    .safeeye_set .s_lbox {@include scale(0.7);}
+    .s_lbox.blinker_set  {@include scale(0.7);}
+
+    .entrance_set {
+      canvas {}
+      .s_rbox {
+        .entrance_ico:before {font-size:10rem;}
+        .c_time { p {font-size:3rem;} }
+      }
+    }
+
+  }
+
+
+  &.area06, &.area09 {
+    .treffic_set {@include scale(0.5);}
+  }
+
+  &.area08, &.area12, &.area16, &.area00 {
+    .treffic_set {@include scale(0.4);}
+  }
+
+  &.area06, &.area09, &.area08, &.area12, &.area00 {
+    .personnel_set {
+      .s_lbox.blinker_set {
+        @include flex-width-one(2);
+        h3 + div:before { font-size:($se_bsize / 2); line-height:6rem; }
+        & > div {
+          & > p {font-size:($bs_bsize_ss);  letter-spacing: -0.2rem; }
+          & > div > p { font-size:$bs_psize_ss; line-height:($bs_psize_ss + 0.1rem);}
+        }
+      }
+
+      .s_rbox .blinker_set {
+        h3 {font-size:1rem; letter-spacing: -0.1rem;}
+        & > div {
+          & > p {font-size:2.2rem; line-height:3rem; letter-spacing: -0.2rem;}
+          & > div > p { font-size:1rem; line-height:1.4rem;}
+        }
+      }
+    }
+    .safeeye_set .s_lbox {@include scale(0.55);}
+
+    .entrance_set {
+      canvas {width:70%;}
+      .s_rbox {
+        .entrance_ico:before {font-size:8rem;}
+        .c_time {p {font-size:2.5rem;} }
+      }
+    }
+  }
+
+  &.area09, &.area12, &.area16, &.area00  {
+    .entrance_set {
+
+      .s_rbox {
+        .entrance_ico:before {font-size:5.5rem;}
+        .entrance_ico {
+          &.enter, &.fall {
+            & {@include flex-width-one(1.4); }
+            & ~ h3 {@include flex-width-one(0.6);}
+            & ~ .c_time {@include flex-width-one(1);}
+          }
+        }
+        h3 {font-size:2rem;}
+        .c_time {p {font-size:1.8rem;} }
+      }
+    }
+  }
+
+  &.area12, &.area16, &.area00 {
+    .m_marqueebox {display: none !important;}
+  }
+
+  &.area02 ,&.area08 {
+    .guard_set {
+      @include flex-column;
+      .s_lbox, .s_rbox {width: 100%; }
+      .s_lbox {}
+      .s_rbox {
+        min-width: auto; height: auto; /*max-height:40%;*/
+        ul {
+          @include flex-column-row; @include flex-row-wrap;
+          width:100%;
+          li {
+            @include flex-option(0, 1, 100%); width:auto; height:auto; min-width:50%; max-width:50%;
+            &:before {left:auto; right:0; width:1px; height:100%;}
+            &:nth-of-type(even):before {display: none;}
+          }
+        }
+      }
+    }
+  }
+  &.area02 { .guard_set .s_rbox ul li {min-height:200px; max-height:200px;} }
+  &.area04, &.area06 { .guard_set .s_rbox ul li {min-width: 200px; max-width: 200px;} }
+  &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
+
+  &.area09, &.area12, &.area00 {
+    .guard_set .s_rbox  {
+      max-width:250px;
+      ul {
+        @include flex-row-wrap;
+        li {min-width: 125px; max-width: 125px; min-height:50%; max-height:50%;}
+      }
+    }
+  }
+}
+/////..... 구역 End
+
+
+/////..... marquee 시작
+.copybox_area, .m_marqueebox {
+  overflow: hidden; position: absolute; left:0; z-index: 1;
+  em {letter-spacing: 0;}
+  &, & * {color:$color-white-01;}
+}
+
+.m_marqueebox, .copybox {
+  display: none;
+  &:after {content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; opacity: 0.6;}
+}
+
+.copybox {
+  position: relative; width:auto; top:0; padding:10px 20px; background-color: transparent !important;
+  &:before {}
+
+  p {
+    display: block;
+    &:first-of-type {font-size:2rem;    letter-spacing: -1px; font-weight:bold;}
+    &:last-of-type  {font-size: 1.5rem; letter-spacing: 1px; opacity: 0.7;}
+  }
+  em {
+    position: relative; top:-7px; font-size:2rem;
+    &:before {content:"\e935"; margin:0 5px 0 0;}
+  }
+
+  span {
+    font-size:3.5rem; position: relative; left: -3px;
+    &:before { content:"\e950"; font-size:3rem; }
+  }
+}
+
+.m_marqueebox {
+  bottom:0; width:100%; height:24px; line-height:1.1rem;
+
+  &:before, p {@include flex-midddle; height:100%; }
+  &:before {content:"\e946"; position: absolute; z-index: 1; left:0; width:40px; font-size:1.2rem;}
+  p {
+    overflow: hidden; position: relative; margin:0 0 0 40px;
+    span {
+      display: inline-block; position: absolute; left:100%;
+      white-space:nowrap; word-wrap:normal; font-weight:bold;
+      &:before {content:"ㆍ";}
+    }
+  }
+}
+/////..... marquee 끝
+
+
+/////..... 차트 영역 Start
+.chart_area {
+  width:100%;
+  select {
+    z-index: 1; position: absolute; top:-24px; right:0; width:120px;
+    background-color: $color-gray-09;
+    border-color:$color-gray-09;
+    &, & * {color:$color-white-02 !important;}
+    background-image: url(../images/ico/select_allow_w.svg);
+  }
+}
+.chart_select_set {
+  position: absolute !important; z-index:1; top:-50px; left:15px; height:40px; text-align: right;
+  @include transition(400ms);
+  button {
+    float: left; @include line_btn02; border-width:1px; width:40px; height:40px; right:0; margin:0 0 0 5px;
+    color:$adm-color; background-color: $bas-color;
+  }
+}
+.chart_box {position: relative; width:100%; height:100%; margin:10px 0; }
+.date_select {
+  z-index: 1; position: absolute; top:0; right:0; width:auto;
+  select {background-color: $color-gray-09;}
+}
+/////..... 차트 영역 End
+
+
+/////..... 아이콘 일반, 경고, 감지 표시 expl 시작
+.date_select, .chart_select {
+  overflow: hidden; width: 40px;
+  & * {opacity: 0; position: absolute; bottom:0; left:0; height:100%; color:#3c3c3c !important;}
+}
+.expl {
+  margin: 0 0 0 auto; padding:0 0 3px 0;  @include flex-align-self-end;
+  span {
+    position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
+    &:before {
+      content:""; position: absolute; left:0; bottom:1px; width:18px; height:18px;
+      @include border-radius(200px);  @include borderwidth(3px);
+    }
+    &:nth-of-type(1):before {border-color:$color-gray-03;}
+    &:nth-of-type(2):before {border-color:$color-orange-01;}
+    &:nth-of-type(3):before {border-color:$color-red-01;}
+  }
+
+  &.inout {
+    /*position: relative; right:auto; padding:0 20px 0 0;
+    @include flex-align-self-center;*/
+    span {
+      &:nth-of-type(1):before {border-color:$color-blue-01;}
+      &:nth-of-type(2):before {border-color:$color-green-03;}
+    }
+
+    & + * {margin:0 5px 0 0;}
+  }
+
+}
+/////..... 아이콘 일반, 경고, 감지 표시 expl 끝
+
+
+/////...... button base 정의 Start
+.btnbase {@include btnbase;}
+.dim {pointer-events: none; opacity: 0.5;}
+
+/////...... button base 정의 End
+
+
+////// ----------------- ONNLE MAP 설정 Start
+.device > * {
+  &:before, &:after {}
+
+  &:before, &:after {
+    @include flex-midddle;
+    width:100%; height:100%; font-size:1.5rem; color:$color-white-01; background-color: transparent;
+    @include border-radius(200px); @include transition(400ms); cursor: pointer;
+  }
+  &:before {position:absolute; }
+}
+
+.icon-tof, .icon-ptz {
+  position: absolute; width:$devi_w; height:$devi_w; @include border-radius(200px); background-color: $bas-color;
+  &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
+  & > span {
+    @include flex-midddle; position: absolute; height:20px; bottom:-($devi_w - 10px);
+    padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
+    background-color:$color-gray-09; @include border-radius(200px);
+  }
+
+  /////..... 임계치 적용 표시 Start
+  &.level {
+    &-caution,&-warning,&-danger {@include pOn; }
+
+    &-caution:after {@include border01(2px,$color-gray-05,1);  }
+    &-warning:after {@include border01(2px,$color-orange-01,1);}
+    &-danger:after  {@include border01(2px,$color-red-01,1);   }
+    &-die:after {}
+
+    &-caution { &,& > span {background-color:$color-gray-05;   } }
+    &-warning { &,& > span {background-color:$color-orange-01; } }
+    &-danger  { &,& > span {background-color:$color-red-01;    } }
+    &-die     {
+      @include issue02; background-color:$color-gray-09;
+      &:before {opacity: 0.6;}
+      &:after {
+        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
+        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
+      }
+    }
+  }
+  /////..... 임계치 적용 표시 End
+}
+
+
+/////.......... 디바이스 보기 Popup Start
+.device_popup {
+    /*
+    <div class="device_popup">
+        <ul>
+            <li>연기 감지센서</li>
+            <li>유해가스 감지센서</li>
+            <li class="cctv_view">CCTV 01<button></button></li>
+            <li>일산화탄소 감지센서</li>
+            <li>진출입 감지센서</li>
+        </ul>
+    </div>
+    */
+    $dp_mlr:($m_lr - 5px);
+
+    z-index:1; position: absolute; top:$btnarea-height; right:-100%; bottom:$dp_mlr; width:100%;
+    @include transition(400ms);
+
+    & *,& *:before, & *:after {color:#3c3c3c !important;}
+
+    &:before {
+      content:"DEVIC LIST";
+      position: absolute; z-index: -1; top:0; left:$dp_mlr; right:$dp_mlr; bottom:0;
+      background-color: $adm-color; padding:7px $m_lr; font-size: 1.2rem;
+      color:$color-blue-01 !important; @include box-shadow01(0px, 25px, 35px, -10px, #000, 0.6);
+    }
+
+    ul {
+      overflow: auto; position: absolute; top:$btnarea-height; left:$m_lr; right:$m_lr; bottom:0; padding:0 $m_lr;
+
+      li {
+        @include flexbase; @include flex-align-items-center;
+        position: relative; width:100%; height:40px; font-weight:bold;
+
+        button {
+          width:90px; height:30px; margin:0 0 0 auto; padding:0 0 2px 0;
+          @include border01(1px,$color-gray-01, 1);
+          &:before {
+            content:"VIEW"; font-weight:normal; font-size:0.9rem;
+          }
+          &:hover {
+            background-color: $color-blue-01; border-color:$color-blue-01;
+            &:before {color:#fff !important;}
+          }
+        }
+
+
+        &:before {content:"\e92f"; font-size:1.2rem; padding:0 10px 0 0; }
+        &.cctv_view {
+          &:before {content:"\e91c" !important; font-size:1.4rem;}
+        }
+
+      }
+    }
+
+  }
+/////.......... 디바이스 보기 Popup End
+

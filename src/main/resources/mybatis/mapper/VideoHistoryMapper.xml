@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.VideoHistoryDao" >
+
+    <!--
+        알림센터 이력 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListVideoHistory" resultType="VideoHistoryBean" parameterType="map" >
+        SELECT	a.video_history_id as videoHistoryId
+                ,a.notification_id as notificationId
+                ,a.device_id as deviceId
+                ,area.area_name as areaName
+                ,b.event_name as eventName
+                ,b.fence_name as fenceName
+                ,c.device_name as deviceName
+                ,a.video_file_name as videoFileName
+                ,a.thumbnail_file_name as thumbnailFileName
+                ,a.video_type as videoType
+                ,a.video_datetime as videoDatetime
+                ,a.video_size as videoSize
+        FROM	isaver.video_history a
+        LEFT OUTER JOIN (
+            SELECT	notification_id
+                    ,event_name
+                    ,fence_name
+            FROM	isaver.notification noti
+            INNER JOIN isaver.event evt
+            ON	    noti.event_id = evt.event_id
+            LEFT OUTER JOIN isaver.fence fnc
+            ON	    noti.fence_id = fnc.fence_id
+        ) b
+        ON	a.notification_id = b.notification_id
+        INNER JOIN isaver.device c
+        ON	a.device_id = c.device_id
+        INNER JOIN isaver.area area
+        ON	c.area_id = area.area_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="areaId != null and areaId != ''">
+                AND     area.area_id = #{areaId}
+            </if>
+            <if test="deviceId != null and deviceId != ''">
+                AND     c.device_id = #{deviceId}
+            </if>
+            <if test="videoType != null and videoType != ''">
+                AND     a.video_type = #{videoType}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     a.video_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     a.video_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+        ORDER BY video_datetime DESC
+    </select>
+
+    <!--
+        알림센터 이력 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountVideoHistory" parameterType="map" resultType="java.lang.Integer" >
+        SELECT  count(a.video_history_id)
+        FROM	isaver.video_history a
+        LEFT OUTER JOIN (
+            SELECT	notification_id
+                    ,event_name
+            FROM	isaver.notification noti
+            INNER JOIN isaver.event evt
+            ON	    noti.event_id = evt.event_id
+        ) b
+        ON	a.notification_id = b.notification_id
+        INNER JOIN isaver.device c
+        ON	a.device_id = c.device_id
+        INNER JOIN isaver.area area
+        ON	c.area_id = area.area_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="areaId != null and areaId != ''">
+                AND     area.area_id = #{areaId}
+            </if>
+            <if test="deviceId != null and deviceId != ''">
+                AND     c.device_id = #{deviceId}
+            </if>
+            <if test="videoType != null and videoType != ''">
+                AND     a.video_type = #{videoType}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     a.video_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     a.video_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+    </select>
+</mapper>

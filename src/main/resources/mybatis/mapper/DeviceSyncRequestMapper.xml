@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.DeviceSyncRequestDao" >
+
+    <!--
+        장치동기화 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListDeviceSyncRequest" resultType="DeviceSyncRequestBean" parameterType="map" >
+        SELECT  A.device_sync_request_id as deviceSyncRequestId
+                , A.device_id as deviceId
+                , B.device_name as deviceName
+                , T01.code_name as type
+                , S01.code_name as status
+                , A.start_datetime as startDatetime
+                , A.end_datetime as endDatetime
+                , A.insert_user_id as insertUserId
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , A.insert_datetime as insertDatetime
+                , A.update_user_id as updateUserId
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+                , A.update_datetime as updateDatetime
+        FROM    isaver.device_sync_request A
+        INNER JOIN isaver.device B
+        ON      A.device_id = B.device_id
+        INNER JOIN
+        (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'T01'
+        ) AS T01
+        ON      A.type = T01.code_id
+        INNER JOIN
+        (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'S01'
+        ) AS S01
+        ON      A.status = S01.code_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type != null and type != ''">
+                AND   A.type = #{type}
+            </if>
+            <if test="status != null and status != ''">
+                AND   A.status = #{status}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND   A.start_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' 00:00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND   A.start_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' 23:59:59')::timestamp
+            </if>
+        </trim>
+        ORDER BY A.start_datetime DESC
+        <if test="pageIndex != null">
+            LIMIT ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+        장치동기화 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountDeviceSyncRequest" parameterType="map" resultType="java.lang.Integer" >
+        SELECT  count(A.device_sync_request_id)
+        FROM    isaver.device_sync_request A
+        INNER JOIN isaver.device B
+        ON      A.device_id = B.device_id
+        INNER JOIN
+        (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'T01'
+        ) AS T01
+        ON      A.type = T01.code_id
+        INNER JOIN
+        (
+            SELECT    code_id, code_name FROM isaver.code
+            WHERE     group_code_id = 'S01'
+        ) AS S01
+        ON      A.status = S01.code_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type != null and type != ''">
+                AND   A.type = #{type}
+            </if>
+            <if test="status != null and status != ''">
+                AND   A.status = #{status}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND   A.start_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' 00:00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND   A.start_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' 23:59:59')::timestamp
+            </if>
+        </trim>
+    </select>
+
+    <!--
+        장치동기화를 등록한다.
+        @author psb
+    -->
+    <insert id="addDeviceSyncRequest" parameterType="java.util.List" >
+        <foreach collection="list" item="item" separator=";">
+            insert into isaver.device_sync_request (
+                device_sync_request_id
+                ,device_id
+                ,type
+                ,status
+                ,start_datetime
+                ,insert_user_id
+                ,insert_datetime
+            ) values (
+                #{item.deviceSyncRequestId}
+                ,#{item.deviceId}
+                ,#{item.type}
+                ,#{item.status}
+                ,now()
+                ,#{item.insertUserId}
+                ,now()
+            )
+        </foreach>
+    </insert>
+
+    <!--
+        장치동기화를 저장한다.
+        @author psb
+    -->
+    <update id="saveDeviceSyncRequest" parameterType="java.util.List" >
+        <foreach collection="list" item="item" separator=";">
+            update isaver.device_sync_request
+            set   status = #{item.status}
+                  ,start_datetime = NOW()
+                  ,update_user_id = #{item.updateUserId}
+                  ,update_datetime = NOW()
+            where device_sync_request_id = #{item.deviceSyncRequestId}
+        </foreach>
+    </update>
+</mapper>

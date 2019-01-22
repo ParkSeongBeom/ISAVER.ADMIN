@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.FenceDeviceDao" >
+    <!--
+        펜스 카메라 맵핑정보를 가져온다.
+        @author psb
+    -->
+    <select id="findListFenceDevice" parameterType="map" resultType="FenceDeviceBean">
+        SELECT  A.uuid as uuid
+                , A.device_id as deviceId
+                , B.fence_id as fenceId
+        FROM  isaver.fence_device A
+        INNER JOIN isaver.fence b
+        ON      a.uuid = b.uuid
+        INNER JOIN isaver.device c
+        ON      b.device_id = c.device_id
+        <where>
+            <if test="areaId != null and areaId != ''">
+                AND     c.area_id = #{areaId}
+            </if>
+            <if test="deviceId != null and deviceId != ''">
+                AND     a.device_id = #{deviceId}
+            </if>
+            <if test="uuid != null and uuid != ''">
+                AND     a.uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--
+      펜스 카메라 맵핑정보를 등록한다.
+      @author psb
+    -->
+    <insert id="addFenceDevice" parameterType="java.util.List" >
+        INSERT INTO isaver.fence_device (
+              uuid
+            , device_id
+        ) VALUES
+        <foreach collection="list" item="item" separator="," close=";">
+            (
+                #{item.uuid}
+                ,#{item.deviceId}
+            )
+        </foreach>
+    </insert>
+
+    <!--
+      해당 구역의 펜스 카메라 맵핑정보를 제거한다.
+      @author psb
+    -->
+    <delete id="removeFenceDevice" parameterType="map" >
+        DELETE FROM isaver.fence_device
+        WHERE  uuid in (
+          SELECT uuid
+          FROM    isaver.fence a
+          INNER JOIN isaver.device b
+          ON      a.device_id = b.device_id
+          AND     b.area_id = #{areaId}
+        );
+    </delete>
+</mapper>

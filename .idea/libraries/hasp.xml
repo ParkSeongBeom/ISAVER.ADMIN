@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="hasp">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/hasp" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/hasp" recursive="false" />
+  </library>
+</component>

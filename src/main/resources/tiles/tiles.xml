@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!--suppress ALL -->
+<tiles-definitions>
+    <!-- ############# -->
+    <!-- [START] 안전 방재 -->
+    <!-- ############# -->
+    <definition name="base" template="/WEB-INF/views/tiles/layout.jsp"></definition>
+
+    <!--
+        에러페이지
+        @author psb
+    -->
+    <definition name="error" template="/WEB-INF/views/authorization/error.jsp" />
+
+    <!--
+        로그인페이지
+        @author kst
+    -->
+    <definition name="login" template="/WEB-INF/views/authorization/login.jsp" />
+
+    <!--
+        사용자 관리
+        @author kst
+    -->
+    <definition name="userList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/list.jsp" />
+    </definition>
+    <definition name="userDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/detail.jsp" />
+    </definition>
+
+    <!--
+        이벤트 관리
+        @author dhj
+    -->
+    <definition name="eventList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/event/list.jsp" />
+    </definition>
+    <definition name="eventDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/event/detail.jsp" />
+    </definition>
+
+    <!--
+        대응 관리
+        @author dhj
+    -->
+    <definition name="actionList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/action/list.jsp" />
+    </definition>
+    <definition name="actionDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/action/detail.jsp" />
+    </definition>
+
+    <!--
+        이벤트 대응 관리
+        @author dhj
+    -->
+    <definition name="eventActionList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventAction/list.jsp" />
+    </definition>
+    <definition name="eventActionDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventAction/detail.jsp" />
+    </definition>
+
+    <!--
+        장치 동기화 요청 이력 관리
+        @author psb
+    -->
+    <definition name="deviceSyncRequestList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/deviceSyncRequest/list.jsp" />
+    </definition>
+
+    <!--
+        라이센스  관리
+        @author dhj
+    -->
+    <definition name="licenseList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/license/list.jsp" />
+    </definition>
+    <definition name="licenseDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/license/detail.jsp" />
+    </definition>
+
+    <!--
+        메뉴관리
+        @author dhj
+     -->
+    <definition name="menuList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/menu/list.jsp" />
+    </definition>
+
+    <!--
+        메뉴권한관리
+        @author psb
+     -->
+    <definition name="roleMenuList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/rolemenu/list.jsp" />
+    </definition>
+
+    <!--
+        권한관리
+        @author dhj
+     -->
+    <definition name="roleList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/role/list.jsp" />
+    </definition>
+
+    <definition name="roleDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/role/detail.jsp" />
+    </definition>
+
+    <!--
+        코드관리
+        @author kst
+     -->
+    <definition name="groupCodeList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/groupcode/list.jsp" />
+    </definition>
+
+    <definition name="groupCodeDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/groupcode/detail.jsp" />
+    </definition>
+
+    <definition name="codeDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/code/detail.jsp" />
+    </definition>
+
+    <!--
+        이벤트 이력 관리
+        @author dhj
+    -->
+    <definition name="eventLogList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventLog/list.jsp" />
+    </definition>
+
+    <!--
+        알림센터 이력 관리
+        @author psb
+    -->
+    <definition name="notificationList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/notification/list.jsp" />
+    </definition>
+
+    <!--
+        영상 이력 관리
+        @author psb
+    -->
+    <definition name="videoHistoryList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/videoHistory/list.jsp" />
+    </definition>
+
+    <!--
+        사용자 로그인 이력 관리
+        @author psb
+    -->
+    <definition name="loginHistoryList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/user/history.jsp" />
+    </definition>
+
+    <!--
+        대쉬보드
+        @author psb
+    -->
+    <definition name="dashboardList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/list.jsp" />
+    </definition>
+
+    <!--
+        대쉬 화면  - 전체
+        @author dhj
+    -->
+    <definition name="allDashboard" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/all.jsp" />
+    </definition>
+
+    <!--
+        대쉬 화면  - 상세
+        @author dhj
+    -->
+    <definition name="detailDashboard" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard/detail.jsp" />
+    </definition>
+
+    <!--
+        이벤트 통계
+        @author psb
+    -->
+    <definition name="eventStatistics" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/eventStatistics/list.jsp" />
+    </definition>
+
+
+    <!-- ############# -->
+    <!-- [END] 안전 방재 -->
+    <!-- ############# -->
+
+    <!--
+        웹소켓 테스트
+        @author dhj
+    -->
+    <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
+
+    <!--
+        파일 관리
+        @author psb
+    -->
+    <definition name="fileList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/list.jsp" />
+    </definition>
+    <definition name="fileDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/file/detail.jsp" />
+    </definition>
+
+    <!--
+        파일 환경설정
+        @author psb
+    -->
+    <definition name="fileSettingDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/fileSetting/detail.jsp" />
+    </definition>
+
+    <!--
+        임계치 설정 관리
+        @author psb
+    -->
+    <definition name="criticalList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/critical/list.jsp" />
+    </definition>
+
+    <!--
+        고객사 관리
+        @author psb
+    -->
+    <definition name="targetDetail" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/target/detail.jsp" />
+    </definition>
+
+    <!--
+        구역/장치 관리
+        @author psb
+    -->
+    <definition name="resourceList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/resource/list.jsp" />
+    </definition>
+
+    <!--
+        장치상태이력 관리
+        @author psb
+    -->
+    <definition name="deviceStatusHistoryList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/deviceStatusHistory/list.jsp" />
+    </definition>
+
+    <!--
+        시뮬레이터용 테스트페이지
+        @author psb
+    -->
+    <definition name="testList" template="/WEB-INF/views/authorization/test.jsp" />
+</tiles-definitions>

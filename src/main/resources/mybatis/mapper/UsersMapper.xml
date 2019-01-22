@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.UsersDao" >
+
+    <!--
+      사용자 목록을 가져온다.
+      @author dhj
+    -->
+    <select id="findListUsers" resultType="UsersBean" parameterType="map" >
+        select  A.user_id as userId
+        , ROLE.role_name as roleName
+        , A.user_name as userName
+        , A.email as email
+        , A.del_yn as delYn
+        , A.telephone as telephone
+        , A.insert_user_id as insertUserId
+        , A.insert_datetime as insertDatetime
+        , A.update_user_id as updateUserId
+        , A.update_datetime as updateDatetime
+        from    isaver.users A
+        INNER JOIN
+        (
+        SELECT    role_id, role_name FROM isaver.role
+        ) AS ROLE
+        ON      A.role_id = ROLE.role_id
+        <if test="roleId == null or roleId != 'ROL000'">
+            AND     ROLE.role_id <![CDATA[ <> ]]> 'ROL000'
+        </if>
+        WHERE   del_yn='N'
+        <if test="userId != null and userId != ''">
+            AND   A.user_id like '%${userId}%'
+        </if>
+        <if test="userName != null and userName != ''">
+            AND   A.user_name like '%${userName}%'
+        </if>
+        <if test="roleName != null and roleName != ''">
+            AND   ROLE.role_id = #{roleName}
+        </if>
+        order by A.insert_datetime DESC
+        <if test="pageIndex != null">
+            LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+      사용자 목록 갯수를 가져온다.
+      @author dhj
+    -->
+    <select id="findCountUsers" parameterType="map" resultType="java.lang.Integer" >
+        select count(A.user_id)
+        from isaver.users A
+        INNER JOIN
+        (
+        SELECT    role_id, role_name FROM isaver.role
+        ) AS ROLE
+        ON      A.role_id = ROLE.role_id
+        <if test="roleId == null or roleId != 'ROL000'">
+            AND     ROLE.role_id <![CDATA[ <> ]]> 'ROL000'
+        </if>
+        WHERE   del_yn='N'
+        <if test="userId != null and userId != ''">
+            AND   user_id like '%${userId}%'
+        </if>
+        <if test="userName != null and userName != ''">
+            AND   user_name like '%${userName}%'
+        </if>
+        <if test="roleName != null and roleName != ''">
+            AND   ROLE.role_id = #{roleName}
+        </if>
+    </select>
+
+    <!--
+      사용자 상세를 가져온다.
+      @author dhj
+    -->
+    <select id="findByUsers" resultType="UsersBean" parameterType="map" >
+        select user_id as userId
+        , role_id as roleId
+        , user_name as userName
+        , email as email
+        , del_yn as delYn
+        , telephone as telephone
+        , insert_user_id as insertUserId
+        , insert_datetime as insertDatetime
+        , update_user_id as updateUserId
+        , update_datetime as updateDatetime
+        , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+        , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+        from isaver.users A
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <!--
+        정보를 가져온다. (for Login)
+        @author psb
+    -->
+    <select id="findByUsersForLogin" parameterType="map" resultType="UsersBean">
+        SELECT  a.user_id as userId
+                , a.role_id as roleId
+                , a.user_name as userName
+                , a.email as email
+                , a.del_yn as delYn
+                , a.telephone as telephone
+                , a.insert_user_id as insertUserId
+                , a.insert_datetime as insertDatetime
+                , a.update_user_id as updateUserId
+                , a.update_datetime as updateDatetime
+        FROM    isaver.users a
+        INNER JOIN  isaver.role b
+        ON      a.role_id = b.role_id
+        AND     b.del_yn = 'N'
+        WHERE   a.user_id = #{userId}
+        AND     a.user_password = #{userPassword}
+    </select>
+
+    <!--
+        사용자 존재여부를 확인한다.
+        @author kst
+    -->
+    <select id="findByUserCheckExist" parameterType="map" resultType="java.lang.Integer">
+        select  count(user_id)
+        from    isaver.users
+        where   user_id = #{userId}
+    </select>
+
+    <!--
+        사용자 존재여부를 확인한다.
+        @author kst
+    -->
+    <select id="findByUserRoleCount" parameterType="map" resultType="java.lang.Integer">
+        select  count(user_id)
+        from    isaver.users
+        where   role_id = #{roleId}
+    </select>
+
+    <!--
+      사용자를 등록한다.
+      @author dhj
+    -->
+    <insert id="addUsers" parameterType="map" >
+        insert into isaver.users (
+        user_id
+        ,role_id
+        ,user_password
+        ,user_name
+        ,email
+        ,del_yn
+        ,telephone
+        ,insert_user_id
+        ,insert_datetime
+        ) values (
+        #{userId}
+        ,#{roleId}
+        ,#{userPassword}
+        ,#{userName}
+        ,#{email}
+        ,'N'
+        ,#{telephone}
+        ,#{insertUserId}
+        ,now()
+        )
+    </insert>
+
+    <!--
+      사용자를 저장한다.
+      @author dhj
+    -->
+    <update id="saveUsers" parameterType="map" >
+        update isaver.users
+        set   user_name = #{userName}
+            ,email = #{email}
+            ,telephone=#{telephone}
+            ,update_user_id = #{updateUserId}
+            ,update_datetime = NOW()
+            <if test="roleId != null and roleId != ''">
+                ,role_id=#{roleId}
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                ,user_password=#{userPassword}
+            </if>
+        where user_id = #{userId}
+    </update>
+
+    <!--
+        권한삭제시 관련 정보를 제거한다.
+        @author kst
+    -->
+    <update id="saveUsersForRole" parameterType="map">
+        UPDATE  isaver.users
+        SET     update_user_id='admin'
+        ,update_datetime=NOW()
+        ,role_id = NULL
+        WHERE   role_id = #{roleId}
+    </update>
+
+    <!--
+      사용자를 제거한다.
+      @author dhj
+    -->
+    <update id="removeUsers" parameterType="map">
+        update isaver.users
+        set     del_yn = 'Y'
+        ,update_user_id = #{updateUserId}
+        ,update_datetime = NOW()
+        where   user_id = #{userId}
+    </update>
+</mapper>

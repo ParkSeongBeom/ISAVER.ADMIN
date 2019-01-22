@@ -1,0 +1,1320 @@
+@charset "utf-8";
+
+/*
+ @at-root {.class { } } 존속받지 않고 root에 위치
+ */
+
+// 폰트사이즈 지정
+@mixin font-size15 {font-size:0.9rem;}            //ex)  @include font-size15;
+@mixin font-size20 {font-size:1.25rem;}           //ex)  @include font-size20;
+@mixin font-size48 {font-size:3rem;}              //ex)  @include font-size48;
+@mixin font-size64 {font-size:4rem;}              //ex)  @include font-size64;
+@mixin font-size-navbtn {font-size:1.25rem;}      //ex)  nav 01 depth btn = 20px    @include font-size-navbtn;
+@mixin font-size-navdepthbtn {font-size:1.1rem;}  //ex)  nav 02 depth btn = 17.5px  @include font-size-navdepthbtn;
+@mixin font-size-menubtn {font-size:1.5rem;}      //ex)  메뉴 아이콘 btn = 24px  @include font-size-menubtn;
+@mixin font-size-h2 {font-size:1.8rem;}            //ex)  32px   @include font-size-h2;
+@mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
+@mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
+
+$bs_hsize:1.5rem; // 진출입 구역명
+$bs_bsize:7.2rem; // 진출입 현재 잔존
+$bs_psize:3rem;   // 진출입 인, 아웃
+$bs_lsize:15rem;  // 진출입 인, 아웃
+
+$bs_hsize_s:($bs_hsize - 0.3rem); // 진출입 구역명 작은글씨
+$bs_bsize_s:($bs_bsize - 2rem);   // 진출입 목록 큰글씨
+$bs_psize_s:($bs_psize - 0.8rem); // 진출입 목록 작은글씨
+
+$bs_hsize_ss:($bs_hsize - 0.4rem);  // 진출입 구역명 작은글씨
+$bs_bsize_ss:($bs_bsize - 3.7rem);  // 진출입 목록 큰글씨
+$bs_psize_ss:($bs_psize - 1.4rem);  // 진출입 목록 작은글씨
+
+$se_fsize:1.5rem; // safeeye 리스트
+$se_bsize:12rem;  // safeeye 이벤트 아이콘
+
+$ks_bsize:16rem;
+$ks_ssize:($ks_bsize / 4.5);
+
+/*
+일반, 주의, 경고, 위험 색상단계 정의
+일반 :
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
+*/
+
+
+// 기본 색상
+$bas-color:#3c3c3c; //rgba(76,76,76,1)     데시보드 기본 bg
+$adm-color:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
+$not-color:#0f0e13; //rgba(15,14,19,1)     알림센터 기본 bg
+
+$color-gray-01:#a9a9a9;   // rgba(169,169,169,1)  form Normal border-color
+$color-gray-02:#ddd;      // form Dim border-color
+$color-gray-03:#999;      // rgba(88,88,88,1)  주위
+$color-gray-04:#e1e1e1;   // rgba(225,225,225,1)  테이블 Hover
+$color-gray-05:#757575;   // rgba(177,177,177,1)  밝은 버튼, 테이블 th bg
+$color-gray-06:#bcbcbc;   // rgba(188,188,188,1)  테이블 border-color
+$color-gray-07:#4c4c4c;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
+$color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
+$color-gray-09:#111;      // rgba(45,45,45,1)  데시보드 스킨 그레이
+$color-gray-10:#2c2c2c;
+
+$color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
+$color-red-02:#be1e1e;    // rgba(190,30,30,1)
+
+$color-yellow-01:#f6b900; // rgba(246,185,0,1)  차트03
+$color-yellow-02:#ef8116; // rgba(239,129,22,1) 차트08
+
+$color-blue-01:#109dcb;   // rgba(16,157,203,1) 버튼 ON
+$color-blue-02:#259dcf;   // rgba(37,157,207,1) 차트06
+$color-blue-03:#49dbff;   // rgba(37,157,207,1) 차트09
+
+
+$color-purple-01:#cc3dd3; // rgba(204,61,211,1)  차트02
+$color-purple-02:#9753dc; // rgba(151,83,220,1) 차트05
+$color-purple-03:#7894c2; // rgba(120,148,194,1) 차트10
+
+$color-orange-01:#ff8400; // rgba(255,132,0,1) 경고
+$color-orange-02:#e05f2d; // rgba(224,95,45,1)
+
+$color-green-01:#01d65a;  // rgba(0,212,88,1)   차트01
+$color-green-02:#56c96e;  // rgba(86,201,110,1) 차트07
+$color-green-03:#a8d164;  // rgba(168,209,100,1) 들어옴
+
+$color-dark-01:#4c4c4c;   // rgba(76,76,76,1) 버튼기본
+$color-dark-02:#0f0e13;   // rgba(15,14,19,1)
+
+$color-white-01:#fff;     //
+$color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
+
+$hov-color:#040404;   //rgba(20,20,20,1) 구분라인
+
+
+
+// 길이지정
+$body-minwidth:1450px;
+$dash-margin:15px;
+$popup-margin:20px;
+$admin-margin : 150px;
+$video-width:400px;
+$issueWidth:80px;
+
+$noticecenter-width:300px;
+
+
+
+
+$devicewidth:40px;
+$device-width:100vw;
+$device-height:100vh;
+$screen-width:100%;
+$screen-height:100%;
+$nav_width:100px;
+$btnarea-height:40px;
+$headerHeight:40px; // wrap > header의 height
+$areaHeaderHeight:60px;
+$padpay:80px; //admin 공통 padding 값
+$td-height:55px;
+$tree-area-width:400px;
+$btnHeight:40px;
+$loding-size:220px;
+$thwidth:180px;
+$tdwidth:calc(50% - 180px);
+$tree-table-width:350px;
+
+$margin:15px; // root article 상하좌우 마진값
+$m_lr:15px; // 감시구역 상하좌우 마진값
+$m_slr:($m_lr - 10px);
+
+$devi_w:25px;
+$resi_w:10px;
+
+//.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
+// display
+$display-table:table;
+$display-table-cell:table-cell;
+$display-block:block;
+$display-inline-block:inline-block;
+
+//z-index
+@mixin z-index-popup  {z-index:10; } //ex) popup @include z-index-popup;
+@mixin z-index-notice {z-index:20; } //ex) 알림센터 @include z-index-not;
+@mixin z-index-header {z-index:30; } //ex) 알림센터 @include z-index-header;
+@mixin z-index-toast  {z-index:40; } //ex) popup @include z-index-toast;
+@mixin z-index-menu   {z-index:50; } //ex) menu @include z-index-menu;
+
+
+@mixin dark_select {
+  @include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02;
+}
+
+@mixin screenbg {
+  background-color: $bas-color; color:$color-white-02;
+  /*
+  &:after {
+    content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
+    background-image: url(../images/bg/bg_spot.svg); opacity: 0.5;
+  }
+  */
+
+  ::-webkit-input-placeholder {color:rgba(255, 255, 255, 0.4);}
+  ::-moz-placeholder          {color:rgba(255, 255, 255, 0.4);}
+  :-ms-input-placeholder      {color:rgba(255, 255, 255, 0.4);}
+  :-moz-placeholder           {color:rgba(255, 255, 255, 0.4);}
+
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,$color-gray-01,1); background-color: $color-gray-03;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+} //ex) @include screenbg;  백그라운드 공통
+
+
+// display flex 플렉스 기본
+@mixin flexbase {display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;}
+//ex) @include flexbase;
+
+@mixin flexbase-inline {display:-webkit-box; display:-moz-inline-box; display:-ms-inline-flexbox; display:-webkit-inline-flex; display:inline-flex; display:flexbox; display:box;}
+//ex) @include flexbase-inline;
+
+
+// flex width
+@mixin flex-width {flex:0 1 100%; -webkit-flex:0 1 100%;  flexbox:0 1 100%; -webkit-box-flex:1; -ms-flex: 1; }
+// ex) @include flex-width;
+@mixin flex-width-one($width) {flex:$width; -webkit-flex:$width;  flexbox:$width; -webkit-box-flex:$width; -ms-flex: $width; }
+// ex) @include flex-width-one(1);
+@mixin flex-width-option($quarter, $width) {flex:0 $quarter $width; -webkit-flex:0 $quarter $width;  flexbox:0 $quarter $width; -webkit-box-flex:$quarter; -ms-flex: 0 $quarter $width; }
+// ex) @include flex-width-option(1, 100%);
+@mixin flex-option($grow, $shrink, $basis) {flex: $grow $shrink $basis; -webkit-flex: $grow $shrink $basis;  flexbox: $grow $shrink $basis; -webkit-box-flex:$shrink; -ms-flex: $grow $shrink $basis; }
+// ex) @include flex-option(0, 1, 100%);
+
+
+//flex-direction
+@mixin flex-column {-webkit-box-orient:column; -webkit-box-direction:column; -webkit-flex-direction:column; -ms-flex-direction:column; flex-direction:column;}
+// ex) @include flex-column;
+@mixin flex-column-reverse {-webkit-box-orient:column-reverse; -webkit-box-direction:column-reverse; -webkit-flex-direction:column-reverse; -ms-flex-direction:column-reverse; flex-direction:column-reverse;}
+// ex) @include flex-column-reverse;
+@mixin flex-column-none {-webkit-box-orient:unset; -webkit-box-direction:unset; -webkit-flex-direction:unset; -ms-flex-direction:unset; flex-direction:unset;}
+// ex) @include flex-column-none;
+@mixin flex-column-row {-webkit-box-orient:row; -webkit-box-direction:row; -webkit-flex-direction:row; -ms-flex-direction:row; flex-direction:row;}
+// ex) @include flex-column-row;
+
+
+//align-items
+@mixin flex-align-items-start   {box-align:start;   -webkit-box-align:start;   -moz-box-align:flex-start;   -webkit-align-items:flex-start;   -ms-flex-align:flex-start;   align-items:flex-start;  }
+// ex) @include flex-align-items-start;
+@mixin flex-align-items-center  {box-align:center;  -webkit-box-align:center;  -moz-box-align:center;       -webkit-align-items:center;       -ms-flex-align:center;       align-items:center;      }
+// ex) @include flex-align-items-center;
+@mixin flex-align-items-end     {box-align:end;     -webkit-box-align:end;     -moz-box-align:flex-end;     -webkit-align-items:flex-end;     -ms-flex-align:flex-end;     align-items:flex-end;    }
+// ex) @include flex-align-items-end;
+@mixin flex-align-items-stretch {box-align:stretch; -webkit-box-align:stretch; -moz-box-align:flex-stretch; -webkit-align-items:flex-stretch; -ms-flex-align:flex-stretch; align-items:flex-stretch;}
+// ex) @include flex-align-items-stretch;
+
+
+//justify-content
+@mixin flex-justify-content-center  {-webkit-box-pack:center;  -moz-box-pack:center;     -webkit-justify-content:center;        -ms-flex-pack:center;     justify-content:center;       }
+// ex) @include flex-justify-content-center;
+@mixin flex-justify-content-start   {-webkit-box-pack:start;   -moz-box-pack:flex-start; -webkit-justify-content:flex-start;    -ms-flex-pack:flex-start; justify-content:flex-start;   }
+// ex) @include flex-justify-content-start;
+@mixin flex-justify-content-end     {-webkit-box-pack:end;     -moz-box-pack:flex-end;   -webkit-justify-content:flex-end;      -ms-flex-pack:flex-end;   justify-content:flex-end;     }
+// ex) @include flex-justify-content-end;
+@mixin flex-justify-content-between {-webkit-box-pack:justify; -moz-box-pack:justify;    -webkit-justify-content:space-between; -ms-flex-pack:justify;    justify-content:space-between;}
+// ex) @include flex-justify-content-between;
+@mixin flex-justify-content-around {-webkit-box-pack:justify;  -moz-box-pack:justify;    -webkit-justify-content:space-around;  -ms-flex-pack:justify;    justify-content:space-around; }
+// ex) @include flex-justify-content-around;
+
+
+//flex-flow
+@mixin flex-row-wrap   {-webkit-flex-flow:row wrap;   -moz-flex-flow:row wrap;   -ms-flex-flow:row wrap;   flex-flow:row wrap;}
+// ex) @include flex-row-wrap;
+@mixin flex-row-nowrap {-webkit-flex-flow:row nowrap; -moz-flex-flow:row nowrap; -ms-flex-flow:row nowrap; flex-flow:row nowrap;}
+// ex) @include flex-row-nowrap;
+
+
+//align-content
+@mixin flex-align-content-start  {-webkit-align-content:flex-start; align-content:flex-start;}
+// ex) @include flex-align-content-start;
+@mixin flex-align-content-center {-webkit-align-content:center;     align-content:center;    }
+// ex) @include flex-align-content-center;
+@mixin flex-align-content-end    {-webkit-align-content:flex-end;   align-content:flex-end;  }
+// ex) @include flex-align-content-end;
+
+//align-self
+@mixin flex-align-self-start  {-webkit-align-self:flex-start; align-self:flex-start;}
+// ex) @include flex-align-self-start;
+@mixin flex-align-self-center {-webkit-align-self:center;     align-self:center;    }
+// ex) @include flex-align-self-center;
+@mixin flex-align-self-end    {-webkit-align-self:flex-end;   align-self:flex-end;  }
+// ex) @include flex-align-self-end;
+
+@mixin flex-midddle {
+  display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:flexbox; display:box;
+  box-align:center; -webkit-box-align:center; -moz-box-align:center; -webkit-align-items:center; -ms-flex-align:center; align-items:center;
+  -webkit-box-pack:center; -moz-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center;
+}  // ex) @include flex-midddle;
+@mixin flex-midddle-important {
+  display:-webkit-box !important; display:-moz-box !important; display:-ms-flexbox !important;
+  display:-webkit-flex !important; display:flex !important; display:flexbox !important; display:box !important;
+  box-align:center !important; -webkit-box-align:center !important; -moz-box-align:center !important;
+  -webkit-align-items:center !important; -ms-flex-align:center !important; align-items:center !important;
+  -webkit-box-pack:center !important; -moz-box-pack:center !important; -webkit-justify-content:center !important;
+  -ms-flex-pack:center !important; justify-content:center !important;
+}  // ex) @include flex-midddle-important;
+
+// box-sizing
+@mixin border-box  {-webkit-box-sizing:border-box;  -moz-box-sizing:border-box;  box-sizing:border-box;}
+// ex) @include border-box;
+@mixin content-box {-webkit-box-sizing:content-box; -moz-box-sizing:content-box; box-sizing:content-box;}
+// ex)  @include content-box;
+
+
+// text-overflow:ellipsis 말줄임
+@mixin text-overflow-ellipsis {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal;}
+// ex) @include text-overflow-ellipsis;
+
+
+// border-radius 라운딩
+@mixin border-radius($px) {-moz-border-radius:$px; -webkit-border-radius:$px; border-radius:$px; -khtml-border-radius:$px;}
+// ex) @include border-radius(200px);
+
+// box-shadow 그림자
+@mixin box-shadow($xpx,$ypx,$bpx,$rgb-r,$rgb-g,$rgb-b,$opacity) {
+  box-shadow:        $xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+}
+// ex) @include box-shadow(0px, 0px, 8px, 0, 0, 0, 0.5);
+
+@mixin box-shadow01 ($xpx,$ypx,$bpx,$zpx,$color,$opacity) {
+  box-shadow:        $xpx $ypx $bpx $zpx rgba($color,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx $zpx rgba($color,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx $zpx rgba($color,$opacity);
+}
+// ex) @include box-shadow01(0px, 0px, 8px, 0px, $지정-color, 0.5);
+
+@mixin box-shadow02 ($xpx,$ypx,$bpx,$zpx,$rgb-r,$rgb-g,$rgb-b,$opacity) {
+  box-shadow:        $xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -webkit-box-shadow:$xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+  -moz-box-shadow:   $xpx $ypx $bpx $zpx rgba($rgb-r,$rgb-g,$rgb-b,$opacity);
+}
+// ex) @include box-shadow02(0px, 0px, 8px, 0px, 0, 0, 0, 0.5);
+// $xpx-x축  $ypx-y축  $zpx-그림자 넓이 $color-지정컬러 $opacity-투명값
+
+@mixin box-inset-shadow ($xpx,$ypx,$bpx,$color,$opacity) {
+  box-shadow:        inset $xpx $ypx $bpx rgba($color,$opacity);
+  -webkit-box-shadow:inset $xpx $ypx $bpx rgba($color,$opacity);
+  -moz-box-shadow:   inset $xpx $ypx $bpx rgba($color,$opacity);
+}
+// ex) @include box-inset-shadow(0px, 0px, 8px, $지정-color, 0.5);
+
+@mixin box-shadow-none {
+  box-shadow:        none !important;
+  -webkit-box-shadow:none !important;
+  -moz-box-shadow:   none !important;
+}
+// ex) @include box-shadow-none;
+
+// box-shadow 텍스트 그림자
+@mixin text-shadow($xpx,$ypx,$bpx,$color,$opacity) {
+  text-shadow:        $xpx $ypx $bpx rgba($color,$opacity);
+  -webkit-text-shadow:$xpx $ypx $bpx rgba($color,$opacity);
+  -moz-text-shadow:   $xpx $ypx $bpx rgba($color,$opacity);
+}
+// ex) @include text-shadow(0, 0, 8px, #000, 0.5);
+
+
+@mixin box-blur ($xpx) {
+  -webkit-filter: blur($xpx);
+  -moz-filter:    blur($xpx);
+  -o-filter:      blur($xpx);
+  -ms-filter:     blur($xpx);
+  filter:         blur($xpx);
+  -ms-filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius=$xpx);
+}
+// ex) @include box-blur($xpx);
+
+@mixin box-readient {
+  background: -moz-linear-gradient(   top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+  background: linear-gradient(  to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 40%);
+}
+
+// scale
+@mixin scale($deg){transform:scale($deg); ms-transform:scale($deg); -ms-transform:scale($deg); -moz-transform:scale($deg); -webkit-transform:scale($deg); -o-transform:scale($deg);}
+// ex) @include scale(1);
+
+
+// rotate 회전
+@mixin rotate($deg){transform:rotate($deg); ms-transform:rotate($deg); -ms-transform:rotate($deg); -moz-transform:rotate($deg); -webkit-transform:rotate($deg); -o-transform:rotate($deg);}
+// ex) @include rotate(45deg);
+
+// rotate Y 회전
+@mixin rotate-y($deg){transform:rotateY($deg); ms-transform:rotateY($deg); -ms-transform:rotateY($deg); -moz-transform:rotateY($deg); -webkit-transform:rotateY($deg); -o-transform:rotateY($deg);}
+// ex) @include rotate-y(45deg);
+
+// rotate X 회전
+@mixin rotate-x($deg){transform:rotateX($deg); ms-transform:rotateX($deg); -ms-transform:rotateX($deg); -moz-transform:rotateX($deg); -webkit-transform:rotateX($deg); -o-transform:rotateX($deg);}
+// ex) @include rotate-x(45deg);
+
+// rotate 3D 회전
+@mixin rotate-3d($x, $y, $z, $deg){transform:rotate3d($x, $y, $z, $deg); ms-transform:rotate3d($x, $y, $z, $deg); -ms-transform:rotate3d($x, $y, $z, $deg);
+  -moz-transform:rotate3d($x, $y, $z, $deg); -webkit-transform:rotate3d($x, $y, $z, $deg); -o-transform:rotate3d($x, $y, $z, $deg);}
+// ex) @include rotate-3d($x, $y, $z, $deg);
+
+
+// perspective 설정
+@mixin perspective01($per, $per-x, $per-y){
+  perspective:$per; ms-perspective:$per; -ms-perspective:$per; -moz-perspective:$per; -webkit-perspective:$per; -o-perspective:$per;
+  perspective-origin: $per-x $per-y; ms-perspective-origin: $per-x $per-y; -ms-perspective-origin: $per-x $per-y;
+  -moz-perspective-origin: $per-x $per-y;  -webkit-perspective-origin: $per-x $per-y; -o-perspective-origin: $per-x $per-y;
+}
+// ex) @include perspective01(px, x축, y축);
+
+// perspective 설정
+@mixin perspective($per){perspective:$per; ms-perspective:$per; -ms-perspective:$per; -moz-perspective:$per; -webkit-perspective:$per; -o-perspective:$per;}
+// ex) @include perspective(px);
+
+// perspective 설정
+@mixin perspective-origin($per-x, $per-y){
+  perspective-origin: $per-x $per-y; ms-perspective-origin: $per-x $per-y; -ms-perspective-origin: $per-x $per-y;
+  -moz-perspective-origin: $per-x $per-y;  -webkit-perspective-origin: $per-x $per-y; -o-perspective-origin: $per-x $per-y;
+}
+// ex) @include perspective-origin(x축, y축);
+
+
+
+// border
+@mixin border($px,$color){border-style:solid; border-width:$px; border-color:$color;}
+// ex) @include border(2px 0 0 4px,rgba(0,0,0,0) );
+@mixin border01($px,$color,$opacity){border-style:solid; border-width:$px; border-color:rgba($color,$opacity);}
+// ex) @include border01(2px 0 0 4px,$컬러지정,1 );
+@mixin borderwidth($px){border-style:solid; border-width:$px;}
+// ex) @include borderwidth(2px 0 0 4px);
+
+//triangle 삼각도형
+@mixin triangle {width:0; height:0; border-style:solid;}
+@mixin triangle-top($px,$color) {@include triangle; border-width:$px; border-color:transparent transparent $color transparent;} // 위
+@mixin triangle-bot($px,$color) {@include triangle; border-width:$px; border-color:$color transparent transparent transparent;} // 아래
+@mixin triangle-lef($px,$color) {@include triangle; border-width:$px; border-color:transparent $color transparent transparent;} // 왼쪽
+@mixin triangle-rig($px,$color) {@include triangle; border-width:$px; border-color:transparent transparent transparent $color;} // 오른쪽
+// ex) @include triangle-lef(0 10px 10px 10px,#898989);
+
+@mixin transition($ms) {
+  transition:        all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -moz-transition:   all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -webkit-transition:all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -o-transition:     all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -ms-transition:    all $ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+// ex) @include transition(400ms);
+
+@mixin transition01($ms) {
+  transition:        all $ms;
+  -moz-transition:   all $ms;
+  -webkit-transition:all $ms;
+  -o-transition:     all $ms;
+  -ms-transition:    all $ms;
+}
+// ex) @include transition01(400ms);
+
+// 애니메이션
+@mixin detection {
+  -webkit-animation-duration: 300ms;
+  animation-duration:         300ms;
+  -webkit-animation-direction:alternate;
+  animation-direction:        alternate;
+  animation-fill-mode:             both;
+  -webkit-animation-fill-mode:     both;
+  -webkit-animation-timing-function:ease-in-out;
+  -webkit-animation-play-state:running;
+  -webkit-animation-iteration-count: infinite;
+}
+// ex) @include detection;
+
+
+
+// 웹킷 하이라이트 컬러 지정
+@mixin highlight-color($rgbcolor, $alpha) {-webkit-tap-highlight-color:rgba($rgbcolor, $alpha);}
+//ex) @include highlight-color(rgba(),1);
+@mixin user-select {-webkit-user-select: none; -ms-user-select:none; -moz-user-select:none;}
+//ex) @user-select bbl(0,0,0,0,0,0);
+
+
+// 구분 라인 설정
+@mixin bblbase   {content:""; position: absolute; z-index:1; top:0; right:0; background-color: $hov-color;}
+//ex) @include bblbase;
+@mixin bblwidth  {width:100%; height:1px;} // ex) @include bblwidth;
+@mixin bblheight {width:1px; height:100%;} // ex) @include bblheight;
+$bbl01:100%; $bbl02:1px;
+
+@mixin bbl($top, $right, $bottom, $left, $width, $height) {
+  content:""; position: absolute; z-index:1; background-color: $hov-color;
+  top:$top; right:$right; bottom:$bottom; left:$left; width:$width; height:$height;
+} //ex) @include bbl(0,0,0,0,0,0);
+
+
+
+// button base 정의 Start
+@mixin length-wh01 {width:$btnHeight;  height:$btnHeight;} // btn 작은 단위
+@mixin length-wh02 {width:100%; max-width:160px; height:$btnHeight; } // btn 박스형
+@mixin ibtn_font_size {font-size:1.75rem;}
+//ex) 28px @include ibtn_font_size;
+@mixin btn_font_size  {font-size:0.9rem; font-weight: bold;}
+//ex) 14.4px @include btn_font_size
+
+@mixin dim_btn {
+  &:disabled, &.dim { opacity: 0.5 !important; pointer-events: none; /*cursor: not-allowed;*/ }
+} // ex) @include dim_btn;
+
+@mixin line_btn {
+  @include border01(2px, $color-gray-01, 1);
+  background-color: transparent !important;
+  &:hover {border-color: $color-blue-01 !important; color: $color-blue-01 !important; }
+  &.on {border-color: $color-red-01; color: $color-red-01; }
+} // ex) @include line_btn;
+
+@mixin line_btn02 {
+  @include border01(1px, $color-gray-01, 1);
+  background-color: transparent;
+  &:hover {border-color: $color-blue-01 !important;  color: $color-blue-01;}
+  &.on {border-color: $color-blue-01; color: $color-white-01; background-color: $color-blue-01 !important;}
+} // ex) @include line_btn02;
+
+@mixin box_btn {
+  @include btn_font_size; color:$color-white-01;
+  background-color: $bas-color; height:40px;
+  &.on {background-color: $color-blue-01;}
+  &:hover {background-color: $color-blue-01 !important;}
+} // ex) @include box_btn;
+
+@mixin icon_btn {
+  @include length-wh01;
+  &:before {font-size:1.6rem; }
+  &:hover, &.on {&:before {font-weight:bold;}}
+  &:hover {&:before {color:$color-blue-01;}}
+  &.on    {&:before {color:$color-blue-01;}}
+} // ex) @include icon_btn;
+
+@mixin layout_btn {
+  @include length-wh01;
+  &:before {font-size:1.75rem; }//28px
+  &:hover, &.on {&:before {font-weight:bold;}}
+  &:hover {&:before {color:$color-blue-01;}}
+  &.on    {&:before {color:$color-blue-01;}}
+} // ex) @include icon_btn;
+// button base 정의 End
+
+
+@mixin btnbase {
+  min-width:$btnHeight; height:$btnHeight; background-color: $bas-color;
+  float: left; margin:0 10px 0 0; &:last-of-type {margin:0;}
+
+  @include border01(1px,$color-white-01,0.7); padding:0 10px;
+  &:hover {border-color:$color-blue-01; &,&:before {color:$color-blue-01;} }
+  &.on { background-color:$color-gray-01; border-color:$color-gray-02; }
+
+  &:before {
+    @include flex-midddle; position: absolute; top:0; left:-1px;
+    width:$btnHeight; height:$btnHeight; font-size:1.8rem;
+  }
+} //ex) @include btnbase;  버튼 공통
+
+@mixin btnbase_type01 {
+  &:before, &:after {width:100%; height:100%;}
+  &:before {@include flex-midddle; position: absolute; z-index:1; top:0; left:0;  font-size:1.4rem; }
+  &:after {content:""; display: inline-block;}
+  &:hover:after  {background-color: $color-blue-01;}
+  &:hover:before {color:$color-white-01;}
+  &:active:after {background-color: $color-red-01;}
+} //ex) @include btnbase_type01;
+
+
+@mixin list_more_btn {
+  width:100%; background-color: $bas-color; color:$color-white-01;
+  @include flex-option(1, 0, $btnarea-height);
+  &:after  {content:"More"; padding:0 0 0 10px;}
+  &:before {content:"\e92b";}
+  @include border01( 1px 0 0 0,$color-gray-09,1);
+  &:hover {background-color: $color-gray-09}
+} //ex) @include list_more_btn;
+
+
+
+// webkit-scroll Bar
+
+@mixin webkit_scroll {
+  ::-webkit-scrollbar {width: 12px;height: 10px; }
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner {height:8px; width:11px;}
+  ::-webkit-scrollbar-button {
+    display: inline-block; width: 12px; height: 7px;
+    background-repeat: no-repeat; background-position: center; background-size: 10px;
+  }
+  ::-webkit-scrollbar-button:start:decrement {background-image: url("../images/ico/select_allow_upw.svg");}
+  ::-webkit-scrollbar-button:end:decrement   {background-image: url("../images/ico/select_allow_w.svg");}
+  ::-webkit-scrollbar-thumb {min-height: 30px; background-clip: content-box; border-width:2px; border-style:solid;}
+} // ex) @include webkit_scroll;
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09 !important;}
+  ::-webkit-scrollbar-thumb {background-color: $bas-color !important; border-color:$color-gray-09 !important; }
+} // ex) @include webkit_scroll_dashboard;
+
+
+
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_admin;
+
+// line Bar
+@mixin line_bar{
+  &:after, &:before {content:""; position: absolute; z-index:12; background-color: $bas-color;}
+}
+@mixin line_bar_h{@include line_bar; &:after, &:before {width:100%; height:1px; left:0; } }
+@mixin line_bar_v{@include line_bar; &:after, &:before {width:1px; height:100%; left:0; } }
+
+@mixin line_bar_top($before,$after)    { @include line_bar_h; &:before {top:$before;} &:after {top:$after;} }
+// ex) @include line_bar_top( 1px, 0);
+@mixin line_bar_bottom($before,$after) { @include line_bar_h; &:before {bottom:$before;} &:after {bottom:$after;} }
+// ex) @include line_bar_bottom(1px, 0);
+@mixin line_bar_left($before,$after)   { @include line_bar_v; &:before {left:$before;} &:after {left:$after;} }
+// ex) @include line_bar_bottom(1px, 0);
+@mixin line_bar_right($before,$after)  { @include line_bar_v; &:before {right:$before;} &:after {right:$after;} }
+// ex) @include line_bar_right(1px, 0);
+
+
+@mixin line_bas{
+  content:""; position: absolute; z-index:12;  background-color: $bas-color;
+} // @include line_bas;
+
+@mixin line_left {
+  &:before {
+    @include line_bas; top:0;  left:0; width:1px; height:100%;
+  }
+} // @include line_left;
+
+@mixin line_bottom {
+  &:after {
+    @include line_bas; bottom:0; left:0; width:100%; height:1px;
+  }
+} // @include line_bottom;
+
+
+
+
+// 이벤트 감지 아이콘 애니메이션
+@mixin infinite {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+} // ex) @include infinite;
+
+// 이벤트 감지 아이콘 애니메이션
+@mixin issue {
+  animation-name: issue;
+  -webkit-animation-name: issue;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 10;
+  animation-iteration-count: 10;
+  //animation-fill-mode: both;
+  //-webkit-animation-fill-mode: both;
+
+  @-webkit-keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+  @keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+} // ex) @include issue;
+
+@mixin notice {
+  animation-name: notice;
+  -webkit-animation-name: notice;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 50;
+  animation-iteration-count: 50;
+
+  @-webkit-keyframes notice {
+    0%   {margin:0 1px 0 0;}
+    100%  {margin:0 -1px 0 0;}
+  }
+  @keyframes notice {
+    0%   {margin:0 1px 0 0;}
+    100%  {margin:0 -1px 0 0;}
+  }
+} // ex) @include notice;
+
+@mixin notice02 {
+  @include infinite;
+  animation-name: notice02;
+  -webkit-animation-name: notice02;
+  -webkit-animation-duration: 0.1s !important;
+  animation-duration: 0.1s !important;
+
+
+  @-webkit-keyframes notice02 {
+    0%    {}
+    100%  {opacity: 0.7;}
+  }
+  @keyframes notice02 {
+    0%    {}
+    100%  { opacity: 0.7;}
+  }
+} // ex) @include notice02;
+
+@mixin notice03 {
+  @include infinite;
+  animation-name: notice03;
+  -webkit-animation-name: notice03;
+  -webkit-animation-duration: 0.1s !important;
+  animation-duration: 0.1s !important;
+
+
+  @-webkit-keyframes notice03 {
+    0%    {}
+    100%  { opacity: 0.7;}
+  }
+  @keyframes notice03 {
+    0%    {}
+    100%  { opacity: 0.7;}
+  }
+} // ex) @include notice03;
+
+
+@mixin notice04 {
+  animation-name: notice04;
+  -webkit-animation-name: notice04;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 50;
+  animation-iteration-count: 50;
+
+  @-webkit-keyframes notice04 {
+    0%   {@include rotate-y(10deg); }
+    50%  {@include rotate-y(-10deg); opacity: 0.8;}
+    100%    {@include rotate-y(0deg);  }
+  }
+  @keyframes notice04 {
+
+    0%   {@include rotate-y(10deg); }
+    50%  {@include rotate-y(-10deg); opacity: 0.8;}
+    100%    {@include rotate-y(0deg);  }
+  }
+} // ex) @include notice04;
+
+
+
+@mixin issue02 {
+  animation-name: issue02;
+  -webkit-animation-name: issue02;
+  @include infinite;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue02 {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  @keyframes issue02 {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+} // ex) @include issue02;
+@mixin issue03 {
+  animation-name: issue03;
+  -webkit-animation-name: issue03;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue03 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; width:180%; height:180%; }
+  }
+  @keyframes issue03 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; width:180%; height:180%; }
+  }
+} // ex) @include issue03;
+@mixin issue04 {
+  animation-name: issue04;
+  -webkit-animation-name: issue04;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue04 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; width:160%; height:160%; left:-30%; top:-30%;}
+  }
+  @keyframes issue04 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; width:160%; height:160%; left:-30%; top:-30%;}
+  }
+} // ex) @include issue04;
+
+@mixin issue05 {
+  animation-name: issue05;
+  -webkit-animation-name: issue05;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue05 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:10%}
+  }
+  @keyframes issue04 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:10%}
+  }
+} // ex) @include issue04;
+
+@mixin issue06 {
+  animation-name: issue06;
+  -webkit-animation-name: issue06;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue06 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:70%}
+  }
+  @keyframes issue04 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:70%}
+  }
+} // ex) @include issue04;
+
+
+
+@mixin issue07 {
+  animation-name: issue07;
+  -webkit-animation-name: issue07;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue07 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:15%}
+  }
+  @keyframes issue07 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; padding:15%}
+  }
+} // ex) @include issue07;
+
+@mixin issue08 {
+  animation-name: issue08;
+  -webkit-animation-name: issue08;
+  @include infinite;
+
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+
+  @-webkit-keyframes issue08 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(1.5);}
+  }
+  @keyframes issue08 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(1.5);}
+  }
+} // ex) @include issue08;
+
+@mixin die {
+  content:"Not Connected!"; z-index: 10; opacity: 1; font-size: 1rem; color:$color-yellow-01;
+  width:100%; height:100%; background-color: rgba(0,0,0,1);
+
+  animation-name: die;
+  -webkit-animation-name: die;
+  @include infinite;
+
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+
+  @-webkit-keyframes die {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 0.8; }
+    40%  { opacity: 0.8; }
+    100% { opacity: 0.2; }
+  }
+  @keyframes die {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 0.8; }
+    40%  { opacity: 0.8; }
+    100% { opacity: 0.2; }
+  }
+
+} // ex) @include die;
+
+
+@mixin die02 {
+
+  content:"\e93d";
+  z-index: 10; position: absolute; top:0; left:0; width:100%; height:100%;  @include flex-midddle;
+  background-color:$color-yellow-01; color:#000; font-size:1.4rem;
+
+  animation-name: die02;
+  -webkit-animation-name: die02;
+  @include infinite;
+
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+
+  @-webkit-keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+  @keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+
+} // ex) @include die02;
+
+
+
+@mixin list {
+  animation-name: list;
+  -webkit-animation-name: list;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 8;
+  animation-iteration-count: 8;
+  //animation-fill-mode: both;
+  //-webkit-animation-fill-mode: both;
+
+  @-webkit-keyframes list {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.7;}
+    100% {opacity: 1;}
+  }
+  @keyframes list {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.7;}
+    100% {opacity: 1;}
+  }
+
+} // ex) @include list;
+
+@mixin arealist {
+  @include infinite;
+  animation-name: arealist;
+  -webkit-animation-name: arealist;
+  -webkit-animation-duration: 0.1s !important;
+  animation-duration: 0.1s !important;
+
+  @-webkit-keyframes arealist {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.7;}
+    100% {opacity: 1;}
+  }
+  @keyframes arealist {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.7;}
+    100% {opacity: 1;}
+  }
+
+} // ex) @include arealist;
+
+
+@mixin marquee {
+  animation-name: marquee;
+  -webkit-animation-name: marquee;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         15s;
+  -webkit-animation-duration: 15s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+
+  @-webkit-keyframes marquee {
+    0%   {left:100%; opacity: 1;}
+    99%  {opacity: 1;}
+    100% {left:-120%; opacity: 0;}
+  }
+  @keyframes marquee {
+    0%   {left:100%; opacity: 1;}
+    99%  {opacity: 1;}
+    100% {left:-120%; opacity: 0;}
+  }
+
+} // ex) @include marquee;
+
+@mixin marquee_h {
+  &:hover {
+    -webkit-animation-play-state: paused;
+    //height:auto !important; max-height: none !important;
+    top:0;
+  }
+
+  animation-name: marquee_h;
+  // -webkit-animation-name: marquee_h;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         10s;
+  -webkit-animation-duration: 10s;
+  //animation-direction:         alternate;
+  //-webkit-animation-direction: alternate;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  //animation-timing-function:         steps(10, end);
+  //-webkit-animation-timing-function: steps(10, end);
+  animation-fill-mode:         both;
+  -webkit-animation-fill-mode: both;
+
+  @-webkit-keyframes marquee_h {
+    0%   {top:100%; opacity: 1;}
+    99%  {opacity: 1;}
+    100% {top:-120%; opacity: 0;}
+  }
+  @keyframes marquee_h {
+    0%   {top:100%; opacity: 1;}
+    99%  {opacity: 1;}
+    100% {top:-120%; opacity: 0;}
+  }
+} // ex) @include marquee_h;
+
+@mixin loding {
+  animation-name: loding;
+  -webkit-animation-name: loding;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         6s;
+  -webkit-animation-duration: 6s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+
+  @-webkit-keyframes loding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(360deg); }
+  }
+  @keyframes loding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(360deg); }
+  }
+} // ex) @include loding;
+@mixin loading_fast {animation-duration: 1s !important;  -webkit-animation-duration: 1s !important;}
+// ex) @include loading_fast;
+
+@mixin loding02 {
+  animation-name: loding02;
+  -webkit-animation-name: loding02;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         1s;
+  -webkit-animation-duration: 1s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+
+
+  @-webkit-keyframes loding02 {
+    0%   {border-top-color:$color-red-01;}
+    25%  {border-right-color:$color-red-01;}
+    50%  {border-bottom-color:$color-red-01;}
+    75%  {border-left-color:$color-red-01;}
+    100% {border-top-color:$color-red-01;}
+  }
+  @-webkit-keyframes loding02 {
+    0%   {border-top-color:$color-red-01;}
+    25%  {border-right-color:$color-red-01;}
+    50%  {border-bottom-color:$color-red-01;}
+    75%  {border-left-color:$color-red-01;}
+    100% {border-top-color:$color-red-01;}
+  }
+} // ex) @include loding02;
+
+@mixin loding_bar {
+  @include flex-midddle;
+  position: absolute; z-index: 100; width:100%; left:0; top:0; bottom:0;
+  background-color: rgba(0,0,0,0.7);
+
+  &:before {
+    content:""; width:80px; height:80px;
+    @include box-shadow01(0px, 0px, 20px, 0px, #000, 1);
+    @include loding;  @include loading_fast; @include border-radius(500px);
+    @include border(0 3px 3px 3px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
+  }
+}  // @include loding_bar; 로딩바 애니메이션
+
+@mixin loding_ico {
+  &:after {
+    content:""; position: absolute; width:100%; height:100%; top:0; left:0;
+    @include loding;  @include loading_fast; @include border-radius(500px);
+    @include border(0 2px 2px 2px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
+  }
+}  // @include loding_ico; 로딩바 애니메이션
+
+
+@mixin header_ani {
+  animation-name: header_ani;
+  -webkit-animation-name: header_ani;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  animation-duration:         10s;
+  -webkit-animation-duration: 10s;
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+
+
+  @-webkit-keyframes header_ani {
+    0%   {left:-100%;}
+    100% {left:100%;}
+  }
+  @-webkit-keyframes header_ani {
+    0%   {left:-100%;}
+    100% {left:100%;}
+  }
+} // ex) @include header_ani;
+
+// Guard 감지 아이콘 애니메이션
+@mixin pOn {
+  &:before { @include notice03;}
+  &:after {content:""; position: absolute; width:120%; height:120%; @include issue03;}
+} // @include pOn;
+
+
+// h2 타이틀 아이콘 공통 부분
+@mixin title_icon {
+  padding:0 0 0 15px; font-weight:bold;
+  &:before {
+    content:""; position: absolute; left:0; top:6px; bottom:4px; width:5px;
+    background-color: $color-blue-01;
+  }
+}
+
+
+// 팝업 백그라운드 공통 부분
+@mixin popupdiv {
+  background-color: $adm-color; padding:$popup-margin;
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+  @include border01(3px,$color-blue-01,1 );
+  @include transition(400ms);
+}
+
+// menu_tree_set 공통부분
+$plus_icon_wh:30px;
+$mt_btn_h:50px;
+$mt_btn_w:40px;
+@mixin tree-line {content:""; position: absolute; background-color:$color-gray-06; }
+
+@mixin tree-hover
+{background-color: $color-blue-01 !important; border-color:transparent; color:#fff !important;}
+@mixin tree-on
+{background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
+@mixin tree-normal
+{background-color:rgba($color-white-02,1); border-color:$color-gray-01; color:$color-dark-01; opacity: 1 !important;}
+
+// tree 공통부분
+@mixin treebase {
+  width:100%; height:100%; max-height:600px; margin:50px 0;
+  ul, li {position: relative; @include transition(400ms);}
+
+  ul:before, ul:after, li:after, li:before, .dynatree-expander:before
+  {@include tree-line; }
+  ul:before, li:before, .dynatree-expander:before {width:10px; height:1px;}
+
+  ul:before {top:25px; left:-20px;}
+  li:before {top:25px; left:-10px;}
+
+  li {
+    &:after {top:25px; left:-10px; bottom:-26px; width:1px;}
+    &:last-of-type:after {display: none;}
+  }
+
+  input[type="checkbox"] {
+    position: absolute; z-index: 5; left:0; top:0; margin:0; padding:0; height:$mt_btn_h;
+    border:none; background-color: transparent; cursor: pointer; opacity: 0;
+  }
+} // @include treebase;
+
+//버튼기본
+@mixin tree-button {
+  text-align: left; margin:0 0 6px 0;
+  background-color: $color-white-02; color:$color-dark-01;
+  @include border01(1px,$color-gray-01,1 );
+  @include box-shadow01(0px, 10px, 8px, -10px, #000, 0.4);
+} //  @include tree-button;
+
+// 트리 + - 아이콘
+@mixin plus_icon {
+  content: "\e92b";
+  @include flex-midddle;
+  width:$plus_icon_wh; height:$plus_icon_wh; background-color: $color-dark-01; color:#fff;
+  z-index: 2;  top:9px; left:-($mt_btn_w - 1px);
+  @include border-radius(200px);
+  @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
+
+} // @include plus_icon;
+
+// checkbox_set
+$cslwidth:80px;
+@mixin checkbox_set {
+  position:relative; width:auto !important; height:40px !important; float: left;
+  & > *:not(span) {width:100%; height:40px;}
+  &, & > label {@include flexbase; @include flex-align-items-center; }
+  & > input {position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; height:100%; cursor: pointer; }
+  & > span {margin:0 10px; & + input {left:auto !important; right:0; margin:0;} }
+} // @include checkbox_set;
+
+@mixin csl_style01 {
+  /*
+    <div class="checkbox_set csl_style01">
+        <input type="checkbox"  name="" />
+        <label></label>
+        <span>자동로그인</span>
+    </div>
+    */
+
+  & > input, & > label {width:40px;}
+
+  & > label {
+    @include flex-justify-content-center;
+    &:before {content:"\e901"; font-size:1.2rem; opacity: 0.3; z-index:1;}
+    &:after  {
+      content:""; opacity: 0.8; position: absolute; width:24px; height:24px;
+        @include border-radius(200px); background-color: rgba(0,0,0,0.5);
+
+    }
+  }
+
+  & > input {
+    &:checked + label, &.on + label {
+      &:before {
+        @include text-shadow(1px, 3px, 4px, #000, 0.4);
+        font-size:1.6rem; font-weight:bold; opacity: 1;
+      }
+      &:after {opacity: 1; width:28px; height:28px; background-color: rgba(0,0,0,0.7); }
+    }
+  }
+} // @include csl_style01;
+
+@mixin csl_style02 {
+  /*
+  <div class="checkbox_set csl_style02">
+      <span>자동로그인</span>
+      <input type="checkbox"  name="" />
+      <label></label>
+  </div>
+  */
+  margin:0 45px 0 0;
+
+  & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
+
+  & > label {
+    background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
+    &, &:before {@include border-radius(200px);}
+    &:before {content:""; left:10px; width:20px; height:20px; background-color: $color-gray-01;}
+    &:after  {right:-20px; color:$color-dark-01;}
+  }
+
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      background-color:$color-red-01; border:none;
+      &:before {left:calc(100% - 30px); background-color:$color-white-01;}
+      &:after  {right:5px; color:$color-white-01;}
+    }
+  }
+
+  &.disabled {opacity: 0.6; pointer-events: none;}
+} // @include csl_style02;
+
+@mixin csl_style02_onoff {
+  & > label {
+    &:after  {content:"OFF";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"ON"; }
+    }
+  }
+} // @include csl_style02_onoff;
+
+@mixin csl_style03_noyes {
+  & > label {
+    &:after  {content:"NO";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"YES"; }
+    }
+  }
+} // @include csl_style03_noyes;
+
+@mixin csl_style04_showhide {
+  & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
+  & > label {
+    &:after  {content:"Hide";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"Show"; }
+    }
+  }
+} // @include csl_style04_showhide;
+
+
+@mixin listbase {
+  @include flex-option(0, 1, 100%);
+  p {font-size:0.9rem; opacity: 0.8; letter-spacing: 0; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+  p:nth-of-type(2) {font-size:1rem; font-weight:bold; opacity: 1; padding:3px 0;}
+  p:nth-of-type(3) {word-spacing: 2px; }
+  p:nth-of-type(4) {
+    padding:5px 0 0 0; margin:5px 0 0 0; @include border01(1px 0 0 0,$color-gray-09,0.3 );
+    &, & ~ p {}
+  }
+} // @include listbase;

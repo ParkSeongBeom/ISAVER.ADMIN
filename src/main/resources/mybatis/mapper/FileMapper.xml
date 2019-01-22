@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.FileDao" >
+
+    <!--
+        파일 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListFile" resultType="FileBean" parameterType="map" >
+        SELECT  A.file_id as fileId
+                , A.title as title
+                , A.description as description
+                , A.logical_file_name as logicalFileName
+                , A.physical_file_name as physicalFileName
+                , A.file_type as fileType
+                , CODE.code_name as fileTypeName
+                , A.file_size as fileSize
+                , A.file_path as filePath
+                , A.use_yn as useYn
+                , A.insert_user_id as insertUserId
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , A.insert_datetime as insertDatetime
+                , A.update_user_id as updateUserId
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+                , A.update_datetime as updateDatetime
+        FROM    isaver.file A
+        INNER JOIN isaver.code CODE
+        ON      A.file_type = CODE.code_id
+        AND     CODE.group_code_id = 'FTA'
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="title != null and title != ''">
+                AND   A.title ilike '%${title}%'
+            </if>
+            <if test="description != null and description != ''">
+                AND   A.description ilike '%${description}%'
+            </if>
+            <if test="fileName != null and fileName != ''">
+                AND   A.logical_file_name ilike '%${fileName}%'
+            </if>
+            <if test="fileType != null and fileType != ''">
+                AND   A.file_type = #{fileType}
+            </if>
+            <if test="useYn != null and useYn != ''">
+                AND   A.use_yn = #{useYn}
+            </if>
+        </trim>
+        ORDER BY A.insert_datetime DESC
+        <if test="pageIndex != null">
+            LIMIT ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+        파일 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountFile" parameterType="map" resultType="java.lang.Integer" >
+        SELECT  count(A.file_id)
+        FROM    isaver.file A
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="title != null and title != ''">
+                AND   A.title ilike '%${title}%'
+            </if>
+            <if test="description != null and description != ''">
+                AND   A.description ilike '%${description}%'
+            </if>
+            <if test="fileName != null and fileName != ''">
+                AND   A.logical_file_name ilike '%${fileName}%'
+            </if>
+            <if test="fileType != null and fileType != ''">
+                AND   A.file_type = #{fileType}
+            </if>
+            <if test="useYn != null and useYn != ''">
+                AND   A.use_yn = #{useYn}
+            </if>
+        </trim>
+    </select>
+
+    <!--
+        파일 상세를 가져온다.
+        @author psb
+    -->
+    <select id="findByFile" resultType="FileBean" parameterType="map" >
+        SELECT  A.file_id as fileId
+                , A.title as title
+                , A.description as description
+                , A.logical_file_name as logicalFileName
+                , A.physical_file_name as physicalFileName
+                , A.file_type as fileType
+                , A.file_size as fileSize
+                , A.file_path as filePath
+                , A.use_yn as useYn
+                , A.insert_user_id as insertUserId
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , A.insert_datetime as insertDatetime
+                , A.update_user_id as updateUserId
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+                , A.update_datetime as updateDatetime
+                , CASE
+                    WHEN (SELECT COUNT(*) FROM isaver.critical WHERE dashboard_file_id = a.file_id) <![CDATA[ > ]]> 0
+                      THEN 'Y'
+                    WHEN (SELECT COUNT(*) FROM isaver.critical_target WHERE alarm_file_id = a.file_id) <![CDATA[ > ]]> 0
+                      THEN 'Y'
+                    WHEN (SELECT COUNT(*) FROM isaver.area b WHERE b.file_id = a.file_id) <![CDATA[ > ]]> 0
+                      THEN 'Y'
+                    ELSE 'N'
+                  END AS fkUseYn
+        FROM    isaver.file A
+        WHERE   A.file_id = #{fileId}
+    </select>
+
+    <!--
+        파일을 등록한다.
+        @author psb
+    -->
+    <insert id="addFile" parameterType="map" >
+        INSERT INTO isaver.file (
+            file_id
+            , file_type
+            , title
+            , description
+            , logical_file_name
+            , physical_file_name
+            , file_size
+            , file_path
+            , use_yn
+            , insert_datetime
+            , insert_user_id
+        ) VALUES (
+            #{fileId}
+            , #{fileType}
+            , #{title}
+            , #{description}
+            , #{logicalFileName}
+            , #{physicalFileName}
+            , ${fileSize}
+            , #{filePath}
+            , #{useYn}
+            , NOW()
+            , #{insertUserId}
+        );
+    </insert>
+
+    <!--
+        파일을 저장한다.
+        @author psb
+    -->
+    <update id="saveFile" parameterType="map" >
+        update isaver.file
+        set     title = #{title}
+                ,description = #{description}
+                ,use_yn = #{useYn}
+                <if test="physicalFileName != null and physicalFileName != ''">
+                  , physical_file_name = #{physicalFileName}
+                </if>
+                <if test="logicalFileName != null and logicalFileName != ''">
+                  , logical_file_name = #{logicalFileName}
+                </if>
+                <if test="fileSize != null">
+                    , fileSize = ${fileSize}
+                </if>
+                <if test="filePath != null and filePath != ''">
+                    , filePath = #{filePath}
+                </if>
+                <if test="fileType != null and fileType != ''">
+                    , file_type = #{fileType}
+                </if>
+                ,update_user_id = #{updateUserId}
+                ,update_datetime = NOW()
+        where   file_id=#{fileId}
+    </update>
+
+    <!--
+        파일을 제거한다.
+        @author psb
+    -->
+    <delete id="removeFile" parameterType="map">
+        DELETE FROM isaver.file
+        WHERE       file_id=#{fileId}
+    </delete>
+</mapper>

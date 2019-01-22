@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.NotificationDao" >
+
+    <!--
+        알림센터 이력 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListNotification" resultType="NotificationBean" parameterType="map" >
+        SELECT  A.notification_id as notificationId
+                , A.event_log_id as eventLogId
+                , A.object_id as objectId
+                , A.fence_id as fenceId
+                , (SELECT fence_name FROM isaver.fence f WHERE A.fence_id = f.fence_id AND A.device_id = f.device_id) as fenceName
+                , A.status as status
+                , A.area_id as areaId
+                , AREA.area_name as areaName
+                , A.device_id as deviceId
+                , DEVICE.device_name as deviceName
+                , A.event_id as eventId
+                , EVENT.event_name as eventName
+                , A.event_datetime as eventDatetime
+                , to_char(A.event_datetime,'yyyy-MM-dd HH24:MI:ss') as eventDatetimeStr
+                , A.critical_level as criticalLevel
+                , COD.code_name as criticalLevelName
+                , A.confirm_user_id as confirmUserId
+                , (select user_name from isaver.users where user_id=A.confirm_user_id) as confirmUserName
+                , A.confirm_datetime as confirmDatetime
+                , to_char(A.confirm_datetime,'yyyy-MM-dd HH24:MI:ss') as confirmDatetimeStr
+                , A.cancel_user_id as cancelUserId
+                , (select user_name from isaver.users where user_id=A.cancel_user_id) as cancelUserName
+                , A.cancel_datetime as cancelDatetime
+                , to_char(A.cancel_datetime,'yyyy-MM-dd HH24:MI:ss') as cancelDatetimeStr
+                , A.cancel_desc as cancelDesc
+                , A.insert_user_id as insertUserId
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , A.insert_datetime as insertDatetime
+                , A.update_user_id as updateUserId
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+                , A.update_datetime as updateDatetime
+                , A.value as value
+        FROM    isaver.notification as A
+        INNER JOIN isaver.area AREA
+        ON      A.area_id = AREA.area_id
+        INNER JOIN isaver.code COD
+        ON      A.critical_level = COD.code_id
+        AND     COD.group_code_id = 'LEV'
+        INNER JOIN isaver.device AS DEVICE
+        ON      A.device_id = DEVICE.device_id
+        INNER JOIN isaver.event EVENT
+        ON      A.event_id = EVENT.event_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="areaId != null and areaId != ''">
+                AND     AREA.area_id = #{areaId}
+            </if>
+            <if test="deviceCode != null and deviceCode != ''">
+                AND     DEVICE.device_code  = #{deviceCode}
+            </if>
+            <if test="criticalLevel != null and criticalLevel != ''">
+                AND     A.critical_level  = #{criticalLevel}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+        order by A.event_datetime DESC
+        <if test="pageIndex != null">
+            LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+        알림센터 이력 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountNotification" parameterType="map" resultType="java.lang.Integer" >
+        SELECT count(*)
+        FROM    isaver.notification as A
+        INNER JOIN isaver.area AREA
+        ON      A.area_id = AREA.area_id
+        INNER JOIN isaver.code COD
+        ON      A.critical_level = COD.code_id
+        AND     COD.group_code_id = 'LEV'
+        INNER JOIN (
+            SELECT  DEV.device_id, DEV.device_code, CODE.code_name
+            FROM    isaver.device DEV
+            INNER JOIN  isaver.code CODE
+            ON      DEV.device_code = CODE.code_id
+            AND     CODE.group_code_id = 'DEV'
+        ) AS DEVICE
+        ON      A.device_id = DEVICE.device_id
+        INNER JOIN isaver.event EVENT
+        ON      A.event_id = EVENT.event_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="areaId != null and areaId != ''">
+                AND     AREA.area_id = #{areaId}
+            </if>
+            <if test="deviceCode != null and deviceCode != ''">
+                AND     DEVICE.device_code  = #{deviceCode}
+            </if>
+            <if test="criticalLevel != null and criticalLevel != ''">
+                AND     A.critical_level  = #{criticalLevel}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+    </select>
+
+    <!--
+        알림센터 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListNotificationForDashboard" resultType="NotificationBean" parameterType="map" >
+        SELECT  A.notification_id as notificationId
+                , A.event_log_id as eventLogId
+                , A.object_id as objectId
+                , A.fence_id as fenceId
+                , (SELECT fence_name FROM isaver.fence f WHERE A.fence_id = f.fence_id AND A.device_id = f.device_id) as fenceName
+                , A.status as status
+                , A.area_id as areaId
+                , AREA.area_name as areaName
+                , A.device_id as deviceId
+                , DEVICE.device_name as deviceName
+                , A.event_id as eventId
+                , EVENT.event_name as eventName
+                , A.event_datetime as eventDatetime
+                , A.critical_level as criticalLevel
+                , A.confirm_user_id as confirmUserId
+                , (select user_name from isaver.users where user_id=A.confirm_user_id) as confirmUserName
+                , A.confirm_datetime as confirmDatetime
+                , A.cancel_user_id as cancelUserId
+                , (select user_name from isaver.users where user_id=A.cancel_user_id) as cancelUserName
+                , A.cancel_datetime as cancelDatetime
+                , A.cancel_desc as cancelDesc
+                , A.insert_user_id as insertUserId
+                , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+                , A.insert_datetime as insertDatetime
+                , A.update_user_id as updateUserId
+                , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+                , A.update_datetime as updateDatetime
+                , A.value as value
+        FROM    isaver.notification as A
+        INNER JOIN isaver.area AREA
+        ON      A.area_id = AREA.area_id
+        INNER JOIN isaver.device AS DEVICE
+        ON      A.device_id = DEVICE.device_id
+        INNER JOIN isaver.event EVENT
+        ON      A.event_id = EVENT.event_id
+        WHERE   A.cancel_user_id is null
+        ORDER BY A.event_datetime
+    </select>
+
+    <!--
+        알림센터 목록을 가져온다. (카운트용)
+        @author psb
+    -->
+    <select id="findListNotificationForDashboardCount" resultType="NotificationBean" >
+        SELECT  A.critical_level as criticalLevel
+                , count(A.notification_id) as notiCnt
+        FROM    isaver.notification as A
+        INNER JOIN isaver.area AREA
+        ON      A.area_id = AREA.area_id
+        INNER JOIN (
+            SELECT  DEV.device_id, CODE.code_name
+            FROM    isaver.device DEV
+            INNER JOIN  isaver.code CODE
+            ON      DEV.device_code = CODE.code_id
+        ) AS DEVICE
+        ON      A.device_id = DEVICE.device_id
+        INNER JOIN isaver.event EVENT
+        ON      A.event_id = EVENT.event_id
+        WHERE   A.cancel_user_id is null
+        GROUP BY A.critical_level
+    </select>
+
+    <!--
+        대시보드용 알림센터 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListNotificationForArea" parameterType="map" resultType="NotificationBean" >
+        SELECT	a.code_id as criticalLevel
+                ,count(b.*) as notiCnt
+                ,max(b.event_datetime) as eventDatetime
+        FROM	isaver.code a
+        LEFT OUTER JOIN isaver.notification b
+        ON	    a.code_id = b.critical_level
+        AND     b.area_id = #{areaId}
+        AND	    b.status = 'D'
+        WHERE	a.use_yn = 'Y'
+        AND	    a.group_code_id = 'LEV'
+        GROUP BY a.code_id
+    </select>
+
+    <!--
+        알림센터를 저장한다. (해제, 확인)
+        @author psb
+    -->
+    <update id="saveNotification" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update  isaver.notification
+            set     update_user_id = #{item.updateUserId}
+                    , update_datetime = #{item.updateDatetime}::timestamp
+                    <if test="item.actionType == 'confirm'">
+                        , confirm_user_id = #{item.updateUserId}
+                        , confirm_datetime = #{item.updateDatetime}::timestamp
+                    </if>
+                    <if test="item.actionType == 'cancel'">
+                        , cancel_user_id = #{item.updateUserId}
+                        , cancel_datetime = #{item.updateDatetime}::timestamp
+                        <if test="item.cancelDesc != null and item.cancelDesc != ''">
+                            , cancel_desc = #{item.cancelDesc}
+                        </if>
+                    </if>
+            where   notification_id = #{item.notificationId}
+        </foreach>
+    </update>
+
+    <!--
+        알림센터 전체를 해제한다.
+        @author psb
+    -->
+    <update id="allCancelNotification" parameterType="map">
+        update  isaver.notification
+        set     update_user_id = #{updateUserId}
+                , update_datetime = now()
+                , cancel_user_id = #{updateUserId}
+                , cancel_datetime = now()
+                , cancel_desc = #{cancelDesc}
+        where   cancel_user_id is null
+    </update>
+</mapper>

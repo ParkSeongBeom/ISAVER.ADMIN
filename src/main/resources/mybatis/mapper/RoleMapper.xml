@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.RoleDao">
+    <!--
+        권한목록을 가져온다.
+        @author kst
+    -->
+    <select id="findListRole" parameterType="map" resultType="RoleBean">
+      SELECT          a.role_id           as roleId
+                      ,a.role_name         as roleName
+                      ,a.del_yn            as delYn
+                      ,a.insert_datetime   as insertDatetime
+                      ,a.update_datetime   as updateDatetime
+                      ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserId
+                      ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserId
+      FROM            isaver.role a
+      <trim prefix="WHERE" prefixOverrides="AND">
+          <if test="roleId != null and roleId != ''">
+              AND     upper(a.role_id) like upper('%${roleId}%')
+          </if>
+          <if test="roleName != null and roleName != ''">
+              AND     a.role_name like '%${roleName}%'
+          </if>
+      </trim>
+      ORDER BY        a.insert_datetime desc, a.role_id
+      <if test="pageIndex != null">
+          LIMIT   ${pageRowNumber} OFFSET ${pageIndex}
+      </if>
+    </select>
+
+    <!--
+        권한 목록 전체 갯수를 가져온다.
+        @author kst
+    -->
+    <select id="findCountRole" parameterType="map" resultType="java.lang.Integer">
+      SELECT  COUNT(role_id)
+      FROM    isaver.role
+      <trim prefix="WHERE" prefixOverrides="AND">
+          <if test="roleId != null and roleId != ''">
+              AND     upper(role_id) like upper('%${roleId}%')
+          </if>
+          <if test="roleName != null and roleName != ''">
+              AND     role_name like '%${roleName}%'
+          </if>
+      </trim>
+    </select>
+
+    <!--
+      권한 상세를 가져온다.
+      @author psb
+      -->
+    <select id="findByRole" parameterType="map" resultType="RoleBean">
+      SELECT      a.role_id            as roleId
+                  ,a.role_name         as roleName
+                  ,a.del_yn            as delYn
+                  ,a.insert_datetime   as insertDatetime
+                  ,a.update_datetime   as updateDatetime
+                  ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserId
+                  ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserId
+      FROM        isaver.role a
+      WHERE       a.role_id = #{roleId}
+      ORDER BY    a.insert_datetime;
+    </select>
+
+
+    <!--
+      권한을 등록한다.
+      @author psb
+      -->
+    <insert id="addRole" parameterType="map">
+      INSERT INTO isaver.role(
+        role_id
+        ,role_name
+        ,del_yn
+        ,insert_user_id
+        ,insert_datetime
+      ) VALUES (
+        #{roleId}
+        ,#{roleName}
+        ,#{delYn}
+        ,#{insertUserId}
+        ,NOW()
+      );
+    </insert>
+
+    <!--
+      권한을 저장한다.
+      @author psb
+      -->
+    <update id="saveRole" parameterType="map">
+        UPDATE isaver.role SET
+          del_yn          = #{delYn}
+          ,role_name        = #{roleName}
+          ,update_user_id   = #{updateUserId}
+          ,update_datetime  = NOW()
+        WHERE role_id       = #{roleId};
+    </update>
+
+    <!--
+      권한을 제거한다.
+      @author psb
+      -->
+    <delete id="removeRole" parameterType="map">
+      DELETE FROM isaver.role
+      WHERE role_id = #{roleId};
+    </delete>
+</mapper>

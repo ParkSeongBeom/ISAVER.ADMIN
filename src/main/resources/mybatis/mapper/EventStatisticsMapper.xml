@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.EventStatisticsDao">
+
+    <resultMap id="eventStatisticsResultMap" type="EventStatisticsBean">
+        <id property="stDt" column="stDt"/>
+        <id property="stDtStr" column="stDtStr"/>
+        <id property="dow" column="dow"/>
+        <id property="week" column="week"/>
+        <collection property="infos" ofType="EventStatisticsBean">
+            <result property="eventId" column="eventId"/>
+            <result property="eventName" column="eventName"/>
+            <result property="value" column="value"/>
+        </collection>
+    </resultMap>
+
+    <!--
+        이벤트 통계 시간별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsHour" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	A.st_dt as stDt
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.hour A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND   A.st_dt between #{startDatetime}::timestamp and #{endDatetime}::timestamp
+        GROUP by A.st_dt, A.event_id, event.event_name, event.statistics_code
+        order by A.st_dt
+    </select>
+
+    <!--
+        이벤트 통계 일별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsDay" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	A.st_dt as stDt
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.day A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND   A.st_dt between #{startDatetime}::date and #{endDatetime}::date
+        GROUP by A.st_dt, A.event_id, event.event_name, event.statistics_code
+        order by A.st_dt
+    </select>
+
+    <!--
+        이벤트 통계 요일별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsDow" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	A.st_dt as stDt
+                , A.dow as dow
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.day A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND   A.st_dt between #{startDatetime}::date and #{endDatetime}::date
+        GROUP by A.st_dt, A.event_id, A.dow, event.event_name, event.statistics_code
+        order by A.st_dt
+    </select>
+
+    <!--
+        이벤트 통계 주별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsWeek" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	A.st_dt as stDtStr
+                , A.week as week
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.week A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND	  date_trunc('week', (a.st_dt || '-01')::date + (interval '1 week' * (A.week-1))) between date_trunc('week', #{startDatetime}::date) and date_trunc('week', #{endDatetime}::date)
+        GROUP by stDtStr, A.week, A.event_id,  event.event_name, event.statistics_code
+        order by stDtStr
+    </select>
+
+    <!--
+        이벤트 통계 월별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsMonth" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	A.st_dt as stDtStr
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.month A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND   (a.st_dt || '-01')::date between date_trunc('month',#{startDatetime}::date)::date and date_trunc('month',#{endDatetime}::date + interval '1 months')::date - 1
+        GROUP by stDtStr, A.event_id, event.event_name, event.statistics_code
+        order by stDtStr
+    </select>
+
+    <!--
+        이벤트 통계 년별 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventStatisticsYear" resultMap="eventStatisticsResultMap" parameterType="map">
+        SELECT	a.st_dt as stDtStr
+                , A.event_id as eventId
+                , event.event_name as eventName
+                , CASE
+                    WHEN event.statistics_code = 'STS001' THEN sum(a.value)
+                    WHEN event.statistics_code = 'STS002' THEN avg(a.value)
+                  END as value
+        FROM	statistics.year A
+        INNER JOIN isaver.event event
+        ON      A.event_id = event.event_id
+        WHERE	A.event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="areaId != null and areaId != ''">
+            AND A.area_id = #{areaId}
+        </if>
+        AND   a.st_dt between substr(#{startDatetime},1,4) and substr(#{endDatetime},1,4)
+        GROUP by stDtStr, A.event_id, event.event_name, event.statistics_code
+        order by stDtStr
+    </select>
+</mapper>

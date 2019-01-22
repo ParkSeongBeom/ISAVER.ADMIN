@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.TemplateSettingDao" >
+
+    <!--
+      Dashboard Template 환경설정 목록을 가져온다.
+      @author psb
+    -->
+    <select id="findListTemplateSetting" resultType="TemplateSettingBean" >
+        select setting_id as settingId
+                , description
+                , value
+        from    isaver.template_setting
+    </select>
+
+    <!--
+      Dashboard Template 환경설정을 저장한다.
+      @author psb
+    -->
+    <update id="upsertTemplateSetting" parameterType="java.util.List" >
+        <foreach collection="list" item="item" separator=";">
+            WITH upsert as (
+                UPDATE  isaver.template_setting
+                SET
+                <if test="item.value != null and item.value != ''">
+                    value = #{item.value}
+                </if>
+                <if test="item.value == null or item.value == ''">
+                    value = null
+                </if>
+                WHERE   setting_id = #{item.settingId}
+                returning *
+            )
+            INSERT INTO isaver.template_setting (setting_id, value)
+            SELECT      #{item.settingId}
+                        <if test="item.value != null and item.value != ''">
+                            ,#{item.value}
+                        </if>
+                        <if test="item.value == null or item.value == ''">
+                            ,null
+                        </if>
+            WHERE NOT EXISTS (
+                SELECT  setting_id, value
+                FROM    isaver.template_setting
+                WHERE   setting_id = #{item.settingId}
+            );
+        </foreach>
+    </update>
+</mapper>

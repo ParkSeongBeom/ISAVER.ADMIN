@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.EventDao" >
+
+  <!--
+        이벤트 목록을 가져온다.
+        @author dhj
+    -->
+  <select id="findListEvent" parameterType="map" resultType="EventBean">
+    SELECT A.event_id as eventId
+          , ACT01.code_name as eventFlag
+          , ACT04.code_name as statisticsName
+          , event_name as eventName
+          , event_desc as eventDesc
+          , insert_user_id as inserUserId
+          , insert_datetime as insertDatetime
+          , update_user_id as updateUserId
+          , update_datetime as updateDatime
+          , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+          , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+          , ACT03.action_id as actionId
+          , CODE01.code_name as actionCode
+          , ACT03.action_desc as actionDesc
+    FROM isaver.event A
+    INNER JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'EVT'
+    ) AS ACT01
+    ON      A.event_flag = ACT01.code_id
+    LEFT JOIN
+    (
+    SELECT    event_id, action_id FROM isaver.event_action
+    ) AS ACT02
+    ON      A.event_id = ACT02.event_id
+    LEFT JOIN
+    (
+    SELECT    action_id, action_code, action_desc FROM isaver.action  WHERE del_yn = 'N'
+    ) AS ACT03
+    ON      ACT02.action_id = ACT03.action_id
+    INNER JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'STS'
+    ) AS ACT04
+    ON      A.statistics_code = ACT04.code_id
+    LEFT JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'ACT'
+    ) AS CODE01
+    ON      ACT03.action_code = CODE01.code_id
+    WHERE           A.del_yn='N'
+    <if test="eventId != null and eventId != ''">
+      AND     A.event_id like '%${eventId}%'
+    </if>
+    <if test="eventName != null and eventName != ''">
+      AND     A.event_name like '%${eventName}%'
+    </if>
+      <if test="eventFlag != null and eventFlag != ''">
+          AND     A.event_flag = #{eventFlag}
+      </if>
+    ORDER BY        A.event_id ASC
+    <if test="pageIndex != null">
+      LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+    </if>;
+  </select>
+
+    <!--
+      이벤트 목록을 가져온다. (대쉬보드)
+      @author psb
+    -->
+    <select id="findListEventForDashBoard" parameterType="map" resultType="EventBean">
+        SELECT  event_id as eventId
+                , event_flag as eventFlag
+                , event_name as eventName
+                , event_desc as eventDesc
+        FROM    isaver.event A
+        WHERE   del_yn='N'
+        AND     event_id in
+        <foreach collection="eventIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+  <!--
+        이벤트 목록 갯수를 가져온다.
+        @author dhj
+    -->
+  <select id="findCountEvent" resultType="java.lang.Integer" parameterType="map" >
+    select count(A.event_id) from isaver.event as A
+    WHERE           A.del_yn='N'
+    <if test="eventId != null and eventId != ''">
+      AND     A.event_id like '%${eventId}%'
+    </if>
+    <if test="eventName != null and eventName != ''">
+      AND     A.event_name like '%${eventName}%'
+    </if>
+      <if test="eventFlag != null and eventFlag != ''">
+          AND     A.event_flag = #{eventFlag}
+      </if>
+  </select>
+
+    <!--
+        이벤트 갯수를 가져온다.
+        @author dhj
+    -->
+  <select id="findCountGenerator" parameterType="map" resultType="java.lang.Integer" >
+    select count(event_id)
+    from isaver.event
+  </select>
+
+  <!--
+        이벤트 존재여부를 확인한다.
+        @author dhj
+    -->
+  <select id="findByEventCheckExist" parameterType="map" resultType="java.lang.Integer">
+    select  count(event_id)
+    from    isaver.event
+    where   event_id = #{eventId}
+  </select>
+
+  <!--
+        이벤트 상세를 가져온다.
+        @author dhj
+    -->
+  <select id="findByEvent" parameterType="map" resultType="EventBean">
+    SELECT A.event_id as eventId
+          , event_flag as eventFlag
+          , event_name as eventName
+          , event_desc as eventDesc
+          , del_yn as delYn
+          , insert_user_id as inserUserId
+          , insert_datetime as insertDatetime
+          , update_user_id as updateUserId
+          , update_datetime as updateDatetime
+          , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+          , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+          , ACT02.action_id as actionId
+          , CODE01.code_name as actionCodeName
+          , CODE02.code_name as eventFlagName
+          , ACT03.action_desc as actionDesc
+          , statistics_code as statisticsCode
+          , ACT04.code_name as statisticsName
+    FROM isaver.event A
+    LEFT JOIN
+    (
+    SELECT    event_id, action_id FROM isaver.event_action
+    ) AS ACT02
+    ON      A.event_id = ACT02.event_id
+    LEFT JOIN
+    (
+    SELECT    action_id, action_code, action_desc FROM isaver.action  WHERE del_yn = 'N'
+    ) AS ACT03
+    ON      ACT02.action_id = ACT03.action_id
+    LEFT JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'ACT'
+    ) AS CODE01
+    ON      ACT03.action_code = CODE01.code_id
+    INNER JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'STS'
+    ) AS ACT04
+    ON      A.statistics_code = ACT04.code_id
+    LEFT JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'EVT'
+    ) AS CODE02
+    ON      A.event_flag = CODE02.code_id
+    where A.event_id = #{eventId,jdbcType=CHAR}
+  </select>
+
+
+    <!--
+        이벤트 목록을 가져온다(임계치 등록된 이벤트 제외)
+        @author dhj
+    -->
+    <select id="findListNotInCriticalList" parameterType="map" resultType="EventBean">
+        SELECT  E.event_id AS eventId
+                ,e.event_name AS eventName
+        FROM    isaver.event AS E
+        WHERE   del_yn = 'N'
+        AND     E.event_id NOT IN
+        (
+        SELECT  event_id
+        FROM    isaver.critical
+        <if test="eventId != null and eventId != ''">
+            WHERE  event_id <![CDATA[ <> ]]> #{eventId}
+        </if>
+        )
+        ORDER BY e.event_id
+    </select>
+
+  <!--
+        이벤트를 등록한다.
+        @author dhj
+    -->
+  <insert id="addEvent" parameterType="map" >
+
+    insert into isaver.event (
+      event_id
+      , event_flag
+      , event_name
+      , event_desc
+      , del_yn
+      , statistics_code
+      , insert_user_id
+      , insert_datetime
+    ) values (
+      #{eventId,jdbcType=CHAR}
+      , #{eventFlag,jdbcType=CHAR}
+      , #{eventName,jdbcType=VARCHAR}
+      , #{eventDesc,jdbcType=VARCHAR}
+      , 'N'
+      , #{statisticsCode,jdbcType=VARCHAR}
+      , #{insertUserId,jdbcType=VARCHAR}
+      , NOW()
+      );
+  </insert>
+
+  <!--
+        이벤트를 저장한다
+        @author dhj
+    -->
+  <update id="saveEvent" parameterType="map" >
+
+    update isaver.event
+    set event_flag = #{eventFlag,jdbcType=CHAR},
+      event_name = #{eventName,jdbcType=VARCHAR},
+      event_desc = #{eventDesc,jdbcType=VARCHAR},
+      statistics_code = #{statisticsCode,jdbcType=VARCHAR},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_datetime = NOW()
+    where event_id = #{eventId,jdbcType=CHAR}
+  </update>
+
+  <!--
+        이벤트를 제거한다
+        @author dhj
+    -->
+  <update id="removeEvent" parameterType="map" >
+    update isaver.event
+    set del_yn = 'Y'
+      , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+      , update_datetime = NOW()
+    where event_id = #{eventId,jdbcType=CHAR}
+  </update>
+
+</mapper>

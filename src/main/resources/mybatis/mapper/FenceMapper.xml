@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.FenceDao" >
+
+    <resultMap id="fenceResultMap" type="FenceBean">
+        <id property="uuid" column="uuid"/>
+        <result property="fenceId" column="fenceId"/>
+        <result property="fenceType" column="fenceType"/>
+        <result property="areaId" column="areaId"/>
+        <result property="deviceId" column="deviceId"/>
+        <result property="fenceName" column="fenceName"/>
+        <collection property="location" ofType="FenceLocationBean">
+            <result property="lat" column="lat"/>
+            <result property="lng" column="lng"/>
+        </collection>
+    </resultMap>
+
+    <!--
+        펜스 목록을 가져온다. (대쉬보드)
+        @author psb
+    -->
+    <select id="findListFence" parameterType="map" resultMap="fenceResultMap">
+        SELECT  A.uuid as uuid
+                , A.fence_id as fenceId
+                , A.fence_type as fenceType
+                , A.device_id as deviceId
+                , C.area_id as areaId
+                , A.fence_name as fenceName
+                , b.lat as lat
+                , b.lng as lng
+        FROM    isaver.fence A
+        INNER JOIN isaver.fence_location b
+        ON      a.uuid = b.uuid
+        INNER JOIN isaver.device c
+        ON      a.device_id = c.device_id
+        <where>
+            <if test="deviceId != null and deviceId != ''">
+                AND     a.device_id = #{deviceId}
+            </if>
+        </where>
+    </select>
+
+    <!--
+        펜스 목록을 가져온다. (test)
+        @author psb
+    -->
+    <select id="findListFenceForTest" resultMap="fenceResultMap">
+        SELECT  uuid as uuid
+                , fence_id as fenceId
+                , fence_type as fenceType
+                , device_id as deviceId
+                , fence_name as fenceName
+        FROM    isaver.fence
+    </select>
+
+    <!--
+      펜스를 등록한다.
+      @author psb
+    -->
+    <insert id="addFence" parameterType="java.util.List">
+        INSERT INTO isaver.fence (
+            uuid
+            , fence_id
+            , fence_type
+            , device_id
+            , fence_name
+        ) VALUES
+        <foreach collection="list" item="item" separator="," close=";">
+            (
+                #{item.uuid}
+                ,#{item.fenceId}
+                ,#{item.fenceType}
+                ,#{item.deviceId}
+                ,#{item.fenceName}
+            )
+        </foreach>
+    </insert>
+
+    <!--
+      펜스를 저장한다.
+      @author psb
+    -->
+    <update id="saveFence" parameterType="java.util.List" >
+        UPDATE  isaver.fence
+        SET     device_id = #{deviceId}
+        WHERE   uuid in (
+            SELECT  uuid
+            FROM    isaver.fence
+            WHERE   device_id in (
+                SELECT  device_id
+                FROM    isaver.device
+                WHERE   parent_device_id = #{parentDeviceId}
+            )
+        );
+    </update>
+
+    <!--
+      해당 구역의 펜스를 제거한다.
+      @author psb
+    -->
+    <delete id="removeFence" parameterType="map" >
+        DELETE FROM isaver.fence
+        WHERE  device_id in (
+            SELECT  device_id
+            FROM    isaver.device
+            WHERE   area_id = #{areaId}
+        );
+    </delete>
+</mapper>

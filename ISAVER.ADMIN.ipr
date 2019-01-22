@@ -295,25 +295,12 @@
             </SvnBranchConfiguration>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/../ISAVER.ADMIN.RESPOSIORY">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="branchUrls">
-                <list>
-                  <option value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN.RESPOSIORY/branches" />
-                  <option value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN.RESPOSIORY/tags" />
-                </list>
-              </option>
-              <option name="trunkUrl" value="http://172.16.120.202/svn/ICENT_ISAVER/ISAVER.ADMIN.RESPOSIORY/trunk" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
       </map>
     </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="WebContextManager">
     <option name="state">

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.GroupCodeDao">
+
+    <!--
+        그룹코드 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListGroupCode" resultType="GroupCodeBean">
+        SELECT      group_code_id         as groupCodeId
+                    ,group_name           as groupName
+        FROM        isaver.group_code
+        ORDER BY    GROUP_CODE_ID;
+    </select>
+
+    <!--
+        그룹코드 상세를 가져온다.
+        @author psb
+    -->
+    <select id="findByGroupCode" parameterType="map" resultType="GroupCodeBean">
+        SELECT     a.group_code_id         as groupCodeId
+                    ,a.group_name           as groupName
+                    ,a.insert_user_id       as insertUserId
+                    ,a.insert_datetime      as insertDatetime
+                    ,a.update_user_id       as updateUserId
+                    ,a.update_datetime      as updateDatetime
+                    ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserName
+                    ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserName
+        FROM       isaver.group_code a
+        WHERE      a.group_code_id=#{groupCodeId}
+    </select>
+
+    <!--
+        그룹코드를 등록한다.
+        @author psb
+    -->
+    <insert id="addGroupCode" parameterType="map">
+        INSERT INTO isaver.group_code(
+            group_code_id
+            ,group_name
+            ,insert_user_id
+            ,insert_datetime
+        ) VALUES (
+            #{groupCodeId}
+            ,#{groupName}
+            ,#{insertUserId}
+            ,NOW()
+        );
+    </insert>
+
+    <!--
+        그룹코드를 저장한다.
+        @author psb
+    -->
+    <update id="saveGroupCode" parameterType="map">
+        UPDATE      isaver.group_code
+        SET         update_user_id=#{updateUserId}
+                    ,update_datetime=NOW()
+                    ,group_name=#{groupName}
+        WHERE       group_code_id = #{groupCodeId};
+    </update>
+
+    <!--
+        그룹코드를 제거한다.
+        @author psb
+    -->
+    <delete id="removeGroupCode" parameterType="map">
+        DELETE FROM isaver.group_code
+        WHERE       group_code_id = #{groupCodeId};
+    </delete>
+
+</mapper>

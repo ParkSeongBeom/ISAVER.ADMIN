@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.CriticalDao">
+
+    <resultMap id="criticalResultMap" type="EventBean">
+        <id property="eventId" column="eventId"/>
+        <result property="eventName" column="eventName"/>
+        <collection property="criticals" ofType="CriticalBean">
+            <id property="criticalId" column="criticalId"/>
+            <result property="criticalLevel" column="criticalLevel"/>
+            <result property="criticalName" column="criticalName"/>
+            <result property="criticalValue" column="criticalValue"/>
+            <result property="dashboardFileId" column="dashboardFileId"/>
+            <collection property="criticalDetects" ofType="CriticalDetectBean">
+                <id property="criticalDetectId" column="criticalDetectId"/>
+                <result property="detectDeviceId" column="detectDeviceId"/>
+                <result property="detectDeviceName" column="detectDeviceName"/>
+                <collection property="criticalTargets" ofType="CriticalTargetBean">
+                    <id property="targetDeviceId" column="targetDeviceId"/>
+                    <result property="targetDeviceName" column="targetDeviceName"/>
+                    <result property="alarmType" column="alarmType"/>
+                    <result property="alarmMessage" column="alarmMessage"/>
+                    <result property="alarmFileId" column="alarmFileId"/>
+                </collection>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!--
+        임계치 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListCritical" resultMap="criticalResultMap" parameterType="map">
+        SELECT  a.event_id as eventId
+                , a.event_name as eventName
+                , b.critical_id as criticalId
+                , b.critical_level as criticalLevel
+                , (SELECT code_name FROM isaver.code WHERE group_code_id = 'LEV' AND code_id = b.critical_level) as criticalName
+                , b.critical_value as criticalValue
+                , b.dashboard_file_id as dashboardFileId
+                , c.critical_detect_id as criticalDetectId
+                , c.detect_device_id as detectDeviceId
+                , (SELECT device_name FROM isaver.device WHERE device_id = c.detect_device_id) as detectDeviceName
+                , d.target_device_id as targetDeviceId
+                , (SELECT device_name FROM isaver.device WHERE device_id = d.target_device_id) as targetDeviceName
+                , d.alarm_type as alarmType
+                , d.alarm_message as alarmMessage
+                , d.alarm_file_id as alarmFileId
+        FROM	isaver.event a
+        LEFT OUTER JOIN isaver.critical b
+        ON	a.event_id = b.event_id
+        LEFT OUTER JOIN isaver.critical_detect c
+        ON	b.critical_id = c.critical_id
+        LEFT OUTER JOIN isaver.critical_target d
+        ON	c.critical_detect_id = d.critical_detect_id
+        WHERE	a.del_yn = 'N'
+        ORDER BY b.event_id, b.critical_level, a.event_id
+    </select>
+
+    <!--
+        임계치 상세를 가져온다.
+        @author psb
+    -->
+    <select id="findByCritical" resultType="CriticalBean" parameterType="map">
+        SELECT  b.event_id as eventId
+                , b.event_name as eventName
+                , a.critical_id as criticalId
+                , a.critical_level as criticalLevel
+                , a.critical_value as criticalValue
+                , a.dashboard_file_id as dashboardFileId
+        FROM	isaver.critical a
+        INNER JOIN isaver.event b
+        ON	    a.event_id = b.event_id
+        WHERE	a.critical_id = #{criticalId}
+    </select>
+
+    <!--
+        임계치 중복 체크.
+        @author psb
+    -->
+    <select id="findExistCritical" resultType="CriticalBean" parameterType="map">
+        SELECT  critical_id as criticalId
+        FROM	isaver.critical
+        WHERE	event_id = #{eventId}
+        AND	    critical_level = #{criticalLevel}
+        <if test="criticalValue != null and criticalValue != ''">
+            AND	    critical_value = ${criticalValue}
+        </if>
+    </select>
+
+    <!--
+        임계치를 등록한다
+        @author psb
+    -->
+    <insert id="addCritical" parameterType="map">
+        INSERT INTO isaver.critical (
+            critical_id
+            , event_id
+            , critical_level
+        <if test="criticalValue != null and criticalValue != ''">
+            , critical_value
+        </if>
+            , dashboard_file_id
+        ) VALUES (
+            #{criticalId}
+            , #{eventId}
+            , #{criticalLevel}
+        <if test="criticalValue != null and criticalValue != ''">
+            , ${criticalValue}
+        </if>
+            , #{dashboardFileId}
+        );
+    </insert>
+
+    <!--
+        임계치를 수정한다
+        @author psb
+    -->
+    <update id="saveCritical" parameterType="map">
+        UPDATE  isaver.critical
+        SET     critical_level = #{criticalLevel}
+                <if test="criticalValue != null and criticalValue != ''">
+                    , critical_value = ${criticalValue}
+                </if>
+                <if test="criticalValue == null or criticalValue == ''">
+                    , critical_value = null
+                </if>
+                , dashboard_file_id = #{dashboardFileId}
+        WHERE   critical_id = #{criticalId}
+    </update>
+
+    <!--
+        임계치를  제거한다
+        @author psb
+    -->
+    <delete id="removeCritical" parameterType="map">
+        DELETE FROM isaver.critical_target WHERE critical_detect_id in (SELECT critical_detect_id FROM isaver.critical_detect WHERE critical_id = #{criticalId});
+        DELETE FROM isaver.critical_detect WHERE critical_id = #{criticalId};
+        DELETE FROM isaver.critical WHERE critical_id = #{criticalId};
+    </delete>
+</mapper>

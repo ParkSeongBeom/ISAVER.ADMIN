@@ -1,0 +1,1002 @@
+@charset "utf-8";
+@import "filters";
+
+/*
+form-bg-effect :
+@include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
+*/
+
+
+.ico {
+  &-safeeye:before  {content:"\e941";} // -safeeye
+  &-blinker:before  {content:"\e944";} // -blinker
+  &-tracker:before  {content:"\e943";} // -tracker
+  &-function:before {content:"\e940";} // 설정새로고침
+  &-pool:before     {content:"\e942";} // 수영장
+  &-health:before   {content:"\e93f";} // 의료
+  &-nhr:before      {content:"\e945";} // detector
+  &-invasion:before {content:"\e93e";} // 침입
+  &-exhibit:before  {content:"\e93c";} // 전시물보호
+  &-speaker:before  {content:"\e93a";} // 스피커
+  &-wlight:before   {content:"\e93b";} // 경광등
+  &-mobile:before   {content:"\e939";} // 모바일
+  &-close:before    {content:"\e91a";} // 닫기
+  &-plus:before     {content:"\e92b";} // 더보기
+  &-minus:before    {content:"\e92c";} // 빼기
+  &-login:before    {content:"\e900";} // 로그인
+  &-admin:before    {content:"\e909";} // 관리자
+  &-user:before     {content:"\e90e";} // 사용자
+  &-update:before   {content:"\e961";} // 업데이트
+  &-confirm:before  {content:"\e941";} // 확인
+  &-cancle:before   {content:"\e937";} // 알림해지
+  &-more:before     {content:"\e95c";} // 더보기
+  &-zoom:before     {content:"\e925";} // 자세히보기
+  &-area:before     {content:"\e91b";} // 장소
+  &-tof:before      {content:"\e962";} // TOF 센서
+  &-m8:before       {content:"\e962";} // m8 센서
+  &-ptz:before      {content:"\e964";} // PTZ 카메라
+  &-camera:before   {content:"\e964";} // PTZ 카메라
+  &-chart:before    {content:"\e908";} // 차트
+  &-four:before     {content:"\e938";} // 4분할
+  &-gate:before     {content:"\e92f";} // 게이트 웨이 센서
+  &-temp:before     {content:"\e949";} // 온도
+  &-humi:before     {content:"\e947";} // 습도
+  &-co2:before      {content:"\e955";} // CO2
+  &-co:before       {content:"\e956";} // CO
+  &-plug:before     {content:"\e933";} // 스마트 플러그
+  &-smok:before     {content:"\e963";} // 연기
+  &-gas:before      {content:"\e910";} // 가스
+  &-hlds:before     {content:"\e959";} // 근거리 HLDS 센서
+  &-device:before   {content:"\e92f";} // 근거리 HLDS 센서
+  &-led:before      {content:"\e966";} // LED
+  &-sioc:before     {content:"\e96e";} // sioc
+  &-qguard:before   {content:"\e96c";} // q가드 서버
+
+}
+
+/*
+.ico-safeeye :   -safeeye
+.ico-blinker :   -blinker
+.ico-tracker :   -tracker
+.ico-function :  설정새로고침
+.ico-pool :      수영장
+.ico-health :    의료
+.ico-nhr :       detector
+.ico-invasion :  침입
+.ico-exhibit :   전시물보호
+.ico-speaker :   스피커
+.ico-wlight :    경광등
+.ico-mobile :    모바일
+.ico-close :     닫기
+.ico-plus :      더보기
+.ico-minus :     빼기
+.ico-login :     로그인
+.ico-admin :     관리자
+.ico-user :      사용자
+.ico-update :    업데이트
+.ico-confirm :   확인
+.ico-cancle :    알림해지
+.ico-more :      더보기
+.ico-zoom :      자세히보기
+.ico-area :      장소
+.ico-tof :       TOF 센서
+.ico-ptz :       PTZ 카메라
+.ico-chart :     차트
+.ico-four :      4분할
+.ico-gate :      게이트 웨이 센서
+.ico-temp :      온도
+.ico-humi :      습도
+.ico-co2 :       CO2
+.ico-co :        CO
+.ico-plug :      스마트 플러그
+.ico-smok :      연기
+.ico-gas :       가스
+.ico-hlds :      근거리 HLDS 센서
+.ico-device :    근거리 HLDS 센서
+.ico-led :       LED
+.ico-sioc :      sioc
+*/
+
+.cursor_cros {cursor:crosshair !important;}
+.cursor_auto {cursor:auto !important;}
+.cursor_default {cursor:default !important;}
+.cursor_poin {cursor:pointer !important;}
+
+
+////// 시계 Start
+.datetime_set {
+  @include flex-midddle; opacity: 0.6;
+  & span {
+    @include font-size-h3; height:auto !important; letter-spacing: 1px;
+    &.c-Day,&.c-Date,&.c-Week {padding:0 10px 0 0;}
+  }
+}
+////// 시계 End
+
+////// form_area  Start
+.form_area {
+  span, input {width:100%;}
+  span  {margin: 0 0 5px 0;}
+  input {margin: 0 0 20px 0;}
+}
+////// form_area  End
+
+
+////// btn_set 정의 Start
+.btn_set  {
+  @include flexbase; @include flex-justify-content-between;
+  position: relative;
+  & > button {
+    @include flex-width-option(1, 100%);
+    width: auto; min-width: auto; max-width: none;
+    margin:0 0 0 5px;
+    &:first-of-type {margin:0;}
+  }
+}
+////// btn_set 정의 End
+
+
+////// 시,분, 초 선택 폼 Start
+.select_edit {
+  @include flexbase;
+  position: relative; height:40px;
+  & > div {
+    position: relative; height:100%; margin:0 2px; @include flex-option(0, 1, 100%);
+
+    input, select {position: absolute; top:0; left:0; height:100%;}
+    input  {width:calc(100% - 25px);width:-webkit-calc(100% - 25px); z-index: 1;}
+    select {width:100%;}
+  }
+  &.disabled {opacity: 0.2; input, select {pointer-events:none;} }
+}
+////// 시,분, 초 선택 폼 End
+
+
+
+//////...... 달력 datepicker Start
+input.datepicker {width:100px;}
+// datepicker Start
+button.ui-datepicker-trigger {
+  @include length-wh01; @include border(1px 1px 1px 0,$color-gray-01);
+  background-color: #fff;
+  &:before {content:"\e91f"; font-size:1.8rem; margin:0 1px 0 0; color:$color-dark-01;}
+  &:hover:before {color:$color-red-01;}
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br
+{@include border-radius(0px);}
+
+.ui-datepicker {
+  display: none;
+  width:320px; padding:10px; background-color:$color-white-01;
+  @include border01(1px,$color-gray-01,1);
+  @include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
+
+  table {width: 100%;  font-size: .9em; border-collapse: collapse;}
+
+  //.ui-datepicker-header start
+  .ui-datepicker-header {
+    position: relative; height:40px; margin:10px 0;
+
+    // .ui-datepicker-header 좌우 화살표 Start
+    & > a {
+      overflow: hidden; position: absolute; top:0;  @include length-wh01;
+
+      &:hover > span:before {color:$color-red-01;}
+      &.ui-datepicker-prev {left:0;}
+      &.ui-datepicker-next {right:0;}
+      &.ui-datepicker-prev > span:before {content:"\e918";}
+      &.ui-datepicker-next > span:before {content:"\e919";}
+
+      & > span {
+        @include flex-midddle; position:relative; width:100%; height:100%;
+        &:before {font-size:1.8rem; color:$color-dark-01; }
+      }
+    } // .ui-datepicker-header 좌우 화살표 End
+
+    // .ui-datepicker-header 타이틀 Start
+    .ui-datepicker-title {
+      @include flex-midddle;
+      position: absolute; top:0; left:40px; right:40px; height:40px; cursor: pointer;
+      & > select  {
+        font-size:1.6rem; line-height: 1.8rem; width:110px;
+        &:first-of-type {border-right-width:0;}
+      }
+      &, & > span {font-size:2rem;}
+    } // .ui-datepicker-header 타이틀 End
+
+  } //.ui-datepicker-header End
+
+  //.ui-datepicker-calendar Start
+  .ui-datepicker-calendar {
+    thead {opacity: 0.5;}
+    th, td {
+      height:40px; text-align: center; padding:0; border:none;
+      & > span, & > a {@include flex-midddle; height:100%; font-size:16px;}
+      &.ui-datepicker-week-end, &.ui-datepicker-week-end > a {color:$color-dark-01;}
+      & > a.ui-state-highlight {color:$color-red-01; font-weight:bold;}
+      & > a:hover {background-color: $color-orange-01; color:$color-white-01;}
+      & > a.ui-state-active {background-color: $color-red-01; color:$color-white-01; border:none;}
+    }
+  }//.ui-datepicker-calendar End
+}
+
+.dpk_normal_type.dpk_open {
+  display: inline-block;
+  position: absolute; z-index:1; top:0; left:0;
+  .ui-datepicker {
+    @include border01(1px, $color-gray-01, 0);
+    @include box-shadow01(0px, 30px, 40px, -20px, #000, 0.0);
+  }
+  .ui-datepicker-calendar {display: none;}
+
+  &:hover .ui-datepicker-calendar {display: table;}
+  &:hover .ui-datepicker {
+    @include border01(1px, $color-gray-01, 1);
+    @include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
+  }
+
+}
+
+.dpk_open_type {
+  display: inline-block;
+  & > .ui-datepicker {
+    background-color: transparent; border:none; @include box-shadow-none;
+    & > .ui-datepicker-header {
+      & > a > span:before {color:$color-dark-01;}
+    }
+  }
+}
+/////...... 달력 datepicker End
+
+
+/////...... timepicker Start
+.timepicker {@include flexbase;  @include flex-align-items-center;  height: 40px;}
+.timepicker > div, .in-timepicker, .w_input {
+  display: inline-block; position: relative; min-width:70px; width:auto; margin:0 2px;
+
+  &, & > select {min-height:40px;}
+  &:first-child {margin:0 2px 0 0;}
+  & > select {width:100%; min-width:0; height: 100%;}
+  & > input  {
+    position: absolute; z-index:1; top: 1px; left: 1px;
+    width: calc(100% - 30px) !important; width: -webkit-calc(100% - 30px) !important;
+    height: calc(100% - 2px) !important; height: -webkit-calc(100% - 2px) !important;
+    border: none;
+  }
+  & > input:focus + select { border-color: $color-red-01; }
+}
+
+input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
+.timepicker, .filter_box, .filter_set { & em {margin:0 10px;} }
+/////...... timepicker End
+
+
+///// input[type="checkbox"] checkBox label base 정의 Start
+.checkbox_set {
+  @include checkbox_set;
+
+  //라벨 스타일 csl_style01 Start
+  &.csl_style01 {@include csl_style01;}
+  // 라벨 스타일 csl_style01 End
+
+  // 라벨 스타일 csl_style02 Start
+  &.csl_style02, &.csl_style03, &.csl_style04 {@include csl_style02;}
+  // 라벨 스타일 csl_style02 End
+
+  &.csl_style02 {@include csl_style02_onoff;} // ON or OFF
+  &.csl_style03 {@include csl_style03_noyes;} // YES or NO
+  &.csl_style04 {@include csl_style04_showhide;} // SHOW or HIDE
+}
+///// input[type="checkbox"] checkBox label base 정의 End
+
+
+/////...... button base 정의 Start
+* {
+  a.btn {
+    @include flex-midddle;
+    span {width:100%; text-align:center;}
+  }
+
+  button.btn, a.btn, input[type="button"].btn, .btn, .cbtn {@include box_btn;} // 면 버튼 정의
+  button.btn ~ button.btn {margin:0 0 0 5px;}
+
+  .lbtn, .lcbtn {@include line_btn;} //라인 버튼 정의
+  .lcbtn, .cbtn {@include border-radius(200px);} //사이클 버튼 정의
+
+  .dim   {@include dim_btn;}
+  .btn   {@include length-wh02;}
+  .lbtn  {@include length-wh02;}
+  .lcbtn {@include length-wh01;}
+  .cbtn  {@include length-wh01;}
+
+
+  .list_select_box > button /* 알림센터 이력 알림해제 버튼 */,
+  .filter_area > button     /* 검색영역 버튼 */,
+  .table_bottom > button   /* 엑셀다운로드 버튼  */
+  {@include box_btn; @include length-wh02;}
+
+  .tree_area > header > button  /* 트리 헤더 버튼  */
+  {@include box_btn;}
+  .ibtn, .l-popup header > button, .file_btn {@include icon_btn;}
+  .file_btn:before {content: "\e915";}
+  .l-popup header > button:before {content: "\e904";}
+  .excel_btn {background-color: $color-green-01 !important;}
+
+  /*버튼 공통 정리
+  검색 영역 삽입 버튼   = .btype01 + .bstyle01
+  테이블 타이틀 버튼 튼 = .btype01 + .bstyle03
+  테이블 삽입 버튼     = .btype02 + .bstyle02
+  */
+
+  // 일반형 버튼
+  .btype01 {}
+
+  // 테이블 안에 삽입되는 버튼
+  .btype02 {min-width:60px; height:25px; font-size:13px; @include border-radius(20px); }
+
+  // 파일 첨부 버튼 및 높이값이 작은 버튼
+  .btype03 {min-width:100px;height:30px;font-size:14px;}
+
+  .db_btn, .alra_btn {@include icon_btn;} //아이콘버튼
+  .alra_btn {
+    width:80px; height:30px;  padding: 0 5px 4px 5px; margin:0;
+    line-height: 0; font-size:1.3rem; background-color: $color-red-01;
+    @include border-radius(20px);
+    &:before {content: "\e907"; position: relative; top: 1px; padding: 0 5px 0 0; font-size:1.3rem;}
+
+    &:hover {&:before {color:#fff !important;}}
+  }
+  .stion_btn {
+    width:64px;
+    padding:1px 0 !important;
+    display: inline-block;
+    text-align:center;
+    font-size:13px;
+    color:#fff;
+    -moz-border-radius:    20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius:  20px;
+    border-radius:         20px;
+  }
+
+  // 화면 확대 축소 버튼
+  .change_btn {
+    position: fixed; z-index:10; top:0; right:0; width:45px; height:45px !important;
+    &:before {font-size:26px; color:#fff;}
+  }
+
+
+  .zoom_btn, .sett_btn, .refl_btn, .zoomclose_btn {margin:0 0 0 15px;}
+  .zoom_btn:before      {content: "\e904";}
+  .zoom_btn.on:before   {content: "\e903";}
+  .zoomclose_btn:before {content: "\e91a";}
+  .sett_btn:before      {content: "\e905";}
+  .refl_btn:before      {content:"\e961";}
+
+}
+/////...... button base 정의 End
+
+
+/////...... contenteditable 정의 Start
+div[contenteditable] {}
+/////...... contenteditable 정의 End
+
+
+
+
+
+
+//////...... 차트 상태 표시 시작
+* {
+  // 상태 표시
+  .ch_name, .chart_label span, .mh_name {
+    position: relative; margin:0 20px 0 0; background-color: transparent;
+    &:before {
+      content:""; display: inline-block; position: relative; top:1px;
+      width:14px; height:14px; margin:0 5px 0 0; @include border-radius(20px);
+    }
+  }
+
+  /*
+   &.co_gren:before {background-color: rgba(0,212,88,  0.4);} !*1 작업자상태, 안전복 미착용*!
+   &.co_purp:before {background-color: rgba(204,61,211,0.4);} !*2 크레인상태, 헬멧 미착용 *!
+   &.co_yell:before {background-color: rgba(255,206,83,0.4);} !*3 유해가스상태, 배회 쓰러짐*!
+   &.co_redd:before {background-color: rgba(254,77,59,0.4); } !*4 위험지역 감지  *!
+   &.co_viol:before {background-color: rgba(151,83,220,0.4);} !*5  *!
+   &.co_blue:before {background-color: rgba(41,161,247,0.4);} !*6  *!
+   */
+
+  .mp_header {@include flexbase;}
+
+  .check_th tbody tr:before, .check_th tbody tr td:first-of-type:before {@include border-radius(200px);}
+  .check_th tbody tr.top00 td:first-of-type:before {background-color: #ccc;}
+
+  .check_th tbody tr.top01 td:first-of-type:before,
+  .chart_label > span:nth-of-type(1):before,
+  .mp_header > div > .ch_name:nth-of-type(1):before
+  {background-color: $color-green-01;} // 1 #01d65a 작업자상태, 안전복 미착용
+
+  .check_th tbody tr.top02 td:first-of-type:before,
+  .chart_label > span:nth-of-type(2):before,
+  .mp_header > div > .ch_name:nth-of-type(2):before
+  {background-color: $color-purple-01;} // 2 #cc3dd3 크레인상태, 헬멧 미착용
+
+  .check_th tbody tr.top03 td:first-of-type:before,
+  .chart_label > span:nth-of-type(3):before,
+  .mp_header > div > .ch_name:nth-of-type(3):before
+  {background-color: $color-yellow-01;} // 3 #ffce53 유해가스상태, 배회 쓰러짐
+
+  .check_th tbody tr.top04 td:first-of-type:before,
+  .chart_label > span:nth-of-type(4):before,
+  .mp_header > div > .ch_name:nth-of-type(4):before
+  {background-color: $color-red-01;} // 4 #e41717 위험지역 감지
+
+  .check_th tbody tr.top05 td:first-of-type:before,
+  .chart_label > span:nth-of-type(5):before,
+  .mp_header > div > .ch_name:nth-of-type(5):before
+  {background-color: $color-purple-02;} // 5 #9753dc
+
+  .check_th tbody tr.top06 td:first-of-type:before,
+  .chart_label > span:nth-of-type(6):before,
+  .mp_header > div > .ch_name:nth-of-type(6):before
+  {background-color: $color-blue-02;} // 6 #29a1f7
+
+  .check_th tbody tr.top07 td:first-of-type:before,
+  .chart_label > span:nth-of-type(7):before,
+  .mp_header > div > .ch_name:nth-of-type(7):before
+  {background-color: $color-green-02;} // 7 #56c96e
+
+  .check_th tbody tr.top08 td:first-of-type:before,
+  .chart_label > span:nth-of-type(8):before,
+  .mp_header > div > .ch_name:nth-of-type(8):before
+  {background-color: $color-yellow-02;} // 8 #ff7a39
+
+  .check_th tbody tr.top09 td:first-of-type:before,
+  .chart_label > span:nth-of-type(9):before,
+  .mp_header > div > .ch_name:nth-of-type(9):before
+  {background-color: $color-blue-03;} // 9 #de4ec1
+
+  .check_th tbody tr.top10 td:first-of-type:before,
+  .chart_label > span:nth-of-type(10):before,
+  .mp_header > div > .ch_name:nth-of-type(10):before
+  {background-color: $color-purple-03;} // 10  #7894c2
+
+}
+//////...... 차트 상태 표시 끝
+
+// 1  $color-green-01;
+// 2  $color-purple-01;
+// 3  $color-yellow-01;
+// 4  $color-red-01;
+// 5  $color-purple-02;
+// 6  $color-blue-02;
+// 7  $color-green-02;
+// 8  $color-yellow-02;
+// 9  $color-blue-03;
+// 10 $color-purple-03;
+
+/////...... 차트 색상 정의 Start
+.ct-series {
+  /*
+  .ct-series-a .ct-area,
+  .ct-series-a .ct-slice-pie, 파이차트
+  .ct-series-a .ct-bar,
+  .ct-series-a .ct-line,
+  .ct-series-a .ct-point, 라이차트 포인트
+  .ct-series-a .ct-slice-donut
+  */
+
+  & {
+    .ct-line, .ct-series .ct-point {stroke-linecap: square;}
+    .ct-line  { stroke-width: 1px !important; }
+    .ct-point { stroke-width: 7px !important; }
+    .ct-bar {opacity: 0.7;  }
+  }
+
+  &-a {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-green-01 !important; stroke: $color-green-01 !important;}
+    .ct-line, .ct-point {stroke: $color-green-01 !important;}
+  } // 1 #01d65a // rgba(0,212,88,1) 작업자상태, 차트01
+
+  &-b {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-purple-01 !important; stroke: $color-purple-01 !important;}
+    .ct-line, .ct-point {stroke: $color-purple-01 !important;}
+  }  // 2 #cc3dd3; // rgba(204,61,211,1) 크레인상태, 차트02
+
+  &-c {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-yellow-01 !important; stroke: $color-yellow-01 !important;}
+    .ct-line, .ct-point {stroke: $color-yellow-01 !important;}
+  } // 3 #ffce53; // rgba(255,206,83,1) 유해가스상태, 주위, 차트03
+
+  &-d {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-red-01 !important; stroke: $color-red-01 !important;}
+    .ct-line, .ct-point {stroke: $color-red-01 !important;}
+  } // 4 #e41717; // rgba(254,77,59,1) 감지, 차트04
+
+  &-e {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-purple-02 !important; stroke: $color-purple-02 !important;}
+    .ct-line, .ct-point {stroke: $color-purple-02 !important;}
+  } // 5 #9753dc; // rgba(151,83,220,1) 차트05
+
+  &-f {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-blue-02 !important; stroke: $color-blue-02 !important;}
+    .ct-line, .ct-point {stroke: $color-blue-02 !important;}
+  } // 6 #259dcf;   // rgba(37,157,207,1) 차트06
+
+  &-g {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-green-02 !important; stroke: $color-green-02 !important;}
+    .ct-line, .ct-point {stroke: $color-green-02 !important;}
+  }  // 7 #56c96e;  // rgba(86,201,110,1) 차트07
+
+  &-h {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-yellow-02 !important; stroke: $color-yellow-02 !important;}
+    .ct-line, .ct-point {stroke: $color-yellow-02 !important;}
+  } // 8 #ef8116; // rgba(239,129,22,1) 차트08
+
+  &-i {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-blue-03 !important; stroke: $color-blue-03 !important;}
+    .ct-line, .ct-point {stroke: $color-blue-03 !important;}
+  } // 9 #259dcf;   // rgba(37,157,207,1) 차트09
+
+  &-j {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $color-purple-03 !important; stroke: $color-purple-03 !important;}
+    .ct-line, .ct-point {stroke: $color-purple-03 !important;}
+  } // 10 #7894c2; // rgba(120,148,194,1) 차트10
+
+}
+/////...... 차트 색상 정의 End
+
+
+///// 데시보드 라인 차트 시작
+.ct-chart-line {
+  overflow: hidden; position: relative;
+  & > g:nth-of-type(2) {position: absolute; left:0; top:0; bottom:0;  right:0;}
+  & > * {width:100%;}
+}
+.ct-grids, .ct-grids * {color:#fff !important;}
+.ct-grid {
+  stroke: rgba(0,0,0,.4) !important;
+  stroke-width: 1px;
+  stroke-dasharray: 0 !important;
+
+  &.ct-horizontal {opacity: 0.4 !important;}
+}
+.ct-label {
+  font-size: 0.85rem !important;
+  color:$color-gray-05 !important; fill:$color-gray-05 !important;
+  &.ct-vertical.ct-start {width:auto !important;}
+  &.ct-horizontal.ct-end {
+    position: relative; left: -50% !important;
+    -webkit-box-align:   flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align:      flex-start;
+    align-items:         flex-start;
+    -webkit-box-pack:        center !important;
+    -webkit-justify-content: center !important;
+    -ms-flex-pack:           center !important;
+    justify-content:         center !important;
+    text-align:              center !important;
+    text-anchor:              start;
+  }
+
+}
+.ct-label01 {stroke:rgba(255,255,255,0.8) !important; font-size:13px;}
+
+/////..... 통계 툴팁 시작
+.chartist-tooltip {
+  @include flex-midddle-important;
+  height:40px !important; min-width:40px !important;
+  background-color: $color-dark-01 !important;
+  color: #fff !important;
+
+  -moz-border-radius:    200px !important;
+  -webkit-border-radius: 200px !important;
+  border-radius:         200px !important;
+  -khtml-border-radius:  200px !important;
+
+  &:before {
+    margin: -2px 0 0 -5px  !important;
+    border-style:solid !important;
+    border-width: 10px 5px 0 5px !important;
+    border-color:#333240 transparent transparent transparent !important;
+  }
+}
+/////..... 통계 툴팁 끝
+///// 데시보드 라인 차트 끝
+
+
+/////...... 날짜 선택 버튼 셋 정의 Start
+.month_btn_set {
+  @include flexbase;
+  width:auto; @include flex-align-items-center;
+  p { text-align:center; font-size:30px; padding:0 20px;}
+  button {
+    font-size:36px;
+    &:before {font-weight:bold;}
+    &:first-of-type:before {content:"\e918";}
+    &:last-of-type:before  {content:"\e919";}
+    &:hover:before { color: $color-red-01;}
+  }
+}
+/////...... 날짜 선택 버튼 셋 정의 End
+
+
+///// 그래프로 보기 , 표로보기 버튼 셋 정의 Start
+.depthtabs_btn_set {
+  button {
+    height:40px; margin:0 0 0 15px;
+    &:hover, &.tabs_on {color: $color-red-01;}
+    &.tabs_on:after {opacity: 1}
+    &:before {padding:0 4px 0 0;}
+    &:first-of-type:before {content:"\e908";}
+    &:last-of-type:before  {content:"\e91f";}
+    &:after {
+      content:"";  position: absolute; left:0; bottom:0; width:100%; height:1px;
+      background-color: $color-red-01; opacity: 0;
+    }
+  }
+}
+///// 그래프로 보기 , 표로보기 버튼 셋 정의 End
+
+
+.chart_box.type01 {overflow-x:auto;}
+.chart_box.type02 {overflow-y:auto;}
+
+
+////// ----------------- Loading Start
+.loading_ico {
+  position: absolute; bottom:10px; width:80px; height:80px;
+  &:before {position: absolute; left:0; top:0;}
+}
+.loding_bar, .loading_ico {&.on {@include loding_bar;}}
+////// ----------------- Loading End
+
+
+
+// Paging 정의  [총건수 + 현재페이지 번호 + 총페이지 수 + 이전 + 이후 ] Start
+.paging {
+  /*
+  <div class="pasing">
+       <p>120</p><!-- 총 건수 -->
+       <div class="page_count">
+           <div>
+               <input type="number" name="" value="01">
+               <select onchange="this.previousElementSibling.value=this.value">
+                   <option value="01" selected="selected">01</option>
+                   <option value="02">02</option>
+               </select>
+           </div>
+           <p>5</p>
+       </div><!-- 현재 페이지 -->
+       <button class="pre"></button>
+       <button class="nex"></button>
+       <!-- 좌우버튼 -->
+   </div>
+  */
+  display:inline-block; height:40px;
+  & * {font-size:15px; @include flex-midddle;}
+  & > * {
+    float: left; position: relative; height:100%;
+    @include border01(1px 0 1px 1px, $color-gray-01, 1); background-color: $color-white-01;
+  }
+  & p {
+    &:before, &:after
+    {@include flex-midddle; position: absolute; top:0; height:100%; opacity: 0.5;}
+  }
+  & > p {
+    width:90px; font-weight:bold;
+    &:before {content:"All"; left:10px;}
+    &:after  {content:"N"; right:10px;}
+  }
+
+  & > .page_count {
+    width:100px;
+    & * {position: relative; border:none; height:100%;  }
+    & > div {
+      width:60px;
+      & > input  {position: absolute; z-index:1; top:0; left:0; width:40px; font-weight:bold;}
+      & > select {width:100%;}
+    }
+    & > p { width:30px; opacity: 0.5; }
+  }
+
+  & > button {
+    width:40px;
+    &:hover {
+      background-color: $color-blue-01; color:$color-white-01; border:none;
+      &:before, &:after {color:#fff;}
+    }
+    &.nex {border-width:1px;}
+    &:before, &:after {font-size:16px; color:#2d2d2d;}
+    &.pre:before {content:"\e918";}
+    &.nex:before {content:"\e919";}
+  }
+
+}
+
+// page 정의 Start [처음 + 이전 + 페이지 + 다음 + 마지막]
+.page {
+  /*
+  <div class="page">
+      <p class="paging">
+          <button class="p_arrow pll">《</button>
+          <button class="p_arrow pl"> 〈</button>
+          <button class="page_select ">1</button>
+          <button >2</button>
+          <button class="p_arrow pl"> 〉</button>
+          <button class="p_arrow pll">》</button>
+      </p>
+  </div>
+  */
+  position:relative; width:100%; height:40px; margin:20px 0; text-align:center;
+
+  .paging {
+    display:inline-block;
+    button {
+      width:40px; height:40px; margin:0 2px;
+      @include border01(1px, $color-gray-01, 1); background-color: $color-white-01;
+      &:hover, &.page_select {
+        @include borderwidth(1); background-color: $color-blue-01; color:$color-white-01; border:none;
+      }
+
+      &.p_arrow {
+        overflow: hidden; text-indent: -1000px;
+
+        &:before, &:after {
+          @include flex-midddle; position: absolute; top:0; left:0;
+          width:100%; height:100%; text-indent: 0;
+        }
+
+        &:first-of-type, &:last-of-type {
+          &:before, &:after {width:15px; left:50%; }
+        }
+        &:first-of-type {
+          &:before, &:after {content:"\e918";}
+          &:before {margin:0 0 0 -6px}
+          &:after  {margin:0 0 0 -12px}
+        }
+        &:last-of-type  {
+          &:before, &:after {content:"\e919";}
+          &:before {margin:0 0 0 -9px}
+          &:after  {margin:0 0 0 -3px}
+        }
+
+        &:nth-of-type(2):before {content:"\e918";}
+        &:nth-last-of-type(2):before {content:"\e919";}
+      }
+
+    }
+  }
+}
+/////...... Table_layout 정의 End
+
+
+////// ----------------- OFFINLE MAP 설정 Start
+@mixin resize {
+  .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
+    display: none !important; position: absolute; width:$resi_w; height:$resi_w;
+
+    &:before {
+      content:"";
+      @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
+      background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
+      background-position: 50% 50%; background-color: $color-blue-01;
+      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
+
+    }
+    &:hover:before {
+      /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;
+    }
+  }
+  .ui-resizable-e:before  {@include rotate(180deg);  }
+  .ui-resizable-s:before  {@include rotate(-90deg);  }
+  .ui-resizable-se:before {@include rotate(-135deg); }
+} // @include resize;
+
+.map_images {
+  position: absolute; width:5000px !important; height:5000px !important;
+
+  /*background-image: url("../images/map/icent.svg");*/ background-repeat:no-repeat;
+  background-position: center;
+
+  & > * {position: absolute !important;}
+  &:before {content:""; position: absolute; z-index:-1; /*background-color: rgba(#fff,0.4);*/ }
+  /*&:after  {width:100%; height:1px; left:0; top:50%;}*/
+  &:before {
+    /*width:1px; height:100%; left:50%; top:0;*/
+    width:100%; height:100%;
+    background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg"); background-repeat:repeat, no-repeat;
+  }
+
+  //&.cursor_cros {}
+}
+
+.g {
+
+  &-m8, &-camera, &-wlight, &-led, &-speaker, &-qguard, &-ico  {z-index: 50;}
+
+  &-tracking,&-line {z-index: 100;}
+
+  &-area  {z-index:10;}
+  &-fence {z-index: 5;}
+
+  &-ico, &-m8, &-camera, &-tracking,&-line, &-area, &-fence {position: absolute !important;}
+
+  // 감시, 감지 디바이스 공통
+  &-ico, &-m8, &-camera, &-area {
+    //@include scale(0.5);
+    &, & > * {cursor: pointer;}
+    @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
+
+
+    // 디바이스, 구역 이름표
+    & > span {
+      @include flex-midddle; position: absolute; width: max-content; bottom:-17px;
+      padding:3px 10px; font-size:0.9rem;
+      /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
+      background-color:$color-gray-09; @include border-radius(200px);
+      @include scale(0.4);
+    }
+
+    &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
+    &.on {&, & > span {background-color: $color-blue-01;}}
+
+  }
+
+  // MAP 설정 시 크기, 위치 버튼 표시
+  &-ico, &-m8, &-camera {
+    width:$devi_w; height:$devi_w;
+    .ui-resizable-e, .ui-resizable-s {display: none !important;}
+    .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
+
+    &.on {
+      background-color: $color-blue-01;
+      &:hover { .ui-resizable-se {display: block !important;} }
+    }
+
+    //@at-root {.dashboard_mode & {pointer-events: none; } }
+    //&:before {font-size:1.4rem; }
+    &:before, &:after {}
+  }
+
+  // 감시, 감지 디바이스, 트레킹 아이콘 공통
+  &-ico, &-m8, &-camera, &-tracking {
+    background-color: $bas-color;
+    &, &:before {@include flex-midddle;}
+    &, &:after  {@include border-radius(500px);}
+
+    &:before, &:after {
+      content:""; width:100%; height:100%; background-color: transparent; @include transition(400ms);
+    }
+
+    &:before {
+      content:""; position: absolute;
+      background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;
+    }
+  }
+
+  &-ico:before     {font-size:1.2rem !important;}
+  &-m8:before      {content:"\e962"; /*background-image: url(../images/map/sico_96.svg);*/ } // M8 센서
+  &-camera:before  {content:"\e964"; /*background-image: url(../images/map/sico_98.svg);*/ } // PTZ 카메라
+  &-wlight:before  {content:"\e93b";} // 경광등
+  &-led:before     {content:"\e966";} // LED
+  &-speaker:before {content:"\e93a";} // 스피커
+  &-qguard:before  {content:"\e96c";} // Q가드
+
+
+  &-tracking {
+    width:24px; height:24px; background-color: transparent;
+    @include box-shadow01(0, 0, 0, 0px, #000, 0);
+    &:before {
+      content:"\e953"; font-size:1.2rem !important; /*@include scale(0.8);*/ color:$color-blue-03 !important;
+      //color:$color-blue-03 !important;
+      ///background-image: url(../images/map/tracking.svg); background-size: 60% !important;
+    }
+    &.object:before {content:"\e953"; color:$color-white-01 !important;  opacity: 0.7; @include scale(0.8);}
+    &:after {display: none;}
+  }
+
+  &-area {
+    z-index: 5; width:70px; height:70px; background-color: rgba(255,255,255,0.2);
+    border-style:dashed; border-width:1px; border-color:$color-white-01;
+
+    .ui-resizable-e  {bottom: ($resi_w); right:-($resi_w / 2); }
+    .ui-resizable-s  {bottom:-($resi_w / 2); right: ($resi_w); }
+    .ui-resizable-se {bottom:-($resi_w / 2); right:-($resi_w / 2); }
+
+    &.on {
+      background-color: rgba($color-blue-01,0.4); border-color:$color-blue-01;
+      &:hover  { .ui-resizable-se, .ui-resizable-e, .ui-resizable-s {display: block !important;} }
+    }
+  }
+
+  &-fence {
+    width:100% !important; height:100% !important; background-color: transparent !important;
+    cursor:move;
+
+    polygon, path {
+      stroke-width:1px;
+      text {font-size:5px !important; letter-spacing: 0;}
+
+      fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01;
+      &.level {
+        &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
+        &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
+        &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
+        &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }
+      }
+    }
+
+  }
+
+  &-line {
+    polyline {fill: transparent !important; stroke: $color-blue-01; stroke-width:2px;}
+    marker {overflow: visible;}
+    image  {width:6px; height:6px;}
+
+    polyline.object {stroke: $color-gray-05;}
+    polyline.level {
+      &-caution, &-warning, &-danger { @include issue02;}
+      &-caution { stroke: $color-gray-05; }
+      &-warning { stroke: $color-orange-01; }
+      &-danger  { stroke: $color-red-01; }
+    }
+
+  }
+
+
+  &-ignore_fence {
+    fill: rgba($color-gray-05, 0.2) !important;  stroke: $color-gray-05 !important;
+  }
+
+  // 임계치 적용 표시
+  &-ico, &-m8, &-camera, &-tracking {
+    &.level {
+      &-caution,&-warning,&-danger  {
+        @include pOn;
+        &:after {display: block; border-style:solid; border-width:2px;}
+        &:before {color:$color-white-01 !important;  }
+      }
+
+      &-caution {
+        &,& > span {background-color:$color-gray-05;   }
+        &:after { border-color:$color-gray-05; }
+      }
+
+      &-warning {
+        &,& > span {background-color:$color-orange-01; }
+        &:after { border-color:$color-orange-01;}
+      }
+
+      &-danger  {
+        &,& > span {background-color:$color-red-01;    }
+        &:after  { border-color:$color-red-01; }
+      }
+
+      &-die     {
+
+        &, span {background-color:#000;}
+        &:after {
+
+          @include die02;
+          /*
+          left:calc(50% - 1px); top:0; width:2px; height:100%;
+          @include rotate(-45deg); background-color:rgba($color-yellow-01,1);
+          */
+        }
+      }
+    }
+  }
+}
+////// ----------------- OFFINLE MAP 설정  End
+

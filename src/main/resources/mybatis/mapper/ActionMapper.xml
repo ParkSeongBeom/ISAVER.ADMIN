@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.ActionDao" >
+
+  <!--
+    대응 목록을 가져온다.
+    @author dhj
+  -->
+  <select id="findListAction" parameterType="map" resultType="ActionBean">
+    select
+      action_id as actionId
+      , ACT01.code_name as actionCode
+      , action_desc as actionDesc
+      , del_yn as delYn
+      , insert_user_id as insertUserId
+      , insert_datetime as insertDatetime
+      , update_user_id as updateUserId
+      , update_datetime as  updateDatetime
+    , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+    , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+    from isaver.action A
+    INNER JOIN
+    (
+    SELECT    code_id, code_name FROM isaver.code
+    WHERE     group_code_id = 'ACT'
+    ) AS ACT01
+    ON      A.action_code = ACT01.code_id
+    WHERE           A.del_yn='N'
+    <if test="actionId != null and actionId != ''">
+      AND     A.action_id = #{actionId}
+    </if>
+    <if test="actionCode != null and actionCode != ''">
+      AND     A.action_code  = #{actionCode}
+    </if>
+    <if test="notInActionId != null and notInActionId != ''">
+      AND A.action_id NOT IN (SELECT action_id from isaver.event_action)
+    </if>
+    <if test="actionDesc != null and actionDesc != ''">
+      AND     A.action_desc like '%${actionDesc}%'
+    </if>
+    order by A.action_id ASC
+    <if test="pageIndex != null">
+      LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+    </if>;
+  </select>
+
+  <!--
+    대응 상세를 가져온다.
+    @author dhj
+  -->
+  <select id="findByAction" parameterType="map" resultType="ActionBean">
+    select action_id as actionId
+      , action_code as actionCode
+      , action_desc as actionDesc
+      , del_yn as delYn
+      , insert_user_id as insertUserId
+      , insert_datetime as insertDatetime
+      , update_user_id as updateUserId
+      , update_datetime as  updateDatetime
+      , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
+      , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
+    from isaver.action A
+    where action_id = #{actionId,jdbcType=CHAR}
+  </select>
+
+    <!--
+      이벤트 대응 상세를 가져온다.
+      @author psb
+    -->
+    <select id="findByActionFromEventId" parameterType="map" resultType="ActionBean">
+        select  A.action_id as actionId
+                , A.action_code as actionCode
+                , A.action_desc as actionDesc
+                , A.del_yn as delYn
+                , C.event_name as eventName
+        from    isaver.action A
+        inner join isaver.event_action B
+        ON      A.action_id = B.action_id
+        inner join isaver.event C
+        ON      B.event_id = C.event_id
+        where  C.event_id = #{eventId}
+    </select>
+
+  <!--
+    대응 목록 갯수를 가져온다.
+    @author dhj
+  -->
+  <select id="findCountAction" parameterType="map" resultType="java.lang.Integer" >
+    select count(A.action_id)
+    from isaver.action as A
+    WHERE           A.del_yn='N'
+    <if test="actionId != null and actionId != ''">
+      AND     A.action_id = #{actionId}
+    </if>
+    <if test="actionCode != null and actionCode != ''">
+      AND     A.action_code  = #{actionCode}
+    </if>
+    <if test="notInActionId != null and notInActionId != ''">
+      AND      A.action_id NOT IN (SELECT action_id from isaver.event_action)
+    </if>
+  </select>
+
+  <!--
+    대응 갯수를 가져온다.
+    @author dhj
+  -->
+  <select id="findCountGenerator" parameterType="map" resultType="java.lang.Integer" >
+    select count(action_id)
+    from isaver.action;
+  </select>
+
+  <!--
+        대응 존재여부를 확인한다.
+        @author dhj
+    -->
+  <select id="findByActionCheckExist" parameterType="map" resultType="java.lang.Integer">
+    select  count(action_id)
+    from    isaver.action
+    where   action_id = #{actionId}
+  </select>
+
+  <!--
+    대응을 등록한다.
+    @author dhj
+  -->
+  <insert id="addAction" parameterType="map" >
+
+    insert into isaver.action (
+      action_id
+      , action_code
+      , action_desc
+      , del_yn
+      , insert_user_id
+      , insert_datetime
+   ) values (
+    #{actionId,jdbcType=CHAR}
+    , #{actionCode,jdbcType=CHAR}
+    , #{actionDesc,jdbcType=VARCHAR}
+    , 'N'
+    , #{insertUserId,jdbcType=VARCHAR}
+    , NOW()
+   )
+  </insert>
+
+  <!--
+      대응을 저장한다.
+      @author dhj
+    -->
+  <update id="saveAction" parameterType="map" >
+
+    update isaver.action
+    set action_code = #{actionCode,jdbcType=CHAR},
+      action_desc = #{actionDesc,jdbcType=VARCHAR},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_datetime = NOW()
+    where action_id = #{actionId,jdbcType=CHAR}
+  </update>
+
+  <!--
+    대응을 제거한다.
+    @author dhj
+  -->
+  <update id="removeAction" parameterType="java.lang.String" >
+
+    update isaver.action
+    set del_yn = 'Y'
+      , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+      , update_datetime = NOW()
+    where action_id = #{actionId,jdbcType=CHAR};
+  </update>
+
+</mapper>

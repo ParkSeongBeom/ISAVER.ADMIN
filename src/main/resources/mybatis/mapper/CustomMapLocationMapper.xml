@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.CustomMapLocationDao" >
+
+    <!--
+      Custom Map 구역/장치 목록을 가져온다.
+      @author psb
+    -->
+    <select id="findListCustomMapLocation" resultType="CustomMapLocationBean" >
+        SELECT	A.parent_area_id as areaId
+                ,A.area_id as targetId
+                ,A.area_name as targetName
+	            ,'area' as deviceCode
+	            ,'Y' as deviceStat
+	            ,'' as linkUrl
+	            ,'N' as mainFlag
+                ,B.use_yn as useYn
+                ,B.x1 as x1
+                ,B.x2 as x2
+                ,B.y1 as y1
+                ,B.y2 as y2
+        FROM   isaver.area A
+        LEFT OUTER JOIN isaver.custom_map_location B
+        ON	    A.area_id = B.target_id
+        AND	    B.area_id = #{areaId}
+        WHERE   A.parent_area_id = #{areaId}
+        AND	    A.del_yn = 'N'
+        AND	    A.template_code = 'TMP005'
+        UNION ALL
+        SELECT	A.area_id as areaId
+                ,A.device_id as targetId
+                ,A.device_name as targetName
+	            ,A.device_code as deviceCode
+	            ,A.device_stat as deviceStat
+	            ,A.link_url as linkUrl
+	            ,A.main_flag as mainFlag
+                ,B.use_yn as useYn
+                ,B.x1 as x1
+                ,B.x2 as x2
+                ,B.y1 as y1
+                ,B.y2 as y2
+        FROM    isaver.device A
+        LEFT OUTER JOIN isaver.custom_map_location B
+        ON	    A.device_id = B.target_id
+        AND	    B.area_id = #{areaId}
+        WHERE   A.area_id = #{areaId}
+        AND     A.device_code in ('DEV002','DEV006','DEV007','DEV008','DEV013')
+        AND	    A.del_yn = 'N'
+    </select>
+
+    <!--
+      Custom Map 설정을 등록한다.
+      @author psb
+    -->
+    <insert id="addCustomMapLocation" parameterType="java.util.List" >
+        <foreach collection="list" item="item" separator=";">
+            INSERT INTO isaver.custom_map_location (
+                area_id
+                ,target_id
+                ,use_yn
+                ,x1
+                ,x2
+                ,y1
+                ,y2
+            ) VALUES (
+                #{item.areaId}
+                ,#{item.targetId}
+                ,#{item.useYn}
+                ,${item.x1}
+                ,${item.x2}
+                ,${item.y1}
+                ,${item.y2}
+            )
+        </foreach>
+    </insert>
+
+    <!--
+      Custom Map 설정을 제거한다.
+      @author psb
+    -->
+    <delete id="removeCustomMapLocation" parameterType="map" >
+        DELETE FROM isaver.custom_map_location
+        WHERE area_id = #{areaId}
+    </delete>
+</mapper>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.MenuDao">
+
+    <!--
+        전체 메뉴 트리를 반환 한다.
+        @author dhj
+    -->
+    <select id="findAllMenuTree" parameterType="MenuBean" resultType="MenuBean">
+      WITH RECURSIVE MENU_HIERACHY(depth, path, menu_id, menu_name, parent_menu_id, sort_order, menu_flag, menu_path, sortName ) AS (
+          SELECT  0 as depth,
+                  '' || menu_name,
+                  menu_id,
+                  menu_name,
+                  --menu_depth,
+                  parent_menu_id,
+                  sort_order,
+                  menu_flag,
+                  menu_path,
+                  sort_order || '' as sortName
+          FROM    isaver.menu
+          WHERE   menu_depth = 0
+          UNION ALL
+          SELECT
+                  b.depth + 1 as depth,
+                  path || ' > ' || a.menu_name,
+                  a.menu_id,
+                  a.menu_name,
+                  --a.menu_depth,
+                  a.parent_menu_id,
+                  a.sort_order,
+                  a.menu_flag,
+                  a.menu_path,
+                  b.sortName || ' > ' || a.sort_order as sortName
+          FROM    isaver.menu AS a
+          JOIN    MENU_HIERACHY AS b
+          ON      a.parent_menu_id = b.menu_id
+      )
+      SELECT  depth             as menuDepth,
+              menu_id           as menuId,
+              parent_menu_id    as parentMenuId,
+              menu_name         as menuName,
+              sort_order        as sortOrder,
+              menu_flag         as menuFlag,
+              menu_path          as menuPath,
+              path              as description,
+              sortName
+      FROM    MENU_HIERACHY
+      <if test="menuId != null">
+        WHERE menu_id = #{menuId}
+      </if>
+      ORDER BY sortName
+    </select>
+
+
+    <!--
+        전체 메뉴 트리를 반환 한다. 메뉴권한용
+        @author psb
+    -->
+    <select id="findRoleMenuTree" parameterType="MenuBean" resultType="MenuBean">
+        WITH RECURSIVE MENU_HIERACHY(depth, path, menu_id, menu_name, parent_menu_id, sort_order, menu_flag, menu_path, sortName ) AS (
+            SELECT  0 as depth,
+                    '' || menu_name,
+                    menu_id,
+                    menu_name,
+                    --menu_depth,
+                    parent_menu_id,
+                    sort_order,
+                    menu_flag,
+                    menu_path,
+                    sort_order || '' as sortName
+            FROM    isaver.menu
+            WHERE   menu_depth = 0
+            AND     menu_id = '000000'
+            UNION ALL
+            SELECT
+                    b.depth + 1 as depth,
+                    path || ' > ' || a.menu_name,
+                    a.menu_id,
+                    a.menu_name,
+                    --a.menu_depth,
+                    a.parent_menu_id,
+                    a.sort_order,
+                    a.menu_flag,
+                    a.menu_path,
+                    b.sortName || ' > ' || a.sort_order as sortName
+            FROM    isaver.menu AS a
+            JOIN    MENU_HIERACHY AS b
+            ON      a.parent_menu_id = b.menu_id
+        )
+        SELECT  depth             as menuDepth,
+                menu_id           as menuId,
+                parent_menu_id    as parentMenuId,
+                menu_name         as menuName,
+                sort_order        as sortOrder,
+                menu_flag         as menuFlag,
+                menu_path          as menuPath,
+                path              as description,
+                sortName
+        FROM    MENU_HIERACHY
+        ORDER BY sortName
+    </select>
+
+    <!--
+        전체 메뉴 바를 반환한다.
+        @author dhj
+    -->
+    <select id="findAllMenuTopBar" parameterType="map" resultType="MenuBean">
+        WITH RECURSIVE MENU_HIERACHY(depth, path, menu_id, menu_name, parent_menu_id, sort_order, menu_flag, menu_path) AS (
+            SELECT  0 as depth,
+                    '' || menu_name,
+                    menu_id,
+                    menu_name,
+                    -- menu_depth,
+                    parent_menu_id,
+                    sort_order,
+                    menu_flag,
+                    menu_path,
+                    use_yn
+            FROM    isaver.menu
+            WHERE   menu_depth = 0
+            UNION ALL
+            SELECT  b.depth + 1 as depth,
+                    path || ' > ' || a.menu_name,
+                    a.menu_id,
+                    a.menu_name,
+                    -- a.menu_depth,
+                    a.parent_menu_id,
+                    a.sort_order,
+                    a.menu_flag,
+                    a.menu_path,
+                    a.use_yn
+            FROM    isaver.menu       AS a
+            JOIN    MENU_HIERACHY     AS b
+            ON      a.parent_menu_id = b.menu_id
+            WHERE   a.menu_id in (
+                SELECT menu_id
+                FROM 	isaver.role_menu AS role
+                INNER JOIN isaver.users as aa
+                ON      role.role_id = aa.role_id
+                AND	    user_id = #{id}
+            )
+            <if test="statisticsMenuIds != null and statisticsMenuIds != ''">
+                OR a.parent_menu_id in
+                <foreach collection="statisticsMenuIds" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        )
+        SELECT  depth             as menuDepth,
+                menu_id           as menuId,
+                parent_menu_id    as parentMenuId,
+                menu_name         as menuName,
+                sort_order        as sortOrder,
+                menu_flag         as menuFlag,
+                menu_path          as menuPath,
+                path              as description
+        FROM    MENU_HIERACHY
+        WHERE   use_yn = 'Y'
+        ORDER BY depth, sort_order, description
+    </select>
+
+    <!--
+      메뉴 트리를 가져온다.
+      @author psb
+      -->
+    <select id="findByMenuTree" parameterType="MenuBean" resultType="MenuBean">
+       WITH RECURSIVE MENU_HIERACHY(depth, path, menu_id, menu_name, menu_depth) AS (
+        SELECT
+              0,
+              '' || menu_name,
+              menu_id,
+              menu_name,
+              menu_depth
+        FROM    isaver.menu
+        WHERE   menu_depth = 0
+        UNION ALL
+        SELECT
+              b.menu_depth+1,
+	          path || ' > ' || a.menu_name,
+	          a.menu_id,
+	          a.menu_name,
+	          a.menu_depth
+        FROM    isaver.menu              AS a
+        JOIN    MENU_HIERACHY     AS b
+        ON      a.parent_menu_id = b.menu_id )
+        SELECT  --depth             as menuDepth,
+              menu_id           as menuId,
+              --parent_menu_id    as parentMenuId,
+              --menu_name         as menuName,
+              --sort_order        as sortOrder,
+              --menu_flag         as menuFlag,
+              --menu_path          as menuPath,
+              path              as description
+        FROM    MENU_HIERACHY
+        WHERE   menu_id = #{menuId}
+    </select>
+
+    <!--
+        해당 메뉴 ID에 대한 하위 노드를 가져온다.
+        @author dhj
+    -->
+    <select id="findByMenuTreeChildNodes" parameterType="MenuBean" resultType="MenuBean">
+        WITH RECURSIVE MENU_HIERACHY(menu_id, parent_menu_id) AS (
+        SELECT
+                menu_id,
+                parent_menu_id
+        FROM    isaver.menu
+        WHERE   menu_id = #{menuId}
+        UNION ALL
+        SELECT
+                a.menu_id,
+                a.parent_menu_id
+        FROM    isaver.menu       AS a
+        JOIN    MENU_HIERACHY     AS b
+        ON      a.parent_menu_id = b.menu_id )
+        SELECT  menu_id           AS menuId
+        FROM    MENU_HIERACHY
+    </select>
+
+    <!--
+        단건에 대한 메뉴를 가져온다.
+        @author dhj
+    -->
+    <select id="findByMenu" parameterType="MenuBean" resultType="MenuBean">
+      SELECT  menu_id           as menuId,
+              parent_menu_id    as parentMenuId,
+              menu_name         as menuName,
+              menu_path          as menuPath,
+              menu_depth        as menuDepth,
+              sort_order        as sortOrder,
+              use_yn          as useYn,
+              menu_flag         as menuFlag,
+              (SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserId,
+              insert_datetime   as insertDatetime,
+              (SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserId,
+              update_datetime   as updateDatetime
+      FROM    isaver.menu a
+      WHERE   menu_id=#{menuId}LIMIT 1;
+    </select>
+
+    <!--
+        단건에 대한 메뉴를 등록한다.
+        @author dhj
+    -->
+    <insert id="addMenu" parameterType="MenuBean">
+      INSERT INTO isaver.menu (
+        menu_id,
+        parent_menu_id,
+        menu_name,
+        menu_path,
+        menu_depth,
+        sort_order,
+        use_yn,
+        menu_flag,
+        insert_user_id,
+        insert_datetime
+      ) VALUES (
+        #{menuId},
+        #{parentMenuId},
+        #{menuName},
+        #{menuPath},
+        ${menuDepth},
+        ${sortOrder},
+        #{useYn},
+        #{menuFlag},
+        #{insertUserId},
+        NOW()
+       )
+    </insert>
+
+    <!--
+        메뉴를 저장한다.
+        @author dhj
+    -->
+    <update id="saveMenu" parameterType="MenuBean">
+        UPDATE isaver.menu
+          <trim prefix="SET" prefixOverrides=",">
+            <if test="menuPath != null">
+              , menu_path = #{menuPath}
+            </if>
+            <if test="useYn != null">
+              , use_yn = #{useYn}
+            </if>
+            <if test="menuFlag != null">
+              , menu_flag = #{menuFlag}
+            </if>
+            <if test="menuDepth != null">
+              , menu_depth = ${menuDepth}
+            </if>
+            <if test="sortOrder != null">
+              , sort_order = ${sortOrder}
+            </if>
+            , parent_menu_id = #{parentMenuId}
+            , menu_name = #{menuName}
+            , update_user_id = #{updateUserId}
+            , update_datetime = NOW()
+          </trim>
+        WHERE
+            menu_id = #{menuId};
+    </update>
+
+    <!--
+        메뉴 삭제 시 하위 메뉴 노드를 제거한다.
+        @author dhj
+    -->
+    <delete id="removeListMenuForTree" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            DELETE FROM isaver.menu
+            <where>
+                menu_id=#{item.menuId}
+            </where>
+        </foreach>
+    </delete>
+</mapper>

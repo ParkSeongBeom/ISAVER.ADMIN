@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icent.isaver.admin.dao.LoginHistoryDao">
+    <!--
+        접속 로그 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListLoginHistory" resultType="LoginHistoryBean" parameterType="map">
+        select  a.log_id as logId
+        , a.user_id as userId
+        , c.user_name as userName
+        , a.login_flag as loginFlag
+        , a.ip_address as ipAddress
+        , a.log_datetime as logDatetime
+        , a.insert_user_id as insertUserId
+        , a.insert_datetime as insertDatetime
+        , a.update_user_id as updateUserId
+        , a.update_datetime as updateDatetime
+        ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserName
+        ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserName
+        from    isaver.login_history a
+        LEFT OUTER JOIN isaver.users c
+        ON      a.user_id = c.user_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userName != null and userName != ''">
+                AND     c.user_name like '%${userName}%'
+            </if>
+            <!--<if test="loginFlag != null and loginFlag != ''">-->
+                <!--AND     a.login_flag = #{loginFlag}-->
+            <!--</if>-->
+            AND     a.login_flag = '1'
+        </trim>
+        order by a.log_datetime desc, a.insert_datetime desc
+        <if test="pageIndex != null">
+            LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+        접속 로그 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountLoginHistory" parameterType="map" resultType="java.lang.Integer">
+        select  count(a.user_id)
+        from    isaver.login_history a
+        LEFT OUTER JOIN isaver.users c
+        ON      a.user_id = c.user_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userName != null and userName != ''">
+                AND     c.user_name like '%${userName}%'
+            </if>
+            <!--<if test="loginFlag != null and loginFlag != ''">-->
+                <!--AND     a.login_flag = #{loginFlag}-->
+            <!--</if>-->
+            AND     a.login_flag = '1'
+        </trim>
+    </select>
+
+
+    <!--
+        로그를 등록한다.
+        @author psb
+    -->
+    <select id="addLoginHistory" parameterType="LoginHistoryBean">
+        INSERT INTO isaver.login_history(
+            log_id
+            ,user_id
+            ,login_flag
+            ,ip_address
+            ,log_datetime
+        ) VALUES (
+            #{logId}
+            ,#{userId}
+            ,#{loginFlag}
+            ,#{ipAddress}
+            ,NOW()
+        );
+    </select>
+
+    <!--
+        접속 로그 목록을 가져온다. - 엑셀다운로드용
+        @author psb
+    -->
+    <select id="findListLoginHistoryForExcel" resultType="LoginHistoryBean" parameterType="map">
+        select  a.log_id as logId
+                , a.user_id as userId
+                , c.user_name as userName
+                , a.login_flag as loginFlag
+                , a.ip_address as ipAddress
+                , a.log_datetime as logDatetime
+                , a.insert_user_id as insertUserId
+                , a.insert_datetime as insertDatetime
+                , a.update_user_id as updateUserId
+                , a.update_datetime as updateDatetime
+                ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserName
+                ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserName
+                , CASE
+                      WHEN a.login_flag='1' THEN '로그인'
+                      WHEN a.login_flag='0' THEN '로그아웃'
+                  END as loginFlagStr
+                , to_char(a.log_datetime,'yyyy-MM-dd HH24:MI:ss') as logDatetimeStr
+        from    isaver.login_history a
+        LEFT OUTER JOIN isaver.users c
+        ON      a.user_id = c.user_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userName != null and userName != ''">
+                AND     c.user_name like '%${userName}%'
+            </if>
+            AND     a.login_flag = '1'
+        </trim>
+        order by a.log_datetime desc, a.insert_datetime desc
+    </select>
+</mapper>
