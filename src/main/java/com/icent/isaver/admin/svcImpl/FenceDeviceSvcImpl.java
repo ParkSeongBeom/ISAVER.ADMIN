@@ -1,8 +1,8 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.svc.FenceDeviceSvc;
 import com.icent.isaver.admin.bean.FenceDeviceBean;
 import com.icent.isaver.admin.dao.FenceDeviceDao;
+import com.icent.isaver.admin.svc.FenceDeviceSvc;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 

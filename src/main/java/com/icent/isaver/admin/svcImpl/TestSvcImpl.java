@@ -1,15 +1,15 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.resource.ResultState;
-import com.icent.isaver.admin.svc.TestSvc;
-import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.admin.bean.AreaBean;
 import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.bean.FenceBean;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
 import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.dao.FenceDao;
+import com.icent.isaver.admin.resource.ResultState;
+import com.icent.isaver.admin.svc.TestSvc;
+import com.icent.isaver.admin.util.AlarmRequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

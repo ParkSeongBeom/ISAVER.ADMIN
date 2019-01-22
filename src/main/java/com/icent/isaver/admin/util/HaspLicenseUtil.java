@@ -2,10 +2,10 @@ package com.icent.isaver.admin.util;
 
 import Aladdin.Hasp;
 import Aladdin.HaspStatus;
-import com.icent.isaver.admin.bean.License;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.bean.CodeBean;
+import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.dao.CodeDao;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.kst.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
