@@ -360,6 +360,7 @@
         ,'targetSaveUrl':'${rootPath}/criticalTarget/save.json'
         ,'targetRemoveUrl':'${rootPath}/criticalTarget/remove.json'
     };
+
     $(document).ready(function(){
     });
 

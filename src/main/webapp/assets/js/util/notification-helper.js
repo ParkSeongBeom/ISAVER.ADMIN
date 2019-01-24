@@ -197,6 +197,18 @@ var NotificationHelper = (
             }
         };
 
+        var getFence = function(fenceId){
+            var result = null;
+
+            for(var index in _fenceList){
+                if(_fenceList[index]['fenceId']==fenceId){
+                    result = _fenceList[index];
+                    break;
+                }
+            }
+            return result;
+        };
+
         this.getFenceList = function(type, id){
             var resultList = [];
             if(id==null || id==""){
@@ -227,10 +239,7 @@ var NotificationHelper = (
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
                 case 'fenceList':
-                    for(var index in data['fenceList']){
-                        var fence = data['fenceList'][index];
-                        _fenceList[fence['fenceId']]=fence;
-                    }
+                    _fenceList = data['fenceList'];
                     break;
                 case 'notificationList':
                     addNotificationList(data['notifications'], data['notiCountList']);
@@ -463,8 +472,9 @@ var NotificationHelper = (
             }
 
             if(notification['fenceId']!=null && (notification['fenceName']==null || notification['fenceName']=='')){
-                if(_fenceList[notification['fenceId']]!=null){
-                    notification['fenceName'] = _fenceList[notification['fenceId']]['fenceName']!=null?_fenceList[notification['fenceId']]['fenceName']:notification['fenceId'];
+                var fence = getFence(notification['fenceId']);
+                if(fence!=null){
+                    notification['fenceName'] = fence['fenceName']!=null?fence['fenceName']:notification['fenceId'];
                 }else{
                     notification['fenceName'] = notification['fenceId'];
                 }

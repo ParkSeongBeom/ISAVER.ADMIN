@@ -106,12 +106,14 @@ var CustomMapPopup = (
                 customParamList.push(customMap);
             }
 
-            var fenceList = _customMapMediator.getMarker('fence');
+            var deviceList = _customMapMediator.getMarker('fence');
             var fenceParamList = [];
-            for(var index in fenceList){
-                var fenceMap = $.extend({}, fenceList[index]['data']);
-                fenceMap['areaId'] = _areaId;
-                fenceParamList.push(fenceMap);
+            for(var index in deviceList){
+                for(var i in deviceList[index]){
+                    var fenceMap = $.extend({}, deviceList[index][i]['data']);
+                    fenceMap['areaId'] = _areaId;
+                    fenceParamList.push(fenceMap);
+                }
             }
 
             var fenceDeviceParamList = [];
@@ -241,16 +243,16 @@ var CustomMapPopup = (
                                         )
                                     ).append(
                                         $("<div/>",{class:"fence_name"}).append(
-                                            $("<input/>",{type:'text',name:'fenceName',value:data['fenceName'],maxlength:"50"}).change({fenceId:data['fenceId']},function(evt){
-                                                _customMapMediator.saveFence(evt.data.fenceId, $(this).val());
+                                            $("<input/>",{type:'text',name:'fenceName',value:data['fenceName'],maxlength:"50"}).change({deviceId:data['deviceId'],fenceId:data['fenceId']},function(evt){
+                                                _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, $(this).val());
                                             })
                                         ).append(
                                             $("<select/>",{name:'fenceType'}).append(
                                                 $("<option/>",{value:'normal',selected:data['fenceType']=='normal'}).text("normal")
                                             ).append(
                                                 $("<option/>",{value:'ignore',selected:data['fenceType']=='ignore'}).text("ignore")
-                                            ).change({fenceId:data['fenceId']},function(evt){
-                                                _customMapMediator.saveFence(evt.data.fenceId, null, $(this).val());
+                                            ).change({deviceId:data['deviceId'],fenceId:data['fenceId']},function(evt){
+                                                _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, null, $(this).val());
                                             })
                                         )
                                     )
@@ -386,14 +388,6 @@ var CustomMapPopup = (
             _addFenceInfo['fence'] = null;
             _addFenceInfo['circleList'] = [];
             _addFenceInfo['points'] = [];
-        };
-
-        /**
-         * save fence
-         * @author psb
-         */
-        this.saveFence = function(fenceId, fenceName, fenceType){
-            _customMapMediator.saveFence(fenceId, fenceName, fenceType);
         };
 
         /**

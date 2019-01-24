@@ -46,6 +46,7 @@
         WHERE   A.area_id = #{areaId}
         AND     A.device_code in ('DEV002','DEV006','DEV007','DEV008','DEV013')
         AND	    A.del_yn = 'N'
+        ORDER BY deviceCode, targetName
     </select>
 
     <!--

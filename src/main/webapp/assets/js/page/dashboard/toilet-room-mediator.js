@@ -20,6 +20,7 @@ var ToiletRoomMediator = (
             'empty' : ''
             ,'normal' : 'enter'
             ,'fall' : 'fall'
+            ,'sign' : 'sign'
         };
         var _statusData = {
             'status' : null
@@ -45,7 +46,6 @@ var ToiletRoomMediator = (
         this.init = function(areaId,webSocketHelper){
             _areaId = areaId;
             _webSocketHelper = webSocketHelper;
-            //_self.wsSendMessage('getImageMode');
 
             addRefreshTimeCallBack(refreshEventTime);
             _ajaxCall('toiletRoom',{areaId:_areaId});
@@ -62,9 +62,6 @@ var ToiletRoomMediator = (
             };
 
             switch (type){
-                case "getImageMode" :
-                    webSocketHelper.sendMessage('toiletRoom', message);
-                    break;
                 case "setImageMode" :
                     message['imageMode'] = _element.find("button[name='imageModeBtn']").hasClass("on")?'tof':'ir';
                     webSocketHelper.sendMessage('toiletRoom',message);
@@ -184,6 +181,7 @@ var ToiletRoomMediator = (
                     _statusData['eventDatetime'] = null;
                     break;
                 case "normal":
+                case "sign":
                 case "fall":
                     if(_statusData['eventDatetime']==null && eventDatetime!=null){
                         _statusData['eventDatetime'] = new Date(eventDatetime);

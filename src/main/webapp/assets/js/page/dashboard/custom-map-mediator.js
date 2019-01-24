@@ -424,12 +424,16 @@ var CustomMapMediator = (
 
                 if(targetData.hasOwnProperty("setFenceList")){
                     for(var index in _marker[_MARKER_TYPE[1]]){
-                        if(targetData['targetId']==_marker[_MARKER_TYPE[1]][index]['data']['deviceId']){
-                            _self.saveFence(index);
+                        for(var i in _marker[_MARKER_TYPE[1]][index]){
+                            if(targetData['targetId']==_marker[_MARKER_TYPE[1]][index][i]['data']['deviceId']){
+                                _self.saveFence(index, i);
+                            }
                         }
                     }
                 }else if(_options['custom']['fenceView']){
                     targetData['setFenceList'] = true;
+                    _marker[_MARKER_TYPE[1]][targetData['targetId']] = {};
+                    _marker[_MARKER_TYPE[2]][targetData['targetId']] = {};
                     _ajaxCall('fenceList',{deviceId:targetData['targetId']});
                 }
             }
@@ -439,17 +443,17 @@ var CustomMapMediator = (
          * save fence name
          * @author psb
          */
-        this.saveFence = function(fenceId, fenceName, fenceType, location){
-            if(_marker[_MARKER_TYPE[1]]!=null && _marker[_MARKER_TYPE[1]][fenceId]!=null){
+        this.saveFence = function(deviceId, fenceId, fenceName, fenceType, location){
+            if(_marker[_MARKER_TYPE[1]][deviceId]!=null && _marker[_MARKER_TYPE[1]][deviceId][fenceId]!=null){
                 _self.addMarker(
                     _MARKER_TYPE[1]
                     , {
-                        'uuid':_marker[_MARKER_TYPE[1]][fenceId]['data']['uuid']
+                        'uuid':_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['uuid']
                         ,'id' : fenceId
-                        ,'deviceId':_marker[_MARKER_TYPE[1]][fenceId]['data']['deviceId']
-                        ,'fenceType':fenceType!=null?fenceType:_marker[_MARKER_TYPE[1]][fenceId]['data']['fenceType']
-                        ,'fenceName':fenceName!=null?fenceName:_marker[_MARKER_TYPE[1]][fenceId]['data']['fenceName']
-                        ,'location':location!=null?location:_marker[_MARKER_TYPE[1]][fenceId]['data']['location']
+                        ,'deviceId':_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['deviceId']
+                        ,'fenceType':fenceType!=null?fenceType:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceType']
+                        ,'fenceName':fenceName!=null?fenceName:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']
+                        ,'location':location!=null?location:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['location']
                     }
                 );
             }
@@ -595,16 +599,16 @@ var CustomMapMediator = (
                             points.push([lat,lng]);
                         }
 
-                        if(_marker[messageType][data['id']]!=null){
-                            _marker[messageType][data['id']]['element'].attr("points",points.join(" ")).off('click');
-                            _marker[messageType][data['id']]['data']['location'] = data['location'];
-                            fenceName = data['fenceName']!=null?data['fenceName']:_marker[messageType][data['id']]['data']['fenceName'];
-                            _marker[messageType][data['id']]['data']['fenceName'] = fenceName;
-                            _marker[messageType][data['id']]['data']['fenceType'] = data['fenceType'];
+                        if(_marker[messageType][data['deviceId']][data['id']]!=null){
+                            _marker[messageType][data['deviceId']][data['id']]['element'].attr("points",points.join(" ")).off('click');
+                            _marker[messageType][data['deviceId']][data['id']]['data']['location'] = data['location'];
+                            fenceName = data['fenceName']!=null?data['fenceName']:_marker[messageType][data['deviceId']][data['id']]['data']['fenceName'];
+                            _marker[messageType][data['deviceId']][data['id']]['data']['fenceName'] = fenceName;
+                            _marker[messageType][data['deviceId']][data['id']]['data']['fenceType'] = data['fenceType'];
                         }else{
                             fenceName = data['fenceName']?data['fenceName']:data['id'];
                             const svgPolygon = _canvasSvg.polygon(points, {fenceId:data['id']});
-                            _marker[messageType][data['id']] = {
+                            _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : $(svgPolygon)
                                 ,'textElement' : null
                                 ,'data' : {
@@ -620,7 +624,7 @@ var CustomMapMediator = (
 
                             if(_options['custom']['draggable']){
                                 let pointerY, pointerX;
-                                _marker[messageType][data['id']]['element'].draggable({
+                                _marker[messageType][data['deviceId']][data['id']]['element'].draggable({
                                     cursor: "move"
                                     ,containment: "parent"
                                     ,start : function(evt, ui) {
@@ -636,7 +640,7 @@ var CustomMapMediator = (
                                             const lng = Number(loc[1])+(Number(evt.pageY)-Number(pointerY))/_scale;
                                             pointList.push([lat,lng]);
                                         }
-                                        _self.saveFence(data['id'], null, null, _self.convertFenceLocationOrigin(data['deviceId'],pointList));
+                                        _self.saveFence(data['deviceId'], data['id'], null, null, _self.convertFenceLocationOrigin(data['deviceId'],pointList));
                                         pointerY = evt.pageY;
                                         pointerX = evt.pageX;
                                     }
@@ -644,26 +648,26 @@ var CustomMapMediator = (
                             }
 
                             if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
-                                _options['custom']['onLoad']('addFence',_marker[messageType][data['id']]['data']);
+                                _options['custom']['onLoad']('addFence',_marker[messageType][data['deviceId']][data['id']]['data']);
                             }
                         }
 
                         if(data['fenceType']==_FENCE_TYPE[1]){
-                            _marker[messageType][data['id']]['element'].addClass('g-ignore_fence');
-                            if(_marker[messageType][data['id']]['textElement']!=null) {
-                                _marker[messageType][data['id']]['textElement'].remove();
-                                _marker[messageType][data['id']]['textElement'] = null;
+                            _marker[messageType][data['deviceId']][data['id']]['element'].addClass('g-ignore_fence');
+                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) {
+                                _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
+                                _marker[messageType][data['deviceId']][data['id']]['textElement'] = null;
                             }
                         } else {
-                            _marker[messageType][data['id']]['element'].removeClass('g-ignore_fence');
-                            if(_marker[messageType][data['id']]['textElement']==null){
+                            _marker[messageType][data['deviceId']][data['id']]['element'].removeClass('g-ignore_fence');
+                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']==null){
                                 const svgText = _canvasSvg.text((latMin+latMax)/2, (lngMin+lngMax)/2, fenceName, $.extend({"fenceId": data['id']}, _options[_MARKER_TYPE[1]]['text']));
-                                _marker[messageType][data['id']]['textElement'] = $(svgText);
+                                _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);
                             }else{
-                                _marker[messageType][data['id']]['textElement'].attr({x:(latMin+latMax)/2,y:(lngMin+lngMax)/2}).text(fenceName);
+                                _marker[messageType][data['deviceId']][data['id']]['textElement'].attr({x:(latMin+latMax)/2,y:(lngMin+lngMax)/2}).text(fenceName);
                             }
                             if(_options['custom']['moveFence']){
-                                _marker[messageType][data['id']]['element'].on('dblclick', function(evt){
+                                _marker[messageType][data['deviceId']][data['id']]['element'].on('dblclick', function(evt){
                                     setTransform2d(_options['custom']['moveFenceScale']);
                                     _mapCanvas.animate({
                                         'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
@@ -675,6 +679,10 @@ var CustomMapMediator = (
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
                         break;
                     case _MARKER_TYPE[2] : // Object
+                        if(_marker[messageType][data['deviceId']]==null){
+                            return false;
+                        }
+
                         if(data['location'] instanceof Array){
                             data['location'] = data['location'][0];
                         }
@@ -682,19 +690,19 @@ var CustomMapMediator = (
                         const top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(data['location']['lng'])*_ratio);
                         let element;
 
-                        if(_marker[messageType][data['id']]!=null){
+                        if(_marker[messageType][data['deviceId']][data['id']]!=null){
                             let points = [];
                             if(_options['object']['pointsHideFlag']){
                                 points = [left+","+top];
-                                _marker[messageType][data['id']]['points'] = points;
+                                _marker[messageType][data['deviceId']][data['id']]['points'] = points;
                             }else{
-                                points = _marker[messageType][data['id']]['points'];
+                                points = _marker[messageType][data['deviceId']][data['id']]['points'];
                                 points.push(left+","+top);
                                 if(points.length > _options['object']['pointShiftCnt']){
                                     points.shift();
                                 }
                             }
-                            element = _marker[messageType][data['id']]['element'];
+                            element = _marker[messageType][data['deviceId']][data['id']]['element'];
 
                             if(element.hasClass("level-"+criticalCss['LEV003'])){
                                 element.attr("marker-end","url(#"+data['objectType']+"-LEV003)");
@@ -710,7 +718,7 @@ var CustomMapMediator = (
                             const polyline = _canvasSvg.polyline([[left,top]],{'objectId':data['id'],'marker-end':"url(#"+data['objectType']+")"});
                             element = $(polyline);
                             element.addClass(_targetClass[messageType]);
-                            _marker[messageType][data['id']] = {
+                            _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : element
                                 ,'points' : [left+","+top]
                             };
@@ -760,20 +768,20 @@ var CustomMapMediator = (
 
             switch (messageType){
                 case _MARKER_TYPE[1] : // Fence
-                    if(_marker[messageType][data['id']]!=null){
-                        if(_marker[messageType][data['id']]['element']!=null) _marker[messageType][data['id']]['element'].remove();
-                        if(_marker[messageType][data['id']]['textElement']!=null) _marker[messageType][data['id']]['textElement'].remove();
+                    if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
+                        if(_marker[messageType][data['deviceId']][data['id']]['element']!=null) _marker[messageType][data['deviceId']][data['id']]['element'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
                         if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
-                            _options['custom']['onLoad']('removeFence',_marker[messageType][data['id']]['data']);
+                            _options['custom']['onLoad']('removeFence',_marker[messageType][data['deviceId']][data['id']]['data']);
                         }
-                        delete _marker[messageType][data['id']];
+                        delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
                     }
                     break;
                 case _MARKER_TYPE[2] : // Object
-                    if(_marker[messageType][data['id']]!=null){
-                        _marker[messageType][data['id']]['element'].remove();
-                        delete _marker[messageType][data['id']];
+                    if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
+                        _marker[messageType][data['deviceId']][data['id']]['element'].remove();
+                        delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] object complete - [" + messageType + "][" + data['id'] + "]");
                     }
                     break;
@@ -814,15 +822,22 @@ var CustomMapMediator = (
             var fenceMarker = null;
             switch (actionType) {
                 case "fenceName":
+                    var findFlag = false;
                     for(var index in _marker[_MARKER_TYPE[1]]){
-                        if(_marker[_MARKER_TYPE[1]][index]['data']['fenceName']==data['fenceName']){
-                            fenceMarker = _marker[_MARKER_TYPE[1]][index];
+                        for(var i in _marker[_MARKER_TYPE[1]][index]){
+                            if(_marker[_MARKER_TYPE[1]][index][i]['data']['fenceName']==data['fenceName']){
+                                fenceMarker = _marker[_MARKER_TYPE[1]][index][i];
+                                findFlag = true;
+                                break;
+                            }
+                        }
+                        if(findFlag){
                             break;
                         }
                     }
                     break;
                 case "fenceId":
-                    fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceId']);
+                    fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
                     break;
                 case "fenceMarker":
                     fenceMarker = data;
@@ -843,7 +858,7 @@ var CustomMapMediator = (
                 return false;
             }
 
-            var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data['fenceId']);
+            var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
             if(fenceMarker!=null){
                 switch (actionType){
                     case "add" :
@@ -870,7 +885,7 @@ var CustomMapMediator = (
                 console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
             }
 
-            var objectMarker = _self.getMarker(_MARKER_TYPE[2], data['objectId']);
+            var objectMarker = _self.getMarker(_MARKER_TYPE[2], data);
             if(objectMarker!=null){
                 switch (actionType){
                     case "add" :
@@ -897,16 +912,22 @@ var CustomMapMediator = (
          * get marker
          * @author psb
          */
-        this.getMarker = function(messageType, id){
+        this.getMarker = function(messageType, data){
             switch (messageType){
                 case _MARKER_TYPE[1] : // Fence
-                case _MARKER_TYPE[2] : // Object
-                    if(id!=null){
-                        if(_marker[messageType][id]!=null){
-                            return _marker[messageType][id];
-                        }
-                    }else{
+                    if(data==null) {
                         return _marker[messageType];
+                    }else if(data['deviceId']!=null && data['fenceId']!=null){
+                        if(_marker[messageType][data['deviceId']][data['fenceId']]!=null){
+                            return _marker[messageType][data['deviceId']][data['fenceId']];
+                        }
+                    }
+                    break;
+                case _MARKER_TYPE[2] : // Object
+                    if(data['deviceId']!=null && data['objectId']!=null){
+                        if(_marker[messageType][data['deviceId']][data['objectId']]!=null){
+                            return _marker[messageType][data['deviceId']][data['objectId']];
+                        }
                     }
                     break;
                 case "all" :

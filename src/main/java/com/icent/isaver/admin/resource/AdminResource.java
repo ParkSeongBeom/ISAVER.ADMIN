@@ -139,7 +139,7 @@ public class AdminResource {
      * - 쓰러짐 : fall
      * @author psb
      */
-    public final static String[] TOILET_ROOM_STATUS = new String[]{"empty","normal","fall"};
+    public final static String[] TOILET_ROOM_STATUS = new String[]{"empty","normal","fall","sign"};
 
     /**
      * 임계치 레벨별 css정의

@@ -1383,21 +1383,23 @@ body.dashboard_mode {
     .entrance_set .s_rbox .entrance_ico.enter:before {
       content: "\e932";
       opacity: 1; }
+    .entrance_set .s_rbox .entrance_ico.sign:before {
+      content: "\e93d"; }
     .entrance_set .s_rbox .entrance_ico.fall:before {
       content: "\e952"; }
-    .entrance_set .s_rbox .entrance_ico.enter, .entrance_set .s_rbox .entrance_ico.fall {
+    .entrance_set .s_rbox .entrance_ico.enter, .entrance_set .s_rbox .entrance_ico.sign, .entrance_set .s_rbox .entrance_ico.fall {
       flex: 1.5;
       -webkit-flex: 1.5;
       flexbox: 1.5;
       -webkit-box-flex: 1.5;
       -ms-flex: 1.5; }
-    .entrance_set .s_rbox .entrance_ico.enter ~ h3, .entrance_set .s_rbox .entrance_ico.fall ~ h3 {
+    .entrance_set .s_rbox .entrance_ico.enter ~ h3, .entrance_set .s_rbox .entrance_ico.sign ~ h3, .entrance_set .s_rbox .entrance_ico.fall ~ h3 {
       flex: 0.6;
       -webkit-flex: 0.6;
       flexbox: 0.6;
       -webkit-box-flex: 0.6;
       -ms-flex: 0.6; }
-    .entrance_set .s_rbox .entrance_ico.enter ~ .c_time, .entrance_set .s_rbox .entrance_ico.fall ~ .c_time {
+    .entrance_set .s_rbox .entrance_ico.enter ~ .c_time, .entrance_set .s_rbox .entrance_ico.sign ~ .c_time, .entrance_set .s_rbox .entrance_ico.fall ~ .c_time {
       flex: 0.9;
       -webkit-flex: 0.9;
       flexbox: 0.9;
@@ -1425,7 +1427,7 @@ body.dashboard_mode {
       height: 40px;
       min-width: 100px;
       min-height: 40px;
-      margin: 0 0 20px 0;
+      margin: 10px 0 20px 0;
       border-style: solid;
       border-width: 2px;
       border-color: darkgray;
@@ -1446,7 +1448,7 @@ body.dashboard_mode {
       .entrance_set .s_rbox .c_time button:before {
         content: "Reset"; }
 
-.level-danger .entrance_ico.enter:before, .level-danger .entrance_ico.fall:before, .level-warning .entrance_ico.enter:before, .level-warning .entrance_ico.fall:before, .level-caution .entrance_ico.enter:before, .level-caution .entrance_ico.fall:before {
+.level-danger .entrance_ico.enter:before, .level-danger .entrance_ico.sign:before, .level-danger .entrance_ico.fall:before, .level-warning .entrance_ico.enter:before, .level-warning .entrance_ico.sign:before, .level-warning .entrance_ico.fall:before, .level-caution .entrance_ico.enter:before, .level-caution .entrance_ico.sign:before, .level-caution .entrance_ico.fall:before {
   animation-name: issue02;
   -webkit-animation-name: issue02;
   -webkit-animation-duration: 0.5s;
@@ -1477,7 +1479,7 @@ body.dashboard_mode {
     opacity: 1; }
   100% {
     opacity: 0.5; } }
-.level-danger .entrance_ico.enter:after, .level-danger .entrance_ico.fall:after, .level-warning .entrance_ico.enter:after, .level-warning .entrance_ico.fall:after, .level-caution .entrance_ico.enter:after, .level-caution .entrance_ico.fall:after {
+.level-danger .entrance_ico.enter:after, .level-danger .entrance_ico.sign:after, .level-danger .entrance_ico.fall:after, .level-warning .entrance_ico.enter:after, .level-warning .entrance_ico.sign:after, .level-warning .entrance_ico.fall:after, .level-caution .entrance_ico.enter:after, .level-caution .entrance_ico.sign:after, .level-caution .entrance_ico.fall:after {
   animation-name: issue08;
   -webkit-animation-name: issue08;
   -webkit-animation-duration: 0.5s;
@@ -1518,19 +1520,19 @@ body.dashboard_mode {
     -moz-transform: scale(1.5);
     -webkit-transform: scale(1.5);
     -o-transform: scale(1.5); } }
-.level-danger .entrance_ico.enter ~ .c_time > p, .level-danger .entrance_ico.enter:before, .level-danger .entrance_ico.enter ~ h3, .level-danger .entrance_ico.fall ~ .c_time > p, .level-danger .entrance_ico.fall:before, .level-danger .entrance_ico.fall ~ h3 {
+.level-danger .entrance_ico.enter ~ .c_time > p, .level-danger .entrance_ico.enter:before, .level-danger .entrance_ico.enter ~ h3, .level-danger .entrance_ico.sign ~ .c_time > p, .level-danger .entrance_ico.sign:before, .level-danger .entrance_ico.sign ~ h3, .level-danger .entrance_ico.fall ~ .c_time > p, .level-danger .entrance_ico.fall:before, .level-danger .entrance_ico.fall ~ h3 {
   color: #be1e1e; }
-.level-danger .entrance_ico.enter:after, .level-danger .entrance_ico.fall:after {
+.level-danger .entrance_ico.enter:after, .level-danger .entrance_ico.sign:after, .level-danger .entrance_ico.fall:after {
   border-color: #be1e1e; }
 
-.level-warning .entrance_ico.enter ~ .c_time > p, .level-warning .entrance_ico.enter:before, .level-warning .entrance_ico.enter ~ h3, .level-warning .entrance_ico.fall ~ .c_time > p, .level-warning .entrance_ico.fall:before, .level-warning .entrance_ico.fall ~ h3 {
+.level-warning .entrance_ico.enter ~ .c_time > p, .level-warning .entrance_ico.enter:before, .level-warning .entrance_ico.enter ~ h3, .level-warning .entrance_ico.sign ~ .c_time > p, .level-warning .entrance_ico.sign:before, .level-warning .entrance_ico.sign ~ h3, .level-warning .entrance_ico.fall ~ .c_time > p, .level-warning .entrance_ico.fall:before, .level-warning .entrance_ico.fall ~ h3 {
   color: #ff8400; }
-.level-warning .entrance_ico.enter:after, .level-warning .entrance_ico.fall:after {
+.level-warning .entrance_ico.enter:after, .level-warning .entrance_ico.sign:after, .level-warning .entrance_ico.fall:after {
   border-color: #ff8400; }
 
-.level-caution .entrance_ico.enter ~ .c_time > p, .level-caution .entrance_ico.enter:before, .level-caution .entrance_ico.enter ~ h3, .level-caution .entrance_ico.fall ~ .c_time > p, .level-caution .entrance_ico.fall:before, .level-caution .entrance_ico.fall ~ h3 {
+.level-caution .entrance_ico.enter ~ .c_time > p, .level-caution .entrance_ico.enter:before, .level-caution .entrance_ico.enter ~ h3, .level-caution .entrance_ico.sign ~ .c_time > p, .level-caution .entrance_ico.sign:before, .level-caution .entrance_ico.sign ~ h3, .level-caution .entrance_ico.fall ~ .c_time > p, .level-caution .entrance_ico.fall:before, .level-caution .entrance_ico.fall ~ h3 {
   color: #999; }
-.level-caution .entrance_ico.enter:after, .level-caution .entrance_ico.fall:after {
+.level-caution .entrance_ico.enter:after, .level-caution .entrance_ico.sign:after, .level-caution .entrance_ico.fall:after {
   border-color: #999; }
 
 .device_box, .screen_box {
@@ -1692,10 +1694,7 @@ body.dashboard_mode {
       cursor: pointer;
       font-size: 0.9rem;
       height: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      word-wrap: normal; }
+      word-break: break-all; }
       .device_set > * p:nth-of-type(2) {
         font-size: 1.2rem; }
     .device_set > *.level-caution {
