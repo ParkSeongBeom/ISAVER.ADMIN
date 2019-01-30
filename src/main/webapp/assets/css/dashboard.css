@@ -1694,7 +1694,7 @@ body.dashboard_mode {
       cursor: pointer;
       font-size: 0.9rem;
       height: 100%;
-      word-break: break-all; }
+      word-break: break-word; }
       .device_set > * p:nth-of-type(2) {
         font-size: 1.2rem; }
     .device_set > *.level-caution {

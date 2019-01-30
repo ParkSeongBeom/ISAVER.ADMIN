@@ -276,8 +276,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><spring:message code='device.column.config'/></th>
+                                <td colspan="3">
+                                    <textarea name="config" class="textboard"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><spring:message code='device.column.deviceDesc'/></th>
-                                <td class="point" colspan="3">
+                                <td colspan="3">
                                     <textarea name="deviceDesc" class="textboard"></textarea>
                                 </td>
                             </tr>

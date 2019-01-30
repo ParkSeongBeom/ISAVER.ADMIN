@@ -54,6 +54,7 @@
                 , B.del_yn as delYn
                 , B.main_flag as mainFlag
                 , B.version as version
+                , B.config as config
                 , (select user_name from isaver.users where user_id=B.insert_user_id) as insertUserName
                 , (select user_name from isaver.users where user_id=B.update_user_id) as updateUserName
                 , B.sub_url as subUrl
@@ -131,6 +132,7 @@
             , del_yn as delYn
             , main_flag as mainFlag
             , version as version
+            , config as config
             , insert_user_id as insertUserId
             , insert_datetime as insertDatetime
             , update_user_id as updateUserId
@@ -199,6 +201,7 @@
             <if test="version != null and version != ''">
                 , version
             </if>
+            , config
             , insert_user_id
             , insert_datetime
             <if test="subUrl != null and subUrl != ''">
@@ -238,6 +241,7 @@
             <if test="version != null and version != ''">
                 , #{version,jdbcType=VARCHAR}
             </if>
+            , #{config,jdbcType=VARCHAR}
             , #{insertUserId,jdbcType=VARCHAR}
             , NOW()
             <if test="subUrl != null and subUrl != ''">
@@ -298,6 +302,7 @@
             device_type_code = #{deviceTypeCode,jdbcType=CHAR},
             device_code = #{deviceCode,jdbcType=CHAR},
             device_desc = #{deviceDesc,jdbcType=VARCHAR},
+            config = #{config,jdbcType=VARCHAR},
             update_user_id = #{updateUserId,jdbcType=VARCHAR},
             update_datetime = NOW()
         where device_id = #{deviceId,jdbcType=CHAR}

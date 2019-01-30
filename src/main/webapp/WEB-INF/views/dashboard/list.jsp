@@ -411,7 +411,7 @@
                                         <h3>${childArea.areaName}</h3>
                                         <div class="c_time">
                                             <p id="eventDatetime">00:00:00</p>
-                                            <button name="resetEventBtn" onclick="javascript:dashboardHelper.toiletRoomSendMessage('${childArea.areaId}','resetEvent');"></button>
+                                            <button name="resetEventBtn" onclick="javascript:dashboardHelper.toiletRoomSendMessage({messageType:'resetEvent',areaId:'${childArea.areaId}'});"></button>
                                         </div>
                                     </div>
                                     <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
@@ -587,6 +587,7 @@
     var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
     var subMenuId = String('${subMenuId}');
     var chartList = {};
+    var imageCheckUnload = {};
     var renderDatetime = new Date();
     var dashboardHelper = new DashboardHelper("${rootPath}","${version}");
     var fileUploadPath = '${fileUploadPath}';
@@ -617,6 +618,12 @@
         , emptyPassword : '<spring:message code="dashboard.message.emptyPassword"/>'
         , authorizeCheckFailure : '<spring:message code="dashboard.message.authorizeCheckFailure"/>'
     };
+
+    $(window).on("beforeunload", function(){
+        for(var index in imageCheckUnload){
+            dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:index,'imageMode':'bg'});
+        }
+    });
 
     $(document).ready(function(){
         for(var key in criticalCss){
@@ -950,11 +957,11 @@
      * 사용자 인증 팝업 열기
      * @author psb
      */
-    function openAuthorizePopup(_this, _areaId){
+    function openAuthorizePopup(_this, areaId){
         if($(_this).hasClass("on")){
-            $(_this).removeClass("on");
+            dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:areaId,'imageMode':'bg'});
         }else{
-            $("#authrizeAreaId").val(_areaId);
+            $("#authrizeAreaId").val(areaId);
             $("#authrizePassword").val('');
             $(".ir_popup").fadeIn(200);
 
@@ -986,6 +993,7 @@
         }
         var param = {
             'userPassword' : $("#authrizePassword").val()
+            ,'areaId' : $("#authrizeAreaId").val()
         };
         callAjax('authorizeCheck',param);
     }
@@ -1003,7 +1011,7 @@
         switch(actionType){
             case 'authorizeCheck':
                 if(data['result']!=null && Boolean(data['result'])){
-                    $(".watch_area div[areaId='"+$("#authrizeAreaId").val()+"'] .ir_btn").addClass("on");
+                    dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:data['paramBean']['areaId'],'imageMode':'ir'});
                     closeAuthorizePopup();
                 }else{
                     alertMessage(actionType+'Failure');

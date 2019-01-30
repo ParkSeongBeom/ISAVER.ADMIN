@@ -553,11 +553,10 @@ $critical_w03 : 150px;
   @include flexbase; width:100%; padding:10px 0;
   * {margin:0 20px 0 0; width:$critical_w02;}
   *:nth-of-type(1) {width:$critical_w01;}
-  *:nth-of-type(2) {width:$critical_w03;}
 }
 
 .critical_tree_set {
-  @include treebase;
+  @include treebase; max-height:none; height:auto;
 
   margin:10px 0 50px 0;
   & > li > div > button:before {display: none !important;}
@@ -567,7 +566,7 @@ $critical_w03 : 150px;
 
     div {
       @include tree-button; @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-      width:$critical_w02; height:$mt_btn_h;
+      width:$critical_w02; min-height:$mt_btn_h;
 
       &.level {
         &-caution { background-color: rgba($color-gray-03,1) !important;   }    // &-caution 주의
@@ -582,7 +581,7 @@ $critical_w03 : 150px;
       }
 
       button {
-        height:100%;
+        height:100%; min-height:$mt_btn_h;
         &:hover {background-color: $color-blue-01; color:$color-white-01;}
 
         &:first-of-type {
@@ -597,7 +596,7 @@ $critical_w03 : 150px;
     }
 
     & > button {
-      @include flex-midddle; width:30px; height:$mt_btn_h;
+      @include flex-midddle; width:30px; /*height:$mt_btn_h;*/
 
       @include btnbase_type01;
       &:after, &:before {overflow: hidden; width:100%; @include border-radius(200px); }

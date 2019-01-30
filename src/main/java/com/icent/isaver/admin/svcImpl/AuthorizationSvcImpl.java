@@ -106,6 +106,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         boolean result = usersDao.findByUsersForLogin(parameters)!=null;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("result",result);
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 
@@ -131,6 +132,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());
+        modelAndView.addObject("majorVersion", majorVersion);
         return modelAndView;
     }
 

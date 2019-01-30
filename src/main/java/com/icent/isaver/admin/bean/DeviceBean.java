@@ -59,6 +59,8 @@ public class DeviceBean extends ISaverCommonBean {
     private String mainFlag;
     /* 버전정보 */
     private String version;
+    /* 설정정보 */
+    private String config;
 
     /* ETC */
     private String useFileYn;
@@ -310,5 +312,13 @@ public class DeviceBean extends ISaverCommonBean {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
     }
 }

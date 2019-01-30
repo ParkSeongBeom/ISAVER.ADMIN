@@ -766,7 +766,7 @@ $ds-sw:50px; $ds-w:150px;
     &:before {font-size: 1.8rem; }
 
     p {
-      cursor: pointer; font-size:0.9rem; height:100%; word-break:break-all;
+      cursor: pointer; font-size:0.9rem; height:100%; word-break: break-word;
       &:nth-of-type(2) {font-size:1.2rem;}
     }
 

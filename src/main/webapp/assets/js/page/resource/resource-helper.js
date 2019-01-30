@@ -321,6 +321,7 @@ var ResourceHelper = (
                 form.find("input[name='linkUrl']").val(data['linkUrl']!=null?data['linkUrl']:'');
                 form.find("#mainFlagCB").prop("checked",data['mainFlag']=='Y').trigger("change");
                 form.find("textarea[name='deviceDesc']").val(data['deviceDesc']!=null?data['deviceDesc']:'');
+                form.find("textarea[name='config']").val(data['config']!=null?data['config']:'');
                 form.find("td[name='insertUserName']").text(data['insertUserName']);
                 form.find("td[name='insertDatetime']").text(new Date(data['insertDatetime']).format("yyyy-MM-dd HH:mm:ss"));
                 form.find("td[name='updateUserName']").text(data['updateUserName']?data['updateUserName']:'');

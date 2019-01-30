@@ -139,14 +139,14 @@ var DashboardHelper = (
                 return false;
             }
 
-            const _toiletRoomMediator = _toiletRoomList[resultData['areaId']];
-            if(resultData['areaId']!=null && _toiletRoomMediator!=null){
+            const toiletRoomMediator = _toiletRoomList[resultData['areaId']];
+            if(resultData['areaId']!=null && toiletRoomMediator!=null){
                 switch (resultData['messageType']) {
                     case "imageMode":
-                        _toiletRoomMediator.updateImageMode(resultData['imageMode']);
+                        toiletRoomMediator.updateImageMode(resultData['imageMode'],false);
                         break;
                     case "imageStream":
-                        _toiletRoomMediator.saveCanvasImage(resultData['imageData']);
+                        toiletRoomMediator.saveCanvasImage(resultData['imageData']);
                         break;
                 }
             }
@@ -224,7 +224,7 @@ var DashboardHelper = (
                         _toiletRoomList[areaId] = {};
                         _toiletRoomList[areaId] = new ToiletRoomMediator(_rootPath);
                         _toiletRoomList[areaId].setElement($(this));
-                        _toiletRoomList[areaId].init(areaId,_webSocketHelper);
+                        _toiletRoomList[areaId].init(areaId);
                         break;
                 }
             });
@@ -238,11 +238,13 @@ var DashboardHelper = (
          * sendMessage websocket
          * @author psb
          */
-        this.toiletRoomSendMessage = function(areaId, type){
-            if(areaId!=null && _toiletRoomList[areaId]!=null){
-                _toiletRoomList[areaId].wsSendMessage(type);
-            }else{
-                console.log("[DashboardHelper] toiletRoom mediator is empty - areaId:"+areaId);
+        this.toiletRoomSendMessage = function(message){
+            const toiletRoomMediator = _toiletRoomList[message['areaId']];
+            if(message['areaId']!=null && toiletRoomMediator!=null){
+                _webSocketHelper.sendMessage('toiletRoom',message);
+                if(message['messageType']=='imageMode'){
+                    toiletRoomMediator.updateImageMode(message['imageMode'],true);
+                }
             }
         };
 
