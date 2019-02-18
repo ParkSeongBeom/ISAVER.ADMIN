@@ -1,0 +1,49 @@
+variables:
+  DOCKER_OPTS: "--insecure-registry=repo.isaver.co.kr:5000"
+  DOCKER_HOST: "tcp://lordgaav__dind-options:2375"
+  GIT_STRATEGY: none
+  GIT_CHECKOUT: "false"
+
+services:
+  - lordgaav/dind-options:latest
+
+stages:
+  - gradle_build
+  - docker_build
+
+gradle_build:
+  stage: gradle_build
+  image: repo.isaver.co.kr:5000/tms_builder:latest
+  variables:
+    GIT_STRATEGY: clone
+    GIT_CHECKOUT: "true"
+  only:
+    - master
+  before_script:
+    - export LANG=en_US.UTF-8
+    - locale
+  script:
+    - ls -al
+    - ./gradlew --stacktrace clean build -x test
+    - mv build/libs/ISAVER.ADMIN.war docker/PACKAGES/INSTALL/container/isaver_web/webapps/
+  artifacts:
+    paths:
+      - docker/
+    when: on_success
+  tags:
+    - tms
+
+docker_build:
+  stage: docker_build
+  only:
+    - master
+  before_script:
+    - docker info
+  script:
+    - ls -al
+    - cd docker
+    - ls -al
+    - docker build -t repo.isaver.co.kr:5000/tms_web:latest .
+    - docker push repo.isaver.co.kr:5000/tms_web:latest
+  tags:
+    - tms
