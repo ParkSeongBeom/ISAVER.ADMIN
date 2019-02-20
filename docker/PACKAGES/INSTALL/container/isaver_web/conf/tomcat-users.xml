@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<tomcat-users>
-  <role rolename="manager-gui" />
-  <role rolename="manager-script" />
-  <role rolename="probeuser" />
-  <role rolename="admin" />
-  <user username="icent" password="dkdltpsxm" roles="manager-gui, manager-script, probeuser, admin" /> 
-</tomcat-users>
