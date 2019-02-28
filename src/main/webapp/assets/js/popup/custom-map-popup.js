@@ -235,10 +235,10 @@ var CustomMapPopup = (
                                                 _self.addFence(evt.data.fenceId,evt.data.deviceId);
                                             })
                                         ).append(
-                                            $("<button/>",{class:"btn-del"}).click({fenceId:data['fenceId']},function(evt){
+                                            $("<button/>",{class:"btn-del"}).click({fenceId:data['fenceId'],deviceId:data['deviceId']},function(evt){
                                                 if(!validate()){ return false; }
                                                 _self.resetAddFenceInfo();
-                                                _customMapMediator.removeMarker('fence',{id:evt.data.fenceId});
+                                                _customMapMediator.removeMarker('fence',{deviceId:evt.data.deviceId,id:evt.data.fenceId});
                                             })
                                         )
                                     ).append(
