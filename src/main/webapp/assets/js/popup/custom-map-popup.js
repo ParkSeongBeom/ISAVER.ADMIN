@@ -296,7 +296,7 @@ var CustomMapPopup = (
             }
             var mouseOverUseFlag = false;
 
-            _addFenceInfo['fenceMarker'] = _customMapMediator.getMarker('fence', {'deviceId':'deviceId','fenceId':fenceId});
+            _addFenceInfo['fenceMarker'] = _customMapMediator.getMarker('fence', {'deviceId':deviceId,'fenceId':fenceId});
             if(_addFenceInfo['fenceMarker']!=null){
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].hide();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].hide();
