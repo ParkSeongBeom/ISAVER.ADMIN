@@ -296,7 +296,7 @@ var CustomMapPopup = (
             }
             var mouseOverUseFlag = false;
 
-            _addFenceInfo['fenceMarker'] = _customMapMediator.getMarker('fence', fenceId);
+            _addFenceInfo['fenceMarker'] = _customMapMediator.getMarker('fence', {'deviceId':'deviceId','fenceId':fenceId});
             if(_addFenceInfo['fenceMarker']!=null){
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].hide();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].hide();
@@ -308,14 +308,10 @@ var CustomMapPopup = (
 
             var fence = _addFenceInfo['canvasSvg'].polygon([],{"fenceId":fenceId});
             _addFenceInfo['fence'] = $(fence);
-            var isDragging = false;
             _addFenceInfo['mapCanvas'].parent().addClass("cursor_cros");
             $(".fenceset_popup").addClass("on");
 
-            _addFenceInfo['mapCanvas'].find("svg").on("mousedown", function(event){
-                isDragging = false;
-            }).on("mousemove", function(event){
-                isDragging = true;
+            _addFenceInfo['mapCanvas'].find("svg").on("mousemove", function(event){
                 const point = [event.offsetX,event.offsetY];
                 if(_addFenceInfo['points'].length>0){
                     if(mouseOverUseFlag){
@@ -327,7 +323,7 @@ var CustomMapPopup = (
                     _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
                 }
             }).on("mouseup", function(event){
-                if (!isDragging && event.which==1) {
+                if (event.which==1) {
                     const point = [event.offsetX,event.offsetY];
                     if(_addFenceInfo['points'].length>0){
                         _addFenceInfo['points'][_addFenceInfo['points'].length-1] = point;
@@ -339,7 +335,6 @@ var CustomMapPopup = (
                     _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
                     mouseOverUseFlag = true;
                 }
-                isDragging = false;
             }).on("dblclick", function(event){
                 if(_addFenceInfo['points'].length<3){
                     _alertMessage("fenceNotEnough");
