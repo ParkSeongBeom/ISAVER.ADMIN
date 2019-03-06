@@ -51,6 +51,8 @@ form-bg-effect :
   &-led:before      {content:"\e966";} // LED
   &-sioc:before     {content:"\e96e";} // sioc
   &-qguard:before   {content:"\e96c";} // q가드 서버
+  &-shock:before    {content:"\e942";} // 압전센서
+  &-server:before   {content:"\e96d";} // 서버
 
 }
 
@@ -823,17 +825,17 @@ div[contenteditable] {}
 
 .g {
 
-  &-m8, &-camera, &-wlight, &-led, &-speaker, &-qguard, &-ico  {z-index: 50;}
+  &-ico  {z-index: 50;}
 
   &-tracking,&-line {z-index: 100;}
 
   &-area  {z-index:10;}
   &-fence {z-index: 5;}
 
-  &-ico, &-m8, &-camera, &-tracking,&-line, &-area, &-fence {position: absolute !important;}
+  &-ico, &-tracking, &-line, &-area, &-fence {position: absolute !important;}
 
   // 감시, 감지 디바이스 공통
-  &-ico, &-m8, &-camera, &-area {
+  &-ico, &-area {
     //@include scale(0.5);
     &, & > * {cursor: pointer;}
     @include box-shadow01(0, 3px, 8px, 0px, #000, 1); @include resize;
@@ -854,7 +856,7 @@ div[contenteditable] {}
   }
 
   // MAP 설정 시 크기, 위치 버튼 표시
-  &-ico, &-m8, &-camera {
+  &-ico {
     width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
@@ -870,7 +872,7 @@ div[contenteditable] {}
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
-  &-ico, &-m8, &-camera, &-tracking {
+  &-ico, &-tracking {
     background-color: $bas-color;
     &, &:before {@include flex-midddle;}
     &, &:after  {@include border-radius(500px);}
@@ -892,6 +894,8 @@ div[contenteditable] {}
   &-led:before     {content:"\e966";} // LED
   &-speaker:before {content:"\e93a";} // 스피커
   &-qguard:before  {content:"\e96c";} // Q가드
+  &-shock:before   {content:"\e942";} // 압전센서
+  &-server:before  {content:"\e96d";} // 서버
 
 
   &-tracking {
@@ -940,9 +944,9 @@ div[contenteditable] {}
   }
 
   &-line {
-    polyline {fill: transparent !important; stroke: $color-blue-01; stroke-width:2px;}
+    polyline {fill: transparent !important; stroke: rgba($color-blue-01,0.4); stroke-width:1px;}
     marker {overflow: visible;}
-    image  {width:6px; height:6px;}
+    image  {width:9px; height:9px;}
 
     polyline.object {stroke: $color-gray-05;}
     polyline.level {
@@ -960,7 +964,7 @@ div[contenteditable] {}
   }
 
   // 임계치 적용 표시
-  &-ico, &-m8, &-camera, &-tracking {
+  &-ico, &-tracking {
     &.level {
       &-caution,&-warning,&-danger  {
         @include pOn;

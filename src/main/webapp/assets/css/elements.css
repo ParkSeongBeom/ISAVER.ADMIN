@@ -99,6 +99,10 @@ form-bg-effect :
   content: "\e96e"; }
 .ico-qguard:before {
   content: "\e96c"; }
+.ico-shock:before {
+  content: "\e942"; }
+.ico-server:before {
+  content: "\e96d"; }
 
 /*
 .ico-safeeye :   -safeeye
@@ -1438,7 +1442,7 @@ input.datepicker + button + .in-timepicker {
     background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
     background-repeat: repeat, no-repeat; }
 
-.g-m8, .g-camera, .g-wlight, .g-led, .g-speaker, .g-qguard, .g-ico {
+.g-ico {
   z-index: 50; }
 .g-tracking, .g-line {
   z-index: 100; }
@@ -1446,20 +1450,20 @@ input.datepicker + button + .in-timepicker {
   z-index: 10; }
 .g-fence {
   z-index: 5; }
-.g-ico, .g-m8, .g-camera, .g-tracking, .g-line, .g-area, .g-fence {
+.g-ico, .g-tracking, .g-line, .g-area, .g-fence {
   position: absolute !important; }
-.g-ico, .g-m8, .g-camera, .g-area {
+.g-ico, .g-area {
   box-shadow: 0 3px 8px 0px black;
   -webkit-box-shadow: 0 3px 8px 0px black;
   -moz-box-shadow: 0 3px 8px 0px black; }
-  .g-ico, .g-ico > *, .g-m8, .g-m8 > *, .g-camera, .g-camera > *, .g-area, .g-area > * {
+  .g-ico, .g-ico > *, .g-area, .g-area > * {
     cursor: pointer; }
-  .g-ico .ui-resizable-e, .g-ico .ui-resizable-s, .g-ico .ui-resizable-se, .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s, .g-camera .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
+  .g-ico .ui-resizable-e, .g-ico .ui-resizable-s, .g-ico .ui-resizable-se, .g-area .ui-resizable-e, .g-area .ui-resizable-s, .g-area .ui-resizable-se {
     display: none !important;
     position: absolute;
     width: 10px;
     height: 10px; }
-    .g-ico .ui-resizable-e:before, .g-ico .ui-resizable-s:before, .g-ico .ui-resizable-se:before, .g-m8 .ui-resizable-e:before, .g-m8 .ui-resizable-s:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-e:before, .g-camera .ui-resizable-s:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
+    .g-ico .ui-resizable-e:before, .g-ico .ui-resizable-s:before, .g-ico .ui-resizable-se:before, .g-area .ui-resizable-e:before, .g-area .ui-resizable-s:before, .g-area .ui-resizable-se:before {
       content: "";
       display: -webkit-box;
       display: -moz-box;
@@ -1491,32 +1495,32 @@ input.datepicker + button + .in-timepicker {
       background-position: 50% 50%;
       background-color: #109dcb;
       /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/ }
-    .g-ico .ui-resizable-e:hover:before, .g-ico .ui-resizable-s:hover:before, .g-ico .ui-resizable-se:hover:before, .g-m8 .ui-resizable-e:hover:before, .g-m8 .ui-resizable-s:hover:before, .g-m8 .ui-resizable-se:hover:before, .g-camera .ui-resizable-e:hover:before, .g-camera .ui-resizable-s:hover:before, .g-camera .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
+    .g-ico .ui-resizable-e:hover:before, .g-ico .ui-resizable-s:hover:before, .g-ico .ui-resizable-se:hover:before, .g-area .ui-resizable-e:hover:before, .g-area .ui-resizable-s:hover:before, .g-area .ui-resizable-se:hover:before {
       /*background-color: $color-blue-01;*/
       background-color: #be1e1e;
       color: #fff; }
-  .g-ico .ui-resizable-e:before, .g-m8 .ui-resizable-e:before, .g-camera .ui-resizable-e:before, .g-area .ui-resizable-e:before {
+  .g-ico .ui-resizable-e:before, .g-area .ui-resizable-e:before {
     transform: rotate(180deg);
     ms-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     -o-transform: rotate(180deg); }
-  .g-ico .ui-resizable-s:before, .g-m8 .ui-resizable-s:before, .g-camera .ui-resizable-s:before, .g-area .ui-resizable-s:before {
+  .g-ico .ui-resizable-s:before, .g-area .ui-resizable-s:before {
     transform: rotate(-90deg);
     ms-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
     -o-transform: rotate(-90deg); }
-  .g-ico .ui-resizable-se:before, .g-m8 .ui-resizable-se:before, .g-camera .ui-resizable-se:before, .g-area .ui-resizable-se:before {
+  .g-ico .ui-resizable-se:before, .g-area .ui-resizable-se:before {
     transform: rotate(-135deg);
     ms-transform: rotate(-135deg);
     -ms-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
     -o-transform: rotate(-135deg); }
-  .g-ico > span, .g-m8 > span, .g-camera > span, .g-area > span {
+  .g-ico > span, .g-area > span {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1553,25 +1557,25 @@ input.datepicker + button + .in-timepicker {
     -moz-transform: scale(0.4);
     -webkit-transform: scale(0.4);
     -o-transform: scale(0.4); }
-  .g-ico:hover, .g-ico:hover > span, .g-m8:hover, .g-m8:hover > span, .g-camera:hover, .g-camera:hover > span, .g-area:hover, .g-area:hover > span {
+  .g-ico:hover, .g-ico:hover > span, .g-area:hover, .g-area:hover > span {
     background-color: rgba(246, 185, 0, 0.5); }
-  .g-ico.on, .g-ico.on > span, .g-m8.on, .g-m8.on > span, .g-camera.on, .g-camera.on > span, .g-area.on, .g-area.on > span {
+  .g-ico.on, .g-ico.on > span, .g-area.on, .g-area.on > span {
     background-color: #109dcb; }
-.g-ico, .g-m8, .g-camera {
+.g-ico {
   width: 25px;
   height: 25px; }
-  .g-ico .ui-resizable-e, .g-ico .ui-resizable-s, .g-m8 .ui-resizable-e, .g-m8 .ui-resizable-s, .g-camera .ui-resizable-e, .g-camera .ui-resizable-s {
+  .g-ico .ui-resizable-e, .g-ico .ui-resizable-s {
     display: none !important; }
-  .g-ico .ui-resizable-se, .g-m8 .ui-resizable-se, .g-camera .ui-resizable-se {
+  .g-ico .ui-resizable-se {
     right: -5px;
     bottom: -5px; }
-  .g-ico.on, .g-m8.on, .g-camera.on {
+  .g-ico.on {
     background-color: #109dcb; }
-    .g-ico.on:hover .ui-resizable-se, .g-m8.on:hover .ui-resizable-se, .g-camera.on:hover .ui-resizable-se {
+    .g-ico.on:hover .ui-resizable-se {
       display: block !important; }
-.g-ico, .g-m8, .g-camera, .g-tracking {
+.g-ico, .g-tracking {
   background-color: #3c3c3c; }
-  .g-ico, .g-ico:before, .g-m8, .g-m8:before, .g-camera, .g-camera:before, .g-tracking, .g-tracking:before {
+  .g-ico, .g-ico:before, .g-tracking, .g-tracking:before {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1590,12 +1594,12 @@ input.datepicker + button + .in-timepicker {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center; }
-  .g-ico, .g-ico:after, .g-m8, .g-m8:after, .g-camera, .g-camera:after, .g-tracking, .g-tracking:after {
+  .g-ico, .g-ico:after, .g-tracking, .g-tracking:after {
     -moz-border-radius: 500px;
     -webkit-border-radius: 500px;
     border-radius: 500px;
     -khtml-border-radius: 500px; }
-  .g-ico:before, .g-ico:after, .g-m8:before, .g-m8:after, .g-camera:before, .g-camera:after, .g-tracking:before, .g-tracking:after {
+  .g-ico:before, .g-ico:after, .g-tracking:before, .g-tracking:after {
     content: "";
     width: 100%;
     height: 100%;
@@ -1605,7 +1609,7 @@ input.datepicker + button + .in-timepicker {
     -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .g-ico:before, .g-m8:before, .g-camera:before, .g-tracking:before {
+  .g-ico:before, .g-tracking:before {
     content: "";
     position: absolute;
     background-repeat: no-repeat;
@@ -1627,6 +1631,10 @@ input.datepicker + button + .in-timepicker {
   content: "\e93a"; }
 .g-qguard:before {
   content: "\e96c"; }
+.g-shock:before {
+  content: "\e942"; }
+.g-server:before {
+  content: "\e96d"; }
 .g-tracking {
   width: 24px;
   height: 24px;
@@ -1728,13 +1736,13 @@ input.datepicker + button + .in-timepicker {
       stroke: #be1e1e; }
 .g-line polyline {
   fill: transparent !important;
-  stroke: #109dcb;
-  stroke-width: 2px; }
+  stroke: rgba(16, 157, 203, 0.4);
+  stroke-width: 1px; }
 .g-line marker {
   overflow: visible; }
 .g-line image {
-  width: 6px;
-  height: 6px; }
+  width: 9px;
+  height: 9px; }
 .g-line polyline.object {
   stroke: #757575; }
 .g-line polyline.level-caution, .g-line polyline.level-warning, .g-line polyline.level-danger {
@@ -1777,7 +1785,7 @@ input.datepicker + button + .in-timepicker {
 .g-ignore_fence {
   fill: rgba(117, 117, 117, 0.2) !important;
   stroke: #757575 !important; }
-.g-ico.level-caution:before, .g-ico.level-warning:before, .g-ico.level-danger:before, .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
+.g-ico.level-caution:before, .g-ico.level-warning:before, .g-ico.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
   animation-iteration-count: infinite;
@@ -1796,7 +1804,7 @@ input.datepicker + button + .in-timepicker {
 @keyframes notice03 {
   100% {
     opacity: 0.7; } }
-.g-ico.level-caution:after, .g-ico.level-warning:after, .g-ico.level-danger:after, .g-m8.level-caution:after, .g-m8.level-warning:after, .g-m8.level-danger:after, .g-camera.level-caution:after, .g-camera.level-warning:after, .g-camera.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
+.g-ico.level-caution:after, .g-ico.level-warning:after, .g-ico.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
   content: "";
   position: absolute;
   width: 120%;
@@ -1831,27 +1839,27 @@ input.datepicker + button + .in-timepicker {
     opacity: 0;
     width: 180%;
     height: 180%; } }
-.g-ico.level-caution:after, .g-ico.level-warning:after, .g-ico.level-danger:after, .g-m8.level-caution:after, .g-m8.level-warning:after, .g-m8.level-danger:after, .g-camera.level-caution:after, .g-camera.level-warning:after, .g-camera.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
+.g-ico.level-caution:after, .g-ico.level-warning:after, .g-ico.level-danger:after, .g-tracking.level-caution:after, .g-tracking.level-warning:after, .g-tracking.level-danger:after {
   display: block;
   border-style: solid;
   border-width: 2px; }
-.g-ico.level-caution:before, .g-ico.level-warning:before, .g-ico.level-danger:before, .g-m8.level-caution:before, .g-m8.level-warning:before, .g-m8.level-danger:before, .g-camera.level-caution:before, .g-camera.level-warning:before, .g-camera.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
+.g-ico.level-caution:before, .g-ico.level-warning:before, .g-ico.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   color: #fff !important; }
-.g-ico.level-caution, .g-ico.level-caution > span, .g-m8.level-caution, .g-m8.level-caution > span, .g-camera.level-caution, .g-camera.level-caution > span, .g-tracking.level-caution, .g-tracking.level-caution > span {
+.g-ico.level-caution, .g-ico.level-caution > span, .g-tracking.level-caution, .g-tracking.level-caution > span {
   background-color: #757575; }
-.g-ico.level-caution:after, .g-m8.level-caution:after, .g-camera.level-caution:after, .g-tracking.level-caution:after {
+.g-ico.level-caution:after, .g-tracking.level-caution:after {
   border-color: #757575; }
-.g-ico.level-warning, .g-ico.level-warning > span, .g-m8.level-warning, .g-m8.level-warning > span, .g-camera.level-warning, .g-camera.level-warning > span, .g-tracking.level-warning, .g-tracking.level-warning > span {
+.g-ico.level-warning, .g-ico.level-warning > span, .g-tracking.level-warning, .g-tracking.level-warning > span {
   background-color: #ff8400; }
-.g-ico.level-warning:after, .g-m8.level-warning:after, .g-camera.level-warning:after, .g-tracking.level-warning:after {
+.g-ico.level-warning:after, .g-tracking.level-warning:after {
   border-color: #ff8400; }
-.g-ico.level-danger, .g-ico.level-danger > span, .g-m8.level-danger, .g-m8.level-danger > span, .g-camera.level-danger, .g-camera.level-danger > span, .g-tracking.level-danger, .g-tracking.level-danger > span {
+.g-ico.level-danger, .g-ico.level-danger > span, .g-tracking.level-danger, .g-tracking.level-danger > span {
   background-color: #be1e1e; }
-.g-ico.level-danger:after, .g-m8.level-danger:after, .g-camera.level-danger:after, .g-tracking.level-danger:after {
+.g-ico.level-danger:after, .g-tracking.level-danger:after {
   border-color: #be1e1e; }
-.g-ico.level-die, .g-ico.level-die span, .g-m8.level-die, .g-m8.level-die span, .g-camera.level-die, .g-camera.level-die span, .g-tracking.level-die, .g-tracking.level-die span {
+.g-ico.level-die, .g-ico.level-die span, .g-tracking.level-die, .g-tracking.level-die span {
   background-color: #000; }
-.g-ico.level-die:after, .g-m8.level-die:after, .g-camera.level-die:after, .g-tracking.level-die:after {
+.g-ico.level-die:after, .g-tracking.level-die:after {
   content: "\e93d";
   z-index: 10;
   position: absolute;

@@ -66,6 +66,8 @@ var CustomMapMediator = (
                 , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
                 , 'moveFence': false // 이벤트 발생시 펜스로 이동 기능
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
+                , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
+                , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
             }
         };
         var _targetClass = {
@@ -88,6 +90,7 @@ var CustomMapMediator = (
         var _scale=_options['element']['zoom']['init'];
         var _originX = 2500;
         var _originY = 2500;
+        var _fenceReturnTimeout;
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
@@ -434,6 +437,16 @@ var CustomMapMediator = (
                     targetData['setFenceList'] = true;
                     _marker[_MARKER_TYPE[1]][targetData['targetId']] = {};
                     _marker[_MARKER_TYPE[2]][targetData['targetId']] = {};
+
+                    if(_options['custom']['moveFence']){
+                        targetElement.on('dblclick', function(evt){
+                            setTransform2d(_options['element']['zoom']['init']);
+                            _mapCanvas.animate({
+                                'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
+                                ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
+                            },300);
+                        });
+                    }
                     _ajaxCall('fenceList',{deviceId:targetData['targetId']});
                 }
             }
@@ -667,12 +680,13 @@ var CustomMapMediator = (
                                 _marker[messageType][data['deviceId']][data['id']]['textElement'].attr({x:(latMin+latMax)/2,y:(lngMin+lngMax)/2}).text(fenceName);
                             }
                             if(_options['custom']['moveFence']){
-                                _marker[messageType][data['deviceId']][data['id']]['element'].on('dblclick', function(evt){
+                                _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
                                     setTransform2d(_options['custom']['moveFenceScale']);
                                     _mapCanvas.animate({
                                         'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
                                         ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
                                     },300);
+                                    moveReturn(evt.data.deviceId);
                                 });
                             }
                         }
@@ -943,6 +957,22 @@ var CustomMapMediator = (
          */
         var _ajaxCall = function(actionType, data){
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
+        };
+
+        var moveReturn = function(deviceId){
+            if(!_options['custom']['moveReturn']){
+                return false;
+            }
+
+            if(_fenceReturnTimeout!=null){
+                clearTimeout(_fenceReturnTimeout);
+            }
+
+            _fenceReturnTimeout = setTimeout(function() {
+                if(_marker[_MARKER_TYPE[4]][deviceId]!=null){
+                    _marker[_MARKER_TYPE[4]][deviceId]['element'].trigger('dblclick');
+                }
+            }, _options['custom']['moveReturnDelay']);
         };
 
         /**
