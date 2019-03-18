@@ -24,6 +24,7 @@ var CustomMapPopup = (
             ,"DEV015" : "ico-qguard"
         };
         var _areaId = null;
+        var _mouseDownInterval = 0;
         var _customMapMediator;
         var _messageConfig;
         var _cameraSelectTag;
@@ -124,6 +125,7 @@ var CustomMapPopup = (
             if(confirm(_messageConfig['saveConfirmMessage'])){
                 _ajaxCall('save', {
                     areaId:_areaId
+                    , rotate:_element.find("#rotate").val()
                     , fileId:_element.find("#fileId").val()
                     , customList:JSON.stringify(customParamList)
                     , fenceList:JSON.stringify(fenceParamList)
@@ -159,7 +161,6 @@ var CustomMapPopup = (
                     'draggable' : true
                     ,'resizable' : true
                     ,'fenceView' : true
-                    ,'allView' : true
                     ,'openLinkFlag': false
                     ,'onLoad' : function(actionType,data){
                         switch (actionType){
@@ -271,6 +272,9 @@ var CustomMapPopup = (
                         _checkChildTarget(data['targetId'], data['useYn']=='Y');
                         _updateTargetValue(data);
                     }
+                    ,'rotate' : function(data){
+                        _element.find("input[name='rotate']").val(data);
+                    }
                 });
             }catch(e){
                 console.error("[CustomMapPopup][openPopup] custom map mediator init error - "+ e.message);
@@ -350,6 +354,24 @@ var CustomMapPopup = (
                 _self.resetAddFenceInfo();
                 event.stopPropagation();
             });
+        };
+
+        /**
+         * 이미지 회전
+         * @author psb
+         */
+        this.setRotate = function(actionType, deg, continueFlag){
+            _customMapMediator.setRotate(actionType, deg);
+
+            if(continueFlag!=null && continueFlag){
+                _mouseDownInterval = setInterval(function(){
+                    _self.setRotate(actionType);
+                }, 100);
+            }
+        };
+
+        this.stopRotate = function(){
+            clearInterval(_mouseDownInterval);
         };
 
         this.removePointFence = function(){

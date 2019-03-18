@@ -20,7 +20,7 @@ var ResourceHelper = (
         var _messageConfig;
         var _areaList = {};
         var _deviceList = {};
-        var _parentDeviceCode = ['DEV001','DEV003','DEV900','DEV015'];
+        var _parentDeviceCode = ['DEV001','DEV003','DEV900','DEV015','DEV016'];
         var _self = this;
 
         /**

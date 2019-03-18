@@ -31,6 +31,8 @@ public class AreaBean extends ISaverCommonBean {
     private Integer sortOrder;
     /* 구역 깊이 */
     private Integer depth;
+    /* 회전값 */
+    private Integer rotate;
     /* 템플릿 코드 */
     private String templateCode;
     /* 파일ID */
@@ -175,5 +177,13 @@ public class AreaBean extends ISaverCommonBean {
 
     public void setAreaPath(String areaPath) {
         this.areaPath = areaPath;
+    }
+
+    public Integer getRotate() {
+        return rotate;
+    }
+
+    public void setRotate(Integer rotate) {
+        this.rotate = rotate;
     }
 }

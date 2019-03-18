@@ -12,6 +12,7 @@ import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.kst.common.spring.TransactionUtil;
+import com.kst.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,7 +96,12 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
 
     @Override
     public ModelAndView findListCustomMapLocation(Map<String, String> parameters) {
-        List<CustomMapLocationBean> childList = customMapLocationDao.findListCustomMapLocation(parameters);
+        Map paramBean = new HashMap();
+        paramBean.put("areaId",parameters.get("areaId"));
+        if(StringUtils.notNullCheck(parameters.get("deviceCodes"))){
+            paramBean.put("deviceCodes",parameters.get("deviceCodes").split(","));
+        }
+        List<CustomMapLocationBean> childList = customMapLocationDao.findListCustomMapLocation(paramBean);
         AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -127,6 +133,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         Map<String, String> saveAreaParam = new HashMap<>();
         saveAreaParam.put("areaId",parameters.get("areaId"));
         saveAreaParam.put("fileId",parameters.get("fileId"));
+        saveAreaParam.put("rotate",parameters.get("rotate"));
 
         // Custom Map Insert Param
         List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("customList"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
@@ -136,7 +143,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try {
             // 구역 Bg File 업데이트
-            areaDao.saveAreaFileId(saveAreaParam);
+            areaDao.saveAreaByCustomMapLocation(saveAreaParam);
 
             // 장치 위치 Update
             customMapLocationDao.removeCustomMapLocation(removeCustomParam);

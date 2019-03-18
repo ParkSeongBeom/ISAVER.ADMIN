@@ -147,6 +147,7 @@ var NotificationHelper = (
                         _notificationList[index]['data']['actionType']='cancel';
                         updateNotification(_notificationList[index]['data']);
                     }
+                    $("#notiMoreBtn").hide();
                     break;
                 case "updateNotification": // 알림센터 이벤트 수정 (확인, 해제)
                     updateNotificationList(resultData['notification']);
@@ -501,7 +502,6 @@ var NotificationHelper = (
 
                 /* 싸이렌 */
                 playSegment();
-
 
                 if(_options['toastPopup']) {
                     if(typeof dashboardHelper!="undefined" && dashboardHelper instanceof DashboardHelper){

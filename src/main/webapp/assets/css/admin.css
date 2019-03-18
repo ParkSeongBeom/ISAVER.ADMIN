@@ -2498,15 +2498,56 @@ a.fc-more {
         -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
-        max-width: 35px;
-        min-width: 35px;
+        min-width: 55px;
         height: 100%;
         padding: 0 !important;
         border-style: solid;
         border-width: 0 1px;
         border-color: darkgray; }
       .map_sett_box .map > div:last-of-type input {
-        max-width: 80px; }
+        max-width: 100px; }
+      .map_sett_box .map > div:last-of-type button {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        max-width: 40px;
+        background-color: rgba(60, 60, 60, 0.5); }
+        .map_sett_box .map > div:last-of-type button:before {
+          position: absolute;
+          font-size: 1.2rem; }
+        .map_sett_box .map > div:last-of-type button:nth-of-type(1):before {
+          content: "\e902";
+          transform: rotate(90deg);
+          ms-transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          -webkit-transform: rotate(90deg);
+          -o-transform: rotate(90deg); }
+        .map_sett_box .map > div:last-of-type button:nth-of-type(2) {
+          margin: 0 0 0 1px; }
+          .map_sett_box .map > div:last-of-type button:nth-of-type(2):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
   .map_sett_box .list {
     flex: 1 0 400px;
     -webkit-flex: 1 0 400px;

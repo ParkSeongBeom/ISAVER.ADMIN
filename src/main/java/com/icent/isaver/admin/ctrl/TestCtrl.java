@@ -40,21 +40,18 @@ public class TestCtrl {
         return modelAndView;
     }
 
-    public final static String[] eventAddParam = new String[]{"eventId","areaId","areaName","deviceId"};
+    public final static String[] eventAddParam = new String[]{"eventData"};
 
     @RequestMapping(method={RequestMethod.POST}, value="/event")
     public ModelAndView eventSend(HttpServletRequest request, @RequestParam Map<String, String> parameters){
         if(MapUtils.nullCheckMap(parameters, eventAddParam)){
             throw new IsaverException("");
         }
-
-        ModelAndView modelAndView = testSvc.eventSend(request, parameters);
-        return modelAndView;
+        return testSvc.eventSend(request, parameters);
     }
 
     @RequestMapping(method={RequestMethod.POST}, value="/guard")
     public ModelAndView guard(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = testSvc.guard(request, parameters);
-        return modelAndView;
+        return testSvc.guard(request, parameters);
     }
 }

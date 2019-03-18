@@ -2,6 +2,8 @@ package com.icent.isaver.admin.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.icent.isaver.admin.bean.ResultBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
 import com.kst.common.util.StringUtils;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -116,4 +119,59 @@ public class AlarmRequestUtil {
         return null;
     }
 
+
+    public static ResultBean sendRequestFuncJson(StringEntity stringEntity, String requestHttpUrl) {
+        CloseableHttpClient commonHttpClient = null;
+        commonHttpClient = CommonUtil.getHttpClientFunc(commonHttpClient, timeout* 1000);
+        HttpPost httpPost = null;
+        HttpResponse response = null;
+        HttpEntity httpEntity =  null;
+        ResultBean result = new ResultBean();
+
+        try{
+            httpPost = new HttpPost(requestHttpUrl);
+            final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout* 1000).setSocketTimeout(timeout* 1000).build();
+            httpPost.setConfig(params);
+            httpPost.addHeader("charset", "UTF-8");
+            httpPost.addHeader("content-type", "application/json");
+            httpPost.setEntity(stringEntity);
+
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setSocketTimeout(timeout * 1000)
+                    .setConnectTimeout(timeout * 1000)
+                    .setConnectionRequestTimeout(timeout * 1000)
+                    .build();
+
+            httpPost.setConfig(requestConfig);
+
+            response = commonHttpClient.execute(httpPost);
+            httpEntity = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+
+            String output;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((output = br.readLine()) != null) {
+                stringBuilder.append(output);
+            }
+
+            logger.info(requestHttpUrl);
+            logger.info(stringBuilder.toString());
+            result.setCode(response.getStatusLine().getStatusCode());
+            result.setDesc(stringBuilder.toString());
+
+            if (httpEntity != null) {
+                httpEntity.getContent().close();
+            }
+        } catch (Exception e) {
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+        } finally {
+            if (commonHttpClient != null && commonHttpClient.getConnectionManager() != null) {
+                commonHttpClient.getConnectionManager().shutdown();
+                commonHttpClient = null;
+            }
+        }
+        return result;
+    }
 }

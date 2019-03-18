@@ -535,7 +535,6 @@
                 , device_name as deviceName
         FROM    isaver.device
         WHERE   del_yn='N'
-        AND	    device_code not in ('DEV001','DEV003','DEV015','DEV900')
         ORDER BY area_id, device_name
     </select>
 

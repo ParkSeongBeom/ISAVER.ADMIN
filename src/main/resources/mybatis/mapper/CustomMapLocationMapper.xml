@@ -44,7 +44,12 @@
         ON	    A.device_id = B.target_id
         AND	    B.area_id = #{areaId}
         WHERE   A.area_id = #{areaId}
-        AND     A.device_code in ('DEV002','DEV006','DEV007','DEV008','DEV013')
+        <if test="deviceCodes != null and deviceCodes != ''">
+            AND     A.device_code in
+            <foreach collection="deviceCodes" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
         AND	    A.del_yn = 'N'
         ORDER BY deviceCode, targetName
     </select>

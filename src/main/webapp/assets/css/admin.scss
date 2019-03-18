@@ -1183,10 +1183,22 @@ a.fc-more {position: relative; z-index: 2;}
 
         select {@include flex-option(0, 1, 100%);}
         span  {
-          @include flex-midddle; max-width:35px; min-width:35px; height:100%; padding: 0 !important;
+          @include flex-midddle;   min-width:55px; height:100%; padding: 0 !important;
           @include border01(0 1px,$color-gray-01,1 );
         }
-        input {max-width:80px;  }
+        input  {max-width:100px;}
+        button {
+          @include flex-midddle; max-width:40px; background-color: rgba($bas-color, 0.5);
+
+          &:before {position: absolute; font-size:1.2rem;}
+          &:nth-of-type(1){
+            &:before {content:"\e902";  @include rotate(90deg);}
+          }
+          &:nth-of-type(2){
+            margin:0 0 0 1px;
+            &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);}
+          }
+        }
       }
 
 

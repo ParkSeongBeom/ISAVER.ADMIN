@@ -398,6 +398,10 @@
                             <select id="fileId">
                                 <option value=""><spring:message code="common.column.selectNo"/></option>
                             </select>
+                            <span>Rotate</span>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setRotate('decrease', null, true);" onmouseup="javascript:customMapPopup.stopRotate();"></button>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setRotate('increase', null, true);" onmouseup="javascript:customMapPopup.stopRotate();"></button>
+                            <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setRotate('directInput',this.value);" onkeypress="isNumberWithPoint(this);"/>
                             <span>X1</span>
                             <input name="x1" type="number" onkeypress="isNumberWithPoint(this);"/>
                             <span>Y1</span>

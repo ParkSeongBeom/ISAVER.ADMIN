@@ -1,8 +1,9 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.AreaBean;
-import com.icent.isaver.admin.bean.DeviceBean;
-import com.icent.isaver.admin.bean.FenceBean;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.icent.isaver.admin.bean.*;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
 import com.icent.isaver.admin.dao.DeviceDao;
@@ -10,6 +11,7 @@ import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +22,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,18 +90,18 @@ public class TestSvcImpl implements TestSvc {
 
     @Override
     public ModelAndView eventSend(HttpServletRequest request, Map<String, String> parameters) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        parameters.put("type","D");
-        parameters.put("time",sdf.format(new Date()));
-
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
+        EventLogBean eventLogBean = gson.fromJson(parameters.get("eventData"), new TypeToken<EventLogBean>(){}.getType());
+        ResultBean result = new ResultBean();
         try {
-            AlarmRequestUtil.sendAlarmRequestFunc(parameters, "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl, "form", null);
+            result = AlarmRequestUtil.sendRequestFuncJson(new StringEntity(parameters.get("eventData")), "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl);
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("paramBean",parameters);
+        modelAndView.addObject("result",result);
+        modelAndView.addObject("paramBean",eventLogBean);
         return modelAndView;
     }
 

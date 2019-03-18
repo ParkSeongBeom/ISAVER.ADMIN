@@ -7,7 +7,7 @@
 var DashboardHelper = (
     function(rootPath, version){
         const _MEDIATOR_TYPE = ['video','map','toiletRoom'];
-        const _noneAddEvents = ['EVT999'];
+        const _noneAddEvents = ['EVT999','EVT021'];
         const _defaultTemplateCode = "TMP001";
         const _self = this;
 

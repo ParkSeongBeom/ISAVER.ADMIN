@@ -87,16 +87,7 @@ var VideoMediator = (
                     }
                     _element.append(ptzElement);
 
-                    // register webrtc streamer connection
-                    _videoList[deviceList[index]['deviceId']] = {
-                        'element' : ptzElement
-                        ,'server' : null
-                        ,'responseBody' : null
-                        ,'notification' : $.extend(true,{},criticalList)
-                        ,'data' : deviceList[index]
-                    };
-
-                    setDeviceStatus(_videoList[deviceList[index]['deviceId']], deviceList[index]['deviceStat']);
+                    setVideoList(deviceList[index], ptzElement);
                 }
             }
         };
@@ -109,17 +100,19 @@ var VideoMediator = (
         this.createPlayer = function(data){
             if(data['deviceCode']==_options['useDeviceCode'] && data['streamServerUrl']!=null && data['streamServerUrl']!=''){
                 _element.find(".onvif").attr("id","videoDiv");
-
-                // register webrtc streamer connection
-                _videoList[data['deviceId']] = {
-                    'element' : _element
-                    ,'server' : null
-                    ,'responseBody' : null
-                    ,'notification' : $.extend(true,{},criticalList)
-                    ,'data' : data
-                };
-                setDeviceStatus(_videoList[data['deviceId']], data['deviceStat']);
+                setVideoList(data, _element);
             }
+        };
+
+        var setVideoList = function(data, element){
+            _videoList[data['deviceId']] = {
+                'element' : element
+                ,'server' : null
+                ,'responseBody' : null
+                ,'notification' : $.extend(true,{},criticalList)
+                ,'data' : data
+            };
+            setDeviceStatus(_videoList[data['deviceId']], data['deviceStat']);
         };
 
         /**

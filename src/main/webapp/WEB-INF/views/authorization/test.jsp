@@ -439,58 +439,50 @@
         }
 
         var data = {
-            'areaId' : areaTag.val()
-            ,'areaName' : areaTag.text()
-            ,'deviceId' : deviceTag.val()
-            ,'deviceName' : deviceTag.attr("deviceName")
+            'deviceId' : deviceTag.val()
+            ,'eventDatetime' : new Date().format("yyyy-MM-dd HH:mm:ss.000")
+            ,'infos' : [{'key':'eventFlag','value':'D'}]
         };
 
         switch(actionType){
             case 'co':
                 data['eventId'] = "EVT302";
-                data['eventName'] = "CO(일산화탄소)";
                 valueValidateFlag = true;
                 break;
             case 'co2':
                 data['eventId'] = "EVT303";
-                data['eventName'] = "CO2(이산화탄소)";
                 valueValidateFlag = true;
                 break;
             case 'gas':
                 data['eventId'] = "EVT304";
-                data['eventName'] = "가스";
                 valueValidateFlag = true;
                 break;
             case 'smoke':
                 data['eventId'] = "EVT305";
-                data['eventName'] = "연기";
                 valueValidateFlag = true;
                 break;
             case 'temp':
                 data['eventId'] = "EVT306";
-                data['eventName'] = "온도";
                 valueValidateFlag = true;
                 break;
             case 'in' :
                 data['eventId'] = "EVT300";
-                data['inCount'] = valueTag.val();
-                data['outCount'] = 0;
-                data['value'] = 0;
-                data['direction'] = "test";
+                data['infos'].push({'inCount':valueTag.val()});
+                data['infos'].push({'outCount':0});
+                data['infos'].push({'direction':"test"});
                 valueValidateFlag = true;
                 break;
             case 'out':
                 data['eventId'] = "EVT301";
-                data['inCount'] = 0;
-                data['outCount'] = valueTag.val();
-                data['value'] = 0;
-                data['direction'] = "test";
+                data['infos'].push({'key':'inCount','value':0});
+                data['infos'].push({'key':'outCount','value':valueTag.val()});
+                data['infos'].push({'key':'direction','value':"test"});
                 valueValidateFlag = true;
                 break;
             case 'worker':
                 data['eventId'] = "EVT013";
-                data['riskFlag'] = 0;
-                data['targetCount'] = valueTag.val();
+                data['infos'].push({'key':'riskFlag','value':0});
+                data['infos'].push({'key':'targetCount','value':valueTag.val()});
                 break;
             case 'guardIn':
                 data['eventId'] = "EVT314";
@@ -510,7 +502,7 @@
                 alert("수치값을 입력해 주세요.");
                 return false;
             }
-            data['value'] = valueTag.val();
+            data['infos'].push({'key':'value','value':valueTag.val()});
         }
 
         if(fenceValidateFlag){
@@ -518,10 +510,10 @@
                 alert("펜스를 선택해 주세요.");
                 return false;
             }
-            data['fenceId'] = fenceTag.val();
-            data['objectId'] = valueTag.val();
+            data['infos'].push({'key':'fenceId','value':fenceTag.val()});
+            data['infos'].push({'key':'objectId','value':valueTag.val()});
         }
-        ajaxCall(actionType, data);
+        ajaxCall(actionType, {eventData:JSON.stringify(data)});
     }
 
     function ajaxCall(actionType,data){
@@ -529,6 +521,11 @@
     }
 
     function successHandler(data, dataType, actionType){
+        if(data['result']['code']!=200){
+            failureLog(actionType,data['result']);
+            return false;
+        }
+
         var logTag = $("<div/>");
 
         switch(actionType){
@@ -542,26 +539,34 @@
                 logTag.append(
                     $("<div/>").text("전송 성공!")
                 ).append(
-                    $("<div/>").text("구역명 : "+data['paramBean']['areaName'])
+                    $("<div/>").text("구역명 : "+$("select[area][eventType='"+actionType+"'] option:selected").text())
                 ).append(
-                    $("<div/>").text("장치구분 : "+data['paramBean']['deviceName'])
+                    $("<div/>").text("장치구분 : "+$("select[device][eventType='"+actionType+"'] option:selected").attr("deviceName"))
                 );
-                if(data['paramBean']['value']!=null){
-                    logTag.append(
-                        $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
-                    )
+
+                var infos = data['paramBean']['infos'];
+                for(var index in infos){
+                    var info = infos[index];
+
+                    switch(info['key']) {
+                        case 'value':
+                            logTag.append(
+                                $("<div/>").text("임계치 수치 : "+info['value'])
+                            );
+                            break;
+                        case 'fenceId':
+                            logTag.append(
+                                $("<div/>").text("펜스ID : "+info['value'])
+                            );
+                            break;
+                        case 'objectId':
+                            logTag.append(
+                                $("<div/>").text("ObjectId : "+info['value'])
+                            );
+                            break;
+                    }
                 }
-                if(data['paramBean']['fenceId']!=null){
-                    logTag.append(
-                        $("<div/>").text("펜스ID : "+data['paramBean']['fenceId'])
-                    )
-                }
-                if(data['paramBean']['objectId']!=null){
-                    logTag.append(
-                        $("<div/>").text("ObjectId : "+data['paramBean']['objectId'])
-                    )
-                }
-                _intervalInfo['param'] = data['paramBean'];
+                _intervalInfo['param'] = {eventData:JSON.stringify(data['paramBean'])};
                 _intervalInfo['actionType'] = actionType;
                 break;
         }
@@ -569,6 +574,11 @@
     }
 
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        failureLog(actionType);
+        console.log(XMLHttpRequest, textStatus, errorThrown);
+    }
+
+    function failureLog(actionType, data){
         var logTag = $("<div/>");
         switch(actionType){
             case 'guardIn':
@@ -605,9 +615,12 @@
                 logTag.text("진출 전송 실패!");
                 break;
         }
-
+        if(data!=null && data['desc']!=null){
+            logTag.append(
+                $("<div/>").text("에러 상세 : "+data['desc'])
+            );
+        }
         addLog(logTag);
-        console.log(XMLHttpRequest, textStatus, errorThrown);
     }
 
     function addLog(addTag){

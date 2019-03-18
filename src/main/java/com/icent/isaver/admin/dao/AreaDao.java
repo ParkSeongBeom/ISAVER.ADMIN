@@ -126,5 +126,5 @@ public interface AreaDao {
      * @param parameters
      * @return
      */
-    void saveAreaFileId(Map<String, String> parameters);
+    void saveAreaByCustomMapLocation(Map<String, String> parameters);
 }

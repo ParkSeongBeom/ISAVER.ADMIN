@@ -41,6 +41,7 @@ var CustomMapMediator = (
                     ,'min' : 0.5
                     ,'max' : 5.0
                 }
+                ,'rotateIncrementValue': 1 // 회전 클릭시 증가치
             }
             ,'fence' : {
                 'text' : {
@@ -58,10 +59,10 @@ var CustomMapMediator = (
                 , 'resizable': false // 사이즈 조절 기능
                 , 'nameView': true // 이름 표시 여부
                 , 'websocketSend': false // getdevice 요청 여부
-                , 'allView' : false // 사용유무 상관없이 전체보기
                 , 'fenceView': false // fence 표시 여부
                 , 'onLoad': null // List load eventHandler
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
+                , 'rotate': null // 회전시 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
                 , 'moveFence': false // 이벤트 발생시 펜스로 이동 기능
@@ -80,7 +81,10 @@ var CustomMapMediator = (
             ,"DEV008" : "g-ico g-wlight"
             ,"DEV013" : "g-ico g-m8"
             ,"DEV015" : "g-ico g-qguard"
+            ,"DEV016" : "g-ico g-server"
+            ,"DEV017" : "g-ico g-shock"
         };
+        var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017'];
         // true :사람만보기
         // false:전체보기
         var _objectViewFlag=false;
@@ -88,8 +92,8 @@ var CustomMapMediator = (
         // 비율 1m : 10px
         var _ratio=10;
         var _scale=_options['element']['zoom']['init'];
-        var _originX = 2500;
-        var _originY = 2500;
+        var _originX = 5000;
+        var _originY = 5000;
         var _fenceReturnTimeout;
         var _translateX = 0;
         var _translateY = 0;
@@ -152,7 +156,7 @@ var CustomMapMediator = (
                     _options['custom'][index] = options[index];
                 }
             }
-            _ajaxCall('list',{areaId:_areaId});
+            _ajaxCall('list',{areaId:_areaId,deviceCodes:_customDeviceCode.toString()});
         };
 
         /**
@@ -332,10 +336,14 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setBackgroundImage = function(physicalFileName){
+            if(_mapCanvas.find(".map_bg").length==0){
+                _mapCanvas.append($("<div/>",{class:'map_bg'}))
+            }
+
             if(physicalFileName!=null && physicalFileName!=""){
-                _mapCanvas.css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
+                _mapCanvas.find(".map_bg").css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
             }else{
-                _mapCanvas.css({"background-image":""});
+                _mapCanvas.find(".map_bg").css({"background-image":""});
             }
         };
 
@@ -550,8 +558,10 @@ var CustomMapMediator = (
                         ,'useYn' : data['useYn']
                     }
                     ,'element' : targetElement
+                    ,'notification' : $.extend(true,{},criticalList)
                 };
 
+                _self.setDisplayTarget(data['targetId'],data['useYn']=='Y');
                 positionChangeEventHandler(data['targetId'],'init');
             }else{
                 positionChangeEventHandler(data['targetId']);
@@ -868,7 +878,37 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setAnimate = function(actionType, criticalLevel, data){
-            if(data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
+            if(data['deviceId']==null){
+                return false;
+            }
+
+            var customMarker = _self.getMarker(_MARKER_TYPE[4], data);
+            if(customMarker!=null){
+                switch (actionType){
+                    case "add" :
+                        if(customMarker['notification'][criticalLevel].indexOf(data['notificationId'])<0){
+                            customMarker['notification'][criticalLevel].push(data['notificationId']);
+                        }
+                        break;
+                    case "remove" :
+                        if(customMarker['notification'][criticalLevel].indexOf(data['notificationId'])>-1){
+                            customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(data['notificationId']),1);
+                        }
+                        break;
+                }
+
+                for(var index in customMarker['notification']){
+                    if(customMarker['notification'][index].length > 0){
+                        customMarker['element'].addClass("level-"+criticalCss[index]);
+                    }else{
+                        customMarker['element'].removeClass("level-"+criticalCss[index]);
+                    }
+                }
+            }else{
+                console.warn("[CustomMapMediator][setAnimate] not found custom marker");
+            }
+
+            if(data['fenceId']==null || data['objectId']==null){
                 return false;
             }
 
@@ -944,6 +984,15 @@ var CustomMapMediator = (
                         }
                     }
                     break;
+                case _MARKER_TYPE[4] : // custom
+                    if(data==null) {
+                        return _marker[messageType];
+                    }else if(data['deviceId']!=null){
+                        if(_marker[messageType][data['deviceId']]!=null){
+                            return _marker[messageType][data['deviceId']];
+                        }
+                    }
+                    break;
                 case "all" :
                     return _marker;
                     break;
@@ -957,6 +1006,35 @@ var CustomMapMediator = (
          */
         var _ajaxCall = function(actionType, data){
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
+        };
+
+        this.setRotate = function(type, deg){
+            switch (type){
+                case "increase" :
+                    _rotate += _options['element']['rotateIncrementValue'];
+                    break;
+                case "decrease" :
+                    _rotate -= _options['element']['rotateIncrementValue'];
+                    break;
+                case "directInput" :
+                    if(deg != null){ _rotate = eval(deg); }
+                    break;
+                default :
+                    return false;
+            }
+
+            var rotate = "rotate("+_rotate+"deg)";
+            _mapCanvas.find(".map_bg").css({
+                'transform':rotate
+                ,'-webkit-transform':rotate
+                ,'-moz-transform':rotate
+                ,'-o-transform':rotate
+                ,'-ms-transform':rotate
+            });
+
+            if(_options['custom']['rotate']!=null && typeof _options['custom']['rotate'] == "function"){
+                _options['custom']['rotate'](_rotate);
+            }
         };
 
         var moveReturn = function(deviceId){
@@ -983,23 +1061,18 @@ var CustomMapMediator = (
             switch(actionType){
                 case 'list':
                     _fileUploadPath = data['fileUploadPath'];
-                    _self.setBackgroundImage(data['area']['physicalFileName']);
                     if(data['templateSetting']!=null && data['iconFileList']!=null){
                         setDefsMarkerRef(data['templateSetting'], data['iconFileList']);
                     }
+                    _self.setBackgroundImage(data['area']['physicalFileName']);
                     if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
                         _options['custom']['onLoad']('childList',data['childList']);
                     }
-
                     var childList = data['childList'];
                     for(var index in childList){
-                        if(_options['custom']['allView'] || childList[index]['useYn']=='Y'){
-                            _self.targetRender(childList[index]);
-                        }
+                        _self.targetRender(childList[index]);
                     }
-                    if(data['area']['rotate']!=null){
-                        _rotate = data['area']['rotate'];
-                    }
+                    _self.setRotate("directInput", data['area']['rotate']);
                     break;
                 case 'fenceList':
                     var fenceList = data['fenceList'];

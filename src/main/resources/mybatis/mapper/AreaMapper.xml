@@ -96,6 +96,7 @@
                 , area_desc as areaDesc
                 , del_yn as delYn
                 , sort_order as sortOrder
+                , rotate as rotate
                 , template_code as templateCode
                 , insert_user_id as insertUserId
                 , insert_datetime as insertDatetime
@@ -410,15 +411,19 @@
       구역을 수정한다. Custom Map FileId용
       @author psb
     -->
-    <update id="saveAreaFileId" parameterType="map" >
+    <update id="saveAreaByCustomMapLocation" parameterType="map" >
         update isaver.area
-        SET
-        <if test="fileId == null or fileId == ''">
-            file_id = null
-        </if>
-        <if test="fileId != null and fileId != ''">
-            file_id = #{fileId}
-        </if>
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="fileId == null or fileId == ''">
+                ,file_id = null
+            </if>
+            <if test="fileId != null and fileId != ''">
+                ,file_id = #{fileId}
+            </if>
+            <if test="rotate != null and rotate != ''">
+                ,rotate = ${rotate}
+            </if>
+        </trim>
         where area_id = #{areaId,jdbcType=CHAR}
     </update>
 </mapper>
