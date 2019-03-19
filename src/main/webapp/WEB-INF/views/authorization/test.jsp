@@ -467,9 +467,9 @@
                 break;
             case 'in' :
                 data['eventId'] = "EVT300";
-                data['infos'].push({'inCount':valueTag.val()});
-                data['infos'].push({'outCount':0});
-                data['infos'].push({'direction':"test"});
+                data['infos'].push({'key':'inCount','value':valueTag.val()});
+                data['infos'].push({'key':'outCount','value':0});
+                data['infos'].push({'key':'direction','value':"test"});
                 valueValidateFlag = true;
                 break;
             case 'out':
