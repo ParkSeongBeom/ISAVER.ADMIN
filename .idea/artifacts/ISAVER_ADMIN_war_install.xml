@@ -99,6 +99,7 @@
           <element id="library" level="module" name="Gradle: spring-webmvc-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
           <element id="library" level="module" name="Gradle: spring-webmvc-portlet-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
           <element id="library" level="module" name="Gradle: spring-websocket-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="project" name="common" />
         </element>
       </element>
     </root>

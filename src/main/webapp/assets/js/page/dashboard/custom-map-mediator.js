@@ -561,7 +561,9 @@ var CustomMapMediator = (
                     ,'notification' : $.extend(true,{},criticalList)
                 };
 
-                _self.setDisplayTarget(data['targetId'],data['useYn']=='Y');
+                if(data['useYn']=='N'){
+                    _self.setDisplayTarget(data['targetId'],false);
+                }
                 positionChangeEventHandler(data['targetId'],'init');
             }else{
                 positionChangeEventHandler(data['targetId']);

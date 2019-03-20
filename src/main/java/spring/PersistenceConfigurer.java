@@ -47,16 +47,4 @@ public class PersistenceConfigurer {
         dataSource.setMaxWaitMillis(wait);
         return dataSource;
     }
-
-//    @Bean
-//    public FindSystemUtil findSystemUtil() {
-//        // H/W ���̼��� üũ
-//        FindSystemUtil findSystemUtil = new FindSystemUtil();
-//        ResultSystemBean resultSystemBean = findSystemUtil.loadSystemUUID(propertyManager.getProperty("uuid.code"), propertyManager.getProperty("uuid.filePath"));
-//        if(!resultSystemBean.getaBoolean()){
-//            logger.error(resultSystemBean.getLogdata());
-//            System.exit(0);
-//        }
-//        return findSystemUtil;
-//    }
 }
