@@ -319,6 +319,7 @@
                             );
                         }
                     }
+                    layerShowHide('license','show');
                     notificationHelper.licenseStatusChangeHandler(data['license']['status']);
                     break;
                 case 'saveProfile':

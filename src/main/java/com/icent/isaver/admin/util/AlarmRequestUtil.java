@@ -2,7 +2,6 @@ package com.icent.isaver.admin.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.icent.isaver.admin.bean.ResultBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
