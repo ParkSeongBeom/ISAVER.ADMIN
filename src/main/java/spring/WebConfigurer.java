@@ -2,6 +2,7 @@ package spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.common.PropertyManager;
+import com.icent.isaver.admin.common.XMLMarshaller;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.util.*;
 import com.kst.common.util.POIExcelView;
@@ -13,6 +14,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
@@ -32,6 +34,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
+import org.springframework.web.servlet.view.xml.MarshallingView;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -98,26 +101,26 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         return new MappingJackson2JsonView();
     }
 
-//    @Bean
-//    public Jaxb2Marshaller xmlMarshaller() {
-//        XMLMarshaller xmlMarshaller = new XMLMarshaller();
-//        List<String> packages = new ArrayList<String>() {{
-//            add("**.bean");
-//        }};
-//        xmlMarshaller.setBasePackages(packages);
-//        xmlMarshaller.addClasses(
-//                "java.util.ArrayList"
-//                , "java.util.HashMap"
-//        );
-//        return xmlMarshaller;
-//    }
-//
-//    @Bean
-//    public MarshallingView xmlView() {
-//        MarshallingView marshallingView = new MarshallingView(xmlMarshaller());
-//        marshallingView.setContentType("application/xml");
-//        return marshallingView;
-//    }
+    @Bean
+    public Jaxb2Marshaller xmlMarshaller() {
+        XMLMarshaller xmlMarshaller = new XMLMarshaller();
+        List<String> packages = new ArrayList<String>() {{
+            add("com/icent/isaver/admin/bean");
+        }};
+        xmlMarshaller.setBasePackages(packages);
+        xmlMarshaller.addClasses(
+                "java.util.ArrayList"
+                , "java.util.HashMap"
+        );
+        return xmlMarshaller;
+    }
+
+    @Bean
+    public MarshallingView xmlView() {
+        MarshallingView marshallingView = new MarshallingView(xmlMarshaller());
+        marshallingView.setContentType("application/xml");
+        return marshallingView;
+    }
 
     @Bean
     public ContentNegotiationManager negotiationManager() {
@@ -133,7 +136,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 
         List<View> views = new ArrayList<View>() {{
             add(jsonView());
-//            add(xmlView());
+            add(xmlView());
         }};
 
         viewResolver.setDefaultViews(views);

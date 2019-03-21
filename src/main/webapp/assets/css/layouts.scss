@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import "filters";
+@import "filters" ;
 
 body.adaptive_landscape {}
 body.adaptive_mobile    {}
@@ -174,7 +174,7 @@ header {
           }
 
           &:hover, &.on:not(.issue_btn) {
-            background-color: $color-blue-01;
+            background-color: $color-ho;
             &:before {color:#fff !important;}
           }
 
@@ -558,9 +558,9 @@ menu {
     }
 
     &.level {
-      &-caution { background-color: rgba($color-gray-03,1) !important;  }    // &-caution 주의
-      &-warning { background-color: rgba($color-orange-01,1) !important;}    // &-warning 경고
-      &-danger  { background-color: rgba($color-red-01,1) !important;   }    // &-danger  위험
+      &-caution { background-color: rgba($color-caution,1) !important;  }    // &-caution 주의
+      &-warning { background-color: rgba($color-warning,1) !important;}    // &-warning 경고
+      &-danger  { background-color: rgba($color-danger,1) !important;   }    // &-danger  위험
     }
 
   }
@@ -605,15 +605,15 @@ menu {
 
         &:before {font-size:.8rem; padding:5px 0;}
         &:nth-of-type(1) {
-          background-color: $color-gray-03;
+          background-color: $color-caution;
           &:before {content:"CAUTION";}
         }
         &:nth-of-type(2) {
-          background-color: $color-orange-01;
+          background-color: $color-warning;
           &:before {content:"WARNING";}
         }
         &:nth-of-type(3) {
-          background-color: $color-red-01;
+          background-color: $color-danger;
           &:before {content:"DANGER";}
         }
       }
@@ -653,20 +653,20 @@ menu {
 
       }
       &.caution {
-        //background-color:$color-gray-03;
-        &,&:before {color:$color-gray-03;}
+        //background-color:$color-caution;
+        &,&:before {color:$color-caution;}
         &:before {content:"CAUTION"; }
       }
 
       &.warning {
-        //background-color:$color-orange-01;
-        &,&:before {color:$color-orange-01;}
+        //background-color:$color-warning;
+        &,&:before {color:$color-warning;}
         &:before {content:"WARNING";}
       }
 
       &.danger  {
-        //background-color:$color-red-01;
-        &,&:before {color:$color-red-01;}
+        //background-color:$color-danger;
+        &,&:before {color:$color-danger;}
         &:before {content:"DANGER";}
       }
     }
@@ -698,9 +698,9 @@ menu {
       & > * {
         @include flex-midddle; width:calc(100% / 3); height:100%;
         font-size:1.4rem; color:$color-white-01; line-height: 1.4rem;
-        &:nth-of-type(1) {background-color: $color-gray-03;  }
-        &:nth-of-type(2) {background-color: $color-orange-01;}
-        &:nth-of-type(3) {background-color: $color-red-01;   }
+        &:nth-of-type(1) {background-color: $color-caution;  }
+        &:nth-of-type(2) {background-color: $color-warning;}
+        &:nth-of-type(3) {background-color: $color-danger;   }
       }
     }
 
@@ -745,7 +745,7 @@ menu {
       &.dbc_close_btn:before {content:"\e91a";}
 
       &.dbc_sera_btn {
-        &.on {opacity: 1; background-color: $color-blue-01;}
+        &.on {opacity: 1; background-color: $color-on;}
         &.on ~ .search_box { height:auto;}
         &:before {content:"\e925";}
       }
@@ -965,7 +965,7 @@ menu {
         background-color: $color-blue-01;
       }
       &:hover {
-        color:$color-blue-01;
+        color:$color-ho;
         &:after {display: block;}
       }
     }
@@ -997,42 +997,42 @@ menu {
 
 
   &-caution {
-    background-color: rgba($color-gray-03,1);
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-gray-03,1);}
+    background-color: rgba($color-caution,1);
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-caution,1);}
 
-    .safeeye_set .s_lbox {color:$color-gray-03; &:after {border-color:$color-gray-03;} }
+    .safeeye_set .s_lbox {color:$color-caution; &:after {border-color:$color-caution;} }
 
     .treffic_set .ts-caution {
       &:before {border-width:2px;  background-color:$color-white-01;}
-      &:after  { @include issue02; background-color:$color-gray-03;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-gray-03,1 );  }}
+      &:after  { @include issue02; background-color:$color-caution;}
+      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-caution,1 );  }}
     } //신호등
 
 
   } // .level-caution 주의
 
   &-warning {
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-orange-01,1);}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-warning,1);}
 
-    .safeeye_set .s_lbox {color:$color-orange-01; &:after {border-color:$color-orange-01;} }
+    .safeeye_set .s_lbox {color:$color-warning; &:after {border-color:$color-warning;} }
 
     .treffic_set .ts-warning {
       &:before {border-width:2px; background-color:$color-white-01;}
-      &:after  {@include issue02; background-color:$color-orange-01;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-orange-01,1 ); }}
+      &:after  {@include issue02; background-color:$color-warning;}
+      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-warning,1 ); }}
     } // 신호등
 
   } // .level-warning 경고
 
   &-danger  {
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-red-01,1);}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-danger,1) !important;}
 
-    .safeeye_set .s_lbox {color:$color-red-01; &:after {border-color:$color-red-01; } }
+    .safeeye_set .s_lbox {color:$color-danger; &:after {border-color:$color-danger; } }
 
     .treffic_set .ts-danger {
       &:before {border-width:2px; background-color:$color-white-01;}
-      &:after  {@include issue02; background-color:$color-red-01;}
-      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-red-01,1 ); } }
+      &:after  {@include issue02; background-color:$color-danger;}
+      & > p {color:$color-white-01 !important; &:before {@include issue06; @include border01(3px,$color-danger,1 ); } }
     } // 신호등
 
   } // .level-danger  위험
@@ -1061,7 +1061,7 @@ menu {
       &, &:before {background-color: transparent !important;}
     } // 각 구역
 
-    .m_marqueebox, &.copybox {display: block !important;}
+    .m_marqueebox, &.copybox {display: block;}
 
     .m_marqueebox { & > p > span {@include marquee;} }  //각구역 마키
 
@@ -1078,9 +1078,9 @@ menu {
 
 .nhr_set li {
   &.ts, &.level {
-    &-caution { &:after, &:before {background-color: rgba($color-gray-03,1) !important;  } }    // &-caution 주의
-    &-warning { &:after, &:before {background-color: rgba($color-orange-01,1) !important;} }    // &-warning 경고
-    &-danger  { &:after, &:before {background-color: rgba($color-red-01,1) !important;   } }    // &-danger  위험
+    &-caution { &:after, &:before {background-color: rgba($color-caution,1) !important;  } }    // &-caution 주의
+    &-warning { &:after, &:before {background-color: rgba($color-warning,1) !important;} }    // &-warning 경고
+    &-danger  { &:after, &:before {background-color: rgba($color-danger,1) !important;   } }    // &-danger  위험
     &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
 
     &-caution, &-warning, &-danger {
@@ -1096,7 +1096,7 @@ menu {
 .issue_board.level {
   &-caution, &-warning, &-danger {
     &.issue_btn {
-      width:100%; /*background-color:$color-red-01;*/
+      width:100%; /*background-color:$color-danger;*/
       &:before {color:#fff !important;}
       &.on {
         @include issue;
@@ -1107,15 +1107,15 @@ menu {
 
   &-caution > div.caution {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-gray-03;}
+    &:after {@include notice04; background-color:$color-caution;}
   }
   &-warning > div.warning {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-orange-01;}
+    &:after {@include notice04; background-color:$color-warning;}
   }
   &-danger > div.danger {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-red-01;}
+    &:after {@include notice04; background-color:$color-danger;}
   }
 }
 /////..... 임계치 적용 표시 End

@@ -322,7 +322,7 @@
 
                     <c:if test="${childArea.templateCode=='TMP005'}">
                         <!-- Safe-Guard -->
-                        <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                             <header>
                                 <h3>${childArea.areaName}</h3>
                                 <c:if test="${childArea.childAreaIds!=null}">
@@ -335,22 +335,6 @@
                             </header>
                             <article>
                                 <section class="guard_set">
-                                    <div class="s_lbox">
-                                        <div class="check_btn_set">
-                                            <div class="human_check">
-                                                <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setObjectViewFlag('${childArea.areaId}',this);">
-                                                <label></label>
-                                            </div>
-                                            <div class="object_check">
-                                                <input type="checkbox" name="pointsCkb" onClick="javascript:dashboardHelper.setPointsHideFlag('${childArea.areaId}',this);">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                        <div name="map-canvas" class="map_images"></div>
-                                    </div>
-                                    <div class="s_rbox">
-                                        <ul ptzPlayers></ul>
-                                    </div>
                                     <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
                                         <div class="device_box">
                                             <div class="device_set">
@@ -375,8 +359,28 @@
                                             </div>
                                         </div>
                                     </c:if>
+                                    <div class="s_lbox">
+                                        <div class="check_btn_set">
+                                            <div class="human_check">
+                                                <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setGuardOption('objectView','${childArea.areaId}',this);">
+                                                <label></label>
+                                            </div>
+                                            <div class="object_check">
+                                                <input type="checkbox" name="pointsCkb" onClick="javascript:dashboardHelper.setGuardOption('pointsHide','${childArea.areaId}',this);">
+                                                <label></label>
+                                            </div>
+                                            <div class="fence_check">
+                                                <input type="checkbox" name="moveFenceCkb" onClick="javascript:dashboardHelper.setGuardOption('moveFence','${childArea.areaId}',this);">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div name="map-canvas" class="map_images"></div>
+                                        <div name="copyboxElement" class="copybox_area"></div>
+                                    </div>
+                                    <div class="s_rbox">
+                                        <ul ptzPlayers></ul>
+                                    </div>
                                 </section>
-                                <div guardInfo class="copybox_area"></div>
                                 <div class="m_marqueebox">
                                     <!-- <span>에 내용 삽입 -->
                                     <p messageBox></p>

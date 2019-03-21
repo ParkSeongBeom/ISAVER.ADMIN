@@ -42,6 +42,7 @@ var CustomMapMediator = (
                     ,'max' : 5.0
                 }
                 ,'rotateIncrementValue': 1 // 회전 클릭시 증가치
+                ,'guardInfo' : true
             }
             ,'fence' : {
                 'text' : {
@@ -65,7 +66,7 @@ var CustomMapMediator = (
                 , 'rotate': null // 회전시 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
-                , 'moveFence': false // 이벤트 발생시 펜스로 이동 기능
+                , 'moveFence': true // 이벤트 발생시 펜스로 이동 기능
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
@@ -99,6 +100,7 @@ var CustomMapMediator = (
         var _translateY = 0;
         var _rotate=0;
         var _element;
+        var _copyBoxElement;
         var _mapCanvas;
         var _canvasSvg;
         var _fileUploadPath;
@@ -151,6 +153,12 @@ var CustomMapMediator = (
                 _element.find("input[name='pointsCkb']").prop("checked",_options['object']['pointsHideFlag']);
             }
 
+            var moveFenceFlag = $.cookie(areaId+"moveFenceFlag");
+            if(moveFenceFlag != null && moveFenceFlag.length > 0){
+                _options['custom']['moveFence'] = moveFenceFlag == "true";
+                _element.find("input[name='moveFenceCkb']").prop("checked",_options['custom']['moveFence']);
+            }
+
             for(var index in options){
                 if(_options['custom'].hasOwnProperty(index)){
                     _options['custom'][index] = options[index];
@@ -163,8 +171,9 @@ var CustomMapMediator = (
          * set element
          * @author psb
          */
-        this.setElement = function(element, canvas){
+        this.setElement = function(element, canvas, copyBox){
             _element = element;
+            _copyBoxElement = copyBox;
             _mapCanvas = canvas;
             _mapCanvas.empty();
             if(_mapCanvas.data('uiDraggable')){
@@ -270,26 +279,32 @@ var CustomMapMediator = (
         };
 
         /**
-         * set object view (전체보기/사람만보기)
+         * set guard option
+         * objectView : 전체보기/사람만보기
+         * pointsHide : 트래킹 잔상 보기/숨기기
+         * moveFence : 이벤트 발생시 펜스로 이동
          * @author psb
          */
-        this.setObjectViewFlag = function(flag){
-            _objectViewFlag = flag;
-            $.cookie(_areaId+'objectViewFlag',flag);
-            if(_objectViewFlag){
-                _mapCanvas.addClass("onlyhuman");
-            }else{
-                _mapCanvas.removeClass("onlyhuman");
+        this.setGuardOption = function(actionType, flag){
+            switch (actionType){
+                case "objectView" :
+                    _objectViewFlag = flag;
+                    $.cookie(_areaId+'objectViewFlag',flag);
+                    if(_objectViewFlag){
+                        _mapCanvas.addClass("onlyhuman");
+                    }else{
+                        _mapCanvas.removeClass("onlyhuman");
+                    }
+                    break;
+                case "pointsHide" :
+                    _options['object']['pointsHideFlag'] = flag;
+                    $.cookie(_areaId+'pointsHideFlag',flag);
+                    break;
+                case "moveFence" :
+                    _options['custom']['moveFence'] = flag;
+                    $.cookie(_areaId+'moveFenceFlag',flag);
+                    break;
             }
-        };
-
-        /**
-         * set Points view (트래킹 잔상 보기/숨기기)
-         * @author psb
-         */
-        this.setPointsHideFlag =  function(flag){
-            _options['object']['pointsHideFlag'] = flag;
-            $.cookie(_areaId+'pointsHideFlag',flag);
         };
 
         /**
@@ -446,15 +461,13 @@ var CustomMapMediator = (
                     _marker[_MARKER_TYPE[1]][targetData['targetId']] = {};
                     _marker[_MARKER_TYPE[2]][targetData['targetId']] = {};
 
-                    if(_options['custom']['moveFence']){
-                        targetElement.on('dblclick', function(evt){
-                            setTransform2d(_options['element']['zoom']['init']);
-                            _mapCanvas.animate({
-                                'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
-                                ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
-                            },300);
-                        });
-                    }
+                    targetElement.on('dblclick', function(evt){
+                        setTransform2d(_options['element']['zoom']['init']);
+                        _mapCanvas.animate({
+                            'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
+                            ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
+                        },300);
+                    });
                     _ajaxCall('fenceList',{deviceId:targetData['targetId']});
                 }
             }
@@ -633,9 +646,24 @@ var CustomMapMediator = (
                         }else{
                             fenceName = data['fenceName']?data['fenceName']:data['id'];
                             const svgPolygon = _canvasSvg.polygon(points, {fenceId:data['id']});
+                            let copyBoxElement = null;
+                            if(_options['element']['guardInfo'] && _copyBoxElement!=null) {
+                                copyBoxElement = $("<div/>",{class:'copybox'}).append(
+                                    $("<p/>",{name:'detectText'})
+                                ).append(
+                                    $("<span/>",{name:'detectCnt'}).text(0)
+                                ).append(
+                                    $("<em/>",{name:'fenceName'}).text(data['fenceName'])
+                                ).append(
+                                    $("<p/>",{name:'detectEventDatetime'})
+                                );
+                                _copyBoxElement.append(copyBoxElement);
+                            }
+
                             _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : $(svgPolygon)
                                 ,'textElement' : null
+                                ,'copyBoxElement' : copyBoxElement
                                 ,'data' : {
                                     'location' : data['location']
                                     ,'uuid' : data['uuid']
@@ -691,16 +719,14 @@ var CustomMapMediator = (
                             }else{
                                 _marker[messageType][data['deviceId']][data['id']]['textElement'].attr({x:(latMin+latMax)/2,y:(lngMin+lngMax)/2}).text(fenceName);
                             }
-                            if(_options['custom']['moveFence']){
-                                _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
-                                    setTransform2d(_options['custom']['moveFenceScale']);
-                                    _mapCanvas.animate({
-                                        'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
-                                        ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
-                                    },300);
-                                    moveReturn(evt.data.deviceId);
-                                });
-                            }
+                            _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
+                                setTransform2d(_options['custom']['moveFenceScale']);
+                                _mapCanvas.animate({
+                                    'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
+                                    ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
+                                },300);
+                                moveReturn(evt.data.deviceId);
+                            });
                         }
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
                         break;
@@ -841,7 +867,7 @@ var CustomMapMediator = (
         };
 
         this.moveFence = function(actionType, data){
-            if(!_options['custom']['moveFence']){
+            if(_options['custom']['moveFence']){
                 return false;
             }
 
@@ -930,11 +956,27 @@ var CustomMapMediator = (
                         break;
                 }
 
+                let detectCnt = 0;
                 for(var index in fenceMarker['notification']){
+                    detectCnt += fenceMarker['notification'][index].length;
                     if(fenceMarker['notification'][index].length > 0){
                         fenceMarker['element'].addClass("level-"+criticalCss[index]);
+                        if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].addClass("level-"+criticalCss[index]);}
                     }else{
                         fenceMarker['element'].removeClass("level-"+criticalCss[index]);
+                        if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].removeClass("level-"+criticalCss[index]);}
+                    }
+                }
+
+                if(fenceMarker['copyBoxElement']!=null){
+                    if(detectCnt>0){
+                        fenceMarker['copyBoxElement'].find("p[name='detectText']").text(data['eventName']+' - '+data['fenceName']);
+                        fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
+                        fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+                    }else{
+                        fenceMarker['copyBoxElement'].find("p[name='detectText']").text("");
+                        fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
+                        fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text("");
                     }
                 }
             }else{

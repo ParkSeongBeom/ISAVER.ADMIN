@@ -7,7 +7,6 @@
 var DashboardHelper = (
     function(rootPath, version){
         const _MEDIATOR_TYPE = ['video','map','toiletRoom'];
-        const _noneAddEvents = ['EVT999','EVT021'];
         const _defaultTemplateCode = "TMP001";
         const _self = this;
 
@@ -22,7 +21,6 @@ var DashboardHelper = (
         };
         let _options ={
             marquee : false
-            ,guardInfo : true
         };
 
         let _areaList = {};
@@ -163,7 +161,6 @@ var DashboardHelper = (
                 const templateCode = $(this).attr("templateCode");
                 _areaList[areaId] = {
                     'element' : $(this)
-                    ,'detect' : {}
                     ,'templateCode' : templateCode
                     ,'notification' : $.extend(true,{},criticalList)
                     ,'childDevice' : {}
@@ -207,13 +204,12 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMap($(this).find("div[name='map-canvas']"), $(this).attr("areaDesc"), deviceList);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].addImage();
                         }else if(_guardList[areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
-                            _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"));
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'websocketSend':false
                                 ,'fenceView':true
                                 ,'openLinkFlag':false
-                                ,'moveFence':true
                                 ,'click':function(targetId,deviceCode){
                                     if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
                                 }
@@ -286,21 +282,15 @@ var DashboardHelper = (
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null && data['status']!="C"){
                             _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
                             _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
-                            if(_noneAddEvents.indexOf(data['eventId'])<0){
-                                notificationGuardInfoUpdate(messageType, data['criticalLevel'], data);
-                            }
                         }
-                        if(_noneAddEvents.indexOf(data['eventId'])<0){
-                            notificationUpdate(messageType, data);
-                            notificationMarqueeUpdate(data['areaId'], data);
-                        }
+                        notificationUpdate(messageType, data);
+                        notificationMarqueeUpdate(data['areaId'], data);
                     }
                     break;
                 case "removeNotification": // 알림이벤트 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
                         _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
-                        notificationGuardInfoUpdate(messageType, data['notification']['criticalLevel'],data['notification']);
                     }
                     notificationUpdate(messageType, data['notification']);
                     notificationMarqueeUpdate(data['areaId']);
@@ -310,7 +300,6 @@ var DashboardHelper = (
                         for(let index in data['cancel']){
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
-                            notificationGuardInfoUpdate(messageType, data['cancel'][index]['criticalLevel'], data['notification']);
                         }
                     }
                     break;
@@ -325,22 +314,12 @@ var DashboardHelper = (
         };
 
         /**
-         * set ObjectViewFlag
+         * set Guard Options
          * @author psb
          */
-        this.setObjectViewFlag = function(areaId, _this){
+        this.setGuardOption = function(actionType, areaId, _this){
             if(_guardList[areaId]!=null){
-                _guardList[areaId][_MEDIATOR_TYPE[1]].setObjectViewFlag($(_this).is(":checked"));
-            }
-        };
-
-        /**
-         * set pointsUseFlag
-         * @author psb
-         */
-        this.setPointsHideFlag = function(areaId, _this){
-            if(_guardList[areaId]!=null){
-                _guardList[areaId][_MEDIATOR_TYPE[1]].setPointsHideFlag($(_this).is(":checked"));
+                _guardList[areaId][_MEDIATOR_TYPE[1]].setGuardOption(actionType, $(_this).is(":checked"));
             }
         };
 
@@ -499,77 +478,6 @@ var DashboardHelper = (
                     inoutTag.attr("startDatetime",inout['startDatetime']);
                     inoutTag.attr("endDatetime",inout['endDatetime']);
                 }
-            }
-        };
-
-        /**
-         * Safe-Guard 왼쪽 상단 거수자감시 인원 표시
-         */
-        var notificationGuardInfoUpdate = function(messageType, criticalLevel, data){
-            if(!_options['guardInfo']) {
-                return false;
-            }
-
-            const areaComponent = _self.getArea("all", data['areaId']);
-
-            if(areaComponent==null || data['deviceId']==null || data['fenceId']==null || data['objectId']==null){
-                return false;
-            }
-            const detect = areaComponent['detect'];
-            let detectText = null;
-
-            if(detect[data['fenceId']] == null){
-                const element = areaComponent['element'];
-                const detectTag = $("<div/>",{class:'copybox'}).append(
-                    $("<p/>",{name:'detectText'}).text(data['eventName']+' - '+data['fenceName'])
-                ).append(
-                    $("<span/>",{name:'detectCnt'})
-                ).append(
-                    $("<em/>",{name:'detectEventDatetime'})
-                );
-                element.find("div[guardInfo]").append(detectTag);
-
-                detect[data['fenceId']] = {
-                    'element' : detectTag
-                    ,'notification' : $.extend(true,{},criticalList)
-                }
-            }
-
-            const fenceTarget = detect[data['fenceId']];
-            switch (messageType) {
-                case "addNotification": // 알림센터 이벤트 등록
-                    detectText = data['eventName']+' - '+data['fenceName'];
-                    if(data['objectId']!=null && fenceTarget['notification'][criticalLevel].indexOf(data['objectId'])<0){
-                        fenceTarget['notification'][criticalLevel].push(data['objectId']);
-                    }
-                    break;
-                case "cancelDetection": // 감지 해제
-                case "removeNotification": // 알림 해지
-                    if(fenceTarget['notification'][criticalLevel].indexOf(data['objectId'])>-1){
-                        fenceTarget['notification'][criticalLevel].splice(fenceTarget['notification'][criticalLevel].indexOf(data['objectId']),1);
-                    }
-                    break;
-            }
-
-            let detectCnt = 0;
-            for(let index in fenceTarget['notification']){
-                detectCnt += fenceTarget['notification'][index].length;
-                if(fenceTarget['notification'][index].length > 0){
-                    fenceTarget['element'].addClass("level-"+criticalCss[index]);
-                }else{
-                    fenceTarget['element'].removeClass("level-"+criticalCss[index]);
-                }
-            }
-
-            if(detectCnt>0){
-                if(detectText!=null){
-                    fenceTarget['element'].find("p[name='detectText']").text(detectText);
-                }
-                fenceTarget['element'].find("span[name='detectCnt']").text(detectCnt);
-                fenceTarget['element'].find("em[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
-            }else{
-                fenceTarget['element'].remove();
-                delete _areaList[data['areaId']]['detect'][data['fenceId']];
             }
         };
 

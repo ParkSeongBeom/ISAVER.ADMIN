@@ -17,7 +17,7 @@ section.container {
     padding-left:40px; padding-right:40px; width:$noticecenter-onwidth;
     /*padding-right:(40px + $noticecenter-width);*/
 
-    .popupbase {right:($noticecenter-width + 40px);}
+    .popupbase {right:($noticecenter-width);}
   }
 }
 ///// ----------------- container END
@@ -40,11 +40,15 @@ section.container {
   float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
   &, & > * {@include flexbase;  @include flex-align-items-center;}
   & > *:not(select) { height: 100%;  }
-  & > span > em  {padding:0 3px;}
-  & > span:first-child {padding:0 10px 0 0;}
-  & > span > input {max-width:170px;}
-  & > span > input.hasDatepicker {width:110px;}
-  & > span > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
+
+  & > span {
+    & > em  {padding:0 3px;}
+    &:first-child {padding:0 10px 0 0;}
+    & > input, & > select {max-width:170px;}
+    & > input.hasDatepicker {width:110px;}
+    & > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
+  }
+
 }
 
 
@@ -546,15 +550,16 @@ ul.u_defalut {
 
 }
 
+// 임계치 관리 트리 (개선 전 사용)
 $critical_w01 : 350px;
 $critical_w02 : 200px;
 $critical_w03 : 150px;
+
 .critical_title {
   @include flexbase; width:100%; padding:10px 0;
   * {margin:0 20px 0 0; width:$critical_w02;}
   *:nth-of-type(1) {width:$critical_w01;}
 }
-
 .critical_tree_set {
   @include treebase; max-height:none; height:auto;
 
@@ -569,9 +574,9 @@ $critical_w03 : 150px;
       width:$critical_w02; min-height:$mt_btn_h;
 
       &.level {
-        &-caution { background-color: rgba($color-gray-03,1) !important;   }    // &-caution 주의
-        &-warning { background-color: rgba($color-orange-01,1) !important; }    // &-warning 경고
-        &-danger  { background-color: rgba($color-red-01,1) !important; }    // &-danger  위험
+        &-caution { background-color: rgba($color-caution,1) !important;   }    // &-caution 주의
+        &-warning { background-color: rgba($color-warning,1) !important; }    // &-warning 경고
+        &-danger  { background-color: rgba($color-danger,1) !important; }    // &-danger  위험
         &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
 
         &-caution, &-warning, &-danger, &-die {
@@ -582,7 +587,7 @@ $critical_w03 : 150px;
 
       button {
         height:100%; min-height:$mt_btn_h;
-        &:hover {background-color: $color-blue-01; color:$color-white-01;}
+        &:hover {background-color: $color-ho; color:$color-white-01;}
 
         &:first-of-type {
           @include flex-option(0, 1, 100%); padding:0 10px; text-align: left;
@@ -626,6 +631,11 @@ $critical_w03 : 150px;
 }
 
 
+// 임계치 관리 UI (현재 적용)
+.critical-ui {
+
+}
+
 //구역 디바이스 관리
 .area_tree_set {
   @include treebase;
@@ -650,8 +660,8 @@ $critical_w03 : 150px;
     @include border01(1px, $color-gray-01, 1);
 
     &:after {content:""; position: absolute; top:24px; left:-24px;width:24px; height:1px; background-color:$color-gray-06;}
-    &:hover {border-color:rgba($color-blue-01, 1);}
-    &.on {border-color:rgba($color-red-01, 1) !important;}
+    &:hover {border-color:rgba($color-ho, 1);}
+    &.on {border-color:rgba($color-on, 1) !important;}
 
     button {
       width:100%; padding: 5px 0; opacity: 0.8;
@@ -659,10 +669,10 @@ $critical_w03 : 150px;
       &:before {content:"\e92a"; padding:0 5px 0 0;}
       &:first-of-type { font-weight:bold; opacity: 1; &:before {display: none;} }
 
-      &:hover {color:$color-blue-01;}
+      &:hover {color:$color-ho;}
       &.on {
-        color:$color-red-01; font-weight: bold;
-        &:after {content:""; position: absolute; bottom:0; left:0; width:100%; height:1px; background-color:$color-red-01; }
+        color:$color-on; font-weight: bold;
+        &:after {content:""; position: absolute; bottom:0; left:0; width:100%; height:1px; background-color:$color-on; }
       }
     }
 
@@ -782,7 +792,7 @@ $critical_w03 : 150px;
       @include flex-midddle;
       @include transition(400ms);
     }
-    &:hover:before {background-color: $color-blue-01;}
+    &:hover:before {background-color: $color-ho;}
 
     input[type="file"]
     {position: absolute;z-index: 1;left:0;top:0;width:100%;height:100%;opacity: 0; cursor:pointer;}
@@ -809,7 +819,7 @@ $critical_w03 : 150px;
   & * {float: left;}
   & > input[type="text"] {width:calc(100% - 40px); width:-webkit-calc(100% - 40px);}
   & > input[type="file"] {position: absolute; z-index:1; top:0; left:0; width:100%; height:100%; opacity: 0; cursor:pointer;}
-  & > input[type="file"]:hover + button:before {color:$color-blue-01; font-weight:bold;}
+  & > input[type="file"]:hover + button:before {color:$color-ho; font-weight:bold;}
   & > button {
     @include icon_btn;
     @include border01(1px 1px 1px 0, $color-gray-01, 1);
@@ -938,7 +948,7 @@ $critical_w03 : 150px;
   float:left; position: relative; width:100%;
   & > button, & > div {
     overflow: hidden; float:left; @include border-radius(200px);  margin:0 5px 0 0;
-    &:hover {background-color: $color-blue-01; border-color: $color-blue-01; color:#fff;}
+    &:hover {background-color: $color-ho; border-color: $color-ho; color:#fff;}
   }
   & > button, & > div > button {
     height:40px;
@@ -1023,10 +1033,10 @@ $critical_w03 : 150px;
 
     button {
       @include flex-midddle; @include line_btn; border-width:0 0 3px 0; color:$bas-color; font-size: 1.1rem;
-      &:before {content:""; position: absolute; bottom:-22px; @include triangle-bot(10px,$color-blue-01); opacity: 0;}
+      &:before {content:""; position: absolute; bottom:-22px; @include triangle-bot(10px,$color-ho); opacity: 0;}
       &.on {
         &:before {@include triangle-bot(10px,$color-red-01); opacity: 1;}
-        &:hover:before {@include triangle-bot(10px,$color-blue-01);}
+        &:hover:before {@include triangle-bot(10px,$color-ho);}
       }
     }
   }
@@ -1126,12 +1136,12 @@ a.fc-more {position: relative; z-index: 2;}
 
     & > * {width:100%; position: relative;  }
 
-    &:first-of-type {
+    &:nth-of-type(1) {
       @include flex-option(0,1,100%); margin:0;
     }
 
-    &:last-of-type {
-      & > * {position: relative; width: 100%; padding:0 $ch_margin;}
+    &:nth-of-type(2) {
+      & > * {position: relative; width: 100%; }
     }
 
     h3 {overflow: auto; margin:$ch_margin 0 0 0; max-height: 40px; min-height:40px;}
@@ -1145,7 +1155,6 @@ a.fc-more {position: relative; z-index: 2;}
         overflow: hidden; height:100%;
         background-color: $bas-color;
         &, & * {color:$color-white-02;}
-
 
         .fencebtn_set {
           display: none; position: absolute; z-index:10; bottom:10px; right:10px;
@@ -1162,7 +1171,7 @@ a.fc-more {position: relative; z-index: 2;}
             }
             &:after {order:1; font-size:0.9rem; opacity: 0.7; width:40px; text-align: left; margin:0 10px 0 0;}
 
-            &:hover {color:$color-blue-01; &:before {border-color:$color-blue-01;} }
+            &:hover {color:$color-ho; &:before {border-color:$color-ho;} }
           }
 
           .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";}}
@@ -1176,7 +1185,7 @@ a.fc-more {position: relative; z-index: 2;}
 
       }
 
-      &:last-of-type {
+      &:nth-of-type(2) {
         @include flexbase; @include flex-align-items-center;
         height:40px; min-height:40px;
         & > * {position: relative; z-index: 1; border-width:0;}
@@ -1268,8 +1277,8 @@ a.fc-more {position: relative; z-index: 2;}
           button {
             @include flex-midddle;
             &:before {font-size:1.3rem; }
-            &.on {font-weight:bold; color:$color-orange-01;}
-            &:hover {color:$color-blue-01;}
+            &.on {font-weight:bold; color:$color-on;}
+            &:hover {color:$color-ho;}
           }
           button.btn {
             &-del, &-edi {
@@ -1287,7 +1296,7 @@ a.fc-more {position: relative; z-index: 2;}
               overflow: hidden; width:40px; height:40px; color:$color-white-01; background-color: $color-dark-01;
               @include border-radius(400px);
               &:before {content:"\e92b";}
-              &:hover {background-color: $color-blue-01;}
+              &:hover {background-color: $color-ho;}
             }
           }
 
@@ -1535,7 +1544,7 @@ a.fc-more {position: relative; z-index: 2;}
       li {
         @include flexbase; margin:0 0 10px 0;
         @include border01(1px,$color-gray-01,1 );
-        &.on {@include border01(2px,$color-red-01,1 );}
+        &.on {@include border01(2px,$color-on,1 );}
 
         &.setting {
           & > div select, .cp_btn, .cd_btn {display: inline-block;}
@@ -1734,7 +1743,7 @@ a.fc-more {position: relative; z-index: 2;}
           &:nth-of-type(3):before {content:"4x";}
           &:nth-of-type(4):before {content:"8x";}
 
-          &.on {color:$color-red-01;}
+          &.on {color:$color-on;}
         }
       }
 
@@ -1756,12 +1765,12 @@ a.fc-more {position: relative; z-index: 2;}
 
         &:before {
           content:""; position: absolute; width:100%; height:100%; background-color: transparent;
-          /*opacity: 0;  @include border01(1px,$color-blue-01,1 );*/
+          /*opacity: 0;  @include border01(1px,$color-ho,1 );*/
           border-style:solid; border-color:rgba($color-gray-09,0.2); border-width:0 0 1px 0;
         }
 
-        &:hover:before {border-color:$color-blue-01; border-width:1px;}
-        &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-red-01;}
+        &:hover:before {border-color:$color-ho; border-width:1px;}
+        &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-on;}
         & > div {
           &:first-of-type {
             @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:100%; background-color: $color-gray-02;
@@ -1825,7 +1834,7 @@ a.fc-more {position: relative; z-index: 2;}
 .eventdetail {padding-right:50px !important;}
 .eventdetail_btn {
   @include flex-midddle; position: absolute; right:0; top:0; /*width:50px;*/ height:100%;
-  &:hover:before {color:$color-blue-01;}
+  &:hover:before {color:$color-ho;}
   &:before{content:"\e925"; font-size:1.5rem;}
 }
 

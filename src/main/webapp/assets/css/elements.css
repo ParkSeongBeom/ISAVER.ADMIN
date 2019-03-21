@@ -613,7 +613,7 @@ input.datepicker + button + .in-timepicker {
         right: -20px;
         color: #4c4c4c; }
     .checkbox_set.csl_style02 > input:checked + label, .checkbox_set.csl_style02 > input.on + label, .checkbox_set.csl_style02 > input label, .checkbox_set.csl_style02.on:checked + label, .checkbox_set.csl_style02.on.on + label, .checkbox_set.csl_style02.on label, .checkbox_set.csl_style03 > input:checked + label, .checkbox_set.csl_style03 > input.on + label, .checkbox_set.csl_style03 > input label, .checkbox_set.csl_style03.on:checked + label, .checkbox_set.csl_style03.on.on + label, .checkbox_set.csl_style03.on label, .checkbox_set.csl_style04 > input:checked + label, .checkbox_set.csl_style04 > input.on + label, .checkbox_set.csl_style04 > input label, .checkbox_set.csl_style04.on:checked + label, .checkbox_set.csl_style04.on.on + label, .checkbox_set.csl_style04.on label {
-      background-color: #be1e1e;
+      background-color: #b42d6e;
       border: none; }
       .checkbox_set.csl_style02 > input:checked + label:before, .checkbox_set.csl_style02 > input.on + label:before, .checkbox_set.csl_style02 > input label:before, .checkbox_set.csl_style02.on:checked + label:before, .checkbox_set.csl_style02.on.on + label:before, .checkbox_set.csl_style02.on label:before, .checkbox_set.csl_style03 > input:checked + label:before, .checkbox_set.csl_style03 > input.on + label:before, .checkbox_set.csl_style03 > input label:before, .checkbox_set.csl_style03.on:checked + label:before, .checkbox_set.csl_style03.on.on + label:before, .checkbox_set.csl_style03.on label:before, .checkbox_set.csl_style04 > input:checked + label:before, .checkbox_set.csl_style04 > input.on + label:before, .checkbox_set.csl_style04 > input label:before, .checkbox_set.csl_style04.on:checked + label:before, .checkbox_set.csl_style04.on.on + label:before, .checkbox_set.csl_style04.on label:before {
         left: calc(100% - 30px);
@@ -673,12 +673,12 @@ input.datepicker + button + .in-timepicker {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #3c3c3c;
+    background-color: #535353;
     height: 40px; }
     * button.btn.on, * a.btn.on, * input[type="button"].btn.on, * .btn.on, * .cbtn.on {
-      background-color: #109dcb; }
+      background-color: #b42d6e; }
     * button.btn:hover, * a.btn:hover, * input[type="button"].btn:hover, * .btn:hover, * .cbtn:hover {
-      background-color: #109dcb !important; }
+      background-color: #32a0be !important; }
   * button.btn ~ button.btn {
     margin: 0 0 0 5px; }
   * .lbtn, * .lcbtn {
@@ -687,11 +687,11 @@ input.datepicker + button + .in-timepicker {
     border-color: darkgray;
     background-color: transparent !important; }
     * .lbtn:hover, * .lcbtn:hover {
-      border-color: #109dcb !important;
-      color: #109dcb !important; }
+      border-color: #32a0be !important;
+      color: #32a0be !important; }
     * .lbtn.on, * .lcbtn.on {
-      border-color: #be1e1e;
-      color: #be1e1e; }
+      border-color: #b42d6e;
+      color: #b42d6e; }
   * .lcbtn, * .cbtn {
     -moz-border-radius: 200px;
     -webkit-border-radius: 200px;
@@ -721,7 +721,7 @@ input.datepicker + button + .in-timepicker {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #3c3c3c;
+    background-color: #535353;
     height: 40px;
     width: 100%;
     max-width: 160px;
@@ -729,21 +729,21 @@ input.datepicker + button + .in-timepicker {
     * .list_select_box > button.on,
     * .filter_area > button.on,
     * .table_bottom > button.on {
-      background-color: #109dcb; }
+      background-color: #b42d6e; }
     * .list_select_box > button:hover,
     * .filter_area > button:hover,
     * .table_bottom > button:hover {
-      background-color: #109dcb !important; }
+      background-color: #32a0be !important; }
   * .tree_area > header > button {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    background-color: #3c3c3c;
+    background-color: #535353;
     height: 40px; }
     * .tree_area > header > button.on {
-      background-color: #109dcb; }
+      background-color: #b42d6e; }
     * .tree_area > header > button:hover {
-      background-color: #109dcb !important; }
+      background-color: #32a0be !important; }
   * .ibtn, * .l-popup header > button, * .file_btn {
     width: 40px;
     height: 40px; }
@@ -752,9 +752,9 @@ input.datepicker + button + .in-timepicker {
     * .ibtn:hover:before, * .ibtn.on:before, * .l-popup header > button:hover:before, * .l-popup header > button.on:before, * .file_btn:hover:before, * .file_btn.on:before {
       font-weight: bold; }
     * .ibtn:hover:before, * .l-popup header > button:hover:before, * .file_btn:hover:before {
-      color: #109dcb; }
+      color: #32a0be; }
     * .ibtn.on:before, * .l-popup header > button.on:before, * .file_btn.on:before {
-      color: #109dcb; }
+      color: #b42d6e; }
   * .file_btn:before {
     content: "\e915"; }
   * .l-popup header > button:before {
@@ -781,9 +781,9 @@ input.datepicker + button + .in-timepicker {
     * .db_btn:hover:before, * .db_btn.on:before, * .alra_btn:hover:before, * .alra_btn.on:before {
       font-weight: bold; }
     * .db_btn:hover:before, * .alra_btn:hover:before {
-      color: #109dcb; }
+      color: #32a0be; }
     * .db_btn.on:before, * .alra_btn.on:before {
-      color: #109dcb; }
+      color: #b42d6e; }
   * .alra_btn {
     width: 80px;
     height: 30px;
@@ -1448,8 +1448,7 @@ input.datepicker + button + .in-timepicker {
     left: 0;
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    /*background-image: url("../images/map/k_map_right.svg"); */ }
+    background-repeat: no-repeat; }
 
 .g-ico {
   z-index: 50; }
@@ -1569,7 +1568,7 @@ input.datepicker + button + .in-timepicker {
   .g-ico:hover, .g-ico:hover > span, .g-area:hover, .g-area:hover > span {
     background-color: rgba(246, 185, 0, 0.5); }
   .g-ico.on, .g-ico.on > span, .g-area.on, .g-area.on > span {
-    background-color: #109dcb; }
+    background-color: #b42d6e; }
 .g-ico {
   width: 25px;
   height: 25px; }
@@ -1579,11 +1578,11 @@ input.datepicker + button + .in-timepicker {
     right: -5px;
     bottom: -5px; }
   .g-ico.on {
-    background-color: #109dcb; }
+    background-color: #b42d6e; }
     .g-ico.on:hover .ui-resizable-se {
       display: block !important; }
 .g-ico, .g-tracking {
-  background-color: #3c3c3c; }
+  background-color: #535353; }
   .g-ico, .g-ico:before, .g-tracking, .g-tracking:before {
     display: -webkit-box;
     display: -moz-box;
@@ -1686,8 +1685,8 @@ input.datepicker + button + .in-timepicker {
     bottom: -5px;
     right: -5px; }
   .g-area.on {
-    background-color: rgba(16, 157, 203, 0.4);
-    border-color: #109dcb; }
+    background-color: rgba(180, 45, 110, 0.4);
+    border-color: #b42d6e; }
     .g-area.on:hover .ui-resizable-se, .g-area.on:hover .ui-resizable-e, .g-area.on:hover .ui-resizable-s {
       display: block !important; }
 .g-fence {
@@ -1735,14 +1734,14 @@ input.datepicker + button + .in-timepicker {
   100% {
     opacity: 0.5; } }
     .g-fence polygon.level-caution, .g-fence path.level-caution {
-      fill: rgba(117, 117, 117, 0.2);
-      stroke: #757575; }
+      fill: rgba(210, 160, 30, 0.2);
+      stroke: #d2a01e; }
     .g-fence polygon.level-warning, .g-fence path.level-warning {
-      fill: rgba(255, 132, 0, 0.2);
-      stroke: #ff8400; }
+      fill: rgba(240, 100, 0, 0.2);
+      stroke: #f06400; }
     .g-fence polygon.level-danger, .g-fence path.level-danger {
-      fill: rgba(190, 30, 30, 0.2);
-      stroke: #be1e1e; }
+      fill: rgba(195, 2, 2, 0.2);
+      stroke: #c30202; }
 .g-line polyline {
   fill: transparent !important;
   stroke: rgba(16, 157, 203, 0.4);
@@ -1753,7 +1752,7 @@ input.datepicker + button + .in-timepicker {
   width: 9px;
   height: 9px; }
 .g-line polyline.object {
-  stroke: #757575; }
+  stroke: #d2a01e; }
 .g-line polyline.level-caution, .g-line polyline.level-warning, .g-line polyline.level-danger {
   animation-name: issue02;
   -webkit-animation-name: issue02;
@@ -1786,11 +1785,11 @@ input.datepicker + button + .in-timepicker {
   100% {
     opacity: 0.5; } }
 .g-line polyline.level-caution {
-  stroke: #757575; }
+  stroke: #d2a01e; }
 .g-line polyline.level-warning {
-  stroke: #ff8400; }
+  stroke: #f06400; }
 .g-line polyline.level-danger {
-  stroke: #be1e1e; }
+  stroke: #c30202; }
 .g-ignore_fence {
   fill: rgba(117, 117, 117, 0.2) !important;
   stroke: #757575 !important; }
@@ -1855,17 +1854,17 @@ input.datepicker + button + .in-timepicker {
 .g-ico.level-caution:before, .g-ico.level-warning:before, .g-ico.level-danger:before, .g-tracking.level-caution:before, .g-tracking.level-warning:before, .g-tracking.level-danger:before {
   color: #fff !important; }
 .g-ico.level-caution, .g-ico.level-caution > span, .g-tracking.level-caution, .g-tracking.level-caution > span {
-  background-color: #757575; }
+  background-color: #d2a01e; }
 .g-ico.level-caution:after, .g-tracking.level-caution:after {
-  border-color: #757575; }
+  border-color: #d2a01e; }
 .g-ico.level-warning, .g-ico.level-warning > span, .g-tracking.level-warning, .g-tracking.level-warning > span {
-  background-color: #ff8400; }
+  background-color: #f06400; }
 .g-ico.level-warning:after, .g-tracking.level-warning:after {
-  border-color: #ff8400; }
+  border-color: #f06400; }
 .g-ico.level-danger, .g-ico.level-danger > span, .g-tracking.level-danger, .g-tracking.level-danger > span {
-  background-color: #be1e1e; }
+  background-color: #c30202; }
 .g-ico.level-danger:after, .g-tracking.level-danger:after {
-  border-color: #be1e1e; }
+  border-color: #c30202; }
 .g-ico.level-die, .g-ico.level-die span, .g-tracking.level-die, .g-tracking.level-die span {
   background-color: #000; }
 .g-ico.level-die:after, .g-tracking.level-die:after {

@@ -820,9 +820,10 @@ div[contenteditable] {}
     background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
     background-repeat:repeat, no-repeat;
   }
+
   .map_bg {
     position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; background-repeat:no-repeat;
-    /*background-image: url("../images/map/k_map_right.svg"); */
+    //background-image: url("../images/map/k_map_right.svg");
   }
   //&.cursor_cros {}
 }
@@ -855,7 +856,7 @@ div[contenteditable] {}
     }
 
     &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
-    &.on {&, & > span {background-color: $color-blue-01;}}
+    &.on {&, & > span {background-color: $color-on;}}
 
   }
 
@@ -866,7 +867,7 @@ div[contenteditable] {}
     .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
 
     &.on {
-      background-color: $color-blue-01;
+      background-color: $color-on;
       &:hover { .ui-resizable-se {display: block !important;} }
     }
 
@@ -923,7 +924,7 @@ div[contenteditable] {}
     .ui-resizable-se {bottom:-($resi_w / 2); right:-($resi_w / 2); }
 
     &.on {
-      background-color: rgba($color-blue-01,0.4); border-color:$color-blue-01;
+      background-color: rgba($color-on,0.4); border-color:$color-on;
       &:hover  { .ui-resizable-se, .ui-resizable-e, .ui-resizable-s {display: block !important;} }
     }
   }
@@ -939,9 +940,9 @@ div[contenteditable] {}
       fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01;
       &.level {
         &-caution, &-warning, &-danger {@include issue02; stroke-width:1px;}
-        &-caution { fill: rgba($color-gray-05, 0.2); stroke: $color-gray-05; }
-        &-warning { fill: rgba($color-orange-01, 0.2); stroke: $color-orange-01; }
-        &-danger  { fill: rgba($color-red-01, 0.2); stroke: $color-red-01; }
+        &-caution { fill: rgba($color-caution, 0.2); stroke: $color-caution; }
+        &-warning { fill: rgba($color-warning, 0.2); stroke: $color-warning; }
+        &-danger  { fill: rgba($color-danger, 0.2);  stroke: $color-danger; }
       }
     }
 
@@ -952,12 +953,12 @@ div[contenteditable] {}
     marker {overflow: visible;}
     image  {width:9px; height:9px;}
 
-    polyline.object {stroke: $color-gray-05;}
+    polyline.object {stroke: $color-caution;}
     polyline.level {
       &-caution, &-warning, &-danger { @include issue02;}
-      &-caution { stroke: $color-gray-05; }
-      &-warning { stroke: $color-orange-01; }
-      &-danger  { stroke: $color-red-01; }
+      &-caution { stroke: $color-caution; }
+      &-warning { stroke: $color-warning; }
+      &-danger  { stroke: $color-danger; }
     }
 
   }
@@ -977,18 +978,18 @@ div[contenteditable] {}
       }
 
       &-caution {
-        &,& > span {background-color:$color-gray-05;   }
-        &:after { border-color:$color-gray-05; }
+        &,& > span {background-color:$color-caution;   }
+        &:after { border-color:$color-caution; }
       }
 
       &-warning {
-        &,& > span {background-color:$color-orange-01; }
-        &:after { border-color:$color-orange-01;}
+        &,& > span {background-color:$color-warning; }
+        &:after { border-color:$color-warning;}
       }
 
       &-danger  {
-        &,& > span {background-color:$color-red-01;    }
-        &:after  { border-color:$color-red-01; }
+        &,& > span {background-color:$color-danger;    }
+        &:after  { border-color:$color-danger; }
       }
 
       &-die     {

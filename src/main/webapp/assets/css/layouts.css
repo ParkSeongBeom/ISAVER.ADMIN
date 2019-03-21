@@ -38,7 +38,7 @@ body {
   body.dashboard_mode ::-webkit-scrollbar, body.dashboard_mode ::-webkit-scrollbar-corner, body.dashboard_mode ::-webkit-scrollbar-track {
     background-color: #111 !important; }
   body.dashboard_mode ::-webkit-scrollbar-thumb {
-    background-color: #3c3c3c !important;
+    background-color: #535353 !important;
     border-color: #111 !important; }
   body.admin_mode ::-webkit-scrollbar, body.admin_mode ::-webkit-scrollbar-corner, body.admin_mode ::-webkit-scrollbar-track {
     background-color: #fff; }
@@ -117,7 +117,7 @@ h4 {
     color: #fff; }
 
 .language {
-  background-color: #3c3c3c;
+  background-color: #535353;
   color: #f5f5f5;
   /*
   &:after {
@@ -235,7 +235,7 @@ h4 {
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: #3c3c3c;
+  background-color: #535353;
   color: #f5f5f5;
   /*
   &:after {
@@ -280,7 +280,7 @@ h4 {
     z-index: 3;
     width: 500px;
     padding: 20px 30px 40px 30px;
-    background-color: #3c3c3c;
+    background-color: #535353;
     box-shadow: 0px 55px 90px -50px rgba(0, 0, 0, 0.8);
     -webkit-box-shadow: 0px 55px 90px -50px rgba(0, 0, 0, 0.8);
     -moz-box-shadow: 0px 55px 90px -50px rgba(0, 0, 0, 0.8); }
@@ -460,7 +460,7 @@ header {
               border-radius: 200px;
               -khtml-border-radius: 200px; }
           header .header_area .header_right_area .header_btn_set button:hover, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn) {
-            background-color: #109dcb; }
+            background-color: #32a0be; }
             header .header_area .header_right_area .header_btn_set button:hover:before, header .header_area .header_right_area .header_btn_set button.on:not(.issue_btn):before {
               color: #fff !important; }
           header .header_area .header_right_area .header_btn_set button.level-caution.issue_btn, header .header_area .header_right_area .header_btn_set button.level-warning.issue_btn, header .header_area .header_right_area .header_btn_set button.level-danger.issue_btn {
@@ -964,7 +964,7 @@ menu {
   -moz-box-shadow: 0px 60px 100px -50px black;
   border-style: solid;
   border-width: 2px;
-  border-color: #3c3c3c;
+  border-color: #535353;
   transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -moz-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -1112,11 +1112,11 @@ menu {
           font-size: 1.3rem;
           font-weight: bold; }
     .toast_popup > div.level-caution {
-      background-color: #999999 !important; }
+      background-color: #d2a01e !important; }
     .toast_popup > div.level-warning {
-      background-color: #ff8400 !important; }
+      background-color: #f06400 !important; }
     .toast_popup > div.level-danger {
-      background-color: #be1e1e !important; }
+      background-color: #c30202 !important; }
 
 .db_area {
   position: fixed;
@@ -1153,7 +1153,7 @@ menu {
   .db_area ::-webkit-scrollbar, .db_area ::-webkit-scrollbar-corner, .db_area ::-webkit-scrollbar-track {
     background-color: #111 !important; }
   .db_area ::-webkit-scrollbar-thumb {
-    background-color: #3c3c3c !important;
+    background-color: #535353 !important;
     border-color: #111 !important; }
   .db_area:before {
     content: "";
@@ -1271,15 +1271,15 @@ menu {
         font-size: .8rem;
         padding: 5px 0; }
       .db_area h2 > div span:nth-of-type(1) {
-        background-color: #999; }
+        background-color: #d2a01e; }
         .db_area h2 > div span:nth-of-type(1):before {
           content: "CAUTION"; }
       .db_area h2 > div span:nth-of-type(2) {
-        background-color: #ff8400; }
+        background-color: #f06400; }
         .db_area h2 > div span:nth-of-type(2):before {
           content: "WARNING"; }
       .db_area h2 > div span:nth-of-type(3) {
-        background-color: #be1e1e; }
+        background-color: #c30202; }
         .db_area h2 > div span:nth-of-type(3):before {
           content: "DANGER"; }
   .db_area .issue_board {
@@ -1376,15 +1376,15 @@ menu {
         border-width: 2px;
         border-color: #111111; }
       .db_area .issue_board > p.caution, .db_area .issue_board > p.caution:before {
-        color: #999; }
+        color: #d2a01e; }
       .db_area .issue_board > p.caution:before {
         content: "CAUTION"; }
       .db_area .issue_board > p.warning, .db_area .issue_board > p.warning:before {
-        color: #ff8400; }
+        color: #f06400; }
       .db_area .issue_board > p.warning:before {
         content: "WARNING"; }
       .db_area .issue_board > p.danger, .db_area .issue_board > p.danger:before {
-        color: #be1e1e; }
+        color: #c30202; }
       .db_area .issue_board > p.danger:before {
         content: "DANGER"; }
   .db_area .db_list_box {
@@ -1408,7 +1408,7 @@ menu {
       .db_area .db_list_box textarea:-moz-placeholder {
         color: rgba(255, 255, 255, 0.4); }
     .db_area .db_list_box select {
-      background-color: #3c3c3c;
+      background-color: #535353;
       color: #f5f5f5;
       /*
       &:after {
@@ -1448,7 +1448,7 @@ menu {
       -webkit-box-flex: 0;
       -ms-flex: 1 0 41px;
       max-height: 41px;
-      background-color: #3c3c3c; }
+      background-color: #535353; }
       .db_area .db_list_box .db_count > * {
         display: -webkit-box;
         display: -moz-box;
@@ -1474,11 +1474,11 @@ menu {
         color: #fff;
         line-height: 1.4rem; }
         .db_area .db_list_box .db_count > *:nth-of-type(1) {
-          background-color: #999; }
+          background-color: #d2a01e; }
         .db_area .db_list_box .db_count > *:nth-of-type(2) {
-          background-color: #ff8400; }
+          background-color: #f06400; }
         .db_area .db_list_box .db_count > *:nth-of-type(3) {
-          background-color: #be1e1e; }
+          background-color: #c30202; }
     .db_area .db_list_box .db_filter_set {
       -webkit-flex-flow: row wrap;
       -moz-flex-flow: row wrap;
@@ -1552,7 +1552,7 @@ menu {
         .db_area .db_list_box button.dbc_open_btn.on {
           pointer-events: auto;
           opacity: 1;
-          background-color: #3c3c3c; }
+          background-color: #535353; }
         .db_area .db_list_box button.dbc_open_btn:before {
           content: "\e937"; }
       .db_area .db_list_box button.dbc_dele_btn:before {
@@ -1561,7 +1561,7 @@ menu {
         content: "\e91a"; }
       .db_area .db_list_box button.dbc_sera_btn.on {
         opacity: 1;
-        background-color: #109dcb; }
+        background-color: #b42d6e; }
       .db_area .db_list_box button.dbc_sera_btn.on ~ .search_box {
         height: auto; }
       .db_area .db_list_box button.dbc_sera_btn:before {
@@ -1570,7 +1570,7 @@ menu {
         width: 100%;
         max-height: 40px;
         min-height: 40px;
-        background-color: #3c3c3c;
+        background-color: #535353;
         color: #fff;
         flex: 1 0 40px;
         -webkit-flex: 1 0 40px;
@@ -1604,7 +1604,7 @@ menu {
       .db_area .db_list_box > ul ::-webkit-scrollbar, .db_area .db_list_box > ul ::-webkit-scrollbar-corner, .db_area .db_list_box > ul ::-webkit-scrollbar-track {
         background-color: #111 !important; }
       .db_area .db_list_box > ul ::-webkit-scrollbar-thumb {
-        background-color: #3c3c3c !important;
+        background-color: #535353 !important;
         border-color: #111 !important; }
       .db_area .db_list_box > ul li {
         display: -webkit-box;
@@ -1927,7 +1927,7 @@ menu {
         height: 2px;
         background-color: #109dcb; }
       .sub_title_area .navigation span:hover {
-        color: #109dcb; }
+        color: #32a0be; }
         .sub_title_area .navigation span:hover:after {
           display: block; }
     .admin_mode .sub_title_area .navigation span {
@@ -1937,13 +1937,13 @@ menu {
   background-color: #259dcf !important; }
 
 .level-caution {
-  background-color: #999999; }
+  background-color: #d2a01e; }
   .level-caution, .level-caution .m_marqueebox:after, .level-caution.copybox:after {
-    background-color: #999999; }
+    background-color: #d2a01e; }
   .level-caution .safeeye_set .s_lbox {
-    color: #999; }
+    color: #d2a01e; }
     .level-caution .safeeye_set .s_lbox:after {
-      border-color: #999; }
+      border-color: #d2a01e; }
   .level-caution .treffic_set .ts-caution:before {
     border-width: 2px;
     background-color: #fff; }
@@ -1960,7 +1960,7 @@ menu {
     -webkit-animation-fill-mode: forwards;
     -webkit-animation-duration: 0.8s;
     animation-duration: 0.8s;
-    background-color: #999; }
+    background-color: #d2a01e; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -1996,7 +1996,7 @@ menu {
       animation-duration: 0.8s;
       border-style: solid;
       border-width: 3px;
-      border-color: #999999; }
+      border-color: #d2a01e; }
 @-webkit-keyframes issue06 {
   0% {
     opacity: 0; }
@@ -2014,11 +2014,11 @@ menu {
     opacity: 0;
     padding: 70%; } }
 .level-warning, .level-warning .m_marqueebox:after, .level-warning.copybox:after {
-  background-color: #ff8400; }
+  background-color: #f06400; }
 .level-warning .safeeye_set .s_lbox {
-  color: #ff8400; }
+  color: #f06400; }
   .level-warning .safeeye_set .s_lbox:after {
-    border-color: #ff8400; }
+    border-color: #f06400; }
 .level-warning .treffic_set .ts-warning:before {
   border-width: 2px;
   background-color: #fff; }
@@ -2035,7 +2035,7 @@ menu {
   -webkit-animation-fill-mode: forwards;
   -webkit-animation-duration: 0.8s;
   animation-duration: 0.8s;
-  background-color: #ff8400; }
+  background-color: #f06400; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -2071,7 +2071,7 @@ menu {
     animation-duration: 0.8s;
     border-style: solid;
     border-width: 3px;
-    border-color: #ff8400; }
+    border-color: #f06400; }
 @-webkit-keyframes issue06 {
   0% {
     opacity: 0; }
@@ -2089,11 +2089,11 @@ menu {
     opacity: 0;
     padding: 70%; } }
 .level-danger, .level-danger .m_marqueebox:after, .level-danger.copybox:after {
-  background-color: #be1e1e; }
+  background-color: #c30202 !important; }
 .level-danger .safeeye_set .s_lbox {
-  color: #be1e1e; }
+  color: #c30202; }
   .level-danger .safeeye_set .s_lbox:after {
-    border-color: #be1e1e; }
+    border-color: #c30202; }
 .level-danger .treffic_set .ts-danger:before {
   border-width: 2px;
   background-color: #fff; }
@@ -2110,7 +2110,7 @@ menu {
   -webkit-animation-fill-mode: forwards;
   -webkit-animation-duration: 0.8s;
   animation-duration: 0.8s;
-  background-color: #be1e1e; }
+  background-color: #c30202; }
 @-webkit-keyframes issue02 {
   0% {
     opacity: 0.5; }
@@ -2146,7 +2146,7 @@ menu {
     animation-duration: 0.8s;
     border-style: solid;
     border-width: 3px;
-    border-color: #be1e1e; }
+    border-color: #c30202; }
 @-webkit-keyframes issue06 {
   0% {
     opacity: 0; }
@@ -2240,7 +2240,7 @@ menu {
 .level-caution.type-list, .level-caution.type-list:before, .level-caution .watch_area > div, .level-caution .watch_area > div:before, .level-warning.type-list, .level-warning.type-list:before, .level-warning .watch_area > div, .level-warning .watch_area > div:before, .level-danger.type-list, .level-danger.type-list:before, .level-danger .watch_area > div, .level-danger .watch_area > div:before {
   background-color: transparent !important; }
 .level-caution .m_marqueebox, .level-caution.copybox, .level-warning .m_marqueebox, .level-warning.copybox, .level-danger .m_marqueebox, .level-danger.copybox {
-  display: block !important; }
+  display: block; }
 .level-caution .m_marqueebox > p > span, .level-warning .m_marqueebox > p > span, .level-danger .m_marqueebox > p > span {
   animation-name: marquee;
   -webkit-animation-name: marquee;
@@ -2313,11 +2313,11 @@ menu {
   -moz-box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5); }
 
 .nhr_set li.ts-caution:after, .nhr_set li.ts-caution:before, .nhr_set li.level-caution:after, .nhr_set li.level-caution:before {
-  background-color: #999999 !important; }
+  background-color: #d2a01e !important; }
 .nhr_set li.ts-warning:after, .nhr_set li.ts-warning:before, .nhr_set li.level-warning:after, .nhr_set li.level-warning:before {
-  background-color: #ff8400 !important; }
+  background-color: #f06400 !important; }
 .nhr_set li.ts-danger:after, .nhr_set li.ts-danger:before, .nhr_set li.level-danger:after, .nhr_set li.level-danger:before {
-  background-color: #be1e1e !important; }
+  background-color: #c30202 !important; }
 .nhr_set li.ts-die, .nhr_set li.level-die {
   animation-name: issue02;
   -webkit-animation-name: issue02;
@@ -2358,7 +2358,7 @@ menu {
 
 .issue_board.level-caution.issue_btn, .issue_board.level-warning.issue_btn, .issue_board.level-danger.issue_btn {
   width: 100%;
-  /*background-color:$color-red-01;*/ }
+  /*background-color:$color-danger;*/ }
   .issue_board.level-caution.issue_btn:before, .issue_board.level-warning.issue_btn:before, .issue_board.level-danger.issue_btn:before {
     color: #fff !important; }
   .issue_board.level-caution.issue_btn.on, .issue_board.level-warning.issue_btn.on, .issue_board.level-danger.issue_btn.on {
@@ -2408,7 +2408,7 @@ menu {
   animation-duration: 0.1s;
   -webkit-animation-iteration-count: 50;
   animation-iteration-count: 50;
-  background-color: #999; }
+  background-color: #d2a01e; }
 @-webkit-keyframes notice04 {
   0% {
     transform: rotateY(10deg);
@@ -2464,7 +2464,7 @@ menu {
   animation-duration: 0.1s;
   -webkit-animation-iteration-count: 50;
   animation-iteration-count: 50;
-  background-color: #ff8400; }
+  background-color: #f06400; }
 @-webkit-keyframes notice04 {
   0% {
     transform: rotateY(10deg);
@@ -2520,7 +2520,7 @@ menu {
   animation-duration: 0.1s;
   -webkit-animation-iteration-count: 50;
   animation-iteration-count: 50;
-  background-color: #be1e1e; }
+  background-color: #c30202; }
 @-webkit-keyframes notice04 {
   0% {
     transform: rotateY(10deg);

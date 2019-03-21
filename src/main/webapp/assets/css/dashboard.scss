@@ -99,8 +99,8 @@ body.dashboard_mode {
             &.device:before {content:"\e935"; }
             &.ioset:before, &.date_select:before  {content:"\e909"; }
             &.chart_select:before {content:"\e908";  }
-            &.on {background-color: $color-blue-01;}
-            &:hover:before, &:hover:after {color:$color-blue-01;}
+            &.on {background-color: $color-on;}
+            &:hover:before, &:hover:after {color:$color-ho;}
 
             &.device_view {order: 10; &:before {content:"\e92f";} }
 
@@ -139,7 +139,6 @@ body.dashboard_mode {
 
         article {
           @include flex-option(0, 1, 100%); @include flex-align-items-center;
-
           & > section {
             position: relative; @include flex-midddle;  @include flex-option(0, 1, 100%); width:100%;
             &, & > div {position: relative;}
@@ -148,10 +147,45 @@ body.dashboard_mode {
         }
       }
 
+      /////..... BMT UI 시작
+      /*&.bmt {
+        & > div {
+          min-height:100%; height:100%;
+          .copybox_area {
+            $bmtwidth:160px;
+            $bmtmargin:10px;
+            @include flex-justify-content-start; @include flex-align-items-center;
+            order:2; overflow: hidden; z-index: 20; left:auto; right:0; !*background-color: rgba(0,0,0,0.5);*!
+            min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:100%; padding: 0 0 10px 0;
+
+            &:hover {overflow: overlay;}
+
+            &, & > div {@include flexbase; @include flex-column; }
+
+            & > div, .copybox {
+              @include flex-justify-content-center; @include flex-align-items-start;
+              order: 2; width:calc(100% - 20px); min-height:calc(100% / 5 - 10px);
+              padding: 10px; margin:10px; margin-bottom:0;
+              @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
+
+              &.level-danger {order:1 !important;}
+
+              //&:before {@include bbl(auto,0,0,0,100%,1px,#000); }
+              &:after  {background-color: $not-color; opacity: 0.95;}
+
+              & > * {width:100%; }
+
+              span {order:2; font-size:3.1rem; left:-5px; &:before {font-size:2.8rem;}}
+              em {order:1; top:0; font-size:1.2rem; &:before {display: none;} }
+              p { &:first-of-type {order:3; font-size:1rem;} &:last-of-type  {order:4; font-size:0.9rem;} }
+            }
+          }
+        }
+      }*/
+      /////..... BMT UI 끝
+
     }
-
   }
-
 }
 /////..... 데시보드 입력폼 스타일 끝
 
@@ -215,17 +249,17 @@ body.dashboard_mode {
 
     &.ts {
       &-caution{
-        &:before {background-color: rgba($color-gray-03,1);   border-color:rgba($color-gray-03,  1);}
-        p {color:$color-gray-03;}
+        &:before {background-color: rgba($color-caution,1);   border-color:rgba($color-caution,  1);}
+        p {color:$color-caution;}
       }   // &-caution 주의
       &-warning{
 
-        &:before {background-color: rgba($color-orange-01,1); border-color:rgba($color-orange-01,1);}
-        p {color:$color-orange-01;}
+        &:before {background-color: rgba($color-warning,1); border-color:rgba($color-warning,1);}
+        p {color:$color-warning;}
       }  // &-warning 경고
       &-danger {
-        &:before {background-color: rgba($color-red-01,1);    border-color:rgba($color-red-01,1);}
-        p {color:$color-red-01;}
+        &:before {background-color: rgba($color-danger,1);    border-color:rgba($color-danger,1);}
+        p {color:$color-danger;}
       }  // &-danger  위험
     }
 
@@ -433,7 +467,7 @@ body.dashboard_mode {
         input:hover + label { opacity: 1;}
         input:checked + label {
           opacity: 1;
-          &:before, &:after {color:$color-blue-01;}
+          &:before, &:after {color:$color-ho;}
           &:before {}
         }
 
@@ -516,6 +550,7 @@ body.dashboard_mode {
       @include flexbase; @include flex-column; position: relative; height: 100%;
       li {
         overflow: hidden; position: relative; width:0; background-color: transparent !important;
+         order:4;
 
         @include transition(200ms); @include line_bottom;
 
@@ -543,15 +578,15 @@ body.dashboard_mode {
             //span:before {@include notice03;}
           }
 
-          &-caution { & > div:before {border-color:$color-gray-05;  } span {background-color:$color-gray-05;}    }
-          &-warning { & > div:before {border-color:$color-orange-01;} span {background-color:$color-orange-01;}  }
-          &-danger  { & > div:before {border-color:$color-red-01;   } span {background-color:$color-red-01;}     }
-
           &-die {
             opacity: 0.3;
             & > div:after {content:"\e90f"; font-size:3rem; position: absolute; z-index: -1;}
             span {background-color:$color-gray-05;}
           }
+
+          &-caution {order:3; & > div:before {border-color:$color-caution;  } span {background-color:$color-caution;}    }
+          &-warning {order:2; & > div:before {border-color:$color-warning;  } span {background-color:$color-warning;}    }
+          &-danger  {order:1; & > div:before {border-color:$color-danger;   } span {background-color:$color-danger;}     }
         }
         /////..... 임계치 적용 표시 End
       }
@@ -612,7 +647,7 @@ body.dashboard_mode {
     &:before {/*content: "\e921";*/ content:"IR"; /*font-size:2.5rem; line-height: 2rem;*/}
 
     &:hover, &.on {
-      &:after,&:before {color:$color-blue-01; border-color:$color-blue-01; }
+      &:after,&:before {color:$color-ho; border-color:$color-ho; }
     }
 
     &.on {
@@ -691,8 +726,8 @@ body.dashboard_mode {
 .level-danger {
   .entrance_ico {
     &.enter, &.sign, &.fall {
-      & ~ .c_time > p, &:before, & ~ h3 {color: $color-red-01;}
-      &:after {border-color:$color-red-01;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-danger;}
+      &:after {border-color:$color-danger;}
 
     }
   }
@@ -701,8 +736,8 @@ body.dashboard_mode {
 .level-warning {
   .entrance_ico {
     &.enter, &.sign, &.fall {
-      & ~ .c_time > p, &:before, & ~ h3 {color: $color-orange-01;}
-      &:after {border-color:$color-orange-01;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-warning;}
+      &:after {border-color:$color-warning;}
     }
   }
 }
@@ -710,8 +745,8 @@ body.dashboard_mode {
 .level-caution {
   .entrance_ico {
     &.enter, &.sign, &.fall {
-      & ~ .c_time > p, &:before, & ~ h3 {color: $color-gray-03;}
-      &:after {border-color:$color-gray-03;}
+      & ~ .c_time > p, &:before, & ~ h3 {color: $color-caution;}
+      &:after {border-color:$color-caution;}
     }
   }
 }
@@ -779,7 +814,7 @@ $ds-sw:50px; $ds-w:150px;
     }
 
 
-    &.on {background-color: $color-blue-01 !important;}
+    &.on {background-color: $color-ho !important;}
     &.issue {order: 1 !important;}
 
   }
@@ -810,8 +845,8 @@ $ds-sw:50px; $ds-w:150px;
     &.big { &:before {content:"\e904"; } }
     &.sma { &:before {content:"\e903"; } }
 
-    &.on:before {border-color: $color-blue-01; color:$color-blue-01;}
-    &:hover {background-color: $color-blue-01; &:before {border-color: #fff; color:#fff;} }
+    &.on:before {border-color: $color-ho; color:$color-ho;}
+    &:hover {background-color: $color-ho; &:before {border-color: #fff; color:#fff;} }
   }
 }
 
@@ -1023,6 +1058,7 @@ $ds-sw:50px; $ds-w:150px;
 /////..... 구역 End
 
 
+
 /////..... marquee 시작
 .copybox_area, .m_marqueebox {
   overflow: hidden; position: absolute; left:0; z-index: 1;
@@ -1055,6 +1091,42 @@ $ds-sw:50px; $ds-w:150px;
   }
 }
 
+
+.bmt {
+  .perspective {
+    position: absolute; z-index:20; height:100%; top:0; right:0;
+  }
+  .copybox_area {
+    $bmtwidth:160px;
+
+    @include flex-justify-content-start; @include flex-align-items-center;
+    order:2; overflow: hidden; z-index: 20; left:auto; right:0; /*background-color: rgba(0,0,0,0.5);*/
+    min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:100%; padding: 0 0 10px 0;
+
+    @include perspective01(600px, 50%, 50%);
+
+    &:hover {overflow: overlay; & > div {@include rotate-y(0deg);} }
+
+    &, & > div {@include flexbase; @include flex-column; }
+
+    & > div, .copybox {
+      @include flex-justify-content-center; @include flex-align-items-start; @include rotate-y(-20deg); @include transition(200ms);
+      order: 2; width:calc(100% - 20px); min-height:calc(100% / 5 - 10px); padding: 10px; margin:10px; margin-bottom:0;
+      @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
+
+      &.level-danger {order:1 !important;}
+
+      //&:before {@include bbl(auto,0,0,0,100%,1px,#000); }
+      &:after  {background-color: $not-color; opacity: 0.95;}
+
+      & > * {width:100%; }
+
+      span {order:2; font-size:3.1rem; left:-5px; &:before {font-size:2.8rem;}}
+      em {order:1; top:0; font-size:1.2rem; &:before {display: none;} }
+      p { &:first-of-type {order:3; font-size:1rem;} &:last-of-type  {order:4; font-size:0.9rem;} }
+    }
+  }
+}
 .m_marqueebox {
   bottom:0; width:100%; height:24px; line-height:1.1rem;
 
@@ -1070,6 +1142,9 @@ $ds-sw:50px; $ds-w:150px;
   }
 }
 /////..... marquee 끝
+
+
+
 
 
 /////..... 차트 영역 Start
@@ -1112,9 +1187,9 @@ $ds-sw:50px; $ds-w:150px;
       content:""; position: absolute; left:0; bottom:1px; width:18px; height:18px;
       @include border-radius(200px);  @include borderwidth(3px);
     }
-    &:nth-of-type(1):before {border-color:$color-gray-03;}
-    &:nth-of-type(2):before {border-color:$color-orange-01;}
-    &:nth-of-type(3):before {border-color:$color-red-01;}
+    &:nth-of-type(1):before {border-color:$color-caution;}
+    &:nth-of-type(2):before {border-color:$color-warning;}
+    &:nth-of-type(3):before {border-color:$color-danger;}
   }
 
   &.inout {
@@ -1209,7 +1284,7 @@ $ds-sw:50px; $ds-w:150px;
       content:"DEVIC LIST";
       position: absolute; z-index: -1; top:0; left:$dp_mlr; right:$dp_mlr; bottom:0;
       background-color: $adm-color; padding:7px $m_lr; font-size: 1.2rem;
-      color:$color-blue-01 !important; @include box-shadow01(0px, 25px, 35px, -10px, #000, 0.6);
+      color:$color-ho !important; @include box-shadow01(0px, 25px, 35px, -10px, #000, 0.6);
     }
 
     ul {
@@ -1226,7 +1301,7 @@ $ds-sw:50px; $ds-w:150px;
             content:"VIEW"; font-weight:normal; font-size:0.9rem;
           }
           &:hover {
-            background-color: $color-blue-01; border-color:$color-blue-01;
+            background-color: $color-ho; border-color:$color-ho;
             &:before {color:#fff !important;}
           }
         }
