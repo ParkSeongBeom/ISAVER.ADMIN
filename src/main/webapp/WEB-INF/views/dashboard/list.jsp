@@ -370,7 +370,7 @@
                                                 <label></label>
                                             </div>
                                             <div class="fence_check">
-                                                <input type="checkbox" name="moveFenceCkb" onClick="javascript:dashboardHelper.setGuardOption('moveFence','${childArea.areaId}',this);">
+                                                <input type="checkbox" name="moveFenceCkb" onClick="javascript:dashboardHelper.setGuardOption('moveFenceHide','${childArea.areaId}',this);">
                                                 <label></label>
                                             </div>
                                         </div>

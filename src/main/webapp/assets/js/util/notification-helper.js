@@ -269,6 +269,7 @@ var NotificationHelper = (
          */
         var _failureHandler = function(XMLHttpRequest, textStatus, errorThrown, actionType){
             if(XMLHttpRequest['status']!="0"){
+                setLoading('noti', false);
                 _alertMessage(actionType + 'Failure');
             }
         };

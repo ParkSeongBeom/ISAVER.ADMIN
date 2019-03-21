@@ -66,7 +66,7 @@ var CustomMapMediator = (
                 , 'rotate': null // 회전시 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
-                , 'moveFence': true // 이벤트 발생시 펜스로 이동 기능
+                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 기능
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
@@ -153,10 +153,10 @@ var CustomMapMediator = (
                 _element.find("input[name='pointsCkb']").prop("checked",_options['object']['pointsHideFlag']);
             }
 
-            var moveFenceFlag = $.cookie(areaId+"moveFenceFlag");
-            if(moveFenceFlag != null && moveFenceFlag.length > 0){
-                _options['custom']['moveFence'] = moveFenceFlag == "true";
-                _element.find("input[name='moveFenceCkb']").prop("checked",_options['custom']['moveFence']);
+            var moveFenceHideFlag = $.cookie(areaId+"moveFenceHideFlag");
+            if(moveFenceHideFlag != null && moveFenceHideFlag.length > 0){
+                _options['custom']['moveFenceHide'] = moveFenceHideFlag == "true";
+                _element.find("input[name='moveFenceCkb']").prop("checked",_options['custom']['moveFenceHide']);
             }
 
             for(var index in options){
@@ -282,7 +282,7 @@ var CustomMapMediator = (
          * set guard option
          * objectView : 전체보기/사람만보기
          * pointsHide : 트래킹 잔상 보기/숨기기
-         * moveFence : 이벤트 발생시 펜스로 이동
+         * moveFenceHideFlag : 이벤트 발생시 펜스로이동/이동안함
          * @author psb
          */
         this.setGuardOption = function(actionType, flag){
@@ -300,9 +300,9 @@ var CustomMapMediator = (
                     _options['object']['pointsHideFlag'] = flag;
                     $.cookie(_areaId+'pointsHideFlag',flag);
                     break;
-                case "moveFence" :
-                    _options['custom']['moveFence'] = flag;
-                    $.cookie(_areaId+'moveFenceFlag',flag);
+                case "moveFenceHide" :
+                    _options['custom']['moveFenceHide'] = flag;
+                    $.cookie(_areaId+'moveFenceHideFlag',flag);
                     break;
             }
         };
@@ -867,7 +867,7 @@ var CustomMapMediator = (
         };
 
         this.moveFence = function(actionType, data){
-            if(_options['custom']['moveFence']){
+            if(_options['custom']['moveFenceHide']){
                 return false;
             }
 
@@ -942,8 +942,10 @@ var CustomMapMediator = (
 
             var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
             if(fenceMarker!=null){
+                let detectText = null;
                 switch (actionType){
                     case "add" :
+                        detectText = data['eventName']+' - '+data['fenceName'];
                         if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                             fenceMarker['notification'][criticalLevel].push(data['objectId']);
                         }
@@ -970,7 +972,9 @@ var CustomMapMediator = (
 
                 if(fenceMarker['copyBoxElement']!=null){
                     if(detectCnt>0){
-                        fenceMarker['copyBoxElement'].find("p[name='detectText']").text(data['eventName']+' - '+data['fenceName']);
+                        if(detectText!=null){
+                            fenceMarker['copyBoxElement'].find("p[name='detectText']").text(detectText);
+                        }
                         fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
                         fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
                     }else{
