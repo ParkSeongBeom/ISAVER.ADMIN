@@ -127,7 +127,10 @@
 
             // 타이틀에 텍스트 맵핑
             $.each($("table.t_type01 > tbody > tr > td"),function(){
-                $(this).attr("title",$(this).text().trim());
+                var text = $(this).contents().not($(this).children()).text().trim();
+                if(text!=""){
+                    $(this).attr("title",text);
+                }
             });
 
             if(subMenuId == "100000"){

@@ -158,18 +158,24 @@
                                 <td><fmt:formatDate value="${notification.confirmDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td>${notification.cancelUserName}</td>
                                 <td><fmt:formatDate value="${notification.cancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                <td <c:if test="${notification.cancelUserId!=null}">class="eventdetail_btn" onclick="javascript:openCancelDescPopup(this);"</c:if>>
-                                    <textarea name="cancelDesc" style="display:none;">${notification.cancelDesc}</textarea>
+                                <td>
+                                    <c:if test="${notification.cancelUserId!=null}">
+                                        <button class="eventdetail_btn" onclick="javascript:openCancelDescPopup(this);"></button>
+                                        <textarea disabled="disabled" style="display:none;">${notification.cancelDesc}</textarea>
+                                    </c:if>
                                 </td>
-                                <td <c:if test="${notification.trackingJson!=null}">class="eventdetail_btn" onclick="javascript:openTrackingHistoryPopup('${notification.areaId}','${notification.deviceId}','${notification.objectId}',this);"</c:if>>
-                                    <textarea name="trackingJson" style="display:none;">${notification.trackingJson}</textarea>
+                                <td>
+                                    <c:if test="${notification.trackingJson!=null}">
+                                        <button class="eventdetail_btn" onclick="javascript:openTrackingHistoryPopup('${notification.areaId}','${notification.deviceId}','${notification.objectId}',this);"></button>
+                                        <textarea disabled="disabled" style="display:none;">${notification.trackingJson}</textarea>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="10"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="11"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -278,7 +284,7 @@
      @author psb
      */
     function openCancelDescPopup(_this){
-        $("#cancelDescText").text($(_this).find("[name='cancelDesc']").text());
+        $("#cancelDescText").text($(_this).next().text());
         $(".eventdetail_popup").fadeIn();
     }
 
@@ -289,6 +295,7 @@
     function openTrackingHistoryPopup(areaId, deviceId, objectId, _this){
         $(".map_pop").fadeIn();
 
+        var trackingJson = JSON.parse($(_this).next().text());
         customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
         try{
             customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
@@ -299,7 +306,6 @@
                     ,'fenceView' : true
                     ,'openLinkFlag': false
                     ,'onLoad' : function(){
-                        var trackingJson = JSON.parse($(_this).find("[name='trackingJson']").text());
                         if(trackingJson!=null) {
                             for(var index in trackingJson){
                                 var marker = {
@@ -316,7 +322,7 @@
                 }
                 ,'object' :{
                     'pointsHideFlag' : false
-                    ,'pointShiftCnt' : 9999
+                    ,'pointShiftCnt' : null
                 }
             });
         }catch(e){

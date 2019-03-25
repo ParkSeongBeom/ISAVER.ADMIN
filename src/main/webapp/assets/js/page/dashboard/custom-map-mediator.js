@@ -53,7 +53,7 @@ var CustomMapMediator = (
             }
             ,'object' : {
                 'pointsHideFlag' : false // 트래킹 이동경로 숨김여부
-                ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수
+                ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수 null일경우 무제한
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
@@ -754,7 +754,7 @@ var CustomMapMediator = (
                             }else{
                                 points = _marker[messageType][data['deviceId']][data['id']]['points'];
                                 points.push(left+","+top);
-                                if(points.length > _options['object']['pointShiftCnt']){
+                                if(_options['object']['pointShiftCnt']!=null && points.length > _options['object']['pointShiftCnt']){
                                     points.shift();
                                 }
                             }

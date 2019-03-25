@@ -1362,6 +1362,8 @@ a.fc-more {position: relative; z-index: 2;}
     & > div, ul li > div , ul li button, .camera_list ul li, .fence_list > div, .fence_list p, .camera_list > div
     {@include flexbase; @include flex-align-items-center;}
 
+    h3, h3 + div, h3 ~ ul {padding: 0 $ch_margin 0 ($ch_margin - 5px);}
+
     & > div {
       /*
       <div>
@@ -1380,7 +1382,6 @@ a.fc-more {position: relative; z-index: 2;}
 
     ul {
       overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
-      padding: 0 $ch_margin 0 ($ch_margin - 5px);
 
       li {
         min-height:60px;
@@ -1947,16 +1948,23 @@ a.fc-more {position: relative; z-index: 2;}
 
 
 //이벤트 이력 관리 테이블
-.eventlog_col col {
-  &:nth-of-type(1) {width:10%;}    // 1 구역명
-  &:nth-of-type(2) {width:110px;}  // 2 이벤트구분
-  &:nth-of-type(3) {width:250px;}  // 3 장치명
-  &:nth-of-type(4) {width:160px;}  // 4 이벤트발생일시
-  &:nth-of-type(5) {width:250px;}  // 5 이벤트명
-  &:nth-of-type(6) {width:100px;}  // 6 임계치레벨map_sett_box
-  &:nth-of-type(7) {width:120px;}  // 7 이벤트해제자
-  &:nth-of-type(8) {width:auto;}  // 8 이벤트해지일시map_sett_box
-  &:nth-of-type(9) {width:auto;}   // 9 이벤트해지사유
+.notification_col {
+  colgroup  {
+    col {
+      &:nth-of-type(1)  {width:180px;}    // 1 알림발생일시
+      &:nth-of-type(2)  {width:auto;}  // 2 구역명
+      &:nth-of-type(3)  {width:auto;}  // 3 장치구분
+      &:nth-of-type(4)  {width:auto;}  // 4 이벤트명
+      &:nth-of-type(5)  {width:105px;}  // 5 임계치레벨
+      &:nth-of-type(6)  {width:90px;}  // 6 확인자
+      &:nth-of-type(7)  {width:180px;}  // 7 확인일시
+      &:nth-of-type(8)  {width:90px;}   // 8 해지자
+      &:nth-of-type(9)  {width:180px;}   // 9 해지일시
+      &:nth-of-type(10) {width:90px;}   // 10 해지사유
+      &:nth-of-type(11) {width:90px;}   // 10 이동경로
+    }
+  }
+
 }
 
 // 코드관리 상세
@@ -1973,7 +1981,7 @@ a.fc-more {position: relative; z-index: 2;}
 
 .eventdetail {padding-right:50px !important;}
 .eventdetail_btn {
-  @include flex-midddle; position: absolute; right:0; top:0; /*width:50px;*/ height:100%;
+  @include flex-midddle; width:100%; height:100%;
   &:hover:before {color:$color-ho;}
   &:before{content:"\e925"; font-size:1.5rem;}
 }
