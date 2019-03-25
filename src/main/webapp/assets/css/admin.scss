@@ -634,6 +634,146 @@ $critical_w03 : 150px;
 // 임계치 관리 UI (현재 적용)
 .critical-ui {
 
+  $criwidth:50px;
+
+  @mixin buwidth {
+    width:$criwidth; height:$criwidth; min-width:$criwidth; min-height:$criwidth;
+    max-width:$criwidth; max-height:$criwidth; @include flex-option(1, 0, $criwidth);
+  } // @include buwidth;
+  @mixin buheight {height:$criwidth; min-height:$criwidth; max-height:$criwidth;} // @include buheight;
+  @mixin critical-rotate($deg,$scale,$trans) {
+    -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
+    transform:        rotateX($deg) scale($scale) translateX($trans);
+  } // @include critical-rotate(20deg,.95,5px);
+
+  @include flexbase; position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
+
+  & > section {
+    @include flexbase; @include flex-column; @include flex-width-one(1);
+    overflow: hidden; position: relative; height:100%;
+
+    &:before {@include bbl(0,0,0,auto,1px,100%,$color-gray-01);}
+
+    & > * {width:100%;  padding:0 ($criwidth - 20px);}
+
+    h5, li > div, li > div > p {position: relative; @include flexbase;}
+
+    h5, li {@include flex-row-wrap; min-height:$criwidth; }
+
+    h5 {
+      @include flex-align-items-center; @include flex-justify-content-between;
+      font-size:1.1rem; margin:0 0 20px 0;
+
+      & > button {
+        @include buwidth; @include btn-normal-action;
+        &:first-of-type {margin-left:auto;}
+        &.on ~ .zoom-box {
+          display: inline-block; background-color: $color-on; @include translate3d(0, -($criwidth), 0); z-index: 10;
+
+        }
+      }
+
+    }
+
+    h5 + * {@include flex-width-one(1); overflow: auto;}
+
+    li {
+      margin:0 0 10px 0; @include perspective01(1000px, 250%, 100%); cursor:pointer;
+
+      & > div {
+        @include flex-row-wrap; @include critical-rotate(20deg,.95,5px);
+
+        &, &:before {@include transition01(200ms);}
+
+        &:before, &:after {content:""; position: absolute;}
+        &:before {
+          opacity: 0.5;  z-index:-1; width:100%; height:100%;
+          @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
+        }
+        &:after {
+          opacity: 0; top:16px; right:-($criwidth - 20px); width:0; height:0;
+          @include triangle-lef(10px 10px 10px 0,$color-dark-01);
+        }
+
+        & * {color:$color-white-01;}
+
+        & > p {
+          @include flex-align-items-center; @include flex-width-one(1);
+          height:$criwidth; padding:0 10px;
+        }
+
+        & > button {
+          display: none;
+          @include btn-critical-action; @include buwidth;
+          &.on ~ .zoom-box {display: inline-block;}
+        }
+
+      }
+
+      &:hover, &.on, &.check { & > div { &:before {opacity: 1;} } }
+
+      &.on, &.show {
+        & > div {
+          & > button {display: block;}
+          &:after {opacity: 1;}
+          @include critical-rotate(0deg,1,0);
+        }
+      }
+
+      &.level {
+        &-danger,&-warning,&-caution,&-die,&-end {background-color: transparent !important;}
+        &-danger  {& > div:before {background-color: $color-danger;} }
+        &-warning {& > div:before {background-color: $color-warning;} }
+        &-caution {& > div:before {background-color: $color-caution;} }
+        &-die     {& > div:before {background-color: $color-die;} }
+        &-end     {& > div:before {background-color: $color-end;} }
+      }
+
+      .btn-check {@include checkbtn-01; @include buwidth; }
+    }
+  }
+
+  .zoom-box {
+    display: none; width:100%; min-width:100%; padding:10px; @include placeholder-white;
+    & > * {width:100%;}
+    & * {color:$color-white-01;}
+    p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
+    input, select {
+      border-width:0 0 1px 0; border-color:$color-white-01;
+      background-color: transparent; padding:0; margin:0 0 30px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+    }
+    select {
+      background-image: url(../images/ico/select_allow_w.svg);
+      option { background-color: $bas-color; }
+    }
+
+    button {@include btn-critical-action; @include translate3d(10px, -10px, 0);}
+
+    .checkbox_set { &, & * {margin:0;} }
+
+    .cycle-setting {
+      &, & > div {@include flexbase; @include flex-align-items-center;}
+      @include flex-justify-content-between; height:40px; margin:0 0 20px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+      input, select {width:auto; margin:0 2px; width:35px; text-align: center; }
+      .checkbox_set {@include scale(0.9); left:-5px; top:4px;}
+    }
+
+
+  }
+
+  .critical {
+    &-event {
+      & > * {padding-left:0;}
+      //@include flex-width-one(1.5);
+      select {width:100%; height:$criwidth; margin:0 0 20px 0;}
+      button {height:$criwidth; }
+    }
+    &-criti {}
+    &-detec, &-objec { li > div:before {background-color: $color-dark-01;} }
+    &-objec { li > div:after {display: none;}}
+  }
 }
 
 //구역 디바이스 관리

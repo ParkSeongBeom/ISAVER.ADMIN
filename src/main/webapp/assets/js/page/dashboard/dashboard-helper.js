@@ -207,11 +207,13 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
-                                'websocketSend':false
-                                ,'fenceView':true
-                                ,'openLinkFlag':false
-                                ,'click':function(targetId,deviceCode){
-                                    if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
+                                'custom' : {
+                                    'websocketSend':false
+                                    ,'fenceView':true
+                                    ,'openLinkFlag':false
+                                    ,'click':function(targetId,deviceCode){
+                                        if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
+                                    }
                                 }
                             });
                         }

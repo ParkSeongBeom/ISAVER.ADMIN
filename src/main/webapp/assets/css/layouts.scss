@@ -998,7 +998,7 @@ menu {
 
   &-caution {
     background-color: rgba($color-caution,1);
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-caution,1);}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-caution,1) !important;}
 
     .safeeye_set .s_lbox {color:$color-caution; &:after {border-color:$color-caution;} }
 
@@ -1012,7 +1012,7 @@ menu {
   } // .level-caution 주의
 
   &-warning {
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-warning,1);}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-warning,1) !important;}
 
     .safeeye_set .s_lbox {color:$color-warning; &:after {border-color:$color-warning;} }
 

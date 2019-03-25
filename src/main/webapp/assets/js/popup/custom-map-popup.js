@@ -158,122 +158,173 @@ var CustomMapPopup = (
                 _customMapMediator.setElement(_element, _element.find("#mapElement"));
                 _customMapMediator.setMessageConfig(_messageConfig);
                 _customMapMediator.init(areaId,{
-                    'draggable' : true
-                    ,'resizable' : true
-                    ,'fenceView' : true
-                    ,'openLinkFlag': false
-                    ,'onLoad' : function(actionType,data){
-                        switch (actionType){
-                            case 'childList' :
-                                _element.find("#childList").empty();
-                                _cameraSelectTag = $("<select/>",{name:"selCamera"}).append(
-                                    $("<option/>",{value:""}).text("Choice Camera")
-                                );
+                    'custom' : {
+                        'draggable': true
+                        , 'resizable': true
+                        , 'fenceView': true
+                        , 'openLinkFlag': false
+                        , 'childListLoad': function (data) {
+                            _element.find("#childList").empty();
+                            _cameraSelectTag = $("<select/>", {name: "selCamera"}).append(
+                                $("<option/>", {value: ""}).text("Choice Camera")
+                            );
 
-                                for(var index in data){
-                                    var target = data[index];
-                                    if(target['deviceCode']=="DEV002"){
-                                        _cameraSelectTag.append(
-                                            $("<option/>",{value:target['targetId']}).text(target['targetName'])
-                                        );
-                                    }
-
-                                    var targetElement = $("<li/>",{targetId:target['targetId'],deviceCode:target['deviceCode']}).append(
-                                        $("<div/>",{name:"custom"}).append(
-                                            $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).click({targetId:target['targetId'],deviceCode:target['deviceCode']},function(evt){
-                                                _customMapMediator.targetRender({targetId:evt.data.targetId, deviceCode:evt.data.deviceCode});
-                                            })
-                                        ).append(
-                                            $("<div/>").append(
-                                                $("<input/>",{type:'checkbox',name:'useYn',checked:target['useYn']=='Y'}).click({targetId:target['targetId']},function(evt){
-                                                    _checkChildTarget(evt.data.targetId, $(this).is(":checked"));
-                                                })
-                                            ).append(
-                                                $("<label/>")
-                                            )
-                                        )
+                            for (var index in data) {
+                                var target = data[index];
+                                if (target['deviceCode'] == "DEV002") {
+                                    _cameraSelectTag.append(
+                                        $("<option/>", {value: target['targetId']}).text(target['targetName'])
                                     );
-                                    _element.find("#childList").append(targetElement);
-
-                                    if(target['deviceCode']=="DEV013" && target['mainFlag']=="Y" && targetElement.find("#addSection").length==0){
-                                        targetElement.append(
-                                            $("<section/>",{id:"addSection"}).append(
-                                                $("<button/>",{class:"btn-add"}).click({deviceId:target['targetId']},function(evt){
-                                                    _self.addFence(null,evt.data.deviceId);
-                                                })
-                                            )
-                                        );
-                                    }
                                 }
-                                break;
-                            case 'addFence' :
-                                var targetTag = _element.find("#childList > li[targetId='"+data['deviceId']+"']");
-                                var cameraSelectTag = _cameraSelectTag.clone();
-                                cameraSelectTag.attr("uuid",data['uuid']).on("change",function(){
-                                    var selectedOption = $(this).find("option:selected");
-                                    if(selectedOption.val()!=""){
-                                        $(this).after(
-                                            $("<div/>").append(
-                                                $("<button/>",{class:"btn-cam"}).text(selectedOption.text())
-                                            ).append(
-                                                $("<button/>",{class:"btn-del",name:"fenceDevice",uuid:$(this).attr("uuid"),deviceId:selectedOption.val()}).on("click",function(){
-                                                    $(this).parent().parent().find("select option[value='"+$(this).attr("deviceId")+"']").prop("disabled",false);
-                                                    $(this).parent().remove();
-                                                })
-                                            )
-                                        );
-                                        selectedOption.prop("disabled",true);
-                                    }
-                                    $(this).val("");
-                                });
 
-                                var fenceElement = $("<section/>",{fenceId:data['fenceId'],deviceId:data['deviceId']}).append(
-                                    $("<div/>",{class:"fence_list"}).append(
-                                        $("<div/>",{class:"fence_title"}).append(
-                                            $("<p/>").text(data['fenceId'])
-                                        ).append(
-                                            $("<button/>",{class:"btn-edi"}).click({fenceId:data['fenceId'],deviceId:data['deviceId']},function(evt){
-                                                _self.addFence(evt.data.fenceId,evt.data.deviceId);
-                                            })
-                                        ).append(
-                                            $("<button/>",{class:"btn-del"}).click({fenceId:data['fenceId'],deviceId:data['deviceId']},function(evt){
-                                                if(!validate()){ return false; }
-                                                _self.resetAddFenceInfo();
-                                                _customMapMediator.removeMarker('fence',{deviceId:evt.data.deviceId,id:evt.data.fenceId});
-                                            })
-                                        )
+                                var targetElement = $("<li/>", {
+                                    targetId: target['targetId'],
+                                    deviceCode: target['deviceCode']
+                                }).append(
+                                    $("<div/>", {name: "custom"}).append(
+                                        $("<button/>").text(target['targetName']).addClass(_markerClass[target['deviceCode']]).click({
+                                            targetId: target['targetId'],
+                                            deviceCode: target['deviceCode']
+                                        }, function (evt) {
+                                            _customMapMediator.targetRender({
+                                                targetId: evt.data.targetId,
+                                                deviceCode: evt.data.deviceCode
+                                            });
+                                        })
                                     ).append(
-                                        $("<div/>",{class:"fence_name"}).append(
-                                            $("<input/>",{type:'text',name:'fenceName',value:data['fenceName'],maxlength:"50"}).change({deviceId:data['deviceId'],fenceId:data['fenceId']},function(evt){
-                                                _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, $(this).val());
+                                        $("<div/>").append(
+                                            $("<input/>", {
+                                                type: 'checkbox',
+                                                name: 'useYn',
+                                                checked: target['useYn'] == 'Y'
+                                            }).click({targetId: target['targetId']}, function (evt) {
+                                                _checkChildTarget(evt.data.targetId, $(this).is(":checked"));
                                             })
                                         ).append(
-                                            $("<select/>",{name:'fenceType'}).append(
-                                                $("<option/>",{value:'normal',selected:data['fenceType']=='normal'}).text("normal")
-                                            ).append(
-                                                $("<option/>",{value:'ignore',selected:data['fenceType']=='ignore'}).text("ignore")
-                                            ).change({deviceId:data['deviceId'],fenceId:data['fenceId']},function(evt){
-                                                _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, null, $(this).val());
-                                            })
+                                            $("<label/>")
                                         )
                                     )
-                                ).append(
-                                    $("<div/>",{class:"camera_list"}).append(cameraSelectTag)
                                 );
-                                fenceElement.insertBefore(targetTag.find("#addSection"));
-                                _ajaxCall("fenceDeviceList",{areaId:_areaId, uuid:data['uuid']});
-                                break;
-                            case 'removeFence' :
-                                _element.find("#childList > li[targetId='"+data['deviceId']+"'] section[fenceId='"+data['fenceId']+"']").remove();
-                                break;
+                                _element.find("#childList").append(targetElement);
+
+                                if (target['deviceCode'] == "DEV013" && target['mainFlag'] == "Y" && targetElement.find("#addSection").length == 0) {
+                                    targetElement.append(
+                                        $("<section/>", {id: "addSection"}).append(
+                                            $("<button/>", {class: "btn-add"}).click({deviceId: target['targetId']}, function (evt) {
+                                                _self.addFence(null, evt.data.deviceId);
+                                            })
+                                        )
+                                    );
+                                }
+                            }
                         }
-                    }
-                    ,'change' : function(data){
-                        _checkChildTarget(data['targetId'], data['useYn']=='Y');
-                        _updateTargetValue(data);
-                    }
-                    ,'rotate' : function(data){
-                        _element.find("input[name='rotate']").val(data);
+                        , 'changeFence': function (actionType, data) {
+                            switch (actionType) {
+                                case 'add' :
+                                    var targetTag = _element.find("#childList > li[targetId='" + data['deviceId'] + "']");
+                                    var cameraSelectTag = _cameraSelectTag.clone();
+                                    cameraSelectTag.attr("uuid", data['uuid']).on("change", function () {
+                                        var selectedOption = $(this).find("option:selected");
+                                        if (selectedOption.val() != "") {
+                                            $(this).after(
+                                                $("<div/>").append(
+                                                    $("<button/>", {class: "btn-cam"}).text(selectedOption.text())
+                                                ).append(
+                                                    $("<button/>", {
+                                                        class: "btn-del",
+                                                        name: "fenceDevice",
+                                                        uuid: $(this).attr("uuid"),
+                                                        deviceId: selectedOption.val()
+                                                    }).on("click", function () {
+                                                        $(this).parent().parent().find("select option[value='" + $(this).attr("deviceId") + "']").prop("disabled", false);
+                                                        $(this).parent().remove();
+                                                    })
+                                                )
+                                            );
+                                            selectedOption.prop("disabled", true);
+                                        }
+                                        $(this).val("");
+                                    });
+
+                                    var fenceElement = $("<section/>", {
+                                        fenceId: data['fenceId'],
+                                        deviceId: data['deviceId']
+                                    }).append(
+                                        $("<div/>", {class: "fence_list"}).append(
+                                            $("<div/>", {class: "fence_title"}).append(
+                                                $("<p/>").text(data['fenceId'])
+                                            ).append(
+                                                $("<button/>", {class: "btn-edi"}).click({
+                                                    fenceId: data['fenceId'],
+                                                    deviceId: data['deviceId']
+                                                }, function (evt) {
+                                                    _self.addFence(evt.data.fenceId, evt.data.deviceId);
+                                                })
+                                            ).append(
+                                                $("<button/>", {class: "btn-del"}).click({
+                                                    fenceId: data['fenceId'],
+                                                    deviceId: data['deviceId']
+                                                }, function (evt) {
+                                                    if (!validate()) {
+                                                        return false;
+                                                    }
+                                                    _self.resetAddFenceInfo();
+                                                    _customMapMediator.removeMarker('fence', {
+                                                        deviceId: evt.data.deviceId,
+                                                        id: evt.data.fenceId
+                                                    });
+                                                })
+                                            )
+                                        ).append(
+                                            $("<div/>", {class: "fence_name"}).append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'fenceName',
+                                                    value: data['fenceName'],
+                                                    maxlength: "50"
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, $(this).val());
+                                                })
+                                            ).append(
+                                                $("<select/>", {name: 'fenceType'}).append(
+                                                    $("<option/>", {
+                                                        value: 'normal',
+                                                        selected: data['fenceType'] == 'normal'
+                                                    }).text("normal")
+                                                ).append(
+                                                    $("<option/>", {
+                                                        value: 'ignore',
+                                                        selected: data['fenceType'] == 'ignore'
+                                                    }).text("ignore")
+                                                ).change({
+                                                        deviceId: data['deviceId'],
+                                                        fenceId: data['fenceId']
+                                                    }, function (evt) {
+                                                        _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, null, $(this).val());
+                                                    })
+                                            )
+                                        )
+                                    ).append(
+                                        $("<div/>", {class: "camera_list"}).append(cameraSelectTag)
+                                    );
+                                    fenceElement.insertBefore(targetTag.find("#addSection"));
+                                    _ajaxCall("fenceDeviceList", {areaId: _areaId, uuid: data['uuid']});
+                                    break;
+                                case 'remove' :
+                                    _element.find("#childList > li[targetId='" + data['deviceId'] + "'] section[fenceId='" + data['fenceId'] + "']").remove();
+                                    break;
+                            }
+                        }
+                        , 'change': function (data) {
+                            _checkChildTarget(data['targetId'], data['useYn'] == 'Y');
+                            _updateTargetValue(data);
+                        }
+                        , 'rotate': function (data) {
+                            _element.find("input[name='rotate']").val(data);
+                        }
                     }
                 });
             }catch(e){

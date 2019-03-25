@@ -47,6 +47,8 @@ public class NotificationBean extends ISaverCommonBean {
     private String cancelDesc;
     /* 임계치레벨 */
     private String criticalLevel;
+    /* 이벤트 트래킹 Json data */
+    private String trackingJson;
     /* value */
     private Double value;
 
@@ -288,5 +290,13 @@ public class NotificationBean extends ISaverCommonBean {
 
     public void setFenceName(String fenceName) {
         this.fenceName = fenceName;
+    }
+
+    public String getTrackingJson() {
+        return trackingJson;
+    }
+
+    public void setTrackingJson(String trackingJson) {
+        this.trackingJson = trackingJson;
     }
 }

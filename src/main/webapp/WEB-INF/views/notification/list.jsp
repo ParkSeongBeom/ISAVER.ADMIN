@@ -8,6 +8,11 @@
 <c:set value="2B0010" var="menuId"/>
 <c:set value="2B0000" var="subMenuId"/>
 
+<script src="${rootPath}/assets/js/popup/custom-map-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+<script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
+
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
 <section class="container sub_area">
@@ -37,6 +42,26 @@
             </div>
         </div>
         <div class="bg ipop_close" onclick="closeCancelDescPopup();"></div>
+    </div>
+
+    <!-- 트래킹이력 팝업 -->
+    <div class="popupbase map_pop">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="notification.title.trackingHistory"/></h2>
+                    <button onclick="javascript:closeTrackingHistoryPopup();"></button>
+                </header>
+                <article class="map_sett_box">
+                    <section class="map">
+                        <div>
+                            <div id="mapElement" class="map_images"></div>
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="javascript:closeTrackingHistoryPopup();"></div>
     </div>
 
     <form id="eventLogForm" method="POST">
@@ -98,6 +123,7 @@
                     <col> <!-- 8 해제자-->
                     <col> <!-- 9 해제일시 -->
                     <col> <!-- 10 해제사유 -->
+                    <col> <!-- 11 트래킹보기 -->
                 </colgroup>
                 <thead>
                 <tr>
@@ -111,6 +137,7 @@
                     <th><spring:message code="notification.column.cancelUserName"/></th>
                     <th><spring:message code="notification.column.cancelDatetime"/></th>
                     <th><spring:message code="notification.column.cancelDesc"/></th>
+                    <th><spring:message code="notification.column.trackingJson"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -134,6 +161,9 @@
                                 <td <c:if test="${notification.cancelUserId!=null}">class="eventdetail_btn" onclick="javascript:openCancelDescPopup(this);"</c:if>>
                                     <textarea name="cancelDesc" style="display:none;">${notification.cancelDesc}</textarea>
                                 </td>
+                                <td <c:if test="${notification.trackingJson!=null}">class="eventdetail_btn" onclick="javascript:openTrackingHistoryPopup('${notification.areaId}','${notification.deviceId}','${notification.objectId}',this);"</c:if>>
+                                    <textarea name="trackingJson" style="display:none;">${notification.trackingJson}</textarea>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:when>
@@ -156,6 +186,7 @@
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
     var form = $('#eventLogForm');
+    var customMapMediator;
 
     var messageConfig = {
         'earlyDatetime':'<spring:message code="notification.message.earlyDatetime"/>'
@@ -250,6 +281,57 @@
         $("#cancelDescText").text($(_this).find("[name='cancelDesc']").text());
         $(".eventdetail_popup").fadeIn();
     }
+
+    /*
+     open 이동경로 이력 popup
+     @author psb
+     */
+    function openTrackingHistoryPopup(areaId, deviceId, objectId, _this){
+        $(".map_pop").fadeIn();
+
+        customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
+        try{
+            customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
+//            customMapMediator.setMessageConfig(_messageConfig);
+            customMapMediator.init(areaId,{
+                'custom' : {
+                    'draggable' : true
+                    ,'fenceView' : true
+                    ,'openLinkFlag': false
+                    ,'onLoad' : function(){
+                        var trackingJson = JSON.parse($(_this).find("[name='trackingJson']").text());
+                        if(trackingJson!=null) {
+                            for(var index in trackingJson){
+                                var marker = {
+                                    'areaId' : areaId
+                                    ,'deviceId' : deviceId
+                                    ,'objectType' : 'human'
+                                    ,'id' : objectId
+                                    ,'location' : trackingJson[index]
+                                };
+                                customMapMediator.saveMarker('object', marker);
+                            }
+                        }
+                    }
+                }
+                ,'object' :{
+                    'pointsHideFlag' : false
+                    ,'pointShiftCnt' : 9999
+                }
+            });
+        }catch(e){
+            console.error("[openTrackingHistoryPopup] custom map mediator init error - "+ e.message);
+        }
+    }
+
+    /*
+     close 이동경로 이력 popup
+     @author psb
+     */
+    function closeTrackingHistoryPopup(){
+        $(".map_pop").fadeOut();
+    }
+
 
     /*
      close 이벤트 해제사유 popup

@@ -61,6 +61,8 @@ var CustomMapMediator = (
                 , 'nameView': true // 이름 표시 여부
                 , 'websocketSend': false // getdevice 요청 여부
                 , 'fenceView': false // fence 표시 여부
+                , 'childListLoad': null // List load eventHandler
+                , 'changeFence': null // fence change eventHandler
                 , 'onLoad': null // List load eventHandler
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
                 , 'rotate': null // 회전시 eventHandler
@@ -159,9 +161,11 @@ var CustomMapMediator = (
                 _element.find("input[name='moveFenceCkb']").prop("checked",_options['custom']['moveFenceHide']);
             }
 
-            for(var index in options){
-                if(_options['custom'].hasOwnProperty(index)){
-                    _options['custom'][index] = options[index];
+            for(var i in options){
+                if(_options.hasOwnProperty(i)){
+                    for(var index in options[i]){
+                        _options[i][index] = options[i][index];
+                    }
                 }
             }
             _ajaxCall('list',{areaId:_areaId,deviceCodes:_customDeviceCode.toString()});
@@ -700,8 +704,8 @@ var CustomMapMediator = (
                                 });
                             }
 
-                            if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
-                                _options['custom']['onLoad']('addFence',_marker[messageType][data['deviceId']][data['id']]['data']);
+                            if(_options['custom']['changeFence']!=null && typeof _options['custom']['changeFence'] == "function"){
+                                _options['custom']['changeFence']('add',_marker[messageType][data['deviceId']][data['id']]['data']);
                             }
                         }
 
@@ -823,8 +827,8 @@ var CustomMapMediator = (
                     if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
                         if(_marker[messageType][data['deviceId']][data['id']]['element']!=null) _marker[messageType][data['deviceId']][data['id']]['element'].remove();
                         if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
-                        if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
-                            _options['custom']['onLoad']('removeFence',_marker[messageType][data['deviceId']][data['id']]['data']);
+                        if(_options['custom']['changeFence']!=null && typeof _options['custom']['changeFence'] == "function"){
+                            _options['custom']['changeFence']('remove',_marker[messageType][data['deviceId']][data['id']]['data']);
                         }
                         delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
@@ -1113,14 +1117,18 @@ var CustomMapMediator = (
                         setDefsMarkerRef(data['templateSetting'], data['iconFileList']);
                     }
                     _self.setBackgroundImage(data['area']['physicalFileName']);
-                    if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
-                        _options['custom']['onLoad']('childList',data['childList']);
+                    if(_options['custom']['childListLoad']!=null && typeof _options['custom']['childListLoad'] == "function"){
+                        _options['custom']['childListLoad'](data['childList']);
                     }
                     var childList = data['childList'];
                     for(var index in childList){
                         _self.targetRender(childList[index]);
                     }
                     _self.setRotate("directInput", data['area']['rotate']);
+
+                    if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
+                        _options['custom']['onLoad']();
+                    }
                     break;
                 case 'fenceList':
                     var fenceList = data['fenceList'];

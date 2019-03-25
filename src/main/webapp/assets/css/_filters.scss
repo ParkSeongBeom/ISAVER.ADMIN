@@ -43,11 +43,21 @@ $ks_ssize:($ks_bsize / 4.5);
 위험 : 빨강  $color-red-01     level-danger
 */
 
-
 // 기본 색상
-$bas-color:#3c3c3c; //rgba(76,76,76,1)     데시보드 기본 bg
+$bas-color:#535353; //rgba(83,83,83,1)     데시보드 기본 bg
 $adm-color:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
-$not-color:#0f0e13; //rgba(15,14,19,1)     알림센터 기본 bg
+$not-color:#393939; //rgba(15,14,19,1)   #0f0e13   알림센터 기본 bg
+
+$color-caution:#d2a01e;   // rgba(160,210,30,1) 주위
+$color-warning:#f06400;   // rgba(240,100,0,1)  경고
+$color-danger:#c30202;    // rgba(195,2,2,1)    위험
+$color-confirm:#259dcf;
+$color-die:#000; // 통신두절
+$color-end:#25c09b; // 해지
+
+$color-ho:#32a0be; // rgba(0,135,120,1) HOVER, FOCUS
+$color-on:#b42d6e; // rgba(180,45,110,1) ON
+$color-ac:#00af9b; // rgba(0,175,155,1) ACTIVE
 
 $color-gray-01:#a9a9a9;   // rgba(169,169,169,1)  form Normal border-color
 $color-gray-02:#ddd;      // form Dim border-color
@@ -89,6 +99,16 @@ $color-white-01:#fff;     //
 $color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
 
 $hov-color:#040404;   //rgba(20,20,20,1) 구분라인
+
+@mixin level-color {
+  .level {
+    &-danger  {&:before {background-color: $color-danger;} }
+    &-warning {&:before {background-color: $color-warning;} }
+    &-caution {&:before {background-color: $color-caution;} }
+    &-die     {&:before {background-color: $color-die;} }
+    &-end     {&:before {background-color: $color-end;} }
+  }
+} // @include level-color;
 
 
 
@@ -143,6 +163,15 @@ $display-inline-block:inline-block;
 @mixin z-index-header {z-index:30; } //ex) 알림센터 @include z-index-header;
 @mixin z-index-toast  {z-index:40; } //ex) popup @include z-index-toast;
 @mixin z-index-menu   {z-index:50; } //ex) menu @include z-index-menu;
+
+
+@mixin placeholder-white {
+  ::-webkit-input-placeholder {color:rgba(255, 255, 255, 0.4);}
+  ::-moz-placeholder          {color:rgba(255, 255, 255, 0.4);}
+  :-ms-input-placeholder      {color:rgba(255, 255, 255, 0.4);}
+  :-moz-placeholder           {color:rgba(255, 255, 255, 0.4);}
+} // @include placeholder-white;
+
 
 
 @mixin dark_select {
@@ -361,6 +390,11 @@ $display-inline-block:inline-block;
   -moz-transform:rotate3d($x, $y, $z, $deg); -webkit-transform:rotate3d($x, $y, $z, $deg); -o-transform:rotate3d($x, $y, $z, $deg);}
 // ex) @include rotate-3d($x, $y, $z, $deg);
 
+// translate3d
+@mixin translate3d($x, $y, $z){transform:translate3d($x, $y, $z); ms-transform:translate3d($x, $y, $z);
+  -ms-transform:translate3d($x, $y, $z); -moz-transform:translate3d($x, $y, $z); -webkit-transform:translate3d($x, $y, $z);
+  -o-transform:translate3d($x, $y, $z);}
+// ex) @include translate3d($x, $y, $z);
 
 // perspective 설정
 @mixin perspective01($per, $per-x, $per-y){
@@ -447,10 +481,10 @@ $display-inline-block:inline-block;
 @mixin bblheight {width:1px; height:100%;} // ex) @include bblheight;
 $bbl01:100%; $bbl02:1px;
 
-@mixin bbl($top, $right, $bottom, $left, $width, $height) {
-  content:""; position: absolute; z-index:1; background-color: $hov-color;
+@mixin bbl($top, $right, $bottom, $left, $width, $height, $color) {
+  content:""; position: absolute; z-index:1; background-color: $color;
   top:$top; right:$right; bottom:$bottom; left:$left; width:$width; height:$height;
-} //ex) @include bbl(0,0,0,0,0,0);
+} //ex) @include bbl(0,0,0,0,0,0,0);
 
 
 
@@ -469,38 +503,38 @@ $bbl01:100%; $bbl02:1px;
 @mixin line_btn {
   @include border01(2px, $color-gray-01, 1);
   background-color: transparent !important;
-  &:hover {border-color: $color-blue-01 !important; color: $color-blue-01 !important; }
-  &.on {border-color: $color-red-01; color: $color-red-01; }
+  &:hover {border-color: $color-ho !important; color: $color-ho !important; }
+  &.on {border-color: $color-on; color:$color-on; }
 } // ex) @include line_btn;
 
 @mixin line_btn02 {
   @include border01(1px, $color-gray-01, 1);
   background-color: transparent;
-  &:hover {border-color: $color-blue-01 !important;  color: $color-blue-01;}
-  &.on {border-color: $color-blue-01; color: $color-white-01; background-color: $color-blue-01 !important;}
+  &:hover {border-color: $color-ho !important;  color: $color-ho;}
+  &.on {border-color: $color-on; color: $color-white-01; background-color: $color-on !important;}
 } // ex) @include line_btn02;
 
 @mixin box_btn {
   @include btn_font_size; color:$color-white-01;
   background-color: $bas-color; height:40px;
-  &.on {background-color: $color-blue-01;}
-  &:hover {background-color: $color-blue-01 !important;}
+  &.on {background-color: $color-on;}
+  &:hover {background-color: $color-ho !important;}
 } // ex) @include box_btn;
 
 @mixin icon_btn {
   @include length-wh01;
   &:before {font-size:1.6rem; }
   &:hover, &.on {&:before {font-weight:bold;}}
-  &:hover {&:before {color:$color-blue-01;}}
-  &.on    {&:before {color:$color-blue-01;}}
+  &:hover {&:before {color:$color-ho;}}
+  &.on    {&:before {color:$color-on;}}
 } // ex) @include icon_btn;
 
 @mixin layout_btn {
   @include length-wh01;
   &:before {font-size:1.75rem; }//28px
   &:hover, &.on {&:before {font-weight:bold;}}
-  &:hover {&:before {color:$color-blue-01;}}
-  &.on    {&:before {color:$color-blue-01;}}
+  &:hover {&:before {color:$color-ho;}}
+  &.on    {&:before {color:$color-on;}}
 } // ex) @include icon_btn;
 // button base 정의 End
 
@@ -510,7 +544,7 @@ $bbl01:100%; $bbl02:1px;
   float: left; margin:0 10px 0 0; &:last-of-type {margin:0;}
 
   @include border01(1px,$color-white-01,0.7); padding:0 10px;
-  &:hover {border-color:$color-blue-01; &,&:before {color:$color-blue-01;} }
+  &:hover {border-color:$color-ho; &,&:before {color:$color-ho;} }
   &.on { background-color:$color-gray-01; border-color:$color-gray-02; }
 
   &:before {
@@ -523,7 +557,7 @@ $bbl01:100%; $bbl02:1px;
   &:before, &:after {width:100%; height:100%;}
   &:before {@include flex-midddle; position: absolute; z-index:1; top:0; left:0;  font-size:1.4rem; }
   &:after {content:""; display: inline-block;}
-  &:hover:after  {background-color: $color-blue-01;}
+  &:hover:after  {background-color: $color-ho;}
   &:hover:before {color:$color-white-01;}
   &:active:after {background-color: $color-red-01;}
 } //ex) @include btnbase_type01;
@@ -539,6 +573,26 @@ $bbl01:100%; $bbl02:1px;
 } //ex) @include list_more_btn;
 
 
+@mixin btn-action-base {
+  position: relative;
+  &:after, &:before {position: absolute; top:0; left:0; width:100%; height:100%; top:0; left:0; @include transition01(200ms);}
+  &:before {@include flex-midddle; z-index: 1; color:$color-white-01; font-size:1.4rem;}
+  &:after {content:""; z-index: -1;}
+} // @include btn-action-base;
+
+@mixin btn-normal-action {
+  @include btn-action-base;
+  &:after {background-color: $color-dark-01;}
+  &:hover:after {background-color: $color-ho;}
+  &.on:after {background-color: $color-on;}
+} // @include btn-normal-action;
+
+@mixin btn-critical-action {
+  @include btn-action-base;
+  &:after {background-color: transparent;}
+  &:hover:after {background-color: rgba(0,0,0,0.4) !important;}
+  &.on:after {background-color: rgba(0,0,0,0.7) !important;}
+} // @include btn-critical-action;
 
 // webkit-scroll Bar
 
@@ -558,7 +612,6 @@ $bbl01:100%; $bbl02:1px;
   ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09 !important;}
   ::-webkit-scrollbar-thumb {background-color: $bas-color !important; border-color:$color-gray-09 !important; }
 } // ex) @include webkit_scroll_dashboard;
-
 
 
 @mixin webkit_scroll_admin {
@@ -1153,7 +1206,7 @@ $mt_btn_w:40px;
 @mixin tree-line {content:""; position: absolute; background-color:$color-gray-06; }
 
 @mixin tree-hover
-{background-color: $color-blue-01 !important; border-color:transparent; color:#fff !important;}
+{background-color: $color-ho !important; border-color:transparent; color:#fff !important;}
 @mixin tree-on
 {background-color:$color-red-01; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
 @mixin tree-normal
@@ -1264,7 +1317,7 @@ $cslwidth:80px;
 
   & > input, &.on {
     &:checked + label , &.on + label, label {
-      background-color:$color-red-01; border:none;
+      background-color:$color-on; border:none;
       &:before {left:calc(100% - 30px); background-color:$color-white-01;}
       &:after  {right:5px; color:$color-white-01;}
     }
@@ -1306,6 +1359,31 @@ $cslwidth:80px;
     }
   }
 } // @include csl_style04_showhide;
+
+@mixin checkbtn-01 {
+  /*
+  <div class="checkbtn-01">
+    <input type="checkbox" name="">
+    <label class="아이콘클래스 삽입"></label>
+  </div>
+  */
+  position:relative;
+  & > *:not(span) {width:100%; height:100%;}
+  &, label {@include flexbase; @include flex-align-items-center; }
+  input {
+    position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; cursor: pointer;
+    &:hover + label { &:after {opacity: 0.2;} }
+    &:checked + label { &:before {opacity: 1;} &:after {opacity: 1; background-color: $color-on;} }
+  }
+
+  label {
+    position: relative; @include flex-justify-content-center;
+    &:after, &:before {position: absolute; top:0; left:0; width:100%; height:100%; top:0; left:0;}
+    &:before {@include flex-midddle;  z-index: 1; color:$color-white-01; font-size:1.4rem; opacity: 0.6;}
+    &:after  {content:""; z-index: -1; background-color: rgba(0,0,0,1); opacity: 0;}
+  }
+
+} // @include checkbtn-01;
 
 
 @mixin listbase {

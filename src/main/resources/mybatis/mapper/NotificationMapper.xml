@@ -39,6 +39,7 @@
                 , (select user_name from isaver.users where user_id=A.update_user_id) as updateUserName
                 , A.update_datetime as updateDatetime
                 , A.value as value
+                , A.tracking_json as trackingJson
         FROM    isaver.notification as A
         INNER JOIN isaver.area AREA
         ON      A.area_id = AREA.area_id
