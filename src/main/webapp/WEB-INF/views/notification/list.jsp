@@ -166,7 +166,14 @@
                                 </td>
                                 <td>
                                     <c:if test="${notification.trackingJson!=null}">
-                                        <button class="eventdetail_btn" onclick="javascript:openTrackingHistoryPopup('${notification.areaId}','${notification.deviceId}','${notification.objectId}',this);"></button>
+                                        <button class="eventdetail_btn"
+                                                data-notification-id="${notification.notificationId}"
+                                                data-critical-level="${notification.criticalLevel}"
+                                                data-area-id="${notification.areaId}"
+                                                data-device-id="${notification.deviceId}"
+                                                data-object-id="${notification.objectId}"
+                                                data-fence-id="${notification.fenceId}"
+                                                onclick="javascript:openTrackingHistoryPopup(this);"></button>
                                         <textarea disabled="disabled" style="display:none;">${notification.trackingJson}</textarea>
                                     </c:if>
                                 </td>
@@ -292,31 +299,41 @@
      open 이동경로 이력 popup
      @author psb
      */
-    function openTrackingHistoryPopup(areaId, deviceId, objectId, _this){
+    function openTrackingHistoryPopup(_this){
         $(".map_pop").fadeIn();
 
+        var data = $(_this).data();
+        data['objectType'] = 'human';
+        console.log(data);
         var trackingJson = JSON.parse($(_this).next().text());
+
         customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
         try{
             customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
 //            customMapMediator.setMessageConfig(_messageConfig);
-            customMapMediator.init(areaId,{
+            customMapMediator.init(data['areaId'],{
                 'custom' : {
                     'draggable' : true
                     ,'fenceView' : true
-                    ,'openLinkFlag': false
+                    ,'openLinkFlag' : false
+                    ,'moveFenceHide' : false
+                    ,'moveReturn' : false
                     ,'onLoad' : function(){
                         if(trackingJson!=null) {
                             for(var index in trackingJson){
                                 var marker = {
-                                    'areaId' : areaId
-                                    ,'deviceId' : deviceId
+                                    'areaId' : data['areaId']
+                                    ,'deviceId' : data['deviceId']
                                     ,'objectType' : 'human'
-                                    ,'id' : objectId
+                                    ,'id' : data['objectId']
                                     ,'location' : trackingJson[index]
                                 };
                                 customMapMediator.saveMarker('object', marker);
                             }
+
+                            setTimeout(function(){
+                                customMapMediator.setAnimate('add',data['criticalLevel'],data);
+                            },500);
                         }
                     }
                 }

@@ -423,17 +423,17 @@
                                             <div class="device_set">
                                                 <c:forEach var="device" items="${childArea.devices}">
                                                     <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
-                                                         data-deviceId="${device.deviceId}"
-                                                         data-deviceCode="${device.deviceCode}"
-                                                         data-ipAddress="${device.ipAddress}"
+                                                         data-device-id="${device.deviceId}"
+                                                         data-device-code="${device.deviceCode}"
+                                                         data-ip-address="${device.ipAddress}"
                                                          data-port="${device.port}"
-                                                         data-deviceUserId="${device.deviceUserId}"
-                                                         data-devicePassword="${device.devicePassword}"
-                                                         data-subUrl="${device.subUrl}"
-                                                         data-linkUrl="${device.linkUrl}"
-                                                         data-streamServerUrl="${device.streamServerUrl}"
-                                                         data-deviceStat="${device.deviceStat}"
-                                                         data-deviceName="${device.deviceName}"
+                                                         data-device-user-id="${device.deviceUserId}"
+                                                         data-device-password="${device.devicePassword}"
+                                                         data-sub-url="${device.subUrl}"
+                                                         data-link-url="${device.linkUrl}"
+                                                         data-stream-server-url="${device.streamServerUrl}"
+                                                         data-device-stat="${device.deviceStat}"
+                                                         data-device-name="${device.deviceName}"
                                                             >
                                                         <p>${device.deviceName}</p>
                                                         <p></p>
