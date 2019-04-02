@@ -30,24 +30,6 @@ public interface CriticalSvc {
     ModelAndView findListCritical(Map<String, String> parameters);
 
     /**
-     * 임계치 상세를 가져온다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    ModelAndView findByCritical(Map<String, String> parameters);
-
-    /**
-     * 임계치를 등록한다.
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    ModelAndView addCritical(Map<String, String> parameters);
-
-    /**
      * 임계치를 수정한다.
      *
      * @author psb
@@ -55,13 +37,4 @@ public interface CriticalSvc {
      * @return
      */
     ModelAndView saveCritical(Map<String, String> parameters);
-
-    /**
-     * 임계치를 제거한다
-     *
-     * @author psb
-     * @param parameters
-     * @return
-     */
-    ModelAndView removeCritical(Map<String, String> parameters);
 }

@@ -1,7 +1,6 @@
 package com.icent.isaver.admin.dao;
 
 import com.icent.isaver.admin.bean.CriticalBean;
-import com.icent.isaver.admin.bean.EventBean;
 
 import java.util.List;
 import java.util.Map;
@@ -21,10 +20,7 @@ import java.util.Map;
  * </pre>
  */
 public interface CriticalDao {
-    List<EventBean> findListCritical(Map<String, String> parameters);
-    CriticalBean findByCritical(Map<String, String> parameters);
-    List<CriticalBean> findExistCritical(Map<String, String> parameters);
-    void addCritical(Map<String, String> parameters);
-    void saveCritical(Map<String, String> parameters);
+    List<CriticalBean> findListCritical(Map<String, String> parameters);
+    void saveCritical(List<CriticalBean> parameterList);
     void removeCritical(Map<String, String> parameters);
 }

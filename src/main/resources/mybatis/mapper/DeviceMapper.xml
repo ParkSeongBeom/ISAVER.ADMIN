@@ -524,10 +524,31 @@
     </select>
 
     <!--
-      장치 목록을 가져온다. 임계치관리용
+      감지장치 목록을 가져온다. 임계치관리용
       @author psb
     -->
-    <select id="findListDeviceForCritical" resultType="DeviceBean">
+    <select id="findListDeviceForCriticalDetect" resultType="DeviceBean">
+        select  a.device_id as deviceId
+                , a.area_id as areaId
+                , a.device_code as deviceCode
+                , a.device_type_code as deviceTypeCode
+                , a.device_name as deviceName
+                , b.fence_id as fenceId
+                , b.fence_name as fenceName
+        FROM    isaver.device a
+        LEFT OUTER JOIN isaver.fence b
+        ON	    a.device_id = b.device_id
+        AND     b.fence_type = 'normal'
+        WHERE   a.del_yn='N'
+        AND     a.device_type_code = #{deviceTypeCode}
+        ORDER BY a.area_id, a.device_name
+    </select>
+
+    <!--
+      대상장치 목록을 가져온다. 임계치관리용
+      @author psb
+    -->
+    <select id="findListDeviceForCriticalTarget" resultType="DeviceBean">
         select  device_id as deviceId
                 , area_id as areaId
                 , device_code as deviceCode
@@ -535,6 +556,7 @@
                 , device_name as deviceName
         FROM    isaver.device
         WHERE   del_yn='N'
+        AND     device_type_code = #{deviceTypeCode}
         ORDER BY area_id, device_name
     </select>
 

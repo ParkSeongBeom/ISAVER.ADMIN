@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public class AdminResource {
 
+    public final static String SEARCH_MODE = "search";
+
     public final static String RESULT_NODE_NAME = "result";
 
     /**

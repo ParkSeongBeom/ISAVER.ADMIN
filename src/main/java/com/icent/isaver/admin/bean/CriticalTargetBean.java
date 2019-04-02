@@ -21,16 +21,7 @@ public class CriticalTargetBean {
     private String alarmType;
     private String alarmMessage;
     private String alarmFileId;
-
-    /**
-     * Etc
-     */
-    private String eventId;
-    private String eventName;
-    private String criticalLevel;
-    private String detectDeviceId;
-    private String detectDeviceName;
-    private String targetDeviceName;
+    private String useYn;
 
     public String getCriticalDetectId() {
         return criticalDetectId;
@@ -72,51 +63,11 @@ public class CriticalTargetBean {
         this.alarmFileId = alarmFileId;
     }
 
-    public String getTargetDeviceName() {
-        return targetDeviceName;
+    public String getUseYn() {
+        return useYn;
     }
 
-    public void setTargetDeviceName(String targetDeviceName) {
-        this.targetDeviceName = targetDeviceName;
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getCriticalLevel() {
-        return criticalLevel;
-    }
-
-    public void setCriticalLevel(String criticalLevel) {
-        this.criticalLevel = criticalLevel;
-    }
-
-    public String getDetectDeviceId() {
-        return detectDeviceId;
-    }
-
-    public void setDetectDeviceId(String detectDeviceId) {
-        this.detectDeviceId = detectDeviceId;
-    }
-
-    public String getDetectDeviceName() {
-        return detectDeviceName;
-    }
-
-    public void setDetectDeviceName(String detectDeviceName) {
-        this.detectDeviceName = detectDeviceName;
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
     }
 }

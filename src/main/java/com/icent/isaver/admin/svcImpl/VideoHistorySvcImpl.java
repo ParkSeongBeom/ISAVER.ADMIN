@@ -4,6 +4,7 @@ import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.bean.VideoHistoryBean;
 import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.dao.VideoHistoryDao;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +50,7 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
         List<DeviceBean> deviceList = deviceDao.findListDeviceForHistory(parameters);
         ModelAndView modelAndView = new ModelAndView();
 
-        if(StringUtils.notNullCheck(parameters.get("mode"))){
+        if(StringUtils.notNullCheck(parameters.get("mode")) && parameters.get("mode").equals(AdminResource.SEARCH_MODE)){
             List<VideoHistoryBean> videoHistoryList = videoHistoryDao.findListVideoHistory(parameters);
             Integer totalCount = videoHistoryDao.findCountVideoHistory(parameters);
             modelAndView.addObject("videoHistoryList", videoHistoryList);

@@ -106,10 +106,15 @@ public interface DeviceDao {
 
     /**
      *
-     * @param parameters
      * @return
      */
-    List<DeviceBean> findListDeviceForCritical(Map<String, String> parameters);
+    List<DeviceBean> findListDeviceForCriticalDetect(Map<String, String> parameters);
+
+    /**
+     *
+     * @return
+     */
+    List<DeviceBean> findListDeviceForCriticalTarget(Map<String, String> parameters);
 
     /**
      *

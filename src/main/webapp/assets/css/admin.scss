@@ -630,8 +630,186 @@ $critical_w03 : 150px;
   }
 }
 
-
 // 임계치 관리 UI (현재 적용)
+.critical-ui {
+
+  $criwidth:50px;
+  $crimargin:80px;
+  $crievent:350px;
+  $criconte:300px;
+  @mixin crievent {
+    @include flex-option(0, 1, $crievent); width:$crievent; min-width:$crievent; max-width:$crievent;
+    margin: 0 ($crimargin * 2) 0 0;
+  } // @include crievent;
+
+  @mixin wauto($width) {
+    @include flex-option(0, 1, $width); width:$width; min-width:$width; max-width:$width;
+  } // @include wauto();
+
+  @mixin buwidth {
+    width:$criwidth; height:$criwidth; min-width:$criwidth; min-height:$criwidth;
+    max-width:$criwidth; max-height:$criwidth; @include flex-option(1, 0, $criwidth);
+  } // @include buwidth;
+  @mixin buheight {height:$criwidth; min-height:$criwidth; max-height:$criwidth;} // @include buheight;
+  @mixin critical-rotate($deg,$scale,$trans) {
+    -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
+    transform:        rotateX($deg) scale($scale) translateX($trans);
+  } // @include critical-rotate(20deg,.95,5px);
+
+  @include flexbase; @include flex-column; @include flex-align-items-start; overflow: hidden;
+  position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
+
+  input, select, button {height:$criwidth;}
+
+  h4, li {position: relative; }
+  h4 {
+    @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+    margin: 0 $crimargin 0 0;
+    & > button {
+      @include buwidth; @include btn-normal-action;
+      &.on ~ .zoom-box {
+        display: inline-block; background-color: $color-on;
+      }
+    }
+  }
+
+  & > section {
+    @include flexbase; position: relative; width:100%;
+  }
+
+  .critical {
+    &-title {
+      height:$criwidth; margin:0 0 20px 0;
+      & > h4 {width:$crievent; font-size:1.1rem; &:first-of-type {@include crievent;} }
+    }
+    &-content {
+      width:1620px; height:100%;
+      &:before, &:after {
+        content:""; position: absolute; top:0; width:1px; height:100%;  background-color: rgba($hov-color,.4);
+      }
+      &:before {right:($crievent + 90px); }
+      &:after  {right:($crievent * 2  + 90px);}
+    }
+  }
+
+  li {
+    margin:0 0 10px 0; padding: 0 $crimargin 0 0;
+    @include perspective01(1000px, 250%, 100%); cursor:pointer;
+
+    & > div {
+      @include flexbase; @include flex-row-wrap; @include critical-rotate(20deg,.95,5px); min-height:$criwidth;
+
+      &, &:before {@include transition01(200ms);}
+
+      &:before, &:after {content:""; position: absolute;}
+      &:before {
+        opacity: 0.5;  z-index:-1; width:100%; height:100%;
+        @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
+      }
+      &:after {
+        opacity: 0; top:16px; right:-($criwidth); width:0; height:0;
+        @include triangle-lef(10px 10px 10px 0,$color-dark-01);
+      }
+
+      & * {color:$color-white-01;}
+
+      & > p {
+        @include flexbase; @include flex-align-items-center; @include flex-width-one(1); padding:0 10px;
+      }
+
+      & > button {
+        display: none;
+        @include btn-critical-action; @include buwidth;
+        &.on ~ .zoom-box {display: inline-block;}
+      }
+
+      .zoom-box {position: relative;}
+
+    }
+
+    &:hover, &.on, &.check { & > div { &:before {opacity: 1;} } }
+
+    &.on, &.show {
+      & > div {
+        & > button {display: block;}
+        &:after {opacity: 1;}
+        @include critical-rotate(0deg,1,0);
+      }
+
+      & > ul {display: block;}
+    }
+
+    &.level {
+      &-danger,&-warning,&-caution,&-die,&-end {background-color: transparent !important;}
+      &-danger  {& > div:before {background-color: $color-danger;} }
+      &-warning {& > div:before {background-color: $color-warning;} }
+      &-caution {& > div:before {background-color: $color-caution;} }
+      &-die     {& > div:before {background-color: $color-die;} }
+      &-end     {& > div:before {background-color: $color-end;} }
+    }
+
+    .btn-check {@include checkbtn-01; @include buwidth; }
+  }
+
+  .list {
+    &-event {
+      @include crievent;
+      & > div {@include flexbase;}
+      select {
+        width:100%;  height:$criwidth; margin:0 0 20px 0;
+        & + button {width:100px; height:$criwidth;}
+      }
+    }
+
+    &-criti {
+      @include flex-width-one(1); position: relative; height:100%; overflow: overlay;
+      li {width:$crievent;}
+    }
+
+    &-detec, &-objec {
+      display: none; position: absolute; top:0; left:100%; width:100%;
+      li {
+        width:100%;
+        & > div:before {background-color: $color-dark-01;}
+      }
+    }
+    &-objec {li > div:after {display: none;}}
+  }
+
+  .zoom-box {
+    display: none; position: absolute; top:0; left:0; z-index: 1;
+    width:100%; min-width:100%; padding:10px; @include placeholder-white;
+
+    & > * {width:100%;}
+    & * {color:$color-white-01;}
+
+    h4 {@include wauto(100%); span {margin:0 auto 0 0;} }
+    p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
+    input, select {
+      border-width:0 0 1px 0; border-color:$color-white-01;
+      background-color: transparent; padding:0; margin:0 0 30px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+    }
+    select {
+      background-image: url(../images/ico/select_allow_w.svg);
+      option { background-color: $bas-color; }
+    }
+
+    button {@include btn-critical-action; @include translate3d(10px, -10px, 0); z-index: 1;}
+
+    .checkbox_set { &, & * {margin:0;} }
+
+    .cycle-setting {
+      @include flexbase; @include flex-column; margin:0 0 20px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+      & > div {}
+      input, select {width:auto; margin:0 2px; width:30px; text-align: center; }
+      .checkbox_set {@include scale(0.9); left:-10px; top:4px;}
+    }
+  }
+}
+
+/*
 .critical-ui {
 
   $criwidth:50px;
@@ -775,6 +953,7 @@ $critical_w03 : 150px;
     &-objec { li > div:after {display: none;}}
   }
 }
+*/
 
 //구역 디바이스 관리
 .area_tree_set {
@@ -1914,7 +2093,8 @@ a.fc-more {position: relative; z-index: 2;}
         &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-on;}
         & > div {
           &:first-of-type {
-            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:100%; background-color: $color-gray-02;
+            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:100%;
+            background-color: $color-gray-02;
             margin:0 10px 0 0;
           }
 

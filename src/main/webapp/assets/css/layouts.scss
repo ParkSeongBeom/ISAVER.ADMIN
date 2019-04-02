@@ -1130,7 +1130,6 @@ body.adaptive_mobile {
     .wrap > article { min-width:0 !important;  right:$margin;}
     button.issue_btn.issue {width: 40px !important;}
   }
-
 }
 body.login_mode.taekwon_mode { h1 {background-position: 0 50% !important;} }
 body.dashboard_mode.taekwon_mode,
@@ -1158,11 +1157,6 @@ body.admin_mode.taekwon_mode {
   }
   .db_area, .issue_btn {display: none;}
 }
-
-
-
-.dashboard_mode {}
-.admin_mode {}
 /////......  구역 / 장치 관리 MAP 설정 끝
 
 

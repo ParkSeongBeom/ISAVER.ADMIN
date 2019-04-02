@@ -24,278 +24,154 @@
     <!-- 2depth 타이틀 영역 End -->
 
     <article class="table_area">
-        <div class="critical_title">
-            <p><spring:message code="critical.title.event"/></p>
-            <p><spring:message code="critical.title.critical"/></p>
-            <p><spring:message code="critical.title.detectDevice"/></p>
-            <p><spring:message code="critical.title.targetDevice"/></p>
-        </div>
-
-        <ul class="critical_tree_set">
-            <c:forEach var="event" items="${eventList}">
-                <li>
-                    <div>
-                        <button>${event.eventName}(${event.eventId})</button>
+        <div class="critical-ui">
+            <section class="critical-title" id="criticalTitle">
+                <h4><spring:message code="critical.title.event"/></h4>
+                <h4>
+                    <spring:message code="critical.title.critical"/>
+                    <button class="ico-plus addBtn" disabled="disabled" onclick="javascript:$(this).toggleClass('on');"></button>
+                    <!-- 임계치 추가 시작 -->
+                    <div class="zoom-box" id="addCriticalBox">
+                        <h4>
+                            <span><spring:message code="critical.title.criticalAdd"/></span>
+                            <button class="ico-save" onclick="javascript:addCritical();" title="<spring:message code="common.button.save"/>"></button>
+                            <button class="ico-close" onclick="javascript:$('.addBtn').trigger('click');"></button>
+                        </h4>
+                        <p><spring:message code="critical.column.criticalValue"/></p>
+                        <input type="text" name="criticalValue" value=""/>
+                        <p><spring:message code="critical.column.criticalLevel"/></p>
+                        <select name="criticalLevel">
+                            <option value="LEV000"><spring:message code="critical.selectbox.cancel"/></option>
+                            <c:forEach var="critical" items="${criticalList}">
+                                <option value="${critical.codeId}">${critical.codeName}</option>
+                            </c:forEach>
+                        </select>
+                        <p><spring:message code="critical.column.dashboardSoundSetting"/></p>
+                        <isaver:fileSelectBox htmlTagName="dashboardFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
                     </div>
-                    <ul>
-                        <c:forEach var="critical" items="${event.criticals}">
-                            <li>
-                                <div <c:if test="${criticalLevelCss[critical.criticalLevel]!=null}">class="level-${criticalLevelCss[critical.criticalLevel]}"</c:if>>
-                                    <button onclick="javascript:openPopup('critical',{mode:'modify',criticalId:'${critical.criticalId}'});">
-                                        <c:if test="${critical.criticalName!=null}">
-                                            ${critical.criticalName}
-                                        </c:if>
-                                        <c:if test="${critical.criticalName==null && critical.criticalLevel=='LEV000'}">
-                                            <spring:message code="critical.selectbox.cancel"/>
-                                        </c:if>
-                                    </button>
-                                    <button onclick="remove('critical',{criticalId:'${critical.criticalId}'});"></button>
-                                </div>
-                                <ul>
-                                    <c:forEach var="criticalDetect" items="${critical.criticalDetects}">
-                                        <li criticalDetectId="${criticalDetect.criticalDetectId}">
-                                            <div>
-                                                <button onclick="javascript:openPopup('detect',{mode:'modify',criticalDetectId:'${criticalDetect.criticalDetectId}'});">${criticalDetect.detectDeviceName}(${criticalDetect.detectDeviceId})</button>
-                                                <button onclick="remove('detect',{criticalDetectId:'${criticalDetect.criticalDetectId}'});"></button>
-                                            </div>
-                                            <ul>
-                                                <c:forEach var="criticalTarget" items="${criticalDetect.criticalTargets}">
-                                                    <li targetDeviceId="${criticalTarget.targetDeviceId}">
-                                                        <div>
-                                                            <button onclick="javascript:openPopup('target',{mode:'modify',criticalDetectId:'${criticalDetect.criticalDetectId}',targetDeviceId:'${criticalTarget.targetDeviceId}'});">${criticalTarget.targetDeviceName}(${criticalTarget.targetDeviceId})</button>
-                                                            <button onclick="remove('target',{criticalDetectId:'${criticalDetect.criticalDetectId}',targetDeviceId:'${criticalTarget.targetDeviceId}'});"></button>
-                                                        </div>
-                                                    </li>
-                                                </c:forEach>
-                                                <li>
-                                                    <button onclick="openPopup('target',{mode:'new',eventId:'${event.eventId}',criticalLevel:'${critical.criticalLevel}',criticalDetectId:'${criticalDetect.criticalDetectId}',detectDeviceId:'${criticalDetect.detectDeviceId}'});"></button>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </c:forEach>
-                                    <li>
-                                        <button onclick="openPopup('detect',{mode:'new',eventId:'${event.eventId}',criticalId:'${critical.criticalId}',criticalLevel:'${critical.criticalLevel}'});"></button>
-                                    </li>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                        <li>
-                            <button onclick="openPopup('critical',{mode:'new',eventId:'${event.eventId}'});"></button>
-                        </li>
-                    </ul>
-                </li>
-            </c:forEach>
-        </ul>
+                    <!-- 임계치 추가 끝 -->
+                </h4>
+                <h4><spring:message code="critical.title.detectDevice"/></h4>
+                <h4><spring:message code="critical.title.targetDevice"/></h4>
+            </section>
+
+            <section class="critical-content">
+                <div class="list-event">
+                    <div>
+                        <input id="eventId" type="hidden"/>
+                        <select id="eventSelectBox">
+                            <option value=""><spring:message code="critical.selectbox.selectEvent"/></option>
+                            <c:forEach var="event" items="${eventList}">
+                                <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
+                            </c:forEach>
+                        </select>
+                        <button class="btn" onclick="javascript:search();"><spring:message code="common.button.search"/></button>
+                    </div>
+                    <div class="btn_set">
+                        <button class="btn" onclick="javascript:save();"><spring:message code="critical.button.add"/></button>
+                    </div>
+                </div>
+                <ul class="list-criti" id="criticalListDiv"></ul>
+            </section>
+        </div>
     </article>
 
-    <!-- 임계치 설정 팝업 -->
-    <div class="popupbase critical_pop" popupType="critical">
-        <input type="hidden" name="criticalId" value=""/>
-        <div>
+    <ul style="display:none;" id="criticalTemplate">
+        <!-- 임계치 템플릿 -->
+        <li onclick="javascript:deviceClickHandler(this,event);">
             <div>
-                <header>
-                    <h2><spring:message code="critical.title.criticalPopup"/></h2>
-                    <button class="close_btn" onclick="javascript:closePopup('critical');"></button>
-                </header>
-                <article>
-                    <section class="critical_set_list">
-                        <div>
-                            <p><spring:message code="critical.column.event"/></p>
-                            <div>
-                                <select name="eventId" disabled="disabled">
-                                    <c:forEach var="event" items="${eventList}">
-                                        <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.criticalValue"/></p>
-                            <div><input type="text" name="criticalValue" value=""/></div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.criticalLevel"/></p>
-                            <div>
-                                <select name="criticalLevel">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                    <option value="LEV000"><spring:message code="critical.selectbox.cancel"/></option>
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <option value="${critical.codeId}">${critical.codeName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.dashboardSoundSetting"/></p>
-                            <div>
-                                <isaver:fileSelectBox htmlTagName="dashboardFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
-                            </div>
-                        </div>
-                    </section>
-                </article>
-                <footer>
-                    <button class="btn addBtn" onclick="javascript:add('critical');"><spring:message code="common.button.add"/></button>
-                    <button class="btn saveBtn" onclick="javascript:save('critical');"><spring:message code="common.button.save"/></button>
-                </footer>
+                <p clickOn="true" name="criticalName"></p>
+                <button class="ico-zoom"></button> <!-- 상세보기 버튼 -->
+                <button class="ico-minus"></button> <!-- 삭제 버튼 -->
+                <!-- 상세보기 시작 -->
+                <div class="zoom-box">
+                    <p><spring:message code="critical.column.criticalValue"/></p>
+                    <input type="text" name="criticalValue" value=""/>
+                    <p><spring:message code="critical.column.criticalLevel"/></p>
+                    <select name="criticalLevel">
+                        <option value="LEV000"><spring:message code="critical.selectbox.cancel"/></option>
+                        <c:forEach var="critical" items="${criticalList}">
+                            <option value="${critical.codeId}">${critical.codeName}</option>
+                        </c:forEach>
+                    </select>
+                    <p><spring:message code="critical.column.dashboardSoundSetting"/></p>
+                    <isaver:fileSelectBox htmlTagName="dashboardFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
+                </div>
+                <!-- 상세보기 끝 -->
             </div>
-        </div>
-        <div class="bg" onclick="javascript:closePopup('critical');"></div>
-    </div>
 
-    <!-- 감지장치 설정 팝업 -->
-    <div class="popupbase critical_pop" popupType="detect">
-        <input type="hidden" name="criticalId" value=""/>
-        <input type="hidden" name="criticalDetectId" value=""/>
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="critical.title.detectPopup"/></h2>
-                    <button class="close_btn" onclick="javascript:closePopup('detect');"></button>
-                </header>
-                <article>
-                    <section class="critical_set_list">
+            <!-- 감지장치 템플릿 -->
+            <ul class="list-detec">
+                <c:forEach var="detect" items="${detectDeviceList}">
+                    <li detectDeviceId="${detect.deviceId}" fenceId="${detect.fenceId}" onclick="javascript:deviceClickHandler(this,event);">
                         <div>
-                            <p><spring:message code="critical.column.event"/></p>
-                            <div>
-                                <select name="eventId" disabled="disabled">
-                                    <c:forEach var="event" items="${eventList}">
-                                        <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="btn-check list-check">
+                                <input type="checkbox" name="detectDeviceUseYn"/>
+                                <label class="ico-check"></label>
                             </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.criticalLevel"/></p>
-                            <div>
-                                <select name="criticalLevel" disabled="disabled">
-                                    <option value="LEV000"><spring:message code="critical.selectbox.cancel"/></option>
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <option value="${critical.codeId}">${critical.codeName}</option>
-                                    </c:forEach>
-                                </select>
+                            <input type="hidden" name="fenceId" <c:if test="${detect.fenceId!=null}">value="${detect.fenceId}"</c:if>/>
+                            <p clickOn="true">${detect.deviceName}<c:if test="${detect.fenceName!=null}">-${detect.fenceName}</c:if>(${detect.deviceId})</p>
+                            <button class="ico-zoom"></button>
+                            <!-- 상세보기 시작 -->
+                            <div class="zoom-box">
+                                <p><spring:message code="critical.column.deviceConfigDatetime"/></p>
+                                <c:forEach begin="0" end="2" varStatus="loop">
+                                    <div class="cycle-setting">
+                                        <div class="checkbox_set csl_style02">
+                                            <input type="checkbox" name="detectConfigUseYn">
+                                            <label></label>
+                                        </div>
+                                        <div>
+                                            <input type="number" name="startHour" placeholder='<spring:message code="common.column.hour"/>'>
+                                            <input type="number" name="startMinute" placeholder='<spring:message code="common.column.minute"/>'>
+                                            <input type="number" name="startSecond" placeholder='<spring:message code="common.column.second"/>'>
+                                            ~
+                                            <input type="number" name="endHour" placeholder='<spring:message code="common.column.hour"/>'>
+                                            <input type="number" name="endMinute" placeholder='<spring:message code="common.column.minute"/>'>
+                                            <input type="number" name="endSecond" placeholder='<spring:message code="common.column.second"/>'>
+                                        </div>
+                                    </div>
+                                </c:forEach>
                             </div>
+                            <!-- 상세보기 끝 -->
                         </div>
-                        <div>
-                            <p><spring:message code="critical.column.detectDevice"/></p>
-                            <div>
-                                <select name="detectDeviceId" onchange="javascript:detectDeviceChangeHandler('detect',this);">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                    <c:forEach var="device" items="${deviceList}">
-                                        <option deviceCode="${device.deviceCode}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div fenceDiv>
-                            <p><spring:message code="critical.column.fenceId"/></p>
-                            <div>
-                                <select name="fenceId">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                </select>
-                            </div>
-                        </div>
-                    </section>
-                </article>
-                <footer>
-                    <button class="btn addBtn" onclick="javascript:add('detect');"><spring:message code="common.button.add"/></button>
-                    <button class="btn saveBtn" onclick="javascript:save('detect');"><spring:message code="common.button.save"/></button>
-                </footer>
-            </div>
-        </div>
-        <div class="bg" onclick="javascript:closePopup('detect');"></div>
-    </div>
 
-    <!-- 대상장치 설정 팝업 -->
-    <div class="popupbase critical_pop" popupType="target">
-        <input type="hidden" name="criticalDetectId" value=""/>
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="critical.title.targetPopup"/></h2>
-                    <button class="close_btn" onclick="javascript:closePopup('target');"></button>
-                </header>
-                <article>
-                    <section class="critical_set_list">
-                        <div>
-                            <p><spring:message code="critical.column.event"/></p>
-                            <div>
-                                <select name="eventId" disabled="disabled">
-                                    <c:forEach var="event" items="${eventList}">
-                                        <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.criticalLevel"/></p>
-                            <div>
-                                <select name="criticalLevel" disabled="disabled">
-                                    <option value="LEV000"><spring:message code="critical.selectbox.cancel"/></option>
-                                    <c:forEach var="critical" items="${criticalList}">
-                                        <option value="${critical.codeId}">${critical.codeName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.detectDevice"/></p>
-                            <div>
-                                <select name="detectDeviceId" disabled="disabled">
-                                    <c:forEach var="device" items="${deviceList}">
-                                        <c:if test="${device.deviceTypeCode==detectDeviceTypeCode}">
-                                            <option value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.targetDevice"/></p>
-                            <div>
-                                <select name="targetDeviceId">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                    <c:forEach var="device" items="${deviceList}">
-                                        <c:if test="${device.deviceTypeCode==targetDeviceTypeCode}">
-                                            <option value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.alarmType"/></p>
-                            <div>
-                                <select name="alarmType">
-                                    <option value="file"><spring:message code="critical.selectbox.file"/></option>
-                                    <option value="control"><spring:message code="critical.selectbox.control"/></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.alarmMessage"/></p>
-                            <div>
-                                <select name="alarmMessage">
-                                    <option value="on"><spring:message code="critical.selectbox.on"/></option>
-                                    <option value="off"><spring:message code="critical.selectbox.off"/></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <p><spring:message code="critical.column.alarmFile"/></p>
-                            <div>
-                                <isaver:fileSelectBox htmlTagName="alarmFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
-                            </div>
-                        </div>
-                    </section>
-                </article>
-                <footer>
-                    <button class="btn addBtn" onclick="javascript:add('target');"><spring:message code="common.button.add"/></button>
-                    <button class="btn saveBtn" onclick="javascript:save('target');"><spring:message code="common.button.save"/></button>
-                </footer>
-            </div>
-        </div>
-        <div class="bg" onclick="javascript:closePopup('target');"></div>
-    </div>
+                        <!-- 대상장치 템플릿 -->
+                        <ul class="list-objec">
+                            <c:forEach var="target" items="${targetDeviceList}">
+                                <li targetDeviceId="${target.deviceId}">
+                                    <div>
+                                        <div class="btn-check list-check">
+                                            <input type="checkbox" name="targetDeviceUseYn">
+                                            <label class="ico-check"></label>
+                                        </div>
+                                        <p>${target.deviceName}(${target.deviceId})</p>
+                                        <button class="ico-zoom"></button>
+                                        <!-- 상세보기 시작 -->
+                                        <div class="zoom-box">
+                                            <p><spring:message code="critical.column.alarmType"/></p>
+                                            <select name="alarmType">
+                                                <option value="control"><spring:message code="critical.selectbox.control"/></option>
+                                                <option value="file"><spring:message code="critical.selectbox.file"/></option>
+                                            </select>
+                                            <p><spring:message code="critical.column.alarmMessage"/></p>
+                                            <select name="alarmMessage">
+                                                <option value="on"><spring:message code="critical.selectbox.on"/></option>
+                                                <option value="off"><spring:message code="critical.selectbox.off"/></option>
+                                            </select>
+                                            <p><spring:message code="critical.column.alarmFile"/></p>
+                                            <isaver:fileSelectBox htmlTagName="alarmFileId" allModel="true" fileType="${alarmFileType}" allText="${allSelectText}"/>
+                                        </div>
+                                        <!-- 상세보기 끝 -->
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
+                </c:forEach>
+            </ul>
+        </li>
+    </ul>
 </section>
 
 <script type="text/javascript">
@@ -304,240 +180,124 @@
 
     var messageConfig = {
         /** 임계치 */
-        'requireCriticalLevel':'<spring:message code="critical.message.requireCriticalLevel"/>'
-        ,'criticalDetailFailure':'<spring:message code="critical.message.criticalDetailFailure"/>'
-        ,'criticalAddConfirm':'<spring:message code="critical.message.criticalAddConfirm"/>'
-        ,'criticalSaveConfirm':'<spring:message code="critical.message.criticalSaveConfirm"/>'
-        ,'criticalRemoveConfirm':'<spring:message code="critical.message.criticalRemoveConfirm"/>'
-        ,'criticalAddFailure':'<spring:message code="critical.message.criticalAddFailure"/>'
-        ,'criticalSaveFailure':'<spring:message code="critical.message.criticalSaveFailure"/>'
-        ,'criticalRemoveFailure':'<spring:message code="critical.message.criticalRemoveFailure"/>'
-        ,'criticalAddComplete':'<spring:message code="critical.message.criticalAddComplete"/>'
-        ,'criticalSaveComplete':'<spring:message code="critical.message.criticalSaveComplete"/>'
-        ,'criticalRemoveComplete':'<spring:message code="critical.message.criticalRemoveComplete"/>'
+        'requireEvent':'<spring:message code="critical.message.requireEvent"/>'
+        ,'saveConfirm':'<spring:message code="critical.message.saveConfirm"/>'
+        ,'saveFailure':'<spring:message code="critical.message.saveFailure"/>'
+        ,'saveComplete':'<spring:message code="critical.message.saveComplete"/>'
         ,'criticalExist':'<spring:message code="critical.message.criticalExist"/>'
-        /** 감지장치 */
-        ,'requireDetectDeviceId':'<spring:message code="critical.message.requireDetectDeviceId"/>'
-        ,'requireFenceId':'<spring:message code="critical.message.requireFenceId"/>'
-        ,'detectDetailFailure':'<spring:message code="critical.message.detectDetailFailure"/>'
-        ,'detectAddConfirm':'<spring:message code="critical.message.detectAddConfirm"/>'
-        ,'detectSaveConfirm':'<spring:message code="critical.message.detectSaveConfirm"/>'
-        ,'detectRemoveConfirm':'<spring:message code="critical.message.detectRemoveConfirm"/>'
-        ,'detectAddFailure':'<spring:message code="critical.message.detectAddFailure"/>'
-        ,'detectSaveFailure':'<spring:message code="critical.message.detectSaveFailure"/>'
-        ,'detectRemoveFailure':'<spring:message code="critical.message.detectRemoveFailure"/>'
-        ,'detectAddComplete':'<spring:message code="critical.message.detectAddComplete"/>'
-        ,'detectSaveComplete':'<spring:message code="critical.message.detectSaveComplete"/>'
-        ,'detectRemoveComplete':'<spring:message code="critical.message.detectRemoveComplete"/>'
-        ,'detectExist':'<spring:message code="critical.message.detectExist"/>'
-        /** 대상장치 */
-        ,'requireTargetDeviceId':'<spring:message code="critical.message.requireTargetDeviceId"/>'
-        ,'requireAlarmFileId':'<spring:message code="critical.message.requireAlarmFileId"/>'
-        ,'targetDetailFailure':'<spring:message code="critical.message.targetDetailFailure"/>'
-        ,'targetAddConfirm':'<spring:message code="critical.message.targetAddConfirm"/>'
-        ,'targetSaveConfirm':'<spring:message code="critical.message.targetSaveConfirm"/>'
-        ,'targetRemoveConfirm':'<spring:message code="critical.message.targetRemoveConfirm"/>'
-        ,'targetAddFailure':'<spring:message code="critical.message.targetAddFailure"/>'
-        ,'targetSaveFailure':'<spring:message code="critical.message.targetSaveFailure"/>'
-        ,'targetRemoveFailure':'<spring:message code="critical.message.targetRemoveFailure"/>'
-        ,'targetAddComplete':'<spring:message code="critical.message.targetAddComplete"/>'
-        ,'targetSaveComplete':'<spring:message code="critical.message.targetSaveComplete"/>'
-        ,'targetRemoveComplete':'<spring:message code="critical.message.targetRemoveComplete"/>'
+    };
+
+    var criticalLevelNameList = {
+        'LEV000' : '<spring:message code="critical.selectbox.cancel"/>',
+        <c:forEach var="criticalLevel" items="${criticalList}" varStatus="status">
+            '${criticalLevel.codeId}' : '${criticalLevel.codeName}' ${!status.last?',':''}
+        </c:forEach>
     };
 
     var urlConfig = {
         'listUrl':'${rootPath}/critical/list.html'
-        ,'criticalDetailUrl':'${rootPath}/critical/detail.json'
-        ,'criticalAddUrl':'${rootPath}/critical/add.json'
-        ,'criticalSaveUrl':'${rootPath}/critical/save.json'
-        ,'criticalRemoveUrl':'${rootPath}/critical/remove.json'
-        ,'detectDetailUrl':'${rootPath}/criticalDetect/detail.json'
-        ,'detectAddUrl':'${rootPath}/criticalDetect/add.json'
-        ,'detectSaveUrl':'${rootPath}/criticalDetect/save.json'
-        ,'detectRemoveUrl':'${rootPath}/criticalDetect/remove.json'
-        ,'targetDetailUrl':'${rootPath}/criticalTarget/detail.json'
-        ,'targetAddUrl':'${rootPath}/criticalTarget/add.json'
-        ,'targetSaveUrl':'${rootPath}/criticalTarget/save.json'
-        ,'targetRemoveUrl':'${rootPath}/criticalTarget/remove.json'
+        ,'saveUrl':'${rootPath}/critical/save.json'
     };
 
     $(document).ready(function(){
     });
 
-    function detectDeviceChangeHandler(actionType, _this){
-        var deviceId = $(_this).val();
-        var deviceCode = $(_this).find("option:selected").attr("deviceCode");
-        var targetElement = $(".popupbase[popupType='"+actionType+"']");
-        targetElement.find("select[name='fenceId'] option").not("[value='']").remove();
+    function search(){
+        var eventId = $("#eventSelectBox").val();
 
-        if(deviceCode!="DEV013"){
-            targetElement.find("div[fenceDiv]").addClass("d_none");
-        }else{
-            targetElement.find("div[fenceDiv]").removeClass("d_none");
-            var fenceList = notificationHelper.getFenceList('deviceId',deviceId);
-            for(var index in fenceList){
-                var fence = fenceList[index];
-                if(fence['fenceType']!='ignore'){
-                    targetElement.find("select[name='fenceId']").append(
-                        $("<option/>",{value:fence['fenceId']}).text(fence['fenceName']!=null?fence['fenceName']:fence['fenceId'])
-                    );
-                }
-            }
-        }
-    }
-
-    function openPopup(actionType, data){
-        if(data['mode']=='modify'){
-            callAjax(actionType+"Detail",data);
-        }else{
-            switch(actionType){
-                case 'critical':
-                    criticalRender(data);
-                    break;
-                case 'detect':
-                    detectRender(data);
-                    break;
-                case 'target':
-                    targetRender(data);
-                    break;
-            }
-        }
-    }
-
-    function closePopup(actionType){
-        $(".popupbase[popupType='"+actionType+"']").fadeOut(200);
-    }
-
-    function validate(targetElement, actionType){
-        switch(actionType) {
-            case 'critical':
-                if(targetElement.find("select[name='criticalLevel'] option:selected").val()==''){
-                    alertMessage('requireCriticalLevel');
-                    return false;
-                }
-                break;
-            case 'detect':
-                if(targetElement.find("select[name='detectDeviceId'] option:selected").val()==''){
-                    alertMessage('requireDetectDeviceId');
-                    return false;
-                }
-
-                if(targetElement.find("select[name='eventId'] option:selected").val()!='EVT999'){
-                    if(targetElement.find("select[name='detectDeviceId'] option:selected").attr("deviceCode")=='DEV013'
-                            && targetElement.find("select[name='fenceId'] option:selected").val()==''){
-                        alertMessage('requireFenceId');
-                        return false;
-                    }
-                }
-                break;
-            case 'target':
-                if(targetElement.find("select[name='targetDeviceId'] option:selected").val()==''){
-                    alertMessage('requireTargetDeviceId');
-                    return false;
-                }
-
-                if(targetElement.find("select[name='alarmType'] option:selected").val()=='file' && targetElement.find("select[name='alarmFileId'] option:selected").val()==''){
-                    alertMessage('requireAlarmFileId');
-                    return false;
-                }
-                break;
-        }
-        return true;
-    }
-
-    function add(actionType){
-        var targetElement = $(".popupbase[popupType='"+actionType+"']");
-
-        if(targetElement.length>0){
-            var param = null;
-
-            switch(actionType){
-                case 'critical':
-                    param = {
-                        'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
-                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel'] option:selected").val()
-                        ,'criticalValue' : targetElement.find("input[name='criticalValue']").val()
-                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId'] option:selected").val()
-                    };
-                    break;
-                case 'detect':
-                    param = {
-                        'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
-                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
-                        ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
-                    };
-                    break;
-                case 'target':
-                    param = {
-                        'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId'] option:selected").val()
-                        ,'alarmType' : targetElement.find("select[name='alarmType'] option:selected").val()
-                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage'] option:selected").val()
-                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId'] option:selected").val()
-                    };
-                    break;
-            }
-
-            if(validate(targetElement,actionType) && param!=null){
-                if(!confirm(messageConfig[actionType+'AddConfirm'])){
-                    return false;
-                }
-                callAjax(actionType+'Add',param);
-            }
-        }
-    }
-
-    function save(actionType){
-        var targetElement = $(".popupbase[popupType='"+actionType+"']");
-
-        if(targetElement.length>0){
-            var param = null;
-
-            switch(actionType){
-                case 'critical':
-                    param = {
-                        'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'criticalLevel' : targetElement.find("select[name='criticalLevel'] option:selected").val()
-                        ,'criticalValue' : targetElement.find("input[name='criticalValue']").val()
-                        ,'dashboardFileId' : targetElement.find("select[name='dashboardFileId'] option:selected").val()
-                    };
-                    break;
-                case 'detect':
-                    param = {
-                        'criticalId' : targetElement.find("input[name='criticalId']").val()
-                        ,'eventId' : targetElement.find("select[name='eventId'] option:selected").val()
-                        ,'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'detectDeviceId' : targetElement.find("select[name='detectDeviceId'] option:selected").val()
-                        ,'fenceId' : targetElement.find("select[name='fenceId'] option:selected").val()
-                    };
-                    break;
-                case 'target':
-                    param = {
-                        'criticalDetectId' : targetElement.find("input[name='criticalDetectId']").val()
-                        ,'targetDeviceId' : targetElement.find("select[name='targetDeviceId'] option:selected").val()
-                        ,'alarmType' : targetElement.find("select[name='alarmType'] option:selected").val()
-                        ,'alarmMessage' : targetElement.find("select[name='alarmMessage'] option:selected").val()
-                        ,'alarmFileId' : targetElement.find("select[name='alarmFileId'] option:selected").val()
-                    };
-                    break;
-            }
-
-            if(validate(targetElement,actionType) && param!=null){
-                if(!confirm(messageConfig[actionType+'SaveConfirm'])){
-                    return false;
-                }
-                callAjax(actionType+'Save',param);
-            }
-        }
-    }
-
-    function remove(actionType, data){
-        if(!confirm(messageConfig[actionType+'RemoveConfirm'])){
+        if(eventId==null || eventId==""){
+            alertMessage('requireEvent');
             return false;
         }
-        callAjax(actionType+'Remove',data);
+
+        $("#eventId").val(eventId);
+        callAjax('list',{'eventId':eventId});
+    }
+
+    function save(){
+        if(!confirm(messageConfig['saveConfirm'])){
+            return false;
+        }
+
+        var criticalList = [];
+        // 임계치 목록
+        $.each($("#criticalListDiv > li"),function(){
+            var criticalId = uuid32();
+            var criticalParam = {
+                criticalId:criticalId
+                ,eventId:$("#eventId").val()
+                ,criticalValue:$(this).find("input[name='criticalValue']").val()?eval($(this).find("input[name='criticalValue']").val()):null
+                ,criticalLevel:$(this).find("select[name='criticalLevel'] option:selected").val()
+                ,dashboardFileId:$(this).find("select[name='dashboardFileId'] option:selected").val()
+                ,criticalDetects:[]
+            };
+
+            // 감지장치 목록
+            $.each($(this).find("li[detectDeviceId]"),function(){
+                var criticalDetectId = uuid32();
+                var criticalDetectParam = {
+                    criticalId:criticalId
+                    ,criticalDetectId:criticalDetectId
+                    ,detectDeviceId:$(this).attr("detectDeviceId")
+                    ,fenceId:$(this).find("input[name='fenceId']").val()
+                    ,useYn:$(this).find("input[name='detectDeviceUseYn']").is(":checked")?"Y":"N"
+                    ,criticalDetectConfigs:[]
+                    ,criticalTargets:[]
+                };
+
+                // 감지장치 설정 목록
+                $.each($(this).find(".cycle-setting"),function(){
+                    var criticalDetectConfigId = uuid32();
+                    var startHour = $(this).find("input[name='startHour']").val()?$(this).find("input[name='startHour']").val():"00";
+                    var startMinute = $(this).find("input[name='startMinute']").val()?$(this).find("input[name='startMinute']").val():"00";
+                    var startSecond = $(this).find("input[name='startSecond']").val()?$(this).find("input[name='startSecond']").val():"00";
+                    var startDatetime = startHour+":"+startMinute+":"+startSecond;
+
+                    var endHour = $(this).find("input[name='endHour']").val()?$(this).find("input[name='endHour']").val():"00";
+                    var endMinute = $(this).find("input[name='endMinute']").val()?$(this).find("input[name='endMinute']").val():"00";
+                    var endSecond = $(this).find("input[name='endSecond']").val()?$(this).find("input[name='endSecond']").val():"00";
+                    var endDatetime = endHour+":"+endMinute+":"+endSecond;
+                    criticalDetectParam['criticalDetectConfigs'].push({
+                        criticalDetectConfigId:criticalDetectConfigId
+                        ,criticalDetectId:criticalDetectId
+                        ,startDatetime:startDatetime
+                        ,endDatetime:endDatetime
+                        ,useYn:$(this).find("input[name='detectConfigUseYn']").is(":checked")?"Y":"N"
+                    });
+                });
+
+                // 대상장치 설정 목록
+                $.each($(this).find("li[targetDeviceId]"),function(){
+                    criticalDetectParam['criticalTargets'].push({
+                        criticalDetectId:criticalDetectId
+                        ,targetDeviceId:$(this).attr("targetDeviceId")
+                        ,alarmType:$(this).find("select[name='alarmType'] option:selected").val()
+                        ,alarmMessage:$(this).find("select[name='alarmMessage'] option:selected").val()
+                        ,alarmFileId:$(this).find("select[name='alarmFileId'] option:selected").val()
+                        ,useYn:$(this).find("input[name='targetDeviceUseYn']").is(":checked")?"Y":"N"
+                    });
+                });
+                criticalParam['criticalDetects'].push(criticalDetectParam);
+            });
+
+            criticalList.push(criticalParam);
+        });
+
+        callAjax('save',{'eventId':$("#eventId").val(),'criticalList':JSON.stringify(criticalList)});
+    }
+
+    function deviceClickHandler(_this,event){
+        if($(event.target).attr("clickOn")!='true'){
+            return false;
+        }
+
+        if(!$(_this).hasClass('on')){
+            $(_this).parent().find(">li").removeClass('on');
+            $(_this).addClass('on');
+        }else{
+            $(_this).removeClass('on');
+        }
+        event.stopPropagation();
     }
 
     /*
@@ -554,113 +314,17 @@
      */
     function critical_successHandler(data, dataType, actionType){
         switch(actionType){
-            case 'criticalDetail':
-                criticalRender(data['critical']);
-                break;
-            case 'detectDetail':
-                detectRender(data['criticalDetect']);
-                break;
-            case 'targetDetail':
-                targetRender(data['criticalTarget']);
-                break;
-            default :
-                if(data['resultCode']!=null){
-                    switch (data['resultCode']){
-                        case "ERR100":
-                            alertMessage('criticalExist');
-                            break;
-                        case "ERR101":
-                            alertMessage('detectExist');
-                            break;
-                    }
-                }else{
-                    alertMessage(actionType + 'Complete');
-                    cancel();
+            case 'list':
+                $("#criticalListDiv").empty();
+                $(".addBtn").prop("disabled",false);
+                var criticalList = data['list'];
+                for(var index in criticalList){
+                    criticalRender(criticalList[index]);
                 }
-        }
-    }
-
-    function criticalRender(data){
-        var targetElement = $(".popupbase[popupType='critical']");
-
-        if(targetElement.length>0){
-            targetElement.find("input[name='criticalId']").val(data['criticalId']);
-            targetElement.find("select[name='eventId']").val(data['eventId']);
-            targetElement.find("input[name='criticalValue']").val(data['criticalValue']?data['criticalValue']:'');
-            targetElement.find("select[name='criticalLevel']").val(data['criticalLevel']?data['criticalLevel']:'');
-            targetElement.find("select[name='dashboardFileId']").val(data['dashboardFileId']?data['dashboardFileId']:'');
-
-            switch(data['mode']){
-                case 'new':
-                    targetElement.find(".addBtn").show();
-                    targetElement.find(".saveBtn").hide();
-                    break;
-                default :
-                    targetElement.find(".saveBtn").show();
-                    targetElement.find(".addBtn").hide();
-            }
-            targetElement.show();
-        }
-    }
-
-    function detectRender(data){
-        var targetElement = $(".popupbase[popupType='detect']");
-
-        if(targetElement.length>0){
-            targetElement.find("input[name='criticalId']").val(data['criticalId']);
-            targetElement.find("input[name='criticalDetectId']").val(data['criticalDetectId']);
-            targetElement.find("select[name='eventId']").val(data['eventId']);
-            targetElement.find("select[name='criticalLevel']").val(data['criticalLevel']);
-            targetElement.find("select[name='detectDeviceId']").val(data['detectDeviceId']?data['detectDeviceId']:'').trigger('change');
-            targetElement.find("select[name='fenceId']").val(data['fenceId']);
-
-            switch(data['mode']){
-                case 'new':
-                    targetElement.find(".addBtn").show();
-                    targetElement.find(".saveBtn").hide();
-                    break;
-                default :
-                    targetElement.find(".saveBtn").show();
-                    targetElement.find(".addBtn").hide();
-            }
-            targetElement.show();
-        }
-    }
-
-    function targetRender(data){
-        var targetElement = $(".popupbase[popupType='target']");
-
-        if(targetElement.length>0){
-            targetElement.find("select[name='targetDeviceId'] option").prop("disabled",false);
-            $.each($("li[criticalDetectId='"+data['criticalDetectId']+"'] li[targetDeviceId]"), function(){
-                targetElement.find("select[name='targetDeviceId'] option[value='"+$(this).attr("targetDeviceId")+"']").prop("disabled",true);
-            });
-
-            targetElement.find("input[name='criticalDetectId']").val(data['criticalDetectId']);
-            targetElement.find("select[name='eventId']").val(data['eventId']);
-            targetElement.find("select[name='criticalLevel']").val(data['criticalLevel']);
-            targetElement.find("select[name='detectDeviceId']").val(data['detectDeviceId']);
-            targetElement.find("select[name='targetDeviceId']").val(data['targetDeviceId']?data['targetDeviceId']:'');
-            if(data['alarmType']!=null){
-                targetElement.find("select[name='alarmType']").val(data['alarmType']);
-            }
-            if(data['alarmMessage']!=null){
-                targetElement.find("select[name='alarmMessage']").val(data['alarmMessage']);
-            }
-            targetElement.find("select[name='alarmFileId']").val(data['alarmFileId']?data['alarmFileId']:'');
-
-            switch(data['mode']){
-                case 'new':
-                    targetElement.find("select[name='targetDeviceId']").prop("disabled",false);
-                    targetElement.find(".addBtn").show();
-                    targetElement.find(".saveBtn").hide();
-                    break;
-                default :
-                    targetElement.find("select[name='targetDeviceId']").prop("disabled",true);
-                    targetElement.find(".saveBtn").show();
-                    targetElement.find(".addBtn").hide();
-            }
-            targetElement.show();
+                break;
+            case 'save':
+                alertMessage(actionType + 'Complete');
+                break;
         }
     }
 
@@ -672,10 +336,112 @@
         alertMessage(actionType + 'Failure');
     }
 
-    function cancel(){
-        var listForm = $('<FORM>').attr('method','POST').attr('action',urlConfig['listUrl']);
-        listForm.appendTo(document.body);
-        listForm.submit();
+    function addCritical(){
+        var parentElement = $("#addCriticalBox");
+        var param = {
+            'eventId' : $("#eventId").val()
+            ,'criticalId' : uuid32()
+            ,'criticalLevel' : parentElement.find("select[name='criticalLevel'] option:selected").val()
+            ,'criticalValue' : parentElement.find("input[name='criticalValue']").val()
+            ,'dashboardFileId' : parentElement.find("select[name='dashboardFileId'] option:selected").val()
+        };
+        criticalRender(param);
+        $('.addBtn').trigger('click');
+    }
+
+    function removeCritical(criticalId){
+        $("#criticalListDiv > li[criticalId='"+criticalId+"']").remove();
+    }
+
+    function criticalRender(critical){
+        var criticalTag = $("#criticalTemplate > li").clone();
+
+        if(criticalCss[critical['criticalLevel']]!=null){
+            criticalTag.addClass('level-'+criticalCss[critical['criticalLevel']]);
+        }else{
+            criticalTag.addClass('level-end');
+        }
+        criticalTag.attr("criticalId",critical['criticalId']);
+        criticalTag.find("p[name='criticalName']").text(criticalLevelNameList[critical['criticalLevel']]);
+        criticalTag.find("button.ico-zoom").on('click',function(){
+            $(this).toggleClass('on');
+        });
+        criticalTag.find("button.ico-minus").click({criticalId:critical['criticalId']},function(evt){
+            removeCritical(evt.data.criticalId);
+        });
+        criticalTag.find("input[name='criticalValue']").val(critical['criticalValue']);
+        criticalTag.find("select[name='criticalLevel']").val(critical['criticalLevel']);
+        criticalTag.find("select[name='dashboardFileId']").val(critical['dashboardFileId']);
+        $("#criticalListDiv").append(criticalTag);
+
+        // 감지장치
+        var detectList = critical['criticalDetects'];
+        for(var index in detectList){
+            detectRender(detectList[index], criticalTag);
+        }
+    }
+
+    function detectRender(detect, parentElement){
+        var detectTag = null;
+
+        if(detect['fenceId']!=null){
+            detectTag = parentElement.find("li[detectDeviceId='"+detect['detectDeviceId']+"'][fenceId='"+detect['fenceId']+"']");
+        }else{
+            detectTag = parentElement.find("li[detectDeviceId='"+detect['detectDeviceId']+"']");
+        }
+
+        if(detectTag==null || detectTag.length==0){
+            console.log("[detectRender] detect device li tag null", detect);
+            return false;
+        }
+        detectTag.find("input[name='detectDeviceUseYn']").prop("checked",detect['useYn']=='Y');
+
+        // 감지장치 설정
+        var detectConfigList = detect['criticalDetectConfigs'];
+        for(var index in detectConfigList){
+            detectConfigRender(detectConfigList[index], detectTag, index);
+        }
+
+        // 대상장치
+        var targetList = detect['criticalTargets'];
+        for(var index in targetList){
+            targetRender(targetList[index], detectTag);
+        }
+    }
+
+    function detectConfigRender(detectConfig, parentElement, index){
+        var detectConfigTag = parentElement.find(".cycle-setting:eq("+index+")");
+
+        if(detectConfigTag==null || detectConfigTag.length==0){
+            console.log("[detectConfigRender] detect config tag null");
+            return false;
+        }
+        detectConfigTag.find("input[name='detectConfigUseYn']").prop("checked",detectConfig['useYn']=='Y');
+        var startDatetime = detectConfig['startDatetime'].split(":");
+        if(startDatetime.length==3){
+            detectConfigTag.find("input[name='startHour']").val(startDatetime[0]);
+            detectConfigTag.find("input[name='startMinute']").val(startDatetime[1]);
+            detectConfigTag.find("input[name='startSecond']").val(startDatetime[2]);
+        }
+        var endDatetime = detectConfig['endDatetime'].split(":");
+        if(endDatetime.length==3){
+            detectConfigTag.find("input[name='endHour']").val(endDatetime[0]);
+            detectConfigTag.find("input[name='endMinute']").val(endDatetime[1]);
+            detectConfigTag.find("input[name='endSecond']").val(endDatetime[2]);
+        }
+    }
+
+    function targetRender(target,parentElement){
+        var targetTag = parentElement.find("li[targetDeviceId='"+target['targetDeviceId']+"']");
+
+        if(targetTag==null || targetTag.length==0){
+            console.log("[targetRender] target device li tag null");
+            return false;
+        }
+        targetTag.find("input[name='targetDeviceUseYn']").prop("checked",target['useYn']=='Y');
+        targetTag.find("select[name='alarmType']").val(target['alarmType']);
+        targetTag.find("select[name='alarmMessage']").val(target['alarmMessage']);
+        targetTag.find("select[name='alarmFileId']").val(target['alarmFileId']);
     }
 
     function alertMessage(type){

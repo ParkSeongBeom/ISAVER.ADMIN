@@ -1268,11 +1268,107 @@ ul.u_defalut {
   display: flex;
   display: flexbox;
   display: box;
+  -webkit-box-orient: column;
+  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-align: start;
+  -webkit-box-align: start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
   position: relative;
   width: 100%;
   height: calc(100vh - 180px);
   max-height: 780px;
   padding: 50px 0 0 0; }
+  .critical-ui input, .critical-ui select, .critical-ui button {
+    height: 50px; }
+  .critical-ui h4, .critical-ui li {
+    position: relative; }
+  .critical-ui h4 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 0 80px 0 0; }
+    .critical-ui h4 > button {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      min-height: 50px;
+      max-width: 50px;
+      max-height: 50px;
+      flex: 1 0 50px;
+      -webkit-flex: 1 0 50px;
+      flexbox: 1 0 50px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 50px;
+      position: relative; }
+      .critical-ui h4 > button:after, .critical-ui h4 > button:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transition: all 200ms;
+        -moz-transition: all 200ms;
+        -webkit-transition: all 200ms;
+        -o-transition: all 200ms;
+        -ms-transition: all 200ms; }
+      .critical-ui h4 > button:before {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        z-index: 1;
+        color: #fff;
+        font-size: 1.4rem; }
+      .critical-ui h4 > button:after {
+        content: "";
+        z-index: -1; }
+      .critical-ui h4 > button:after {
+        background-color: #4c4c4c; }
+      .critical-ui h4 > button:hover:after {
+        background-color: #32a0be; }
+      .critical-ui h4 > button.on:after {
+        background-color: #b42d6e; }
+      .critical-ui h4 > button.on ~ .zoom-box {
+        display: inline-block;
+        background-color: #b42d6e; }
   .critical-ui > section {
     display: -webkit-box;
     display: -moz-box;
@@ -1281,63 +1377,122 @@ ul.u_defalut {
     display: flex;
     display: flexbox;
     display: box;
-    -webkit-box-orient: column;
-    -webkit-box-direction: column;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    flex: 1;
-    -webkit-flex: 1;
-    flexbox: 1;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    overflow: hidden;
     position: relative;
+    width: 100%; }
+  .critical-ui .critical-title {
+    height: 50px;
+    margin: 0 0 20px 0; }
+    .critical-ui .critical-title > h4 {
+      width: 350px;
+      font-size: 1.1rem; }
+      .critical-ui .critical-title > h4:first-of-type {
+        flex: 0 1 350px;
+        -webkit-flex: 0 1 350px;
+        flexbox: 0 1 350px;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 350px;
+        width: 350px;
+        min-width: 350px;
+        max-width: 350px;
+        margin: 0 160px 0 0; }
+  .critical-ui .critical-content {
+    width: 1620px;
     height: 100%; }
-    .critical-ui > section:before {
+    .critical-ui .critical-content:before, .critical-ui .critical-content:after {
       content: "";
       position: absolute;
-      z-index: 1;
-      background-color: #a9a9a9;
       top: 0;
-      right: 0;
-      bottom: 0;
-      left: auto;
       width: 1px;
-      height: 100%; }
-    .critical-ui > section > * {
-      width: 100%;
-      padding: 0 30px; }
-    .critical-ui > section h5, .critical-ui > section li > div, .critical-ui > section li > div > p {
-      position: relative;
+      height: 100%;
+      background-color: rgba(4, 4, 4, 0.4); }
+    .critical-ui .critical-content:before {
+      right: 440px; }
+    .critical-ui .critical-content:after {
+      right: 790px; }
+  .critical-ui li {
+    margin: 0 0 10px 0;
+    padding: 0 80px 0 0;
+    perspective: 1000px;
+    ms-perspective: 1000px;
+    -ms-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -webkit-perspective: 1000px;
+    -o-perspective: 1000px;
+    perspective-origin: 250% 100%;
+    ms-perspective-origin: 250% 100%;
+    -ms-perspective-origin: 250% 100%;
+    -moz-perspective-origin: 250% 100%;
+    -webkit-perspective-origin: 250% 100%;
+    -o-perspective-origin: 250% 100%;
+    cursor: pointer; }
+    .critical-ui li > div {
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
       display: flexbox;
-      display: box; }
-    .critical-ui > section h5, .critical-ui > section li {
+      display: box;
       -webkit-flex-flow: row wrap;
       -moz-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
       flex-flow: row wrap;
+      -webkit-transform: rotateX(20deg) scale(0.95) translateX(5px);
+      transform: rotateX(20deg) scale(0.95) translateX(5px);
       min-height: 50px; }
-    .critical-ui > section h5 {
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: justify;
-      -moz-box-pack: justify;
-      -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      font-size: 1.1rem;
-      margin: 0 0 20px 0; }
-      .critical-ui > section h5 > button {
+      .critical-ui li > div, .critical-ui li > div:before {
+        transition: all 200ms;
+        -moz-transition: all 200ms;
+        -webkit-transition: all 200ms;
+        -o-transition: all 200ms;
+        -ms-transition: all 200ms; }
+      .critical-ui li > div:before, .critical-ui li > div:after {
+        content: "";
+        position: absolute; }
+      .critical-ui li > div:before {
+        opacity: 0.5;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
+        -webkit-box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
+        -moz-box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8); }
+      .critical-ui li > div:after {
+        opacity: 0;
+        top: 16px;
+        right: -50px;
+        width: 0;
+        height: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent #4c4c4c transparent transparent; }
+      .critical-ui li > div * {
+        color: #fff; }
+      .critical-ui li > div > p {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        flex: 1;
+        -webkit-flex: 1;
+        flexbox: 1;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        padding: 0 10px; }
+      .critical-ui li > div > button {
+        display: none;
+        position: relative;
         width: 50px;
         height: 50px;
         min-width: 50px;
@@ -1348,9 +1503,8 @@ ul.u_defalut {
         -webkit-flex: 1 0 50px;
         flexbox: 1 0 50px;
         -webkit-box-flex: 0;
-        -ms-flex: 1 0 50px;
-        position: relative; }
-        .critical-ui > section h5 > button:after, .critical-ui > section h5 > button:before {
+        -ms-flex: 1 0 50px; }
+        .critical-ui li > div > button:after, .critical-ui li > div > button:before {
           position: absolute;
           top: 0;
           left: 0;
@@ -1363,7 +1517,7 @@ ul.u_defalut {
           -webkit-transition: all 200ms;
           -o-transition: all 200ms;
           -ms-transition: all 200ms; }
-        .critical-ui > section h5 > button:before {
+        .critical-ui li > div > button:before {
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
@@ -1385,204 +1539,109 @@ ul.u_defalut {
           z-index: 1;
           color: #fff;
           font-size: 1.4rem; }
-        .critical-ui > section h5 > button:after {
+        .critical-ui li > div > button:after {
           content: "";
           z-index: -1; }
-        .critical-ui > section h5 > button:after {
-          background-color: #4c4c4c; }
-        .critical-ui > section h5 > button:hover:after {
-          background-color: #32a0be; }
-        .critical-ui > section h5 > button.on:after {
+        .critical-ui li > div > button:after {
+          background-color: transparent; }
+        .critical-ui li > div > button:hover:after {
+          background-color: rgba(0, 0, 0, 0.4) !important; }
+        .critical-ui li > div > button.on:after {
+          background-color: rgba(0, 0, 0, 0.7) !important; }
+        .critical-ui li > div > button.on ~ .zoom-box {
+          display: inline-block; }
+      .critical-ui li > div .zoom-box {
+        position: relative; }
+    .critical-ui li:hover > div:before, .critical-ui li.on > div:before, .critical-ui li.check > div:before {
+      opacity: 1; }
+    .critical-ui li.on > div, .critical-ui li.show > div {
+      -webkit-transform: rotateX(0deg) scale(1) translateX(0);
+      transform: rotateX(0deg) scale(1) translateX(0); }
+      .critical-ui li.on > div > button, .critical-ui li.show > div > button {
+        display: block; }
+      .critical-ui li.on > div:after, .critical-ui li.show > div:after {
+        opacity: 1; }
+    .critical-ui li.on > ul, .critical-ui li.show > ul {
+      display: block; }
+    .critical-ui li.level-danger, .critical-ui li.level-warning, .critical-ui li.level-caution, .critical-ui li.level-die, .critical-ui li.level-end {
+      background-color: transparent !important; }
+    .critical-ui li.level-danger > div:before {
+      background-color: #c30202; }
+    .critical-ui li.level-warning > div:before {
+      background-color: #f06400; }
+    .critical-ui li.level-caution > div:before {
+      background-color: #d2a01e; }
+    .critical-ui li.level-die > div:before {
+      background-color: #000; }
+    .critical-ui li.level-end > div:before {
+      background-color: #25c09b; }
+    .critical-ui li .btn-check {
+      /*
+      <div class="checkbtn-01">
+        <input type="checkbox" name="">
+        <label class="아이콘클래스 삽입"></label>
+      </div>
+      */
+      position: relative;
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      min-height: 50px;
+      max-width: 50px;
+      max-height: 50px;
+      flex: 1 0 50px;
+      -webkit-flex: 1 0 50px;
+      flexbox: 1 0 50px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 50px; }
+      .critical-ui li .btn-check > *:not(span) {
+        width: 100%;
+        height: 100%; }
+      .critical-ui li .btn-check, .critical-ui li .btn-check label {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center; }
+      .critical-ui li .btn-check input {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        margin: 0;
+        cursor: pointer; }
+        .critical-ui li .btn-check input:hover + label:after {
+          opacity: 0.2; }
+        .critical-ui li .btn-check input:checked + label:before {
+          opacity: 1; }
+        .critical-ui li .btn-check input:checked + label:after {
+          opacity: 1;
           background-color: #b42d6e; }
-        .critical-ui > section h5 > button:first-of-type {
-          margin-left: auto; }
-        .critical-ui > section h5 > button.on ~ .zoom-box {
-          display: inline-block;
-          background-color: #b42d6e;
-          transform: translate3d(0, -50px, 0);
-          ms-transform: translate3d(0, -50px, 0);
-          -ms-transform: translate3d(0, -50px, 0);
-          -moz-transform: translate3d(0, -50px, 0);
-          -webkit-transform: translate3d(0, -50px, 0);
-          -o-transform: translate3d(0, -50px, 0);
-          z-index: 10; }
-    .critical-ui > section h5 + * {
-      flex: 1;
-      -webkit-flex: 1;
-      flexbox: 1;
-      -webkit-box-flex: 1;
-      -ms-flex: 1;
-      overflow: auto; }
-    .critical-ui > section li {
-      margin: 0 0 10px 0;
-      perspective: 1000px;
-      ms-perspective: 1000px;
-      -ms-perspective: 1000px;
-      -moz-perspective: 1000px;
-      -webkit-perspective: 1000px;
-      -o-perspective: 1000px;
-      perspective-origin: 250% 100%;
-      ms-perspective-origin: 250% 100%;
-      -ms-perspective-origin: 250% 100%;
-      -moz-perspective-origin: 250% 100%;
-      -webkit-perspective-origin: 250% 100%;
-      -o-perspective-origin: 250% 100%;
-      cursor: pointer; }
-      .critical-ui > section li > div {
-        -webkit-flex-flow: row wrap;
-        -moz-flex-flow: row wrap;
-        -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
-        -webkit-transform: rotateX(20deg) scale(0.95) translateX(5px);
-        transform: rotateX(20deg) scale(0.95) translateX(5px); }
-        .critical-ui > section li > div, .critical-ui > section li > div:before {
-          transition: all 200ms;
-          -moz-transition: all 200ms;
-          -webkit-transition: all 200ms;
-          -o-transition: all 200ms;
-          -ms-transition: all 200ms; }
-        .critical-ui > section li > div:before, .critical-ui > section li > div:after {
-          content: "";
-          position: absolute; }
-        .critical-ui > section li > div:before {
-          opacity: 0.5;
-          z-index: -1;
+      .critical-ui li .btn-check label {
+        position: relative;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center; }
+        .critical-ui li .btn-check label:after, .critical-ui li .btn-check label:before {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
-          box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
-          -webkit-box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
-          -moz-box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8); }
-        .critical-ui > section li > div:after {
-          opacity: 0;
-          top: 16px;
-          right: -30px;
-          width: 0;
-          height: 0;
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 10px 10px 10px 0;
-          border-color: transparent #4c4c4c transparent transparent; }
-        .critical-ui > section li > div * {
-          color: #fff; }
-        .critical-ui > section li > div > p {
-          box-align: center;
-          -webkit-box-align: center;
-          -moz-box-align: center;
-          -webkit-align-items: center;
-          -ms-flex-align: center;
-          align-items: center;
-          flex: 1;
-          -webkit-flex: 1;
-          flexbox: 1;
-          -webkit-box-flex: 1;
-          -ms-flex: 1;
-          height: 50px;
-          padding: 0 10px; }
-        .critical-ui > section li > div > button {
-          display: none;
-          position: relative;
-          width: 50px;
-          height: 50px;
-          min-width: 50px;
-          min-height: 50px;
-          max-width: 50px;
-          max-height: 50px;
-          flex: 1 0 50px;
-          -webkit-flex: 1 0 50px;
-          flexbox: 1 0 50px;
-          -webkit-box-flex: 0;
-          -ms-flex: 1 0 50px; }
-          .critical-ui > section li > div > button:after, .critical-ui > section li > div > button:before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            transition: all 200ms;
-            -moz-transition: all 200ms;
-            -webkit-transition: all 200ms;
-            -o-transition: all 200ms;
-            -ms-transition: all 200ms; }
-          .critical-ui > section li > div > button:before {
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            display: flexbox;
-            display: box;
-            box-align: center;
-            -webkit-box-align: center;
-            -moz-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -moz-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            z-index: 1;
-            color: #fff;
-            font-size: 1.4rem; }
-          .critical-ui > section li > div > button:after {
-            content: "";
-            z-index: -1; }
-          .critical-ui > section li > div > button:after {
-            background-color: transparent; }
-          .critical-ui > section li > div > button:hover:after {
-            background-color: rgba(0, 0, 0, 0.4) !important; }
-          .critical-ui > section li > div > button.on:after {
-            background-color: rgba(0, 0, 0, 0.7) !important; }
-          .critical-ui > section li > div > button.on ~ .zoom-box {
-            display: inline-block; }
-      .critical-ui > section li:hover > div:before, .critical-ui > section li.on > div:before, .critical-ui > section li.check > div:before {
-        opacity: 1; }
-      .critical-ui > section li.on > div, .critical-ui > section li.show > div {
-        -webkit-transform: rotateX(0deg) scale(1) translateX(0);
-        transform: rotateX(0deg) scale(1) translateX(0); }
-        .critical-ui > section li.on > div > button, .critical-ui > section li.show > div > button {
-          display: block; }
-        .critical-ui > section li.on > div:after, .critical-ui > section li.show > div:after {
-          opacity: 1; }
-      .critical-ui > section li.level-danger, .critical-ui > section li.level-warning, .critical-ui > section li.level-caution, .critical-ui > section li.level-die, .critical-ui > section li.level-end {
-        background-color: transparent !important; }
-      .critical-ui > section li.level-danger > div:before {
-        background-color: #c30202; }
-      .critical-ui > section li.level-warning > div:before {
-        background-color: #f06400; }
-      .critical-ui > section li.level-caution > div:before {
-        background-color: #d2a01e; }
-      .critical-ui > section li.level-die > div:before {
-        background-color: #000; }
-      .critical-ui > section li.level-end > div:before {
-        background-color: #25c09b; }
-      .critical-ui > section li .btn-check {
-        /*
-        <div class="checkbtn-01">
-          <input type="checkbox" name="">
-          <label class="아이콘클래스 삽입"></label>
-        </div>
-        */
-        position: relative;
-        width: 50px;
-        height: 50px;
-        min-width: 50px;
-        min-height: 50px;
-        max-width: 50px;
-        max-height: 50px;
-        flex: 1 0 50px;
-        -webkit-flex: 1 0 50px;
-        flexbox: 1 0 50px;
-        -webkit-box-flex: 0;
-        -ms-flex: 1 0 50px; }
-        .critical-ui > section li .btn-check > *:not(span) {
-          width: 100%;
-          height: 100%; }
-        .critical-ui > section li .btn-check, .critical-ui > section li .btn-check label {
+          top: 0;
+          left: 0; }
+        .critical-ui li .btn-check label:before {
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
@@ -1595,67 +1654,75 @@ ul.u_defalut {
           -moz-box-align: center;
           -webkit-align-items: center;
           -ms-flex-align: center;
-          align-items: center; }
-        .critical-ui > section li .btn-check input {
-          position: absolute;
-          z-index: 10;
-          top: 0;
-          left: 0;
-          opacity: 0;
-          margin: 0;
-          cursor: pointer; }
-          .critical-ui > section li .btn-check input:hover + label:after {
-            opacity: 0.2; }
-          .critical-ui > section li .btn-check input:checked + label:before {
-            opacity: 1; }
-          .critical-ui > section li .btn-check input:checked + label:after {
-            opacity: 1;
-            background-color: #b42d6e; }
-        .critical-ui > section li .btn-check label {
-          position: relative;
+          align-items: center;
           -webkit-box-pack: center;
           -moz-box-pack: center;
           -webkit-justify-content: center;
           -ms-flex-pack: center;
-          justify-content: center; }
-          .critical-ui > section li .btn-check label:after, .critical-ui > section li .btn-check label:before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0; }
-          .critical-ui > section li .btn-check label:before {
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            display: flexbox;
-            display: box;
-            box-align: center;
-            -webkit-box-align: center;
-            -moz-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -moz-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            z-index: 1;
-            color: #fff;
-            font-size: 1.4rem;
-            opacity: 0.6; }
-          .critical-ui > section li .btn-check label:after {
-            content: "";
-            z-index: -1;
-            background-color: black;
-            opacity: 0; }
+          justify-content: center;
+          z-index: 1;
+          color: #fff;
+          font-size: 1.4rem;
+          opacity: 0.6; }
+        .critical-ui li .btn-check label:after {
+          content: "";
+          z-index: -1;
+          background-color: black;
+          opacity: 0; }
+  .critical-ui .list-event {
+    flex: 0 1 350px;
+    -webkit-flex: 0 1 350px;
+    flexbox: 0 1 350px;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 350px;
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    margin: 0 160px 0 0; }
+    .critical-ui .list-event > div {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box; }
+    .critical-ui .list-event select {
+      width: 100%;
+      height: 50px;
+      margin: 0 0 20px 0; }
+      .critical-ui .list-event select + button {
+        width: 100px;
+        height: 50px; }
+  .critical-ui .list-criti {
+    flex: 1;
+    -webkit-flex: 1;
+    flexbox: 1;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    position: relative;
+    height: 100%;
+    overflow: overlay; }
+    .critical-ui .list-criti li {
+      width: 350px; }
+  .critical-ui .list-detec, .critical-ui .list-objec {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%; }
+    .critical-ui .list-detec li, .critical-ui .list-objec li {
+      width: 100%; }
+      .critical-ui .list-detec li > div:before, .critical-ui .list-objec li > div:before {
+        background-color: #4c4c4c; }
+  .critical-ui .list-objec li > div:after {
+    display: none; }
   .critical-ui .zoom-box {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
     width: 100%;
     min-width: 100%;
     padding: 10px; }
@@ -1671,6 +1738,17 @@ ul.u_defalut {
       width: 100%; }
     .critical-ui .zoom-box * {
       color: #fff; }
+    .critical-ui .zoom-box h4 {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%; }
+      .critical-ui .zoom-box h4 span {
+        margin: 0 auto 0 0; }
     .critical-ui .zoom-box p {
       font-size: 0.9rem;
       opacity: 0.6;
@@ -1694,7 +1772,8 @@ ul.u_defalut {
       -ms-transform: translate3d(10px, -10px, 0);
       -moz-transform: translate3d(10px, -10px, 0);
       -webkit-transform: translate3d(10px, -10px, 0);
-      -o-transform: translate3d(10px, -10px, 0); }
+      -o-transform: translate3d(10px, -10px, 0);
+      z-index: 1; }
       .critical-ui .zoom-box button:after, .critical-ui .zoom-box button:before {
         position: absolute;
         top: 0;
@@ -1742,33 +1821,25 @@ ul.u_defalut {
     .critical-ui .zoom-box .checkbox_set, .critical-ui .zoom-box .checkbox_set * {
       margin: 0; }
     .critical-ui .zoom-box .cycle-setting {
-      -webkit-box-pack: justify;
-      -moz-box-pack: justify;
-      -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      height: 40px;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
       margin: 0 0 20px 0; }
-      .critical-ui .zoom-box .cycle-setting, .critical-ui .zoom-box .cycle-setting > div {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        box-align: center;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center; }
       .critical-ui .zoom-box .cycle-setting:last-of-type {
         margin: 0 0 10px 0; }
       .critical-ui .zoom-box .cycle-setting input, .critical-ui .zoom-box .cycle-setting select {
         width: auto;
         margin: 0 2px;
-        width: 35px;
+        width: 30px;
         text-align: center; }
       .critical-ui .zoom-box .cycle-setting .checkbox_set {
         transform: scale(0.9);
@@ -1777,21 +1848,154 @@ ul.u_defalut {
         -moz-transform: scale(0.9);
         -webkit-transform: scale(0.9);
         -o-transform: scale(0.9);
-        left: -5px;
+        left: -10px;
         top: 4px; }
-  .critical-ui .critical-event > * {
-    padding-left: 0; }
-  .critical-ui .critical-event select {
-    width: 100%;
-    height: 50px;
-    margin: 0 0 20px 0; }
-  .critical-ui .critical-event button {
-    height: 50px; }
-  .critical-ui .critical-detec li > div:before, .critical-ui .critical-objec li > div:before {
-    background-color: #4c4c4c; }
-  .critical-ui .critical-objec li > div:after {
-    display: none; }
 
+/*
+.critical-ui {
+
+  $criwidth:50px;
+
+  @mixin buwidth {
+    width:$criwidth; height:$criwidth; min-width:$criwidth; min-height:$criwidth;
+    max-width:$criwidth; max-height:$criwidth; @include flex-option(1, 0, $criwidth);
+  } // @include buwidth;
+  @mixin buheight {height:$criwidth; min-height:$criwidth; max-height:$criwidth;} // @include buheight;
+  @mixin critical-rotate($deg,$scale,$trans) {
+    -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
+    transform:        rotateX($deg) scale($scale) translateX($trans);
+  } // @include critical-rotate(20deg,.95,5px);
+
+  @include flexbase; position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
+
+  & > section {
+    @include flexbase; @include flex-column; @include flex-width-one(1);
+    overflow: hidden; position: relative; height:100%;
+
+    &:before {@include bbl(0,0,0,auto,1px,100%,$color-gray-01);}
+
+    & > * {width:100%;  padding:0 ($criwidth - 20px);}
+
+    h5, li > div, li > div > p {position: relative; @include flexbase;}
+
+    h5, li {@include flex-row-wrap; min-height:$criwidth; }
+
+    h5 {
+      @include flex-align-items-center; @include flex-justify-content-between;
+      font-size:1.1rem; margin:0 0 20px 0;
+
+      & > button {
+        @include buwidth; @include btn-normal-action;
+        &:first-of-type {margin-left:auto;}
+        &.on ~ .zoom-box {
+          display: inline-block; background-color: $color-on; @include translate3d(0, -($criwidth), 0); z-index: 10;
+
+        }
+      }
+
+    }
+
+    h5 + * {@include flex-width-one(1); overflow: auto;}
+
+    li {
+      margin:0 0 10px 0; @include perspective01(1000px, 250%, 100%); cursor:pointer;
+
+      & > div {
+        @include flex-row-wrap; @include critical-rotate(20deg,.95,5px);
+
+        &, &:before {@include transition01(200ms);}
+
+        &:before, &:after {content:""; position: absolute;}
+        &:before {
+          opacity: 0.5;  z-index:-1; width:100%; height:100%;
+          @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
+        }
+        &:after {
+          opacity: 0; top:16px; right:-($criwidth - 20px); width:0; height:0;
+          @include triangle-lef(10px 10px 10px 0,$color-dark-01);
+        }
+
+        & * {color:$color-white-01;}
+
+        & > p {
+          @include flex-align-items-center; @include flex-width-one(1);
+          height:$criwidth; padding:0 10px;
+        }
+
+        & > button {
+          display: none;
+          @include btn-critical-action; @include buwidth;
+          &.on ~ .zoom-box {display: inline-block;}
+        }
+
+      }
+
+      &:hover, &.on, &.check { & > div { &:before {opacity: 1;} } }
+
+      &.on, &.show {
+        & > div {
+          & > button {display: block;}
+          &:after {opacity: 1;}
+          @include critical-rotate(0deg,1,0);
+        }
+      }
+
+      &.level {
+        &-danger,&-warning,&-caution,&-die,&-end {background-color: transparent !important;}
+        &-danger  {& > div:before {background-color: $color-danger;} }
+        &-warning {& > div:before {background-color: $color-warning;} }
+        &-caution {& > div:before {background-color: $color-caution;} }
+        &-die     {& > div:before {background-color: $color-die;} }
+        &-end     {& > div:before {background-color: $color-end;} }
+      }
+
+      .btn-check {@include checkbtn-01; @include buwidth; }
+    }
+  }
+
+  .zoom-box {
+    display: none; width:100%; min-width:100%; padding:10px; @include placeholder-white;
+    & > * {width:100%;}
+    & * {color:$color-white-01;}
+    p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
+    input, select {
+      border-width:0 0 1px 0; border-color:$color-white-01;
+      background-color: transparent; padding:0; margin:0 0 30px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+    }
+    select {
+      background-image: url(../images/ico/select_allow_w.svg);
+      option { background-color: $bas-color; }
+    }
+
+    button {@include btn-critical-action; @include translate3d(10px, -10px, 0);}
+
+    .checkbox_set { &, & * {margin:0;} }
+
+    .cycle-setting {
+      &, & > div {@include flexbase; @include flex-align-items-center;}
+      @include flex-justify-content-between; height:40px; margin:0 0 20px 0;
+      &:last-of-type {margin:0 0 10px 0;}
+      input, select {width:auto; margin:0 2px; width:35px; text-align: center; }
+      .checkbox_set {@include scale(0.9); left:-5px; top:4px;}
+    }
+
+
+  }
+
+  .critical {
+    &-event {
+      & > * {padding-left:0;}
+      //@include flex-width-one(1.5);
+      select {width:100%; height:$criwidth; margin:0 0 20px 0;}
+      button {height:$criwidth; }
+    }
+    &-criti {}
+    &-detec, &-objec { li > div:before {background-color: $color-dark-01;} }
+    &-objec { li > div:after {display: none;}}
+  }
+}
+*/
 .area_tree_set {
   width: 100%;
   height: 100%;

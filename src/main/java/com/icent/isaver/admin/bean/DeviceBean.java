@@ -74,6 +74,9 @@ public class DeviceBean extends ISaverCommonBean {
     private String parentDeviceName;
     private String evtValue;
 
+    private String fenceId;
+    private String fenceName;
+
     public String getParentDeviceName() {
         return parentDeviceName;
     }
@@ -320,5 +323,21 @@ public class DeviceBean extends ISaverCommonBean {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    public String getFenceId() {
+        return fenceId;
+    }
+
+    public void setFenceId(String fenceId) {
+        this.fenceId = fenceId;
+    }
+
+    public String getFenceName() {
+        return fenceName;
+    }
+
+    public void setFenceName(String fenceName) {
+        this.fenceName = fenceName;
     }
 }

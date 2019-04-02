@@ -1939,7 +1939,7 @@ menu {
 .level-caution {
   background-color: #d2a01e; }
   .level-caution, .level-caution .m_marqueebox:after, .level-caution.copybox:after {
-    background-color: #d2a01e; }
+    background-color: #d2a01e !important; }
   .level-caution .safeeye_set .s_lbox {
     color: #d2a01e; }
     .level-caution .safeeye_set .s_lbox:after {
@@ -2014,7 +2014,7 @@ menu {
     opacity: 0;
     padding: 70%; } }
 .level-warning, .level-warning .m_marqueebox:after, .level-warning.copybox:after {
-  background-color: #f06400; }
+  background-color: #f06400 !important; }
 .level-warning .safeeye_set .s_lbox {
   color: #f06400; }
   .level-warning .safeeye_set .s_lbox:after {

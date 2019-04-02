@@ -22,15 +22,13 @@ public class CriticalDetectBean {
     private String criticalId;
     private String detectDeviceId;
     private String fenceId;
+    private String useYn;
 
     /**
      * Etc
      */
     private List<CriticalTargetBean> criticalTargets;
-    private String eventId;
-    private String eventName;
-    private String criticalLevel;
-    private String detectDeviceName;
+    private List<CriticalDetectConfigBean> criticalDetectConfigs;
 
     public String getCriticalDetectId() {
         return criticalDetectId;
@@ -64,36 +62,12 @@ public class CriticalDetectBean {
         this.criticalTargets = criticalTargets;
     }
 
-    public String getDetectDeviceName() {
-        return detectDeviceName;
+    public List<CriticalDetectConfigBean> getCriticalDetectConfigs() {
+        return criticalDetectConfigs;
     }
 
-    public void setDetectDeviceName(String detectDeviceName) {
-        this.detectDeviceName = detectDeviceName;
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getCriticalLevel() {
-        return criticalLevel;
-    }
-
-    public void setCriticalLevel(String criticalLevel) {
-        this.criticalLevel = criticalLevel;
+    public void setCriticalDetectConfigs(List<CriticalDetectConfigBean> criticalDetectConfigs) {
+        this.criticalDetectConfigs = criticalDetectConfigs;
     }
 
     public String getFenceId() {
@@ -102,5 +76,13 @@ public class CriticalDetectBean {
 
     public void setFenceId(String fenceId) {
         this.fenceId = fenceId;
+    }
+
+    public String getUseYn() {
+        return useYn;
+    }
+
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
     }
 }

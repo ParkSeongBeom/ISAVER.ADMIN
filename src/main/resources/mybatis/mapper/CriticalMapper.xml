@@ -2,26 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icent.isaver.admin.dao.CriticalDao">
 
-    <resultMap id="criticalResultMap" type="EventBean">
-        <id property="eventId" column="eventId"/>
-        <result property="eventName" column="eventName"/>
-        <collection property="criticals" ofType="CriticalBean">
-            <id property="criticalId" column="criticalId"/>
-            <result property="criticalLevel" column="criticalLevel"/>
-            <result property="criticalName" column="criticalName"/>
-            <result property="criticalValue" column="criticalValue"/>
-            <result property="dashboardFileId" column="dashboardFileId"/>
-            <collection property="criticalDetects" ofType="CriticalDetectBean">
-                <id property="criticalDetectId" column="criticalDetectId"/>
-                <result property="detectDeviceId" column="detectDeviceId"/>
-                <result property="detectDeviceName" column="detectDeviceName"/>
-                <collection property="criticalTargets" ofType="CriticalTargetBean">
-                    <id property="targetDeviceId" column="targetDeviceId"/>
-                    <result property="targetDeviceName" column="targetDeviceName"/>
-                    <result property="alarmType" column="alarmType"/>
-                    <result property="alarmMessage" column="alarmMessage"/>
-                    <result property="alarmFileId" column="alarmFileId"/>
-                </collection>
+    <resultMap id="criticalResultMap" type="CriticalBean">
+        <id property="criticalId" column="criticalId"/>
+        <result property="criticalLevel" column="criticalLevel"/>
+        <result property="criticalValue" column="criticalValue"/>
+        <result property="dashboardFileId" column="dashboardFileId"/>
+        <collection property="criticalDetects" ofType="CriticalDetectBean">
+            <id property="criticalDetectId" column="criticalDetectId"/>
+            <result property="criticalId" column="detect_criticalId"/>
+            <result property="detectDeviceId" column="detectDeviceId"/>
+            <result property="fenceId" column="fenceId"/>
+            <result property="useYn" column="detectUseYn"/>
+            <collection property="criticalDetectConfigs" ofType="CriticalDetectConfigBean">
+                <id property="criticalDetectConfigId" column="criticalDetectConfigId"/>
+                <result property="criticalDetectId" column="config_criticalDetectId"/>
+                <result property="startDatetime" column="startDatetime"/>
+                <result property="endDatetime" column="endDatetime"/>
+                <result property="useYn" column="configUseYn"/>
+            </collection>
+            <collection property="criticalTargets" ofType="CriticalTargetBean">
+                <id property="targetDeviceId" column="targetDeviceId"/>
+                <id property="criticalDetectId" column="target_criticalDetectId"/>
+                <result property="alarmType" column="alarmType"/>
+                <result property="alarmMessage" column="alarmMessage"/>
+                <result property="alarmFileId" column="alarmFileId"/>
+                <result property="useYn" column="targetUseYn"/>
             </collection>
         </collection>
     </resultMap>
@@ -31,111 +36,138 @@
         @author psb
     -->
     <select id="findListCritical" resultMap="criticalResultMap" parameterType="map">
-        SELECT  a.event_id as eventId
-                , a.event_name as eventName
-                , b.critical_id as criticalId
-                , b.critical_level as criticalLevel
-                , (SELECT code_name FROM isaver.code WHERE group_code_id = 'LEV' AND code_id = b.critical_level) as criticalName
-                , b.critical_value as criticalValue
-                , b.dashboard_file_id as dashboardFileId
-                , c.critical_detect_id as criticalDetectId
-                , c.detect_device_id as detectDeviceId
-                , (SELECT device_name FROM isaver.device WHERE device_id = c.detect_device_id) as detectDeviceName
-                , d.target_device_id as targetDeviceId
-                , (SELECT device_name FROM isaver.device WHERE device_id = d.target_device_id) as targetDeviceName
-                , d.alarm_type as alarmType
-                , d.alarm_message as alarmMessage
-                , d.alarm_file_id as alarmFileId
-        FROM	isaver.event a
-        LEFT OUTER JOIN isaver.critical b
-        ON	a.event_id = b.event_id
-        LEFT OUTER JOIN isaver.critical_detect c
-        ON	b.critical_id = c.critical_id
-        LEFT OUTER JOIN isaver.critical_target d
-        ON	c.critical_detect_id = d.critical_detect_id
-        WHERE	a.del_yn = 'N'
-        ORDER BY b.event_id, b.critical_level, a.event_id
+        SELECT  critical.critical_id as criticalId
+                , critical.critical_level as criticalLevel
+                , critical.critical_value as criticalValue
+                , critical.dashboard_file_id as dashboardFileId
+                , detect.critical_detect_id as criticalDetectId
+                , detect.critical_id as detect_criticalId
+                , detect.detect_device_id as detectDeviceId
+                , detect.fence_id as fenceId
+                , detect.use_yn as detectUseYn
+                , target.target_device_id as targetDeviceId
+                , target.critical_detect_id as target_criticalDetectId
+                , target.alarm_type as alarmType
+                , target.alarm_message as alarmMessage
+                , target.alarm_file_id as alarmFileId
+                , target.use_yn as targetUseYn
+                , detect_config.critical_detect_config_id as criticalDetectConfigId
+                , detect_config.critical_detect_id as config_criticalDetectId
+                , detect_config.start_datetime as startDatetime
+                , detect_config.end_datetime as endDatetime
+                , detect_config.use_yn as configUseYn
+        FROM	isaver.critical critical
+        LEFT OUTER JOIN isaver.critical_detect detect
+        ON	critical.critical_id = detect.critical_id
+        LEFT OUTER JOIN isaver.critical_target target
+        ON	detect.critical_detect_id = target.critical_detect_id
+        LEFT OUTER JOIN isaver.critical_detect_config detect_config
+        ON	detect.critical_detect_id = detect_config.critical_detect_id
+        WHERE critical.event_id = #{eventId}
+        ORDER BY critical.critical_level
     </select>
 
     <!--
-        임계치 상세를 가져온다.
+        임계치를 저장한다
         @author psb
     -->
-    <select id="findByCritical" resultType="CriticalBean" parameterType="map">
-        SELECT  b.event_id as eventId
-                , b.event_name as eventName
-                , a.critical_id as criticalId
-                , a.critical_level as criticalLevel
-                , a.critical_value as criticalValue
-                , a.dashboard_file_id as dashboardFileId
-        FROM	isaver.critical a
-        INNER JOIN isaver.event b
-        ON	    a.event_id = b.event_id
-        WHERE	a.critical_id = #{criticalId}
-    </select>
+    <insert id="saveCritical" parameterType="java.util.List" >
+        <foreach collection="list" item="critical">
+            INSERT INTO isaver.critical (
+                critical_id
+                , event_id
+                , critical_level
+                <if test="critical.criticalValue != null and critical.criticalValue != ''">
+                    , critical_value
+                </if>
+                , dashboard_file_id
+            ) VALUES (
+                #{critical.criticalId}
+                , #{critical.eventId}
+                , #{critical.criticalLevel}
+                <if test="critical.criticalValue != null and critical.criticalValue != ''">
+                    , ${critical.criticalValue}
+                </if>
+                , #{critical.dashboardFileId}
+            );
+            <foreach collection="critical.criticalDetects" item="detect">
+                INSERT INTO isaver.critical_detect (
+                    critical_detect_id
+                    , critical_id
+                    , detect_device_id
+                    , use_yn
+                    <if test="detect.fenceId != null and detect.fenceId != ''">
+                        , fence_id
+                    </if>
+                ) VALUES (
+                    #{detect.criticalDetectId}
+                    , #{detect.criticalId}
+                    , #{detect.detectDeviceId}
+                    , #{detect.useYn}
+                    <if test="detect.fenceId != null and detect.fenceId != ''">
+                        , #{detect.fenceId}
+                    </if>
+                );
 
-    <!--
-        임계치 중복 체크.
-        @author psb
-    -->
-    <select id="findExistCritical" resultType="CriticalBean" parameterType="map">
-        SELECT  critical_id as criticalId
-        FROM	isaver.critical
-        WHERE	event_id = #{eventId}
-        AND	    critical_level = #{criticalLevel}
-        <if test="criticalValue != null and criticalValue != ''">
-            AND	    critical_value = ${criticalValue}
-        </if>
-    </select>
+                <foreach collection="detect.criticalDetectConfigs" item="config">
+                    INSERT INTO isaver.critical_detect_config (
+                        critical_detect_config_id
+                        , critical_detect_id
+                        , start_datetime
+                        , end_datetime
+                        , use_yn
+                    ) VALUES (
+                        #{config.criticalDetectConfigId}
+                        , #{config.criticalDetectId}
+                        , #{config.startDatetime}
+                        , #{config.endDatetime}
+                        , #{config.useYn}
+                    );
+                </foreach>
 
-    <!--
-        임계치를 등록한다
-        @author psb
-    -->
-    <insert id="addCritical" parameterType="map">
-        INSERT INTO isaver.critical (
-            critical_id
-            , event_id
-            , critical_level
-        <if test="criticalValue != null and criticalValue != ''">
-            , critical_value
-        </if>
-            , dashboard_file_id
-        ) VALUES (
-            #{criticalId}
-            , #{eventId}
-            , #{criticalLevel}
-        <if test="criticalValue != null and criticalValue != ''">
-            , ${criticalValue}
-        </if>
-            , #{dashboardFileId}
-        );
+                <foreach collection="detect.criticalTargets" item="target">
+                    INSERT INTO isaver.critical_target (
+                        critical_detect_id
+                        , target_device_id
+                        , alarm_type
+                        , alarm_message
+                        , alarm_file_id
+                        , use_yn
+                    ) VALUES (
+                        #{target.criticalDetectId}
+                        , #{target.targetDeviceId}
+                        , #{target.alarmType}
+                        , #{target.alarmMessage}
+                        , #{target.alarmFileId}
+                        , #{target.useYn}
+                    );
+                </foreach>
+            </foreach>
+        </foreach>
     </insert>
-
-    <!--
-        임계치를 수정한다
-        @author psb
-    -->
-    <update id="saveCritical" parameterType="map">
-        UPDATE  isaver.critical
-        SET     critical_level = #{criticalLevel}
-                <if test="criticalValue != null and criticalValue != ''">
-                    , critical_value = ${criticalValue}
-                </if>
-                <if test="criticalValue == null or criticalValue == ''">
-                    , critical_value = null
-                </if>
-                , dashboard_file_id = #{dashboardFileId}
-        WHERE   critical_id = #{criticalId}
-    </update>
 
     <!--
         임계치를  제거한다
         @author psb
     -->
     <delete id="removeCritical" parameterType="map">
-        DELETE FROM isaver.critical_target WHERE critical_detect_id in (SELECT critical_detect_id FROM isaver.critical_detect WHERE critical_id = #{criticalId});
-        DELETE FROM isaver.critical_detect WHERE critical_id = #{criticalId};
-        DELETE FROM isaver.critical WHERE critical_id = #{criticalId};
+        DELETE FROM isaver.critical_target
+        WHERE critical_detect_id in (
+          SELECT critical_detect_id
+          FROM isaver.critical_detect
+          WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId})
+        );
+
+        DELETE FROM isaver.critical_detect_config
+        WHERE critical_detect_id in (
+          SELECT critical_detect_id
+          FROM isaver.critical_detect
+          WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId})
+        );
+
+        DELETE FROM isaver.critical_detect
+        WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId});
+
+        DELETE FROM isaver.critical WHERE event_id = #{eventId};
     </delete>
 </mapper>
