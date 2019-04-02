@@ -916,15 +916,19 @@ var CustomMapMediator = (
 
             var customMarker = _self.getMarker(_MARKER_TYPE[4], data);
             if(customMarker!=null){
+                var customKey = data['notificationId'];
+                if(data['fenceId']!=null && data['objectId']!=null){
+                    customKey = data['objectId']+data['fenceId'];
+                }
                 switch (actionType){
                     case "add" :
-                        if(customMarker['notification'][criticalLevel].indexOf(data['notificationId'])<0){
-                            customMarker['notification'][criticalLevel].push(data['notificationId']);
+                        if(customMarker['notification'][criticalLevel].indexOf(customKey)<0){
+                            customMarker['notification'][criticalLevel].push(customKey);
                         }
                         break;
                     case "remove" :
-                        if(customMarker['notification'][criticalLevel].indexOf(data['notificationId'])>-1){
-                            customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(data['notificationId']),1);
+                        if(customMarker['notification'][criticalLevel].indexOf(customKey)>-1){
+                            customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(customKey),1);
                         }
                         break;
                 }

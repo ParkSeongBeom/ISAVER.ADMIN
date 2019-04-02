@@ -694,7 +694,7 @@ $critical_w03 : 150px;
 
   li {
     margin:0 0 10px 0; padding: 0 $crimargin 0 0;
-    @include perspective01(1000px, 250%, 100%); cursor:pointer;
+    //@include perspective01(1000px, 250%, 100%); cursor:pointer;
 
     & > div {
       @include flexbase; @include flex-row-wrap; @include critical-rotate(20deg,.95,5px); min-height:$criwidth;

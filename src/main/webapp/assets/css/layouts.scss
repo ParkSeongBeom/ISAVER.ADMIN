@@ -162,16 +162,9 @@ header {
           width:40px; min-width:40px; float: left;
           &:before {font-size:1.6rem; position: relative;}
           &.issue_btn:before     {content: "\e907";}
-          &.loginout_btn:before  {content: "\e900"; font-size:1.8rem; top:2px;}
+          &.loginout_btn:before  {content: "\e900";}
           &.user_btn:before      {content: "\e90e";}
-          &.info_btn{
-            @include flex-midddle;
-            &:before {content:"i"; font-size:1rem; font-weight:bold;}
-            &:after  {content:"";
-              position: absolute; width:24px; height:24px; @include border01(3px,$color-white-01,1 );
-              @include border-radius(200px);
-            }
-          }
+          &.info_btn:before      {content: "\e946";}
 
           &:hover, &.on:not(.issue_btn) {
             background-color: $color-ho;
@@ -222,17 +215,19 @@ menu {
   overflow: hidden; display: inline-block; margin:0 0 0 25px;
 
   @mixin mbHover  {background-color: $color-blue-01; color: $color-white-01; opacity:1;} // @include mbHover;
-  @mixin mbOn     {color: $color-blue-01; @include border01(1px,$color-blue-01,1);} // @include mbOn;
+  @mixin mbOn     {color: $color-blue-01; @include border01(1px,$color-blue-01,1); opacity:1;} // @include mbOn;
   @mixin mbBefore {
+    /*
     &:before {
       content:""; position:absolute; left:0; bottom:1px;
       width:100%; height:1px; background-color: $color-blue-01;
     }
+    */
   } // @include mbBefore;
 
   button {
     overflow: hidden; text-align: left; word-break: break-all;
-    width:100%; height:40px; padding:0 10px;
+    width:100%; height:40px; padding:0 10px; opacity: 0.7;
 
     &.on { @include mbOn;}
     &:hover {@include mbHover;}
@@ -252,7 +247,7 @@ menu {
       & > ul {
         @include flexbase; @include flex-row-wrap;
         overflow-y: auto; overflow-x: hidden; position: fixed; @include z-index-menu;
-        top:$headerHeight; left:0; width:100%; height:auto !important; max-height:0; padding:0 40px;
+        top:$headerHeight; left:0; width:100%; height:auto !important; max-height:0; padding:0 210px;;
         background-color: $color-gray-09;
         @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1); @include transition(400ms);
 
@@ -261,7 +256,7 @@ menu {
 
           & > * {width:calc(100% - 60px); margin:0 30px;}
           & > button {
-            @include font-size-navbtn; @include mbBefore;
+            @include font-size-navbtn; @include mbBefore; opacity: 1 !important;
             &.on {border:none;font-weight:bold;}
           }
         }
@@ -269,7 +264,7 @@ menu {
 
       &:hover {
         & > ul {
-          max-height:calc(100vh - 200px); padding:40px 40px; z-index:81;
+          max-height:calc(100vh - 200px); padding:40px 210px; z-index:81;
           //@include border01(3px,$color-blue-01,1 );
         }
         & > button {@include mbHover;}
@@ -584,7 +579,7 @@ menu {
   & > * {width:100%;}
 
   &, section, section > div {@include flexbase;}
-  &, section, .db_cancel_set {@include flex-column; @include transition(400ms);}
+  &, section, .db_cancel_set {@include flex-column; @include transition(200ms);}
 
   h2 {
 
@@ -946,7 +941,7 @@ menu {
 /////...... sub_title_area 정의 시작
 .sub_title_area {
 
-  @include flexbase; @include flex-option(1, 0, $btnarea-height); margin: 5px 0;
+  @include flexbase; @include flex-option(1, 0, $btnarea-height); @include flex-align-items-center; /*margin: 5px 0;*/
 
   &, .navigation, .navigation span {position: relative;}
 
@@ -970,6 +965,30 @@ menu {
       }
     }
     .admin_mode & span { pointer-events: none;}
+  }
+}
+.expl {
+  margin: 0 0 0 auto;
+  span {
+    position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
+    &:before {
+      content:""; position: absolute; left:0; bottom:1px; width:18px; height:18px;
+      @include border-radius(200px);  @include borderwidth(3px);
+    }
+    &:nth-of-type(1):before {border-color:$color-caution;}
+    &:nth-of-type(2):before {border-color:$color-warning;}
+    &:nth-of-type(3):before {border-color:$color-danger;}
+  }
+
+  &.inout {
+    /*position: relative; right:auto; padding:0 20px 0 0;
+    @include flex-align-self-center;*/
+    span {
+      &:nth-of-type(1):before {border-color:$color-blue-01;}
+      &:nth-of-type(2):before {border-color:$color-green-03;}
+    }
+
+    & + * {margin:0 5px 0 0;}
   }
 
 }

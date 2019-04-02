@@ -5,7 +5,7 @@
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {
 
-  overflow: hidden; position: absolute; top:0; left:0; right:0; height:100%; min-height:0; padding:0 $dash-margin;
+  overflow: hidden; position: absolute; top:0; left:0; right:0; height:100%; min-height:0;
   background-color: $bas-color; color:$color-white-02;
 
   &, & *:not(personal_popup, popupbase)  {color:$color-white-02; }
@@ -16,21 +16,25 @@ body.dashboard_mode {
 
   .wrap > article {
 
-    position:absolute; top:($headerHeight); left:$margin; bottom:$margin; right:$margin; min-width:800px;
+    position:absolute; top:($headerHeight); left:0; bottom:0; right:0; min-width:800px;
+     /*left:$margin; bottom:$margin; right:$margin;*/
 
+    /*
     &:before,&:after {content:""; position: absolute; z-index:-1; right:0; left:0; top:$headerHeight;}
     &:before {bottom:0;}
     &:after  {height:1px;}
+    */
 
-    &.on {right:($noticecenter-width + $margin);}
+    &.on {right:($noticecenter-width);}
 
     // .watch area
+    & > .sub_title_area {padding:0 15px;}
     & > section, .watch_area {
 
       @include flex-row-wrap; @include flex-option(0, 1, 100%); @include border01(1px 0 0 1px,$color-gray-09,1);
       overflow-y: auto; margin:0 1px 1px 0 ;
 
-      &:before {content:""; position:absolute; z-index: -1; width:100%; height:100%;}
+      //&:before {content:""; position:absolute; z-index: -1; width:100%; height:100%;}
 
       &, & > div {@include flexbase; position: relative;}
 
@@ -886,13 +890,13 @@ $ds-sw:50px; $ds-w:150px;
 
   */
   // 넓이
-  &.area01 { & > div {width:100%;} }
+  &.area01 { & > div {width:100%; &:before {display: none;} } }
   &.area02, &.area04 { & > div {width:50%;} }
   &.area06, &.area09, &.area12 { & > div {width:calc(100% / 3);} }
   &.area08, &.area16, &.area00 { & > div {width:25%;} }
 
   //높이
-  &.area01, &.area02 { & > div {min-height:50%;} }
+  &.area01, &.area02 { & > div {height:100%;} }
   &.area04, &.area06, &.area08 { & > div {min-height:50%; max-height:50%; height:50%;} }
   &.area09 { & > div {height:calc(100% / 3);} }
   &.area12, &.area16, &.area00 { & > div {min-height:25%; height:calc(100% / 3);} }
@@ -1177,31 +1181,7 @@ $ds-sw:50px; $ds-w:150px;
   overflow: hidden; width: 40px;
   & * {opacity: 0; position: absolute; bottom:0; left:0; height:100%; color:#3c3c3c !important;}
 }
-.expl {
-  margin: 0 0 0 auto; padding:0 0 3px 0;  @include flex-align-self-end;
-  span {
-    position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
-    &:before {
-      content:""; position: absolute; left:0; bottom:1px; width:18px; height:18px;
-      @include border-radius(200px);  @include borderwidth(3px);
-    }
-    &:nth-of-type(1):before {border-color:$color-caution;}
-    &:nth-of-type(2):before {border-color:$color-warning;}
-    &:nth-of-type(3):before {border-color:$color-danger;}
-  }
 
-  &.inout {
-    /*position: relative; right:auto; padding:0 20px 0 0;
-    @include flex-align-self-center;*/
-    span {
-      &:nth-of-type(1):before {border-color:$color-blue-01;}
-      &:nth-of-type(2):before {border-color:$color-green-03;}
-    }
-
-    & + * {margin:0 5px 0 0;}
-  }
-
-}
 /////..... 아이콘 일반, 경고, 감지 표시 expl 끝
 
 
