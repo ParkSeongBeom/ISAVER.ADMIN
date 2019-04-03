@@ -267,7 +267,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public HaspLicenseUtil haspLicenseUtil() {
         HaspLicenseUtil haspLicenseUtil=new HaspLicenseUtil();
-        haspLicenseUtil.setHasp(propertyManager.getProperty("cnf.hostIp"), propertyManager.getProperty("cnf.noneLicenseTargets"));
+        haspLicenseUtil.setHasp(propertyManager.getProperty("cnf.hostIp"), propertyManager.getProperty("cnf.noneLicenseTargets"), propertyManager.getProperty("deployMode"));
         return haspLicenseUtil;
     }
 
@@ -277,6 +277,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         StringBuilder loggerBuiler = new StringBuilder();
         loggerBuiler.append("\n==============================");
         loggerBuiler.append("\n= iSaver Admin Version : ").append(propertyManager.getProperty("cnf.server.minorVersion"));
+        loggerBuiler.append("\n= DeployMode : ").append(propertyManager.getProperty("deployMode"));
         loggerBuiler.append("\n==============================");
         version = loggerBuiler.toString();
         loggerBuiler.setLength(0);

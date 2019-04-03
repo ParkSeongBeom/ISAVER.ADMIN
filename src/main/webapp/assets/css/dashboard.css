@@ -962,50 +962,13 @@ body.dashboard_mode {
       .guard_set .s_lbox .check_btn_set > div.fence_check input:checked + label:before {
         content: "\e921"; }
       .guard_set .s_lbox .check_btn_set > div.fence_check input:checked + label:after {
-        content: "FENCE WATCH"; }
-  .guard_set .s_lbox > .map_images {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    display: flexbox;
-    display: box;
-    box-align: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center; }
+        content: "FENCE TRACKING OFF"; }
   .guard_set .s_lbox .gm-style-pbc {
     opacity: 1 !important; }
     .guard_set .s_lbox .gm-style-pbc + div * {
       box-shadow: none !important; }
   .guard_set .s_lbox .gm-style iframe + div, .guard_set .s_lbox .gm-style .gmnoprint {
     display: none !important; }
-  .guard_set .s_lbox .map_images .gm-style-pbc {
-    opacity: 0 !important; }
-  .guard_set .s_lbox .map_images .gm-style > div:after, .guard_set .s_lbox .map_images .gm-style > div:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%; }
-  .guard_set .s_lbox .map_images .gm-style > div:after {
-    background-color: #535353;
-    z-index: -1; }
-  .guard_set .s_lbox .map_images .gm-style > div > div:first-of-type canvas {
-    color: #fff !important; }
-  .guard_set .s_lbox .map_images .gm-style > div > div:first-of-type > div:last-of-type > div > div img {
-    opacity: 0; }
-  .guard_set .s_lbox .map_images.onlyhuman .object {
-    display: none; }
 .guard_set .s_rbox {
   right: 0;
   background-color: #000; }
@@ -2184,28 +2147,9 @@ body.dashboard_mode {
     max-width: 160px;
     width: 160px;
     height: 100%;
-    padding: 0 0 10px 0;
-    perspective: 600px;
-    ms-perspective: 600px;
-    -ms-perspective: 600px;
-    -moz-perspective: 600px;
-    -webkit-perspective: 600px;
-    -o-perspective: 600px;
-    perspective-origin: 50% 50%;
-    ms-perspective-origin: 50% 50%;
-    -ms-perspective-origin: 50% 50%;
-    -moz-perspective-origin: 50% 50%;
-    -webkit-perspective-origin: 50% 50%;
-    -o-perspective-origin: 50% 50%; }
+    padding: 0 0 10px 0; }
     .bmt .copybox_area:hover {
       overflow: overlay; }
-      .bmt .copybox_area:hover > div {
-        transform: rotateY(0deg);
-        ms-transform: rotateY(0deg);
-        -ms-transform: rotateY(0deg);
-        -moz-transform: rotateY(0deg);
-        -webkit-transform: rotateY(0deg);
-        -o-transform: rotateY(0deg); }
     .bmt .copybox_area, .bmt .copybox_area > div {
       display: -webkit-box;
       display: -moz-box;
@@ -2231,12 +2175,6 @@ body.dashboard_mode {
       -webkit-align-items: flex-start;
       -ms-flex-align: flex-start;
       align-items: flex-start;
-      transform: rotateY(-20deg);
-      ms-transform: rotateY(-20deg);
-      -ms-transform: rotateY(-20deg);
-      -moz-transform: rotateY(-20deg);
-      -webkit-transform: rotateY(-20deg);
-      -o-transform: rotateY(-20deg);
       transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
       -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
       -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);

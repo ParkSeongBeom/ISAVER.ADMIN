@@ -771,6 +771,42 @@ menu {
       -webkit-flex-direction: row;
       -ms-flex-direction: row;
       flex-direction: row; }
+  .popupbase.map_pop .trackinghistory-box, .popupbase.onvif_pop .trackinghistory-box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%; }
+    .popupbase.map_pop .trackinghistory-box > *, .popupbase.onvif_pop .trackinghistory-box > * {
+      height: 100%; }
+    .popupbase.map_pop .trackinghistory-box .map_sett_box, .popupbase.onvif_pop .trackinghistory-box .map_sett_box {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%; }
+    .popupbase.map_pop .trackinghistory-box .video_area, .popupbase.onvif_pop .trackinghistory-box .video_area {
+      flex: 1 0 500px;
+      -webkit-flex: 1 0 500px;
+      flexbox: 1 0 500px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 500px;
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      max-height: none;
+      margin: 0 0 0 10px; }
+      .popupbase.map_pop .trackinghistory-box .video_area > *:last-of-type, .popupbase.onvif_pop .trackinghistory-box .video_area > *:last-of-type {
+        margin: 10px 0 0 0; }
   .popupbase.critical_pop > div > div {
     width: 570px;
     max-width: 570px;
@@ -1130,6 +1166,8 @@ menu {
     background-color: #2c2c2c; }
   .db_area.on {
     right: 0; }
+  .db_area * {
+    color: #fff; }
   .db_area > * {
     width: 100%; }
   .db_area, .db_area section, .db_area section > div {
@@ -1522,7 +1560,7 @@ menu {
         .db_area .db_list_box button.dbc_open_btn:before {
           content: "\e937"; }
       .db_area .db_list_box button.dbc_dele_btn:before {
-        content: "\e977"; }
+        content: "\e974"; }
       .db_area .db_list_box button.dbc_close_btn:before {
         content: "\e91a"; }
       .db_area .db_list_box button.dbc_sera_btn.on {

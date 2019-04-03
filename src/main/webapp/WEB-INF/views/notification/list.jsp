@@ -32,7 +32,7 @@
             <div>
                 <header>
                     <h2><spring:message code="notification.column.cancelDesc"/></h2>
-                    <button onclick="javascript:closeCancelDescPopup();"></button>
+                    <button onclick="closeCancelDescPopup();"></button>
                 </header>
                 <article>
                     <div class="search_area">
@@ -50,18 +50,40 @@
             <div>
                 <header>
                     <h2><spring:message code="notification.title.trackingHistory"/></h2>
-                    <button onclick="javascript:closeTrackingHistoryPopup();"></button>
+                    <button onclick="closeTrackingHistoryPopup();"></button>
                 </header>
-                <article class="map_sett_box">
-                    <section class="map">
-                        <div>
-                            <div id="mapElement" class="map_images"></div>
-                        </div>
-                    </section>
-                </article>
+                <div class="trackinghistory-box">
+                    <article class="map_sett_box">
+                        <section class="map">
+                            <div>
+                                <div id="mapElement" class="map_images"></div>
+                            </div>
+                        </section>
+                    </article>
+                    <article class="video_area">
+                        <section>
+                            <!-- 입력 테이블 Start -->
+                            <div>
+                                <video id="videoElement" class="videobox" poster="" controls="ture" style="width:100%;">
+                                    <source id="videoSource" type="video/mp4">
+                                </video>
+
+                                <div class="speed">
+                                    <button class="x1 on" speed="1"></button>
+                                    <button class="x2" speed="2"></button>
+                                    <button class="x4" speed="4"></button>
+                                    <button class="x8" speed="8"></button>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <ul class="video_list" id="videoList"></ul>
+                        </section>
+                    </article>
+                </div>
             </div>
         </div>
-        <div class="bg option_pop_close" onclick="javascript:closeTrackingHistoryPopup();"></div>
+        <div class="bg option_pop_close" onclick="closeTrackingHistoryPopup();"></div>
     </div>
 
     <form id="eventLogForm" method="POST">
@@ -95,7 +117,7 @@
                 </p>
             </div>
             <div class="search_btn">
-                <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                <button onclick="search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
             </div>
         </article>
     </form>
@@ -105,7 +127,7 @@
             <h4></h4>
             <div class="table_btn_set">
                 <p><span><spring:message code="common.message.total"/><em>${paramBean.totalCount}</em><spring:message code="common.message.number01"/></span></p>
-                <button class="btn btype01 bstyle03" onclick="javascript:excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/> </button>
+                <button class="btn btype01 bstyle03" onclick="excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/> </button>
             </div>
         </div>
 
@@ -160,7 +182,7 @@
                                 <td><fmt:formatDate value="${notification.cancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td>
                                     <c:if test="${notification.cancelUserId!=null}">
-                                        <button class="eventdetail_btn" onclick="javascript:openCancelDescPopup(this);"></button>
+                                        <button class="eventdetail_btn" onclick="openCancelDescPopup(this);"></button>
                                         <textarea disabled="disabled" style="display:none;">${notification.cancelDesc}</textarea>
                                     </c:if>
                                 </td>
@@ -173,7 +195,7 @@
                                                 data-device-id="${notification.deviceId}"
                                                 data-object-id="${notification.objectId}"
                                                 data-fence-id="${notification.fenceId}"
-                                                onclick="javascript:openTrackingHistoryPopup(this);"></button>
+                                                onclick="openTrackingHistoryPopup(this);"></button>
                                         <textarea disabled="disabled" style="display:none;">${notification.trackingJson}</textarea>
                                     </c:if>
                                 </td>
@@ -208,6 +230,7 @@
     var urlConfig = {
         'listUrl':'${rootPath}/notification/list.html'
         ,'excelUrl':'${rootPath}/notification/excel.html'
+        ,'videoListUrl':'${rootPath}/videoHistory/notiList.json'
     };
 
     var searchConfig = {
@@ -222,6 +245,13 @@
     };
 
     $(document).ready(function(){
+        $(".speed > button").on("click",function(){
+            $(".speed > button").removeClass("on");
+            $(this).addClass("on");
+            $("#videoElement")[0].playbackRate = Number($(this).attr("speed"));
+            $("#videoElement")[0].play();
+        });
+
         calendarHelper.load(form.find('input[name=startDatetimeStr]'));
         calendarHelper.load(form.find('input[name=endDatetimeStr]'));
 
@@ -304,7 +334,6 @@
 
         var data = $(_this).data();
         data['objectType'] = 'human';
-        console.log(data);
         var trackingJson = JSON.parse($(_this).next().text());
 
         customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
@@ -313,7 +342,7 @@
 //            customMapMediator.setMessageConfig(_messageConfig);
             customMapMediator.init(data['areaId'],{
                 'custom' : {
-                    'draggable' : true
+                    'draggable' : false
                     ,'fenceView' : true
                     ,'openLinkFlag' : false
                     ,'moveFenceHide' : false
@@ -342,6 +371,45 @@
                     ,'pointShiftCnt' : null
                 }
             });
+
+            sendAjaxPostRequest(
+                urlConfig['videoListUrl']
+                ,{'notificationId':data['notificationId'],'videoType':'event'}
+                ,function successHandler(data, dataType, actionType){
+                    $("#videoList").empty();
+                    var videoHistoryList = data['videoHistoryList'];
+                    console.log(data);
+                    for(var index in videoHistoryList){
+                        var videoHistory = videoHistoryList[index];
+                        var fenceName = '';
+                        if(videoHistory['fenceName']!=null){
+                            fenceName = "("+videoHistory['fenceName']+")";
+                        }
+                        $("#videoList").append(
+                            $("<li/>").click({videoFileUrl:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['videoFileName']},function(evt){
+                                openVideo(this,evt.data.videoFileUrl);
+                            }).append(
+                                $("<div/>").append(
+                                    $("<img/>",{src:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']})
+                                )
+                            ).append(
+                                $("<div/>").append(
+                                    $("<span/>").text(videoHistory['areaName']?videoHistory['areaName']:'')
+                                ).append(
+                                    $("<span/>").text(videoHistory['deviceName']?videoHistory['deviceName']:'')
+                                ).append(
+                                    $("<p/>").text((videoHistory['eventName']?videoHistory['eventName']:'')+fenceName)
+                                ).append(
+                                    $("<span/>").text(new Date(videoHistory['videoDatetime']).format("MM/dd HH:mm:ss"))
+                                )
+                            )
+                        );
+                    }
+                }
+                ,function errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+                    alertMessage(actionType + 'Failure');
+                }
+            );
         }catch(e){
             console.error("[openTrackingHistoryPopup] custom map mediator init error - "+ e.message);
         }
@@ -355,6 +423,13 @@
         $(".map_pop").fadeOut();
     }
 
+    function openVideo(_this, videoFileUrl){
+        $(".video_list li").removeClass("on");
+        $(_this).addClass("on");
+
+        $("#videoSource").attr("src",videoFileUrl);
+        $("#videoElement")[0].load();
+    }
 
     /*
      close 이벤트 해제사유 popup

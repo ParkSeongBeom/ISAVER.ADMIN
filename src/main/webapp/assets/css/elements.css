@@ -1427,22 +1427,51 @@ input.datepicker + button + .in-timepicker {
           content: "\e919"; }
 
 .map_images {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   position: absolute;
+  z-index: 1;
   width: 5000px !important;
-  height: 5000px !important;
-  /*background-image: url("../images/map/icent.svg");*/
-  background-repeat: no-repeat;
-  background-position: center;
-  /*&:after  {width:100%; height:1px; left:0; top:50%;}*/ }
+  height: 5000px !important; }
+  .map_images .gm-style-pbc {
+    opacity: 0 !important; }
+  .map_images .gm-style > div:after, .map_images .gm-style > div:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  .map_images .gm-style > div:after {
+    background-color: #535353;
+    z-index: -1; }
+  .map_images .gm-style > div > div:first-of-type canvas {
+    color: #fff !important; }
+  .map_images .gm-style > div > div:first-of-type > div:last-of-type > div > div img {
+    opacity: 0; }
+  .map_images.onlyhuman .object {
+    display: none; }
   .map_images > * {
     position: absolute !important; }
   .map_images:before {
+    /*width:1px; height:100%; left:50%; top:0;*/
     content: "";
     position: absolute;
     z-index: -1;
-    /*background-color: rgba(#fff,0.4);*/ }
-  .map_images:before {
-    /*width:1px; height:100%; left:50%; top:0;*/
     width: 100%;
     height: 100%;
     background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
@@ -1450,12 +1479,11 @@ input.datepicker + button + .in-timepicker {
   .map_images .map_bg {
     position: absolute;
     z-index: -1;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    background-image: url("../images/map/k_map_right.svg"); }
+    background-image: url("../images/map/k_map_right.svg");
+    background-position: center;
+    background-repeat: no-repeat; }
 
 .g-ico {
   z-index: 50; }

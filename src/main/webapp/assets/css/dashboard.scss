@@ -510,39 +510,19 @@ body.dashboard_mode {
           input:hover + label { opacity: 1;}
           input:checked + label {
             &:before {content:"\e921"; }
-            &:after {content:"FENCE WATCH"; }
+            &:after {content:"FENCE TRACKING OFF"; }
           }
         }
 
       }
 
     }
-
-    & > .map_images {width:100%; height:100%; @include flex-midddle;}
 
     .gm-style {
       &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }
       iframe + div, .gmnoprint {display: none !important;}
     }
 
-    .map_images {
-      .gm-style {
-        &-pbc { opacity: 0 !important;}
-        & > div {
-          &:after, &:before {content:""; position: absolute; width:100%; height:100%;}
-          &:after {background-color: $bas-color; z-index: -1;}
-          &:before {}
-
-          & > div:first-of-type {
-            canvas {color:$color-white-01 !important;}
-            & > div:last-of-type > div > div img { opacity: 0;}
-          }
-        }
-      }
-
-      &.onlyhuman .object {display:none;}
-             
-    }
   }
   .s_rbox {
     right:0; background-color: #000;
@@ -1107,14 +1087,18 @@ $ds-sw:50px; $ds-w:150px;
     order:2; overflow: hidden; z-index: 20; left:auto; right:0; /*background-color: rgba(0,0,0,0.5);*/
     min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:100%; padding: 0 0 10px 0;
 
-    @include perspective01(600px, 50%, 50%);
+    //@include perspective01(600px, 50%, 50%);
 
-    &:hover {overflow: overlay; & > div {@include rotate-y(0deg);} }
+    &:hover {
+      overflow: overlay;
+      //& > div {@include rotate-y(0deg);}
+    }
 
     &, & > div {@include flexbase; @include flex-column; }
 
     & > div, .copybox {
-      @include flex-justify-content-center; @include flex-align-items-start; @include rotate-y(-20deg); @include transition(200ms);
+      @include flex-justify-content-center; @include flex-align-items-start;
+      @include transition(200ms);  // @include rotate-y(-20deg);
       order: 2; width:calc(100% - 20px); min-height:calc(100% / 5 - 10px); padding: 10px; margin:10px; margin-bottom:0;
       @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
 

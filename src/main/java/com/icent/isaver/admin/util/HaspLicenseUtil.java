@@ -82,7 +82,7 @@ public class HaspLicenseUtil {
     @Inject
     private CodeDao codeDao;
 
-    public void setHasp(String hostAddress, String noneLicenseTargets){
+    public void setHasp(String hostAddress, String noneLicenseTargets, String deployMode){
         String hostIp = null;
         if(hostAddress != null && hostAddress.length() > 1){
             try{
@@ -93,7 +93,7 @@ public class HaspLicenseUtil {
             }
         }
 
-        if(System.getProperty("deployMode")!=null && System.getProperty("deployMode").equals("localhost")){
+        if(StringUtils.notNullCheck(deployMode) && deployMode.equals("dev")){
             authorLicenseFlag = false;
         }else{
             if(noneLicenseTargets != null && noneLicenseTargets.length() > 0){

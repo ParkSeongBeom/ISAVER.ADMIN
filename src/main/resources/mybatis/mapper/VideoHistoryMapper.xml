@@ -51,6 +51,9 @@
             <if test="endDatetimeStr != null and endDatetimeStr != ''">
                 AND     a.video_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
             </if>
+            <if test="notificationId != null and notificationId != ''">
+                AND     a.notification_id = #{notificationId}
+            </if>
         </trim>
         ORDER BY video_datetime DESC
     </select>

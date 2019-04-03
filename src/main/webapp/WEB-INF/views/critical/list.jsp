@@ -122,13 +122,13 @@
                                             <label></label>
                                         </div>
                                         <div>
-                                            <input type="number" name="startHour" placeholder='<spring:message code="common.column.hour"/>'>
-                                            <input type="number" name="startMinute" placeholder='<spring:message code="common.column.minute"/>'>
-                                            <input type="number" name="startSecond" placeholder='<spring:message code="common.column.second"/>'>
+                                            <input type="number" maxlength="2" value="00" name="startHour" placeholder='<spring:message code="common.column.hour"/>'>
+                                            <input type="number" maxlength="2" value="00" name="startMinute" placeholder='<spring:message code="common.column.minute"/>'>
+                                            <input type="number" maxlength="2" value="00" name="startSecond" placeholder='<spring:message code="common.column.second"/>'>
                                             ~
-                                            <input type="number" name="endHour" placeholder='<spring:message code="common.column.hour"/>'>
-                                            <input type="number" name="endMinute" placeholder='<spring:message code="common.column.minute"/>'>
-                                            <input type="number" name="endSecond" placeholder='<spring:message code="common.column.second"/>'>
+                                            <input type="number" maxlength="2" value="00" name="endHour" placeholder='<spring:message code="common.column.hour"/>'>
+                                            <input type="number" maxlength="2" value="00" name="endMinute" placeholder='<spring:message code="common.column.minute"/>'>
+                                            <input type="number" maxlength="2" value="00" name="endSecond" placeholder='<spring:message code="common.column.second"/>'>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -185,6 +185,11 @@
         ,'saveFailure':'<spring:message code="critical.message.saveFailure"/>'
         ,'saveComplete':'<spring:message code="critical.message.saveComplete"/>'
         ,'criticalExist':'<spring:message code="critical.message.criticalExist"/>'
+        ,'detectExist':'<spring:message code="critical.message.detectExist"/>'
+        ,'requireAlarmFileId':'<spring:message code="critical.message.requireAlarmFileId"/>'
+        ,'formatConfigDatetime':'<spring:message code="critical.message.formatConfigDatetime"/>'
+        ,'earlyConfigDatetime':'<spring:message code="critical.message.earlyConfigDatetime"/>'
+        ,'overlapConfigDatetime':'<spring:message code="critical.message.overlapConfigDatetime"/>'
     };
 
     var criticalLevelNameList = {
@@ -220,68 +225,137 @@
         }
 
         var criticalList = [];
-        // 임계치 목록
-        $.each($("#criticalListDiv > li"),function(){
-            var criticalId = uuid32();
-            var criticalParam = {
-                criticalId:criticalId
-                ,eventId:$("#eventId").val()
-                ,criticalValue:$(this).find("input[name='criticalValue']").val()?eval($(this).find("input[name='criticalValue']").val()):null
-                ,criticalLevel:$(this).find("select[name='criticalLevel'] option:selected").val()
-                ,dashboardFileId:$(this).find("select[name='dashboardFileId'] option:selected").val()
-                ,criticalDetects:[]
-            };
-
-            // 감지장치 목록
-            $.each($(this).find("li[detectDeviceId]"),function(){
-                var criticalDetectId = uuid32();
-                var criticalDetectParam = {
+        try{
+            // 임계치 목록
+            $.each($("#criticalListDiv > li"),function(){
+                var criticalId = uuid32();
+                var criticalParam = {
                     criticalId:criticalId
-                    ,criticalDetectId:criticalDetectId
-                    ,detectDeviceId:$(this).attr("detectDeviceId")
-                    ,fenceId:$(this).find("input[name='fenceId']").val()
-                    ,useYn:$(this).find("input[name='detectDeviceUseYn']").is(":checked")?"Y":"N"
-                    ,criticalDetectConfigs:[]
-                    ,criticalTargets:[]
+                    ,eventId:$("#eventId").val()
+                    ,criticalValue:$(this).find("input[name='criticalValue']").val()?eval($(this).find("input[name='criticalValue']").val()):null
+                    ,criticalLevel:$(this).find("select[name='criticalLevel'] option:selected").val()
+                    ,dashboardFileId:$(this).find("select[name='dashboardFileId'] option:selected").val()
+                    ,criticalDetects:[]
                 };
 
-                // 감지장치 설정 목록
-                $.each($(this).find(".cycle-setting"),function(){
-                    var criticalDetectConfigId = uuid32();
-                    var startHour = $(this).find("input[name='startHour']").val()?$(this).find("input[name='startHour']").val():"00";
-                    var startMinute = $(this).find("input[name='startMinute']").val()?$(this).find("input[name='startMinute']").val():"00";
-                    var startSecond = $(this).find("input[name='startSecond']").val()?$(this).find("input[name='startSecond']").val():"00";
-                    var startDatetime = startHour+":"+startMinute+":"+startSecond;
+                var existCriticalValue = {
+                    'flag' : false
+                    ,'index' : []
+                };
 
-                    var endHour = $(this).find("input[name='endHour']").val()?$(this).find("input[name='endHour']").val():"00";
-                    var endMinute = $(this).find("input[name='endMinute']").val()?$(this).find("input[name='endMinute']").val():"00";
-                    var endSecond = $(this).find("input[name='endSecond']").val()?$(this).find("input[name='endSecond']").val():"00";
-                    var endDatetime = endHour+":"+endMinute+":"+endSecond;
-                    criticalDetectParam['criticalDetectConfigs'].push({
-                        criticalDetectConfigId:criticalDetectConfigId
+                // 임계치 validate
+                for(var i in criticalList){
+                    if(criticalList[i]['criticalValue']==criticalParam['criticalValue'] && criticalList[i]['criticalLevel']==criticalParam['criticalLevel']){
+                        alertMessage('criticalExist');
+                        throw "validateError";
+                    }else if(criticalList[i]['criticalValue']==criticalParam['criticalValue']){
+                        existCriticalValue['flag'] = true;
+                        existCriticalValue['index'].push(i);
+                    }
+                }
+
+                // 감지장치 목록
+                $.each($(this).find("li[detectDeviceId]"),function(){
+                    var criticalDetectId = uuid32();
+                    var criticalDetectParam = {
+                        criticalId:criticalId
                         ,criticalDetectId:criticalDetectId
-                        ,startDatetime:startDatetime
-                        ,endDatetime:endDatetime
-                        ,useYn:$(this).find("input[name='detectConfigUseYn']").is(":checked")?"Y":"N"
+                        ,detectDeviceId:$(this).attr("detectDeviceId")
+                        ,fenceId:$(this).find("input[name='fenceId']").val()
+                        ,useYn:$(this).find("input[name='detectDeviceUseYn']").is(":checked")?"Y":"N"
+                        ,criticalDetectConfigs:[]
+                        ,criticalTargets:[]
+                    };
+
+                    // 감지장치 validate
+                    if(existCriticalValue['flag'] && criticalDetectParam['useYn']=="Y"){
+                        for(var i in existCriticalValue['index']){
+                            var criticalIndex = existCriticalValue['index'][i];
+                            if(criticalList.length>criticalIndex){
+                                for(var k in criticalList[criticalIndex]['criticalDetects']){
+                                    if(criticalList[criticalIndex]['criticalDetects'][k]['useYn']=='Y' && criticalList[criticalIndex]['criticalDetects'][k]['detectDeviceId'] == criticalDetectParam['detectDeviceId']){
+                                        alertMessage('detectExist');
+                                        throw "validateError";
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 감지장치 설정 목록
+                    $.each($(this).find(".cycle-setting"),function(){
+                        var criticalDetectConfigId = uuid32();
+                        var startHour = eval($(this).find("input[name='startHour']").val());
+                        if(startHour==null){startHour="00"}else if(startHour>=0 && startHour<10) {startHour = "0" + startHour;}
+                        var startMinute = eval($(this).find("input[name='startMinute']").val());
+                        if(startMinute==null){startMinute="00"}else if(startMinute>=0 && startMinute<10) {startMinute = "0" + startMinute;}
+                        var startSecond = eval($(this).find("input[name='startSecond']").val());
+                        if(startSecond==null){startSecond="00"}else if(startSecond>=0 && startSecond<10) {startSecond = "0" + startSecond;}
+                        var startDatetime = startHour+":"+startMinute+":"+startSecond;
+
+                        var endHour = eval($(this).find("input[name='endHour']").val());
+                        if(endHour==null){endHour="00"}else if(endHour>=0 && endHour<10) {endHour = "0" + endHour;}
+                        var endMinute = eval($(this).find("input[name='endMinute']").val());
+                        if(endMinute==null){endMinute="00"}else if(endMinute>=0 && endMinute<10) {endMinute = "0" + endMinute;}
+                        var endSecond = eval($(this).find("input[name='endSecond']").val());
+                        if(endSecond==null){endSecond="00"}else if(endSecond>=0 && endSecond<10) {endSecond = "0" + endSecond;}
+                        var endDatetime = endHour+":"+endMinute+":"+endSecond;
+
+                        // 감지장치 설정 시간 validate
+                        if(startDatetime>endDatetime){
+                            alertMessage('earlyConfigDatetime');
+                            throw "validateError";
+                        }else if(!startDatetime.isTime(":") || !endDatetime.isTime(":")){
+                            alertMessage('formatConfigDatetime');
+                            throw "validateError";
+                        }
+
+                        for(var i in criticalDetectParam['criticalDetectConfigs']){
+                            if(
+                                    (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= startDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > startDatetime) ||
+                                    (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= endDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > endDatetime)
+                            ){
+                                alertMessage('overlapConfigDatetime');
+                                throw "validateError";
+                            }
+                        }
+
+                        criticalDetectParam['criticalDetectConfigs'].push({
+                            criticalDetectConfigId:criticalDetectConfigId
+                            ,criticalDetectId:criticalDetectId
+                            ,startDatetime:startDatetime
+                            ,endDatetime:endDatetime
+                            ,useYn:$(this).find("input[name='detectConfigUseYn']").is(":checked")?"Y":"N"
+                        });
                     });
+
+                    // 대상장치 설정 목록
+                    $.each($(this).find("li[targetDeviceId]"),function(){
+                        var criticalTargetParam = {
+                            criticalDetectId:criticalDetectId
+                            ,targetDeviceId:$(this).attr("targetDeviceId")
+                            ,alarmType:$(this).find("select[name='alarmType'] option:selected").val()
+                            ,alarmMessage:$(this).find("select[name='alarmMessage'] option:selected").val()
+                            ,alarmFileId:$(this).find("select[name='alarmFileId'] option:selected").val()
+                            ,useYn:$(this).find("input[name='targetDeviceUseYn']").is(":checked")?"Y":"N"
+                        };
+
+                        // 대상장치 설정 validate
+                        if(criticalTargetParam['alarmType']=='file' && criticalTargetParam['alarmFileId']==''){
+                            alertMessage('requireAlarmFileId');
+                            throw "validateError";
+                        }
+                        criticalDetectParam['criticalTargets'].push(criticalTargetParam);
+                    });
+                    criticalParam['criticalDetects'].push(criticalDetectParam);
                 });
 
-                // 대상장치 설정 목록
-                $.each($(this).find("li[targetDeviceId]"),function(){
-                    criticalDetectParam['criticalTargets'].push({
-                        criticalDetectId:criticalDetectId
-                        ,targetDeviceId:$(this).attr("targetDeviceId")
-                        ,alarmType:$(this).find("select[name='alarmType'] option:selected").val()
-                        ,alarmMessage:$(this).find("select[name='alarmMessage'] option:selected").val()
-                        ,alarmFileId:$(this).find("select[name='alarmFileId'] option:selected").val()
-                        ,useYn:$(this).find("input[name='targetDeviceUseYn']").is(":checked")?"Y":"N"
-                    });
-                });
-                criticalParam['criticalDetects'].push(criticalDetectParam);
+                criticalList.push(criticalParam);
             });
-
-            criticalList.push(criticalParam);
-        });
+        }catch(e){
+            if(e!="validateError"){console.error("[save] error",e);}
+            return false;
+        }
 
         callAjax('save',{'eventId':$("#eventId").val(),'criticalList':JSON.stringify(criticalList)});
     }

@@ -47,7 +47,6 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
 
     @Override
     public ModelAndView findListVideoHistory(Map<String, String> parameters) {
-        List<DeviceBean> deviceList = deviceDao.findListDeviceForHistory(parameters);
         ModelAndView modelAndView = new ModelAndView();
 
         if(StringUtils.notNullCheck(parameters.get("mode")) && parameters.get("mode").equals(AdminResource.SEARCH_MODE)){
@@ -55,16 +54,33 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
             Integer totalCount = videoHistoryDao.findCountVideoHistory(parameters);
             modelAndView.addObject("videoHistoryList", videoHistoryList);
             modelAndView.addObject("totalCount",totalCount);
+        }else{
+            List<DeviceBean> deviceList = deviceDao.findListDeviceForHistory(parameters);
+            modelAndView.addObject("deviceList", deviceList);
         }
 
-        modelAndView.addObject("deviceList", deviceList);
-        modelAndView.addObject("paramBean",parameters);
         try{
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("videoUrl", "http://" + address.getHostAddress() + videoAttachedUploadPath);
         }catch(Exception e){
             e.printStackTrace();
         }
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findListVideoHistoryForNotificaion(Map<String, String> parameters) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<VideoHistoryBean> videoHistoryList = videoHistoryDao.findListVideoHistory(parameters);
+        modelAndView.addObject("videoHistoryList", videoHistoryList);
+        try{
+            InetAddress address = InetAddress.getByName(fileAddress);
+            modelAndView.addObject("videoUrl", "http://" + address.getHostAddress() + videoAttachedUploadPath);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
 }

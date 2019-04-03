@@ -139,6 +139,7 @@ public class AdminResource {
      * - 비어있음 : empty
      * - 정상 : normal
      * - 쓰러짐 : fall
+     * - 이상징후 : sign
      * @author psb
      */
     public final static String[] TOILET_ROOM_STATUS = new String[]{"empty","normal","fall","sign"};

@@ -40,7 +40,7 @@ public class VideoHistoryCtrl {
     private VideoHistorySvc videoHistorySvc;
 
     /**
-     * 알림센터 이력 목록을 가져온다.
+     * 영상이력 목록을 가져온다.
      *
      * @author psb
      * @param request
@@ -58,6 +58,20 @@ public class VideoHistoryCtrl {
         if(StringUtils.nullCheck(parameters.get("mode"))){
             modelAndView.setViewName("videoHistoryList");
         }
+        return modelAndView;
+    }
+
+    /**
+     * 영상이력 목록을 가져온다. 알림이력용
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/notiList")
+    public ModelAndView findListVideoHistoryForNotificaion(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = videoHistorySvc.findListVideoHistoryForNotificaion(parameters);
         return modelAndView;
     }
 }

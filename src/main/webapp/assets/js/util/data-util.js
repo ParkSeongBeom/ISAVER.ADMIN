@@ -176,6 +176,42 @@ String.prototype.checkDatetimePattern = function(datetimeSeparate, dateSeparate,
     return false;
 };
 
+
+/**
+ * 시간형 데이터 여부확인
+ * @author psb
+ * @param separate
+ * @returns {boolean}
+ */
+String.prototype.isTime = function(separate){
+    var value = this;
+
+    if(!separate){
+        separate = '';
+    }
+
+    var value = value.split(separate).join('');
+
+    if (value.length!=6){ return false; }
+
+    var hour = Number(value.substr(0,2));
+    var minute = Number(value.substr(2,2));
+    var second = Number(value.substr(4,2));
+
+    if(hour < 0 || hour > 23){
+        return false;
+    }
+
+    if(minute < 0 || minute > 59){
+        return false;
+    }
+
+    if(second < 0 || second > 59){
+        return false;
+    }
+    return true;
+};
+
 /**
  * 문자열 날짜시간정보(yyyy-MM-dd HH:mm:ss)의 유효성을 체크한다.
  *

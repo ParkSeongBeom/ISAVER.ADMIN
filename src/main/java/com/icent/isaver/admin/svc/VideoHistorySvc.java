@@ -28,4 +28,13 @@ public interface VideoHistorySvc {
      * @return
      */
     ModelAndView findListVideoHistory(Map<String, String> parameters);
+
+    /**
+     * 영상이력 목록을 가져온다. 알림이력용.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListVideoHistoryForNotificaion(Map<String, String> parameters);
 }

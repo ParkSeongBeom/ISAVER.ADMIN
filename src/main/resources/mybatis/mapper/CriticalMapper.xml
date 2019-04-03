@@ -147,27 +147,10 @@
     </insert>
 
     <!--
-        임계치를  제거한다
+        임계치를 제거한다. (FK 설정 되어있는 감지장치/감지장치설정/대상장치 도 전체 삭제)
         @author psb
     -->
     <delete id="removeCritical" parameterType="map">
-        DELETE FROM isaver.critical_target
-        WHERE critical_detect_id in (
-          SELECT critical_detect_id
-          FROM isaver.critical_detect
-          WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId})
-        );
-
-        DELETE FROM isaver.critical_detect_config
-        WHERE critical_detect_id in (
-          SELECT critical_detect_id
-          FROM isaver.critical_detect
-          WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId})
-        );
-
-        DELETE FROM isaver.critical_detect
-        WHERE critical_id in (SELECT critical_id FROM isaver.critical WHERE event_id = #{eventId});
-
         DELETE FROM isaver.critical WHERE event_id = #{eventId};
     </delete>
 </mapper>
