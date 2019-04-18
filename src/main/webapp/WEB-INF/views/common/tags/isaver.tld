@@ -103,6 +103,15 @@
         </attribute>
         <attribute>
             <description>
+                TemplateCode
+            </description>
+            <name>templateCode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 전체여부
             </description>
             <name>allModel</name>

@@ -198,13 +198,15 @@ function MenuView(model) {
 
         for(var index in areaList){
             var _area = areaList[index];
-            var _childMenuLiTag = childMenuLiTag.clone();
-            _childMenuLiTag.attr("name", _area['areaId']);
-            _childMenuLiTag.find("button").text(_area['areaName']);
-            if(_area['childAreaIds']!=null){
-                _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+            if(_area['templateCode']!='TMP009'){
+                var _childMenuLiTag = childMenuLiTag.clone();
+                _childMenuLiTag.attr("name", _area['areaId']);
+                _childMenuLiTag.find("button").text(_area['areaName']);
+                if(_area['childAreaIds']!=null){
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+                }
+                mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
             }
-            mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
         }
 
         $("#topMenu").append(mainMenuTag);

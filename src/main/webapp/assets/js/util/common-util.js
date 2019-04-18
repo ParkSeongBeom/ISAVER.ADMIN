@@ -216,3 +216,30 @@ function s4() {
 $.fn.immediateText = function() {
     return this.contents().not(this.children()).text();
 };
+
+function ctPointLabels(options) {
+    return function ctPointLabels(_chart) {
+        var defaultOptions = {
+            labelClass: 'ct-label01',
+            labelOffset: {
+                x: 0,
+                y: -10
+            },
+            textAnchor: 'middle'
+        };
+
+        options = Chartist.extend({}, defaultOptions, options);
+
+        if (_chart instanceof Chartist.Line) {
+            _chart.on('draw', function (data) {
+                if (data.type === 'point') {
+                    data.group.elem('text', {
+                        x: data.x + options.labelOffset.x,
+                        y: data.y + options.labelOffset.y + 5,
+                        style: 'text-anchor: ' + options.textAnchor
+                    }, options.labelClass).text(data.value.y);
+                }
+            });
+        }
+    }
+}

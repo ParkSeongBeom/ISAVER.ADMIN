@@ -338,6 +338,7 @@
                 ) as childAreaIds
         FROM    isaver.area a
         WHERE	a.del_yn = 'N'
+        AND     a.template_code <![CDATA[ <> ]]> 'TMP009'
         <if test="areaId == null or areaId == ''">
             AND     a.parent_area_id is null
         </if>

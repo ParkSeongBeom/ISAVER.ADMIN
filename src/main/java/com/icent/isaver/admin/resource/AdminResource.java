@@ -180,6 +180,8 @@ public class AdminResource {
             put("DEV016","ico-server"); // 압전서버
             put("DEV017","ico-shock"); // 압전센서
             put("DEV018",""); // 원격 I/O 제어기
+            put("DEV800","ico-server"); // Host
+            put("DEV801","ico-docker"); // container
             put("DEV900","ico-gate"); // 게이트웨이
             put("DEV901","ico-temp"); // 온도 감지기
             put("DEV902","ico-co2"); // CO2(이산화탄소) 감지기
@@ -192,7 +194,7 @@ public class AdminResource {
     };
 
     /**
-     * 장치코드별 css정의
+     * 장치코드별 라이센스
      * @author psb
      */
     public final static Map<String, Integer> DEVICE_CODE_LICENSE = new HashMap<String, Integer>(){
@@ -225,6 +227,12 @@ public class AdminResource {
             put("DEV018",50); // 원격 I/O 제어기
         }
     };
+
+    /**
+     * 라이센스 체크 제외대상
+     * @author psb
+     */
+    public final static String[] IGNORE_DEVICE_CODE_LICENSE = new String[]{"DEV800","DEV801"};
 
     /**
      * 파일 타입 코드 정의

@@ -33,7 +33,7 @@ public interface EventDao {
      * @author psb
      * @return
      */
-    List<EventBean> findListEventForDashBoard(Map<String, Object> parameters);
+    List<EventBean> findListEventForResource(Map<String, Object> parameters);
 
 
     /**

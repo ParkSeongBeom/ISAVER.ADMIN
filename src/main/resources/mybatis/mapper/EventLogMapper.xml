@@ -161,6 +161,9 @@
                 FROM    isaver.event_log b
                 WHERE   b.area_id = #{areaId}
                 AND     b.device_id = #{deviceId}
+                <if test="eventId != null and eventId != ''">
+                    AND     b.event_id = #{eventId}
+                </if>
                 GROUP BY interval_alias
             </if>
             <if test="deviceId == null or deviceId == ''">

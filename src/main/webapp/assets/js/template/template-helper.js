@@ -70,6 +70,17 @@ var TemplateHelper = (
             $("<button/>", {href:"#", class:"btn del"})
         );
 
+        /********************************************************************************
+         * 자원 모니터링 장치 template
+         *********************************************************************************/
+        var RESOURCE_DEVICE_TEMPLATE = $("<li/>").append(
+            $("<p/>", {name:"resourceDeviceName"})
+        ).append(
+            $("<select/>", {name:"resourceEventId"}).append(
+                $("<option/>",{value:''}).text("선택")
+            )
+        );
+
         /**
          * get template (동적생성 Tag)
          * @author psb
@@ -89,6 +100,9 @@ var TemplateHelper = (
                     break;
                 case "statisticsEvent":
                     _returnTag = STATISTICS_EVENT_TEMPLATE.clone();
+                    break;
+                case "resourceDevice":
+                    _returnTag = RESOURCE_DEVICE_TEMPLATE.clone();
                     break;
             }
 

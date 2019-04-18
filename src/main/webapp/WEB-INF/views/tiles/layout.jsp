@@ -14,6 +14,8 @@
     <link href="${rootPath}/assets/css/elements.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
+    <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
     <title>iSaver Admin</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.event.drag-1.5.min.js?version=${version}"></script>
@@ -22,6 +24,8 @@
     <script type="text/javascript" src="${rootPath}/assets/js/common/default.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/data-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
+    <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
 
     <script src="${rootPath}/assets/js/page/menu/MenuModel.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
     <script src="${rootPath}/assets/js/page/menu/MenuCtrl.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
@@ -61,6 +65,8 @@
             ,'saveProfileUrl':'${rootPath}/user/save.json'
             ,'aliveUrl':'${rootPath}/license/list.json'
             ,'licenseUrl':'${rootPath}/license/list.json'
+            ,'resourceDeviceUrl':'${rootPath}/device/resourceList.json'
+            ,'chartUrl' : "${rootPath}/eventLog/chart.json"
         };
 
         var commonMessageConfig = {
@@ -90,6 +96,12 @@
         var alarmDefaultSource = '${rootPath}/assets/library/sound/alarm.mp3';
         var segmentEnd;
         var refreshTimeCallBack = [];
+        var resourceChart = {
+            "areaId" : null
+            ,"deviceId" : null
+            ,"eventId" : null
+            ,"chartist" : null
+        };
 
         var criticalCss = {
             <c:forEach var="criticalLevel" items="${criticalLevelCss}" varStatus="status">
@@ -118,10 +130,11 @@
 
             // 외부 클릭시 팝업 닫기
             $(".wrap").on("click",function(event){
-                if (!$(event.target).closest("button, .db_area, .dbs_area, .personal_popup, .popupbase, .info_popup").length) {
+                if (!$(event.target).closest("button, .db_area, .dbs_area, .tpopup-personal, .popupbase, .tpopup-info, .tpopup-resource").length) {
                     layerShowHide('detail','hide');
                     layerShowHide('profile','hide');
                     layerShowHide('license','hide');
+                    layerShowHide('resource','hide');
                 }
             });
 
@@ -163,7 +176,39 @@
             if($.cookie("notificationShowFlag")=='Y'){
                 layerShowHide('list');
             }
+            initResourceChart();
         });
+
+        function initResourceChart(){
+            resourceChart['chartist'] = new Chartist.Line($("#resourceChartElement")[0], {
+                labels: [],
+                series: [[], []]
+            }, {
+                low: 0,
+                showArea: true,
+                showLabel: true,
+                fullWidth: false,
+                axisY: {
+                    onlyInteger: true,
+                    offset: 20
+                },
+                lineSmooth: Chartist.Interpolation.simple({
+                    divisor: 100
+                }),
+                plugins: [
+                    ctPointLabels()
+                    ,Chartist.plugins.tooltip()
+                ]
+            });
+
+            $("#resourceAreaId").on("change",function(){
+                var areaId = $(this).val();
+                if(areaId!=null && areaId!=""){
+                    resourceChart['areaId'] = areaId;
+                    layoutAjaxCall('resourceDevice',{'areaId':areaId,'eventIds':'EVT800,EVT801,EVT802,EVT803'});
+                }
+            });
+        }
 
         function addRefreshTimeCallBack(_function){
             if(_function!=null && typeof _function == "function"){
@@ -237,10 +282,153 @@
          */
         function getLicense(_this){
             if($(_this).hasClass("on")){
-                $(".info_popup #licenseList").empty();
+                $(".tpopup-info #licenseList").empty();
                 layerShowHide('license','hide');
             }else{
                 layoutAjaxCall('license');
+            }
+        }
+
+        /**
+         * resource Popup open
+         * @author psb
+         */
+        function openResourcePopup(_this){
+            if($(_this).hasClass("on")){
+                layerShowHide('resource','hide');
+            }else{
+                layerShowHide('resource','show');
+            }
+        }
+
+        function deviceRender(deviceList, eventList, deviceCodeCss){
+            $("#resourceDeviceList").empty();
+
+            for(var index in deviceList){
+                var device = deviceList[index];
+
+                if(device['deviceCode']=="DEV800" || device['deviceCode']=="DEV801"){
+                    var resourceDeviceTag = templateHelper.getTemplate("resourceDevice");
+                    resourceDeviceTag.attr("deviceId",device['deviceId']);
+                    if(deviceCodeCss[device['deviceCode']]!=null){
+                        resourceDeviceTag.addClass(deviceCodeCss[device['deviceCode']]);
+                    }
+                    if(device['deviceStat']=='N'){
+                        resourceDeviceTag.addClass("level-die");
+                    }
+                    resourceDeviceTag.click({deviceId:device['deviceId']},function(evt){
+                        if(!$(this).hasClass("on")){
+                            $("#resourceDeviceList").find("li").removeClass("on");
+                            $(this).addClass("on");
+                            resourceChart['deviceId'] = evt.data.deviceId;
+                        }
+                    });
+                    resourceDeviceTag.find("p[name='resourceDeviceName']").text(device['deviceName']);
+                    resourceDeviceTag.find("select[name='resourceEventId']").on("change",function(){
+                        var eventId = $("option:selected", this).val();
+                        if(eventId!=""){
+                            $("#selResourceEventName").text($("option:selected", this).text());
+                            resourceChart['eventId'] = eventId;
+                            findListResourceChart();
+                        }
+                    });
+                    for(var i in eventList){
+                        resourceDeviceTag.find("select[name='resourceEventId']").append(
+                            $("<option/>",{value:eventList[i]['eventId']}).text(eventList[i]['eventName'])
+                        )
+                    }
+                    $("#resourceDeviceList").append(resourceDeviceTag);
+                }
+            }
+        }
+
+        function resourceDateSelTypeClick(_this){
+            if($(_this).hasClass("on")){
+                return false;
+            }else{
+                $(".resource_view").find("button").removeClass("on");
+                $(_this).addClass("on");
+                findListResourceChart();
+            }
+        }
+
+        function findListResourceChart(){
+            var dateSelType = $("#resourceDateSelType button.on").attr("value");
+            var truncType;
+
+            switch (dateSelType){
+                case 'day':
+                    truncType = 'hour';
+                    break;
+                case 'week':
+                    truncType = 'day';
+                    break;
+                case 'month':
+                    truncType = 'week';
+                    break;
+                case 'year':
+                    truncType = 'month';
+                    break;
+            }
+            if(resourceChart['areaId']!=null && resourceChart['deviceId']!=null && resourceChart['eventId']!=null){
+                layoutAjaxCall('chart',{areaId:resourceChart['areaId'], deviceId:resourceChart['deviceId'], eventId:resourceChart['eventId'], truncType: truncType, dateType: dateSelType});
+            }
+        }
+
+        function resourceUpdate(data){
+            if(resourceChart['areaId']!=data['areaId'] || resourceChart['deviceId']!=data['deviceId'] || resourceChart['eventId']!=data['eventId']){
+                return false;
+            }
+
+            let updateFlag = false;
+            let eventValue;
+            for(let index in data['infos']){
+                const info = data['infos'][index];
+
+                if(info['key']=="value"){
+                    eventValue = info['value'];
+                    updateFlag = true;
+                }
+            }
+
+            if(updateFlag){
+                let _eventDate = new Date();
+                _eventDate.setTime(data['eventDatetime']);
+                let _eventDateStr;
+                switch ($("#resourceDateSelType button.on").attr("value")){
+                    case 'day':
+                        _eventDateStr = _eventDate.format("HH");
+                        break;
+                    case 'week':
+                        _eventDateStr = _eventDate.format("es");
+                        break;
+                    case 'month':
+                        _eventDateStr = _eventDate.getWeekOfMonth()+"주";
+                        break;
+                    case 'year':
+                        _eventDateStr = _eventDate.format("MM");
+                        break;
+                }
+
+                const _labels = resourceChart['chartist'].data.labels;
+                let seriesIndex = null;
+                for(let i=0; i<_labels.length; i++){
+                    if(_labels[i]==_eventDateStr){
+                        seriesIndex = i;
+                        break;
+                    }
+                }
+
+                if(seriesIndex!=null){
+                    try{
+                        if(resourceChart['chartist'].data.series[0][seriesIndex] < eventValue){
+                            resourceChart['chartist'].data.series[0][seriesIndex] = eventValue;
+                            resourceChart['chartist'].update();
+                        }
+                    }catch(e){
+                        console.error("[Layout][ResourceUpdate] series index error - "+e);
+                    }
+                }
             }
         }
 
@@ -303,7 +491,7 @@
                     }
                     break;
                 case 'license':
-                    const popupElement = $(".info_popup");
+                    const popupElement = $(".tpopup-info");
                     if(data['license']['status']==-99){
                         popupElement.find("#expireDate").text("none authorize license");
                     }else{
@@ -331,6 +519,48 @@
                     break;
                 case 'alive':
                     notificationHelper.licenseStatusChangeHandler(data['license']['status']);
+                    break;
+                case 'resourceDevice':
+                    deviceRender(data['deviceList'],data['eventList'],data['deviceCodeCss']);
+                    break;
+                case 'chart':
+                    var paramBean = data['paramBean'];
+
+                    if(resourceChart['areaId']!=paramBean['areaId']){
+                        return false;
+                    }
+                    if (data['eventLogChartList'] != null) {
+                        var eventLogChartList = data['eventLogChartList'];
+                        var _chartList = [];
+                        var _eventDateList = [];
+
+                        for(var index in eventLogChartList){
+                            var item = eventLogChartList[index];
+                            var _eventDate = new Date();
+                            _eventDate.setTime(item['eventDatetime']);
+                            _chartList.push(item['value']);
+                            switch (paramBean['truncType']){
+                                case 'hour':
+                                    _eventDateList.push(_eventDate.format("HH"));
+                                    break;
+                                case 'day':
+                                    _eventDateList.push(_eventDate.format("es"));
+                                    break;
+                                case 'week':
+                                    _eventDateList.push(_eventDate.getWeekOfMonth()+"주");
+                                    break;
+                                case 'month':
+                                    _eventDateList.push(_eventDate.format("MM"));
+                                    break;
+                            }
+                        }
+                        _chartList.reverse();
+                        _eventDateList.reverse();
+
+                        resourceChart['chartist'].data.series[0] = _chartList;
+                        resourceChart['chartist'].data.labels = _eventDateList;
+                        resourceChart['chartist'].update();
+                    }
                     break;
             }
         }
@@ -379,16 +609,8 @@
                 case "list":
                     if(_action == 'show'){
                         modifyElementClass($(".db_area"),'on','add');
-                        modifyElementClass($(".dashboardContainer"),'on','add');
-                        modifyElementClass($(".sub_area"),'on','add');
-                        modifyElementClass($(".mapSetting"),'on','add');
-                        modifyElementClass($(".ptzControl"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".db_area"),'on','remove');
-                        modifyElementClass($(".dashboardContainer"),'on','remove');
-                        modifyElementClass($(".sub_area"),'on','remove');
-                        modifyElementClass($(".mapSetting"),'on','remove');
-                        modifyElementClass($(".ptzControl"),'on','remove');
                     }
                     break;
                 case "detail":
@@ -402,19 +624,28 @@
                 case "profile":
                     if(_action == 'show'){
                         modifyElementClass($(".user_btn"),'on','add');
-                        modifyElementClass($(".personal_popup"),'on','add');
+                        modifyElementClass($(".tpopup-personal"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".user_btn"),'on','remove');
-                        modifyElementClass($(".personal_popup"),'on','remove');
+                        modifyElementClass($(".tpopup-personal"),'on','remove');
                     }
                     break;
                 case "license":
                     if(_action == 'show'){
                         modifyElementClass($(".info_btn"),'on','add');
-                        modifyElementClass($(".info_popup"),'on','add');
+                        modifyElementClass($(".tpopup-info"),'on','add');
                     }else if(_action == 'hide'){
                         modifyElementClass($(".info_btn"),'on','remove');
-                        modifyElementClass($(".info_popup"),'on','remove');
+                        modifyElementClass($(".tpopup-info"),'on','remove');
+                    }
+                    break;
+                case "resource":
+                    if(_action == 'show'){
+                        modifyElementClass($(".reso_btn"),'on','add');
+                        modifyElementClass($(".tpopup-resource"),'on','add');
+                    }else if(_action == 'hide'){
+                        modifyElementClass($(".reso_btn"),'on','remove');
+                        modifyElementClass($(".tpopup-resource"),'on','remove');
                     }
                     break;
                 case "notificationCancel":
@@ -499,7 +730,6 @@
 <body class="admin_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
     <!-- wrap Start -->
     <div class="wrap">
-        <!-- hearder Start 고통부분 -->
         <header id="header">
             <div class="header_area">
                 <h1><a href="#" onclick="javascript:moveDashboard(); return false;"></a></h1>
@@ -508,13 +738,14 @@
                 <menu id="topMenu"></menu>
                 <!-- menu End -->
 
-                <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 Start -->
+                <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 -->
                 <div class="header_right_area">
                     <div class="datetime_set">
                         <span id="nowTime"></span>
                     </div>
                     <div class="header_btn_set">
                         <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+                        <button class="reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"></button>
                         <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
                         <button class="info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"></button>
                         <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
@@ -525,153 +756,177 @@
                         <%--</select>--%>
                     </div>
                 </div>
-                <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 End -->
             </div>
-            <!-- header_area 영역 End -->
         </header>
-        <!-- hearder End -->
 
-        <!-- 알림센터 영역 Start -->
-        <aside class="db_area">
-            <h2>
-                <span><spring:message code="dashboard.title.alarmCenter"/></span>
-                <!-- 임계치별 알림 카운트 -->
-                <div criticalLevelCnt>
-                    <c:forEach var="critical" items="${criticalList}">
-                        <span ${critical.codeId}>0</span>
-                    </c:forEach>
+        <main>
+            <!-- 알림센터 -->
+            <aside class="db_area">
+                <article>
+                    <h2>
+                        <span><spring:message code="dashboard.title.alarmCenter"/></span>
+                    </h2>
+                    <!-- 임계치별 알림 카운트 -->
+                    <section class="issue_board">
+                        <c:forEach var="critical" items="${criticalList}">
+                            <span ${critical.codeId}>0</span>
+                        </c:forEach>
+                    </section>
+
+                    <!-- 알림 이력 + 알림 해지 영역 -->
+                    <section class="db_list_box">
+                        <!-- 이력 선택 및 알림해지 버튼-->
+                        <div class="db_filter_set" alarm_menu>
+                            <div class="checkbox_set csl_style01 db_allcheck">
+                                <input type="checkbox" class="check_input" onclick="javascript:notificationHelper.notificationAllCheck(this);"/>
+                                <label></label>
+                            </div>
+                            <button class="dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');" title="<spring:message code="dashboard.title.alarmAction"/>"></button> <!-- 선택 이력 알림해지, 알림확인 박스 열기 -->
+                            <button class="dbc_dele_btn" onclick="javascript:notificationHelper.allCancelNotification();" title="<spring:message code="dashboard.title.allCancel"/>"></button> <!-- 이력 모두 지우기 -->
+                            <button class="dbc_sera_btn" onclick="javascript:$(this).toggleClass('on');" title="<spring:message code="dashboard.title.search"/>"></button> <!-- 찾기 필터 보기 -->
+                            <div class="search_box">
+                                <spring:message code="common.selectbox.select" var="allSelectText"/>
+                                <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true" allText="${allSelectText}"/>
+                                <isaver:areaSelectBox htmlTagId="areaType" allModel="true" allText="${allSelectText}"/>
+                            </div>
+                        </div>
+
+                        <!-- 알림 이력-->
+                        <ul id="notificationList"></ul>
+
+                        <!-- 더보기, 검색 로딩 바 -->
+                        <div id="notiLoading" class="loding_bar"></div>
+
+                        <!-- 더보기 버튼 -->
+                        <button id="notiMoreBtn" class="dbc_more" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
+
+                        <!-- 알림해지 영역 -->
+                        <div class="db_cancel_set">
+                            <div class="title">
+                                <h3><spring:message code='dashboard.title.alarmAction'/></h3>
+                                <button class="dbc_close_btn" onclick="javascript:layerShowHide('notificationCancel','hide');"></button>
+                            </div>
+
+                            <textarea id="cancelDesc" placeholder="<spring:message code='dashboard.placeholder.notificationAction'/>"></textarea>
+                            <div class="btn_set">
+                                <button class="btn" onclick="javascript:notificationHelper.saveNotification('cancel');"><spring:message code="dashboard.button.notificationCancel"/></button>
+                                <button class="btn" onclick="javascript:notificationHelper.saveNotification('confirm');"><spring:message code="dashboard.button.notificationConfirm"/></button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 알림 상세 영역 -->
+                    <section alarm_detail class="db_infor_box">
+                        <div class="dbi_event">
+                            <p areaName></p>
+                            <p eventName></p>
+                            <p eventDatetime></p>
+                            <p currentDatetime></p>
+                        </div>
+                        <div class="dbi_cctv"><button></button></div>
+                        <div class="dbi_copy">
+                            <p><textarea disabled="true" actionDesc></textarea></p>
+                        </div>
+                    </section>
+                </article>
+            </aside>
+
+            <article>
+                <tiles:insertAttribute name="body" />
+            </article>
+
+            <section class="common-popup-layer">
+                <!-- 토스트 영역 -->
+                <div class="toast_popup on"></div>
+
+                <!-- 자원 모니터링 팝업 -->
+                <div class="tpopup-resource">
+                    <h2><spring:message code="dashboard.title.resourceMonitoring"/></h2>
+                    <section>
+                        <div class="resource_view">
+                            <h3 class="select_change" id="selResourceEventName"></h3>
+                            <div class="chart_select_set" id="resourceDateSelType">
+                                <button value="day" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.day"/></button>
+                                <button value="week" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.week"/></button>
+                                <button value="month" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.month"/></button>
+                                <button value="year" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.year"/></button>
+                            </div>
+                            <div class="chart_box chart01" id="resourceChartElement"></div>
+                        </div>
+                        <div class="resource_list">
+                            <div>
+                                <isaver:areaSelectBox htmlTagId="resourceAreaId" templateCode="TMP009" allModel="true" allText="${allSelectText}"/>
+                            </div>
+                            <ul class="device_set" id="resourceDeviceList"></ul>
+                        </div>
+                    </section>
                 </div>
-            </h2>
 
-            <!-- 알림 이력 + 알림 해지 영역 -->
-            <section class="db_list_box">
-                <!-- 이력 선택 및 알림해지 버튼-->
-                <div class="db_filter_set" alarm_menu>
-                    <div class="checkbox_set csl_style01 db_allcheck">
-                        <input type="checkbox" class="check_input" onclick="javascript:notificationHelper.notificationAllCheck(this);"/>
-                        <label></label>
-                    </div>
-                    <button class="dbc_open_btn" onclick="javascript:layerShowHide('notificationCancel','show');" title="<spring:message code="dashboard.title.alarmAction"/>"></button> <!-- 선택 이력 알림해지, 알림확인 박스 열기 -->
-                    <button class="dbc_dele_btn" onclick="javascript:notificationHelper.allCancelNotification();" title="<spring:message code="dashboard.title.allCancel"/>"></button> <!-- 이력 모두 지우기 -->
-                    <button class="dbc_sera_btn" onclick="javascript:$(this).toggleClass('on');" title="<spring:message code="dashboard.title.search"/>"></button> <!-- 찾기 필터 보기 -->
-                    <div class="search_box">
-                        <spring:message code="common.selectbox.select" var="allSelectText"/>
-                        <isaver:codeSelectBox groupCodeId="LEV" htmlTagId="criticalLevel" allModel="true" allText="${allSelectText}"/>
-                        <isaver:areaSelectBox htmlTagId="areaType" allModel="true" allText="${allSelectText}"/>
-                    </div>
-                </div>
-
-                <!-- 알림 이력-->
-                <ul id="notificationList"></ul>
-
-                <!-- 더보기, 검색 로딩 바 -->
-                <div id="notiLoading" class="loding_bar"></div>
-
-                <!-- 더보기 버튼 -->
-                <button id="notiMoreBtn" class="dbc_more" onclick="javascript:notificationHelper.moveNotificationPage(); return false;"></button>
-
-                <!-- 알림해지 영역 -->
-                <div class="db_cancel_set">
-                    <div class="title">
-                        <h3><spring:message code='dashboard.title.alarmAction'/></h3>
-                        <button class="dbc_close_btn" onclick="javascript:layerShowHide('notificationCancel','hide');"></button>
-                    </div>
-
-                    <textarea id="cancelDesc" placeholder="<spring:message code='dashboard.placeholder.notificationAction'/>"></textarea>
+                <!-- 개인상세 정보 팝업-->
+                <div class="tpopup-personal">
+                    <h2><spring:message code="dashboard.title.profile"/></h2>
+                    <section>
+                        <form>
+                            <div class="form_area">
+                                <span><spring:message code="dashboard.column.userName"/></span>
+                                <input type="text" id="userName" />
+                                <span><spring:message code="dashboard.column.password"/></span>
+                                <input autocomplete="off" type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                                <span><spring:message code="dashboard.column.passwordConfirm"/></span>
+                                <input autocomplete="off" type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
+                                <span><spring:message code="dashboard.column.telephone"/></span>
+                                <input type="text" id="telephone" />
+                                <span><spring:message code="dashboard.column.email"/></span>
+                                <input type="text" id="email" />
+                            </div>
+                        </form>
+                    </section>
                     <div class="btn_set">
-                        <button class="btn" onclick="javascript:notificationHelper.saveNotification('cancel');"><spring:message code="dashboard.button.notificationCancel"/></button>
-                        <button class="btn" onclick="javascript:notificationHelper.saveNotification('confirm');"><spring:message code="dashboard.button.notificationConfirm"/></button>
+                        <button class="btn" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
                     </div>
                 </div>
-            </section>
 
-            <!-- 알림 상세 영역 -->
-            <section alarm_detail class="db_infor_box">
-                <div class="dbi_event">
-                    <p areaName></p>
-                    <p eventName></p>
-                    <p eventDatetime></p>
-                    <p currentDatetime></p>
-                </div>
-                <div class="dbi_cctv"><button></button></div>
-                <div class="dbi_copy">
-                    <p><textarea disabled="true" actionDesc></textarea></p>
-                </div>
-            </section>
-        </aside>
-        <!-- 알림목록 영역 End -->
-
-        <!-- 토스트 영역 Start -->
-        <div class="toast_popup on"></div>
-        <!-- 토스트 영역 End -->
-
-        <!-- 개인상세 정보 팝업-->
-        <div class="personal_popup">
-            <section>
-                <h2><spring:message code="dashboard.title.profile"/></h2>
-                <form>
-                    <div class="form_area">
-                        <span><spring:message code="dashboard.column.userName"/></span>
-                        <input type="text" id="userName" />
-                        <span><spring:message code="dashboard.column.password"/></span>
-                        <input autocomplete="off" type="password" id="userPassword" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
-                        <span><spring:message code="dashboard.column.passwordConfirm"/></span>
-                        <input autocomplete="off" type="password" id="password_confirm" placeholder="<spring:message code="common.message.passwordEdit"/>"/>
-                        <span><spring:message code="dashboard.column.telephone"/></span>
-                        <input type="text" id="telephone" />
-                        <span><spring:message code="dashboard.column.email"/></span>
-                        <input type="text" id="email" />
+                <!-- 라이센스 정보 팝업-->
+                <div class="tpopup-info">
+                    <h2>
+                        <spring:message code="dashboard.title.license"/>
+                    </h2>
+                    <div class="d-day">
+                        <span><spring:message code="dashboard.column.expireDate"/></span>
+                        <p id="expireDate"></p>
                     </div>
-                </form>
+                    <section id="licenseList"></section>
+                </div>
+
+                <!-- 라이센스 만료 경고 팝업 -->
+                <div class="license_notice">
+                    <p></p>
+                </div>
+
+                <!-- 연결 오류 팝업 -->
+                <div class="popupbase network_popup">
+                    <div>
+                        <div>
+                            <header>
+                                <h2><spring:message code="error.message.networkTitle"/></h2>
+                                <button class="close_btn" onclick="javascript:$('.network_popup').hide();"></button>
+                            </header>
+                            <article>
+                                <section><spring:message code="error.message.network"/></section>
+                            </article>
+                            <footer>
+                                <button class="btn" onclick="javascript:logout();"><spring:message code="error.button.login"/></button>
+                            </footer>
+                        </div>
+                    </div>
+                    <div class="bg"></div>
+                </div>
             </section>
-            <div class="btn_set">
-                <button class="btn" onclick="javascript:saveProfile();"><spring:message code="common.button.save"/></button>
-            </div>
-        </div>
-
-        <!-- 라이센스 정보 팝업-->
-        <div class="info_popup">
-            <h2>
-                <spring:message code="dashboard.title.license"/>
-                <div>
-                    <span><spring:message code="dashboard.column.expireDate"/></span>
-                    <p id="expireDate"></p>
-                </div>
-            </h2>
-            <section id="licenseList"></section>
-        </div>
-        <!-- 라이센스 정보 팝업 End -->
-
-        <!-- 라이센스 만료 경고 팝업 -->
-        <div class="license_notice">
-            <p></p>
-        </div>
-        <!-- 라이센스 만료 경고 End -->
-
-        <div class="popupbase network_popup">
-            <div>
-                <div>
-                    <header>
-                        <h2><spring:message code="error.message.networkTitle"/></h2>
-                        <button class="close_btn" onclick="javascript:$('.network_popup').hide();"></button>
-                    </header>
-                    <article>
-                        <!-- 진출입 트리보기 센션 -->
-                        <section><spring:message code="error.message.network"/></section>
-                    </article>
-                    <footer>
-                        <button class="btn" onclick="javascript:logout();"><spring:message code="error.button.login"/></button>
-                    </footer>
-                </div>
-            </div>
-            <div class="bg"></div>
-        </div>
+        </main>
 
         <audio controls style="display: none">
             <source id="alarmSource" type="audio/mpeg">
         </audio>
-
-        <tiles:insertAttribute name="body" />
     </div>
 </body>
 </html>

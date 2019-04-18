@@ -1,32 +1,19 @@
 @charset "utf-8";
 @import "filters";
+@import "layout";
 
 body.admin_mode {}
 
 
 ///// ----------------- container START
-section.container {
-  position: relative; width:100%; height:100vh;
 
-  padding:($headerHeight + 50px) $admin-margin 50px $admin-margin;
-
-  @include transition(400ms);
-
-  &.on {
-    $noticecenter-onwidth:calc(100% - 300px);
-    padding-left:40px; padding-right:40px; width:$noticecenter-onwidth;
-    /*padding-right:(40px + $noticecenter-width);*/
-
-    .popupbase {right:($noticecenter-width);}
-  }
-}
 ///// ----------------- container END
 
 
 ////// 어드민 검색영역  Start
 .search_area {
   @include flexbase; @include flex-align-items-center;
-  width:100%; min-height:65px; padding:5px 0; margin:10px 0 0 0;
+  width:100%; min-height:65px; padding:5px 0;
   @include border01(1px 0,$color-gray-06,1);
 
   .tabs_content > & {@include borderwidth(0 0 1px 0);}
@@ -35,6 +22,7 @@ section.container {
 
   .tr_table & {border-width:1px 0 0 0;}
 }
+
 
 .search_contents > * {
   float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
@@ -66,7 +54,7 @@ section.container {
         &:before {content:"\e92c"};}
     }
     input.hasDatepicker {
-      & + button + select {max-width: 80px; min-width:80px;}
+      & + button + select {max-width: 80px; min-width:80px; border-left-width:0 !important;}
     }
   }
 
@@ -224,7 +212,7 @@ div.tablebase, .d_defalut {display: inline-block;}
           &:last-child {border:none;}
         }
 
-        & > button { @include flex-midddle; padding:0;}
+        & > button { @include flex-midddle; padding:0; }
 
         & > span {
           @include flex-align-items-center; @include flex-justify-content-center; max-width:30px; padding:0;
@@ -237,7 +225,7 @@ div.tablebase, .d_defalut {display: inline-block;}
         & > select {
           &.temp_select {
             border:none;
-            & ~ button {max-width:90px !important; border:none !important;}
+            & ~ button {max-width:90px !important; border:none !important; z-index: 10; @include mmheight(100%);}
             & ~ .checkbox_set {
               width:170px !important; min-width:170px !important; max-width:170px !important;
               @include flex-justify-content-between; padding:0 10px;
@@ -437,7 +425,7 @@ ul.u_defalut {
       & > input {width:70px;}
     }
 
-    .checkbox_set.csl_style02 {
+    .checkbox_set.checkbox-style01 {
 
       margin:0 20px 0 0;
       & + .timepicker {
@@ -630,6 +618,7 @@ $critical_w03 : 150px;
   }
 }
 
+
 // 임계치 관리 UI (현재 적용)
 .critical-ui {
 
@@ -638,19 +627,16 @@ $critical_w03 : 150px;
   $crievent:350px;
   $criconte:300px;
   @mixin crievent {
-    @include flex-option(0, 1, $crievent); width:$crievent; min-width:$crievent; max-width:$crievent;
-    margin: 0 ($crimargin * 2) 0 0;
+    @include flex-option(0, 1, $crievent); @include mmwidth($crievent); margin: 0 ($crimargin * 2) 0 0;
   } // @include crievent;
 
-  @mixin wauto($width) {
-    @include flex-option(0, 1, $width); width:$width; min-width:$width; max-width:$width;
-  } // @include wauto();
+  @mixin wauto($width) {@include flex-option(0, 1, $width); @include mmwidth($width);} // @include wauto();
 
   @mixin buwidth {
-    width:$criwidth; height:$criwidth; min-width:$criwidth; min-height:$criwidth;
-    max-width:$criwidth; max-height:$criwidth; @include flex-option(1, 0, $criwidth);
+    @include mmwidth($criwidth); @include mmheight($criwidth); @include flex-option(1, 0, $criwidth);
   } // @include buwidth;
-  @mixin buheight {height:$criwidth; min-height:$criwidth; max-height:$criwidth;} // @include buheight;
+  @mixin buheight {@include mmheight($criwidth);} // @include buheight;
+
   @mixin critical-rotate($deg,$scale,$trans) {
     -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
     transform:        rotateX($deg) scale($scale) translateX($trans);
@@ -659,23 +645,19 @@ $critical_w03 : 150px;
   @include flexbase; @include flex-column; @include flex-align-items-start; overflow: hidden;
   position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
 
-  input, select, button {height:$criwidth;}
+  input, select, button {height:$criwidth; }
 
   h4, li {position: relative; }
   h4 {
     @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-    margin: 0 $crimargin 0 0;
+    padding: 0 $crimargin 0 0;
     & > button {
-      @include buwidth; @include btn-normal-action;
-      &.on ~ .zoom-box {
-        display: inline-block; background-color: $color-on;
-      }
+      @include btn-itype03b;
+      &.on ~ .zoom-box {display: inline-block; background-color: $color-on;}
     }
   }
 
-  & > section {
-    @include flexbase; position: relative; width:100%;
-  }
+  & > section {@include flexbase; position: relative; width:100%;}
 
   .critical {
     &-title {
@@ -684,11 +666,9 @@ $critical_w03 : 150px;
     }
     &-content {
       width:1620px; height:100%;
-      &:before, &:after {
-        content:""; position: absolute; top:0; width:1px; height:100%;  background-color: rgba($hov-color,.4);
-      }
-      &:before {right:($crievent + 90px); }
-      &:after  {right:($crievent * 2  + 90px);}
+      &:before, &:after {@include bbl(0,0,auto,auto,auto,1px,100%,rgba($color-bline,.2));}
+      &:before {right:($crievent + 100px); }
+      &:after  {right:($crievent * 2  + 100px);}
     }
   }
 
@@ -697,7 +677,8 @@ $critical_w03 : 150px;
     //@include perspective01(1000px, 250%, 100%); cursor:pointer;
 
     & > div {
-      @include flexbase; @include flex-row-wrap; @include critical-rotate(20deg,.95,5px); min-height:$criwidth;
+      @include flexbase; @include flex-row-wrap;  min-height:$criwidth;
+      @include critical-rotate(0,.95,0);
 
       &, &:before {@include transition01(200ms);}
 
@@ -707,7 +688,7 @@ $critical_w03 : 150px;
         @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
       }
       &:after {
-        opacity: 0; top:16px; right:-($criwidth); width:0; height:0;
+        opacity: 0; top:16px; right:-($criwidth - 10px); width:0; height:0;
         @include triangle-lef(10px 10px 10px 0,$color-dark-01);
       }
 
@@ -718,8 +699,7 @@ $critical_w03 : 150px;
       }
 
       & > button {
-        display: none;
-        @include btn-critical-action; @include buwidth;
+        display: none; @include btn-itype03b-t;
         &.on ~ .zoom-box {display: inline-block;}
       }
 
@@ -748,16 +728,17 @@ $critical_w03 : 150px;
       &-end     {& > div:before {background-color: $color-end;} }
     }
 
-    .btn-check {@include checkbtn-01; @include buwidth; }
+    .btn-check {@include csl-icon; @include buwidth; }
   }
 
   .list {
     &-event {
       @include crievent;
+      button {@include mmheight($criwidth);}
       & > div {@include flexbase;}
       select {
         width:100%;  height:$criwidth; margin:0 0 20px 0;
-        & + button {width:100px; height:$criwidth;}
+        & + button {width:100px; }
       }
     }
 
@@ -791,11 +772,11 @@ $critical_w03 : 150px;
       &:last-of-type {margin:0 0 10px 0;}
     }
     select {
-      background-image: url(../images/ico/select_allow_w.svg);
-      option { background-color: $bas-color; }
+      background-image: url(../images/ico/select_allow_w.svg) !important; color:$color-white-01 !important;
+      option { background-color: $color-bas; }
     }
 
-    button {@include btn-critical-action; @include translate3d(10px, -10px, 0); z-index: 1;}
+    button {@include btn-itype03b-t; @include translate3d(10px, -10px, 0); z-index: 1;}
 
     .checkbox_set { &, & * {margin:0;} }
 
@@ -809,151 +790,6 @@ $critical_w03 : 150px;
   }
 }
 
-/*
-.critical-ui {
-
-  $criwidth:50px;
-
-  @mixin buwidth {
-    width:$criwidth; height:$criwidth; min-width:$criwidth; min-height:$criwidth;
-    max-width:$criwidth; max-height:$criwidth; @include flex-option(1, 0, $criwidth);
-  } // @include buwidth;
-  @mixin buheight {height:$criwidth; min-height:$criwidth; max-height:$criwidth;} // @include buheight;
-  @mixin critical-rotate($deg,$scale,$trans) {
-    -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
-    transform:        rotateX($deg) scale($scale) translateX($trans);
-  } // @include critical-rotate(20deg,.95,5px);
-
-  @include flexbase; position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
-
-  & > section {
-    @include flexbase; @include flex-column; @include flex-width-one(1);
-    overflow: hidden; position: relative; height:100%;
-
-    &:before {@include bbl(0,0,0,auto,1px,100%,$color-gray-01);}
-
-    & > * {width:100%;  padding:0 ($criwidth - 20px);}
-
-    h5, li > div, li > div > p {position: relative; @include flexbase;}
-
-    h5, li {@include flex-row-wrap; min-height:$criwidth; }
-
-    h5 {
-      @include flex-align-items-center; @include flex-justify-content-between;
-      font-size:1.1rem; margin:0 0 20px 0;
-
-      & > button {
-        @include buwidth; @include btn-normal-action;
-        &:first-of-type {margin-left:auto;}
-        &.on ~ .zoom-box {
-          display: inline-block; background-color: $color-on; @include translate3d(0, -($criwidth), 0); z-index: 10;
-
-        }
-      }
-
-    }
-
-    h5 + * {@include flex-width-one(1); overflow: auto;}
-
-    li {
-      margin:0 0 10px 0; @include perspective01(1000px, 250%, 100%); cursor:pointer;
-
-      & > div {
-        @include flex-row-wrap; @include critical-rotate(20deg,.95,5px);
-
-        &, &:before {@include transition01(200ms);}
-
-        &:before, &:after {content:""; position: absolute;}
-        &:before {
-          opacity: 0.5;  z-index:-1; width:100%; height:100%;
-          @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
-        }
-        &:after {
-          opacity: 0; top:16px; right:-($criwidth - 20px); width:0; height:0;
-          @include triangle-lef(10px 10px 10px 0,$color-dark-01);
-        }
-
-        & * {color:$color-white-01;}
-
-        & > p {
-          @include flex-align-items-center; @include flex-width-one(1);
-          height:$criwidth; padding:0 10px;
-        }
-
-        & > button {
-          display: none;
-          @include btn-critical-action; @include buwidth;
-          &.on ~ .zoom-box {display: inline-block;}
-        }
-
-      }
-
-      &:hover, &.on, &.check { & > div { &:before {opacity: 1;} } }
-
-      &.on, &.show {
-        & > div {
-          & > button {display: block;}
-          &:after {opacity: 1;}
-          @include critical-rotate(0deg,1,0);
-        }
-      }
-
-      &.level {
-        &-danger,&-warning,&-caution,&-die,&-end {background-color: transparent !important;}
-        &-danger  {& > div:before {background-color: $color-danger;} }
-        &-warning {& > div:before {background-color: $color-warning;} }
-        &-caution {& > div:before {background-color: $color-caution;} }
-        &-die     {& > div:before {background-color: $color-die;} }
-        &-end     {& > div:before {background-color: $color-end;} }
-      }
-
-      .btn-check {@include checkbtn-01; @include buwidth; }
-    }
-  }
-
-  .zoom-box {
-    display: none; width:100%; min-width:100%; padding:10px; @include placeholder-white;
-    & > * {width:100%;}
-    & * {color:$color-white-01;}
-    p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
-    input, select {
-      border-width:0 0 1px 0; border-color:$color-white-01;
-      background-color: transparent; padding:0; margin:0 0 30px 0;
-      &:last-of-type {margin:0 0 10px 0;}
-    }
-    select {
-      background-image: url(../images/ico/select_allow_w.svg);
-      option { background-color: $bas-color; }
-    }
-
-    button {@include btn-critical-action; @include translate3d(10px, -10px, 0);}
-
-    .checkbox_set { &, & * {margin:0;} }
-
-    .cycle-setting {
-      &, & > div {@include flexbase; @include flex-align-items-center;}
-      @include flex-justify-content-between; height:40px; margin:0 0 20px 0;
-      &:last-of-type {margin:0 0 10px 0;}
-      input, select {width:auto; margin:0 2px; width:35px; text-align: center; }
-      .checkbox_set {@include scale(0.9); left:-5px; top:4px;}
-    }
-
-
-  }
-
-  .critical {
-    &-event {
-      & > * {padding-left:0;}
-      //@include flex-width-one(1.5);
-      select {width:100%; height:$criwidth; margin:0 0 20px 0;}
-      button {height:$criwidth; }
-    }
-    &-criti {}
-    &-detec, &-objec { li > div:before {background-color: $color-dark-01;} }
-    &-objec { li > div:after {display: none;}}
-  }
-}
-*/
 
 //구역 디바이스 관리
 .area_tree_set {
@@ -1002,13 +838,12 @@ $critical_w03 : 150px;
     &:after {left:-($bar_h);}
 
     & > button {
-      @include line_btn02;
-      min-width:auto; width:50px; height:50px; display: inline-block; margin-right:5px;
-      @include border-radius(200px); @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
+      display: inline-block; @include btn-itype03c;
 
-      &:before {z-index: 1; font-size:2rem; width:100%; @include flex-midddle;}
+      &:before {z-index: 1; font-size:2rem;}
+
       &.all_see_btn:before {content:"\e929" !important;}
-      //&.refl_btn:before {content:"\e961" !important;}
+
     }
 
     ul {
@@ -1065,7 +900,7 @@ $critical_w03 : 150px;
         text-align: center; width:100%; height:100%; font-size:15px;
         @include border01(1px 1px 0 1px,$color-gray-06,1 );
       }
-      button:hover, &.tabs_on button {color:#fff; border: none; background-color: $bas-color;}
+      button:hover, &.tabs_on button {color:#fff; border: none; background-color: $color-bas;}
     }
   }
 
@@ -1107,7 +942,7 @@ $critical_w03 : 150px;
     cursor:pointer;
     &:before {
       content:"FILE";
-      position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $bas-color;
+      position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $color-bas;
       @include flex-midddle;
       @include transition(400ms);
     }
@@ -1140,7 +975,7 @@ $critical_w03 : 150px;
   & > input[type="file"] {position: absolute; z-index:1; top:0; left:0; width:100%; height:100%; opacity: 0; cursor:pointer;}
   & > input[type="file"]:hover + button:before {color:$color-ho; font-weight:bold;}
   & > button {
-    @include icon_btn;
+    @include btn-itype03b;
     @include border01(1px 1px 1px 0, $color-gray-01, 1);
     &:before {content: "\e927";}
   }
@@ -1153,19 +988,17 @@ $critical_w03 : 150px;
 
   position: absolute; z-index: 1; width:$tree-table-width !important; float: left;
   margin:20px 0 0 0;  padding:$dash-margin; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
-  @include border01(1px,$color-gray-06,1 );
+  @include border01(1px,$color-bline,.4 );
 
   .dashboard_mode &, .iocount_popup & {
     @include flexbase; @include flex-column;
-    height:100%; margin:0 0 0 0; padding: 20px 20px 0 20px;
+    height:100%; margin:0 0 0 0;
     .table_btn_set > button {max-width:none; right:auto;}
     .table_contents {
       overflow: auto;  @include flex-option(0, 1, 100%);
       .tree_box {overflow-x: initial; }
     }
   }
-
-
 
 
   .table_title_area {
@@ -1274,11 +1107,11 @@ $critical_w03 : 150px;
     &, &:before {font-weight:bold;}
   }
   & > button {
-    background-color: $bas-color; color:#fff; padding:0 20px;
+    background-color: $color-bas; color:#fff; padding:0 20px;
     &:before {content:"\e925";  color:#fff; padding:0 5px 0 0;}
   }
   & > div {
-    @include border01(1px,$bas-color,1 );
+    @include border01(1px,$color-bas,1 );
     & > button {
       &:nth-of-type(1) {padding:0 0 0 10px; line-height: 11px;}
       &:nth-of-type(2):before {content:"\e91a"; padding:0 10px;}
@@ -1315,11 +1148,8 @@ $critical_w03 : 150px;
 
 /////..... 테이블 버튼 영역 시작
 .table_btn_set {
-  @include flexbase;
-  @include flex-width-one(1);
-  @include flex-justify-content-end;
-  @include flex-align-items-center;
-  position: relative; height:40px;
+  @include flexbase; @include flex-width-one(1); @include flex-justify-content-end;
+  @include flex-align-items-center; position: relative; height:40px;
 
   & > select {width:120px;}
 
@@ -1344,19 +1174,16 @@ $critical_w03 : 150px;
   }
 
   &.type03 {
-    margin:$dash-margin 0; padding:$dash-margin 0;
+    margin:$dash-margin 0 25px 0; height:60px;
+
     &:before {
       content:""; position: absolute; top:0; left:-$dash-margin; right:-$dash-margin;
       height:1px; background-color:$color-gray-06;
     }
 
     button {
-      @include flex-midddle; @include line_btn; border-width:0 0 3px 0; color:$bas-color; font-size: 1.1rem;
-      &:before {content:""; position: absolute; bottom:-22px; @include triangle-bot(10px,$color-ho); opacity: 0;}
-      &.on {
-        &:before {@include triangle-bot(10px,$color-red-01); opacity: 1;}
-        &:hover:before {@include triangle-bot(10px,$color-ho);}
-      }
+      @include flex-midddle; color:$color-bas; font-size:1rem; @include action_textbtn;
+      &:before {height:3px !important; bottom:0; top:auto;}
     }
   }
 
@@ -1440,611 +1267,11 @@ a.fc-more {position: relative; z-index: 2;}
 /////......  이벤트 통계 원 차트 끝
 
 
-/////......  구역 / 장치 관리 MAP 설정 시작
-.map_sett_area {
-  td {border-width:0px 1px 1px 1px !important;}
-}
-.map_sett_box {
-  //min-width:1150px;  padding:$dash-margin;
-  @include flexbase; @include flex-column-row;
-
-  $sec_h:450px; $sec_m:800px; $sec_l:400px; $sec_c:500px; $ch_width:90px; $ch_margin:20px;
-  & > section {
-    overflow: hidden; position: relative; margin:0 0 0 20px; height:100%;
-    @include flexbase; @include flex-column; @include flex-option(0, 1, 100%); @include border01(1px,$color-gray-06,1 );
-
-    & > * {width:100%; position: relative;  }
-
-    &:nth-of-type(1) {
-      @include flex-option(0,1,100%); margin:0;
-    }
-
-    &:nth-of-type(2) {
-      & > * {position: relative; width: 100%; }
-    }
-
-    h3 {overflow: auto; margin:$ch_margin 0 0 0; max-height: 40px; min-height:40px;}
-  }
-
-  .map {
-
-    & > div {
-      position: relative;
-      &:first-of-type {
-        overflow: hidden; height:100%;
-        background-color: $bas-color;
-        &, & * {color:$color-white-02;}
-
-        .fencebtn_set {
-          display: none; position: absolute; z-index:10; bottom:10px; right:10px;
-
-          //&:before {content:"Fence Setting";}
-
-          & > button {
-            @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-            margin:5px 0;
-            &, & * {color:$color-yellow-01; }
-            &:before {
-              @include flex-midddle; width:30px; height:30px; @include border-radius(200px); @include border01(2px,$color-yellow-01,1 );
-              order:2;
-            }
-            &:after {order:1; font-size:0.9rem; opacity: 0.7; width:40px; text-align: left; margin:0 10px 0 0;}
-
-            &:hover {color:$color-ho; &:before {border-color:$color-ho;} }
-          }
-
-          .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";}}
-          .btn-canc { &:before {content:"\e91a";} &:after {content:"Cancle";}}
-        }
-
-        &.cursor_cros {
-          .fencebtn_set {@include flexbase; @include flex-column;}
-          svg, .g-fence {cursor:crosshair !important;}
-        }
-
-      }
-
-      &:nth-of-type(2) {
-        @include flexbase; @include flex-align-items-center;
-        height:40px; min-height:40px;
-        & > * {position: relative; z-index: 1; border-width:0;}
-
-        select {@include flex-option(0, 1, 100%);}
-        span  {
-          @include flex-midddle;   min-width:55px; height:100%; padding: 0 !important;
-          @include border01(0 1px,$color-gray-01,1 );
-        }
-        input  {max-width:100px;}
-        button {
-          @include flex-midddle; max-width:40px; background-color: rgba($bas-color, 0.5);
-
-          &:before {position: absolute; font-size:1.2rem;}
-          &:nth-of-type(1){
-            &:before {content:"\e902";  @include rotate(90deg);}
-          }
-          &:nth-of-type(2){
-            margin:0 0 0 1px;
-            &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);}
-          }
-        }
-      }
-
-
-    }
-
-  }
-
-  .list {
-    @include flex-option(1, 0, $sec_l); max-width:$sec_l; min-width:$sec_l; width:$sec_l;
-    & > div {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px; }
-
-    & > div, ul li > div , ul li button, .camera_list ul li, .fence_list > div, .fence_list p, .camera_list > div
-    {@include flexbase; @include flex-align-items-center;}
-
-    h3, h3 + div, h3 ~ ul {padding: 0 $ch_margin 0 ($ch_margin - 5px);}
-
-    & > div {
-      /*
-      <div>
-          <p>구역명/장치명</p>
-          <p>보기/감추기</p>
-          <p>적용여부</p>
-      </div>
-       */
-      @include flex-option(1, 0, 40px); min-height:40px; max-height:40px; opacity: 0.6; margin:10px 0;
-      & > * {font-size:0.9rem; }
-      &:before {
-        content:""; position: absolute; bottom:0; left:$ch_margin; right:$ch_margin;
-        @include border01(0 0 1px 0,$color-gray-06,1 );
-      }
-    }
-
-    ul {
-      overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
-
-      li {
-        min-height:60px;
-        & > div {
-          & > button {
-            @include transition(200ms); @include flex-option(0, 1, 100%);
-            position: relative; height:100%; padding:0 0 0 20px;
-            &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
-            //&:before {content:"\e91b";  }
-          }
-
-          & > div {@include checkbox_set; @include csl_style02; @include csl_style03_noyes; margin:0 0 0 10px;}
-        }
-
-
-        & > section {
-          @include flex-option(0, 1, 100%); margin: 10px 0 10px 50px; position: relative;
-
-          &:before, &:after {content:""; position: absolute; background-color:$color-gray-01}
-          &:before {left:-20px; top:18px; width:18px; height:1px;}
-          &:after  {left:-20px; top:-18px; width:1px; bottom:0;}
-
-          &:last-of-type {
-            margin-bottom:25px;
-            &:after {bottom:auto; top:-10px; height:28px;}
-          }
-
-          & > div {
-            padding: 0 0 0 40px;
-            select, input {width:100%; margin-top:10px;}
-            & * {width:100%; height:40px;}
-          }
-
-          button {
-            @include flex-midddle;
-            &:before {font-size:1.3rem; }
-            &.on {font-weight:bold; color:$color-on;}
-            &:hover {color:$color-ho;}
-          }
-          button.btn {
-            &-del, &-edi {
-              width:30px; min-width:30px; max-width:30px; @include flex-justify-content-end; padding:0 4px 0 0;
-            }
-            &-del { &:before {content:"\e91a";} }
-            &-edi { &:before {content:"\e905";} }
-
-            &-cam {
-              width:100%; padding:0 0 0 20px; @include flex-justify-content-start;
-              &:before {content:"ㆍ"; position: absolute; left:0; width:20px;}
-            }
-
-            &-add {
-              overflow: hidden; width:40px; height:40px; color:$color-white-01; background-color: $color-dark-01;
-              @include border-radius(400px);
-              &:before {content:"\e92b";}
-              &:hover {background-color: $color-ho;}
-            }
-          }
-
-          .fence_list {
-
-            /*
-            <div class="fence_list">
-
-              <div class="fence_title">
-                <p>fence1 ID 삽입</p>
-                <button class="btn-edi"></button>
-                <button class="btn-del"></button>
-              </div>
-
-              <div class="fence_name">
-                <input type="text" placeholder="펜스명을 입력하세요" />
-                <select>
-                  <option selected disabled>선택</option>
-                  <option>선택01</option>
-                  <option>선택02</option>
-                </select>
-              </div>
-
-            </div>
-            */
-
-
-            @include flex-column; @include flex-align-items-start;
-
-            & > * { /*@include flex-option(0, 1, 100%);*/ }
-
-            .fence_title {
-              &:before {
-                content:"\e904" !important; @include flexbase; @include flex-align-items-center;
-                position: absolute; top:0; left:0; width:40px; height:40px; font-size:1.6rem;
-              }
-
-            }
-            .fence_name {
-              input  {@include flex-option(0, 1, 100%); border-right-width:0;}
-              select {width:95px; min-width:95px; max-width:95px;}
-            }
-
-
-          }
-
-          .camera_list {
-
-            /*
-            <div class="camera_list">
-                  <select>
-                      <option selected disabled>감시카메라 선택</option>
-                      <option>IP Camere 01</option>
-                      <option>IP Camere 01</option>
-                  </select>
-                  <div>
-                      <button class="btn-cam">IP Camere 01</button>
-                      <button class="btn-del"></button>
-                  </div>
-              </div> <!-- 카메라 목록 -->
-            */
-
-            & > div {
-              @include border01(0 0 1px 0,$color-gray-01,1 );
-            }
-          }
-        }
-
-      }
-    }
-
-    & > div, ul li > div {
-      position: relative; width: 100%;
-      & > * {
-        &:nth-child(1) {@include flex-option(0, 1, 100%); margin:0; text-align: left;}
-        &:nth-child(2) {@include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;}
-      }
-    }
-
-    .fenceset_popup {
-
-      display:none; position: absolute; z-index: 10; top:0; left:0;
-      width:100%; height:100%; min-height:100%; max-height: 100%; opacity: 1; margin:0; padding:0;
-      background-color: rgba($color-dark-01,0.8); @include transition01(200ms);
-
-      &.on {display: block;}
-
-      & > div {
-        @include issue02; @include flex-midddle; @include flex-column; width:100%; height:100%;
-        color:$color-white-01;
-        &:after, &:before {position: relative; }
-        &:after  {content:"Fence Setting"; padding:10px 0 0 0; font-size:1.2rem;}
-        &:before {
-          content:"\e905";
-          @include loding; font-size:4rem; border: none; bottom:auto; left:auto; right:auto;
-        }
-      }
-
-    }
-
-  }
-
-  .onvif {background-color: #000; @include flex-justify-content-center;}
-  .controls {
-    @include flex-option(1, 0, $sec_c); max-width:$sec_c; min-width:$sec_c; width:$sec_c;
-
-    & > div {
-      @include flexbase; @include flex-justify-content-between; margin: 30px 0 40px 0;
-
-      $btw:60px;
-
-      .direction_set.type01 {
-        width:($btw * 3); height:($btw * 3);
-        & > * {width:$btw; height:$btw; float: left;}
-
-        button {
-          @include flex-midddle;
-          &:before, &:after {}
-          &:before {content:"\e918"; position: absolute; font-size:1.4rem; font-weight:bold;}
-
-          &:nth-of-type(1):before {@include rotate(45deg);}
-          &:nth-of-type(2):before {@include rotate(90deg);}
-          &:nth-of-type(3):before {@include rotate(135deg);}
-
-          &:nth-of-type(4):before {}
-          &:nth-of-type(5):before {@include rotate(180deg);}
-
-          &:nth-of-type(6):before {@include rotate(-45deg);}
-          &:nth-of-type(7):before {@include rotate(-90deg);}
-          &:nth-of-type(8):before {@include rotate(-135deg);}
-
-          &:after {
-            content:""; display: inline-block; width:($btw - 5px); height:($btw - 5px);
-            @include border01(1px,$color-gray-01,1 ); @include border-radius(600px);
-          }
-        }
-      }
-
-      .direction_set {
-        @include flex-midddle; position: relative; width:($btw * 3 + 40px); height:($btw * 3 + 40px);
-        @include box-inset-shadow(0px, 4px, 20px, #000, 0.4); background-color: $bas-color;
-
-        &, &:before { @include border-radius(1000px); }
-        & > * {position: absolute;}
-
-        &:before {
-            content:""; position: absolute; z-index: 1; width:($btw + 40px); height:($btw + 40px);
-            background-color: $adm-color; @include box-shadow01(0px, 0px, 15px, 0px, #000, 0.5);
-          }
-
-        span {
-          z-index:10; display: inline-block; width:($btw/3); height:($btw/3); background-color:$bas-color;
-          @include border-radius(1000px); @include box-inset-shadow(0px, 2px, 8px, #000, 1); @include transition01(200ms);
-        }
-
-        button {
-          @include flex-midddle; width:$btw; height:$btw;
-
-          @include btnbase_type01;
-
-          &:before {content:"\e918"; font-weight:bold; color:$color-white-01;}
-          &:after {display: none; width:($btw - 5px); height:($btw - 5px); @include border-radius(600px);}
-
-          &:hover:after {display: inline-block;}
-          &:active ~ span {background-color: $color-red-01;}
-
-          &:nth-of-type(1){
-            top:26px; left:26px;
-            &:before {@include rotate(45deg);}
-            &:active ~ span {margin:-20px 0 0 -20px;}
-          }
-          &:nth-of-type(2){
-            top:0;
-            &:before {@include rotate(90deg);}
-            &:active ~ span {margin:-20px 0 0 0;}
-          }
-          &:nth-of-type(3){
-            top:26px; right:26px;
-            &:before {@include rotate(135deg);}
-            &:active ~ span {margin: -20px 0 0 20px;}
-          }
-          &:nth-of-type(4){
-            left:0;
-            &:before {@include rotate(0);}
-            &:active ~ span {margin:0 0 0 -20px;}
-          }
-          &:nth-of-type(5){
-            right:0;
-            &:before {@include rotate(180deg);}
-            &:active ~ span {margin:0 0 0 20px;}
-          }
-          &:nth-of-type(6){
-            left:26px; bottom:26px;
-            &:before {@include rotate(-45deg);}
-            &:active ~ span { margin: 20px 0 0 -20px;}
-          }
-          &:nth-of-type(7){
-            bottom:0;
-            &:before {@include rotate(-90deg);}
-            &:active ~ span {margin: 20px 0 0 0;}
-          }
-          &:nth-of-type(8){
-            right:26px; bottom:26px;
-            &:before {@include rotate(-135deg);}
-            &:active ~ span {margin: 20px 0 0 20px;}
-          }
-
-        }
-
-      }
-
-      .function_set {
-        @include flexbase; @include flex-column; @include flex-justify-content-center;
-
-        & > div {
-          @include flexbase; @include flex-align-items-center; @include flex-justify-content-end; margin:0 0 10px 0;
-          &:before {padding:0 10px 0 0; text-align: right;}
-        }
-
-        button {
-          float:left; width:60px; height:40px;
-
-          @include btnbase_type01;
-
-          &:after {border-style:solid; border-color:$color-gray-01;}
-          &:first-of-type:after {@include border-radius(200px 0 0 200px); border-width:1px 0 1px 1px;}
-          &:last-of-type:after {@include border-radius(0 200px 200px 0 ); border-width:1px;}
-
-        }
-        .zoom {
-          &:before {content:"zoom";}
-          button:first-of-type:before {content:"\e95f";}
-          button:last-of-type:before  {content:"\e960";}
-        }
-        .focus {
-          &:before {content:"focus";}
-          button:first-of-type:before {content:"\e903";}
-          button:last-of-type:before  {content:"\e904";}
-        }
-      }
-    }
-
-    & > ul {
-      overflow: auto; overflow: overlay; @include flex-width-one(1);
-      li {
-        @include flexbase; margin:0 0 10px 0;
-        @include border01(1px,$color-gray-01,1 );
-        &.on {@include border01(2px,$color-on,1 );}
-
-        &.setting {
-          & > div select, .cp_btn, .cd_btn {display: inline-block;}
-        }
-
-        & > div {
-          position: relative; height:40px;  @include flex-option(0, 1, 100%);
-          input, select {width:100%; border:none;}
-          select {position: absolute; z-index: 1; top:0; left:0; height:100%; }
-        }
-
-        .cp_btn, .cd_btn {display: none;}
-
-        button {
-          width:40px; height:40px; min-width:40px; max-width:40px; @include flex-option(1, 0, 40px);
-
-          @include btnbase_type01;
-          &:before {font-size:1.6rem;}
-          &:after { @include border01(0 0 0 1px,$color-gray-01,1 ); }
-
-          &.cs_btn {
-            order:3;
-            &:before {content:"\e909";}
-            &.on:before {content:"\e927";}
-          } // 설정 저장 버튼
-
-          &.cp_btn { &:before {content:"\e941";} } // 프리셋 보기 버튼
-          &.cd_btn { &:before {content:"\e91a";} } // 설정 삭제 버튼
-        }
-
-      }
-    }
-  }
-}
-
-// 구역 / 장치 관리 옵션 시작
-.opatin_list {
-  & > div {
-    @include flexbase; @include flex-align-items-start; @include flex-justify-content-start;
-
-    & > input {
-      width:40px; height:40px; opacity: 0;
-      &:hover + ul:after {@include tree-hover;}
-      &:checked + ul {
-        &:after {content:"\e92c" !important;}
-        li {
-          @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
-          width:100%; min-height:40px;
-          &:before {content:"\e92a"; padding:0 10px 0 0;}
-          & > span {width:120px; min-width:120px; }
-        }
-      }
-    }
-
-    & > ul {
-      @include flexbase; @include flex-column;
-      position: relative; width:100%; padding:50px 0 15px 0;
-      &:before, &:after {position: absolute; left:0;}
-      &:after {@include plus_icon; top:5px; z-index: -1;}
-      &:before {
-        content:"";
-        top:0; width:100%; height:40px;
-        background-position: 0 8px; background-repeat: no-repeat; background-size: auto 28px;
-      }
-
-      li {
-        display: none; position: relative; margin:0 0 15px 0;
-        /*
-        &:first-of-type:after {display: none;}
-        &:after {
-          content:""; position: absolute; width:100%; height:1px; top:-6px; left:0;
-          background-color: rgba($color-gray-01,0.5);
-        }
-        */
-        & > div {
-          &, & > * {width:100%;}
-          p {margin:0 0 5px 0;}
-          & > div {
-            @include flexbase;  margin:0 0 15px 0;
-            input, select {width:100%; margin:0 5px 0 0;}
-          }
-        }
-      }
-    }
-    &.safeguard_option > ul { &:before {background-image: url(../images/logo/safeguard.svg);} }
-    &.safeeye_option > ul { &:before {background-image: url(../images/logo/safeeye.svg);}   }
-    &.blinker_option > ul { &:before {background-image: url(../images/logo/blinker.svg);}   }
-    &.detector_option > ul { &:before {background-image: url(../images/logo/detector.svg);}  }
-  }
-}
-
-
-
-/*
-
-////// ----------------- ONNLE MAP 설정 Start
-.device, .device > div, .icon-tof, .icon-ptz {
-  &, &:before, &:after {@include flex-midddle; }
-
-  &:before, &:after {
-    width:100%; height:100%; font-size:1.5rem; color:$color-white-01; background-color: transparent;
-    @include border-radius(200px); @include transition(400ms); cursor: pointer;
-  }
-  &:before {position:absolute; }
-}
-
-.icon-tof, .icon-ptz {
-  position: absolute; width:$devi_w; height:$devi_w; @include border-radius(200px); background-color: $bas-color;
-  &:before {@include text-shadow(0, 3px, 8px, #000, 1);}
-  & > span {
-    @include flex-midddle; position: absolute; height:20px; bottom:-($devi_w - 10px);
-    padding:0 10px 2px 10px; font-size:0.9rem; line-height: 0.9rem;
-    background-color:$color-gray-09; @include border-radius(200px);
-  }
-
-  /////..... 임계치 적용 표시 Start
-  &.level {
-    &-caution,&-warning,&-danger {@include pOn; }
-
-    &-caution:after {@include border01(2px,$color-gray-05,1);  }
-    &-warning:after {@include border01(2px,$color-orange-01,1);}
-    &-danger:after  {@include border01(2px,$color-red-01,1);   }
-    &-die:after {}
-
-    &-caution { &,& > span {background-color:$color-gray-05;   } }
-    &-warning { &,& > span {background-color:$color-orange-01; } }
-    &-danger  { &,& > span {background-color:$color-red-01;    } }
-    &-die     {
-      @include issue02; background-color:$color-gray-09;
-      &:before {opacity: 0.6;}
-      &:after {
-        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
-        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
-      }
-    }
-  }
-  /////..... 임계치 적용 표시 End
-}
-
-.device {
-  /////..... 임계치 적용 표시 Start
-  //&:before {content: url(../images/map/mapex_w.svg);}
-  &.level {
-    &-caution,&-warning,&-danger { & > div {@include pOn;} }
-
-    &-caution > div {
-      &, & > span {background-color:$color-gray-05;}
-      &:after {@include border01(2px,$color-gray-05,1);}
-    }
-    &-warning > div {
-      &, & > span {background-color:$color-orange-01;}
-      &:after {@include border01(2px,$color-orange-01,1);}
-    }
-    &-danger  > div {
-      &, & > span {background-color:$color-red-01; }
-      &:after {@include border01(2px,$color-red-01,1);}
-    }
-
-    &-die > div  {
-      @include issue02; background-color:$color-gray-09;
-      &:before {opacity: 0.6;}
-      &:after {
-        content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;
-        @include rotate(45deg); background-color:rgba($color-gray-09,0.8); @include loding;
-      }
-    }
-
-  }
-  /////..... 임계치 적용 표시 End
-}
-////// ----------------- ONNLE MAP 설정  End
-*/
-
-/////......  구역 / 장치 관리 MAP 설정 End
-
 
 ////// 영상이력 레이아웃 Start
 #videoHistoryForm select[name="areaId"] {width:250px;}
 .video_area {
-  @include flexbase; margin:5px 0 0 0; height:750px; max-height: 750px;
+  @include flexbase; margin:5px 0 0 0; height:calc(100% - 100px);
 
   & > * {overflow: hidden; height:100%;}
 
@@ -2071,7 +1298,7 @@ a.fc-more {position: relative; z-index: 2;}
   }
   & > *:last-of-type  {
     @include flexbase; @include flex-align-items-start; @include flex-column;
-    @include flex-option(1, 0, 350px); margin:0 0 0 20px;
+    @include flex-option(1, 0, 350px); margin:0 0 0 10px;
 
     .table_btn_set {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px;}
 
@@ -2119,10 +1346,6 @@ a.fc-more {position: relative; z-index: 2;}
 
     button {@include list_more_btn; width:100%;}
   }
-
-
-
-
 }
 ////// 영상이력 레이아웃 End
 

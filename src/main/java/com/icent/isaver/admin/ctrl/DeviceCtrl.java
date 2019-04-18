@@ -40,7 +40,20 @@ public class DeviceCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListDevice(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = deviceSvc.findListDevice(parameters);
-        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 장치 목록을 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/resourceList")
+    public ModelAndView findListDeviceForResource(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = deviceSvc.findListDeviceForResource(parameters);
         return modelAndView;
     }
 

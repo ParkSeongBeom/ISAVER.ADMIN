@@ -158,7 +158,10 @@ public class HaspLicenseUtil {
         if(authorLicenseFlag){
             license = login();
             if (HaspStatus.HASP_STATUS_OK == license.getStatus()) {
-                if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
+                if(ignoreDevice(deviceCode)){
+                    license.setMessage("none authorize license");
+                    license.setStatus(AdminResource.NONE_LICENSE_TARGET);
+                }else if(AdminResource.DEVICE_CODE_LICENSE.get(deviceCode)!=null){
                     byte[] membuffer = new byte[BASE_LENGTH];
                     hasp.read(Hasp.HASP_FILEID_RO, AdminResource.DEVICE_CODE_LICENSE.get(deviceCode), membuffer);
                     int status = hasp.getLastError();
@@ -239,6 +242,21 @@ public class HaspLicenseUtil {
             }
         }
         return resultList;
+    }
+
+    private boolean ignoreDevice(String deviceCode){
+        boolean ignoreTargetFlag = false;
+        if (StringUtils.notNullCheck(deviceCode)) {
+            if(AdminResource.IGNORE_DEVICE_CODE_LICENSE != null && AdminResource.IGNORE_DEVICE_CODE_LICENSE.length > 1){
+                for(String ignoreDeviceCode : AdminResource.IGNORE_DEVICE_CODE_LICENSE){
+                    if(deviceCode.equals(ignoreDeviceCode)){ // 라이센스 체크 대상이 아님.
+                        ignoreTargetFlag = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return ignoreTargetFlag;
     }
 
     private String getExpireDate(){

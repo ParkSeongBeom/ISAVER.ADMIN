@@ -7,6 +7,7 @@ import com.icent.isaver.admin.bean.*;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
 import com.icent.isaver.admin.dao.DeviceDao;
+import com.icent.isaver.admin.dao.EventDao;
 import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TestSvc;
@@ -76,15 +77,21 @@ public class TestSvcImpl implements TestSvc {
     @Inject
     private FenceDao fenceDao;
 
+    @Inject
+    private EventDao eventDao;
+
     @Override
     public ModelAndView testList(HttpServletRequest request, Map<String, String> parameters) {
         List<AreaBean> areaList = areaDao.findListAreaForTest();
         List<DeviceBean> deviceList = deviceDao.findListDeviceForTest();
         List<FenceBean> fenceList = fenceDao.findListFenceForTest();
+        List<EventBean> eventList = eventDao.findListEvent(null);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("areaList",areaList);
         modelAndView.addObject("deviceList",deviceList);
         modelAndView.addObject("fenceList",fenceList);
+        modelAndView.addObject("eventList",eventList);
         return modelAndView;
     }
 

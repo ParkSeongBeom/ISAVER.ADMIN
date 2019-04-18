@@ -67,10 +67,10 @@
   </select>
 
     <!--
-      이벤트 목록을 가져온다. (대쉬보드)
+      이벤트 목록을 가져온다. (자원 모니터링용)
       @author psb
     -->
-    <select id="findListEventForDashBoard" parameterType="map" resultType="EventBean">
+    <select id="findListEventForResource" parameterType="map" resultType="EventBean">
         SELECT  event_id as eventId
                 , event_flag as eventFlag
                 , event_name as eventName

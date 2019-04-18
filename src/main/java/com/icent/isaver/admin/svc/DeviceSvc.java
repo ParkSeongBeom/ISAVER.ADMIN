@@ -24,11 +24,20 @@ public interface DeviceSvc {
     /**
      * 장치 목록을 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param parameters
      * @return
      */
     ModelAndView findListDevice(Map<String, String> parameters);
+
+    /**
+     * 장치 목록을 가져온다. 자원모니터링용
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListDeviceForResource(Map<String, String> parameters);
 
     /**
      * 장치를 등록한다.

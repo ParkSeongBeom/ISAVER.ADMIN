@@ -7,19 +7,15 @@
 <c:set value="B00050" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.role"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
+    </div>
+</div>
+
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
-    <!-- 2depth 타이틀 영역 Start -->
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.role"/></h3>
-        <!-- 2depth 타이틀 End -->
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
-
     <form id="roleForm" method="POST">
         <input type="hidden" id="userCnt" value="${userCnt}" />
         <article class="table_area">

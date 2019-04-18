@@ -2,6 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.DeviceBean;
+import com.icent.isaver.admin.bean.EventBean;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.*;
@@ -87,10 +88,26 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-        List<DeviceBean> deviceTreeList = deviceDao.findListDevice(null);
+        List<DeviceBean> deviceList = deviceDao.findListDevice(null);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("devices", deviceTreeList);
+        modelAndView.addObject("devices", deviceList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findListDeviceForResource(Map<String, String> parameters) {
+        List<DeviceBean> deviceList = deviceDao.findListDevice(parameters);
+
+        Map<String, Object> resourceParam = new HashMap<>();
+        resourceParam.put("eventIds",parameters.get("eventIds").split(","));
+        List<EventBean> eventList = eventDao.findListEventForResource(resourceParam);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("deviceList", deviceList);
+        modelAndView.addObject("eventList", eventList);
+        modelAndView.addObject("deviceCodeCss", AdminResource.DEVICE_CODE_CSS);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }

@@ -752,8 +752,8 @@ var DashboardHelper = (
 
                     if(seriesIndex!=null){
                         try{
-                            if(chartList[data['areaId']].data.series[0][i] < eventValue){
-                                chartList[data['areaId']].data.series[0][i] = eventValue;
+                            if(chartList[data['areaId']].data.series[0][seriesIndex] < eventValue){
+                                chartList[data['areaId']].data.series[0][seriesIndex] = eventValue;
                                 chartList[data['areaId']].update();
                             }
                         }catch(e){

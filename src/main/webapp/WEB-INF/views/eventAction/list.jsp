@@ -10,63 +10,14 @@
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
-<div class="popupbase admin_popup code_select_popup">
-    <div>
-        <div>
-            <header>
-                <h2>대응목록</h2>
-                <button onclick="javascript:popup_cancelButton();return false;"></button>
-            </header>
-            <article>
-                <div class="table_area">
-                    <div class="table_contents">
-                        <!-- 입력 테이블 Start -->
-                        <table id="codeTable" class="t_defalut t_type01 t_style02">
-                            <colgroup>
-                                <col style="width: 15%;">
-                                <col style="width: 20%;">
-                                <col style="width: *%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th><spring:message code="event.column.eventActionId"/></th>
-                                <th><spring:message code="event.column.eventActionDivision"/></th>
-                                <th><spring:message code="event.column.eventActionType"/></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td title="" name="action_id"></td>
-                                <td title="" name="action_code"></td>
-                                <td title="">
-                                    <p class="editable01" name="action_desc"></p>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </article>
-            <footer>
-                <button class="btn" id="actionDetailMoveButton"><spring:message code="event.button.learnMore"/></button>
-            </footer>
-        </div>
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.eventAction"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
     </div>
-    <div class="bg ipop_close" onclick="popup_cancelButton();"></div>
 </div>
 
 <section class="container sub_area">
-    <!-- 2depth 타이틀 영역 Start -->
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.eventAction"/></h3>
-        <!-- 2depth 타이틀 End -->
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
-
     <form id="eventForm" method="POST">
         <input type="hidden" name="pageNumber"/>
 
@@ -156,6 +107,53 @@
     </article>
 </section>
 
+<section class="popup-layer">
+    <div class="popupbase admin_popup code_select_popup">
+        <div>
+            <div>
+                <header>
+                    <h2>대응목록</h2>
+                    <button onclick="javascript:popup_cancelButton();return false;"></button>
+                </header>
+                <article>
+                    <div class="table_area">
+                        <div class="table_contents">
+                            <!-- 입력 테이블 Start -->
+                            <table id="codeTable" class="t_defalut t_type01 t_style02">
+                                <colgroup>
+                                    <col style="width: 15%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: *%;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th><spring:message code="event.column.eventActionId"/></th>
+                                    <th><spring:message code="event.column.eventActionDivision"/></th>
+                                    <th><spring:message code="event.column.eventActionType"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td title="" name="action_id"></td>
+                                    <td title="" name="action_code"></td>
+                                    <td title="">
+                                        <p class="editable01" name="action_desc"></p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </article>
+                <footer>
+                    <button class="btn" id="actionDetailMoveButton"><spring:message code="event.button.learnMore"/></button>
+                </footer>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="popup_cancelButton();"></div>
+    </div>
+</section>
+
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -203,7 +201,7 @@
      */
     function drawPageNavigater(pageSize,pageNumber,totalCount){
         var pageNavigater = new PageNavigator(pageSize,pageNumber,totalCount);
-        pageNavigater.setClass('paging','p_arrow pll','p_arrow pl','','page_select','');
+        pageNavigater.setClass('paging','pll','pl','','on','');
         pageNavigater.setGroupTag('《','〈','〉','》');
         pageNavigater.showInfo(false);
         $('#pageContainer').append(pageNavigater.getHtml());

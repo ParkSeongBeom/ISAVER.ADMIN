@@ -118,17 +118,17 @@ var PageNavigator = (
 				
 				// 현재 페이지버튼 그룹
 				var currentPageGroup = parseInt((_pageNum - 1) / _pageBarSize);
-				resultHtml[lineCount++] = "<p";
-				
-				// 스타일 지정
-				resultHtml[lineCount++] = getClassTag("layout");
-				resultHtml[lineCount++] = ">";
+				//resultHtml[lineCount++] = "<p";
+				//
+				//// 스타일 지정
+				//resultHtml[lineCount++] = getClassTag("layout");
+				//resultHtml[lineCount++] = ">";
 				
 				// 이전 페이지버튼 그룹
 				var prePageGroup = currentPageGroup - 1;
 				
 				// 맨 앞으로
-                resultHtml[lineCount++] = "<button"
+                resultHtml[lineCount++] = "<button";
                 resultHtml[lineCount++] = getClassTag("fnGroup");
 
 				if(_pageNum == 1){
@@ -168,6 +168,8 @@ var PageNavigator = (
 				}
                 resultHtml[lineCount++] = "</button>";
 
+				resultHtml[lineCount++] = "<div>";
+
 				// 페이지번호
 				for(var i = 1; i <= _pageBarSize; i++){
 					var tempNum = i + (currentPageGroup * _pageBarSize);
@@ -181,7 +183,7 @@ var PageNavigator = (
                         resultHtml[lineCount++] = "</button>";
                     }else{
                         resultHtml[lineCount++] = "<button";
-                        resultHtml[lineCount++] = getClassTag("num")
+                        resultHtml[lineCount++] = getClassTag("num");
 						resultHtml[lineCount++] = " onclick='javascript:goPage(";
 						resultHtml[lineCount++] = tempNum;
 						resultHtml[lineCount++] = "); return false;' >";
@@ -189,6 +191,7 @@ var PageNavigator = (
                         resultHtml[lineCount++] = "</button>";
 					}
 				}
+				resultHtml[lineCount++] = "</div>";
 				
 				// 다음 그룹으로
 				var nextPageGroup = currentPageGroup + 1;
@@ -239,7 +242,7 @@ var PageNavigator = (
 				}
                 resultHtml[lineCount++] = "</button>";
 				
-				resultHtml[lineCount++] = "</p>";
+				//resultHtml[lineCount++] = "</p>";
 
                 if(_infoFlag){
                     resultHtml[lineCount++] = "&nbsp;";

@@ -12,17 +12,15 @@
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/excelexport/jquery.techbytarun.excelexportjs.js"></script>
 
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.eventStatistics"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
+    </div>
+</div>
+
 <!-- section Start -->
 <section class="container sub_area">
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.eventStatistics"/></h3>
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
-
     <!-- 트리 영역 Start -->
     <article class="table_area tree_table">
         <div class="table_title_area">

@@ -10,18 +10,14 @@
 
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
-<section class="container sub_area">
-    <!-- 2depth 타이틀 영역 Start -->
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.videoHistory"/></h3>
-        <!-- 2depth 타이틀 End -->
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.videoHistory"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
+    </div>
+</div>
 
+<section class="container sub_area">
     <form id="videoHistoryForm" method="POST">
         <input type="hidden" name="mode" value="search"/>
         <article class="search_area">

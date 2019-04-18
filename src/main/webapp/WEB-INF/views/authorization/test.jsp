@@ -298,29 +298,33 @@
                         <button class="level-start" onclick="javascript:addEvent('guardOut')"></button>
                     </div>
                 </div>
-                <%--<div class="set">--%>
-                    <%--<div class="select_set">--%>
-                        <%--<p>거수자감지</p>--%>
-                        <%--<select area eventType="guard">--%>
-                            <%--<option value="">감시구역선택</option>--%>
-                            <%--<c:forEach items="${areaList}" var="area">--%>
-                                <%--<c:if test="${area.templateCode == 'TMP005'}">--%>
-                                    <%--<option value="${area.areaId}">${area.areaName}</option>--%>
-                                <%--</c:if>--%>
-                            <%--</c:forEach>--%>
-                        <%--</select>--%>
-                        <%--<select device eventType="guard">--%>
-                            <%--<option value="">감시장치선택</option>--%>
-                            <%--<c:forEach items="${deviceList}" var="device">--%>
-                                <%--<option style="display:none;" areaId="${device.areaId}" deviceCode="${device.deviceCode}" deviceName="${device.deviceName}" value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>--%>
-                            <%--</c:forEach>--%>
-                        <%--</select>--%>
-                    <%--</div>--%>
-                    <%--<div class="button_set">--%>
-                        <%--<button class="level-start" onclick="javascript:addEventGuard('start')"></button>--%>
-                        <%--<button class="reset" onclick="javascript:addEventGuard('stop')"></button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+            </div>
+        </section>
+
+        <section>
+            <h2>사용자정의</h2>
+            <div>
+                <div class="set">
+                    <div class="select_set">
+                        <p>Custom Event</p>
+                        <select name="customDeviceId">
+                            <option value="">감시장치선택</option>
+                            <c:forEach items="${deviceList}" var="device">
+                                <option value="${device.deviceId}">${device.deviceName}(${device.deviceId})</option>
+                            </c:forEach>
+                        </select>
+                        <select name="customEventId">
+                            <option value="">이벤트 선택</option>
+                            <c:forEach items="${eventList}" var="event">
+                                <option value="${event.eventId}">${event.eventName}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="customValue" placeholder="Value 입력" onkeypress="javascript:isNumberWithPoint();"/>
+                    </div>
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:addCustomEvent();"></button>
+                    </div>
+                </div>
             </div>
         </section>
     </article>
@@ -516,6 +520,20 @@
         ajaxCall(actionType, {eventData:JSON.stringify(data)});
     }
 
+    function addCustomEvent(){
+        var data = {
+            'deviceId' : $("select[name='customDeviceId'] option:selected").val()
+            ,'eventId' : $("select[name='customEventId'] option:selected").val()
+            ,'eventDatetime' : new Date().format("yyyy-MM-dd HH:mm:ss.000")
+            ,'infos' : [
+                {'key':'eventFlag','value':'D'}
+                ,{'key':'value','value':$("input[name='customValue']").val()}
+            ]
+        };
+
+        ajaxCall('custom', {eventData:JSON.stringify(data)});
+    }
+
     function ajaxCall(actionType,data){
         sendAjaxPostRequest(urlConfig['eventUrl'],data,successHandler,failureHandler,actionType);
     }
@@ -534,6 +552,27 @@
                 break;
             case 'stopGuard':
                 logTag.text("거수자감지 종료!");
+                break;
+            case 'custom' :
+                logTag.append(
+                    $("<div/>").text("전송 성공!")
+                ).append(
+                    $("<div/>").text("장치구분 : "+$("select[name='customDeviceId'] option:selected").text())
+                );
+
+                var infos = data['paramBean']['infos'];
+                for(var index in infos){
+                    var info = infos[index];
+                    switch(info['key']) {
+                        case 'value':
+                            logTag.append(
+                                $("<div/>").text("임계치 수치 : "+info['value'])
+                            );
+                            break;
+                    }
+                }
+                _intervalInfo['param'] = {eventData:JSON.stringify(data['paramBean'])};
+                _intervalInfo['actionType'] = actionType;
                 break;
             default :
                 logTag.append(

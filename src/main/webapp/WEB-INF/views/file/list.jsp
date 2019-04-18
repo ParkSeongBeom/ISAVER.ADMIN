@@ -10,19 +10,15 @@
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
+    </div>
+</div>
+
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
-    <!-- 2depth 타이틀 영역 Start -->
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.file"/></h3>
-        <!-- 2depth 타이틀 End -->
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
-
     <form id="fileForm" method="POST">
         <input type="hidden" name="pageNumber"/>
 
@@ -188,7 +184,7 @@
      */
     function drawPageNavigater(pageSize,pageNumber,totalCount){
         var pageNavigater = new PageNavigator(pageSize,pageNumber,totalCount);
-        pageNavigater.setClass('paging','p_arrow pll','p_arrow pl','','page_select','');
+        pageNavigater.setClass('paging','pll','pl','','on','');
         pageNavigater.setGroupTag('《','〈','〉','》');
         pageNavigater.showInfo(false);
         $('#pageContainer').append(pageNavigater.getHtml());

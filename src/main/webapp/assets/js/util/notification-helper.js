@@ -156,9 +156,18 @@ var NotificationHelper = (
                     callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     break;
                 case "addEvent": // 일반이벤트 등록
+                    resourceUpdate(resultData['eventLog']);
                     callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
                     break;
                 case "editDeviceStatus": // 장치 상태 변경
+                    for(let index in resultData['deviceStatusList']){
+                        const deviceStatus = resultData['deviceStatusList'][index];
+                        if(deviceStatus['deviceStat']=='Y'){
+                            $("li[deviceId='"+deviceStatus['deviceId']+"']").removeClass('level-die');
+                        }else{
+                            $("li[deviceId='"+deviceStatus['deviceId']+"']").addClass('level-die');
+                        }
+                    }
                     callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
                     break;
                 case "licenseStatus": // 라이센스 상태
@@ -398,7 +407,7 @@ var NotificationHelper = (
             if(notiCountList!=null){
                 for(var index in notiCountList){
                     // 알림센터 상단 카운트 및 알림아이콘
-                    var levelTag = $("div[criticalLevelCnt] span["+notiCountList[index]['criticalLevel']+"]");
+                    var levelTag = $("section[criticalLevelCnt] span["+notiCountList[index]['criticalLevel']+"]");
                     levelTag.text(notiCountList[index]['notiCnt']);
                     if(notiCountList[index]['notiCnt']>0){
                         modifyElementClass($(".issue_btn"),"level-"+criticalCss[notiCountList[index]['criticalLevel']],'add');
@@ -489,7 +498,7 @@ var NotificationHelper = (
 
             if(newFlag){
                 // 알림센터 상단 카운트 및 알림아이콘
-                var levelTag = $("div[criticalLevelCnt] span["+notification['criticalLevel']+"]");
+                var levelTag = $("section[criticalLevelCnt] span["+notification['criticalLevel']+"]");
                 levelTag.text(Number(levelTag.text())+1);
                 modifyElementClass($(".issue_btn"),"level-"+criticalCss[notification['criticalLevel']],'add');
 
@@ -627,7 +636,7 @@ var NotificationHelper = (
                     }
                     break;
                 case "cancel" :
-                    var levelTag = $("div[criticalLevelCnt] span["+notificationData['criticalLevel']+"]");
+                    var levelTag = $("section[criticalLevelCnt] span["+notificationData['criticalLevel']+"]");
                     var levelCtn = Number(levelTag.text())-1;
                     levelTag.text(levelCtn);
 

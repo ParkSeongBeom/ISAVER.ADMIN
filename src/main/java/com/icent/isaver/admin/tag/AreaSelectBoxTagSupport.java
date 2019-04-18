@@ -40,6 +40,8 @@ public class AreaSelectBoxTagSupport extends ParamTag {
     private String htmlTagName = "";
     /* htmlTag(CLASS) 명 */
     private String htmlTagClass = "";
+    /* 템플릿코드 */
+    private String templateCode = "";
     /* 전체여부 */
     private Boolean allModel = false;
     /* 전체 */
@@ -71,6 +73,10 @@ public class AreaSelectBoxTagSupport extends ParamTag {
 
     public void setAllText(String allText) {
         this.allText = allText;
+    }
+
+    public void setTemplateCode(String templateCode) {
+        this.templateCode = templateCode;
     }
 
     public int doEndTag() {
@@ -107,10 +113,12 @@ public class AreaSelectBoxTagSupport extends ParamTag {
         }
         if(areas!=null){
             for(AreaBean area:areas) {
-                if (areaId.equals(area.getAreaId())) {
-                    sb.append(String.format("<option value=\"%s\" templateCode=\"%s\" areaPath=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getTemplateCode(),area.getAreaPath(), area.getPath()));
-                } else {
-                    sb.append(String.format("<option value=\"%s\" templateCode=\"%s\" areaPath=\"%s\">%s</option>", area.getAreaId(), area.getTemplateCode(), area.getAreaPath(), area.getPath()));
+                if(StringUtils.nullCheck(templateCode) || area.getTemplateCode().equals(templateCode)){
+                    if (areaId.equals(area.getAreaId())) {
+                        sb.append(String.format("<option value=\"%s\" templateCode=\"%s\" areaPath=\"%s\" selected=\"selected\">%s</option>", area.getAreaId(), area.getTemplateCode(),area.getAreaPath(), area.getPath()));
+                    } else {
+                        sb.append(String.format("<option value=\"%s\" templateCode=\"%s\" areaPath=\"%s\">%s</option>", area.getAreaId(), area.getTemplateCode(), area.getAreaPath(), area.getPath()));
+                    }
                 }
             }
         }

@@ -12,80 +12,16 @@
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
-
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
+<div class="sub_title_area">
+    <h3 class="1depth_title"><spring:message code="common.title.notification"/></h3>
+    <div class="navigation">
+        <span><isaver:menu menuId="${menuId}" /></span>
+    </div>
+</div>
+
 <section class="container sub_area">
-    <!-- 2depth 타이틀 영역 Start -->
-    <article class="sub_title_area">
-        <!-- 2depth 타이틀 Start-->
-        <h3 class="1depth_title"><spring:message code="common.title.notification"/></h3>
-        <!-- 2depth 타이틀 End -->
-        <div class="navigation">
-            <span><isaver:menu menuId="${menuId}" /></span>
-        </div>
-    </article>
-    <!-- 2depth 타이틀 영역 End -->
-
-    <div class="popupbase admin_popup eventdetail_popup">
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="notification.column.cancelDesc"/></h2>
-                    <button onclick="closeCancelDescPopup();"></button>
-                </header>
-                <article>
-                    <div class="search_area">
-                        <div class="editable02" id="cancelDescText"></div>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <div class="bg ipop_close" onclick="closeCancelDescPopup();"></div>
-    </div>
-
-    <!-- 트래킹이력 팝업 -->
-    <div class="popupbase map_pop">
-        <div>
-            <div>
-                <header>
-                    <h2><spring:message code="notification.title.trackingHistory"/></h2>
-                    <button onclick="closeTrackingHistoryPopup();"></button>
-                </header>
-                <div class="trackinghistory-box">
-                    <article class="map_sett_box">
-                        <section class="map">
-                            <div>
-                                <div id="mapElement" class="map_images"></div>
-                            </div>
-                        </section>
-                    </article>
-                    <article class="video_area">
-                        <section>
-                            <!-- 입력 테이블 Start -->
-                            <div>
-                                <video id="videoElement" class="videobox" poster="" controls="ture" style="width:100%;">
-                                    <source id="videoSource" type="video/mp4">
-                                </video>
-
-                                <div class="speed">
-                                    <button class="x1 on" speed="1"></button>
-                                    <button class="x2" speed="2"></button>
-                                    <button class="x4" speed="4"></button>
-                                    <button class="x8" speed="8"></button>
-                                </div>
-                            </div>
-                        </section>
-                        <section>
-                            <ul class="video_list" id="videoList"></ul>
-                        </section>
-                    </article>
-                </div>
-            </div>
-        </div>
-        <div class="bg option_pop_close" onclick="closeTrackingHistoryPopup();"></div>
-    </div>
-
     <form id="eventLogForm" method="POST">
         <input type="hidden" name="pageNumber"/>
 
@@ -217,6 +153,67 @@
     </article>
 </section>
 
+<section class="popup-layer">
+    <div class="popupbase admin_popup eventdetail_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="notification.column.cancelDesc"/></h2>
+                    <button onclick="closeCancelDescPopup();"></button>
+                </header>
+                <article>
+                    <div class="search_area">
+                        <div class="editable02" id="cancelDescText"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closeCancelDescPopup();"></div>
+    </div>
+
+    <!-- 트래킹이력 팝업 -->
+    <div class="popupbase map_pop">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="notification.title.trackingHistory"/></h2>
+                    <button onclick="closeTrackingHistoryPopup();"></button>
+                </header>
+                <div class="trackinghistory-box">
+                    <article class="map_sett_box">
+                        <section class="map">
+                            <div>
+                                <div id="mapElement" class="map_images"></div>
+                            </div>
+                        </section>
+                    </article>
+                    <article class="video_area">
+                        <section>
+                            <!-- 입력 테이블 Start -->
+                            <div>
+                                <video id="videoElement" class="videobox" poster="" controls="ture" style="width:100%;">
+                                    <source id="videoSource" type="video/mp4">
+                                </video>
+
+                                <div class="speed">
+                                    <button class="x1 on" speed="1"></button>
+                                    <button class="x2" speed="2"></button>
+                                    <button class="x4" speed="4"></button>
+                                    <button class="x8" speed="8"></button>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <ul class="video_list" id="videoList"></ul>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="closeTrackingHistoryPopup();"></div>
+    </div>
+</section>
+
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -295,7 +292,7 @@
      */
     function drawPageNavigater(pageSize,pageNumber,totalCount){
         var pageNavigater = new PageNavigator(pageSize,pageNumber,totalCount);
-        pageNavigater.setClass('paging','p_arrow pll','p_arrow pl','','page_select','');
+        pageNavigater.setClass('paging','pll','pl','','on','');
         pageNavigater.setGroupTag('《','〈','〉','》');
         pageNavigater.showInfo(false);
         $('#pageContainer').append(pageNavigater.getHtml());

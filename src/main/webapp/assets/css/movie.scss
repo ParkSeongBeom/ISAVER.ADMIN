@@ -1,5 +1,6 @@
 @charset "utf-8";
-@import "filters" ;
+@import "filters";
+@import "layout";
 
 @mixin com {
   animation-name: tracking;

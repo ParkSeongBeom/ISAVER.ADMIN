@@ -9,9 +9,7 @@
 @mixin font-size20 {font-size:1.25rem;}           //ex)  @include font-size20;
 @mixin font-size48 {font-size:3rem;}              //ex)  @include font-size48;
 @mixin font-size64 {font-size:4rem;}              //ex)  @include font-size64;
-@mixin font-size-navbtn {font-size:1.25rem;}      //ex)  nav 01 depth btn = 20px    @include font-size-navbtn;
-@mixin font-size-navdepthbtn {font-size:1.1rem;}  //ex)  nav 02 depth btn = 17.5px  @include font-size-navdepthbtn;
-@mixin font-size-menubtn {font-size:1.5rem;}      //ex)  메뉴 아이콘 btn = 24px  @include font-size-menubtn;
+
 @mixin font-size-h2 {font-size:1.8rem;}            //ex)  32px   @include font-size-h2;
 @mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
 @mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
@@ -44,9 +42,13 @@ $ks_ssize:($ks_bsize / 4.5);
 */
 
 // 기본 색상
-$bas-color:#535353; //rgba(83,83,83,1)     데시보드 기본 bg
-$adm-color:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
-$not-color:#393939; //rgba(15,14,19,1)   #0f0e13   알림센터 기본 bg
+$color-bas:#535353; //rgba(83,83,83,1)     데시보드 기본 bg
+$color-adm:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
+$color-not:#393939; //rgba(15,14,19,1)   #0f0e13   알림센터 기본 bg
+$color-popup:#3c3c3c; // 팝업 기본컬러
+$color-btn:#2c2c2c; //버튼 기본컬러
+$color-d-text:#f5f5f5;  // 데시보드 기본 텍스트 컬러
+$color-a-text:#3c3c3c; // 어드민 기본 텍스트 컬러
 
 $color-caution:#d2a01e;   // rgba(160,210,30,1) 주위
 $color-warning:#f06400;   // rgba(240,100,0,1)  경고
@@ -54,10 +56,14 @@ $color-danger:#c30202;    // rgba(195,2,2,1)    위험
 $color-confirm:#259dcf;
 $color-die:#000; // 통신두절
 $color-end:#25c09b; // 해지
+$color-lidar:#259dcf;
 
 $color-ho:#32a0be; // rgba(0,135,120,1) HOVER, FOCUS
 $color-on:#b42d6e; // rgba(180,45,110,1) ON
 $color-ac:#00af9b; // rgba(0,175,155,1) ACTIVE
+
+$color-bline:#040404; //rgba(20,20,20,1) 구분라인
+$color-header:#2c2c2c;
 
 $color-gray-01:#a9a9a9;   // rgba(169,169,169,1)  form Normal border-color
 $color-gray-02:#ddd;      // form Dim border-color
@@ -98,7 +104,7 @@ $color-dark-02:#0f0e13;   // rgba(15,14,19,1)
 $color-white-01:#fff;     //
 $color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
 
-$hov-color:#040404;   //rgba(20,20,20,1) 구분라인
+
 
 @mixin level-color {
   .level {
@@ -122,6 +128,8 @@ $issueWidth:80px;
 
 $noticecenter-width:300px; //알림센터 가로 길이
 
+$menu-btn-width:200px;
+
 $devicewidth:40px;
 $device-width:100vw;
 $device-height:100vh;
@@ -134,7 +142,7 @@ $areaHeaderHeight:60px;
 $padpay:80px; //admin 공통 padding 값
 $td-height:55px;
 $tree-area-width:400px;
-$btnHeight:40px;
+
 $loding-size:220px;
 $thwidth:180px;
 $tdwidth:calc(50% - 180px);
@@ -144,10 +152,12 @@ $margin:15px; // root article 상하좌우 마진값
 $m_lr:15px; // 감시구역 상하좌우 마진값
 $m_slr:($m_lr - 10px);
 
-$devi_w:25px;
-$resi_w:10px;
+$devi_w:30px; // 맵 디바이스 크기
+$resi_w:10px; // 맵 디바이스 크기 조절 버튼 크기
 
-//.c-box {background-color: rgba($bas-color,0.1)} 컬러 rgba opacity 쓰기
+$ds-w:200px; // 디바이스 보기 가로 넓이
+
+//.c-box {background-color: rgba($color-bas,0.1)} 컬러 rgba opacity 쓰기
 // display
 $display-table:table;
 $display-table-cell:table-cell;
@@ -156,10 +166,10 @@ $display-inline-block:inline-block;
 
 //z-index
 @mixin z-index-popup  {z-index:10; } //ex) popup @include z-index-popup;
-@mixin z-index-notice {z-index:20; } //ex) 알림센터 @include z-index-not;
-@mixin z-index-header {z-index:30; } //ex) 알림센터 @include z-index-header;
-@mixin z-index-toast  {z-index:40; } //ex) popup @include z-index-toast;
-@mixin z-index-menu   {z-index:50; } //ex) menu @include z-index-menu;
+@mixin z-index-notice {z-index:600; } //ex) 알림센터 @include z-index-notice;
+@mixin z-index-header {z-index:500; } //ex) 메인헤더 @include z-index-header;
+@mixin z-index-toast  {z-index:13; } //ex) popup @include z-index-toast;
+@mixin z-index-menu   {z-index:601; } //ex) menu @include z-index-menu;
 
 
 @mixin placeholder-white {
@@ -170,30 +180,14 @@ $display-inline-block:inline-block;
 } // @include placeholder-white;
 
 
-
-@mixin dark_select {
-  @include screenbg; background-image: url(../images/ico/select_allow_w.svg); color:$color-white-02;
-}
-
-@mixin screenbg {
-  background-color: $bas-color; color:$color-white-02;
-  /*
-  &:after {
-    content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
-    background-image: url(../images/bg/bg_spot.svg); opacity: 0.5;
-  }
-  */
-
-  ::-webkit-input-placeholder {color:rgba(255, 255, 255, 0.4);}
-  ::-moz-placeholder          {color:rgba(255, 255, 255, 0.4);}
-  :-ms-input-placeholder      {color:rgba(255, 255, 255, 0.4);}
-  :-moz-placeholder           {color:rgba(255, 255, 255, 0.4);}
-
-  input, textarea, select, div[contenteditable] {
-    color:$color-white-01 !important; @include border01(1px,$color-gray-01,1); background-color: $color-gray-03;
-  }
-  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
-} //ex) @include screenbg;  백그라운드 공통
+@mixin mmwidth($width)
+{width:$width !important;  min-width:$width !important;  max-width:$width !important;} // @include mmwidth($width);
+@mixin mmheight($height)
+{height:$height !important; min-height:$height !important; max-height:$height !important;} // @include mmheight($height);
+@mixin mhwidth($width) {
+  width:$width !important;  min-width:$width !important;  max-width:$width !important;
+  height:$width !important;  min-height:$width !important;  max-height:$width !important;
+} // @include mhwidth($width);
 
 
 // display flex 플렉스 기본
@@ -412,7 +406,10 @@ $display-inline-block:inline-block;
 }
 // ex) @include perspective-origin(x축, y축);
 
-
+@mixin transform-st ($scale, $x, $y) {
+  -webkit-transform: scale($scale) translate($x,$y); -moz-transform: scale($scale) translate($x,$y);
+  transform: scale($scale) translate($x,$y); -ms-transform: scale($scale) translate($x,$y);
+} // ex) @include transform-st(scale, x, y);
 
 // border
 @mixin border($px,$color){border-style:solid; border-width:$px; border-color:$color;}
@@ -471,73 +468,15 @@ $display-inline-block:inline-block;
 //ex) @user-select bbl(0,0,0,0,0,0);
 
 
-// 구분 라인 설정
-@mixin bblbase   {content:""; position: absolute; z-index:1; top:0; right:0; background-color: $hov-color;}
-//ex) @include bblbase;
-@mixin bblwidth  {width:100%; height:1px;} // ex) @include bblwidth;
-@mixin bblheight {width:1px; height:100%;} // ex) @include bblheight;
-$bbl01:100%; $bbl02:1px;
-
-@mixin bbl($top, $right, $bottom, $left, $width, $height, $color) {
-  content:""; position: absolute; z-index:1; background-color: $color;
-  top:$top; right:$right; bottom:$bottom; left:$left; width:$width; height:$height;
-} //ex) @include bbl(0,0,0,0,0,0,0);
 
 
 
-// button base 정의 Start
-@mixin length-wh01 {width:$btnHeight;  height:$btnHeight;} // btn 작은 단위
-@mixin length-wh02 {width:100%; max-width:160px; height:$btnHeight; } // btn 박스형
-@mixin ibtn_font_size {font-size:1.75rem;}
-//ex) 28px @include ibtn_font_size;
-@mixin btn_font_size  {font-size:0.9rem; font-weight: bold;}
-//ex) 14.4px @include btn_font_size
 
-@mixin dim_btn {
-  &:disabled, &.dim { opacity: 0.5 !important; pointer-events: none; /*cursor: not-allowed;*/ }
-} // ex) @include dim_btn;
 
-@mixin line_btn {
-  @include border01(2px, $color-gray-01, 1);
-  background-color: transparent !important;
-  &:hover {border-color: $color-ho !important; color: $color-ho !important; }
-  &.on {border-color: $color-on; color:$color-on; }
-} // ex) @include line_btn;
-
-@mixin line_btn02 {
-  @include border01(1px, $color-gray-01, 1);
-  background-color: transparent;
-  &:hover {border-color: $color-ho !important;  color: $color-ho;}
-  &.on {border-color: $color-on; color: $color-white-01; background-color: $color-on !important;}
-} // ex) @include line_btn02;
-
-@mixin box_btn {
-  @include btn_font_size; color:$color-white-01;
-  background-color: $bas-color; height:40px;
-  &.on {background-color: $color-on;}
-  &:hover {background-color: $color-ho !important;}
-} // ex) @include box_btn;
-
-@mixin icon_btn {
-  @include length-wh01;
-  &:before {font-size:1.6rem; }
-  &:hover, &.on {&:before {font-weight:bold;}}
-  &:hover {&:before {color:$color-ho;}}
-  &.on    {&:before {color:$color-on;}}
-} // ex) @include icon_btn;
-
-@mixin layout_btn {
-  @include length-wh01;
-  &:before {font-size:1.75rem; }//28px
-  &:hover, &.on {&:before {font-weight:bold;}}
-  &:hover {&:before {color:$color-ho;}}
-  &.on    {&:before {color:$color-on;}}
-} // ex) @include icon_btn;
-// button base 정의 End
 
 
 @mixin btnbase {
-  min-width:$btnHeight; height:$btnHeight; background-color: $bas-color;
+  min-width:$btnHeight; height:$btnHeight; background-color: $color-bas;
   float: left; margin:0 10px 0 0; &:last-of-type {margin:0;}
 
   @include border01(1px,$color-white-01,0.7); padding:0 10px;
@@ -561,7 +500,7 @@ $bbl01:100%; $bbl02:1px;
 
 
 @mixin list_more_btn {
-  width:100%; background-color: $bas-color; color:$color-white-01;
+  width:100%; background-color: $color-bas; color:$color-white-01;
   @include flex-option(1, 0, $btnarea-height);
   &:after  {content:"More"; padding:0 0 0 10px;}
   &:before {content:"\e92b";}
@@ -593,117 +532,13 @@ $bbl01:100%; $bbl02:1px;
 
 // webkit-scroll Bar
 
-@mixin webkit_scroll {
-  ::-webkit-scrollbar {width: 12px;height: 10px; }
-  ::-webkit-scrollbar, ::-webkit-scrollbar-corner {height:8px; width:11px;}
-  ::-webkit-scrollbar-button {
-    display: inline-block; width: 12px; height: 7px;
-    background-repeat: no-repeat; background-position: center; background-size: 10px;
-  }
-  ::-webkit-scrollbar-button:start:decrement {background-image: url("../images/ico/select_allow_upw.svg");}
-  ::-webkit-scrollbar-button:end:decrement   {background-image: url("../images/ico/select_allow_w.svg");}
-  ::-webkit-scrollbar-thumb {min-height: 30px; background-clip: content-box; border-width:2px; border-style:solid;}
-} // ex) @include webkit_scroll;
-
-@mixin webkit_scroll_dashboard {
-  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09 !important;}
-  ::-webkit-scrollbar-thumb {background-color: $bas-color !important; border-color:$color-gray-09 !important; }
-} // ex) @include webkit_scroll_dashboard;
+// 구분 라인 정의
+@mixin bbl($zindex, $top, $right, $bottom, $left, $width, $height, $color) {
+  content:""; position: absolute; background-color: $color; z-index:$zindex;
+  top:$top; right:$right; bottom:$bottom; left:$left; width:$width; height:$height;
+} //ex) @include bbl(z-index,top,right,bottom,left,width,height,bgcolor);
 
 
-@mixin webkit_scroll_admin {
-  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
-  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
-} // ex) @include webkit_admin;
-
-// line Bar
-@mixin line_bar{
-  &:after, &:before {content:""; position: absolute; z-index:12; background-color: $bas-color;}
-}
-@mixin line_bar_h{@include line_bar; &:after, &:before {width:100%; height:1px; left:0; } }
-@mixin line_bar_v{@include line_bar; &:after, &:before {width:1px; height:100%; left:0; } }
-
-@mixin line_bar_top($before,$after)    { @include line_bar_h; &:before {top:$before;} &:after {top:$after;} }
-// ex) @include line_bar_top( 1px, 0);
-@mixin line_bar_bottom($before,$after) { @include line_bar_h; &:before {bottom:$before;} &:after {bottom:$after;} }
-// ex) @include line_bar_bottom(1px, 0);
-@mixin line_bar_left($before,$after)   { @include line_bar_v; &:before {left:$before;} &:after {left:$after;} }
-// ex) @include line_bar_bottom(1px, 0);
-@mixin line_bar_right($before,$after)  { @include line_bar_v; &:before {right:$before;} &:after {right:$after;} }
-// ex) @include line_bar_right(1px, 0);
-
-
-@mixin line_bas{
-  content:""; position: absolute; z-index:12;  background-color: $bas-color;
-} // @include line_bas;
-
-@mixin line_left {
-  &:before {
-    @include line_bas; top:0;  left:0; width:1px; height:100%;
-  }
-} // @include line_left;
-
-@mixin line_bottom {
-  &:after {
-    @include line_bas; bottom:0; left:0; width:100%; height:1px;
-  }
-} // @include line_bottom;
-
-
-
-
-// 이벤트 감지 아이콘 애니메이션
-@mixin infinite {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  animation-iteration-count:         infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function:         linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode:         forwards;
-  -webkit-animation-fill-mode: forwards;
-} // ex) @include infinite;
-
-// 이벤트 감지 아이콘 애니메이션
-@mixin issue {
-  animation-name: issue;
-  -webkit-animation-name: issue;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-iteration-count: 10;
-  animation-iteration-count: 10;
-  //animation-fill-mode: both;
-  //-webkit-animation-fill-mode: both;
-
-  @-webkit-keyframes issue {
-    0%   {opacity: 1; }
-    50%  {opacity: 0.2;}
-    100% {opacity: 1;}
-  }
-  @keyframes issue {
-    0%   {opacity: 1; }
-    50%  {opacity: 0.2;}
-    100% {opacity: 1;}
-  }
-} // ex) @include issue;
-
-@mixin notice {
-  animation-name: notice;
-  -webkit-animation-name: notice;
-  -webkit-animation-duration: 0.1s;
-  animation-duration: 0.1s;
-  -webkit-animation-iteration-count: 50;
-  animation-iteration-count: 50;
-
-  @-webkit-keyframes notice {
-    0%   {margin:0 1px 0 0;}
-    100%  {margin:0 -1px 0 0;}
-  }
-  @keyframes notice {
-    0%   {margin:0 1px 0 0;}
-    100%  {margin:0 -1px 0 0;}
-  }
-} // ex) @include notice;
 
 @mixin notice02 {
   @include infinite;
@@ -762,27 +597,71 @@ $bbl01:100%; $bbl02:1px;
 } // ex) @include notice04;
 
 
+// 이벤트 감지 아이콘 애니메이션
+@mixin issue {
+  animation-name: issue;
+  -webkit-animation-name: issue;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 10;
+  animation-iteration-count: 10;
+  //animation-fill-mode: both;
+  //-webkit-animation-fill-mode: both;
+
+  @-webkit-keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+  @keyframes issue {
+    0%   {opacity: 1; }
+    50%  {opacity: 0.2;}
+    100% {opacity: 1;}
+  }
+} // ex) @include issue;
+
+@mixin issue01 {
+  animation-name: issue01;
+  -webkit-animation-name: issue01;
+  @include infinite;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+
+  @-webkit-keyframes issue01 {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  @keyframes issue01 {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+} // ex) @include issue01; 깜빡임 / 재실감시 사용
+
 
 @mixin issue02 {
   animation-name: issue02;
   -webkit-animation-name: issue02;
-  @include infinite;
-  -webkit-animation-duration: 0.8s;
-  animation-duration: 0.8s;
+
+  @include issue01;
 
   @-webkit-keyframes issue02 {
-    0%   { opacity: 0.5; }
-    10%  { opacity: 1; }
-    50%  { opacity: 1; }
-    100% { opacity: 0.5; }
+    0%   { }
+    10%  { @include scale(1.1);}
+    50%  { }
+    100% { @include scale(1);}
   }
   @keyframes issue02 {
-    0%   { opacity: 0.5; }
-    10%  { opacity: 1; }
-    50%  { opacity: 1; }
-    100% { opacity: 0.5; }
+    0%   { }
+    10%  { @include scale(1.1);}
+    50%  { }
+    100% { @include scale(1);}
   }
-} // ex) @include issue02;
+} // ex) @include issue02; 깜빡임 / 재실감시 사용
+
 @mixin issue03 {
   animation-name: issue03;
   -webkit-animation-name: issue03;
@@ -889,78 +768,22 @@ $bbl01:100%; $bbl02:1px;
   -webkit-animation-name: issue08;
   @include infinite;
 
-  -webkit-animation-duration: 0.8s;
-  animation-duration: 0.8s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
 
   @-webkit-keyframes issue08 {
-    0%   { opacity: 0; }
+    0%   { opacity: 0; @include scale(.2); border-width:10px;}
     10%  { opacity: 1; }
-    100% { opacity: 0; @include scale(1.5);}
+    50%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2.7); border-width:2px;}
   }
   @keyframes issue08 {
-    0%   { opacity: 0; }
+    0%   { opacity: 0; @include scale(.2); border-width:10px;}
     10%  { opacity: 1; }
-    100% { opacity: 0; @include scale(1.5);}
+    50%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2.7); border-width:2px;}
   }
-} // ex) @include issue08;
-
-@mixin die {
-  content:"Not Connected!"; z-index: 10; opacity: 1; font-size: 1rem; color:$color-yellow-01;
-  width:100%; height:100%; background-color: rgba(0,0,0,1);
-
-  animation-name: die;
-  -webkit-animation-name: die;
-  @include infinite;
-
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-
-  @-webkit-keyframes die {
-    0%   { opacity: 0.2; }
-    10%  { opacity: 0.8; }
-    40%  { opacity: 0.8; }
-    100% { opacity: 0.2; }
-  }
-  @keyframes die {
-    0%   { opacity: 0.2; }
-    10%  { opacity: 0.8; }
-    40%  { opacity: 0.8; }
-    100% { opacity: 0.2; }
-  }
-
-} // ex) @include die;
-
-
-@mixin die02 {
-
-  content:"\e93d";
-  z-index: 10; position: absolute; top:0; left:0; width:100%; height:100%;  @include flex-midddle;
-  background-color:$color-yellow-01; color:#000; font-size:1.4rem;
-
-  animation-name: die02;
-  -webkit-animation-name: die02;
-  @include infinite;
-
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-
-  @-webkit-keyframes die02 {
-    0%   { opacity: 0.2; }
-    10%  { opacity: 1; }
-    30%  { opacity: 1; }
-    80%  { opacity: 0.2; }
-    100% { opacity: 0.2; }
-  }
-  @keyframes die02 {
-    0%   { opacity: 0.2; }
-    10%  { opacity: 1; }
-    30%  { opacity: 1; }
-    80%  { opacity: 0.2; }
-    100% { opacity: 0.2; }
-  }
-
-} // ex) @include die02;
-
+} // ex) @include issue08;  재실감시 이벤트 표시 사용.
 
 
 @mixin list {
@@ -1070,80 +893,6 @@ $bbl01:100%; $bbl02:1px;
   }
 } // ex) @include marquee_h;
 
-@mixin loding {
-  animation-name: loding;
-  -webkit-animation-name: loding;
-  /*  animation-delay:         2s;
-    -webkit-animation-delay: 2s;*/
-  animation-duration:         6s;
-  -webkit-animation-duration: 6s;
-  animation-iteration-count:         infinite;
-  -webkit-animation-iteration-count: infinite;
-  animation-timing-function:         linear;
-  -webkit-animation-timing-function: linear;
-  animation-fill-mode:         forwards;
-  -webkit-animation-fill-mode: forwards;
-
-  @-webkit-keyframes loding {
-    0%   {@include rotate(0);}
-    100% {@include rotate(360deg); }
-  }
-  @keyframes loding {
-    0%   {@include rotate(0);}
-    100% {@include rotate(360deg); }
-  }
-} // ex) @include loding;
-@mixin loading_fast {animation-duration: 1s !important;  -webkit-animation-duration: 1s !important;}
-// ex) @include loading_fast;
-
-@mixin loding02 {
-  animation-name: loding02;
-  -webkit-animation-name: loding02;
-  /*  animation-delay:         2s;
-    -webkit-animation-delay: 2s;*/
-  animation-duration:         1s;
-  -webkit-animation-duration: 1s;
-  animation-iteration-count:         infinite;
-  -webkit-animation-iteration-count: infinite;
-
-
-  @-webkit-keyframes loding02 {
-    0%   {border-top-color:$color-red-01;}
-    25%  {border-right-color:$color-red-01;}
-    50%  {border-bottom-color:$color-red-01;}
-    75%  {border-left-color:$color-red-01;}
-    100% {border-top-color:$color-red-01;}
-  }
-  @-webkit-keyframes loding02 {
-    0%   {border-top-color:$color-red-01;}
-    25%  {border-right-color:$color-red-01;}
-    50%  {border-bottom-color:$color-red-01;}
-    75%  {border-left-color:$color-red-01;}
-    100% {border-top-color:$color-red-01;}
-  }
-} // ex) @include loding02;
-
-@mixin loding_bar {
-  @include flex-midddle;
-  position: absolute; z-index: 100; width:100%; left:0; top:0; bottom:0;
-  background-color: rgba(0,0,0,0.7);
-
-  &:before {
-    content:""; width:80px; height:80px;
-    @include box-shadow01(0px, 0px, 20px, 0px, #000, 1);
-    @include loding;  @include loading_fast; @include border-radius(500px);
-    @include border(0 3px 3px 3px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
-  }
-}  // @include loding_bar; 로딩바 애니메이션
-
-@mixin loding_ico {
-  &:after {
-    content:""; position: absolute; width:100%; height:100%; top:0; left:0;
-    @include loding;  @include loading_fast; @include border-radius(500px);
-    @include border(0 2px 2px 2px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
-  }
-}  // @include loding_ico; 로딩바 애니메이션
-
 
 @mixin header_ani {
   animation-name: header_ani;
@@ -1187,7 +936,7 @@ $bbl01:100%; $bbl02:1px;
 
 // 팝업 백그라운드 공통 부분
 @mixin popupdiv {
-  background-color: $adm-color; padding:$popup-margin;
+  background-color: $color-adm; padding:$popup-margin;
   @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
   @include border01(3px,$color-blue-01,1 );
   @include transition(400ms);
@@ -1248,137 +997,6 @@ $mt_btn_w:40px;
 
 } // @include plus_icon;
 
-// checkbox_set
-$cslwidth:80px;
-@mixin checkbox_set {
-  position:relative; width:auto !important; height:40px !important; float: left;
-  & > *:not(span) {width:100%; height:40px;}
-  &, & > label {@include flexbase; @include flex-align-items-center; }
-  & > input {position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; height:100%; cursor: pointer; }
-  & > span {margin:0 10px; & + input {left:auto !important; right:0; margin:0;} }
-} // @include checkbox_set;
-
-@mixin csl_style01 {
-  /*
-    <div class="checkbox_set csl_style01">
-        <input type="checkbox"  name="" />
-        <label></label>
-        <span>자동로그인</span>
-    </div>
-    */
-
-  & > input, & > label {width:40px;}
-
-  & > label {
-    @include flex-justify-content-center;
-    &:before {content:"\e901"; font-size:1.2rem; opacity: 0.3; z-index:1;}
-    &:after  {
-      content:""; opacity: 0.8; position: absolute; width:24px; height:24px;
-        @include border-radius(200px); background-color: rgba(0,0,0,0.5);
-
-    }
-  }
-
-  & > input {
-    &:checked + label, &.on + label {
-      &:before {
-        @include text-shadow(1px, 3px, 4px, #000, 0.4);
-        font-size:1.6rem; font-weight:bold; opacity: 1;
-      }
-      &:after {opacity: 1; width:28px; height:28px; background-color: rgba(0,0,0,0.7); }
-    }
-  }
-} // @include csl_style01;
-
-@mixin csl_style02 {
-  /*
-  <div class="checkbox_set csl_style02">
-      <span>자동로그인</span>
-      <input type="checkbox"  name="" />
-      <label></label>
-  </div>
-  */
-  margin:0 45px 0 0;
-
-  & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
-
-  & > label {
-    background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
-    &, &:before {@include border-radius(200px);}
-    &:before {content:""; left:10px; width:20px; height:20px; background-color: $color-gray-01;}
-    &:after  {right:-20px; color:$color-dark-01;}
-  }
-
-  & > input, &.on {
-    &:checked + label , &.on + label, label {
-      background-color:$color-on; border:none;
-      &:before {left:calc(100% - 30px); background-color:$color-white-01;}
-      &:after  {right:5px; color:$color-white-01;}
-    }
-  }
-
-  &.disabled {opacity: 0.6; pointer-events: none;}
-} // @include csl_style02;
-
-@mixin csl_style02_onoff {
-  & > label {
-    &:after  {content:"OFF";  }
-  }
-  & > input, &.on {
-    &:checked + label , &.on + label, label {
-      &:after  {content:"ON"; }
-    }
-  }
-} // @include csl_style02_onoff;
-
-@mixin csl_style03_noyes {
-  & > label {
-    &:after  {content:"NO";  }
-  }
-  & > input, &.on {
-    &:checked + label , &.on + label, label {
-      &:after  {content:"YES"; }
-    }
-  }
-} // @include csl_style03_noyes;
-
-@mixin csl_style04_showhide {
-  & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
-  & > label {
-    &:after  {content:"Hide";  }
-  }
-  & > input, &.on {
-    &:checked + label , &.on + label, label {
-      &:after  {content:"Show"; }
-    }
-  }
-} // @include csl_style04_showhide;
-
-@mixin checkbtn-01 {
-  /*
-  <div class="checkbtn-01">
-    <input type="checkbox" name="">
-    <label class="아이콘클래스 삽입"></label>
-  </div>
-  */
-  position:relative;
-  & > *:not(span) {width:100%; height:100%;}
-  &, label {@include flexbase; @include flex-align-items-center; }
-  input {
-    position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; cursor: pointer;
-    &:hover + label { &:after {opacity: 0.2;} }
-    &:checked + label { &:before {opacity: 1;} &:after {opacity: 1; background-color: $color-on;} }
-  }
-
-  label {
-    position: relative; @include flex-justify-content-center;
-    &:after, &:before {position: absolute; top:0; left:0; width:100%; height:100%; top:0; left:0;}
-    &:before {@include flex-midddle;  z-index: 1; color:$color-white-01; font-size:1.4rem; opacity: 0.6;}
-    &:after  {content:""; z-index: -1; background-color: rgba(0,0,0,1); opacity: 0;}
-  }
-
-} // @include checkbtn-01;
-
 
 @mixin listbase {
   @include flex-option(0, 1, 100%);
@@ -1390,3 +1008,5 @@ $cslwidth:80px;
     &, & ~ p {}
   }
 } // @include listbase;
+
+

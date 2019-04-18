@@ -1,0 +1,557 @@
+@charset "utf-8";
+@import "filters";
+
+// 스크롤 정의
+@mixin webkit_scroll {
+  ::-webkit-scrollbar {width:12px; height:12px;}
+  ::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
+  ::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+  ::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
+
+  /*
+  ::-webkit-scrollbar-button {
+    display: inline-block; width: 12px; height: 7px;
+    background-repeat: no-repeat; background-position: center; background-size: 10px;
+  }
+  ::-webkit-scrollbar-button:start:decrement {background-image: url("../images/ico/select_allow_upw.svg");}
+  ::-webkit-scrollbar-button:end:decrement   {background-image: url("../images/ico/select_allow_w.svg");}
+  */
+}  // ex) @include webkit_scroll; 스크롤 기본 설정
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09 !important;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas !important; border-color:$color-gray-09 !important; }
+} // ex) @include webkit_scroll_dashboard;
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+
+@mixin at-root-dashbg {
+  &, & * { @include webkit_scroll_dashboard; }
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; background-color: $color-bas !important; border:1px solid #000;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+} // @include at-root-dashbg;
+
+// dashboard 백그라운드 공통
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4) !important;}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4) !important;}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4) !important;}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4) !important;}
+
+  background-color: $color-bas !important; color:$color-white-02 !important;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; background-color: $color-bas !important; border:1px solid #000;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+
+  .sub_title_area {padding:0 15px; margin:0 ;}
+
+} //ex) @include dashboard-bg;
+// admin 백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c; @include border01(1px,$color-gray-01,1 ); background-color: $color-white-01;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg);}
+
+  .sub_title_area {padding:0; margin:0 0 10px 0;}
+} //ex) @include admin-bg;
+
+
+// checkbox
+$cslwidth:80px;
+$cslwidth01:25px;
+$cslwidth02:40px;
+$cslwidth03:50px;
+
+@mixin checkboxbas {
+
+  /*
+ <div class="checkbox_set csl-check">
+     <input type="checkbox"  name="" />
+     <label></label>
+     <span>텍스트 삽입</span>
+ </div>
+ */
+
+  position:relative; width:auto; float: left;
+  & > *:not(span) {width:100%; height:100%;}
+  &, & > label {@include flexbase; @include flex-align-items-center; &:after, &:before {content:"";}}
+  & > input {position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; height:100%; cursor: pointer; }
+  & > span {margin:0 10px; & + input {left:auto !important; right:0; margin:0;} }
+  &.disabled {opacity: 0.6; pointer-events: none;}
+} // @include checkboxbas; 체크박스 기본 설정
+
+@mixin checkbox-style01 {
+
+  @include checkboxbas; height:$cslwidth02; margin:0 45px 0 0;
+
+  & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
+
+  & > label {
+    background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
+    &, &:before {@include border-radius(200px); }
+
+    &:after, &:before {position: absolute; }
+    &:before {left: 10px; width:($cslwidth / 4); height:($cslwidth / 4); background-color: $color-gray-01;}
+    &:after  {left: 50%; color:$color-dark-01;}
+  }
+
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      background-color:$color-on; border:none;
+      &:before {left: calc(100% - 30px); background-color:$color-white-01;}
+      &:after  {left: 10px; color:$color-white-01;}
+    }
+  }
+} // @include checkbox-style01;
+
+@mixin csl-check {
+  @include checkboxbas; height:$cslwidth02;
+  & > input, & > label {width:$cslwidth02;}
+
+  & > label {
+    @include flex-justify-content-center;
+    &:before {content:"\e901"; font-size:1.2rem; opacity: 0.3; z-index:1;}
+    &:after  {
+      opacity: 0.8; position: absolute; width:$cslwidth01; height:$cslwidth01;
+      @include border-radius(500px); background-color: rgba(0,0,0,0.5);
+    }
+  }
+
+  & > input {
+    &:checked + label, &.on + label {
+      &:before {
+        @include text-shadow(1px, 3px, 4px, #000, 0.4); font-size:1.6rem; font-weight:bold; opacity: 1;
+      }
+      &:after {opacity: 1; width:($cslwidth01 + 4px); height:($cslwidth01 + 4px); background-color: rgba(0,0,0,0.7); }
+    }
+  }
+} // @include csl-check;  기본 체크박스
+
+@mixin csl-onoff {
+  @include checkbox-style01;
+  & > label:after { content:"OFF"; }
+  & > input, &.on { &:checked + label , &.on + label, label { &:after  {content:"ON"; } } }
+} // @include csl-onoff;
+
+@mixin csl-yesno {
+  @include checkbox-style01;
+  & > label:after { content:"NO";  }
+  & > input, &.on { &:checked + label , &.on + label, label { &:after  {content:"YES"; } } }
+} // @include csl-yesno;
+
+@mixin csl-showhide {
+  @include checkbox-style01;
+  & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
+  & > label:after { content:"Hide"; }
+  & > input, &.on { &:checked + label , &.on + label, label { &:after {content:"Show"; } } }
+} // @include csl-showhide;
+
+@mixin csl-icon {
+  @include checkboxbas; width:$cslwidth03; height:$cslwidth03;
+  & > *:not(span) {width:100%; height:100%;}
+  &, label {@include flexbase; @include flex-align-items-center; }
+  input {
+    position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; cursor: pointer;
+    &:hover + label { &:after {opacity: 0.2;} }
+    &:checked + label { &:before {opacity: 1;} &:after {opacity: 1; background-color: $color-on;} }
+  }
+  label {
+    position: relative; @include flex-justify-content-center;
+    &:after, &:before {position: absolute; top:0; left:0; width:100%; height:100%; top:0; left:0;}
+    &:before {@include flex-midddle;  z-index: 1; color:$color-white-01; font-size:1.4rem; opacity: 0.6;}
+    &:after  {content:""; z-index: -1; background-color: rgba(0,0,0,1); opacity: 0;}
+  }
+} // @include csl-icon;
+ 
+
+
+
+// button base 정의 Start
+$btnHeight:40px;
+$btn-type01:40px; // 50px 버튼
+$btn-type03:50px; // 40px 버튼
+
+@mixin length01 {@include mmwidth($btn-type01); @include mmheight($btn-type01); }
+// ex) @include length01; 40_40 아이콘 버튼
+@mixin length02 {width:100%; max-width:160px; @include mmheight($btn-type01);}
+// ex) @include length02; btn 박스형
+@mixin length03 {@include mmwidth($btn-type03); @include mmheight($btn-type03);}
+// ex) @include length03; 50_50  아이콘 버튼
+
+
+@mixin btn_before {
+  content:""; @include flex-midddle; position: absolute; z-index:-1; top:0; left:0; width:100%; height:100%;
+  font-size:1.5rem !important; font-weight: normal;
+} //ex) @include btn_before;
+@mixin ibtn_fontsize {font-size:1rem; } //ex) @include ibtn_fontsize;
+
+@mixin btn_fontsize  {font-size:0.9rem; font-weight: bold;}  //ex) @include btn_fontsize;
+
+@mixin abtn_fontsize  { &, &:before {font-size:0.9rem;} }  //ex) @include abtn_fontsize;
+
+
+@mixin action_boxbtn {
+  z-index: 1;
+  &, &:before, &:after {color:$color-d-text; @include transition(200ms);}
+  &:before {@include btn_before; background-color: $color-btn;}
+  &:hover:before  {background-color: $color-ho;}
+  &:active:before {background-color: $color-ac;}
+  &.on:before     {background-color: $color-on;}
+} // ex) @include action_boxbtn; 박스버튼 액션
+
+@mixin action_linebtn {
+  z-index: 1;
+  &, &:before, &:after {@include transition(200ms); color:$color-d-text;}
+  &:before {@include btn_before; background-color: transparent !important; @include border01(1px,$color-d-text,.8 );}
+
+
+  &:hover,&:active,&.on {&:before {border-width:2px;} }
+  &:hover  { &:before {border-color: $color-ho;} &,&:before {color:$color-ho;} }
+  &:active { &:before {border-color: $color-ac;} &,&:before {color:$color-ac;} }
+  &.on     { &:before {border-color: $color-on;} &,&:before {color:$color-on;} }
+} // ex) @include action_linebtn; 라이버튼 액션
+
+@mixin action_textbtn {
+  z-index: 1;
+  &, &:before, &:after {@include transition(200ms);}
+  &:hover  {&,&:before {color: $color-ho;}}
+  &:active {&,&:before {color: $color-ac;}}
+  &.on     {&,&:before {color: $color-on;}}
+} // ex) @include action_textbtn; 테스트버튼 액션
+
+@mixin action_menubtn {
+  @include action_boxbtn;
+  &:before {background-color: transparent;}
+  &:hover,&:active,&.on {&, &:before {opacity: 1;} }
+} // ex) @include action_menubtn; 메뉴, 네비 버튼 액션
+
+@mixin action_criti {
+  z-index: 1;
+  &, &:before, &:after {color: $color-d-text; @include transition(200ms);}
+  &:after, &:before {@include btn_before; background-color: transparent;}
+  &:hover:before  {background-color: rgba(0,0,0,0.4) !important;}
+  &:active:before {background-color: $color-ac; opacity:1;}
+  &.on:before     {background-color: rgba(0,0,0,0.7) !important;}
+} // ex) @include action_criti; 투명버튼 액션
+
+@mixin dim_btn {
+  &, &:before, &:after {@include transition(200ms);}
+  &[disabled], &:disabled, &.dim { opacity: 0.5 !important; pointer-events: none;}
+} // ex) @include dim_btn; 버튼 DIM 처리
+
+
+@mixin btn-line  {@include action_linebtn; @include abtn_fontsize; @include length02;}
+// ex) @include btn-line;
+
+@mixin btn-box  {@include action_boxbtn; @include abtn_fontsize; @include length02;}
+// ex) @include btn-box; 어드민 일반 버튼
+
+@mixin btn-iconbase {@include action_boxbtn; @include ibtn_fontsize;   }
+// ex) @include btn-iconbase; 박스 사각
+
+@mixin btn-iconbase-l {@include action_linebtn; @include ibtn_fontsize;}
+// ex) @include btn-iconbase-l; 박스 라인 사각
+
+@mixin btn-iconbase-t {@include action_criti; @include ibtn_fontsize; }
+// ex) @include btn-iconbase-t; 박스 사각 투명
+@mixin btn-icontype-c {&, &:before {@include border-radius(500px); }  }
+// ex) @include btn-icontype-c; 박스 원 투명
+
+// 아이콘 백그라운드 버튼
+@mixin btn-itype01b  {@include btn-iconbase; @include length01;}
+// ex) @include btn-itype01b;  박스형 40_40 아이콘 버튼
+@mixin btn-itype03b  {@include btn-iconbase; @include length03;}
+// ex) @include btn-itype03b;  박스형 50_50 아이콘 버튼
+@mixin btn-itype01c {@include btn-itype01b; @include btn-icontype-c; }
+// ex) @include btn-itype01c;  원형 40_40 아이콘 버튼
+@mixin btn-itype03c {@include btn-itype03b; @include btn-icontype-c;}
+// ex) @include btn-itype03c;  원형 50_50 아이콘 버튼
+
+// 아이콘 라인버튼
+@mixin btn-itype01b-l {@include btn-iconbase-l; @include length01;}
+// ex) @include btn-itype01b-l;  박스형 라인 40_40 아이콘 버튼
+@mixin btn-itype03b-l {@include btn-iconbase-l; @include length03;}
+// ex) @include btn-itype03b-l;  박스형 라인 50_50 아이콘 버튼
+@mixin btn-itype01c-l {@include btn-itype01b-l; @include btn-icontype-c; }
+// ex) @include btn-itype01c-l; 원형 라인 40_40 아이콘 버튼
+@mixin btn-itype03c-l {@include btn-itype03b-l; @include btn-icontype-c;}
+// ex) @include btn-itype03c-l; 원형 라인 50_50 아이콘 버튼
+
+// 아이콘 투명버튼
+@mixin btn-itype01b-t  {@include btn-iconbase-t; @include length01;}
+// ex) @include btn-itype01b-t;  박스형 40_40 아이콘 버튼
+@mixin btn-itype03b-t  {@include btn-iconbase-t; @include length03;}
+// ex) @include btn-itype03b-t;  박스형 50_50 아이콘 버튼
+@mixin btn-itype01c-t {@include btn-itype01b-t; @include btn-icontype-c; }
+// ex) @include btn-itype01c;  원형 40_40 아이콘 버튼
+@mixin btn-itype03c-t {@include btn-itype03b-t; @include btn-icontype-c;}
+// ex) @include btn-itype03c-t;  원형 50_50 아이콘 버튼
+
+// button base 정의 End
+
+@mixin popup-common {
+  @include webkit_scroll_dashboard; @include dashboard-bg; background-color: $color-popup !important;
+  @include flexbase; @include flex-column; @include transition(200ms);
+  @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
+} // @include popup-common;
+
+// tpopup 정의 - 사용자 보기 팝업, 라이센스정보팝업, 리소스모니터링팝업
+@mixin tpopupbase {
+  @include popup-common;
+
+  position: absolute; z-index:101;
+  width:$noticecenter-width; top:0; right:-($noticecenter-width * 2);
+  @include border01(0 0 1px 1px,$color-bline,1 );
+
+  &.on {right:0;}
+  & > * {position: relative;  width:100%; padding:0 $popup-margin; margin: 0 0 $popup-margin 0}
+  button {@include btn-line;}
+  h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin;}
+  & > div {@include mmheight($headerHeight);}
+  & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
+} // @include tpopupbase;
+
+
+
+
+// 이벤트 감지 아이콘 애니메이션
+@mixin infinite {
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+} // ex) @include infinite;
+
+$d-time:.8s;
+@mixin duration($time){ -webkit-animation-duration: $time; animation-duration: $time;} // @include duration($time);
+
+@mixin notice-border {
+  animation-name: notice-border;
+  -webkit-animation-name: notice-border;
+
+  @include infinite; @include duration($d-time);
+
+  @-webkit-keyframes notice-border {
+    0%   { opacity: 0; @include scale(1); border-width:8px;}
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2); border-width:2px;}
+  }
+  @keyframes notice-border {
+    0%   { opacity: 0; @include scale(1); border-width:8px;}
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; @include scale(2); border-width:2px;}
+  }
+} // ex) @include notice-border;  보더 퍼지면서 사라지는 애니메이션 - 신호등 사용
+
+@mixin notice-border-type01 {
+  animation-name: notice-border-type01;
+  -webkit-animation-name: notice-border-type01;
+
+  @include infinite; @include duration($d-time);
+
+  @-webkit-keyframes notice-border-type01 {
+    0%   { opacity: 0; width:100%; height:100%; border-width:8px;}
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; width:300%; height:300%; border-width:2px;}
+  }
+  @keyframes notice-border-type01 {
+    0%   { opacity: 0; width:100%; height:100%; border-width:8px;}
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; width:300%; height:300%; border-width:2px;}
+  }
+} // ex) @include notice-border-type01;  보더 퍼지면서 사라지는 애니메이션 - 맵 아이콘 적용
+
+@mixin notice-scale-01 {
+  animation-name: notice-scale-01;
+  -webkit-animation-name: notice-scale-01;
+
+  @include infinite; @include duration($d-time);
+
+  @-webkit-keyframes notice-scale-01 {
+    0%   { }
+    10%  { @include scale(1.1);}
+    50%  { }
+    100% { @include scale(1);}
+  }
+  @keyframes notice-scale-01 {
+    0%   { }
+    10%  { @include scale(1.1);}
+    50%  { }
+    100% { @include scale(1);}
+  }
+} // ex) @include notice-scale-01; 커지고 원래데로 애니메이션 - 신호등 사용
+
+@mixin notice-opacity {
+  animation-name: notice-opacity;
+  -webkit-animation-name: notice-opacity;
+
+  @include infinite; @include duration($d-time);
+
+  @-webkit-keyframes notice-opacity {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  @keyframes notice-opacity {
+    0%   { opacity: 0.5; }
+    10%  { opacity: 1; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+} // ex) @include notice-opacity; 깜빡임 애니메이션 - 신호등 사용
+
+@mixin die {
+  content:"\e93d -Not Connected!";
+  @include flex-midddle; position: absolute; z-index: 10;  top:0; left:0; opacity: 1;
+  width:100%; height:100%; background-color: rgba(0,0,0,1); font-size: 1rem; color:$color-yellow-01;
+
+  animation-name: die;
+  -webkit-animation-name: die;
+  @include infinite;
+
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+
+  @-webkit-keyframes die {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 0.8; }
+    40%  { opacity: 0.8; }
+    100% { opacity: 0.2; }
+  }
+  @keyframes die {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 0.8; }
+    40%  { opacity: 0.8; }
+    100% { opacity: 0.2; }
+  }
+
+} // ex) @include die;
+
+@mixin die02 {
+  content:"\e93d";
+  z-index: 10; position: absolute; top:0; left:0; width:100%; height:100%;  @include flex-midddle;
+  background-color:$color-die; color:$color-yellow-01; font-size:1.4rem;
+
+  animation-name: die02;
+  -webkit-animation-name: die02;
+  @include infinite;
+
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+
+  @-webkit-keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+  @keyframes die02 {
+    0%   { opacity: 0.2; }
+    10%  { opacity: 1; }
+    30%  { opacity: 1; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0.2; }
+  }
+
+} // ex) @include die02;
+
+
+// 감시반경 애니메이션
+@mixin lidar {
+  animation-name: lidar; -webkit-animation-name: lidar;
+  @include duration(5s); @include infinite;
+  @-webkit-keyframes lidar {
+    0%   {@include rotate(0);}
+    100% {@include rotate(360deg);}
+  }
+} // ex) @include lidar;
+@mixin lidar-bg($color) {
+  @include border01(1px,$color,.3 );
+  background: -webkit-linear-gradient(top, rgba($color,.05) 0%,rgba($color,.1) 50%,rgba($color,.5) 50.1%,rgba($color,.2) 50.2%,rgba($color,.05) 100%) !important;
+} // @include ridar-bg($color-lidar);
+
+// 로딩바 애니메이션
+@mixin loding {
+  animation-name: loding;
+  -webkit-animation-name: loding;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  @include duration(1s);
+  @include infinite;
+
+  @-webkit-keyframes loding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(360deg); }
+  }
+  @keyframes loding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(360deg); }
+  }
+} // ex) @include loding;
+
+@mixin loding02 {
+  animation-name: loding02;
+  -webkit-animation-name: loding02;
+
+  @include duration(1s);
+  @include infinite;
+
+  @-webkit-keyframes loding02 {
+    0%   {border-top-color:$color-red-01;}
+    25%  {border-right-color:$color-red-01;}
+    50%  {border-bottom-color:$color-red-01;}
+    75%  {border-left-color:$color-red-01;}
+    100% {border-top-color:$color-red-01;}
+  }
+  @-webkit-keyframes loding02 {
+    0%   {border-top-color:$color-red-01;}
+    25%  {border-right-color:$color-red-01;}
+    50%  {border-bottom-color:$color-red-01;}
+    75%  {border-left-color:$color-red-01;}
+    100% {border-top-color:$color-red-01;}
+  }
+} // ex) @include loding02;
+
+@mixin loding_bar {
+  @include flex-midddle;
+  position: absolute; z-index: 100; width:100%; left:0; top:0; bottom:0;
+  background-color: rgba(0,0,0,0.7);
+
+  &:before {
+    content:""; width:80px; height:80px;
+    @include box-shadow01(0px, 0px, 20px, 0px, #000, 1);
+    @include loding; @include border-radius(500px);
+    @include border(0 3px 3px 3px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
+  }
+}  // @include loding_bar; 로딩바 화면을 덮는 돔에 삽입 될때
+
+@mixin loding_ico {
+  position: absolute; bottom:10px; width:80px; height:80px;
+  &:before {
+    content:""; position: absolute; width:100%; height:100%; top:0; left:0;
+    @include loding; @include border-radius(500px);
+    @include border(0 2px 2px 2px, $color-blue-01 $color-blue-01 $color-blue-01 transparent);
+  }
+  &:before {position: absolute; left:0; top:0;}
+}  // @include loding_ico; 로딩바 특정 돔으로 삽입 될때
