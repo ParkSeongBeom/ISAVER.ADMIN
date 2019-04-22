@@ -5,11 +5,6 @@
 body.admin_mode {}
 
 
-///// ----------------- container START
-
-///// ----------------- container END
-
-
 ////// 어드민 검색영역  Start
 .search_area {
   @include flexbase; @include flex-align-items-center;
@@ -22,7 +17,6 @@ body.admin_mode {}
 
   .tr_table & {border-width:1px 0 0 0;}
 }
-
 
 .search_contents > * {
   float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
@@ -38,7 +32,6 @@ body.admin_mode {}
   }
 
 }
-
 
 .tree_box .search_contents > * {
   display: inline-block; width:100%; padding:0;
@@ -101,8 +94,7 @@ div.tablebase, .d_defalut {display: inline-block;}
   tr.on td {color:$color-white-01; background-color:$color-dark-01;}
 
   th,td, & > div > div > * {
-    position: relative; text-align: left; height:$td-height;
-    @include table_padding; @include borderwidth(0 0 1px 0);
+    position: relative; text-align: left; height:$td-height; @include table_padding; @include borderwidth(0 0 1px 0);
 
     & > input[type="checkbox"], & > input[type="radio"] {
       width:18px; height:18px;
@@ -113,7 +105,6 @@ div.tablebase, .d_defalut {display: inline-block;}
       float:none !important; margin:0 5px 0 0; width:80px !important;
       @include borderwidth(0 1px); border-color:$color-gray-06;
     }
-
 
   }
 
@@ -132,11 +123,8 @@ div.tablebase, .d_defalut {display: inline-block;}
       border-color:transparent; margin:0 0 0 -10px;
     }
 
-    & > select[name="deviceCode"] {
-      //width:calc(100% - 130px); width:-webkit-calc(100% - 130px);
-      //& + br {display: none; }
-      //& ~ button { position: absolute; right:0; top:0; height:100%; max-width:100px;}
-    }
+    & > select[name="deviceCode"] {}
+
     @mixin table_in_divset {height:100%; border-color: transparent $color-gray-01 transparent $color-gray-01;}
 
     .filter_set { input, select {@include table_in_divset; width:100%;  min-width:0;} }
@@ -147,11 +135,7 @@ div.tablebase, .d_defalut {display: inline-block;}
 
     .checkbox_set {margin:0 20px 0 0px;}
 
-
-    textarea, div[contenteditable] {
-      min-height:165px; resize: none;
-      &.height_auto {min-height:auto;}
-    }
+    textarea, div[contenteditable] {min-height:165px; resize: none; &.height_auto {min-height:auto;} }
 
     .inwidth150 input {width:150px;}
 
@@ -165,10 +149,7 @@ div.tablebase, .d_defalut {display: inline-block;}
       td input {}
       em {margin:0 5px;}
 
-      .lic_set, .level_set {
-        width:100%;
-        input, select { height:55px; }
-      }
+      .lic_set, .level_set {width:100%; input, select { height:55px; } }
 
       .lic_set, .level_set > div {@include flexbase;  @include flex-align-items-center;}
       .lic_set {
@@ -292,17 +273,9 @@ div.tablebase, .d_defalut {display: inline-block;}
   //div형 테이블
   & > div {// thead, tbody
     & > div {//tr
-      //display: table;
-      @include flexbase;
-      width:100%;
+      @include flexbase; width:100%;
       & > * {//td, th
-        //display: table-cell;
-        @include flex-option(0, 1, 100%);
-        @include flex-midddle;
-        overflow: hidden;
-        vertical-align: middle;
-        height:auto; min-height:55px;
-
+        overflow: hidden; @include flex-option(0, 1, 100%); @include flex-midddle; vertical-align: middle; height:auto; min-height:55px;
       }
     }
   }
@@ -314,28 +287,7 @@ div.tablebase, .d_defalut {display: inline-block;}
   //리스트, 목록
   &.list_type, &.t_type01 {
 
-
-    th, & > div > div > p, & > div.d_thead > div > *
-    {
-      @include borderwidth(1px 1px 1px 0);
-      /* th에 정렬 버튼 아이콘
-      &:before, &:after {content:""; position: absolute; right:10px; width:0; height:0; border-style:solid;}
-      &:before {@include triangle-top(0 4px 6px 4px,#fff); top:10px;}
-      &:after  {@include triangle-bot(6px 4px 0 4px,#fff); bottom:10px;}
-      &.up {
-        th, & > div > div > p {
-          &:before {opacity:1;}
-          &:after  {opacity:0.5;}
-        }
-      }
-      &.down {
-        th, & > div > div > p {
-          &:before {opacity:0.5;}
-          &:after  {opacity:1;}
-        }
-      }
-      */
-    }
+    th, & > div > div > p, & > div.d_thead > div > * {@include borderwidth(1px 1px 1px 0);}
 
     &.notbefore { th, & > div > div > p { &:before, &:after {display: none !important;}  }  }
 
@@ -357,10 +309,7 @@ div.tablebase, .d_defalut {display: inline-block;}
 
     th, td, & > div > div > p, & > div.d_thead > div > * {@include borderwidth(0 1px 1px 0);}
     th {width:$thwidth !important; min-width:$thwidth !important;}
-    td {
-
-      & > select, & > input, & > textarea {/*position: absolute; width:100%; height:100%; left:0; top:0;*/}
-    }
+    td { & > select, & > input, & > textarea {} }
     select {@include text-overflow-ellipsis;}
   }
 
@@ -458,7 +407,7 @@ ul.u_defalut {
   & > header {
     padding:20px; margin:0; @include flex-option(1, 0, 80px);
     & > button {
-      @include flex-option(0, 1, 100%); margin:0 0 0 10px;
+      @include btn-box; @include flex-option(0, 1, 100%); margin:0 0 0 10px;
       &:nth-of-type(1) {margin:0;}
     }
   }
@@ -538,11 +487,8 @@ ul.u_defalut {
 
 }
 
-// 임계치 관리 트리 (개선 전 사용)
-$critical_w01 : 350px;
-$critical_w02 : 200px;
-$critical_w03 : 150px;
-
+// 임계치 관리 트리 (개선 전 사용) 현재는 사용 안함.
+$critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 .critical_title {
   @include flexbase; width:100%; padding:10px 0;
   * {margin:0 20px 0 0; width:$critical_w02;}
@@ -565,37 +511,24 @@ $critical_w03 : 150px;
         &-caution { background-color: rgba($color-caution,1) !important;   }    // &-caution 주의
         &-warning { background-color: rgba($color-warning,1) !important; }    // &-warning 경고
         &-danger  { background-color: rgba($color-danger,1) !important; }    // &-danger  위험
-        &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
+        &-die     {@include notice-scale-01; opacity: 0.2; }    // &-die  위험
 
         &-caution, &-warning, &-danger, &-die {
           color:$color-white-01; opacity: 1; border:none !important;
           //width:$critical_w03 !important;
         }
       }
-
       button {
         height:100%; min-height:$mt_btn_h;
         &:hover {background-color: $color-ho; color:$color-white-01;}
-
-        &:first-of-type {
-          @include flex-option(0, 1, 100%); padding:0 10px; text-align: left;
-        }
-        &:last-of-type  {
-          width:$mt_btn_h;  min-width:$mt_btn_h;
-          &:before {content:"\e92c";}
-        }
+        &:first-of-type {@include flex-option(0, 1, 100%); padding:0 10px; text-align: left;}
+        &:last-of-type  {width:$mt_btn_h;  min-width:$mt_btn_h; &:before {content:"\e92c";} }
       }
-
     }
 
     & > button {
-      @include flex-midddle; width:30px; /*height:$mt_btn_h;*/
-      position: relative; top:10px;
-
-      @include btnbase_type01;
-      &:after, &:before {overflow: hidden; width:100%; @include border-radius(200px); }
-      &:after  {height:30px;  background-color: $color-gray-07; }
-      &:before {content:"\e92b"; color:$color-white-01; height:100%; font-size:1rem;}
+      @include flex-midddle; position: relative; top:10px;  @include btn-itype01c;
+      &:before {content:"\e92b";}
     }
   }
 
@@ -622,10 +555,7 @@ $critical_w03 : 150px;
 // 임계치 관리 UI (현재 적용)
 .critical-ui {
 
-  $criwidth:50px;
-  $crimargin:80px;
-  $crievent:350px;
-  $criconte:300px;
+  $criwidth:50px; $crimargin:80px; $crievent:350px; $criconte:300px;
   @mixin crievent {
     @include flex-option(0, 1, $crievent); @include mmwidth($crievent); margin: 0 ($crimargin * 2) 0 0;
   } // @include crievent;
@@ -643,7 +573,7 @@ $critical_w03 : 150px;
   } // @include critical-rotate(20deg,.95,5px);
 
   @include flexbase; @include flex-column; @include flex-align-items-start; overflow: hidden;
-  position: relative; width:100%; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
+  position: relative; width:1620px;  height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
 
   input, select, button {height:$criwidth; }
 
@@ -665,7 +595,7 @@ $critical_w03 : 150px;
       & > h4 {width:$crievent; font-size:1.1rem; &:first-of-type {@include crievent;} }
     }
     &-content {
-      width:1620px; height:100%;
+      height:100%;
       &:before, &:after {@include bbl(0,0,auto,auto,auto,1px,100%,rgba($color-bline,.2));}
       &:before {right:($crievent + 100px); }
       &:after  {right:($crievent * 2  + 100px);}
@@ -728,7 +658,7 @@ $critical_w03 : 150px;
       &-end     {& > div:before {background-color: $color-end;} }
     }
 
-    .btn-check {@include csl-icon; @include buwidth; }
+    .btn-check {@include csl-icon; }
   }
 
   .list {
@@ -764,7 +694,10 @@ $critical_w03 : 150px;
     & > * {width:100%;}
     & * {color:$color-white-01;}
 
-    h4 {@include wauto(100%); span {margin:0 auto 0 0;} }
+    h4 {
+      @include wauto(100%); padding:0;
+      span {margin:0 auto 0 0;}
+    }
     p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
     input, select {
       border-width:0 0 1px 0; border-color:$color-white-01;
@@ -943,8 +876,7 @@ $critical_w03 : 150px;
     &:before {
       content:"FILE";
       position:absolute;top:0; left:0; width:100%; height: 100%; color:#fff; background-color: $color-bas;
-      @include flex-midddle;
-      @include transition(400ms);
+      @include flex-midddle; @include transition(400ms);
     }
     &:hover:before {background-color: $color-ho;}
 
@@ -952,7 +884,7 @@ $critical_w03 : 150px;
     {position: absolute;z-index: 1;left:0;top:0;width:100%;height:100%;opacity: 0; cursor:pointer;}
   }
   & > p {
-    @include flex-option(0, 1, 100%);  @include flex-align-items-center;
+    @include flex-option(0, 1, 100%); @include flex-align-items-center;
     padding:0 0 0 10px; background-color: rgba(0,0,0,0.1);
     a {
       text-align: left; text-decoration:underline; color:#3e3e3e; @include text-overflow-ellipsis;
@@ -975,8 +907,7 @@ $critical_w03 : 150px;
   & > input[type="file"] {position: absolute; z-index:1; top:0; left:0; width:100%; height:100%; opacity: 0; cursor:pointer;}
   & > input[type="file"]:hover + button:before {color:$color-ho; font-weight:bold;}
   & > button {
-    @include btn-itype03b;
-    @include border01(1px 1px 1px 0, $color-gray-01, 1);
+    @include btn-itype03b; @include border01(1px 1px 1px 0, $color-gray-01, 1);
     &:before {content: "\e927";}
   }
 }
@@ -1267,7 +1198,6 @@ a.fc-more {position: relative; z-index: 2;}
 /////......  이벤트 통계 원 차트 끝
 
 
-
 ////// 영상이력 레이아웃 Start
 #videoHistoryForm select[name="areaId"] {width:250px;}
 .video_area {
@@ -1344,7 +1274,7 @@ a.fc-more {position: relative; z-index: 2;}
       }
     }
 
-    button {@include list_more_btn; width:100%;}
+    button {@include btn-itype01b; @include mmwidth(100%); &:before {content:"\e92b";} }
   }
 }
 ////// 영상이력 레이아웃 End

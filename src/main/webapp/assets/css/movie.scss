@@ -115,7 +115,7 @@
         border-style:solid; border-width:1px; border-color:$color-yellow-01;
 
         &.level {
-          &-caution, &-warning, &-danger {@include issue02; border-width:3px;}
+          &-caution, &-warning, &-danger {@include notice-scale-01; border-width:3px;}
           &-caution { background-color: rgba($color-gray-05, 0.2);   border-color: $color-gray-05; }
           &-warning { background-color: rgba($color-orange-01, 0.2); border-color: $color-orange-01; }
           &-danger  { background-color: rgba($color-red-01, 0.2);    border-color: $color-red-01; }

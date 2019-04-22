@@ -528,7 +528,7 @@ $treffic_w:32%;
       &-caution { &:after, &:before {background-color: rgba($color-caution,1) !important;  } }    // &-caution 주의
       &-warning { &:after, &:before {background-color: rgba($color-warning,1) !important;} }    // &-warning 경고
       &-danger  { &:after, &:before {background-color: rgba($color-danger,1) !important;   } }    // &-danger  위험
-      &-die     {@include issue02; opacity: 0.2; }    // &-die  위험
+      &-die     {@include notice-scale-01; opacity: 0.2; }    // &-die  위험
 
       &-caution, &-warning, &-danger {
         color:$color-white-01; opacity: 1;
@@ -669,7 +669,7 @@ $treffic_w:32%;
           &-caution,&-warning,&-danger,&-die {
             $camerawidth:370px;
             width:$camerawidth; max-width:$camerawidth; min-width:$camerawidth; height:25%; min-height:25%; max-height:25%;
-            & > div:before {border-style:solid; border-width:4px; @include issue01;}
+            & > div:before {border-style:solid; border-width:4px; @include notice-opacity;}
           }
 
           &-die {
@@ -1018,11 +1018,6 @@ $ds-sw:50px; // 스크린설정 가로 넓이
 /////..... 아이콘 일반, 경고, 감지 표시 expl 끝
 
 
-/////...... button base 정의 Start
-.btnbase {@include btnbase;}
-.dim {pointer-events: none; opacity: 0.5;}
-
-/////...... button base 정의 End
 
 
 ////// ----------------- ONNLE MAP 설정 Start
@@ -1048,7 +1043,7 @@ $ds-sw:50px; // 스크린설정 가로 넓이
 
   /////..... 임계치 적용 표시 Start
   &.level {
-    &-caution,&-warning,&-danger {@include pOn; }
+    &-caution,&-warning,&-danger {@include notice-opacity;}
 
     &-caution:after {@include border01(2px,$color-gray-05,1);  }
     &-warning:after {@include border01(2px,$color-orange-01,1);}
@@ -1059,7 +1054,7 @@ $ds-sw:50px; // 스크린설정 가로 넓이
     &-warning { &,& > span {background-color:$color-orange-01; } }
     &-danger  { &,& > span {background-color:$color-red-01;    } }
     &-die     {
-      @include issue02; background-color:$color-gray-09;
+      @include notice-scale-01; background-color:$color-gray-09;
       &:before {opacity: 0.6;}
       &:after {
         content:""; position: absolute; left:calc(50% - 2px); top:0; width:4px; height:100%;

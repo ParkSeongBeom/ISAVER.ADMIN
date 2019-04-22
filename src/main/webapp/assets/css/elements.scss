@@ -2,12 +2,6 @@
 @import "filters";
 @import "layout";
 
-/*
-form-bg-effect :
-@include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
-*/
-
-
 .ico {
   &-safeeye:before  {content:"\e941" !important;} // -safeeye
   &-blinker:before  {content:"\e944" !important;} // -blinker
@@ -49,7 +43,7 @@ form-bg-effect :
   &-gas:before      {content:"\e910" !important;} // 가스
   &-hlds:before     {content:"\e959" !important;} // 근거리 HLDS 센서
   &-device:before   {content:"\e92f" !important;} // 근거리 HLDS 센서
-  &-led:before      {content:"\e966" !important;} // LED
+  &-led:before      {content:"\e963" !important;} // LED
   &-sioc:before     {content:"\e96e" !important;} // sioc
   &-qguard:before   {content:"\e96c" !important;} // q가드 서버
   &-shock:before    {content:"\e942" !important;} // 압전센서
@@ -59,50 +53,8 @@ form-bg-effect :
   &-save:before     {content:"\e927" !important;} // 저장
   &-reso:before     {content:"\e964" !important;} // 리소스 모니터링
   &-docker:before   {content:"\e938" !important;} // 도커
+  &-qguard:before   {content:"\e96c" !important;} // Q가드
 }
-
-/*
-.ico-safeeye :   -safeeye
-.ico-blinker :   -blinker
-.ico-tracker :   -tracker
-.ico-function :  설정새로고침
-.ico-pool :      수영장
-.ico-health :    의료
-.ico-nhr :       detector
-.ico-invasion :  침입
-.ico-exhibit :   전시물보호
-.ico-speaker :   스피커
-.ico-wlight :    경광등
-.ico-mobile :    모바일
-.ico-close :     닫기
-.ico-plus :      더보기
-.ico-minus :     빼기
-.ico-login :     로그인
-.ico-admin :     관리자
-.ico-user :      사용자
-.ico-update :    업데이트
-.ico-confirm :   확인
-.ico-cancle :    알림해지
-.ico-more :      더보기
-.ico-zoom :      자세히보기
-.ico-area :      장소
-.ico-tof :       TOF 센서
-.ico-ptz :       PTZ 카메라
-.ico-chart :     차트
-.ico-four :      4분할
-.ico-gate :      게이트 웨이 센서
-.ico-temp :      온도
-.ico-humi :      습도
-.ico-co2 :       CO2
-.ico-co :        CO
-.ico-plug :      스마트 플러그
-.ico-smok :      연기
-.ico-gas :       가스
-.ico-hlds :      근거리 HLDS 센서
-.ico-device :    근거리 HLDS 센서
-.ico-led :       LED
-.ico-sioc :      sioc
-*/
 
 .cursor_cros {cursor:crosshair !important;}
 .cursor_auto {cursor:auto !important;}
@@ -291,98 +243,31 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 
 
 /////...... button base 정의 Start
-* {
-  a.btn {@include flex-midddle; span {width:100%; text-align:center;} }
+a.btn {@include flex-midddle; span {width:100%; text-align:center;} }
 
+.btn      {@include btn-box;}        // 160_40 박스 버튼
+.btn-line {@include btn-line; }      // 160_40 라인 버튼
 
-  .btn      {@include btn-box;}        // 160_40 박스 버튼
-  .btn-line {@include btn-line; }      // 160_40 라인 버튼
+.btn-itype03b   {@include btn-itype03b;  }   // 40_40 정사각 버튼
+.btn-itype01b   {@include btn-itype01b;  }   // 50_50 정사각 버튼
+.btn-itype03b-t {@include btn-itype03b-t;}   // 40_40 정사각 투명 버튼
+.btn-itype01b-t {@include btn-itype01b-t;}   // 50_50 정사각 투명 버튼
+.btn-itype03b-l {@include btn-itype03b-l;}   // 40_40 정사각 라인 버튼
+.btn-itype01b-l {@include btn-itype01b-l;}   // 50_50 정사각 라인 버튼
+.btn-itype03c   {@include btn-itype03c;  }   // 40_40 원형 버튼
+.btn-itype01c   {@include btn-itype01c;  }   // 50_50 원형 버튼
+.btn-itype03c-t {@include btn-itype03c-t;}   // 40_40 원형 투명 버튼
+.btn-itype01c-t {@include btn-itype01c-t;}   // 50_50 원형 투명 버튼
+.btn-itype03c-l {@include btn-itype03c-l;}   // 40_40 원형 라인 버튼
+.btn-itype01c-l {@include btn-itype01c-l;}   // 50_50 원형 라인 버튼
 
-  .btn-itype03b   {@include btn-itype03b;  }   // 40_40 정사각 버튼
-  .btn-itype01b   {@include btn-itype01b;  }   // 50_50 정사각 버튼
-  .btn-itype03b-t {@include btn-itype03b-t;}   // 40_40 정사각 투명 버튼
-  .btn-itype01b-t {@include btn-itype01b-t;}   // 50_50 정사각 투명 버튼
-  .btn-itype03b-l {@include btn-itype03b-l;}   // 40_40 정사각 라인 버튼
-  .btn-itype01b-l {@include btn-itype01b-l;}   // 50_50 정사각 라인 버튼
-  .btn-itype03c   {@include btn-itype03c;  }   // 40_40 원형 버튼
-  .btn-itype01c   {@include btn-itype01c;  }   // 50_50 원형 버튼
-  .btn-itype03c-t {@include btn-itype03c-t;}   // 40_40 원형 투명 버튼
-  .btn-itype01c-t {@include btn-itype01c-t;}   // 50_50 원형 투명 버튼
-  .btn-itype03c-l {@include btn-itype03c-l;}   // 40_40 원형 라인 버튼
-  .btn-itype01c-l {@include btn-itype01c-l;}   // 50_50 원형 라인 버튼
+.dim {@include dim_btn; } // 버튼 비활성화
 
+button.btn ~ button.btn {margin:0 0 0 5px;} // 버튼이 나란히 배치 되었을때 버튼간 간격 유지
 
-
-
-
-
-  .dim {@include dim_btn;} // 버튼 비활성화
-
-  button.btn ~ button.btn {margin:0 0 0 5px;}
-
-  .list_select_box > button, /* 알림센터 이력 알림해제 버튼 */
-  .filter_area > button,     /* 검색영역 버튼 */
-  .table_bottom > button,  /* 엑셀다운로드 버튼  */
-  .tree_area > header > button  /* 트리 헤더 버튼  */
-  {@include btn-box;}
-
-
-
-  .ibtn, .l-popup header > button, .file_btn {@include btn-itype03b;}
-  .file_btn:before {content: "\e915";}
-  .l-popup header > button:before {content: "\e904";}
-  .excel_btn {background-color: $color-green-01 !important;}
-
-  /*버튼 공통 정리
-  검색 영역 삽입 버튼   = .btype01 + .bstyle01
-  테이블 타이틀 버튼 튼 = .btype01 + .bstyle03
-  테이블 삽입 버튼     = .btype02 + .bstyle02
-  */
-
-  // 일반형 버튼
-  .btype01 {}
-
-  // 테이블 안에 삽입되는 버튼
-  .btype02 {min-width:60px; height:25px; font-size:13px; @include border-radius(20px); }
-
-  // 파일 첨부 버튼 및 높이값이 작은 버튼
-  .btype03 {min-width:100px;height:30px;font-size:14px;}
-
-  .db_btn, .alra_btn {@include btn-itype03b;} //아이콘버튼
-  .alra_btn {
-    width:80px; height:30px;  padding: 0 5px 4px 5px; margin:0;
-    line-height: 0; font-size:1.3rem; background-color: $color-red-01;
-    @include border-radius(20px);
-    &:before {content: "\e907"; position: relative; top: 1px; padding: 0 5px 0 0; font-size:1.3rem;}
-
-    &:hover {&:before {color:#fff !important;}}
-  }
-  .stion_btn {
-    width:64px;
-    padding:1px 0 !important;
-    display: inline-block;
-    text-align:center;
-    font-size:13px;
-    color:#fff;
-    -moz-border-radius:    20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius:  20px;
-    border-radius:         20px;
-  }
-
-  // 화면 확대 축소 버튼
-  .change_btn {
-    position: fixed; z-index:10; top:0; right:0; width:45px; height:45px !important;
-    &:before {font-size:26px; color:#fff;}
-  }
-
-  .zoom_btn, .sett_btn, .refl_btn, .zoomclose_btn {margin:0 0 0 15px;}
-  .zoom_btn:before      {content: "\e904" !important;}
-  .zoom_btn.on:before   {content: "\e903" !important;}
-  .zoomclose_btn:before {content: "\e91a" !important;}
-  .sett_btn:before      {content: "\e905" !important;}
-  .refl_btn:before      {content: "\e95e" !important;}
-}
+.sett_btn, .refl_btn  {margin:0 0 0 15px;}
+.sett_btn:before {content: "\e905" !important;}
+.refl_btn:before {content: "\e95e" !important;}
 /////...... button base 정의 End
 
 
@@ -652,13 +537,8 @@ div[contenteditable] {}
   }
 }
 ///// 그래프로 보기 , 표로보기 버튼 셋 정의 End
-
-
 .chart_box.type01 {overflow-x:auto;}
 .chart_box.type02 {overflow-y:auto;}
-
-
-
 
 
 ////// ----------------- Loading Start
@@ -728,42 +608,18 @@ div[contenteditable] {}
   &.onlyhuman .object {display:none;}
 
   & > * {position: absolute !important;}
-
-  &:before {
-    /*width:1px; height:100%; left:50%; top:0;*/
-    content:""; position: absolute; z-index:-1; width:100%; height:100%;
-    background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
-    background-repeat:repeat, no-repeat;
-  }
-
   .map_bg {
-    position: absolute; z-index: -1; width:100%; height:100%;
-    background-image: url("../images/map/k_map_right.svg"); background-position:center; background-repeat:no-repeat;
+    z-index: -1;
+    &, &:before, &:after {position: absolute; width:100%; height:100%;}
+    &:before, &:after {content:"";}
+    &:before {
+      /*width:1px; height:100%; left:50%; top:0;*/
+      z-index:1; background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg"); background-repeat:repeat, no-repeat;
+    }
+    &:after { opacity: .4; background-image: url("../images/map/map_see_now_2.jpg"); background-position:center; background-repeat:no-repeat;}
   }
   //&.cursor_cros {}
 }
-
-@mixin resize {
-  .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
-    display: none !important; position: absolute; width:$resi_w; height:$resi_w;
-
-    &:before {
-      content:"";
-      @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
-      background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
-      background-position: 50% 50%; background-color: $color-blue-01;
-      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
-
-    }
-    &:hover:before {
-      /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;
-    }
-  }
-  .ui-resizable-e:before  {@include rotate(180deg);  }
-  .ui-resizable-s:before  {@include rotate(-90deg);  }
-  .ui-resizable-se:before {@include rotate(-135deg); }
-} // @include resize; 맵 아이콘 크기 설정
-
 .g {
   &-ico  {z-index: 50;}
   &-tracking,&-line {z-index: 100;}
@@ -906,7 +762,7 @@ div[contenteditable] {}
       stroke-width:1px; fill: rgba($color-yellow-01, 0.2); stroke: $color-yellow-01;
       text {font-size:5px !important; letter-spacing: 0;}
       &.level {
-        &-caution, &-warning, &-danger, &-die {@include issue02; stroke-width:1px;}
+        &-caution, &-warning, &-danger, &-die {@include notice-opacity; stroke-width:1px;}
         &-caution { fill: rgba($color-caution, 0.2); stroke: $color-caution; }
         &-warning { fill: rgba($color-warning, 0.2); stroke: $color-warning; }
         &-danger  { fill: rgba($color-danger, 0.2);  stroke: $color-danger;  }
@@ -918,9 +774,10 @@ div[contenteditable] {}
 
   &-line {
     polyline {fill: transparent !important; stroke: rgba($color-blue-01,0.4); stroke-width:1px;}
-    marker {overflow: visible;} image {width:9px; height:9px;} polyline.object {stroke: $color-caution;}
+    marker {overflow: visible;} image {width:9px; height:9px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
+    g {overflow: visible; width:20px; height:20px; position: relative; }
     polyline.level {
-      &-caution, &-warning, &-danger { @include issue02;}
+      &-caution, &-warning, &-danger {@include notice-opacity;}
       &-caution { stroke: $color-caution; }
       &-warning { stroke: $color-warning; }
       &-danger  { stroke: $color-danger; }

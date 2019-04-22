@@ -79,6 +79,8 @@ body {
   }
 }
 
+
+
 .wrap {
   @include flexbase; @include flex-column; position:relative; width:100%; height:100%;
   & > header {
@@ -138,7 +140,7 @@ body {
           &.level-caution, &.level-warning, &.level-danger {
             &.issue_btn {
               &:before {color:#fff !important;}
-              &.on {@include issue;}
+              &.on {@include notice-opacity;}
             }
           }
         }
@@ -565,7 +567,7 @@ h4 {
     &:before {content:"\e90f"; padding:0 10px 0 0; font-size:1.4rem;}
   }
 
-  &.on {display: block; @include issue;}
+  &.on {display: block; @include notice-opacity;}
 
   .login_area & {
     position:absolute; width:100%; bottom:0;
@@ -865,7 +867,6 @@ h4 {
 
 
 /////......  구역 / 장치 관리 MAP 설정 시작
-.map_sett_area { td {border-width:0px 1px 1px 1px !important;} }
 .map_sett_box {
   $sec_h:450px; $sec_m:800px; $sec_l:400px; $sec_c:500px; $ch_width:90px; $ch_margin:20px;
   @include flexbase; @include flex-column-row;
@@ -926,17 +927,23 @@ h4 {
         & > * {position: relative; z-index: 1; border-color: transparent;}
 
         select {@include flex-option(0, 1, 100%);}
-        span  {
-          @include flex-midddle; @include mmwidth(40px); height:100%; padding: 0 !important;
-          @include border01(0 1px,$color-bline,1 );
+
+        span {
+          @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
+          @include mmwidth(40px); height:100%; padding: 0 !important;
+        }
+        select + span {min-width:60px !important;}
+        span, button {}
+        button {
+          @include btn-itype01b; margin:0;
+          &:before {background-color:rgba( $color-bas, .6);}
+          &:nth-of-type(1){
+            @include border01(0 1px 0 0,$color-bline,1 );
+            &:before {content:"\e902";  @include rotate(90deg);}
+          }
+          &:nth-of-type(2){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
         }
         input  {max-width:100px;}
-
-        button {
-          @include btn-itype01b; &:before {background-color:rgba( $color-bas, .6);}
-          &:nth-of-type(1){ &:before {content:"\e902";  @include rotate(90deg);} }
-          &:nth-of-type(2){margin:0 0 0 1px; &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
-        }
       }
     }
   }
@@ -1149,7 +1156,6 @@ h4 {
 
         button {
 
-
           @include btn-itype03c-t;
 
           &:before {content:"\e918"; font-weight:bold; color:$color-white-01;}
@@ -1212,13 +1218,9 @@ h4 {
         }
 
         button {
-          float:left; width:60px; height:40px;
-
-          @include btnbase_type01;
-
-          &:after {border-style:solid; border-color:$color-gray-01;}
-          &:first-of-type:after {@include border-radius(200px 0 0 200px); border-width:1px 0 1px 1px;}
-          &:last-of-type:after {@include border-radius(0 200px 200px 0 ); border-width:1px;}
+          @include btn-line; @include mmwidth(60px);
+          &:first-of-type:before {@include border-radius(200px 0 0 200px); border-width:1px 0 1px 1px;}
+          &:last-of-type:before  {@include border-radius(0 200px 200px 0 ); border-width:1px;}
 
         }
         .zoom {
@@ -1274,7 +1276,7 @@ h4 {
 .fenceset_popup {
 
   display:none; position: absolute !important; z-index: 10; top:0; left:0;
-  width:100%; height:100%; min-height:100%; max-height: 100%; opacity: 1; margin:0; padding:0;
+  width:100%; @include mmheight(100%); opacity: 1 !important; margin:0 !important; padding:0 !important;
   background-color: rgba($color-dark-01,0.8); @include transition01(200ms);
 
   &:before {display: none;}
@@ -1287,7 +1289,8 @@ h4 {
     &:after  {content:"Fence Setting"; padding:10px 0 0 0; font-size:1.2rem;}
     &:before {
       content:"\e905";
-      @include loding; @include duration(3s); font-size:4rem; border: none; bottom:auto; left:auto; right:auto;
+      @include loding; @include duration(3s); font-size:4rem !important;
+      border: none; bottom:auto; left:auto; right:auto;
     }
   }
 
@@ -1381,8 +1384,7 @@ h4 {
 
     .m_marqueebox, &.copybox {display: block;}
     .m_marqueebox { & > p > span {@include marquee;} }  //각구역 마키
-
-     &.copybox:after {@include issue01;}
+     &.copybox:after {@include notice-opacity;}
 
   }
   // 신호등 3단계 끝
@@ -1394,21 +1396,21 @@ h4 {
     &.issue_btn {
       width:100%; /*background-color:$color-danger;*/
       &:before {color:#fff !important;}
-      &.on {@include issue;}
+      &.on {@include notice-opacity;}
     }
   }
 
   &-caution > div.caution {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-caution;}
+    &:after {background-color:$color-caution;}
   }
   &-warning > div.warning {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-warning;}
+    &:after { background-color:$color-warning;}
   }
   &-danger > div.danger {
     &,&:before {color:$color-white-01;}
-    &:after {@include notice04; background-color:$color-danger;}
+    &:after {background-color:$color-danger;}
   }
 }
 /////..... 임계치 적용 표시 End
