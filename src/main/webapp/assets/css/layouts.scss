@@ -450,13 +450,13 @@ menu {
 
   & > ul {
     display: inline-block;
-
+    & > li, & > li > ul > li { @include border01(0 1px 0 0 ,$color-bline,1 ); &:first-of-type {border-width:0 1px;}}
+    & > li > ul > li button{padding: 0 25px;}
     & > li {
       float:left;
 
       & > button {
         @include font-size-menubtn; text-align: center; text-transform:uppercase;
-
       }
       // menu > ul > li > button
 
@@ -467,7 +467,8 @@ menu {
         background-color: $color-header; @include box-shadow02(0px, 60px, 100px, -50px, 0, 0, 0, 1);
 
         & > li {
-          margin: 0 0 30px 0;
+          position:relative;margin: 0 0 30px 0;
+          &:first-of-type{border-width:0 1px;}
           & > * {width:100%;}
           & > button {@include font-size-navbtn; opacity: 1 !important;}
         }
@@ -806,14 +807,16 @@ h4 {
   }
   /////..... 리소스 모델링 팝업
   &-resource {
-    width:($noticecenter-width * 3); height:600px; right:-($noticecenter-width * 4);
+    width:700px; height:$noticecenter-width; right:-($noticecenter-width * 4);
+
+    & > h2{margin:5px 0;@include mmheight(38px);}
 
     & > section {
       @include flexbase;
       & > * {position: relative; height:100%; overflow: hidden; }
       .resource_view {
-        @include flex-option(0, 1, 100%); order:1;  background-color: rgba(0,0,0,.1);
-        margin:0 15px 0 0; @include border01(1px,$color-bline,1 );
+        @include flex-option(0, 1, 100%); order:2;  background-color: rgba(0,0,0,.1);
+        margin:0 0 0 15px; @include border01(1px,$color-bline,1 );
         &:hover { .chart_select_set {top:0;} }
         h3 {
           position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
@@ -821,7 +824,7 @@ h4 {
         }
       }
       .resource_list {
-        @include mmwidth(200px); order:2; @include flexbase; @include flex-column;
+        @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
         & > div {
           margin:0 0 5px 0;
           select {width:100%; @include mmheight(50px);}

@@ -331,6 +331,10 @@
                             <section class="guard_set">
                                 <div class="s_lbox">
                                     <div class="check_btn_set">
+                                        <div class="range_check">
+                                            <input type="checkbox" name="lidarCkb" onClick="javascript:dashboardHelper.setGuardOption('lidarHide','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
                                         <div class="human_check">
                                             <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setGuardOption('objectView','${childArea.areaId}',this);">
                                             <label></label>

@@ -67,11 +67,12 @@ var CustomMapMediator = (
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
                 , 'rotate': null // 회전시 eventHandler
                 , 'click': null // click eventHandler
-                , 'openLinkFlag' : true // 클릭시 LinkUrl 사용 여부
+                , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
                 , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
+                , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
             }
         };
         var _targetClass = {
@@ -153,6 +154,12 @@ var CustomMapMediator = (
             if(pointsHideFlag != null && pointsHideFlag.length > 0){
                 _options['object']['pointsHideFlag'] = pointsHideFlag == "true";
                 _element.find("input[name='pointsCkb']").prop("checked",_options['object']['pointsHideFlag']);
+            }
+
+            var lidarHideFlag = $.cookie(areaId+"lidarHideFlag");
+            if(lidarHideFlag != null && lidarHideFlag.length > 0){
+                _options['custom']['lidarHideFlag'] = lidarHideFlag == "true";
+                _element.find("input[name='lidarCkb']").prop("checked",_options['custom']['lidarHideFlag']);
             }
 
             var moveFenceHideFlag = $.cookie(areaId+"moveFenceHideFlag");
@@ -284,6 +291,7 @@ var CustomMapMediator = (
 
         /**
          * set guard option
+         * lidarHide : 라이다반경표시 on/off
          * objectView : 전체보기/사람만보기
          * pointsHide : 트래킹 잔상 보기/숨기기
          * moveFenceHideFlag : 이벤트 발생시 펜스로이동/이동안함
@@ -299,6 +307,15 @@ var CustomMapMediator = (
                     }else{
                         _mapCanvas.removeClass("onlyhuman");
                     }
+                    break;
+                case "lidarHide" :
+                    _options['custom']['lidarHideFlag'] = flag;
+                    if(flag){
+                        _mapCanvas.find(".g-m8").removeClass("lidar");
+                    }else{
+                        _mapCanvas.find(".g-m8").addClass("lidar");
+                    }
+                    $.cookie(_areaId+'lidarHideFlag',flag);
                     break;
                 case "pointsHide" :
                     _options['object']['pointsHideFlag'] = flag;
@@ -560,6 +577,10 @@ var CustomMapMediator = (
 
                 if(_options['custom']['nameView'] && data["targetName"]!=null && data["targetName"]!=''){
                     targetElement.append( $("<span/>").text(data["targetName"]) );
+                }
+
+                if(!_options['custom']['lidarHideFlag'] && data['deviceCode']=='DEV013'){
+                    targetElement.addClass("lidar");
                 }
 
                 _mapCanvas.append(targetElement);

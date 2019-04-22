@@ -585,6 +585,20 @@ $treffic_w:32%;
           &:before {}
         }
 
+        &.range_check {
+
+          label {
+            &:before {content:"\e95b";  }
+            &:after  {content:"LIDAR RANGE";}
+          }
+
+          input:hover + label { opacity: 1;}
+          input:checked + label {
+            &:before {content:"\e97f"; }
+            &:after {content:"LIDAR RANGE OFF"; }
+          }
+        }
+
         &.object_check {
 
           label {
