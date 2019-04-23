@@ -52,6 +52,16 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
+    public ModelAndView findListEventLogResourceChart(Map<String, String> parameters) {
+        List<EventLogBean> eventLogChartList = eventLogDao.findListEventLogResourceChart(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventLogChartList", eventLogChartList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findByEventLog(Map<String, String> parameters) {
         ModelAndView modelAndView = new ModelAndView();
 

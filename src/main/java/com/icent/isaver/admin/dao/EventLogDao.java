@@ -67,8 +67,16 @@ public interface EventLogDao {
     /**
      *
      * @param parameters
-     * @author dhj
+     * @author psb
      * @return
      */
     List<EventLogBean> findListEventLogChart(Map<String, String> parameters);
+
+    /**
+     *
+     * @param parameters
+     * @author psb
+     * @return
+     */
+    List<EventLogBean> findListEventLogResourceChart(Map<String, String> parameters);
 }

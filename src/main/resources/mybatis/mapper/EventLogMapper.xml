@@ -200,6 +200,34 @@
         ORDER BY eventDatetime DESC
     </select>
 
+
+    <!--
+        이벤트로그 자원모니터링 차트 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListEventLogResourceChart" parameterType="map" resultType="EventLogBean">
+        SELECT  series.minute as eventDatetime, coalesce(cnt.amnt1,0) as value
+        FROM (
+            SELECT  max((select c.value from isaver.event_log_info c where b.event_log_id = c.event_log_id and c.key = 'value')::float) as amnt1
+                    , (to_timestamp(floor(extract('epoch' from event_datetime) / (${truncType}/10)) *  (${truncType}/10)) AT TIME ZONE 'UTC') as interval_alias
+            FROM    isaver.event_log b
+            WHERE   b.area_id = #{areaId}
+            AND     b.device_id = #{deviceId}
+            AND     b.event_id = #{eventId}
+            GROUP BY interval_alias
+        ) cnt
+        RIGHT JOIN (
+            select generate_series(
+                    (date_trunc('minute', now()) - (${truncType} || ' second')::interval)::timestamp
+                    , (date_trunc('minute', now()))::timestamp
+                    , ((${truncType}/10) || ' second')::interval
+                ) as minute
+            ORDER BY minute DESC
+        ) series
+        ON series.minute = cnt.interval_alias
+        ORDER BY eventDatetime DESC
+    </select>
+
     <!--
         이벤트로그 구역별 목록을 가져온다. (진출입)
         @author psb

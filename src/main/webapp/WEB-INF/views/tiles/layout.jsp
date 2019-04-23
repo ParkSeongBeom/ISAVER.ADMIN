@@ -66,7 +66,7 @@
             ,'aliveUrl':'${rootPath}/license/list.json'
             ,'licenseUrl':'${rootPath}/license/list.json'
             ,'resourceDeviceUrl':'${rootPath}/device/resourceList.json'
-            ,'chartUrl' : "${rootPath}/eventLog/chart.json"
+            ,'resourceChartUrl' : "${rootPath}/eventLog/resourceChart.json"
         };
 
         var commonMessageConfig = {
@@ -100,7 +100,9 @@
             "areaId" : null
             ,"deviceId" : null
             ,"eventId" : null
+            ,"truncType" : null
             ,"chartist" : null
+            ,"nextSearchDatetime" : null
         };
 
         var criticalCss = {
@@ -248,6 +250,10 @@
             setTimeout(function(){
                 printTime();
             },1000);
+
+            if(serverDatetime >= resourceChart['nextSearchDatetime']){
+                findListResourceChart();
+            }
         }
 
         /**
@@ -353,25 +359,16 @@
         }
 
         function findListResourceChart(){
-            var dateSelType = $("#resourceDateSelType button.on").attr("value");
-            var truncType;
-
-            switch (dateSelType){
-                case 'day':
-                    truncType = 'hour';
-                    break;
-                case 'week':
-                    truncType = 'day';
-                    break;
-                case 'month':
-                    truncType = 'week';
-                    break;
-                case 'year':
-                    truncType = 'month';
-                    break;
-            }
             if(resourceChart['areaId']!=null && resourceChart['deviceId']!=null && resourceChart['eventId']!=null){
-                layoutAjaxCall('chart',{areaId:resourceChart['areaId'], deviceId:resourceChart['deviceId'], eventId:resourceChart['eventId'], truncType: truncType, dateType: dateSelType});
+                layoutAjaxCall(
+                    'resourceChart'
+                    ,{
+                        areaId:resourceChart['areaId']
+                        , deviceId:resourceChart['deviceId']
+                        , eventId:resourceChart['eventId']
+                        , truncType: $("#resourceDateSelType button.on").attr("value")
+                    }
+                );
             }
         }
 
@@ -394,40 +391,29 @@
             if(updateFlag){
                 let _eventDate = new Date();
                 _eventDate.setTime(data['eventDatetime']);
-                let _eventDateStr;
-                switch ($("#resourceDateSelType button.on").attr("value")){
-                    case 'day':
-                        _eventDateStr = _eventDate.format("HH");
-                        break;
-                    case 'week':
-                        _eventDateStr = _eventDate.format("es");
-                        break;
-                    case 'month':
-                        _eventDateStr = _eventDate.getWeekOfMonth()+"주";
-                        break;
-                    case 'year':
-                        _eventDateStr = _eventDate.format("MM");
-                        break;
-                }
-
+                let _truncType = $("#resourceDateSelType button.on").attr("value");
+                _eventDate.setTime(Math.round(_eventDate.getTime()/(_truncType/10)/1000)*(_truncType/10)*1000);
+                let _eventDateStr = _eventDate.format("mm:ss");
                 const _labels = resourceChart['chartist'].data.labels;
-                let seriesIndex = null;
-                for(let i=0; i<_labels.length; i++){
-                    if(_labels[i]==_eventDateStr){
-                        seriesIndex = i;
-                        break;
-                    }
-                }
+                let seriesIndex = resourceChart['chartist'].data.labels.indexOf(_eventDateStr);
 
-                if(seriesIndex!=null){
-                    try{
+                try{
+                    if(seriesIndex>-1){
                         if(resourceChart['chartist'].data.series[0][seriesIndex] < eventValue){
                             resourceChart['chartist'].data.series[0][seriesIndex] = eventValue;
                             resourceChart['chartist'].update();
                         }
-                    }catch(e){
-                        console.error("[Layout][ResourceUpdate] series index error - "+e);
+                    }else{
+                        resourceChart['chartist'].data.series[0].shift();
+                        resourceChart['chartist'].data.series[0].push(eventValue);
+                        resourceChart['chartist'].data.labels.shift();
+                        resourceChart['chartist'].data.labels.push(_eventDateStr);
+                        resourceChart['chartist'].update();
                     }
+                    _eventDate.setTime(_eventDate.getTime()+(_truncType/10)*1000);
+                    resourceChart['nextSearchDatetime'] = _eventDate;
+                }catch(e){
+                    console.error("[Layout][ResourceUpdate] series index error - "+e);
                 }
             }
         }
@@ -523,7 +509,7 @@
                 case 'resourceDevice':
                     deviceRender(data['deviceList'],data['eventList'],data['deviceCodeCss']);
                     break;
-                case 'chart':
+                case 'resourceChart':
                     var paramBean = data['paramBean'];
 
                     if(resourceChart['areaId']!=paramBean['areaId']){
@@ -539,20 +525,7 @@
                             var _eventDate = new Date();
                             _eventDate.setTime(item['eventDatetime']);
                             _chartList.push(item['value']);
-                            switch (paramBean['truncType']){
-                                case 'hour':
-                                    _eventDateList.push(_eventDate.format("HH"));
-                                    break;
-                                case 'day':
-                                    _eventDateList.push(_eventDate.format("es"));
-                                    break;
-                                case 'week':
-                                    _eventDateList.push(_eventDate.getWeekOfMonth()+"주");
-                                    break;
-                                case 'month':
-                                    _eventDateList.push(_eventDate.format("MM"));
-                                    break;
-                            }
+                            _eventDateList.push(_eventDate.format("mm:ss"));
                         }
                         _chartList.reverse();
                         _eventDateList.reverse();
@@ -561,6 +534,10 @@
                         resourceChart['chartist'].data.labels = _eventDateList;
                         resourceChart['chartist'].update();
                     }
+                    resourceChart['truncType'] = paramBean['truncType'];
+                    var searchDate = new Date();
+                    searchDate.setTime(Math.round(searchDate.getTime()/(paramBean['truncType']/10)/1000)*(paramBean['truncType']/10)*1000+(paramBean['truncType']/10)*1000);
+                    resourceChart['nextSearchDatetime'] = searchDate;
                     break;
             }
         }
@@ -846,10 +823,10 @@
                         <div class="resource_view">
                             <h3 class="select_change" id="selResourceEventName"></h3>
                             <div class="chart_select_set" id="resourceDateSelType">
-                                <button value="day" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.day"/></button>
-                                <button value="week" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.week"/></button>
-                                <button value="month" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.month"/></button>
-                                <button value="year" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;"><spring:message code="common.column.year"/></button>
+                                <button value="300" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">5<spring:message code="common.column.minute"/></button>
+                                <button value="600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">10<spring:message code="common.column.minute"/></button>
+                                <button value="1800" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">30<spring:message code="common.column.minute"/></button>
+                                <button value="3600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">60<spring:message code="common.column.minute"/></button>
                             </div>
                             <div class="chart_box chart01" id="resourceChartElement"></div>
                         </div>

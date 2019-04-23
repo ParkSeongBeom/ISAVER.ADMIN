@@ -114,4 +114,17 @@ public class EventLogCtrl {
         ModelAndView modelAndView = eventLogSvc.findListEventLogChart(parameters);
         return modelAndView;
     }
+
+    /**
+     * 이벤트 로그 차트를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/resourceChart")
+    public ModelAndView findListEventLogResourceChart(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findListEventLogResourceChart(parameters);
+        return modelAndView;
+    }
 }

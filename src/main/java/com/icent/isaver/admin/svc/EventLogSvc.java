@@ -34,11 +34,20 @@ public interface EventLogSvc {
     /**
      * 이벤트 로그 차트를 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param parameters
      * @return
      */
     ModelAndView findListEventLogChart(Map<String, String> parameters);
+
+    /**
+     * 이벤트 로그 자원모니터링 차트를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListEventLogResourceChart(Map<String, String> parameters);
 
     /**
      * 이벤트 로그 목록을 가져온다. (진출입)
