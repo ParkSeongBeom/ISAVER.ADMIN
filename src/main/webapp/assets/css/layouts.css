@@ -4144,7 +4144,7 @@ h4 {
             content: "\e91a"; }
 
 .fenceset_popup {
-  display: none;
+  display: none !important;
   position: absolute !important;
   z-index: 10;
   top: 0;
@@ -4165,7 +4165,7 @@ h4 {
   .fenceset_popup:before {
     display: none; }
   .fenceset_popup.on {
-    display: block; }
+    display: inline-block !important; }
   .fenceset_popup > div {
     animation-name: notice-opacity;
     -webkit-animation-name: notice-opacity;

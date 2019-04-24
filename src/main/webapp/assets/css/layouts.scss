@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "filters";
-@import "layout";
 
 body.adaptive_landscape {}
 body.adaptive_mobile    {}
@@ -1278,12 +1277,13 @@ h4 {
 /////..... 펜스 셋팅 팝업 시작
 .fenceset_popup {
 
-  display:none; position: absolute !important; z-index: 10; top:0; left:0;
+  display:none !important;
+  position: absolute !important; z-index: 10; top:0; left:0;
   width:100%; @include mmheight(100%); opacity: 1 !important; margin:0 !important; padding:0 !important;
   background-color: rgba($color-dark-01,0.8); @include transition01(200ms);
 
   &:before {display: none;}
-  &.on {display: block;}
+  &.on {display: inline-block !important;}
 
   & > div {
     @include notice-opacity; @include flex-midddle; @include flex-column; width:100%; height:100%;
