@@ -100,9 +100,9 @@
             "areaId" : null
             ,"deviceId" : null
             ,"eventId" : null
-            ,"truncType" : null
             ,"chartist" : null
-            ,"nextSearchDatetime" : null
+            ,"interval" : null
+            ,"intervalDelay" : 10000
         };
 
         var criticalCss = {
@@ -250,10 +250,6 @@
             setTimeout(function(){
                 printTime();
             },1000);
-
-            if(serverDatetime >= resourceChart['nextSearchDatetime']){
-                findListResourceChart();
-            }
         }
 
         /**
@@ -319,9 +315,10 @@
                     if(deviceCodeCss[device['deviceCode']]!=null){
                         resourceDeviceTag.addClass(deviceCodeCss[device['deviceCode']]);
                     }
-                    if(device['deviceStat']=='N'){
-                        resourceDeviceTag.addClass("level-die");
-                    }
+                    // 장치상태 표시안함(박문권CJ 요청)
+//                    if(device['deviceStat']=='N'){
+//                        resourceDeviceTag.addClass("level-die");
+//                    }
                     resourceDeviceTag.click({deviceId:device['deviceId']},function(evt){
                         if(!$(this).hasClass("on")){
                             $("#resourceDeviceList").find("li").removeClass("on");
@@ -330,7 +327,7 @@
                         }
                     });
                     resourceDeviceTag.find("p[name='resourceDeviceName']").text(device['deviceName']);
-                    resourceDeviceTag.find("select[name='resourceEventId']").on("change",function(){
+                    resourceDeviceTag.find("select[name='resourceEventId']").on("focusout change",function(){
                         var eventId = $("option:selected", this).val();
                         if(eventId!=""){
                             $("#selResourceEventName").text($("option:selected", this).text());
@@ -360,15 +357,28 @@
 
         function findListResourceChart(){
             if(resourceChart['areaId']!=null && resourceChart['deviceId']!=null && resourceChart['eventId']!=null){
-                layoutAjaxCall(
-                    'resourceChart'
-                    ,{
-                        areaId:resourceChart['areaId']
-                        , deviceId:resourceChart['deviceId']
-                        , eventId:resourceChart['eventId']
-                        , truncType: $("#resourceDateSelType button.on").attr("value")
-                    }
-                );
+                function getResourceChart(){
+                    var _now = new Date();
+                    var _truncType = $("#resourceDateSelType button.on").attr("value");
+                    layoutAjaxCall(
+                        'resourceChart'
+                        ,{
+                            areaId:resourceChart['areaId']
+                            , deviceId:resourceChart['deviceId']
+                            , eventId:resourceChart['eventId']
+                            , startDatetime:new Date(_now.getTime()-_truncType*1000).format('yyyy-MM-dd HH:mm:ss')
+                            , endDatetime:_now.format('yyyy-MM-dd HH:mm:ss')
+                        }
+                    );
+                }
+                getResourceChart();
+
+                if(resourceChart['interval']!=null){
+                    clearInterval(resourceChart['interval']);
+                }
+                resourceChart['interval'] = setInterval(function() {
+                    getResourceChart();
+                }, resourceChart['intervalDelay']);
             }
         }
 
@@ -389,32 +399,16 @@
             }
 
             if(updateFlag){
-                let _eventDate = new Date();
-                _eventDate.setTime(data['eventDatetime']);
-                let _truncType = $("#resourceDateSelType button.on").attr("value");
-                _eventDate.setTime(Math.round(_eventDate.getTime()/(_truncType/10)/1000)*(_truncType/10)*1000);
-                let _eventDateStr = _eventDate.format("mm:ss");
-                const _labels = resourceChart['chartist'].data.labels;
-                let seriesIndex = resourceChart['chartist'].data.labels.indexOf(_eventDateStr);
-
-                try{
-                    if(seriesIndex>-1){
-                        if(resourceChart['chartist'].data.series[0][seriesIndex] < eventValue){
-                            resourceChart['chartist'].data.series[0][seriesIndex] = eventValue;
-                            resourceChart['chartist'].update();
-                        }
-                    }else{
-                        resourceChart['chartist'].data.series[0].shift();
-                        resourceChart['chartist'].data.series[0].push(eventValue);
-                        resourceChart['chartist'].data.labels.shift();
-                        resourceChart['chartist'].data.labels.push(_eventDateStr);
-                        resourceChart['chartist'].update();
-                    }
-                    _eventDate.setTime(_eventDate.getTime()+(_truncType/10)*1000);
-                    resourceChart['nextSearchDatetime'] = _eventDate;
-                }catch(e){
-                    console.error("[Layout][ResourceUpdate] series index error - "+e);
+                let _eventDate = new Date(data['eventDatetime']).format("HH:mm:ss");
+                if(resourceChart['chartist'].data.series[0][resourceChart['chartist'].data.series[0].length-1]['type']=='event'){
+                    resourceChart['chartist'].data.series[0].push({meta:_eventDate,value:eventValue,type:'event'});
+                    resourceChart['chartist'].data.labels[resourceChart['chartist'].data.labels.length-1] = null;
+                    resourceChart['chartist'].data.labels.push(_eventDate);
+                }else{
+                    resourceChart['chartist'].data.series[0][resourceChart['chartist'].data.series[0].length-1] = {meta:_eventDate,value:eventValue,type:'event'};
+                    resourceChart['chartist'].data.labels[resourceChart['chartist'].data.labels.length-1] = _eventDate;
                 }
+                resourceChart['chartist'].update();
             }
         }
 
@@ -515,29 +509,39 @@
                     if(resourceChart['areaId']!=paramBean['areaId']){
                         return false;
                     }
+
+                    var _chartList = [];
+                    var _eventDateList = [];
+                    var _startDt = new Date(paramBean['startDatetime']).format("HH:mm:ss");
+                    _chartList.push({meta:_startDt,value:0,type:'none'});
+                    _eventDateList.push(_startDt);
+
+                    var _endDt = new Date(paramBean['endDatetime']).format("HH:mm:ss");
+                    var endDtAddFlag = true;
+
                     if (data['eventLogChartList'] != null) {
                         var eventLogChartList = data['eventLogChartList'];
-                        var _chartList = [];
-                        var _eventDateList = [];
 
                         for(var index in eventLogChartList){
                             var item = eventLogChartList[index];
-                            var _eventDate = new Date();
-                            _eventDate.setTime(item['eventDatetime']);
-                            _chartList.push(item['value']);
-                            _eventDateList.push(_eventDate.format("mm:ss"));
+                            var _eventDate = new Date(item['eventDatetime']).format("HH:mm:ss");
+                            _chartList.push({meta:_eventDate,value:item['value'],type:'event'});
+                            if(_eventDate == _endDt){
+                                endDtAddFlag = false;
+                                _eventDateList.push(_eventDate);
+                            }else{
+                                _eventDateList.push(null);
+                            }
                         }
-                        _chartList.reverse();
-                        _eventDateList.reverse();
-
-                        resourceChart['chartist'].data.series[0] = _chartList;
-                        resourceChart['chartist'].data.labels = _eventDateList;
-                        resourceChart['chartist'].update();
                     }
-                    resourceChart['truncType'] = paramBean['truncType'];
-                    var searchDate = new Date();
-                    searchDate.setTime(Math.round(searchDate.getTime()/(paramBean['truncType']/10)/1000)*(paramBean['truncType']/10)*1000+(paramBean['truncType']/10)*1000);
-                    resourceChart['nextSearchDatetime'] = searchDate;
+
+                    if(endDtAddFlag){
+                        _chartList.push({meta:_endDt,value:0,type:'none'});
+                        _eventDateList.push(_endDt);
+                    }
+                    resourceChart['chartist'].data.series[0] = _chartList;
+                    resourceChart['chartist'].data.labels = _eventDateList;
+                    resourceChart['chartist'].update();
                     break;
             }
         }

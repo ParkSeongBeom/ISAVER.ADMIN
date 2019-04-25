@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "filters";
-@import "layout";
 
 .ico {
   &-safeeye:before  {content:"\e941" !important;} // -safeeye
@@ -484,21 +483,14 @@ div[contenteditable] {}
 
 /////..... 통계 툴팁 시작
 .chartist-tooltip {
-  @include flex-midddle-important;
-  height:40px !important; min-width:40px !important;
-  background-color: $color-dark-01 !important;
-  color: #fff !important;
-
-  -moz-border-radius:    200px !important;
-  -webkit-border-radius: 200px !important;
-  border-radius:         200px !important;
-  -khtml-border-radius:  200px !important;
+  @include flex-midddle-important; @include flex-column; min-height:40px !important; min-width:40px !important;
+  background-color: $color-dark-01 !important; color: #fff !important;
+  @include border-radius(200px);
 
   &:before {
     margin: -2px 0 0 -5px  !important;
-    border-style:solid !important;
-    border-width: 10px 5px 0 5px !important;
-    border-color:#333240 transparent transparent transparent !important;
+    border-style:solid !important; border-width: 10px 5px 0 5px !important;
+    border-color:$color-dark-01 transparent transparent transparent !important;
   }
 }
 /////..... 통계 툴팁 끝
@@ -620,7 +612,14 @@ div[contenteditable] {}
   }
   //&.cursor_cros {}
 }
+
+.g-ico {}
+.g-tracking {}
+
+
 .g {
+  /*
+  */
   &-ico  {z-index: 50;}
   &-tracking,&-line {z-index: 100;}
   &-area  {z-index:10;}
