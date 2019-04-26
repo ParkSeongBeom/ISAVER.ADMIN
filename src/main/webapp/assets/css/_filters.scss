@@ -381,6 +381,11 @@ $display-inline-block:inline-block;
   -moz-transform:rotate3d($x, $y, $z, $deg); -webkit-transform:rotate3d($x, $y, $z, $deg); -o-transform:rotate3d($x, $y, $z, $deg);}
 // ex) @include rotate-3d($x, $y, $z, $deg);
 
+// x,y 중심 축
+@mixin origin($x, $y){transform-origin:($x $y); ms-transform:($x $y);
+  -ms-transform-origin:($x $y); -moz-transform-origin:($x $y); -webkit-transform-origin:($x $y); -o-transform-origin:($x $y);}
+// ex) @include origin($x, $y);
+
 // translate3d
 @mixin translate3d($x, $y, $z){transform:translate3d($x, $y, $z); ms-transform:translate3d($x, $y, $z);
   -ms-transform:translate3d($x, $y, $z); -moz-transform:translate3d($x, $y, $z); -webkit-transform:translate3d($x, $y, $z);
@@ -1019,8 +1024,11 @@ $d-time:.8s;
   }
 } // ex) @include lidar;
 @mixin lidar-bg($color) {
-  @include border01(1px,$color,.7 );
-  background: -webkit-linear-gradient(top, rgba($color,0) 0%,rgba($color,.3) 50%,rgba($color,1) 50.1%,rgba($color,.2) 50.2%,rgba($color,0) 100%) !important;
+  content:"";
+  @include lidar; overflow: hidden; @include border01(1px,$color,.8 ); opacity: .6;
+  //background-size: 100%; background-repeat: no-repeat; background-position: 50% 50%;
+  //background-color: rgba($color,.1) !important; background-image: url("../images/map/lidar.svg");
+  background:url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba($color,0) 0%,rgba($color,.3) 50%,rgba($color,.2) 50.1%,rgba($color,0) 100%) !important;
 } // @include ridar-bg($color-lidar);
 
 // 로딩바 애니메이션

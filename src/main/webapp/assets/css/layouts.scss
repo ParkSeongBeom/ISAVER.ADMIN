@@ -774,7 +774,7 @@ h4 {
 
 /////..... 팝업 공통 효과 END
 
-// 사용자 보기 팝업, 라이센스정보팝업, 리소스모니터링팝업
+// 사용자 보기 팝업, 라이센스정보팝업, 자원모니터링팝업
 .tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {@include tpopupbase;}
 
 .tpopup {
@@ -804,12 +804,16 @@ h4 {
       & > div {}
     }
   }
-  /////..... 리소스 모델링 팝업
+  /////..... 자원모니터링팝업
   &-resource {
-    width:700px; height:$noticecenter-width; right:-($noticecenter-width * 4);
+    width:800px; height:400px; right:-($noticecenter-width * 4);
 
     & > h2{margin:5px 0;@include mmheight(38px);}
-
+    & > .chart_select_set{
+      position: relative !important;margin-bottom: 10px; z-index:1; top:0; right:0; @include transition(200ms);
+      padding:5px 21px 5px 10px; background-color: rgba(0,0,0,.3); @include mmheight(50px);text-align:right;
+      button {@include btn-itype01b; &:before {z-index: -1 !important;}}
+    }
     & > section {
       @include flexbase;
       & > * {position: relative; height:100%; overflow: hidden; }
@@ -821,7 +825,7 @@ h4 {
           position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
           @include flexbase; @include flex-align-items-center; background-color: rgba(0,0,0,.4);
         }
-      }
+      } 
       .resource_list {
         @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
         & > div {
@@ -831,6 +835,26 @@ h4 {
         .device_set {@include flex-option(0, 1, 100%); }
       }
     }
+    &.type01{
+      & > section{overflow: visible;}
+      & > section > .resource_view{order:1;margin:0;z-index: 1;
+        & > h3{display: none;}
+      }
+      & > section > .resource_list{@include mmwidth(570px); position: absolute;
+        right:20px; top:-102px; order:1; font-size: 0.8rem;
+        & > div{@include flexbase;
+          select{@include mmheight(35px);margin-left: 7px; font-size:0.8 rem;}
+        }
+        & > .device_set{display:none;}
+      }
+    }
+
+    &.type02{
+      & > section > .resource_list{order:1;
+        & > div > select:nth-of-type(2),& > div > select:nth-of-type(3){display:none;}
+      }
+    }
+
   }
 }
 /////..... 토스트 팝업 시작

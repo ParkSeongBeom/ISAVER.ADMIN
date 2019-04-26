@@ -656,10 +656,53 @@ div[contenteditable] {}
 
   // MAP 설정 시 크기, 위치 버튼 표시
   &-ico {
+
+    $g-wh-01 : 400px;
+    $g-wh-02 : 800px; //기본값
+    $g-wh-03 : 1200px;
+
+    $g-r10 : 10deg;  $g-r20 : 20deg;  $g-r30 : 30deg;  $g-r40 : 40deg;  $g-r50 : 50deg;
+    $g-r60 : 60deg;  $g-r70 : 70deg;  $g-r80 : 80deg;  $g-r90 : 90deg;  $g-r100 : 100deg;
+
     width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-se {right:-($resi_w / 2); bottom:-($resi_w / 2);}
-    &.on {background-color: $color-on;  &:hover { .ui-resizable-se {display: block !important;} } }
+
+    &.on {
+      background-color: $color-on;
+      &:hover { .ui-resizable-se {display: block !important;} }
+    }
+    &.lidar > div {display: block !important;}
+    & > div {
+      z-index: -1; display: none;
+      &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-02); }
+      &:after {@include lidar-bg($color-lidar); @include lidar; @include border-radius(10000px);}
+    }
+
+    &.wh-01 > div {&, &:after { @include mmwidth($g-wh-01); @include mmheight($g-wh-01); } }
+    &.wh-03 > div {&, &:after { @include mmwidth($g-wh-03); @include mmheight($g-wh-03); } }
+
+    &.half {
+      & > div {bottom:($devi_w / 2);  @include mmheight($g-wh-02 / 2); @include origin(50%, 100%);}
+
+      &.wh-01 > div {  @include mmheight($g-wh-01 / 2); }
+      &.wh-03 > div {  @include mmheight($g-wh-03 / 2); }
+    }
+
+    &.quarter {
+      & > div {
+        right:(0 + ($devi_w / 2)); bottom:($devi_w / 2);  @include origin(100%, 100%);
+        @include mmwidth($g-wh-02 / 2); @include mmheight($g-wh-02 / 2);
+      }
+
+      &.wh-01 > div {@include mmwidth($g-wh-01 / 2);  @include mmheight($g-wh-01 / 2); }
+      &.wh-03 > div {@include mmwidth($g-wh-03 / 2);  @include mmheight($g-wh-03 / 2); }
+    }
+
+
+
+
+
 
     &.level {
       &-caution,&-warning,&-danger,&-die {
@@ -668,14 +711,38 @@ div[contenteditable] {}
           @include notice-opacity; @include notice-border-type01;
         }
       }
-      &-caution { &,& > span {background-color:$color-caution;} &:before {border-color:$color-caution; } }
-      &-warning { &,& > span {background-color:$color-warning;} &:before {border-color:$color-warning;} }
-      &-danger  { &,& > span {background-color:$color-danger;}  &:before {border-color:$color-danger; } }
-      &-die     { &,& > span {background-color:$color-die;}     &:before {border-color:$color-die;} &:after {@include die02;}}
+
+      &-caution {
+        &,& > span {background-color:$color-caution;}
+        &:before {border-color:$color-caution; }
+        & > div { &:after {@include lidar-bg($color-caution);} }
+      }
+
+      &-warning {
+        &,& > span {background-color:$color-warning;}
+        &:before {border-color:$color-warning;}
+        & > div { &:after {@include lidar-bg($color-warning);} }
+      }
+
+      &-danger  {
+        &,& > span {background-color:$color-danger;}
+        &:before {border-color:$color-danger; }
+        & > div {&:after {@include lidar-bg($color-danger);}}
+      }
+
+      &-die     {
+        &,& > span {background-color:$color-die;}
+        &:before {border-color:$color-die;}
+
+        & > div {
+
+          &:after {@include die02; @include lidar-bg($color-die);  animation-play-state: paused; top:auto;left:auto;}
+        }
+      }
     }
   }
 
-  &-ico.lidar {
+  /*&-ico.lidar {
     &:after {overflow: hidden; @include mhwidth(800px); @include lidar-bg($color-lidar); @include lidar;}
 
     &.w100:after { @include mhwidth(1000px);}
@@ -693,7 +760,9 @@ div[contenteditable] {}
         }
       }
     }
-  }
+
+    & > div {display: none !important;}
+  }*/
 
   &-ico:before     {font-size:1.2rem !important;}
   &-m8:before      {content:"\e95f";} // M8 센서

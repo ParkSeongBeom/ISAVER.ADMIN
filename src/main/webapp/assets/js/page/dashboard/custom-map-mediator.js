@@ -582,6 +582,7 @@ var CustomMapMediator = (
                 if(!_options['custom']['lidarHideFlag'] && data['deviceCode']=='DEV013'){
                     targetElement.addClass("lidar");
                 }
+                targetElement.append( $("<div/>") );
 
                 _mapCanvas.append(targetElement);
                 _marker[_MARKER_TYPE[4]][data['targetId']] = {

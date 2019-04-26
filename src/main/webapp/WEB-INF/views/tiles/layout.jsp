@@ -97,10 +97,7 @@
         var segmentEnd;
         var refreshTimeCallBack = [];
         var resourceChart = {
-            "areaId" : null
-            ,"deviceId" : null
-            ,"eventId" : null
-            ,"chartist" : null
+            "chartist" : null
             ,"interval" : null
             ,"intervalDelay" : 10000
         };
@@ -194,19 +191,18 @@
                     onlyInteger: true,
                     offset: 20
                 },
-                lineSmooth: Chartist.Interpolation.simple({
-                    divisor: 100
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    fillHoles: true
                 }),
                 plugins: [
-                    ctPointLabels()
-                    ,Chartist.plugins.tooltip()
+                    Chartist.plugins.tooltip()
+//                    ,ctPointLabels()
                 ]
             });
 
             $("#resourceAreaId").on("change",function(){
                 var areaId = $(this).val();
                 if(areaId!=null && areaId!=""){
-                    resourceChart['areaId'] = areaId;
                     layoutAjaxCall('resourceDevice',{'areaId':areaId,'eventIds':'EVT800,EVT801,EVT802,EVT803'});
                 }
             });
@@ -303,44 +299,25 @@
             }
         }
 
-        function deviceRender(deviceList, eventList, deviceCodeCss){
-            $("#resourceDeviceList").empty();
+        function resourceDeviceRender(deviceList, eventList, deviceCodeCss){
+            $("#resourceDeviceId option").not(":eq(0)").remove();
 
+            // 장치리스트
             for(var index in deviceList){
                 var device = deviceList[index];
 
                 if(device['deviceCode']=="DEV800" || device['deviceCode']=="DEV801"){
-                    var resourceDeviceTag = templateHelper.getTemplate("resourceDevice");
-                    resourceDeviceTag.attr("deviceId",device['deviceId']);
-                    if(deviceCodeCss[device['deviceCode']]!=null){
-                        resourceDeviceTag.addClass(deviceCodeCss[device['deviceCode']]);
-                    }
-                    // 장치상태 표시안함(박문권CJ 요청)
-//                    if(device['deviceStat']=='N'){
-//                        resourceDeviceTag.addClass("level-die");
-//                    }
-                    resourceDeviceTag.click({deviceId:device['deviceId']},function(evt){
-                        if(!$(this).hasClass("on")){
-                            $("#resourceDeviceList").find("li").removeClass("on");
-                            $(this).addClass("on");
-                            resourceChart['deviceId'] = evt.data.deviceId;
-                        }
-                    });
-                    resourceDeviceTag.find("p[name='resourceDeviceName']").text(device['deviceName']);
-                    resourceDeviceTag.find("select[name='resourceEventId']").on("focusout change",function(){
-                        var eventId = $("option:selected", this).val();
-                        if(eventId!=""){
-                            $("#selResourceEventName").text($("option:selected", this).text());
-                            resourceChart['eventId'] = eventId;
-                            findListResourceChart();
-                        }
-                    });
-                    for(var i in eventList){
-                        resourceDeviceTag.find("select[name='resourceEventId']").append(
-                            $("<option/>",{value:eventList[i]['eventId']}).text(eventList[i]['eventName'])
-                        )
-                    }
-                    $("#resourceDeviceList").append(resourceDeviceTag);
+                    $("#resourceDeviceId").append(
+                        $("<option/>",{value:device['deviceId']}).text(device['deviceName'])
+                    );
+                }
+            }
+
+            if($("#resourceEventId option").length <= 1){
+                for(var i in eventList){
+                    $("#resourceEventId").append(
+                        $("<option/>",{value:eventList[i]['eventId']}).text(eventList[i]['eventName'])
+                    );
                 }
             }
         }
@@ -349,41 +326,46 @@
             if($(_this).hasClass("on")){
                 return false;
             }else{
-                $(".resource_view").find("button").removeClass("on");
+                $("#resourceDateSelType").find("button").removeClass("on");
                 $(_this).addClass("on");
                 findListResourceChart();
             }
         }
 
         function findListResourceChart(){
-            if(resourceChart['areaId']!=null && resourceChart['deviceId']!=null && resourceChart['eventId']!=null){
-                function getResourceChart(){
+            function getResourceChart(){
+                if($("#resourceAreaId option:selected").val()!="" && $("#resourceDeviceId option:selected").val()!="" && $("#resourceEventId option:selected").val()!=""){
                     var _now = new Date();
                     var _truncType = $("#resourceDateSelType button.on").attr("value");
                     layoutAjaxCall(
-                        'resourceChart'
-                        ,{
-                            areaId:resourceChart['areaId']
-                            , deviceId:resourceChart['deviceId']
-                            , eventId:resourceChart['eventId']
-                            , startDatetime:new Date(_now.getTime()-_truncType*1000).format('yyyy-MM-dd HH:mm:ss')
-                            , endDatetime:_now.format('yyyy-MM-dd HH:mm:ss')
-                        }
+                            'resourceChart'
+                            ,{
+                                areaId:$("#resourceAreaId option:selected").val()
+                                , deviceId:$("#resourceDeviceId option:selected").val()
+                                , eventId:$("#resourceEventId option:selected").val()
+                                , startDatetime:new Date(_now.getTime()-_truncType*1000).format('yyyy-MM-dd HH:mm:ss')
+                                , endDatetime:_now.format('yyyy-MM-dd HH:mm:ss')
+                            }
                     );
+                }else{
+                    stopResourceChartInterval();
                 }
-                getResourceChart();
-
+            }
+            function stopResourceChartInterval(){
                 if(resourceChart['interval']!=null){
                     clearInterval(resourceChart['interval']);
                 }
-                resourceChart['interval'] = setInterval(function() {
-                    getResourceChart();
-                }, resourceChart['intervalDelay']);
             }
+            stopResourceChartInterval();
+
+            getResourceChart();
+            resourceChart['interval'] = setInterval(function() {
+                getResourceChart();
+            }, resourceChart['intervalDelay']);
         }
 
         function resourceUpdate(data){
-            if(resourceChart['areaId']!=data['areaId'] || resourceChart['deviceId']!=data['deviceId'] || resourceChart['eventId']!=data['eventId']){
+            if($("#resourceAreaId option:selected").val()!=data['areaId'] || $("#resourceDeviceId option:selected").val()!=data['deviceId'] || $("#resourceEventId option:selected").val()!=data['eventId']){
                 return false;
             }
 
@@ -400,14 +382,9 @@
 
             if(updateFlag){
                 let _eventDate = new Date(data['eventDatetime']).format("HH:mm:ss");
-                if(resourceChart['chartist'].data.series[0][resourceChart['chartist'].data.series[0].length-1]['type']=='event'){
-                    resourceChart['chartist'].data.series[0].push({meta:_eventDate,value:eventValue,type:'event'});
-                    resourceChart['chartist'].data.labels[resourceChart['chartist'].data.labels.length-1] = null;
-                    resourceChart['chartist'].data.labels.push(_eventDate);
-                }else{
-                    resourceChart['chartist'].data.series[0][resourceChart['chartist'].data.series[0].length-1] = {meta:_eventDate,value:eventValue,type:'event'};
-                    resourceChart['chartist'].data.labels[resourceChart['chartist'].data.labels.length-1] = _eventDate;
-                }
+                resourceChart['chartist'].data.series[0].push({meta:_eventDate,value:eventValue});
+                resourceChart['chartist'].data.labels[resourceChart['chartist'].data.labels.length-1] = null;
+                resourceChart['chartist'].data.labels.push(_eventDate);
                 resourceChart['chartist'].update();
             }
         }
@@ -501,19 +478,19 @@
                     notificationHelper.licenseStatusChangeHandler(data['license']['status']);
                     break;
                 case 'resourceDevice':
-                    deviceRender(data['deviceList'],data['eventList'],data['deviceCodeCss']);
+                    resourceDeviceRender(data['deviceList'],data['eventList'],data['deviceCodeCss']);
                     break;
                 case 'resourceChart':
                     var paramBean = data['paramBean'];
 
-                    if(resourceChart['areaId']!=paramBean['areaId']){
+                    if($("#resourceAreaId option:selected").val()!=paramBean['areaId']){
                         return false;
                     }
 
                     var _chartList = [];
                     var _eventDateList = [];
                     var _startDt = new Date(paramBean['startDatetime']).format("HH:mm:ss");
-                    _chartList.push({meta:_startDt,value:0,type:'none'});
+                    _chartList.push({meta:_startDt,value:null});
                     _eventDateList.push(_startDt);
 
                     var _endDt = new Date(paramBean['endDatetime']).format("HH:mm:ss");
@@ -525,7 +502,7 @@
                         for(var index in eventLogChartList){
                             var item = eventLogChartList[index];
                             var _eventDate = new Date(item['eventDatetime']).format("HH:mm:ss");
-                            _chartList.push({meta:_eventDate,value:item['value'],type:'event'});
+                            _chartList.push({meta:_eventDate,value:item['value']});
                             if(_eventDate == _endDt){
                                 endDtAddFlag = false;
                                 _eventDateList.push(_eventDate);
@@ -536,7 +513,7 @@
                     }
 
                     if(endDtAddFlag){
-                        _chartList.push({meta:_endDt,value:0,type:'none'});
+                        _chartList.push({meta:_endDt,value:null});
                         _eventDateList.push(_endDt);
                     }
                     resourceChart['chartist'].data.series[0] = _chartList;
@@ -821,24 +798,28 @@
                 <div class="toast_popup on"></div>
 
                 <!-- 자원 모니터링 팝업 -->
-                <div class="tpopup-resource">
+                <div class="tpopup-resource type01">
                     <h2><spring:message code="dashboard.title.resourceMonitoring"/></h2>
+                    <div class="chart_select_set" id="resourceDateSelType">
+                        <button value="300" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">5<spring:message code="common.column.minute"/></button>
+                        <button value="600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">10<spring:message code="common.column.minute"/></button>
+                        <button value="1800" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">30<spring:message code="common.column.minute"/></button>
+                        <button value="3600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">60<spring:message code="common.column.minute"/></button>
+                    </div>
                     <section>
                         <div class="resource_view">
-                            <h3 class="select_change" id="selResourceEventName"></h3>
-                            <div class="chart_select_set" id="resourceDateSelType">
-                                <button value="300" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">5<spring:message code="common.column.minute"/></button>
-                                <button value="600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">10<spring:message code="common.column.minute"/></button>
-                                <button value="1800" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">30<spring:message code="common.column.minute"/></button>
-                                <button value="3600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">60<spring:message code="common.column.minute"/></button>
-                            </div>
                             <div class="chart_box chart01" id="resourceChartElement"></div>
                         </div>
                         <div class="resource_list">
                             <div>
                                 <isaver:areaSelectBox htmlTagId="resourceAreaId" templateCode="TMP009" allModel="true" allText="${allSelectText}"/>
+                                <select id="resourceDeviceId" onchange="findListResourceChart();">
+                                    <option value=""><spring:message code="common.selectbox.select"/></option>
+                                </select>
+                                <select id="resourceEventId" onchange="findListResourceChart();">
+                                    <option value=""><spring:message code="common.selectbox.select"/></option>
+                                </select>
                             </div>
-                            <ul class="device_set" id="resourceDeviceList"></ul>
                         </div>
                     </section>
                 </div>

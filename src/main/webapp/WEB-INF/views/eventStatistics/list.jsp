@@ -221,6 +221,9 @@
                 case 'TMP008': // 화장실재실
                     $("#eventSelect option[value='EVT017'], option[value='EVT018'], option[value='EVT019'], option[value='EVT020']").prop("disabled",false);
                     break;
+                case 'TMP009': // 자원모니터링
+                    $("#eventSelect option[value='EVT800'], option[value='EVT801'], option[value='EVT802'], option[value='EVT803']").prop("disabled",false);
+                    break;
             }
         });
 
