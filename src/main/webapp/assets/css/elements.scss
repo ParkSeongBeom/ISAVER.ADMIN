@@ -676,6 +676,9 @@ div[contenteditable] {}
     & > div {
       z-index: -1; display: none;
       &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-02); }
+      &:not(.ui-resizable-handle), &:after:not(.ui-resizable-handle) {@include mhwidth(10px);}
+      &.ui-resizable-handle, &.ui-resizable-handle:after{@include mhwidth(10px);}
+      &.ui-resizable-handle.ui-resizable-s:before{background:none;}
       &:after {@include lidar-bg($color-lidar); @include lidar; @include border-radius(10000px);}
     }
 

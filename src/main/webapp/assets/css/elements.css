@@ -2647,6 +2647,22 @@ button.btn ~ button.btn {
         height: 800px !important;
         min-height: 800px !important;
         max-height: 800px !important; }
+      .g-ico > div:not(.ui-resizable-handle), .g-ico > div:after:not(.ui-resizable-handle) {
+        width: 10px !important;
+        min-width: 10px !important;
+        max-width: 10px !important;
+        height: 10px !important;
+        min-height: 10px !important;
+        max-height: 10px !important; }
+      .g-ico > div.ui-resizable-handle, .g-ico > div.ui-resizable-handle:after {
+        width: 10px !important;
+        min-width: 10px !important;
+        max-width: 10px !important;
+        height: 10px !important;
+        min-height: 10px !important;
+        max-height: 10px !important; }
+      .g-ico > div.ui-resizable-handle.ui-resizable-s:before {
+        background: none; }
       .g-ico > div:after {
         content: "";
         animation-name: lidar;
