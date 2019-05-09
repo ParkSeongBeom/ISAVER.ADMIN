@@ -725,7 +725,7 @@
                         <span><spring:message code="dashboard.title.alarmCenter"/></span>
                     </h2>
                     <!-- 임계치별 알림 카운트 -->
-                    <section class="issue_board">
+                    <section criticalLevelCnt class="issue_board">
                         <c:forEach var="critical" items="${criticalList}">
                             <span ${critical.codeId}>0</span>
                         </c:forEach>
