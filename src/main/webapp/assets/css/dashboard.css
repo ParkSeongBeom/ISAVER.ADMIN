@@ -11,6 +11,62 @@
 */
 /*50px 버튼*/
 /* 40px 버튼 */
+@-webkit-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@-moz-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@-o-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
 .watch_area {
   /*
   #1 .area01
@@ -1645,7 +1701,7 @@
   overflow: hidden; }
   .guard_set .s_lbox .check_btn_set {
     position: absolute;
-    z-index: 100;
+    z-index: 80;
     left: 15px;
     bottom: 15px; }
     .guard_set .s_lbox .check_btn_set > div {

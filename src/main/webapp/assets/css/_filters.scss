@@ -1181,8 +1181,44 @@ $mt_btn_w:40px;
   }
 }
 
+// SVG애니메이션
+$main-width: 70px;
 
+@mixin radarKeyframes() {
+  @-webkit-keyframes radar {
+    @content;
+  }
+  @-moz-keyframes radar {
+    @content;
+  }
+  @-o-keyframes radar {
+    @content;
+  }
+  @keyframes radar {
+    @content;
+  }
+}
 
+@include radarKeyframes() {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px;
+  }
+
+  100% {
+    opacity: 0.5;
+    width: $main-width;
+    height: $main-width;
+    border-width: 1;
+  }
+}
 
 
 

@@ -1,7 +1,5 @@
 ﻿@charset "utf-8";
 @import "filters";
-@import "layout";
-
 
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {}
@@ -558,7 +556,7 @@ $treffic_w:32%;
   .s_lbox {
     @include flex-midddle; overflow: hidden;
     .check_btn_set {
-      position: absolute; z-index: 100; left:15px; bottom:15px;
+      position: absolute; z-index: 80; left:15px; bottom:15px;
 
       & > div {
         position: relative; width:50px; height:60px;

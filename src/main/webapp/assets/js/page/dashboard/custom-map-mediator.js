@@ -360,6 +360,10 @@ var CustomMapMediator = (
                         for(let i in _OBJECT_TYPE){
                             let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],3,5,6,6,"0");
                             _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
+                            _canvasSvg.circle(marker,4,7,20);
+                            _canvasSvg.circle(marker,4,7,35);
+                            _canvasSvg.circle(marker,4,7,40);
+                            _canvasSvg.circle(marker,4,7,50);
                         }
                     }
                 });

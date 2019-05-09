@@ -11,6 +11,62 @@
 */
 /*50px 버튼*/
 /* 40px 버튼 */
+@-webkit-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@-moz-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@-o-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
+@keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1; } }
 .ico-safeeye:before {
   content: "\e941" !important; }
 .ico-blinker:before {
@@ -2626,9 +2682,13 @@ button.btn ~ button.btn {
     height: 30px; }
     .g-ico .ui-resizable-e, .g-ico .ui-resizable-s {
       display: none !important; }
+    .g-ico .ui-resizable-e {
+      right: -16px; }
+    .g-ico .ui-resizable-s {
+      bottom: -23px; }
     .g-ico .ui-resizable-se {
-      right: -5px;
-      bottom: -5px; }
+      right: -16px;
+      bottom: -16px; }
     .g-ico.on {
       background-color: #b42d6e; }
       .g-ico.on:hover .ui-resizable-se {
@@ -3366,6 +3426,35 @@ button.btn ~ button.btn {
     background: url("../images/ico/sico_81.svg"); }
   .g-line polyline.object {
     stroke: #d2a01e; }
+  .g-line marker circle {
+    margin: 0 auto;
+    animation-name: radar;
+    animation-direction: normal;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.6, 0.13, 0.79, 0.49); }
+    .g-line marker circle:nth-of-type(1) {
+      animation-delay: 1.3s;
+      stroke-width: 8px;
+      stroke-opacity: 0.3; }
+    .g-line marker circle:nth-of-type(2) {
+      animation-delay: 1.6s;
+      stroke-width: 10px;
+      stroke-opacity: 0.4; }
+    .g-line marker circle:nth-of-type(3) {
+      animation-delay: 2s;
+      stroke-width: 12px;
+      stroke-opacity: 0.4; }
+    .g-line marker circle:nth-of-type(4) {
+      animation-delay: 2.4s;
+      stroke-width: 16px;
+      stroke-opacity: 0.4; }
+  .g-line #human circle {
+    stroke: #109dcb; }
+  .g-line #unknown circle {
+    stroke: #ffffff; }
   .g-line g {
     overflow: visible;
     width: 20px;
