@@ -3437,19 +3437,15 @@ button.btn ~ button.btn {
     animation-timing-function: cubic-bezier(0.6, 0.13, 0.79, 0.49); }
     .g-line marker circle:nth-of-type(1) {
       animation-delay: 1.3s;
-      stroke-width: 8px;
+      stroke-width: 2px;
       stroke-opacity: 0.3; }
     .g-line marker circle:nth-of-type(2) {
       animation-delay: 1.6s;
-      stroke-width: 10px;
+      stroke-width: 3px;
       stroke-opacity: 0.4; }
     .g-line marker circle:nth-of-type(3) {
       animation-delay: 2s;
-      stroke-width: 12px;
-      stroke-opacity: 0.4; }
-    .g-line marker circle:nth-of-type(4) {
-      animation-delay: 2.4s;
-      stroke-width: 16px;
+      stroke-width: 4px;
       stroke-opacity: 0.4; }
   .g-line #human circle {
     stroke: #109dcb; }
