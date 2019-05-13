@@ -11,62 +11,6 @@
 */
 /*50px 버튼*/
 /* 40px 버튼 */
-@-webkit-keyframes radar {
-  0% {
-    opacity: 0;
-    width: 0;
-    height: 0; }
-  50% {
-    opacity: 1;
-    width: 10px;
-    height: 10px; }
-  100% {
-    opacity: 0.5;
-    width: 70px;
-    height: 70px;
-    border-width: 1; } }
-@-moz-keyframes radar {
-  0% {
-    opacity: 0;
-    width: 0;
-    height: 0; }
-  50% {
-    opacity: 1;
-    width: 10px;
-    height: 10px; }
-  100% {
-    opacity: 0.5;
-    width: 70px;
-    height: 70px;
-    border-width: 1; } }
-@-o-keyframes radar {
-  0% {
-    opacity: 0;
-    width: 0;
-    height: 0; }
-  50% {
-    opacity: 1;
-    width: 10px;
-    height: 10px; }
-  100% {
-    opacity: 0.5;
-    width: 70px;
-    height: 70px;
-    border-width: 1; } }
-@keyframes radar {
-  0% {
-    opacity: 0;
-    width: 0;
-    height: 0; }
-  50% {
-    opacity: 1;
-    width: 10px;
-    height: 10px; }
-  100% {
-    opacity: 0.5;
-    width: 70px;
-    height: 70px;
-    border-width: 1; } }
 .watch_area {
   /*
   #1 .area01
@@ -1699,11 +1643,89 @@
   -ms-flex-pack: center;
   justify-content: center;
   overflow: hidden; }
+  .guard_set .s_lbox .check_btn_menu {
+    position: absolute;
+    z-index: 80;
+    left: 15px;
+    bottom: 15px;
+    width: 50px;
+    height: 50px; }
+    .guard_set .s_lbox .check_btn_menu input {
+      opacity: 0;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      padding: 0;
+      margin: 0; }
+    .guard_set .s_lbox .check_btn_menu label {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      position: relative;
+      opacity: 0.7; }
+      .guard_set .s_lbox .check_btn_menu label:before {
+        font-size: 2.4rem;
+        text-shadow: 0 4px 8px black;
+        -webkit-text-shadow: 0 4px 8px black;
+        -moz-text-shadow: 0 4px 8px black; }
+      .guard_set .s_lbox .check_btn_menu label:after {
+        letter-spacing: 0;
+        line-height: 0.9rem;
+        position: absolute;
+        left: 55px;
+        text-align: left;
+        font-size: 0.8rem; }
+    .guard_set .s_lbox .check_btn_menu input:hover + label {
+      opacity: 1; }
+    .guard_set .s_lbox .check_btn_menu input:checked + label {
+      opacity: 1; }
+      .guard_set .s_lbox .check_btn_menu input:checked + label:before, .guard_set .s_lbox .check_btn_menu input:checked + label:after {
+        color: #32a0be; }
+    .guard_set .s_lbox .check_btn_menu label:before {
+      content: "\e938"; }
+    .guard_set .s_lbox .check_btn_menu label:after {
+      content: "VIEW CONTROL LIST ON"; }
+    .guard_set .s_lbox .check_btn_menu input:hover + label {
+      opacity: 1; }
+    .guard_set .s_lbox .check_btn_menu input:checked + label:before {
+      content: "\e92c"; }
+    .guard_set .s_lbox .check_btn_menu input:checked + label:after {
+      content: "VIEW CONTROL LIST OFF"; }
+  .guard_set .s_lbox .check_btn_menu.on + .check_btn_set {
+    bottom: 65px; }
   .guard_set .s_lbox .check_btn_set {
     position: absolute;
     z-index: 80;
     left: 15px;
-    bottom: 15px; }
+    bottom: 65px;
+    position: absolute;
+    z-index: 101;
+    bottom: -300px;
+    left: 15px;
+    transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
     .guard_set .s_lbox .check_btn_set > div {
       position: relative;
       width: 50px;
@@ -2877,7 +2899,8 @@
   position: relative;
   width: 100%;
   height: 100%;
-  margin: 10px 0; }
+  margin: 10px 0;
+  padding: 70px 0 0 0; }
 
 .date_select {
   z-index: 1;
