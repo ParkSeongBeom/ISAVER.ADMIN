@@ -788,6 +788,10 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
   & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
 } // @include tpopupbase;
 
+// safe-guard - 온오프 리스트
+@mixin bottom-base {
+  position: absolute; z-index:101; bottom:-($noticecenter-width); left:15px; @include transition(200ms);
+} // @include bottombase;
 
 @mixin resize {
   .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {

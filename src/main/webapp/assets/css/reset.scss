@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "filters";
-@import "layout";
 
 /*****************************************************************
  * filename			:	reset.scss
@@ -176,5 +175,5 @@ div[contenteditable] { &:empty:before {content: attr(placeholder); display: bloc
 .sico_126:before {content: "\e97d";}   .sico_136:before {content: "\e987";}
 .sico_127:before {content: "\e97e";}   .sico_137:before {content: "\e988";}
 .sico_128:before {content: "\e97f";}   .sico_138:before {content: "\e989";}
-.sico_129:before {content: "\e980";}
+.sico_129:before {content: "\e980";}   .sico_139:before {content: "\e98a";}
 .sico_130:before {content: "\e981";}
