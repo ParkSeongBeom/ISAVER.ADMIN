@@ -163,6 +163,7 @@ var CustomMapPopup = (
                         , 'resizable': true
                         , 'fenceView': true
                         , 'openLinkFlag': false
+                        , 'lidarHideFlag' : true
                         , 'childListLoad': function (data) {
                             _element.find("#childList").empty();
                             _cameraSelectTag = $("<select/>", {name: "selCamera"}).append(

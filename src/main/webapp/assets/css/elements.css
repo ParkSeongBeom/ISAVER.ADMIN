@@ -2785,6 +2785,13 @@ button.btn ~ button.btn {
     -moz-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); } }
+    .g-ico.level-die > div {
+      width: 0px !important;
+      min-width: 0px !important;
+      max-width: 0px !important;
+      height: 0px !important;
+      min-height: 0px !important;
+      max-height: 0px !important; }
     .g-ico.wh-01 > div, .g-ico.wh-01 > div:after {
       width: 400px !important;
       min-width: 400px !important;

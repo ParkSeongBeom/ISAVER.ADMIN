@@ -682,6 +682,7 @@ div[contenteditable] {}
       &.ui-resizable-handle.ui-resizable-s:before{background:none;}
       &:after {@include lidar-bg($color-lidar); @include lidar; @include border-radius(10000px);}
     }
+    &.level-die > div{@include mhwidth(0px);}
 
     &.wh-01 > div {&, &:after { @include mmwidth($g-wh-01); @include mmheight($g-wh-01); } }
     &.wh-03 > div {&, &:after { @include mmwidth($g-wh-03); @include mmheight($g-wh-03); } }
