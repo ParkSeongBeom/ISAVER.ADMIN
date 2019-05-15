@@ -2459,7 +2459,21 @@ button.btn ~ button.btn {
   position: absolute;
   z-index: 1;
   width: 5000px !important;
-  height: 5000px !important; }
+  height: 5000px !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  /*&:after  {width:100%; height:1px; left:0; top:50%;}*/ }
+  .map_images:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    /*background-color: rgba(#fff,0.4);*/ }
+  .map_images:before {
+    /*width:1px; height:100%; left:50%; top:0;*/
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
+    background-repeat: repeat, no-repeat; }
   .map_images .gm-style-pbc {
     opacity: 0 !important; }
   .map_images .gm-style > div:after, .map_images .gm-style > div:before {
@@ -2486,11 +2500,6 @@ button.btn ~ button.btn {
       height: 100%; }
     .map_images .map_bg:before, .map_images .map_bg:after {
       content: ""; }
-    .map_images .map_bg:before {
-      /*width:1px; height:100%; left:50%; top:0;*/
-      z-index: 1;
-      background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center.svg");
-      background-repeat: repeat, no-repeat; }
     .map_images .map_bg:after {
       opacity: .4;
       background-image: url("../images/map/map_see_now_2.jpg");
