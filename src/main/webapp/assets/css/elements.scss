@@ -679,7 +679,7 @@ div[contenteditable] {}
       background-color: $color-on;
       &:hover { .ui-resizable-se {display: block !important;} }
     }
-    &.lidar > div {display: block !important;}
+    &.lidar > div {display: block !important; cursor: default;}
     & > div {
       z-index: -1; display: none;
       &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-02); }
@@ -738,7 +738,7 @@ div[contenteditable] {}
       &-danger  {
         &,& > span {background-color:$color-danger;}
         &:before {border-color:$color-danger; }
-        & > div {&:after {@include lidar-bg($color-danger);}}
+        & > div {&:after {@include lidar-bg($color-danger);cursor: default;}}
       }
 
       &-die     {
