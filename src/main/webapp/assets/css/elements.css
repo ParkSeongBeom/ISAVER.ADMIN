@@ -2704,7 +2704,7 @@ button.btn ~ button.btn {
         display: block !important; }
     .g-ico.lidar > div {
       display: block !important;
-      cursor: default; }
+      cursor: move; }
     .g-ico > div {
       z-index: -1;
       display: none; }
@@ -3031,7 +3031,7 @@ button.btn ~ button.btn {
       border-color: rgba(195, 2, 2, 0.8);
       opacity: .6;
       background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba(195, 2, 2, 0) 0%, rgba(195, 2, 2, 0.3) 50%, rgba(195, 2, 2, 0.2) 50.1%, rgba(195, 2, 2, 0) 100%) !important;
-      cursor: default; }
+      cursor: move; }
 @-webkit-keyframes lidar {
   0% {
     transform: rotate(0);
