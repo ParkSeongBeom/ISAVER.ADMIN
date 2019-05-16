@@ -68,7 +68,7 @@ var CustomMapMediator = (
                 , 'rotate': null // 회전시 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
-                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
+                , 'moveFenceHide': true // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
