@@ -611,7 +611,7 @@ div[contenteditable] {}
 
   & > * {position: absolute !important;}
   .map_bg {
-    z-index: -1;
+    z-index: -1;background-repeat:no-repeat;background-position: center;
     &, &:before, &:after {position: absolute; width:100%; height:100%;}
     &:before, &:after {content:"";}
     &:after { opacity: .4; background-image: url("../images/map/map_see_now_2.jpg"); background-position:center; background-repeat:no-repeat;}

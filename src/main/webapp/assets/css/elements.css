@@ -2493,7 +2493,9 @@ button.btn ~ button.btn {
   .map_images > * {
     position: absolute !important; }
   .map_images .map_bg {
-    z-index: -1; }
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: center; }
     .map_images .map_bg, .map_images .map_bg:before, .map_images .map_bg:after {
       position: absolute;
       width: 100%;

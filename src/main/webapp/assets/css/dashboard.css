@@ -1757,7 +1757,7 @@
       .guard_set .s_lbox .check_btn_menu input:checked + label:before, .guard_set .s_lbox .check_btn_menu input:checked + label:after {
         color: #32a0be; }
     .guard_set .s_lbox .check_btn_menu label:before {
-      content: "\e98a"; }
+      content: "\e959"; }
     .guard_set .s_lbox .check_btn_menu label:after {
       content: "VIEW OPTIONS"; }
     .guard_set .s_lbox .check_btn_menu input:hover + label {

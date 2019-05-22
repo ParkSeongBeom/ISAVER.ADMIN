@@ -380,7 +380,7 @@ var CustomMapMediator = (
             }
 
             if(physicalFileName!=null && physicalFileName!=""){
-                _mapCanvas.find(".map_bg").css({"background-image":"url("+_fileUploadPath+physicalFileName+")","background-position": "center"});
+                _mapCanvas.find(".map_bg").css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
             }else{
                 _mapCanvas.find(".map_bg").css({"background-image":""});
             }
