@@ -593,6 +593,18 @@ div[contenteditable] {}
     background-repeat:repeat, no-repeat;
   }
 
+  .g-angle{width:100%;height:100%;
+    &.deg10 > .g-ico > div{transform: rotateX(10deg);}
+    &.deg15 > .g-ico > div{transform: rotateX(15deg);}
+    &.deg20 > .g-ico > div{transform: rotateX(20deg);}
+    &.deg25 > .g-ico > div{transform: rotateX(25deg);}
+    &.deg30 > .g-ico > div{transform: rotateX(30deg);}
+    &.deg35 > .g-ico > div{transform: rotateX(35deg);}
+    &.deg40 > .g-ico > div{transform: rotateX(40deg);}
+    &.deg45 > .g-ico > div{transform: rotateX(45deg);}
+    &.deg50 > .g-ico > div{transform: rotateX(50deg);}
+  }
+
   .gm-style {
     &-pbc { opacity: 0 !important;}
     & > div {
@@ -614,7 +626,7 @@ div[contenteditable] {}
     z-index: -1;background-repeat:no-repeat;background-position: center;
     &, &:before, &:after {position: absolute; width:100%; height:100%;}
     &:before, &:after {content:"";}
-    &:after { opacity: .4; background-image: url("../images/map/map_see_now_2.jpg"); background-position:center; background-repeat:no-repeat;}
+    &:after { opacity: .4; background-image: url("../images/map/map1.jpeg"); background-position:center; background-repeat:no-repeat;}
   }
   //&.cursor_cros {}
 }
@@ -853,7 +865,7 @@ div[contenteditable] {}
 
   &-line {
     polyline {fill: transparent !important; stroke: rgba($color-blue-01,0.4); stroke-width:1px;}
-    marker {overflow: visible;} image {width:9px; height:9px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
+    marker {overflow: visible;} image {width:32px; height:32px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
 
     // 마크 반경표시
     marker circle{
