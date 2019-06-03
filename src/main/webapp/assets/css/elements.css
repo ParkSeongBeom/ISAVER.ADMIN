@@ -3462,8 +3462,8 @@ button.btn ~ button.btn {
   .g-line marker {
     overflow: visible; }
   .g-line image {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     background: url("../images/ico/sico_81.svg"); }
   .g-line polyline.object {
     stroke: #d2a01e; }

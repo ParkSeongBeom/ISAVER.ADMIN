@@ -865,7 +865,7 @@ div[contenteditable] {}
 
   &-line {
     polyline {fill: transparent !important; stroke: rgba($color-blue-01,0.4); stroke-width:1px;}
-    marker {overflow: visible;} image {width:32px; height:32px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
+    marker {overflow: visible;} image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
 
     // 마크 반경표시
     marker circle{
