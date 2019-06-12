@@ -125,5 +125,7 @@ public interface DeviceDao {
 
     DeviceBean findByParentDevice(Map<String, String> parameters);
 
+    List<DeviceBean> findListDeviceForLocationSync(Map<String, String> parameters);
+
     List<DeviceBean> findListDeviceForTest();
 }

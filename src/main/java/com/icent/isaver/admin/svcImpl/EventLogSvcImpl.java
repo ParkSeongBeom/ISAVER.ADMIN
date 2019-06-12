@@ -123,7 +123,7 @@ public class EventLogSvcImpl implements EventLogSvc {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        ModelAndView modelAndView = new ModelAndView("excelView");
+        ModelAndView modelAndView = new ModelAndView();
         POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_"+sdf.format(new Date()), events, columns, heads, "EventHistory");
         return modelAndView;
     }

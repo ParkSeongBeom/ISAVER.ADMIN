@@ -27,6 +27,7 @@ var NotificationHelper = (
         };
         let _options ={
             toastPopup : false
+            ,thisAreaShowOnlyFlag : false
         };
         let _webSocketHelper;
         let _messageConfig;
@@ -39,7 +40,7 @@ var NotificationHelper = (
             ,pageIndex : 1
             ,elementArr : []
             ,elementIndex : 0
-            ,initFlag : false
+            ,initViewCnt : 0
         };
 
         /**
@@ -55,6 +56,13 @@ var NotificationHelper = (
             console.log('[NotificationHelper] initialize complete');
         };
 
+        this.setOptions = function(options){
+            for(var i in options){
+                if(_options.hasOwnProperty(i)){
+                    _options[i] = options[i];
+                }
+            }
+        };
 
         this.setCallBackEventHandler = function(_eventHandler){
             if(_eventHandler==null || typeof _eventHandler != "function"){
@@ -140,7 +148,7 @@ var NotificationHelper = (
                     }else{
                         setAlarmAudio();
                     }
-                    addNotification(resultData['notification'], true, true);
+                    addNotification(resultData['notification'], true);
                     break;
                 case "allCancelNotification": // 알림센터 이벤트 전체 해제
                     for(let index in _notificationList){
@@ -390,21 +398,17 @@ var NotificationHelper = (
          * @param notifications
          */
         var addNotificationList = function(notifications, notiCountList){
-            setLoading('noti', true);
             setLoading('area', true);
 
             if(notifications!=null){
                 for(var index in notifications){
-                    addNotification(notifications[index], false, (notifications.length-_notiPageObj['viewMaxCnt'])<=index?true:false);
+                    addNotification(notifications[index], false);
                 }
-
-                if(notifications.length<=_notiPageObj['viewMaxCnt']){
-                    $("#notiMoreBtn").hide();
-                }
+                selectBoxChangeHandler('reset');
                 notificationBtnRefresh();
             }
 
-            if(notiCountList!=null){
+            if(notiCountList!=null && !_options['thisAreaShowOnlyFlag']){
                 for(var index in notiCountList){
                     // 알림센터 상단 카운트 및 알림아이콘
                     var levelTag = $("section[criticalLevelCnt] span["+notiCountList[index]['criticalLevel']+"]");
@@ -414,8 +418,6 @@ var NotificationHelper = (
                     }
                 }
             }
-            setLoading('noti', false);
-
             setTimeout(function () {
                 callBackEvent('addNotification', {'notification':notifications});
                 setLoading('area', false);
@@ -469,6 +471,16 @@ var NotificationHelper = (
             return notificationTag;
         };
 
+        var ignoreNotification = function(areaId){
+            if(!_options['thisAreaShowOnlyFlag']){
+                return false;
+            }else{
+                return !(typeof dashboardHelper!="undefined"
+                    && dashboardHelper instanceof DashboardHelper
+                    && (dashboardHelper.getArea("all", areaId)!=null || (dashboardHelper.getArea("templateCode", areaId)=='TMP001' && dashboardHelper.getArea("child", areaId)!=null)));
+            }
+        };
+
         /**
          * add notification
          * @author psb
@@ -476,7 +488,7 @@ var NotificationHelper = (
          * @param newFlag
          * @param viewFlag
          */
-        var addNotification = function(notification, newFlag, viewFlag){
+        var addNotification = function(notification, newFlag){
             if(_self.getNotification('element',notification['notificationId'])!=null){
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
@@ -491,17 +503,29 @@ var NotificationHelper = (
                 }
             }
 
+            var notificationElement = null;
+            if(ignoreNotification(notification['areaId'])){
+                console.debug("[NotificationHelper][addNotification] ignore notification - "+notification['notificationId']);
+                return false;
+            }
+
+            if(newFlag && checkNotificationData(notification)){
+                notificationElement = notificationViewRender(notification, true);
+            }
+
             _notificationList[notification['notificationId']] = {
-                'element' : (viewFlag&&checkNotificationData(notification))?notificationViewRender(notification,true):null
+                'element' : notificationElement
                 ,'data' : notification
             };
 
-            if(newFlag){
+            if(newFlag || _options['thisAreaShowOnlyFlag']){
                 // 알림센터 상단 카운트 및 알림아이콘
                 var levelTag = $("section[criticalLevelCnt] span["+notification['criticalLevel']+"]");
                 levelTag.text(Number(levelTag.text())+1);
                 modifyElementClass($(".issue_btn"),"level-"+criticalCss[notification['criticalLevel']],'add');
+            }
 
+            if(newFlag){
                 /* 애니메이션 */
                 $(".issue_btn").removeClass("on");
                 try {
@@ -752,32 +776,24 @@ var NotificationHelper = (
                     switch (type){
                         case "reset":
                             _notiPageObj['pageIndex'] = 1;
-                            _notiPageObj['initFlag'] = false;
                             limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex'];
+                            _notiPageObj['elementArr'] = [];
+                            for(var index in _notificationList){
+                                var notification = _notificationList[index];
+                                if(notification['element']!=null){
+                                    notification['element'].remove();
+                                }
+                                notification['element'] = null;
+                                _notiPageObj['elementArr'].push(notification);
+                            }
+                            if(_notiPageObj['elementArr'].length>0){
+                                _notiPageObj['elementIndex'] = _notiPageObj['elementArr'].length-1;
+                            }
                             break;
                         case "more":
                             _notiPageObj['pageIndex']++;
-                            limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex'];
-                            if(_notiPageObj['initFlag']){
-                                limitCnt -= _element.find(">li:visible").length;
-                            }
+                            limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex']-_element.find(">li:visible").length;
                             break;
-                    }
-
-                    if(_notiPageObj['initFlag']==false){
-                        _notiPageObj['elementArr'] = [];
-                        for(var index in _notificationList){
-                            var notification = _notificationList[index];
-                            if(notification['element']!=null){
-                                notification['element'].remove();
-                            }
-                            notification['element'] = null;
-                            _notiPageObj['elementArr'].push(notification);
-                        }
-                        if(_notiPageObj['elementArr'].length>0){
-                            _notiPageObj['elementIndex'] = _notiPageObj['elementArr'].length-1;
-                        }
-                        _notiPageObj['initFlag'] = true;
                     }
 
                     if(_notiPageObj['elementIndex']>=0 && _notiPageObj['elementArr'].length>0){

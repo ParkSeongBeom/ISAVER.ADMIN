@@ -118,7 +118,8 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public MarshallingView xmlView() {
         MarshallingView marshallingView = new MarshallingView(xmlMarshaller());
-        marshallingView.setContentType("application/xml");
+//        marshallingView.setContentType("application/xml");
+        marshallingView.setContentType("text/xml;charset=UTF-8");
         return marshallingView;
     }
 

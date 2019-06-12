@@ -58,7 +58,7 @@ public class LoginHistorySvcImpl implements LoginHistorySvc {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        ModelAndView modelAndView = new ModelAndView("excelView");
+        ModelAndView modelAndView = new ModelAndView();
         POIExcelUtil.downloadExcel(modelAndView, "isaver_login_history_" + sdf.format(new Date()), loginHistoryList, columns, heads, "LoginHistory");
         return modelAndView;
     }

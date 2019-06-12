@@ -53,9 +53,20 @@ menu    {}
 */
 
 body {
-  position: absolute; top:0; left:0; right:0; width:100%; height:100%; min-width:$body-minwidth; min-height:768px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  min-width: $body-minwidth;
+  min-height: 768px;
+
   @include webkit_scroll;
-  &, & > .wrap, main {overflow: hidden; }
+
+  &, & > .wrap, main {
+    overflow: hidden;
+  }
 }
 
 .dashboard_mode,.login_mode {
@@ -77,8 +88,6 @@ body {
     @include flex-option(0, 1, 100%); position: relative; width:100%;
   }
 }
-
-
 
 .wrap {
   @include flexbase; @include flex-column; position:relative; width:100%; height:100%;
@@ -528,9 +537,18 @@ h4 {
     }
     .admin_mode & span { pointer-events: none;}
   }
+  .checkbox_set.csl_style01{
+
+      margin:0 0 0 auto; @include flex-midddle;justify-content: flex-end;
+      &:after {font-size:1rem;}
+      span{margin: 0 5px 0 0;}
+  }
 }
+
+
+
 .expl {
-  margin: 0 0 0 auto;
+  margin: 0 0 0 25px; padding-left: 15px; border-left: 1px solid #a9a9a9;
   span {
     position: relative; padding: 0 0 0 21px; margin: 0 0 0 11px;
     &:before {
@@ -825,7 +843,7 @@ h4 {
           position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
           @include flexbase; @include flex-align-items-center; background-color: rgba(0,0,0,.4);
         }
-      } 
+      }
       .resource_list {
         @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
         & > div {
@@ -918,6 +936,8 @@ h4 {
       &:first-of-type {
         overflow: hidden; height:100%; background-color: $color-bas;
         &, & * {color:$color-white-02;}
+
+
         .fencebtn_set {
           display: none; position: absolute; z-index:10; bottom:10px; right:10px;
 
@@ -952,11 +972,11 @@ h4 {
 
         & > * {position: relative; z-index: 1; border-color: transparent;}
 
-        select {@include flex-option(0, 1, 100%);}
+        select {@include flex-option(0, 1, 100%);max-width:385px;}
 
         span {
           @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
-          @include mmwidth(40px); height:100%; padding: 0 !important;
+          @include mmwidth(60px); height:100%; padding: 0 !important;
         }
         select + span {min-width:60px !important;}
         span, button {}
@@ -968,8 +988,18 @@ h4 {
             &:before {content:"\e902";  @include rotate(90deg);}
           }
           &:nth-of-type(2){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(3){
+            @include border01(0 1px 0 0,$color-bline,1 );
+            &:before {content:"\e902";  @include rotate(90deg);}
+          }
+          &:nth-of-type(4){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(5){
+            @include border01(0 1px 0 0,$color-bline,1 );
+            &:before {content:"\e902";  @include rotate(90deg);}
+          }
+          &:nth-of-type(6){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
         }
-        input  {max-width:100px;}
+        input  {max-width:60px;}
       }
     }
   }
@@ -1336,9 +1366,14 @@ h4 {
         &:after {content:"\e92c" !important;}
         li {
           @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
-          width:100%; min-height:40px;
+          width:100%; min-height:40px; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px dashed #fff;
           &:before {content:"\e92a"; padding:0 10px 0 0;}
           & > span {width:120px; min-width:120px; }
+          div{
+            div{padding-bottom:15px;border-bottom:1px dashed #fff;
+              &:last-child{padding-bottom:0;border-bottom: none;}
+            }
+          }
         }
       }
     }
@@ -1506,12 +1541,14 @@ body.taekwon_mode {
     &, & > div {@include flexbase; @include flex-column; }
 
     & > div, .copybox {
+      display:none;
       @include flex-justify-content-center; @include flex-align-items-start;
       @include transition(200ms);  // @include rotate-y(-20deg);
       order: 2; width:calc(100% - 20px); min-height:calc(100% / 5 - 10px); padding: 10px; margin:10px; margin-bottom:0;
       @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
 
       &.level-danger {order:1 !important;}
+      &.level-caution, &.level-warning, &.level-danger{display:block;}
 
       //&:before {@include bbl(auto,0,0,0,100%,1px,#000); }
       &:after  {background-color: $color-not; opacity: 0.95;}

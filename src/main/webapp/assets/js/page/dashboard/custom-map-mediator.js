@@ -22,6 +22,11 @@ var CustomMapMediator = (
             ,'object' : {}
             ,'custom' : {}
         };
+        // 환경설정에 따라 사람 <-> 오브젝트로 전환
+        var _OBJECT_TYPE_CUSTOM = {
+            'human' : 'human'
+            ,'unknown' : 'unknown'
+        };
         var _defsMarkerRef = {
             'unknown' : '/assets/images/ico/sico_39.svg'
             ,'unknown-LEV001' : '/assets/images/ico/sico_39_cau.svg'
@@ -32,15 +37,19 @@ var CustomMapMediator = (
             ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
             ,'human-LEV003' : '/assets/images/ico/sico_81_dan.svg'
         };
+        var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
         var _options = {
             'element' : {
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
+                ,'saveLastPosition': true // 마지막에 머무른 값 쿠키 저장 기능
                 ,'zoom' : {
                     'init' : 1
-                    ,'min' : 0.5
+                    ,'min' : 0.3
                     ,'max' : 5.0
                 }
+                ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
+                ,'skewYIncrementValue': 1 // Y 기울기 클릭시 증가치
                 ,'rotateIncrementValue': 1 // 회전 클릭시 증가치
                 ,'guardInfo' : true
             }
@@ -50,10 +59,12 @@ var CustomMapMediator = (
                     , 'fill': "white"
                     , 'font-size': "5px"
                 }
+                , 'animateFlag' : true // 이벤트 발생시 펜스 애니메이션 사용 여부
             }
             ,'object' : {
                 'pointsHideFlag' : false // 트래킹 이동경로 숨김여부
                 ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수 null일경우 무제한
+                , 'animateFlag' : true // 이벤트 발생시 오브젝트 애니메이션 사용 여부
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
@@ -65,14 +76,16 @@ var CustomMapMediator = (
                 , 'changeFence': null // fence change eventHandler
                 , 'onLoad': null // List load eventHandler
                 , 'change': null // drag or resize로 인한 수치값 변경시 eventHandler
-                , 'rotate': null // 회전시 eventHandler
+                , 'changeConfig': null // 회전 / X축,Y축 기울기 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
                 , 'moveFenceHide': true // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
+                , 'moveReturnTimeout':null // 펜스로 이동 후 해당 펜스의 메인장치로 복귀
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
                 , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
+                , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
             }
         };
         var _targetClass = {
@@ -98,10 +111,11 @@ var CustomMapMediator = (
         var _scale=_options['element']['zoom']['init'];
         var _originX = 5000;
         var _originY = 5000;
-        var _fenceReturnTimeout;
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
+        var _skewX=0;
+        var _skewY=0;
         var _element;
         var _copyBoxElement;
         var _mapCanvas;
@@ -135,6 +149,15 @@ var CustomMapMediator = (
             _messageConfig = messageConfig;
         };
 
+        this.setObjectTypeCustom = function(human, unknown){
+            if(human!=null && human!=""){
+                _OBJECT_TYPE_CUSTOM['human'] = human;
+            }
+            if(unknown!=null && unknown!=""){
+                _OBJECT_TYPE_CUSTOM['unknown'] = unknown;
+            }
+        };
+
         /**
          * get custom area/device list
          * @author psb
@@ -142,7 +165,7 @@ var CustomMapMediator = (
         this.init = function(areaId,options){
             _areaId = areaId;
 
-            var objectViewFlag = $.cookie(areaId+"objectViewFlag");
+            var objectViewFlag = $.cookie(_areaId+"objectViewFlag");
             if(objectViewFlag != null && objectViewFlag.length > 0){
                 _objectViewFlag = objectViewFlag == "true";
                 _element.find("input[name='humanCkb']").prop("checked",_objectViewFlag);
@@ -150,19 +173,19 @@ var CustomMapMediator = (
                     _mapCanvas.addClass("onlyhuman");
                 }
             }
-            var pointsHideFlag = $.cookie(areaId+"pointsHideFlag");
+            var pointsHideFlag = $.cookie(_areaId+"pointsHideFlag");
             if(pointsHideFlag != null && pointsHideFlag.length > 0){
                 _options['object']['pointsHideFlag'] = pointsHideFlag == "true";
                 _element.find("input[name='pointsCkb']").prop("checked",_options['object']['pointsHideFlag']);
             }
 
-            var lidarHideFlag = $.cookie(areaId+"lidarHideFlag");
+            var lidarHideFlag = $.cookie(_areaId+"lidarHideFlag");
             if(lidarHideFlag != null && lidarHideFlag.length > 0){
                 _options['custom']['lidarHideFlag'] = lidarHideFlag == "true";
                 _element.find("input[name='lidarCkb']").prop("checked",_options['custom']['lidarHideFlag']);
             }
 
-            var moveFenceHideFlag = $.cookie(areaId+"moveFenceHideFlag");
+            var moveFenceHideFlag = $.cookie(_areaId+"moveFenceHideFlag");
             if(moveFenceHideFlag != null && moveFenceHideFlag.length > 0){
                 _options['custom']['moveFenceHide'] = moveFenceHideFlag == "true";
                 _element.find("input[name='moveFenceCkb']").prop("checked",_options['custom']['moveFenceHide']);
@@ -174,6 +197,28 @@ var CustomMapMediator = (
                         _options[i][index] = options[i][index];
                     }
                 }
+            }
+
+            if(_options['element']['saveLastPosition']){
+                var top = $.cookie(_areaId+"MapCanvasTop");
+                var left = $.cookie(_areaId+"MapCanvasLeft");
+                if(top != null && top.length > 0 && left != null && left.length > 0){
+                    _mapCanvas.css({
+                        'top':top
+                        ,'left':left
+                    });
+                }
+                var originX = $.cookie(_areaId+"MapCanvasOriginX");
+                if(!isNaN(originX)){ _originX = eval(originX); }
+                var originY = $.cookie(_areaId+"MapCanvasOriginY");
+                if(!isNaN(originY)){ _originY = eval(originY); }
+                var translateX = $.cookie(_areaId+"MapCanvasTranslateX");
+                if(!isNaN(translateX)){ _translateX = eval(translateX); }
+                var translateY = $.cookie(_areaId+"MapCanvasTranslateY");
+                if(!isNaN(translateY)){ _translateY = eval(translateY); }
+                var scale = $.cookie(_areaId+"MapCanvasScale");
+                if(!isNaN(scale)){ _scale = eval(scale); }
+                setTransform2d();
             }
             _ajaxCall('list',{areaId:_areaId,deviceCodes:_customDeviceCode.toString()});
         };
@@ -187,6 +232,7 @@ var CustomMapMediator = (
             _copyBoxElement = copyBox;
             _mapCanvas = canvas;
             _mapCanvas.empty();
+            _mapCanvas.append($("<div/>",{"id":"drawElement","class":"g-angle"}));
             if(_mapCanvas.data('uiDraggable')){
                 _mapCanvas.draggable('destroy');
             }
@@ -205,6 +251,7 @@ var CustomMapMediator = (
                         // Fix for zoom
                         ui.position.top = evt.pageY - (canvasOffset.top / _scale) - pointerY;
                         ui.position.left = evt.pageX - (canvasOffset.left / _scale) - pointerX;
+                        savePosition();
                     }
                 });
             }
@@ -230,6 +277,7 @@ var CustomMapMediator = (
                     if(event.originalEvent.deltaY > 0){if(_scale > _options['element']['zoom']['min']){_scale-=0.1;}}
                     if(event.originalEvent.deltaY < 0){if(_scale < _options['element']['zoom']['max']){_scale+=0.1;}}
                     setTransform2d();
+                    savePosition();
                 });
             }
 
@@ -238,6 +286,18 @@ var CustomMapMediator = (
                 , top:(_mapCanvas.parent().height()-_mapCanvas.height())/2
             });
             setTransform2d();
+        };
+
+        var savePosition = function(){
+            if(_options['element']['saveLastPosition']) {
+                $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
+                $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
+                $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
+                $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
+                $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
+                $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
+                $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(1));
+            }
         };
 
         var setTransform2d = function(scale){
@@ -348,21 +408,21 @@ var CustomMapMediator = (
             }catch(e){
                 console.error("[CustomMapMediator][setDefsMarkerRef] set error - "+e.message);
             }
-            if(_mapCanvas.data('svgwrapper')){
-                _mapCanvas.svg('destroy');
+            if(_mapCanvas.find("#drawElement").data('svgwrapper')){
+                _mapCanvas.find("#drawElement").svg('destroy');
             }
             // canvas svg initnone
             if($.fn.svg!=null){
-                _mapCanvas.svg({
+                _mapCanvas.find("#drawElement").svg({
                     onLoad:function(svg){
                         _canvasSvg = svg;
                         let defs = _canvasSvg.defs();
                         for(let i in _OBJECT_TYPE){
                             let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],3,5,6,6,"0");
+                            _canvasSvg.circle(marker,10,11,8,{fill:"none"});
+                            _canvasSvg.circle(marker,10,11,11,{fill:"none"});
+                            _canvasSvg.circle(marker,10,11,16,{fill:"none"});
                             _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
-                            _canvasSvg.circle(marker,4,7,8,{fill:"none"});
-                            _canvasSvg.circle(marker,4,7,11,{fill:"none"});
-                            _canvasSvg.circle(marker,4,7,16,{fill:"none"});
                         }
                     }
                 });
@@ -374,7 +434,7 @@ var CustomMapMediator = (
          * set background image
          * @author psb
          */
-        this.setBackgroundImage = function(physicalFileName){
+        this.setBackgroundImage = function(physicalFileName,callBackFlag){
             if(_mapCanvas.find(".map_bg").length==0){
                 _mapCanvas.append($("<div/>",{class:'map_bg'}))
             }
@@ -383,6 +443,28 @@ var CustomMapMediator = (
                 _mapCanvas.find(".map_bg").css({"background-image":"url("+_fileUploadPath+physicalFileName+")"});
             }else{
                 _mapCanvas.find(".map_bg").css({"background-image":""});
+            }
+
+            if(callBackFlag && _options['custom']['changeConfig']!=null && typeof _options['custom']['changeConfig'] == "function"){
+                _options['custom']['changeConfig']("fileId",physicalFileName);
+            }
+        };
+
+        /**
+         * set background image
+         * @author psb
+         */
+        this.setAngleXClass = function(angleClass,callBackFlag){
+            for(var index in _angleCss){
+                _mapCanvas.find("#drawElement").removeClass(_angleCss[index]);
+            }
+
+            if(angleClass!=null && angleClass!=""){
+                _mapCanvas.find("#drawElement").addClass(angleClass);
+            }
+
+            if(callBackFlag && _options['custom']['changeConfig']!=null && typeof _options['custom']['changeConfig'] == "function"){
+                _options['custom']['changeConfig']("angleClass",angleClass);
             }
         };
 
@@ -468,8 +550,8 @@ var CustomMapMediator = (
         var setTranslate = function (targetData, targetElement){
             if(targetData['deviceCode']=='DEV013' && targetData['mainFlag']=='Y'){
                 targetData['translate'] = {
-                    'x' : parseInt(targetElement.css("left")) + targetElement.width()/2
-                    ,'y' : parseInt(targetElement.css("top")) + targetElement.height()/2
+                    'x' : parseInt(targetElement.css("left")) + (_mapCanvas.width()-targetData['x1']-targetData['x2'])/2
+                    ,'y' : parseInt(targetElement.css("top")) + (_mapCanvas.height()-targetData['y1']-targetData['y2'])/2
                 };
 
                 if(targetData.hasOwnProperty("setFenceList")){
@@ -587,7 +669,7 @@ var CustomMapMediator = (
                 }
                 targetElement.append( $("<div/>") );
 
-                _mapCanvas.append(targetElement);
+                _mapCanvas.find("#drawElement").append(targetElement);
                 _marker[_MARKER_TYPE[4]][data['targetId']] = {
                     'data' : {
                         'targetId' : data['targetId']
@@ -786,17 +868,17 @@ var CustomMapMediator = (
                             element = _marker[messageType][data['deviceId']][data['id']]['element'];
 
                             if(element.hasClass("level-"+criticalCss['LEV003'])){
-                                element.attr("marker-end","url(#"+data['objectType']+"-LEV003)");
+                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV003)");
                             }else if(element.hasClass("level-"+criticalCss['LEV002'])){
-                                element.attr("marker-end","url(#"+data['objectType']+"-LEV002)");
+                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV002)");
                             }else if(element.hasClass("level-"+criticalCss['LEV001'])){
-                                element.attr("marker-end","url(#"+data['objectType']+"-LEV001)");
+                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV001)");
                             }else{
-                                element.attr("marker-end","url(#"+data['objectType']+")");
+                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")");
                             }
                             element.attr("points",points.join(" "));
                         }else{
-                            const polyline = _canvasSvg.polyline([[left,top]],{'objectId':data['id'],'marker-end':"url(#"+data['objectType']+")"});
+                            const polyline = _canvasSvg.polyline([[left,top]],{'objectId':data['id'],'marker-end':"url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")"});
                             element = $(polyline);
                             element.addClass(_targetClass[messageType]);
                             _marker[messageType][data['deviceId']][data['id']] = {
@@ -804,7 +886,7 @@ var CustomMapMediator = (
                                 ,'points' : [left+","+top]
                             };
                         }
-                        if(data['objectType']=='unknown'){
+                        if(_OBJECT_TYPE_CUSTOM[data['objectType']]=='unknown'){
                             element.addClass("object");
                         }else{
                             element.removeClass("object");
@@ -939,107 +1021,115 @@ var CustomMapMediator = (
                 return false;
             }
 
-            var customMarker = _self.getMarker(_MARKER_TYPE[4], data);
-            if(customMarker!=null){
-                var customKey = data['notificationId'];
-                if(data['fenceId']!=null && data['objectId']!=null){
-                    customKey = data['objectId']+data['fenceId'];
-                }
-                switch (actionType){
-                    case "add" :
-                        if(customMarker['notification'][criticalLevel].indexOf(customKey)<0){
-                            customMarker['notification'][criticalLevel].push(customKey);
-                        }
-                        break;
-                    case "remove" :
-                        if(customMarker['notification'][criticalLevel].indexOf(customKey)>-1){
-                            customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(customKey),1);
-                        }
-                        break;
-                }
-
-                for(var index in customMarker['notification']){
-                    if(customMarker['notification'][index].length > 0){
-                        customMarker['element'].addClass("level-"+criticalCss[index]);
-                    }else{
-                        customMarker['element'].removeClass("level-"+criticalCss[index]);
+            if(_options[_MARKER_TYPE[4]]['animateFlag']){
+                var customMarker = _self.getMarker(_MARKER_TYPE[4], data);
+                if(customMarker!=null){
+                    var customKey = data['notificationId'];
+                    if(data['fenceId']!=null && data['objectId']!=null){
+                        customKey = data['objectId']+data['fenceId'];
                     }
+                    switch (actionType){
+                        case "add" :
+                            if(customMarker['notification'][criticalLevel].indexOf(customKey)<0){
+                                customMarker['notification'][criticalLevel].push(customKey);
+                            }
+                            break;
+                        case "remove" :
+                            if(customMarker['notification'][criticalLevel].indexOf(customKey)>-1){
+                                customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(customKey),1);
+                            }
+                            break;
+                    }
+
+                    for(var index in customMarker['notification']){
+                        if(customMarker['notification'][index].length > 0){
+                            customMarker['element'].addClass("level-"+criticalCss[index]);
+                        }else{
+                            customMarker['element'].removeClass("level-"+criticalCss[index]);
+                        }
+                    }
+                }else{
+                    console.warn("[CustomMapMediator][setAnimate] not found custom marker");
                 }
-            }else{
-                console.warn("[CustomMapMediator][setAnimate] not found custom marker");
             }
 
             if(data['fenceId']==null || data['objectId']==null){
                 return false;
             }
 
-            var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
-            if(fenceMarker!=null){
-                let detectText = null;
-                switch (actionType){
-                    case "add" :
-                        detectText = data['eventName']+' - '+data['fenceName'];
-                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
-                            fenceMarker['notification'][criticalLevel].push(data['objectId']);
-                        }
-                        _self.moveFence('fenceMarker',fenceMarker);
-                        break;
-                    case "remove" :
-                        if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){
-                            fenceMarker['notification'][criticalLevel].splice(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']),1);
-                        }
-                        break;
-                }
-
-                let detectCnt = 0;
-                for(var index in fenceMarker['notification']){
-                    detectCnt += fenceMarker['notification'][index].length;
-                    if(fenceMarker['notification'][index].length > 0){
-                        fenceMarker['element'].addClass("level-"+criticalCss[index]);
-                        if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].addClass("level-"+criticalCss[index]);}
-                    }else{
-                        fenceMarker['element'].removeClass("level-"+criticalCss[index]);
-                        if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].removeClass("level-"+criticalCss[index]);}
+            if(_options[_MARKER_TYPE[1]]['animateFlag']){
+                var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
+                if(fenceMarker!=null){
+                    let detectText = null;
+                    switch (actionType){
+                        case "add" :
+                            detectText = data['eventName']+' - '+data['fenceName'];
+                            if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
+                                fenceMarker['notification'][criticalLevel].push(data['objectId']);
+                            }
+                            _self.moveFence('fenceMarker',fenceMarker);
+                            break;
+                        case "remove" :
+                            if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){
+                                fenceMarker['notification'][criticalLevel].splice(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']),1);
+                            }
+                            break;
                     }
-                }
 
-                if(fenceMarker['copyBoxElement']!=null){
-                    if(detectCnt>0){
-                        if(detectText!=null){
-                            fenceMarker['copyBoxElement'].find("p[name='detectText']").text(detectText);
+                    let detectCnt = 0;
+                    for(var index in fenceMarker['notification']){
+                        detectCnt += fenceMarker['notification'][index].length;
+                        if(fenceMarker['notification'][index].length > 0){
+                            fenceMarker['element'].addClass("level-"+criticalCss[index]);
+                            if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].addClass("level-"+criticalCss[index]);}
+                        }else{
+                            fenceMarker['element'].removeClass("level-"+criticalCss[index]);
+                            if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].removeClass("level-"+criticalCss[index]);}
                         }
-                        fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
-                        fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
-                    }else{
-                        fenceMarker['copyBoxElement'].find("p[name='detectText']").text("");
-                        fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
-                        fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text("");
                     }
+
+                    if(fenceMarker['copyBoxElement']!=null){
+                        if(detectCnt>0){
+                            if(detectText!=null){
+                                fenceMarker['copyBoxElement'].find("p[name='detectText']").text(detectText);
+                            }
+                            fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
+                            fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+                            fenceMarker['copyBoxElement'].show();
+                        }else{
+                            fenceMarker['copyBoxElement'].find("p[name='detectText']").text("");
+                            fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
+                            fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text("");
+                            fenceMarker['copyBoxElement'].hide();
+                        }
+                    }
+                }else{
+                    console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
                 }
-            }else{
-                console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
             }
 
-            var objectMarker = _self.getMarker(_MARKER_TYPE[2], data);
-            if(objectMarker!=null){
-                switch (actionType){
-                    case "add" :
-                        objectMarker['element'].addClass("level-"+criticalCss[criticalLevel]);
-                        break;
-                    case "remove" :
-                        objectMarker['element'].removeClass("level-"+criticalCss[criticalLevel]);
-                        break;
-                }
+            if(_options[_MARKER_TYPE[2]]['animateFlag']){
+                var objectMarker = _self.getMarker(_MARKER_TYPE[2], data);
+                if(objectMarker!=null){
+                    switch (actionType){
+                        case "add" :
+                            objectMarker['element'].addClass("level-"+criticalCss[criticalLevel]);
+                            break;
+                        case "remove" :
+                            objectMarker['element'].removeClass("level-"+criticalCss[criticalLevel]);
+                            break;
+                    }
 
-                if(objectMarker['element'].hasClass("level-"+criticalCss['LEV003'])){
-                    objectMarker['element'].attr("marker-end","url(#"+data['objectType']+"-LEV003)");
-                }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV002'])){
-                    objectMarker['element'].attr("marker-end","url(#"+data['objectType']+"-LEV002)");
-                }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV001'])){
-                    objectMarker['element'].attr("marker-end","url(#"+data['objectType']+"-LEV001)");
+                    if(objectMarker['element'].hasClass("level-"+criticalCss['LEV003'])){
+                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV003)");
+                    }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV002'])){
+                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV002)");
+                    }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV001'])){
+                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV001)");
+                    }
+                }else{
+                    console.warn("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
                 }
-            }else{
-                console.warn("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
             }
         };
 
@@ -1089,32 +1179,78 @@ var CustomMapMediator = (
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
         };
 
-        this.setRotate = function(type, deg){
-            switch (type){
-                case "increase" :
-                    _rotate += _options['element']['rotateIncrementValue'];
+        this.setImageConfig = function(settingType, type, deg){
+            var callBackValue = null;
+            switch (settingType){
+                case "rotate" :
+                    switch (type){
+                        case "increase" :
+                            _rotate += _options['element']['rotateIncrementValue'];
+                            break;
+                        case "decrease" :
+                            _rotate -= _options['element']['rotateIncrementValue'];
+                            break;
+                        case "directInput" :
+                            if(deg != null){ _rotate = eval(deg); }
+                            break;
+                        default :
+                            return false;
+                    }
+                    callBackValue = _rotate;
                     break;
-                case "decrease" :
-                    _rotate -= _options['element']['rotateIncrementValue'];
+                case "skewX" :
+                    switch (type){
+                        case "increase" :
+                            _skewX += _options['element']['skewXIncrementValue'];
+                            break;
+                        case "decrease" :
+                            _skewX -= _options['element']['skewXIncrementValue'];
+                            break;
+                        case "directInput" :
+                            if(deg != null){ _skewX = eval(deg); }
+                            break;
+                        default :
+                            return false;
+                    }
+                    callBackValue = _skewX;
                     break;
-                case "directInput" :
-                    if(deg != null){ _rotate = eval(deg); }
+                case "skewY" :
+                    switch (type){
+                        case "increase" :
+                            _skewY += _options['element']['skewYIncrementValue'];
+                            break;
+                        case "decrease" :
+                            _skewY -= _options['element']['skewYIncrementValue'];
+                            break;
+                        case "directInput" :
+                            if(deg != null){ _skewY = eval(deg); }
+                            break;
+                        default :
+                            return false;
+                    }
+                    callBackValue = _skewY;
                     break;
-                default :
-                    return false;
             }
 
-            var rotate = "rotate("+_rotate+"deg)";
+            var rotateTransform = "rotate("+_rotate+"deg)";
             _mapCanvas.find(".map_bg").css({
-                'transform':rotate
-                ,'-webkit-transform':rotate
-                ,'-moz-transform':rotate
-                ,'-o-transform':rotate
-                ,'-ms-transform':rotate
+                'transform':rotateTransform
+                ,'-webkit-transform':rotateTransform
+                ,'-moz-transform':rotateTransform
+                ,'-o-transform':rotateTransform
+                ,'-ms-transform':rotateTransform
             });
 
-            if(_options['custom']['rotate']!=null && typeof _options['custom']['rotate'] == "function"){
-                _options['custom']['rotate'](_rotate);
+            var drawTransform = "rotateX("+_skewX+"deg) rotateY("+_skewY+"deg)";
+            _mapCanvas.find("#drawElement").css({
+                'transform':drawTransform
+                ,'-webkit-transform':drawTransform
+                ,'-moz-transform':drawTransform
+                ,'-o-transform':drawTransform
+                ,'-ms-transform':drawTransform
+            });
+            if(_options['custom']['changeConfig']!=null && typeof _options['custom']['changeConfig'] == "function"){
+                _options['custom']['changeConfig'](settingType,callBackValue);
             }
         };
 
@@ -1123,11 +1259,11 @@ var CustomMapMediator = (
                 return false;
             }
 
-            if(_fenceReturnTimeout!=null){
-                clearTimeout(_fenceReturnTimeout);
+            if(_options['custom']['moveReturnTimeout']!=null){
+                clearTimeout(_options['custom']['moveReturnTimeout']);
             }
 
-            _fenceReturnTimeout = setTimeout(function() {
+            _options['custom']['moveReturnTimeout'] = setTimeout(function() {
                 if(_marker[_MARKER_TYPE[4]][deviceId]!=null){
                     _marker[_MARKER_TYPE[4]][deviceId]['element'].trigger('dblclick');
                 }
@@ -1145,7 +1281,8 @@ var CustomMapMediator = (
                     if(data['templateSetting']!=null && data['iconFileList']!=null){
                         setDefsMarkerRef(data['templateSetting'], data['iconFileList']);
                     }
-                    _self.setBackgroundImage(data['area']['physicalFileName']);
+                    _self.setBackgroundImage(data['area']['physicalFileName'],true);
+                    _self.setAngleXClass(data['area']['angleClass'],true);
                     if(_options['custom']['childListLoad']!=null && typeof _options['custom']['childListLoad'] == "function"){
                         _options['custom']['childListLoad'](data['childList']);
                     }
@@ -1153,7 +1290,9 @@ var CustomMapMediator = (
                     for(var index in childList){
                         _self.targetRender(childList[index]);
                     }
-                    _self.setRotate("directInput", data['area']['rotate']);
+                    _self.setImageConfig('rotate',"directInput", data['area']['rotate']);
+                    _self.setImageConfig('skewX',"directInput", data['area']['skewX']);
+                    _self.setImageConfig('skewY',"directInput", data['area']['skewY']);
 
                     if(_options['custom']['onLoad']!=null && typeof _options['custom']['onLoad'] == "function"){
                         _options['custom']['onLoad']();

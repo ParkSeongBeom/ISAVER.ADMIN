@@ -206,6 +206,7 @@ var DashboardHelper = (
                         }else if(_guardList[areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
+                            _guardList[areaId][_MEDIATOR_TYPE[1]].setObjectTypeCustom(_templateSetting['safeGuardObjectTypeHuman'], _templateSetting['safeGuardObjectTypeUnknown']);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'custom' : {
                                     'websocketSend':false
@@ -313,6 +314,22 @@ var DashboardHelper = (
                     }
                     break;
             }
+        };
+
+        /**
+         * set Noti Options
+         * @author psb
+         */
+        this.setNotificationOption = function(areaId, _this){
+            var notificationShowOnlyFlag = false;
+            if(_this!=null){
+                notificationShowOnlyFlag = $(_this).is(":checked");
+                $.cookie(areaId+"NotificationShowOnlyFlag", notificationShowOnlyFlag);
+            }else{
+                notificationShowOnlyFlag = $.cookie(areaId+"NotificationShowOnlyFlag") == "true";
+                $("input[name='notificationShowOnly']").prop("checked",notificationShowOnlyFlag);
+            }
+            notificationHelper.setOptions({'thisAreaShowOnlyFlag':notificationShowOnlyFlag});
         };
 
         /**

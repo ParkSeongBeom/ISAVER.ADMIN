@@ -541,7 +541,7 @@
         AND     b.fence_type = 'normal'
         WHERE   a.del_yn='N'
         AND     a.device_type_code = #{deviceTypeCode}
-        ORDER BY a.area_id, a.device_name
+        ORDER BY a.device_name, b.fence_name
     </select>
 
     <!--
@@ -557,7 +557,7 @@
         FROM    isaver.device
         WHERE   del_yn='N'
         AND     device_type_code = #{deviceTypeCode}
-        ORDER BY area_id, device_name
+        ORDER BY device_name
     </select>
 
     <!--
@@ -575,6 +575,17 @@
         ORDER BY device_id ASC
     </select>
 
+    <!--
+      장치 목록을 가져온다. 영상이력용
+      @author psb
+    -->
+    <select id="findListDeviceForLocationSync" resultType="DeviceBean">
+        select  device_id as deviceId
+        FROM    isaver.device
+        WHERE   del_yn='N'
+        AND     device_code = 'DEV003'
+        AND	    area_id = #{areaId}
+    </select>
     <!--
       장치 목록을 가져온다. 시뮬레이터 테스트용
       @author psb

@@ -34,6 +34,12 @@
         </c:choose>
     </nav>
 
+    <div class="checkbox_set csl_style01">
+        <input type="checkbox" name="notificationShowOnly" onClick="javascript:dashboardHelper.setNotificationOption(String('${empty area.areaId?'100000':area.areaId}'),this);" />
+        <label></label>
+        <span><spring:message code="dashboard.column.notificationShowOnly"/></span>
+    </div>
+
     <div class="expl">
         <c:forEach var="critical" items="${criticalList}">
             <span>${critical.codeName}</span>
@@ -468,8 +474,8 @@
                         <div class="tree_table">
                             <div class="table_title_area">
                                 <div class="table_btn_set">
-                                    <button class="btn" id="expandShow" onclick="javascript:areaCtrl.treeExpandAll(true); return false;"><spring:message code='common.button.viewTheFull'/></button>
-                                    <button class="btn" id="expandClose" style="display:none;" onclick="javascript:areaCtrl.treeExpandAll(false); return false;"><spring:message code='common.button.viewTheFullClose'/></button>
+                                    <button class="btn" id="expandShow" onclick="javascript:areaTreeExpandAll(true); return false;"><spring:message code='common.button.viewTheFull'/></button>
+                                    <button class="btn" id="expandClose" style="display:none;" onclick="javascript:areaTreeExpandAll(false); return false;"><spring:message code='common.button.viewTheFullClose'/></button>
                                 </div>
                             </div>
                             <div class="table_contents">
@@ -596,6 +602,8 @@
     var fileUploadPath = '${fileUploadPath}';
     var templateSetting = {
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
+        ,'safeGuardObjectTypeHuman' : '${templateSetting['safeGuardObjectTypeHuman']}'
+        ,'safeGuardObjectTypeUnknown' : '${templateSetting['safeGuardObjectTypeUnknown']}'
     };
 
     /*
@@ -648,6 +656,7 @@
 
         dashboardHelper.setConfig(messageConfig, fileUploadPath, templateSetting);
         dashboardHelper.setWebsocket(webSocketHelper, {'map':"${mapWebSocketUrl}",'toiletRoom':"${toiletRoomWebSocketUrl}"});
+        dashboardHelper.setNotificationOption(String('${empty area.areaId?'100000':area.areaId}'));
         dashboardHelper.initAreaTemplate();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
@@ -714,6 +723,19 @@
                 west: map.getBounds().getSouthWest().lng()
             }
         };
+    }
+
+    function areaTreeExpandAll(flag){
+        $(".iocount_popup #menuTreeArea").dynatree("getRoot").visit(function(node){
+            node.expand(flag);
+            if(flag){
+                $("#expandClose").show();
+                $("#expandShow").hide();
+            }else{
+                $("#expandClose").hide();
+                $("#expandShow").show();
+            }
+        });
     }
 
     function openDeviceList(_this){

@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="isaver" uri="/WEB-INF/views/common/tags/isaver.tld"%>
-<c:set value="D00000" var="menuId"/>
+<c:set value="D00010" var="menuId"/>
 <c:set value="D00000" var="subMenuId"/>
 <isaver:pageRoleCheck menuId="${menuId}" locale="${pageContext.response.locale}"/>
 <script src="${rootPath}/assets/js/page/resource/resource-helper.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
@@ -345,7 +345,26 @@
                                 </select>
                             </li>
                             <li>
-                                <span>Map icon</span>
+                                <span>Object Type</span>
+                                <div>
+                                    <p>Human</p>
+                                    <div>
+                                        <select name="safeGuardObjectTypeHuman">
+                                            <option value="human" selected="selected">Human</option>
+                                            <option value="unknown">Unknown</option>
+                                        </select>
+                                    </div>
+                                    <p>Object</p>
+                                    <div>
+                                        <select name="safeGuardObjectTypeUnknown">
+                                            <option value="human">Human</option>
+                                            <option value="unknown" selected="selected">Unknown</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Custom Icon</span>
                                 <div>
                                     <p>Human Icon</p>
                                     <div>
@@ -396,10 +415,31 @@
                             <select id="fileId">
                                 <option value=""><spring:message code="common.column.selectNo"/></option>
                             </select>
+                            <span>SkewX</span>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <input name="skewX" id="skewX" type="number" onchange="javascript:customMapPopup.setImageConfig('skewX','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                            <span>SkewY</span>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <input name="skewY" id="skewY" type="number" onchange="javascript:customMapPopup.setImageConfig('skewY','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
                             <span>Rotate</span>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setRotate('decrease', null, true);" onmouseup="javascript:customMapPopup.stopRotate();"></button>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setRotate('increase', null, true);" onmouseup="javascript:customMapPopup.stopRotate();"></button>
-                            <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setRotate('directInput',this.value);" onkeypress="isNumberWithPoint(this);"/>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                            <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setImageConfig('rotate','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                            <span>AngleX</span>
+                            <select id="angleClass">
+                                <option value=""><spring:message code="common.column.selectNo"/></option>
+                                <option value="deg10">10</option>
+                                <option value="deg15">15</option>
+                                <option value="deg20">20</option>
+                                <option value="deg25">25</option>
+                                <option value="deg30">30</option>
+                                <option value="deg35">35</option>
+                                <option value="deg40">40</option>
+                                <option value="deg45">45</option>
+                                <option value="deg50">50</option>
+                            </select>
                             <span>X1</span>
                             <input name="x1" type="number" onkeypress="isNumberWithPoint(this);"/>
                             <span>Y1</span>
@@ -581,6 +621,21 @@
             $(_this).parent().find("input[type='checkbox']").prop('checked', true);
         }else{
             $(_this).parent().find("input[type='checkbox']").prop('checked', false);
+        }
+    }
+
+    function getImagePoint(width, height, cutX, cutY){
+        if(width==null || height==null){
+            console.error("width or height is null - width : "+width+", heigth : "+height);
+            return false;
+        }
+
+        var marginWidth = (5000-width)/2;
+        var marginHeight = (5000-height)/2;
+        var target = $("#drawElement div.on");
+        return {
+            x : (Number(target.css("left").split("px")[0])+(target.width()/2)-marginWidth-(cutX?cutX:0))/10
+            ,y : (Number(target.css("top").split("px")[0])+(target.height()/2)-marginHeight-(cutY?cutY:0))/10
         }
     }
 </script>

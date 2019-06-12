@@ -173,12 +173,12 @@ public class NotificationSvcImpl implements NotificationSvc {
     public ModelAndView findListNotificationForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
         List<NotificationBean> notifications = notificationDao.findListNotification(parameters);
 
-        String[] heads = new String[]{"Event Datetime","Area Name","Device Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};
-        String[] columns = new String[]{"eventDatetimeStr","areaName","deviceName","eventName","criticalLevelName","confirmUserName","confirmDatetimeStr","cancelUserName","cancelDatetimeStr","cancelDesc"};
+        String[] heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};
+        String[] columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","confirmUserName","confirmDatetimeStr","cancelUserName","cancelDatetimeStr","cancelDesc"};
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        ModelAndView modelAndView = new ModelAndView("excelView");
+        ModelAndView modelAndView = new ModelAndView();
         POIExcelUtil.downloadExcel(modelAndView, "isaver_notification_history_" + sdf.format(new Date()), notifications, columns, heads, "NotificationHistory");
         return modelAndView;
     }

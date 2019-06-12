@@ -134,6 +134,9 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         saveAreaParam.put("areaId",parameters.get("areaId"));
         saveAreaParam.put("fileId",parameters.get("fileId"));
         saveAreaParam.put("rotate",parameters.get("rotate"));
+        saveAreaParam.put("skewX",parameters.get("skewX"));
+        saveAreaParam.put("skewY",parameters.get("skewY"));
+        saveAreaParam.put("angleClass",parameters.get("angleClass"));
 
         // Custom Map Insert Param
         List<CustomMapLocationBean> customList = new Gson().fromJson(parameters.get("customList"), new TypeToken<List<CustomMapLocationBean>>(){}.getType());
@@ -169,18 +172,25 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
             transactionManager.rollback(transactionStatus);
             throw new IsaverException("");
         }
-        locationSync();
+        locationSync(parameters);
         return new ModelAndView();
     }
 
-    private void locationSync(){
-        try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("allFlag", CommonResource.YES);
-            websocketParam.put("messageType","locationSync");
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
-        } catch (Exception e) {
-            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+    private void locationSync(Map<String, String> parameters){
+        List<DeviceBean> deviceList = deviceDao.findListDeviceForLocationSync(parameters);
+
+        if(deviceList!=null && deviceList.size() > 0){
+            for(DeviceBean device : deviceList){
+                try {
+                    Map websocketParam = new HashMap();
+//                    websocketParam.put("allFlag", CommonResource.YES);
+                    websocketParam.put("deviceId", device.getDeviceId());
+                    websocketParam.put("messageType","locationSync");
+                    AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+                } catch (Exception e) {
+                    throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+                }
+            }
         }
     }
 }

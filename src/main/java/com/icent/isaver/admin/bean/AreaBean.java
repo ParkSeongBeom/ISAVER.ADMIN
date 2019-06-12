@@ -33,10 +33,16 @@ public class AreaBean extends ISaverCommonBean {
     private Integer depth;
     /* 회전값 */
     private Integer rotate;
+    /* X축 기울기 */
+    private Integer skewX;
+    /* Y축 기울기 */
+    private Integer skewY;
     /* 템플릿 코드 */
     private String templateCode;
     /* 파일ID */
     private String fileId;
+    /* 각도에따른 클래스 */
+    private String angleClass;
 
     /* ETC */
     private List<DeviceBean> devices;
@@ -185,5 +191,29 @@ public class AreaBean extends ISaverCommonBean {
 
     public void setRotate(Integer rotate) {
         this.rotate = rotate;
+    }
+
+    public Integer getSkewX() {
+        return skewX;
+    }
+
+    public void setSkewX(Integer skewX) {
+        this.skewX = skewX;
+    }
+
+    public Integer getSkewY() {
+        return skewY;
+    }
+
+    public void setSkewY(Integer skewY) {
+        this.skewY = skewY;
+    }
+
+    public String getAngleClass() {
+        return angleClass;
+    }
+
+    public void setAngleClass(String angleClass) {
+        this.angleClass = angleClass;
     }
 }

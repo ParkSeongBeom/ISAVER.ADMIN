@@ -75,13 +75,14 @@
                     <col> <!-- 2 구역명 -->
                     <col> <!-- 3 장치명 -->
                     <col> <!-- 4 이벤트명 -->
-                    <col> <!-- 5 임계치레벨 -->
-                    <col> <!-- 6 확인자 -->
-                    <col> <!-- 7 확인일시 -->
-                    <col> <!-- 8 해제자-->
-                    <col> <!-- 9 해제일시 -->
-                    <col> <!-- 10 해제사유 -->
-                    <col> <!-- 11 트래킹보기 -->
+                    <col> <!-- 5 펜스명 -->
+                    <col> <!-- 6 임계치레벨 -->
+                    <col> <!-- 7 확인자 -->
+                    <col> <!-- 8 확인일시 -->
+                    <col> <!-- 9 해제자-->
+                    <col> <!-- 10 해제일시 -->
+                    <col> <!-- 11 해제사유 -->
+                    <col> <!-- 12 트래킹보기 -->
                 </colgroup>
                 <thead>
                 <tr>
@@ -89,6 +90,7 @@
                     <th><spring:message code="notification.column.areaName"/></th>
                     <th><spring:message code="notification.column.deviceName"/></th>
                     <th><spring:message code="notification.column.eventName"/></th>
+                    <th><spring:message code="notification.column.fenceName"/></th>
                     <th><spring:message code="notification.column.criticalLevel"/></th>
                     <th><spring:message code="notification.column.confirmUserName"/></th>
                     <th><spring:message code="notification.column.confirmDatetime"/></th>
@@ -107,6 +109,7 @@
                                 <td>${notification.areaName}</td>
                                 <td>${notification.deviceName}</td>
                                 <td>${notification.eventName}</td>
+                                <td>${notification.fenceName}</td>
                                 <td>
                                     <c:if test="${notification.criticalLevel!=null}">
                                         <span class="level-${criticalLevelCss[notification.criticalLevel]}"></span>
@@ -140,7 +143,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="11"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="12"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -375,7 +378,6 @@
                 ,function successHandler(data, dataType, actionType){
                     $("#videoList").empty();
                     var videoHistoryList = data['videoHistoryList'];
-                    console.log(data);
                     for(var index in videoHistoryList){
                         var videoHistory = videoHistoryList[index];
                         var fenceName = '';

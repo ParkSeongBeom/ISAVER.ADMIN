@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "filters";
-@import "layout";
 
 body.admin_mode {}
 
@@ -1284,17 +1283,18 @@ a.fc-more {position: relative; z-index: 2;}
 .notification_col {
   colgroup  {
     col {
-      &:nth-of-type(1)  {width:180px;}    // 1 알림발생일시
+      &:nth-of-type(1)  {width:120px;}    // 1 알림발생일시
       &:nth-of-type(2)  {width:auto;}  // 2 구역명
-      &:nth-of-type(3)  {width:auto;}  // 3 장치구분
+      &:nth-of-type(3)  {width:90px;}  // 3 장치구분
       &:nth-of-type(4)  {width:auto;}  // 4 이벤트명
-      &:nth-of-type(5)  {width:105px;}  // 5 임계치레벨
-      &:nth-of-type(6)  {width:90px;}  // 6 확인자
-      &:nth-of-type(7)  {width:180px;}  // 7 확인일시
-      &:nth-of-type(8)  {width:90px;}   // 8 해지자
-      &:nth-of-type(9)  {width:180px;}   // 9 해지일시
-      &:nth-of-type(10) {width:90px;}   // 10 해지사유
-      &:nth-of-type(11) {width:90px;}   // 10 이동경로
+      &:nth-of-type(5)  {width:auto;}  // 5 펜스명
+      &:nth-of-type(6)  {width:110px;}  // 6 임계치레벨
+      &:nth-of-type(7)  {width:85px;}  // 7 확인자
+      &:nth-of-type(8)  {width:110px;}  // 8 확인일시
+      &:nth-of-type(9)  {width:85px;}   // 9 해지자
+      &:nth-of-type(10)  {width:110px;}   // 10 해지일시
+      &:nth-of-type(11) {width:85px;}   // 11 해지사유
+      &:nth-of-type(12) {width:120px;}   // 12 이동경로
     }
   }
 

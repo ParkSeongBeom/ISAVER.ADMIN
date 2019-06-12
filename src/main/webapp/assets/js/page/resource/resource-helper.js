@@ -201,7 +201,7 @@ var ResourceHelper = (
                 console.error("[ResourceHelper][openCustomMapPopup] customMapPopup is null or typeerror");
                 return false;
             }
-            customMapPopup.openPopup(areaId,data['areaName'],data['fileId']?data['fileId']:'');
+            customMapPopup.openPopup(areaId,data['areaName']);
         };
 
         this.openPtzControlPopup = function(deviceId){

@@ -57,6 +57,12 @@ var CustomMapPopup = (
          */
         this.initFileList = function(){
             _ajaxCall('fileList', {'fileType':'FTA002','useYn':'Y'});
+
+            _element.find("#angleClass").on("change",function(){
+                if(_customMapMediator!=null){
+                    _customMapMediator.setAngleXClass($(this).find("option:selected").val(),false);
+                }
+            });
         };
 
         /**
@@ -107,11 +113,11 @@ var CustomMapPopup = (
                 customParamList.push(customMap);
             }
 
-            var deviceList = _customMapMediator.getMarker('fence');
+            var fenceList = _customMapMediator.getMarker('fence');
             var fenceParamList = [];
-            for(var index in deviceList){
-                for(var i in deviceList[index]){
-                    var fenceMap = $.extend({}, deviceList[index][i]['data']);
+            for(var index in fenceList){
+                for(var i in fenceList[index]){
+                    var fenceMap = $.extend({}, fenceList[index][i]['data']);
                     fenceMap['areaId'] = _areaId;
                     fenceParamList.push(fenceMap);
                 }
@@ -126,7 +132,10 @@ var CustomMapPopup = (
                 _ajaxCall('save', {
                     areaId:_areaId
                     , rotate:_element.find("#rotate").val()
+                    , skewX:_element.find("#skewX").val()
+                    , skewY:_element.find("#skewY").val()
                     , fileId:_element.find("#fileId").val()
+                    , angleClass:_element.find("#angleClass").val()
                     , customList:JSON.stringify(customParamList)
                     , fenceList:JSON.stringify(fenceParamList)
                     , fenceDeviceList:JSON.stringify(fenceDeviceParamList)
@@ -138,7 +147,7 @@ var CustomMapPopup = (
          * open popup
          * @author psb
          */
-        this.openPopup = function(areaId,areaName,fileId){
+        this.openPopup = function(areaId,areaName){
             if(templateSettingPopup.getSettingValue('safeGuardMapView')!="offline"){
                 _alertMessage("customMapSupport");
                 return false;
@@ -323,15 +332,26 @@ var CustomMapPopup = (
                             _checkChildTarget(data['targetId'], data['useYn'] == 'Y');
                             _updateTargetValue(data);
                         }
-                        , 'rotate': function (data) {
-                            _element.find("input[name='rotate']").val(data);
+                        , 'changeConfig': function (configName, data) {
+                            switch (configName) {
+                                case "skewX":
+                                case "skewY":
+                                case "rotate":
+                                    _element.find("input[name='"+configName+"']").val(data);
+                                    break;
+                                case "fileId":
+                                    _element.find("#fileId option[physicalFileName='"+data+"']").prop("selected",true);
+                                    break;
+                                case "angleClass":
+                                    _element.find("#angleClass").val(data).prop("selected",true);
+                                    break;
+                            }
                         }
                     }
                 });
             }catch(e){
                 console.error("[CustomMapPopup][openPopup] custom map mediator init error - "+ e.message);
             }
-            _element.find("#fileId").val(fileId).prop("selected",true);
         };
 
         /**
@@ -409,20 +429,19 @@ var CustomMapPopup = (
         };
 
         /**
-         * 이미지 회전
+         * 구역 환경 설정 (이미지 회전/기울기)
          * @author psb
          */
-        this.setRotate = function(actionType, deg, continueFlag){
-            _customMapMediator.setRotate(actionType, deg);
-
+        this.setImageConfig = function(settingType, actionType, deg, continueFlag){
+            _customMapMediator.setImageConfig(settingType, actionType, deg);
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
-                    _self.setRotate(actionType);
+                    _self.setImageConfig(settingType, actionType);
                 }, 100);
             }
         };
 
-        this.stopRotate = function(){
+        this.stopMouseDownInterval = function(){
             clearInterval(_mouseDownInterval);
         };
 
@@ -487,7 +506,7 @@ var CustomMapPopup = (
             }
             _element.find("#fileId").on("change",function(){
                 if(_customMapMediator!=null){
-                    _customMapMediator.setBackgroundImage($(this).find("option:selected").attr("physicalFileName"));
+                    _customMapMediator.setBackgroundImage($(this).find("option:selected").attr("physicalFileName"),false);
                 }
             });
         };

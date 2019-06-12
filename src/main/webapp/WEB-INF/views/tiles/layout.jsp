@@ -703,7 +703,9 @@
                     </div>
                     <div class="header_btn_set">
                         <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
-                        <button class="reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"></button>
+                        <c:if test="${mainTarget.targetId!='nonsan'}">
+                            <button class="reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"></button>
+                        </c:if>
                         <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
                         <button class="info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"></button>
                         <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>

@@ -97,6 +97,9 @@
                 , del_yn as delYn
                 , sort_order as sortOrder
                 , rotate as rotate
+                , skew_x as skewX
+                , skew_y as skewY
+                , angle_class as angleClass
                 , template_code as templateCode
                 , insert_user_id as insertUserId
                 , insert_datetime as insertDatetime
@@ -423,6 +426,18 @@
             </if>
             <if test="rotate != null and rotate != ''">
                 ,rotate = ${rotate}
+            </if>
+            <if test="skewX != null and skewX != ''">
+                ,skew_x = ${skewX}
+            </if>
+            <if test="skewY != null and skewY != ''">
+                ,skew_y = ${skewY}
+            </if>
+            <if test="angleClass == null or angleClass == ''">
+                ,angle_class = null
+            </if>
+            <if test="angleClass != null and angleClass != ''">
+                ,angle_class = #{angleClass}
             </if>
         </trim>
         where area_id = #{areaId,jdbcType=CHAR}
