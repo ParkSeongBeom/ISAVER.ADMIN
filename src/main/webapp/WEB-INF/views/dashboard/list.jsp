@@ -91,6 +91,8 @@
                     <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" childAreaIds="${childArea.childAreaIds}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -132,6 +134,8 @@
                     <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -168,6 +172,8 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}'); return false;"></button>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -275,6 +281,8 @@
                     <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -325,6 +333,8 @@
                     <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -401,6 +411,8 @@
                     <div templateCode="${childArea.templateCode}" class="type-list" areaId="${childArea.areaId}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>

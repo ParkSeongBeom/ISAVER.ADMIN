@@ -70,6 +70,7 @@ body.dashboard_mode {}
       button {
         min-width: ($headerHeight); height:($headerHeight - 10px);
         &:before, &:after {@include transition(200ms); font-size:1.4rem;}
+        &.one-screen:before   {content:"\e90a";}
         &.area:before   {content:"\e91b";}
         &.device:before {content:"\e935"; }
         &.ioset:before, &.date_select:before  {content:"\e909"; }
