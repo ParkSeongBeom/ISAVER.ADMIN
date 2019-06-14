@@ -34,7 +34,7 @@ var CustomMapMediator = (
             ,'unknown-LEV003' : '/assets/images/ico/sico_39_dan.svg'
             ,'human' : '/assets/images/ico/sico_81.svg'
             ,'human-LEV001' : '/assets/images/ico/sico_81_cau.svg'
-            ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
+             ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
             ,'human-LEV003' : '/assets/images/ico/sico_81_dan.svg'
         };
         var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
@@ -52,6 +52,7 @@ var CustomMapMediator = (
                 ,'skewYIncrementValue': 1 // Y 기울기 클릭시 증가치
                 ,'rotateIncrementValue': 1 // 회전 클릭시 증가치
                 ,'guardInfo' : true
+                ,'guardInfoCnt' : false
             }
             ,'fence' : {
                 'text' : {
@@ -761,9 +762,14 @@ var CustomMapMediator = (
                             if(_options['element']['guardInfo'] && _copyBoxElement!=null) {
                                 copyBoxElement = $("<div/>",{class:'copybox'}).append(
                                     $("<p/>",{name:'detectText'})
-                                ).append(
-                                    $("<span/>",{name:'detectCnt'}).text(0)
-                                ).append(
+                                );
+
+                                if(_options['element']['guardInfoCnt']){
+                                    copyBoxElement.append(
+                                        $("<span/>",{name:'detectCnt'}).text(0)
+                                    );
+                                }
+                                copyBoxElement.append(
                                     $("<em/>",{name:'fenceName'}).text(data['fenceName'])
                                 ).append(
                                     $("<p/>",{name:'detectEventDatetime'})
@@ -1057,13 +1063,14 @@ var CustomMapMediator = (
                 return false;
             }
 
+
             if(_options[_MARKER_TYPE[1]]['animateFlag']){
                 var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
                 if(fenceMarker!=null){
                     let detectText = null;
                     switch (actionType){
                         case "add" :
-                            detectText = data['eventName']+' - '+data['fenceName'];
+                            detectText = data['eventName'];
                             if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                                 fenceMarker['notification'][criticalLevel].push(data['objectId']);
                             }
@@ -1088,6 +1095,7 @@ var CustomMapMediator = (
                         }
                     }
 
+                    console.log(fenceMarker['copyBoxElement']);
                     if(fenceMarker['copyBoxElement']!=null){
                         if(detectCnt>0){
                             if(detectText!=null){
@@ -1095,12 +1103,10 @@ var CustomMapMediator = (
                             }
                             fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
                             fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
-                            fenceMarker['copyBoxElement'].show();
                         }else{
                             fenceMarker['copyBoxElement'].find("p[name='detectText']").text("");
                             fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
                             fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text("");
-                            fenceMarker['copyBoxElement'].hide();
                         }
                     }
                 }else{

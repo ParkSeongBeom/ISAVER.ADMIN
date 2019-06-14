@@ -204,6 +204,8 @@ function MenuView(model) {
                 _childMenuLiTag.find("button").text(_area['areaName']);
                 if(_area['childAreaIds']!=null){
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+                }else{
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('','"+_area['areaId']+"');");
                 }
                 mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
             }
