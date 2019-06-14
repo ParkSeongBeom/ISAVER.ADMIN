@@ -308,10 +308,13 @@
                             throw "validateError";
                         }
 
+                        var detectConfigUseYn = $(this).find("input[name='detectConfigUseYn']").is(":checked");
                         for(var i in criticalDetectParam['criticalDetectConfigs']){
-                            if(
-                                    (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= startDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > startDatetime) ||
-                                    (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= endDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > endDatetime)
+                            if(detectConfigUseYn && criticalDetectParam['criticalDetectConfigs'][i]['useYn']=="Y" &&
+                                    (
+                                        (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= startDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > startDatetime) ||
+                                        (criticalDetectParam['criticalDetectConfigs'][i]['startDatetime'] <= endDatetime && criticalDetectParam['criticalDetectConfigs'][i]['endDatetime'] > endDatetime)
+                                    )
                             ){
                                 alertMessage('overlapConfigDatetime');
                                 throw "validateError";
@@ -323,7 +326,7 @@
                             ,criticalDetectId:criticalDetectId
                             ,startDatetime:startDatetime
                             ,endDatetime:endDatetime
-                            ,useYn:$(this).find("input[name='detectConfigUseYn']").is(":checked")?"Y":"N"
+                            ,useYn:detectConfigUseYn?"Y":"N"
                         });
                     });
 

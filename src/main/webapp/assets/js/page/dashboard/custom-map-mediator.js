@@ -1095,7 +1095,6 @@ var CustomMapMediator = (
                         }
                     }
 
-                    console.log(fenceMarker['copyBoxElement']);
                     if(fenceMarker['copyBoxElement']!=null){
                         if(detectCnt>0){
                             if(detectText!=null){
