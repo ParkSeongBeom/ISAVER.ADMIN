@@ -28,6 +28,7 @@ var NotificationHelper = (
         let _options ={
             toastPopup : false
             ,thisAreaShowOnlyFlag : false
+            ,sendCancelCnt : 20
         };
         let _webSocketHelper;
         let _messageConfig;
@@ -151,9 +152,21 @@ var NotificationHelper = (
                     addNotification(resultData['notification'], true);
                     break;
                 case "allCancelNotification": // 알림센터 이벤트 전체 해제
+                    var criticalLevelCheck = false;
+                    if(resultData['paramBean']['criticalLevel']!=null && resultData['paramBean']['criticalLevel']!=""){
+                        criticalLevelCheck = true;
+                    }
+                    var areaIdCheck = false;
+                    if(resultData['paramBean']['areaIds']!=null && resultData['paramBean']['areaIds']!=""){
+                        areaIdCheck = true;
+                    }
+
                     for(let index in _notificationList){
-                        _notificationList[index]['data']['actionType']='cancel';
-                        updateNotification(_notificationList[index]['data']);
+                        if((!criticalLevelCheck || _notificationList[index]['data']['criticalLevel'] == resultData['paramBean']['criticalLevel'])
+                            && (!areaIdCheck || resultData['paramBean']['areaIds'].indexOf(_notificationList[index]['data']['areaId'])>-1) ){
+                            _notificationList[index]['data']['actionType']='cancel';
+                            updateNotification(_notificationList[index]['data']);
+                        }
                     }
                     $("#notiMoreBtn").hide();
                     break;
@@ -567,7 +580,7 @@ var NotificationHelper = (
         this.saveNotification = function(actionType){
             function saveNoti(actionType, data, cancelDesc){
                 var param = {
-                    'paramData' : data.splice(0,100).join(",")
+                    'paramData' : data.splice(0,_options['sendCancelCnt']).join(",")
                     ,'actionType' : actionType
                     ,'cancelDesc' : cancelDesc
                     ,'remainCnt' : 0
@@ -605,7 +618,21 @@ var NotificationHelper = (
         this.allCancelNotification = function(){
             if(confirm(_messageConfig['confirmAllCancelNotification'])){
                 setLoading('noti', true);
-                _ajaxCall('allCancelNotification');
+                var areaId = $("#areaType option:selected").val();
+                var param = {
+                    criticalLevel:$("#criticalLevel option:selected").val()
+                };
+                if(areaId!=""){
+                    var areaIds = [];
+                    $.each($("#areaType option"),function(){
+                        var areaPath = $(this).attr("areaPath");
+                        if(areaPath!=null && areaPath.indexOf(areaId)>-1){
+                            areaIds.push($(this).val());
+                        }
+                    });
+                    param['areaIds'] = areaIds.join(",")
+                }
+                _ajaxCall('allCancelNotification',param);
             }
         };
 

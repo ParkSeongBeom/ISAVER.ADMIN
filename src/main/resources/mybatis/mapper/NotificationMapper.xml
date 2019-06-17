@@ -207,18 +207,18 @@
         <foreach collection="list" item="item" separator=";">
             update  isaver.notification
             set     update_user_id = #{item.updateUserId}
-                    , update_datetime = #{item.updateDatetime}::timestamp
-                    <if test="item.actionType == 'confirm'">
-                        , confirm_user_id = #{item.updateUserId}
-                        , confirm_datetime = #{item.updateDatetime}::timestamp
-                    </if>
-                    <if test="item.actionType == 'cancel'">
-                        , cancel_user_id = #{item.updateUserId}
-                        , cancel_datetime = #{item.updateDatetime}::timestamp
-                        <if test="item.cancelDesc != null and item.cancelDesc != ''">
-                            , cancel_desc = #{item.cancelDesc}
-                        </if>
-                    </if>
+            , update_datetime = #{item.updateDatetime}::timestamp
+            <if test="item.actionType == 'confirm'">
+                , confirm_user_id = #{item.updateUserId}
+                , confirm_datetime = #{item.updateDatetime}::timestamp
+            </if>
+            <if test="item.actionType == 'cancel'">
+                , cancel_user_id = #{item.updateUserId}
+                , cancel_datetime = #{item.updateDatetime}::timestamp
+                <if test="item.cancelDesc != null and item.cancelDesc != ''">
+                    , cancel_desc = #{item.cancelDesc}
+                </if>
+            </if>
             where   notification_id = #{item.notificationId}
         </foreach>
     </update>
@@ -235,5 +235,14 @@
                 , cancel_datetime = now()
                 , cancel_desc = #{cancelDesc}
         where   cancel_user_id is null
+        <if test="areaIds != null and areaIds != ''">
+            AND area_id in
+            <foreach collection="areaIds" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="criticalLevel != null and criticalLevel != ''">
+            AND critical_level = #{criticalLevel}
+        </if>
     </update>
 </mapper>

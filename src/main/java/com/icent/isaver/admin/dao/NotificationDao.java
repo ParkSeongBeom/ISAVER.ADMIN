@@ -70,5 +70,5 @@ public interface NotificationDao {
      * @author psb
      * @return
      */
-    void allCancelNotification(Map<String, String> parameters);
+    void allCancelNotification(Map<String, Object> parameters);
 }

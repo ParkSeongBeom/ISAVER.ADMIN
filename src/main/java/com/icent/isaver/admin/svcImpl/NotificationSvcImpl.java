@@ -10,6 +10,7 @@ import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.POIExcelUtil;
+import com.kst.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -142,9 +143,19 @@ public class NotificationSvcImpl implements NotificationSvc {
 
     @Override
     public ModelAndView allCancelNotification(Map<String, String> parameters) {
+        Map<String, Object> notificationCancelParam = new HashMap<>();
+        notificationCancelParam.put("updateUserId", parameters.get("updateUserId"));
+        notificationCancelParam.put("cancelDesc", parameters.get("cancelDesc"));
+        if(StringUtils.notNullCheck(parameters.get("areaIds"))){
+            notificationCancelParam.put("areaIds", parameters.get("areaIds").split(","));
+        }
+        if(StringUtils.notNullCheck(parameters.get("criticalLevel"))){
+            notificationCancelParam.put("criticalLevel", parameters.get("criticalLevel"));
+        }
+
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{
-            notificationDao.allCancelNotification(parameters);
+            notificationDao.allCancelNotification(notificationCancelParam);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);
@@ -159,6 +170,7 @@ public class NotificationSvcImpl implements NotificationSvc {
         try {
             Map websocketParam = new HashMap();
             websocketParam.put("messageType","allCancelNotification");
+            websocketParam.put("paramBean",parameters);
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
