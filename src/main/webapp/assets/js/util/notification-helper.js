@@ -434,7 +434,7 @@ var NotificationHelper = (
             setTimeout(function () {
                 callBackEvent('addNotification', {'notification':notifications});
                 setLoading('area', false);
-            }, 1000);
+            }, 10);
         };
 
         var notificationViewRender = function(notification, flag){

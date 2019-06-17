@@ -378,6 +378,11 @@
                 ,function successHandler(data, dataType, actionType){
                     $("#videoList").empty();
                     var videoHistoryList = data['videoHistoryList'];
+                    if(videoHistoryList.length>0){
+                        $(".video_area").show();
+                    }else{
+                        $(".video_area").hide();
+                    }
                     for(var index in videoHistoryList){
                         var videoHistory = videoHistoryList[index];
                         var fenceName = '';

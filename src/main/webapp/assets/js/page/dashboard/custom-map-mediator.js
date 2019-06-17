@@ -949,6 +949,19 @@ var CustomMapMediator = (
                     break;
                 case _MARKER_TYPE[2] : // Object
                     if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
+                        var param = {
+                            deviceId:data['deviceId']
+                            ,fenceId:data['fenceId']
+                            ,objectId:data['id']
+                            ,objectType:data['objectType']
+                        };
+                        var fenceMarkers = _self.getMarker(_MARKER_TYPE[1]);
+                        for(var marker in fenceMarkers[data['deviceId']]){
+                            param['fenceId'] = marker;
+                            _self.setAnimate("remove",'LEV001',param);
+                            _self.setAnimate("remove",'LEV002',param);
+                            _self.setAnimate("remove",'LEV003',param);
+                        }
                         _marker[messageType][data['deviceId']][data['id']]['element'].remove();
                         delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] object complete - [" + messageType + "][" + data['id'] + "]");
@@ -1063,7 +1076,6 @@ var CustomMapMediator = (
                 return false;
             }
 
-
             if(_options[_MARKER_TYPE[1]]['animateFlag']){
                 var fenceMarker = _self.getMarker(_MARKER_TYPE[1], data);
                 if(fenceMarker!=null){
@@ -1125,12 +1137,21 @@ var CustomMapMediator = (
                             break;
                     }
 
+                    var customObjectType = null;
+                    if(objectMarker['element'].hasClass("object")){
+                        customObjectType = _OBJECT_TYPE_CUSTOM['unknown'];
+                    }else{
+                        customObjectType = _OBJECT_TYPE_CUSTOM['human'];
+                    }
+
                     if(objectMarker['element'].hasClass("level-"+criticalCss['LEV003'])){
-                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV003)");
+                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV003)");
                     }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV002'])){
-                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV002)");
+                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV002)");
                     }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV001'])){
-                        objectMarker['element'].attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV001)");
+                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV001)");
+                    }else{
+                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+")");
                     }
                 }else{
                     console.warn("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
