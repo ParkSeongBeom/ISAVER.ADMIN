@@ -419,7 +419,7 @@ var CustomMapMediator = (
                         _canvasSvg = svg;
                         let defs = _canvasSvg.defs();
                         for(let i in _OBJECT_TYPE){
-                            let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],3,5,6,6,"0");
+                            let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],10,10,6,6,"0");
                             _canvasSvg.circle(marker,10,11,8,{fill:"none"});
                             _canvasSvg.circle(marker,10,11,11,{fill:"none"});
                             _canvasSvg.circle(marker,10,11,16,{fill:"none"});
