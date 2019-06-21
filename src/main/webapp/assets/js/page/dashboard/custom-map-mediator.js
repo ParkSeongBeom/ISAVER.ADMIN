@@ -949,18 +949,18 @@ var CustomMapMediator = (
                     break;
                 case _MARKER_TYPE[2] : // Object
                     if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
-                        var param = {
-                            deviceId:data['deviceId']
-                            ,fenceId:data['fenceId']
-                            ,objectId:data['id']
-                            ,objectType:data['objectType']
-                        };
-                        var fenceMarkers = _self.getMarker(_MARKER_TYPE[1]);
-                        for(var marker in fenceMarkers[data['deviceId']]){
-                            param['fenceId'] = marker;
-                            _self.setAnimate("remove",'LEV001',param);
-                            _self.setAnimate("remove",'LEV002',param);
-                            _self.setAnimate("remove",'LEV003',param);
+                        for(var marker in _marker[_MARKER_TYPE[1]][data['deviceId']]){
+                            var fenceMarker = _marker[_MARKER_TYPE[1]][data['deviceId']][marker];
+                            for(var index in criticalList){
+                                if(fenceMarker['notification'][index].indexOf(data['id'])>-1){
+                                    _self.setAnimate("remove",index,{
+                                        deviceId:data['deviceId']
+                                        ,objectId:data['id']
+                                        ,objectType:data['objectType']
+                                        ,fenceId:marker
+                                    });
+                                }
+                            }
                         }
                         _marker[messageType][data['deviceId']][data['id']]['element'].remove();
                         delete _marker[messageType][data['deviceId']][data['id']];
@@ -1082,7 +1082,7 @@ var CustomMapMediator = (
                     let detectText = null;
                     switch (actionType){
                         case "add" :
-                            detectText = data['eventName'];
+                            detectText = data['eventName']+data['objectId'];
                             if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                                 fenceMarker['notification'][criticalLevel].push(data['objectId']);
                             }
