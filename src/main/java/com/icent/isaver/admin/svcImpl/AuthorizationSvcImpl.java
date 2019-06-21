@@ -93,7 +93,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             }
             modelAndView.addObject("license",license);
         }catch(Exception e){
-            e.printStackTrace();
+            throw new IsaverException("");
         }
         return modelAndView;
     }
