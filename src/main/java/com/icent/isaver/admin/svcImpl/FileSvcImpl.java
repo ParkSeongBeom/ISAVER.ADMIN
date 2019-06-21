@@ -14,6 +14,8 @@ import com.icent.isaver.admin.util.FileUtil;
 import com.kst.common.helper.FileTransfer;
 import com.kst.common.spring.TransactionUtil;
 import com.kst.common.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -47,6 +49,7 @@ import java.util.Map;
  */
 @Service
 public class FileSvcImpl implements FileSvc {
+    static Logger logger = LoggerFactory.getLogger(FileSvcImpl.class);
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
@@ -160,7 +163,6 @@ public class FileSvcImpl implements FileSvc {
 
         if(file != null){
             parameters.put("physicalFileName", file.getName());
-
             if(StringUtils.notNullCheck(parameters.get("selDevices"))){
                 if(StringUtils.nullCheck(parameters.get("addDeviceSyncRequests"))){
                     parameters.put("addDeviceSyncRequests", parameters.get("selDevices"));
@@ -171,7 +173,6 @@ public class FileSvcImpl implements FileSvc {
         }
 
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
-
         try {
             fileDao.saveFile(parameters);
             transactionManager.commit(transactionStatus);
@@ -196,6 +197,18 @@ public class FileSvcImpl implements FileSvc {
             throw new IsaverException("");
         }
 
+        if(StringUtils.notNullCheck(parameters.get("physicalFileName"))){
+            File file = new File(fileUploadPath+parameters.get("physicalFileName"));
+            if(file.exists()){
+                if(file.delete()){
+                    logger.info("[FileRemove] success - {}",parameters.get("physicalFileName"));
+                }else{
+                    logger.info("[FileRemove] failure - {}",parameters.get("physicalFileName"));
+                }
+            }else{
+                logger.info("[FileRemove] file not found - {}",parameters.get("physicalFileName"));
+            }
+        }
         deviceSync();
         return new ModelAndView();
     }
