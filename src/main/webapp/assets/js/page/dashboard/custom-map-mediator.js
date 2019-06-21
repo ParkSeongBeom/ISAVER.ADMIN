@@ -1113,7 +1113,9 @@ var CustomMapMediator = (
                                 fenceMarker['copyBoxElement'].find("p[name='detectText']").text(detectText);
                             }
                             fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
-                            fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+                            if(data['eventDatetime']!=null){
+                                fenceMarker['copyBoxElement'].find("p[name='detectEventDatetime']").text(new Date(data['eventDatetime']).format("yyyy.MM.dd HH:mm:ss"));
+                            }
                         }else{
                             fenceMarker['copyBoxElement'].find("p[name='detectText']").text("");
                             fenceMarker['copyBoxElement'].find("span[name='detectCnt']").text(detectCnt);
