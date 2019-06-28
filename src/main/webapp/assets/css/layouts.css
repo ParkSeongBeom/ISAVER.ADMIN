@@ -3819,8 +3819,7 @@ h4 {
               .map_sett_box .list ul li > section .fence_list .fence_cut span {
                 float: left;
                 height: auto;
-                width: auto;
-                margin: 0 68px 0 2px; }
+                width: 100px; }
             .map_sett_box .list ul li > section .fence_list .fence_cut.on {
               display: flex; }
             .map_sett_box .list ul li > section .fence_list .fence_name input {

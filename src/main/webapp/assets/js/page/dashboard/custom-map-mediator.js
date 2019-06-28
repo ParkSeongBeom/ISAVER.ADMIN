@@ -1216,7 +1216,7 @@ var CustomMapMediator = (
                     let detectText = null;
                     switch (actionType){
                         case "add" :
-                            detectText = data['eventName']+data['objectId'];
+                            detectText = data['eventName'];
                             if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                                 fenceMarker['notification'][criticalLevel].push(data['objectId']);
                             }

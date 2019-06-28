@@ -264,7 +264,7 @@ var CustomMapPopup = (
                                             $("<div/>", {class: "fence_title"}).append(
                                                 $("<p/>").text(data['fenceId'])
                                             ).append(
-                                                $("<button/>", {class: "btn-cut"}).click({
+                                                $("<button/>", {class: "btn-cut", fenceId:data['fenceId'], deviceId: data['deviceId']}).click({
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
@@ -296,23 +296,23 @@ var CustomMapPopup = (
                                         ).append(
                                             $("<div/>", {class: "fence_cut", fenceId:data['fenceId'], deviceId: data['deviceId']}).append(
                                                 $("<div/>", {class:"tit_guide"}).append(
-                                                    $("<span/>").text("가로")
+                                                    $("<span/>").text("Horizontal")
                                                 ).append(
-                                                    $("<span/>").text("세로")
+                                                    $("<span/>").text("Vertical")
                                                 )
                                             ).append(
                                                 $("<input/>", {
                                                     type: "text",
-                                                    placeholder:"Width Cut",
-                                                    name:"wCut",
+                                                    placeholder:"Horizontal",
+                                                    name:"horizontal",
                                                     value:"1",
                                                     maxLength:"3"}
                                                 ).on("keypress",function(){isNumber(this);})
                                             ).append(
                                                 $("<input/>", {
                                                         type: "text",
-                                                        placeholder:"Height Cut",
-                                                        name:"hCut",
+                                                        placeholder:"Vertical",
+                                                        name:"vertical",
                                                         value:"1",
                                                         maxLength:"3"}
                                                 ).on("keypress",function(){isNumber(this);})
@@ -321,13 +321,15 @@ var CustomMapPopup = (
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
-                                                    var wCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='wCut']").val());
-                                                    var hCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='hCut']").val());
+                                                    var wCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='horizontal']").val());
+                                                    var hCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='vertical']").val());
                                                     if(wCut<=0 || hCut<=0){
                                                         _alertMessage("cutValueNotEnough");
                                                         return false;
                                                     }
                                                     _customMapMediator.fencePartition(evt.data.deviceId,evt.data.fenceId,{'w':wCut,'h':hCut});
+                                                    $(".btn-cut[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"']").removeClass("on");
+                                                    $("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'].fence_cut").removeClass("on");
                                                 }).text("CUT")
                                             )
                                         ).append(
