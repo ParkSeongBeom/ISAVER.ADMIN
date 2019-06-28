@@ -296,23 +296,23 @@ var CustomMapPopup = (
                                         ).append(
                                             $("<div/>", {class: "fence_cut", fenceId:data['fenceId'], deviceId: data['deviceId']}).append(
                                                 $("<div/>", {class:"tit_guide"}).append(
-                                                    $("<span/>").text("Horizontal")
+                                                    $("<span/>").text("Column")
                                                 ).append(
-                                                    $("<span/>").text("Vertical")
+                                                    $("<span/>").text("row")
                                                 )
                                             ).append(
                                                 $("<input/>", {
                                                     type: "text",
-                                                    placeholder:"Horizontal",
-                                                    name:"horizontal",
+                                                    placeholder:"column",
+                                                    name:"column",
                                                     value:"1",
                                                     maxLength:"3"}
                                                 ).on("keypress",function(){isNumber(this);})
                                             ).append(
                                                 $("<input/>", {
                                                         type: "text",
-                                                        placeholder:"Vertical",
-                                                        name:"vertical",
+                                                        placeholder:"row",
+                                                        name:"row",
                                                         value:"1",
                                                         maxLength:"3"}
                                                 ).on("keypress",function(){isNumber(this);})
@@ -321,8 +321,8 @@ var CustomMapPopup = (
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
-                                                    var wCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='horizontal']").val());
-                                                    var hCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='vertical']").val());
+                                                    var wCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='column']").val());
+                                                    var hCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='row']").val());
                                                     if(wCut<=0 || hCut<=0){
                                                         _alertMessage("cutValueNotEnough");
                                                         return false;
