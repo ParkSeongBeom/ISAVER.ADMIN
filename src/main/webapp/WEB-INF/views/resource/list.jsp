@@ -573,6 +573,8 @@
         ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
         ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
         ,   saveFailure         :'<spring:message code="common.message.saveFailure"/>'
+        ,   partitionValidate   :'<spring:message code="resource.message.partitionValidate"/>'
+        ,   cutValueNotEnough   :'<spring:message code="resource.message.cutValueNotEnough"/>'
     };
 
     $(document).ready(function(){

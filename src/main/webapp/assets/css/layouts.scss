@@ -162,10 +162,10 @@ header {overflow: hidden; position: relative; width:100%; @include flexbase; @in
 main {
   width:100%; @include flex-option(0, 1, 100%);
   &, & > * {@include flexbase; position: relative; @include transition(200ms); }
-  & > * {@include flex-column; }
-  & > aside   {order:3; }
-  & > article {order:1; @include flex-option(0, 1, 100%); overflow: hidden;}
-  & > section, .common-popup-layer {order:2;}
+  & > * {}
+  & > aside   {}
+  & > article {@include flex-option(0, 1, 100%); overflow: hidden;order:3;@include flex-column;}
+  & > section, .common-popup-layer {}
   .popup-layer {} // 특정 화면 기능 수행 팝업
   .common-popup-layer {} // 모든 화면 공통 팝업
 }
@@ -174,6 +174,7 @@ main {
 aside.db_area {
   $db_filter_h:41px;
   $db_morebt_h:40px;
+  order:5;
 
   @at-root { .admin_mode .db_area {@include at-root-dashbg;} }
 
@@ -189,13 +190,14 @@ aside.db_area {
   article, section:not(.issue_board), .db_cancel_set {@include flex-column; }
 
   h2 {
-    @include flex-option(1, 0, $headerHeight); @include mmheight($headerHeight);
-    span {width:100%; padding:5px 10px;}
+    @include flex-option(1, 0, $areaHeaderHeight); @include mmheight($areaHeaderHeight);
+    span {width:100%; padding:10px 0 0 0;}
   }
+
 
   // 알림카운트
   .issue_board {
-    @include flex-midddle; margin:30px 0;
+    @include flex-midddle; margin:10px 0;
     span {
       @include flex-midddle; @include flex-midddle; @include flex-column; @include border-radius(200px);
       @include box-shadow01(0px, 6px, 6px, 0px, #000, 0.1);
@@ -218,7 +220,11 @@ aside.db_area {
         &:before {content:"DANGER";}
       }
     }
+    & + .checkbox_set.csl_style01{
+      border:1px solid #f5f5f5; border-left: none; border-right: none; margin:10px 0;
+    }
   }
+
 
   // 알림센터
   .db_list_box {
@@ -323,7 +329,9 @@ aside.db_area {
     .dbc_more {
       width:100%; @include mmheight($btnarea-height); @include flex-option(1, 0, $btnarea-height);
       @include action_boxbtn;
-      &:before {content:"\e92b";}
+      &:before {content:"\e92b";position: absolute;left: 0; top: 0; width:100%; height:100%; justify-content: center;align-items: center;
+                display:flex; background-color: #2c2c2c;
+      }
     }
 
     // 알림해지 노출 시 체크박스 및 셀렉트 박스 감춤
@@ -449,11 +457,9 @@ menu {
   @mixin font-size-navbtn  {font-size:1.25rem;}  //ex)  depth @include font-size-navbtn;
   @mixin font-size-menubtn {font-size:1.3rem; }  //ex)  root  @include font-size-menubtn;
 
-  overflow: hidden; display: inline-block;
-
   button {
-    overflow: hidden; text-align: left; word-break: break-all; @include mmwidth($menu-btn-width);
-    height:40px; padding:0 10px; opacity: 0.7; @include action_menubtn;
+    text-align: left; word-break: break-all;
+    height:31px; @include action_menubtn;
   }
 
   & > ul {
@@ -539,13 +545,12 @@ h4 {
   }
   .checkbox_set.csl_style01{
 
-      margin:0 0 0 auto; @include flex-midddle;justify-content: flex-end;
-      &:after {font-size:1rem;}
-      span{margin: 0 5px 0 0;}
+    margin:0 0 0 auto; @include flex-midddle;justify-content: flex-end;
+    &:after {font-size:1rem;}
+    span{margin: 0 5px 0 0;}
   }
 }
-
-
+.dashboard_mode.view_mode > .wrap .sub_title_area h3{@include font-size-h2;}
 
 .expl {
   margin: 0 0 0 25px; padding-left: 15px; border-left: 1px solid #a9a9a9;
@@ -789,11 +794,19 @@ h4 {
     & > div > div {max-width:700px; min-width:400px; max-height:600px;  width:auto; height:auto;}
   }
 }
+.network_popup h2{flex:auto;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
+
+.popupbase h2{flex:auto;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
 
 /////..... 팝업 공통 효과 END
 
 // 사용자 보기 팝업, 라이센스정보팝업, 자원모니터링팝업
-.tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {@include tpopupbase;}
+.common-popup-layer{order:1;}
+.tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {
+  @include tpopupbase;
+  & input,& select{background-color: #535353;}
+
+}
 
 .tpopup {
   /////..... 사용자 보기 팝업
@@ -824,7 +837,7 @@ h4 {
   }
   /////..... 자원모니터링팝업
   &-resource {
-    width:800px; height:400px; right:-($noticecenter-width * 4);
+    width:800px; height:400px; left:-($noticecenter-width * 4);
 
     & > h2{margin:5px 0;@include mmheight(38px);}
     & > .chart_select_set{
@@ -843,14 +856,14 @@ h4 {
           position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
           @include flexbase; @include flex-align-items-center; background-color: rgba(0,0,0,.4);
         }
-      }
+      } 
       .resource_list {
         @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
         & > div {
           margin:0 0 5px 0;
           select {width:100%; @include mmheight(50px);}
         }
-        .device_set {@include flex-option(0, 1, 100%); }
+        .device_set {@include flex-option(0, 1, 100%); overflow-x: hidden;}
       }
     }
     &.type01{
@@ -972,7 +985,7 @@ h4 {
 
         & > * {position: relative; z-index: 1; border-color: transparent;}
 
-        select {@include flex-option(0, 1, 100%);max-width:385px;}
+        select {@include flex-option(0, 1, 100%);max-width:185px;}
 
         span {
           @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
@@ -980,7 +993,7 @@ h4 {
         }
         select + span {min-width:60px !important;}
         span, button {}
-        button {
+        button.btn {
           @include btn-itype01b; margin:0;
           &:before {background-color:rgba( $color-bas, .6);}
           &:nth-of-type(1){
@@ -1069,11 +1082,12 @@ h4 {
           }
 
           button.btn {
-            &-del, &-edi {
+            &-del, &-edi, &-cut {
               width:30px; min-width:30px; max-width:30px; @include flex-justify-content-end; padding:0 4px 0 0;
             }
             &-del { &:before {content:"\e91a";} }
             &-edi { &:before {content:"\e905";} }
+            &-cut { &:before {content:"\e98b";} }
 
             &-cam {
               width:100%; padding:0 0 0 20px; @include flex-justify-content-start;
@@ -1116,6 +1130,19 @@ h4 {
                 position: absolute; top:0; left:0; width:40px; height:40px; font-size:1.6rem;
               }
             }
+            .tit_guide{display: block;height:auto;clear:both;position: absolute;top: 8px;
+              & > span{float: left;height:auto;}
+            }
+            .fence_cut{
+              display:none; position: absolute; left:0; background-color: #535353; padding: 5px 10px; z-index: 99;
+              border:3px solid #040404; height: 90px; background-image: url(../../assets/images/bg/bg_spot.svg);
+              button:hover{color:#ffffff;}
+              input{margin-top: 20px;}
+              button{margin-top: 20px;}
+              span{float:left;height:auto;width:auto;margin:0 68px 0 2px;}
+            }
+            .fence_cut.on{display:flex;}
+
             .fence_name {
               input  {@include flex-option(0, 1, 100%); border-right-color:transparent;}
               select {width:95px; min-width:95px; max-width:95px;}
@@ -1563,5 +1590,458 @@ body.taekwon_mode {
 }
 
 
+// isaver_1.8 view_mode
+.dashboard_mode.view_mode,.admin_mode.view_mode{
+  & > .wrap{
 
+    /********************** 공통 엘리먼트 시작 **********************/
+
+    // 아이콘 시작
+    .ico {
+      &-safeeye:before  {content:"\e941";} // -safeeye
+      &-blinker:before  {content:"\e944";} // -blinker
+      &-tracker:before  {content:"\e943";} // -tracker
+      &-function:before {content:"\e940";} // 설정새로고침
+      &-pool:before     {content:"\e942";} // 수영장
+      &-health:before   {content:"\e93f";} // 의료
+      &-nhr:before      {content:"\e945";} // detector
+      &-invasion:before {content:"\e93e";} // 침입
+      &-exhibit:before  {content:"\e93c";} // 전시물보호
+      &-speaker:before  {content:"\e93a";} // 스피커
+      &-wlight:before   {content:"\e93b";} // 경광등
+      &-mobile:before   {content:"\e939";} // 모바일
+      &-close:before    {content:"\e91a";} // 닫기
+      &-plus:before     {content:"\e92b";} // 더보기
+      &-minus:before    {content:"\e92c";} // 빼기
+      &-logi:before     {content:"\e900";} // 로그인
+      &-admi:before     {content:"\e909";} // 관리자
+      &-user:before     {content:"\e90e";} // 사용자
+      &-update:before   {content:"\e961";} // 업데이트
+      &-confirm:before  {content:"\e941";} // 확인
+      &-cancle:before   {content:"\e937";} // 알림해지
+      &-more:before     {content:"\e95c";} // 더보기
+      &-zoom:before     {content:"\e925";} // 자세히보기
+      &-area:before     {content:"\e91b";} // 장소
+      &-tof:before      {content:"\e962";} // TOF 센서
+      &-m8:before       {content:"\e962";} // m8 센서
+      &-ptz:before      {content:"\e964";} // PTZ 카메라
+      &-camera:before   {content:"\e964";} // 카메라
+      &-stic:before     {content:"\e908";} // 차트, 통계
+      &-four:before     {content:"\e938";} // 4분할
+      &-gate:before     {content:"\e92f";} // 게이트 웨이 센서
+      &-temp:before     {content:"\e949";} // 온도
+      &-humi:before     {content:"\e947";} // 습도
+      &-co2:before      {content:"\e955";} // CO2
+      &-co:before       {content:"\e956";} // CO
+      &-plug:before     {content:"\e933";} // 스마트 플러그
+      &-smok:before     {content:"\e963";} // 연기
+      &-gas:before      {content:"\e910";} // 가스
+      &-hlds:before     {content:"\e959";} // 근거리 HLDS 센서
+      &-device:before   {content:"\e92f";} // 근거리 HLDS 센서
+      &-led:before      {content:"\e966";} // LED
+      &-sioc:before     {content:"\e96e";} // sioc
+      &-qguard:before   {content:"\e96c";} // q가드 서버
+      &-dash:before     {content:"\e90a";} // 데시보드
+      &-info:before     {content:"\e946";} // 라이센스, 버져 정보
+      &-larg:before     {content:"\e904";} // 확대
+      &-thum:before     {content:"\e903";} // 축소
+    }
+
+
+
+    // h 테그 서정 시작
+    h2{
+      @include flex-option(0, 1, 50px); @include flexbase; @include flex-align-items-center;
+      min-height:50px; max-height:50px; padding:10px;
+    }
+    h2 {font-size:1.6rem; opacity: 0.7; }
+    h3 {font-size:1rem;}
+    // h 테그 서정 시작
+
+    // 체크박스 Start
+    .checkbox-style01 {@include checkbox-style01;} // 알림센터 체크 박스 스타일  .db-checkbox
+    // 체크박스 End
+
+    // btn-set 정의 Start
+    .btn-set  {
+      @include flexbase; @include flex-justify-content-between; position: relative;
+
+      & > button {
+        @include line-btn; @include flex-width-option(1, 100%);
+        width: auto; min-width: auto; max-width: none; margin:0 0 0 5px;
+        &:first-of-type {margin:0;}
+      }
+    }
+    // btn-set 정의 End
+
+    // button  Start
+    .notice-area{display: flex; width: 24px; height: 100%; order:4; border-left: 0.5px solid #040404;
+      .notice-btn{width:24px; height:100%; @include noticelevel-style01; @include noticelevel-motion-01; @include noticelevel-ani03;}
+    }
+    aside.db_area > article{position: relative;}
+    aside.db_area > article > .notice-btn{
+      position: absolute; z-index: 100; top:10px; right:10px; width:40px; height:40px;
+      &, &:before, &:after {@include border-radius(800px);  @include flex-midddle;}
+      &:before, &:after {content:""; position: absolute; width:100%; height: 100%; font-size:1.6rem;}
+      &:before {
+        content:"\e91a" !important;
+        @include border01(1px,$color-gray-05,1 );
+        //@include box-shadow01(0px, 9px, 8px, -5px, #000, 1); @include box-inset-shadow(0px, 0px, 8px, #000, 1);
+      }
+    }
+
+    button {
+      &.notice-btn {
+        @include action_boxbtn; @include noticelevel-style01; @include noticelevel-motion-01; @include noticelevel-ani03;
+        &:before {
+          color:$color-white-01; background-color: $color-not;
+          //@include box-shadow01(0px, 9px, 8px, -5px, #000, 1); @include box-inset-shadow(0px, 0px, 8px, #000, 1);
+        }
+        &:after  {z-index: -1; background-color: transparent;}
+      }
+      // 알림버튼
+
+      &.db-openbtn {
+        pointer-events: none; opacity: 0.5;
+        &.active {pointer-events: auto; opacity: 1;}
+        &:before {content:"\e983"; }
+      } // 알림 해지 / 확인 열기 버튼
+
+      &.db-delebtn:before {content: "\e974";} // 알림 전체 해지 버튼
+
+      &.db-inforbtn {
+        margin:0 5px 0 0;
+        &:before {content:"\e92e"; opacity: 0.8; font-size:1.3rem;  background-color: rgba(0,0,0,0.2);}
+        &:hover:before {background-color: rgba(0,0,0,0.6);}
+        &.on {
+          &:before {background-color: rgba(0,0,0,0.6); opacity: 1;}
+        }
+      } // 알림이력 대응보기 버튼
+
+      &.db-serabtn {
+        &.on ~ .db-searchbox { display: inline-block;  }
+        &:before {content:"\e925";}
+      } // 알림이력 찾기 버튼
+
+      &.db-morebtn {
+        overflow: hidden; width:100%; height:0;  @include action_boxbtn;
+        &:before {width:100%; height:30px; @include flex-midddle; background-color: $color-gray-09;}
+        &.on {height:30px; min-height:30px;}
+
+      } // 알림이력 더보기 버튼
+
+      &.pin {
+        @include icon_btn; &:before {content:"\e984";} &.on:before {content:"\e985";}
+      } // 데시보드 메뉴 고정 핀 버튼
+
+      &.dim {@include dim_btn;}
+    }
+    // button End
+
+
+    //****************** 트리 Start
+    //세로형 트리
+    @mixin tree-type-vertical {
+      @include treebase2;
+
+      ul, li { &:before {top:20px; width:10px; height:1px;} }
+      li {
+        display: block; margin:0 0 0 $mt_btn_w; z-index:1;
+        &:before {display: none;}
+      }
+
+      ul:before {left:-20px;}
+      li:before {left:-10px;}
+
+      input[type="checkbox"] {
+
+        &:checked ~ div, &:checked ~ button {
+          & ~ ul {
+            & > li {display: block !important; height:auto;}
+            &:after {content:"\e92c" !important;}
+          }
+        }
+      }
+
+      & > li ul li:after {top:-7px;}
+      & > li ul li:first-child:after {display:flex; width:1px !important; height:auto;}
+    } // @include  tree-type-vertical;
+    .tree-vertical-circle, .tree-vertical-square {@include tree-type-vertical; & > li ul li {display: none; height:0;}}
+
+    .tree-vertical-circle { & > li ul { &:after {@include plus-icon-circle;} } } // 원형버튼 - 구역 디바이스 관리 트리
+    .tree-vertical-square { & > li ul { &:after {@include plus-icon-square;} } } // 사각버튼 - 대시보드 메뉴 트리
+
+    //가로형 트리
+    @mixin tree-type-horizontal {
+      @include treebase2;
+
+      li {@include flexbase; @include flex-align-items-start;}
+
+      input[type="checkbox"] {
+        &:checked ~ div, &:checked ~ button {
+          & ~ ul {
+            & > li {@include flexbase; height:auto;}
+            &:after {content:"\e92c" !important;}
+            &:before {display: block !important;}
+          }
+        }
+      }
+
+      & > li {
+        margin:0 0 0 $mt_btn_w;
+        ul,li { &:before {display: none;} }
+        li {margin:0 0 0 ($mt_btn_w + 20px);}
+        ul {
+          &:before {width:$mt_btn_w; height:1px; top: 20px; left: auto;}
+          li {
+            &:after {top:20px;}
+            //ul li:after {top:-7px;}
+          }
+        }
+      }
+    } // @include tree-type-horizontal;
+
+    .tree-horizontal-square, .tree-horizontal-circle, .tree-horizontal-view  {@include tree-type-horizontal; }
+    .tree-horizontal-square, .tree-horizontal-circle {& > li ul li {display: none; height:0;}}
+
+    .tree-horizontal-square {& > li ul { &:after {@include plus-icon-square;} } } //원형버튼
+    .tree-horizontal-circle {& > li ul { &:after {@include plus-icon-circle;} } } //사각버튼
+
+    @mixin tree-type-view {
+      @include treebase2;
+
+      ul,li { &:before {display: block !important;} }
+
+      li {
+        @include flexbase; @include flex-align-items-start;
+        &:before { @include tree-line; top:20px; left:-($bar_w); width:$bar_w; height:1px;}
+        &:after {top:21px !important;}
+      }
+
+      & > li {
+        margin:0 0 0 0;
+        &:before {display: none !important;}
+        li {margin:0 0 0 ($mt_btn_w);}
+        ul {&:before {width:$mt_btn_w; height:1px; top: 20px; left: auto;} }
+      }
+    } // @include tree-type-view;  열고 닫기 없음
+
+    .tree-rolemenu {
+      @include tree-type-view;
+
+      button {
+        @include flex-justify-content-start; @include tree-button-action;
+        min-width:200px !important; min-height:$mt_btn_w; padding:0 10px 0 ($mt_btn_w + 10px) ; margin:0 0 6px 0;
+
+        &:after {
+          content:"OFF"; @include flex-midddle;
+          position: absolute; top:0; left:0; width:$mt_btn_w; height:$mt_btn_w;
+          background-color: rgba(0,0,0,0.2);
+        }
+        &.on:after {content:"ON" !important;}
+      }
+
+    } //원형버튼 - 메뉴권한관리
+    //****************** 트리 End
+
+
+
+    /********************** 공통 엘리먼트 끝 **********************/
+
+
+
+    & > header{display:none;}
+    & > main{
+      & > menu{z-index: 100; background-color: $color-not; order:2;
+
+       /*
+       <!-- 좌측 메뉴 / 기능 버튼 영역 -->
+       <menu id="menu">
+
+           <!-- 메뉴 SET -->
+           <div class="menu-btnset">
+
+               <!-- 데시보드, 통계, 어드민 링크 버튼 -->
+               <div class="group-menubtn">
+                   <button class="ico-dash">DASHBOARD</button>
+                   <button class="ico-stic">STATISTICS</button>
+                   <button class="ico-admi">ADMINISTRATION</button>
+               </div>
+
+               <!-- 기능 버튼 -->
+               <div class="group-functionbtn">
+                   <button class="ico-user">USER INFORMATION</button>
+                   <button class="ico-info">LICENSE INFORMATION</button>
+                   <button class="ico-logi">LOGOUT</button>
+               </div>
+           </div>
+
+           <div class="menu-naviset">
+           </div>
+       </menu>
+       */
+        @include flex-justify-content-start; @include flex-align-items-start;
+        @include flex-option(1, 0, $menu-width); min-width:$menu-width;
+        &.pin  {@include flex-option(1, 0, ($menu-width + 300px)); min-width:($menu-width + 300px);}
+        &.hide {overflow: hidden;  @include flex-option(1, 0, 0); min-width:0 !important;}
+        &, & > * {@include transition(200ms); }
+
+
+        .menu-btnset {
+          &, & > div {@include flexbase; @include flex-column; position: relative;}
+          @include flex-justify-content-between;
+          z-index: 10; width:$menu-width; min-width:$menu-width; height:100%; background-color:rgba($color-gray-11,1);
+
+          &:after {@include bbl(0,0,0,0,auto,1px,100%, $color-gray-09);}
+
+          button {
+            @include menu_btn;display: flex;align-items: center;
+            &.hover {background-color: $color-ho;}
+
+            //-- 버튼안에 테그 삽입 시 사용 시작
+            /*& > * {
+              @include flexbase; @include flex-align-items-center; position: absolute; z-index: -1; top:0; left:-300px;
+              font-size:1rem; min-width:170px; height:$menu-width; padding:0 10px; background-color:$color-blue-01;
+            }*/
+            &:hover & > *  {left:50px;}
+            &:active & > * {background-color: $color-green-01;}
+            //-- 버튼안에 테그 삽입 시 사용 끝
+
+            &.menubtn-dash { &:before {content:"\e90a";} }
+            &.menubtn-stic { &:before {content:"\e908";} }
+            &.menubtn-admi { &:before {content:"\e909";} }
+            &.funcbtn-user { &:before {content:"\e90e";} }
+            &.funcbtn-info { &:before {content:"\e946";} }
+
+
+            &.funcbtn-reso { &:before {content:"\e907";} }
+            &.funcbtn-logi { &:before {content:"\e900";} }
+            &.funcbtn-mscr { &:before {content:"\e903";} }
+
+          }
+
+          & > div {
+            @include flex-justify-content-start; z-index: 10;
+            &.ignore {flex:auto;}
+          }
+
+          .group {
+            &-menubtn {} // 데시보드, 통계, 어드민 링크 버튼
+            &-informationbtn {} // 기능 버튼
+            &-functionbtn {
+              button {
+
+                &:hover {width:200px; min-width:200px; }
+                &:after  {display: none;}
+                &.funcbtn-mscr.on {
+                  position: fixed !important; left:0 !important; bottom:0 !important;
+                  p { display: none !important;}
+                  &,&:before {width:30px; height:30px; min-width:30px; min-height:30px;}
+                  &:before {content:"\e904"; font-size:1.4rem;}
+                  &:after  { display: block !important; font-size:0.9rem; }
+                  &:hover  {width:200px; min-width:200px; }
+                }
+              }
+            } // 기능 버튼
+          }
+        }
+
+        .menu-navset {
+          position: relative; z-index: -1; height:100%;
+          & > * {
+
+            @include flexbase; @include flex-column; @include flex-justify-content-start; @include flex-align-items-start;
+            overflow: hidden; z-index: 10; position: absolute; top:0; left:-(300px + $menu-width); width:300px; height:100%;
+            background-color:rgba($color-gray-09,0.7); @include transition(200ms);
+
+            &:after {
+              content:""; position: absolute; z-index: -1; width:100%; height:100%; opacity: 0.7;
+              background-image: url("../images/bg/bg_spot.svg");
+            }
+            &:before {@include bbl(0,0,0,0,auto,1px,100%, $color-gray-09);}
+            &.on {left:0;}
+
+            & > * {padding: 10px;}
+
+            & > ul {@include flex-option(0, 1, 100%); overflow: auto; position: relative; width:100%;}
+
+            h3 {font-size:1.1rem; font-weight:bold; margin:0 0 4px 0;  opacity: 0.8;}
+          } // nav
+
+          .nav {
+            &-dash, &-stic, &-admi {
+              &.pin {position: relative; z-index: 1; left:0; background-color:rgba($color-gray-11,1);}
+              button.pin {position: absolute; top: 0; right: 0; padding:0; }
+            }
+            &-stic {}
+            &-admi {}
+            &-user {}
+            &-info {}
+          }
+        }
+
+        // 네비게이션 기본
+        .nav-base {
+          /*
+          <ul class="nav-base">
+            <li>
+                <h3>이벤트</h3>
+                <ul>
+                    <li><button>이벤트이력</button></li>
+                </ul>
+            </li>
+          </ul>
+          */
+
+          h3 {min-height:40px; height:40px; max-height:40px; @include flex-option(0, 1, 50px); padding:10px 0;}
+          ul, li {position: relative; width:100%;}
+          & > li {
+            margin:0 0 10px 0; padding:0 0 10px 0;
+            &:before {@include bbl(auto,0,0,0,0,100%,1px, rgba($color-white-01,0.2));  }
+          }
+          & > li > ul > li > button {
+            @include nav_btn; @include flex-justify-content-start;line-height: 1px;
+          }
+          & > li > ul > li > button:hover {
+            line-height: 1px;
+          }
+        }
+      }
+
+      & > article{
+        & > .watch_area > div > header{display: none;}
+        & > .watch_area.area02 > div > header,
+        & > .watch_area.area04 > div > header,
+        & > .watch_area.area06 > div > header,
+        & > .watch_area.area08 > div > header,
+        & > .watch_area.area10 > div > header,
+        & > .watch_area.area12 > div > header{display: flex;}
+      }
+
+    }
+  }
+}
+
+// isaver_1.8 admin_mode 개별적용
+.admin_mode.view_mode{
+  & > .wrap{
+    & > main{
+      & > menu{
+        *, *:after, *:before{color:#ffffff;}
+      }
+      & > article{
+        & > .sub_title_area{display: block;
+          h3{font-size:1.8rem; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
+          .navigation{display: inline-block;}
+        }
+        & > .watch_area > div > header{display: block;}
+        & > .popup-layer > .popupbase{
+          h2{flex:auto;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
+        }
+      }
+    }
+  }
+}
+
+.admin_mode.view_mode .wrap h2{flex:auto !important;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
 

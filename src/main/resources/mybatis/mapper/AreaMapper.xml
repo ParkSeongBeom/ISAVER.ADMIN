@@ -287,10 +287,32 @@
       @author psb
     -->
     <select id="findListAreaForMenuTopBar" resultType="AreaBean">
-        SELECT  a.area_id as areaId
-                ,a.area_name as areaName
-                ,a.template_code as templateCode
-                ,(
+        WITH RECURSIVE AREA_HIERACHY(areaId, path, parentAreaId, sortOrder, areaPath) AS
+        (
+            SELECT  area_id
+                    ,'HOME > ' || '' || area_name || '(' || area_id || ')'
+                    ,parent_area_id
+                    ,array[sort_order]
+                    ,area_id || ''
+            FROM    isaver.area A
+            where	A.parent_area_id is null
+            UNION ALL
+            SELECT  a.area_id
+                    ,b.path || ' > ' || a.area_name || '(' || a.area_id || ')'
+                    ,a.parent_area_id
+                    ,b.sortOrder
+                    ,b.areaPath || ',' || a.area_id
+            FROM    isaver.area a
+            JOIN    AREA_HIERACHY b
+            ON      a.parent_area_id = b.areaId
+        )
+        SELECT      areaId
+                    , areaPath
+                    , path
+                    , a.area_name as areaName
+                    , a.template_code as templateCode
+                    , a.parent_area_id as parentAreaId
+                    , (
                     WITH RECURSIVE AREA_HIERACHY(area_id, parentAreaId) AS (
                         SELECT  b.area_id, b.parent_area_id
                         FROM    isaver.area b
@@ -305,12 +327,13 @@
                     )
                     SELECT  array_to_string(array_agg(e.area_id),',')
                     FROM    AREA_HIERACHY e
-                    WHERE	 e.area_id <![CDATA[<>]]> a.area_id
-                ) as childAreaIds
-        FROM    isaver.area a
-        WHERE	a.del_yn = 'N'
-        AND     a.parent_area_id is null
-        ORDER BY a.sort_order, a.area_name
+                    WHERE	 e.area_id <![CDATA[<>]]>  a.area_id
+                    ) as childAreaIds
+        FROM        AREA_HIERACHY hierachy
+        INNER JOIN  isaver.area a
+        ON	        hierachy.areaId = a.area_id
+        WHERE	    del_yn = 'N'
+        ORDER BY    sortOrder, path;
     </select>
 
     <!--

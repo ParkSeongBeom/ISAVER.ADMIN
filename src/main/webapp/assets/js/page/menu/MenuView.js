@@ -148,80 +148,145 @@ function MenuView(model) {
             return false;
         }
 
-        var mainMenuTag = $("<ul/>",{menu_main:''});
-        var childMenuLiTag = $("<li/>").append(
-            $("<button/>", {href:"#"})
-        ).append(
-            $("<ul/>")
-        );
-
         for(var index in menuBarModel){
             var _menu = menuBarModel[index];
             if(_menu['menuDepth']==0){
-                var _childMenuLiTag = childMenuLiTag.clone();
-                _childMenuLiTag.attr("name",_menu['menuId']);
-                _childMenuLiTag.find("button").text(_menu['menuName']);
+                var menuBtnAppendTag = $("<button/>",{'name':_menu['menuId']});
+                var menuNavAppendTag = $("<nav/>",{'name':_menu['menuId']}).append(
+                    $("<h2/>").text(_menu['menuName'])
+                ).append(
+                    $("<button/>",{'class':'pin','data-title':'Fix navigation'}).click(function(){
+                        $(this).toggleClass("on");
+                        $(this).parent().toggleClass("pin");
+                        if($(".pin").hasClass("on")){
+                            $("menu").addClass("pin");
+                        }else{
+                            $("menu").removeClass("pin");
+                        }
+                    })
+                ).append(
+                    $("<ul/>")
+                );
 
                 switch (_menu['menuId']){
                     case "000000" : // ADMINISRATION
+                        menuBtnAppendTag.attr({'rel':'nav-admi'}).addClass('menubtn-admi');
+                        menuNavAppendTag.addClass('nav-admi');
+                        menuNavAppendTag.find("ul").addClass("nav-base");
                         break;
                     case "100000" : // DASHBOARD
-                        _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard();");
+                        menuBtnAppendTag.attr({'rel':'nav-dash','onclick':'javascript:moveDashboard();'}).addClass('menubtn-dash');
+                        menuNavAppendTag.addClass('nav-dash');
+                        menuNavAppendTag.find("ul").addClass("tree-vertical-square tree_ac");
                         break;
                     case "200000" : // STATISTICS
+                        menuBtnAppendTag.attr({'rel':'nav-stic'}).addClass('menubtn-stic');
+                        menuNavAppendTag.addClass('nav-stic');
+                        menuNavAppendTag.find("ul").addClass("nav-base");
                         break;
                 }
-                mainMenuTag.append(_childMenuLiTag);
+                $("#menuBtnGroup").append(menuBtnAppendTag);
+                $("#menuNav").append(menuNavAppendTag);
             }else{
                 if (_menu['menuFlag'] == 'M') {
-                    var _childMenuLiTag = childMenuLiTag.clone();
-                    _childMenuLiTag.attr("name", _menu['menuId']);
-                    _childMenuLiTag.find("button").text(_menu['menuName']);
-
-                    if(_menu['menuPath']!="/"){
-                        _childMenuLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
+                    var _childMenuLiTag = $("<li/>",{'name':_menu['menuId'],'parentId':_menu['parentMenuId']});
+                    switch (_menu['parentMenuId']){
+                        case "000000" : // ADMINISRATION
+                        case "200000" : // STATISTICS
+                            _childMenuLiTag.append(
+                                $("<h3/>", {href:"#"}).text(_menu['menuName'])
+                            ).append(
+                                $("<ul/>")
+                            );
+                            $("#menuNav").find("nav[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
+                            break;
+                        default :
+                            _childMenuLiTag.append(
+                                $("<button/>", {'href':"#"}).text(_menu['menuName'])
+                            );
+                            if(_menu['menuPath']!="/"){
+                                _childMenuLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
+                            }
+                            $("#menuNav").find("li[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
                     }
-
-                    if(mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul > li").length==0 && _menu['menuPath']!="/"){
-                        mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
-                    }
-                    mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
                 }
             }
         }
 
         // ADMINISTRATOR 하위 메뉴 없을시 제거
-        var adminTag = mainMenuTag.find("li[name='000000']");
+        var adminTag = $("ul[name='000000']");
         if(adminTag.length > 0 && adminTag.find("ul > li").length==0){
             adminTag.remove();
+            $("button[name='000000']").remove();
         }
 
         for(var index in areaList){
             var _area = areaList[index];
             if(_area['templateCode']!='TMP009'){
-                var _childMenuLiTag = childMenuLiTag.clone();
-                _childMenuLiTag.attr("name", _area['areaId']);
-                _childMenuLiTag.find("button").text(_area['areaName']);
+                var parentAreaId = _area['parentAreaId']==null?'100000':_area['parentAreaId'];
+                var _childMenuLiTag = $("<li/>",{'name':_area['areaId'],'parentId':parentAreaId}).append(
+                    $("<input/>", {'type':"checkbox",'checked':true})
+                ).append(
+                    $("<button/>", {'href':"#"}).text(_area['areaName'])
+                );
+
                 if(_area['childAreaIds']!=null){
+                    _childMenuLiTag.append($("<ul/>"));
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
                 }else{
-                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('','"+_area['areaId']+"');");
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['parentAreaId']+"','"+_area['areaId']+"');");
                 }
-                mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
+
+                if(parentAreaId=='100000'){
+                    $("#menuNav").find("nav[name='"+parentAreaId+"'] > ul").append(_childMenuLiTag);
+                }else{
+                    $("#menuNav").find("li[name='"+parentAreaId+"'] > ul").append(_childMenuLiTag);
+                }
             }
         }
 
-        $("#topMenu").append(mainMenuTag);
+        // 네비게이션 보기 제어
+        var menuButton = $(".menu-btnset button:not(.group-functionbtn button)" );
+        var menuNavset = $(".menu-navset > *" );
+        menuButton.hover(function () {
+            $(".menu-btnset button").removeClass("hover");
+            menuNavset.removeClass("on");
 
-        if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
-            setSelectedMenu(MenuView._model.getParentMenuId());
+            var activeMenu = $(this).attr("rel");
+            $(this).addClass("hover");
+            $('.' + activeMenu).addClass("on");
+
+            var activeMenuOn = menuNavset.hasClass("on");
+            if(activeMenuOn) {
+                menuNavset.mouseleave(function(){
+                    menuButton.removeClass("hover");
+                    menuNavset.removeClass("on");
+                });
+            }
+
+            var ignoreBtnArea = $(".ignore, .group-functionbtn");
+            ignoreBtnArea.hover(function () {
+                menuButton.removeClass("hover");
+                menuNavset.removeClass("on");
+            });
+        });
+
+        if(!setSelectedMenu(MenuView._model.getTargetMenuId(),true)){
+            setSelectedMenu(MenuView._model.getParentMenuId(),true);
         }
 
-        function setSelectedMenu(_targetMenuId){
-            var targetTag = $("li[name='"+_targetMenuId+"']");
+        function setSelectedMenu(_targetMenuId,_flag){
+            var navTarget = $("#menuBtnGroup").find("button[name='"+_targetMenuId+"']");
+            if(navTarget.length > 0){
+                navTarget.addClass("on");
+            }
+
+            var targetTag = $("#menuNav").find("li[name='"+_targetMenuId+"']");
             if(targetTag.length > 0){
-                targetTag.find("> button").addClass("on");
-                setSelectedMenu(targetTag.parent().parent().attr("name"));
+                if(_flag){
+                    targetTag.find("> button").addClass("on");
+                }
+                setSelectedMenu(targetTag.attr("parentId"),false);
                 return true;
             }
             return false;

@@ -23,6 +23,10 @@ html {font-size:16px; font-family:'맑은고딕','Malgun Gothic'; -ms-text-size-
 body {padding:0; margin:0; outline:none; -webkit-touch-callout: none; -webkit-appearance: none;}
 html, body {-webkit-overflow-scrolling : touch; -webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 
+::-webkit-resizer {
+  position: absolute; left:0; bottom:0; width:50px; height:50px; background-image: url("../images/ico/select_allow_upw.svg");
+}
+
 /* 테이블 정의 */
 table {table-layout:fixed; border-spacing:0; border-collapse:collapse; td, th {overflow: hidden;} }
 
@@ -176,4 +180,4 @@ div[contenteditable] { &:empty:before {content: attr(placeholder); display: bloc
 .sico_127:before {content: "\e97e";}   .sico_137:before {content: "\e988";}
 .sico_128:before {content: "\e97f";}   .sico_138:before {content: "\e989";}
 .sico_129:before {content: "\e980";}   .sico_139:before {content: "\e98a";}
-.sico_130:before {content: "\e981";}
+.sico_130:before {content: "\e981";}   .sico_140:before {content: "\e98b";}

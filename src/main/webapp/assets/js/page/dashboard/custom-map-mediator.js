@@ -906,6 +906,140 @@ var CustomMapMediator = (
         };
 
         /**
+         * fence partition (펜스 자르기 기능)
+         * deviceId(String), fenceId(String), partition(가로:w, 세로:h -> {'w':?,'h':?})
+         * @author psb
+         */
+        this.fencePartition = function(deviceId, fenceId, partition){
+            if(_marker[_MARKER_TYPE[1]][deviceId][fenceId]==null){
+                console.log("fence null");
+                return false;
+            }
+
+            let locations = _marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['location'];
+            let fenceName = _marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']!=fenceId?_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']:null;
+            let points = [];
+            let lngs = [];
+            for(let index in locations){
+                let location = locations[index];
+                const lat = Number(_marker[_MARKER_TYPE[4]][deviceId]['data']['translate']['x'])+(Number(location['lat'])*_ratio);
+                const lng = Number(_marker[_MARKER_TYPE[4]][deviceId]['data']['translate']['y'])+(Number(location['lng'])*_ratio);
+                points.push([lat,lng]);
+                lngs.push(lng);
+            }
+
+            if(points.length!=4){
+                _alertMessage("partitionValidate");
+                return false;
+            }
+
+            var topLng = lngs.slice();
+            topLng = topLng.sort((a,b) => a-b).slice(0,2);
+            var positionIndex = {
+                lt : null
+                ,rt : null
+                ,rb : null
+                ,lb : null
+            };
+
+            var pointIndex = [];
+            // Top Position 체크 y축이 가장위에 있는 2점을 상단으로함
+            if(lngs.indexOf(topLng[0])==lngs.indexOf(topLng[1])){
+                var idx = -1;
+                do {
+                    idx = lngs.indexOf(topLng[0],idx+1);
+                    if(idx != -1)
+                        pointIndex.push(idx);
+                } while (idx != -1);
+            }else{
+                pointIndex.push(lngs.indexOf(topLng[0]));
+                pointIndex.push(lngs.indexOf(topLng[1]));
+            }
+
+            if(points[pointIndex[0]][0]>points[pointIndex[1]][0]){
+                positionIndex['lt'] = pointIndex[1];
+                positionIndex['rt'] = pointIndex[0];
+            }else{
+                positionIndex['lt'] = pointIndex[0];
+                positionIndex['rt'] = pointIndex[1];
+            }
+
+            if(positionIndex['lt']>positionIndex['rt']){
+                if(positionIndex['lt']-positionIndex['rt']==1){
+                    positionIndex['lb'] = positionIndex['lt']+1>3?0:positionIndex['lt']+1;
+                    positionIndex['rb'] = positionIndex['lb']+1>3?0:positionIndex['lb']+1;
+                }else{
+                    positionIndex['lb'] = positionIndex['lt']-1<0?3:positionIndex['lt']-1;
+                    positionIndex['rb'] = positionIndex['lb']-1<0?3:positionIndex['lb']-1;
+                }
+            }else{
+                if(positionIndex['rt']-positionIndex['lt']==1){
+                    positionIndex['lb'] = positionIndex['lt']-1<0?3:positionIndex['lt']-1;
+                    positionIndex['rb'] = positionIndex['lb']-1<0?3:positionIndex['lb']-1;
+                }else{
+                    positionIndex['lb'] = positionIndex['lt']+1>3?0:positionIndex['lt']+1;
+                    positionIndex['rb'] = positionIndex['lb']+1>3?0:positionIndex['lb']+1;
+                }
+            }
+
+            var cutPoints = [];
+            var topLatCut = (points[positionIndex['rt']][0]-points[positionIndex['lt']][0])/partition['w'];
+            var topLngCut = (points[positionIndex['rt']][1]-points[positionIndex['lt']][1])/partition['w'];
+            var bottomLatCut = (points[positionIndex['rb']][0]-points[positionIndex['lb']][0])/partition['w'];
+            var bottomLngCut = (points[positionIndex['rb']][1]-points[positionIndex['lb']][1])/partition['w'];
+
+            for(var i=1; i<=partition['w']; i++){
+                var lt = [points[positionIndex['lt']][0], points[positionIndex['lt']][1]];
+                var rt = [points[positionIndex['rt']][0], points[positionIndex['rt']][1]];
+                var lb = [points[positionIndex['lb']][0], points[positionIndex['lb']][1]];
+                var rb = [points[positionIndex['rb']][0], points[positionIndex['rb']][1]];
+
+                lt[0] += topLatCut*(i-1);
+                lt[1] += topLngCut*(i-1);
+                rt[0] -= topLatCut*(partition['w']-i);
+                rt[1] -= topLngCut*(partition['w']-i);
+                lb[0] += bottomLatCut*(i-1);
+                lb[1] += bottomLngCut*(i-1);
+                rb[0] -= bottomLatCut*(partition['w']-i);
+                rb[1] -= bottomLngCut*(partition['w']-i);
+
+                var leftLatCut = (lb[0]-lt[0])/partition['h'];
+                var leftLngCut = (lb[1]-lt[1])/partition['h'];
+                var rightLatCut = (rb[0]-rt[0])/partition['h'];
+                var rightLngCut = (rb[1]-rt[1])/partition['h'];
+
+                for(var k=1; k<=partition['h']; k++){
+                    var loc = [];
+                    loc.push([lt[0]+leftLatCut*(k-1),lt[1]+leftLngCut*(k-1)]);
+                    loc.push([lb[0]-leftLatCut*(partition['h']-k),lb[1]-leftLngCut*(partition['h']-k)]);
+                    loc.push([rb[0]-rightLatCut*(partition['h']-k),rb[1]-rightLngCut*(partition['h']-k)]);
+                    loc.push([rt[0]+rightLatCut*(k-1),rt[1]+rightLngCut*(k-1)]);
+                    cutPoints.push(loc);
+                }
+            }
+            for(var index in cutPoints){
+                var _uuid = null;
+                var _fenceId = null;
+
+                if(index==0){
+                    _uuid = _marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['uuid'];
+                    _fenceId = fenceId;
+                }else{
+                    _uuid = uuid32();
+                    _fenceId = uuid38();
+                }
+                _self.addMarker('fence',{
+                    "deviceId":deviceId
+                    ,"uuid":_uuid
+                    ,"id":_fenceId
+                    ,"fenceType":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceType']
+                    ,"fenceName":fenceName==null?_fenceId:(index==0?fenceName:(fenceName+"_"+index))
+                    ,"location":_self.convertFenceLocationOrigin(deviceId,cutPoints[index])
+                });
+            }
+        };
+
+        /**
          * save marker
          * @author psb
          */

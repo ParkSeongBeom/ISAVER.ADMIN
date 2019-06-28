@@ -498,6 +498,7 @@ var DashboardHelper = (
                     inoutTag.attr("endDatetime",inout['endDatetime']);
                 }
             }
+            blinkerSumUpdate();
         };
 
         /**
@@ -699,6 +700,28 @@ var DashboardHelper = (
             }else{
                 console.warn("[DashboardHelper][blinkerUpdate] eventDatetime is not between startDatetime and endDatetime"
                     ,{"areaId":data['areaId'],"startDatetime":startDatetime.format("yyyy-MM-dd HH:mm:ss"),"endDatetime":endDatetime.format("yyyy-MM-dd HH:mm:ss"),"eventDatetime":eventDatetime.format("yyyy-MM-dd HH:mm:ss")});
+            }
+
+            blinkerSumUpdate();
+        };
+
+        var blinkerSumUpdate = function(){
+            var sumValue = {};
+            $.each($("div[templateCode='TMP003']"), function(){
+                var sumAreaId = $(this).attr("sumAreaId");
+                var inCount = Number($(this).find("p[in]").text());
+                var outCount = Number($(this).find("p[out]").text());
+                sumValue[sumAreaId] = {
+                    'in' : sumValue[sumAreaId]==null?inCount:(sumValue[sumAreaId]['in']+inCount)
+                    ,'out' : sumValue[sumAreaId]==null?outCount:(sumValue[sumAreaId]['out']+outCount)
+                };
+            });
+
+            for(var index in sumValue){
+                var sumTag = $("div[valueType][sumAreaId='"+index+"']");
+                sumTag.find("p[in]").text(sumValue[index]['in']);
+                sumTag.find("p[out]").text(sumValue[index]['out']);
+                sumTag.find("p[gap]").text(sumValue[index]['in']-sumValue[index]['out']);
             }
         };
 

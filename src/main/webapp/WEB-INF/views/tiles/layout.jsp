@@ -41,9 +41,11 @@
     <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/notification-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/cs.communicator.js?version=${version}"></script>
 
     <script type="text/javascript">
         var rootPath = '${rootPath}';
+        var cs;
         var targetId = '${mainTarget.targetId}';
         var calendarHelper = new CalendarHelper(rootPath, "${pageContext.response.locale}");
         var menuModel = new MenuModel();
@@ -115,6 +117,9 @@
         };
 
         $(document).ready(function(){
+            cs = new fnCSController();
+            cs.init();
+
             // 메뉴그리기
             menuModel.setRootUrl(rootPath);
             menuModel.setViewStatus('detail');
@@ -674,6 +679,11 @@
             }
         }
 
+        function menuBarToggle(_this){
+            $("#menu").toggleClass("hide");
+            $(_this).toggleClass("on")
+        }
+
         /* 대쉬보드 전체 페이지 이동*/
         function moveDashboard(areaId, subAreaId) {
             var dashboardForm = $('<FORM>').attr('method','POST').attr('action',layoutUrlConfig['dashboardUrl']);
@@ -685,47 +695,41 @@
         }
     </script>
 </head>
-<body class="admin_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
+<body class="admin_mode view_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
     <!-- wrap Start -->
     <div class="wrap">
-        <header id="header">
-            <div class="header_area">
-                <h1><a href="#" onclick="javascript:moveDashboard(); return false;"></a></h1>
-
-                <!-- menu Start -->
-                <menu id="topMenu"></menu>
-                <!-- menu End -->
-
-                <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 -->
-                <div class="header_right_area">
-                    <div class="datetime_set">
-                        <span id="nowTime"></span>
-                    </div>
-                    <div class="header_btn_set">
-                        <button class="issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+        <main>
+            <menu id="menu">
+                <div class="menu-btnset">
+                    <!-- 데시보드, 통계, 어드민 링크 버튼 -->
+                    <div class="group-menubtn" id="menuBtnGroup"></div>
+                    <div class="ignore"></div>
+                    <!-- 기능 버튼 -->
+                    <div class="group-functionbtn">
+                        <button class="funcbtn-info info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"><spring:message code="dashboard.title.license"/></button>
+                        <button class="funcbtn-user user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"><spring:message code="dashboard.title.profile"/></button>
                         <c:if test="${mainTarget.targetId!='nonsan'}">
-                            <button class="reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"></button>
+                            <button class="funcbtn-reso reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"><spring:message code="dashboard.title.resourceMonitoring"/></button>
                         </c:if>
-                        <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
-                        <button class="info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"></button>
-                        <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
-                        <!-- 다국어 지원 추가 -->
-                        <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
-                            <%--<option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>--%>
-                            <%--<option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>--%>
-                        <%--</select>--%>
+                        <button class="funcbtn-logi loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"><spring:message code="dashboard.title.logout"/></button>
+                        <button class="funcbtn-mscr" onclick="javascript:menuBarToggle(this);" data-content="SHOW MENU BAR"><p>HIDE MENU BAR</p></button>
                     </div>
                 </div>
-            </div>
-        </header>
 
-        <main>
+                <div class="menu-navset" id="menuNav"></div>
+            </menu>
+
+            <div class="notice-area">
+                <button class="notice-btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+            </div>
+
             <!-- 알림센터 -->
             <aside class="db_area">
                 <article>
                     <h2>
                         <span><spring:message code="dashboard.title.alarmCenter"/></span>
                     </h2>
+
                     <!-- 임계치별 알림 카운트 -->
                     <section criticalLevelCnt class="issue_board">
                         <c:forEach var="critical" items="${criticalList}">

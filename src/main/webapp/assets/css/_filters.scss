@@ -50,6 +50,7 @@ $color-btn:#2c2c2c; //버튼 기본컬러
 $color-d-text:#f5f5f5;  // 데시보드 기본 텍스트 컬러
 $color-a-text:#3c3c3c; // 어드민 기본 텍스트 컬러
 
+
 $color-caution:#d2a01e;   // rgba(160,210,30,1) 주위
 $color-warning:#f06400;   // rgba(240,100,0,1)  경고
 $color-danger:#c30202;    // rgba(195,2,2,1)    위험
@@ -73,8 +74,9 @@ $color-gray-05:#757575;   // rgba(177,177,177,1)  밝은 버튼, 테이블 th bg
 $color-gray-06:#bcbcbc;   // rgba(188,188,188,1)  테이블 border-color
 $color-gray-07:#4c4c4c;   // rgba(72,72,72,1)  데시보드 메인 구역 리스트 BG
 $color-gray-08:#2d2d2d;   // rgba(45,45,45,1)  데시보드 스킨 그레이
-$color-gray-09:#111;      // rgba(45,45,45,1)  데시보드 스킨 그레이
+$color-gray-09:#262626;   // rgba(38,38,38,1)  데시보드 구분라인
 $color-gray-10:#2c2c2c;
+$color-gray-11:#393939;   // rgba(45,45,45,1)  데시보드 스킨 그레이
 
 $color-red-01:#be1e1e;    // rgba(190,30,30,1) 위험, 차트04
 $color-red-02:#be1e1e;    // rgba(190,30,30,1)
@@ -119,14 +121,19 @@ $color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
 
 
 // 길이지정
-$body-minwidth:1450px;
+$menu-width:40px; // 메뉴 <menu>
+$nav-width:300px;
+$noticecenter-onwidth:calc(100% - 340px); // 알림센터 <aside>
+
+$body-minwidth:1024px;
+$body-minwidth2:1450px;
 $dash-margin:15px;
 $popup-margin:20px;
 $admin-margin : 150px;
 $video-width:400px;
 $issueWidth:80px;
 
-$noticecenter-width:300px; //알림센터 가로 길이
+$noticecenter-width:320px; //알림센터 가로 길이
 
 $menu-btn-width:200px;
 
@@ -763,6 +770,17 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 // ex) @include btn-itype01c;  원형 40_40 아이콘 버튼
 @mixin btn-itype03c-t {@include btn-itype03b-t; @include btn-icontype-c;}
 // ex) @include btn-itype03c-t;  원형 50_50 아이콘 버튼
+
+// 메뉴버튼 전용
+@mixin menu_fontsize {font-size:1rem; &:before, &:after {font-size:1.5rem;} } //ex) @include menu_fontsize;
+@mixin menu-length01 {width:$menu-width; min-width:$menu-width;  height:$menu-width; min-height:$menu-width;} // ex) @include menu-length01;
+@mixin menu-length { &,&:before {@include menu-length01;} &:before {@include flex-midddle;} } // 메뉴 버튼 버튼 사이즈
+@mixin menu_btn {
+  overflow: hidden; text-align: left; margin:0; line-height: 1rem; white-space:nowrap; word-wrap:normal;
+  @include menu-length; @include menu_fontsize; @include action_menubtn; @include flex-justify-content-start;
+}  // ex) @include menu_btn; 메뉴버튼만 사용
+
+
 // button base 정의 End
 
 //화면을 덥는 팝업 백그라운드 정의, 데시보드 백그라운드와 동일
@@ -776,11 +794,10 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 @mixin tpopupbase {
   @include popup-common;
 
-  position: absolute; z-index:101;
-  width:$noticecenter-width; top:0; right:-($noticecenter-width * 2);
-  @include border01(0 0 1px 1px,$color-bline,1 );
+  position: absolute; z-index:101; width:$noticecenter-width; bottom:0; left:-($noticecenter-width * 2);
+  @include border01(1px 1px 0 0,$color-bline,1 );
 
-  &.on {right:0;}
+  &.on {left:40px;}
   & > * {position: relative;  width:100%; padding:0 $popup-margin; margin: 0 0 $popup-margin 0}
   button {@include btn-line;}
   h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin;}
@@ -1113,7 +1130,7 @@ $d-time:.8s;
 $plus_icon_wh:30px;
 $mt_btn_h:50px;
 $mt_btn_w:40px;
-@mixin tree-line {content:""; position: absolute; background-color:$color-gray-06; }
+@mixin tree-line {content:""; position: absolute; background-color:$color-gray-05; }
 
 @mixin tree-hover
 {background-color: $color-ho !important; border-color:transparent; color:#fff !important;}
@@ -1223,6 +1240,521 @@ $main-width: 70px;
     border-width: 1;
   }
 }
+
+
+// 1.8 대시보드
+::-webkit-scrollbar {width:12px; height:12px;}
+::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
+
+::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-gray-09; }
+} // ex) @include webkit_scroll_dashboard;
+
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4);}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4);}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4);}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4);}
+
+  background-color: $color-bas; color:$color-white-02;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,#000,1); background-color: $color-gray-09;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include dashboard-bg;  백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c !important; @include border01(1px,$color-gray-01,1 ); background-color: #fff;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include admin-bg;  백그라운드 공통
+
+
+
+// 이벤트 감지 아이콘 애니메이션
+@mixin duration-2 {-webkit-animation-duration: 0.2s; animation-duration: 0.2s;} // ex) @include duration-2;
+@mixin duration-5 {-webkit-animation-duration: 0.5s; animation-duration: 0.5s;} // ex) @include duration-5;
+@mixin duration-8 {-webkit-animation-duration: 0.8s; animation-duration: 0.8s;} // ex) @include duration-8;
+@mixin infinite {
+  animation-iteration-count:         infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
+} // ex) @include infinite;
+
+@mixin noticelevel-ani00 {
+  animation-name:         noticelevel-ani00;
+  -webkit-animation-name: noticelevel-ani00;
+  @include duration-8; @include infinite;
+
+  @-webkit-keyframes noticelevel-ani00 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 0.3;}
+    100% { opacity: 1; }
+  }
+  @keyframes noticelevel-ani00 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 0.3;}
+    100% { opacity: 1; }
+  }
+} // @include noticelevel-ani00;
+
+@mixin noticelevel-ani01 {
+  animation-name:         noticelevel-ani01;
+  -webkit-animation-name: noticelevel-ani01;
+  @include duration-8; @include infinite;
+
+  @-webkit-keyframes noticelevel-ani01 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(1.5); }
+  }
+  @keyframes noticelevel-ani01 {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    100% { opacity: 0; @include scale(1.5); }
+  }
+} // @include noticelevel-ani01;
+
+@mixin noticelevel-ani02 {
+  animation-name:         noticelevel-ani02;
+  -webkit-animation-name: noticelevel-ani02;
+  @include duration-8; @include infinite;
+
+  @-webkit-keyframes noticelevel-ani02 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 0.3; @include scale(1.1); }
+    100% { opacity: 1; }
+  }
+  @keyframes noticelevel-ani02 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 0.3; @include scale(1.1); }
+    100% { opacity: 1; }
+  }
+} // @include noticelevel-ani02;
+
+@mixin noticelevel-ani03 {
+  animation-name:         noticelevel-ani03;
+  -webkit-animation-name: noticelevel-ani03;
+  @include duration-8; @include infinite;
+
+  @-webkit-keyframes noticelevel-ani03 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 1;}
+    100% { opacity: 1; }
+  }
+  @keyframes noticelevel-ani03 {
+    0%   { opacity: 1;  }
+    10%  { opacity: 1;}
+    100% { opacity: 1; }
+  }
+} // @include noticelevel-ani03;
+
+
+@mixin noticelevel-style01 {
+  &.level {
+    &-caution, &-warning, &-danger {}
+    &-caution, &-warning, &-danger, &-die, &-confirm { @include noticelevel-ani00;
+      &:before {opacity: 0.8; @include noticelevel-ani03; }
+    }
+    &-caution {
+      &:before {
+        background-color: rgba($color-caution, 0.7) !important;
+        border-color: $color-caution !important;
+      }
+    }
+    &-warning {
+      &:before {
+        background-color: rgba($color-warning, 0.7) !important;
+        border-color: $color-warning !important;
+      }
+    }
+    &-danger  {
+      &:before {
+        background-color: rgba($color-danger,  0.7) !important;
+        border-color: $color-danger !important;
+      }
+    }
+    &-die     {
+      &:before {
+        background-color: rgba($color-die, 0.7) !important;
+        border-color: $color-die !important; opacity: 0.5;
+      }
+    }
+    &-confirm {
+      &:before {
+        background-color: rgba($color-confirm, 0.7) !important;
+        border-color: $color-confirm !important;
+      }
+    }
+  }
+} // @include noticelevel-style01;
+
+
+@mixin noticelevel-style02 {
+
+} // @include noticelevel-style02; 라인변경
+
+
+@mixin noticelevel-motion-01 {
+  &.level {
+    &-caution, &-warning, &-danger, &-die {@include noticelevel-ani01; @include noticelevel-ani02;
+      &:before {}
+      &:after  {border-style:solid; border-width:2px; background-color: transparent; @include noticelevel-ani03;}
+    }
+    &-caution { &:after {border-color: $color-caution !important;} }
+    &-warning { &:after {border-color: $color-warning !important;} }
+    &-danger  { &:after {border-color: $color-danger !important;} }
+    &-die     { &:after {border-color: $color-die !important; opacity: 0.5 !important;}}
+  }
+} //  @include noticelevel-motion-01;
+
+
+@mixin data-style-01 {visibility: visible; position: relative; letter-spacing: 0;} //  @include data-style-01;
+
+
+[data-title] {
+  &:after {
+    content:attr(data-title); visibility: hidden; opacity: 0; font-size:0.8rem !important; white-space: nowrap;
+    position: absolute; z-index:100; right:0; bottom:-40px; height:35px; padding: 16px 5px 5px 5px;
+    background-image: url("../images/bg/tooltipbg.svg"), url("../images/bg/tooltipboxbg.svg");
+    background-repeat: no-repeat, repeat-x; background-size: 10px, 25px; background-position: calc(100% - 14px) 0, 0 10px;
+    @include box-shadow01(0px, 12px, 15px, -7px, #000, 0.8);
+  }
+  &:hover:after {visibility: visible; opacity: 1; bottom:-30px; }
+}
+[data-name] {
+  &:before {
+    content:attr(data-name); @include data-style-01;
+    line-height: normal; font-size:.9rem; @include text-shadow(0, 1px, 2px, #000, 0);
+  }
+}
+[data-tooltip] {}
+[data-item] {}
+[data-type] {}
+[data-content] {
+  p {}
+  &:after {content:attr(data-content); @include data-style-01;}
+}
+
+// button base 정의 Start
+@mixin length-wh01 {
+  &,&:before {@include length01;} &:before {@include flex-midddle;}
+} // 50_50 아이콘 버튼 사이즈
+@mixin length-wh02 {
+  &,&:before {@include length02;} &:before {@include flex-midddle;}
+} // ex) @include length-wh02; btn 박스형
+@mixin length-wh03 {
+  &,&:before {@include length03;} &:before {@include flex-midddle;}
+} // ex) @include length-wh03; 40_40 아이콘 버튼 사이즈
+
+
+@mixin action_menubtn {
+  &:hover {background-color: $color-ho;} &:active{background-color: $color-ac !important;} &.on{background-color: $color-on;}
+} // ex) @include action_menubtn; 메뉴, 네비 버튼 액션
+
+@mixin line_btn  {@include action_linebtn; @include abtn_fontsize; @include length-wh02;}
+// ex) @include line_btn;
+
+
+
+@mixin box_btn  {@include action_boxbtn; @include abtn_fontsize; @include length-wh02;}
+// ex) @include box_btn; 어드민 일반 버튼
+
+@mixin icon_btn  {@include action_boxbtn; @include ibtn_fontsize; @include length-wh03;}
+// ex) @include icon_btn;  아이콘 버튼 박스형
+@mixin iconc_btn {@include icon_btn; &, &:before {@include border-radius(800px); } }
+// ex) @include iconc_btn; 아이콘 버튼 원형
+
+// 메뉴버튼 전용
+@mixin menu_fontsize {font-size:1rem; &:before, &:after {font-size:1.5rem;} } //ex) @include menu_fontsize;
+@mixin menu-length01 {width:$menu-width; min-width:$menu-width;  height:$menu-width; min-height:$menu-width;} // ex) @include menu-length01;
+@mixin menu-length { &,&:before {@include menu-length01;} &:before {@include flex-midddle;} } // 메뉴 버튼 버튼 사이즈
+@mixin menu_btn {
+  overflow: hidden; text-align: left; margin:0; line-height: 1rem; white-space:nowrap; word-wrap:normal;
+  @include menu-length; @include menu_fontsize; @include action_menubtn; @include flex-justify-content-start;
+}  // ex) @include menu_btn; 메뉴버튼만 사용
+
+@mixin nav_btn {
+  width:100%; padding:5px 10px 5px 15px; @include action_menubtn;
+  &:before {
+    content:""; position: absolute; left:5px; width:4px; height:4px;
+    background-color: $color-white-01; @include border-radius(200px);
+  }
+  &.on, &:hover { &:before {width:6px; height:6px;}}
+
+} // ex) @include nav_btn; 네비게이션 버튼 만 사용
+
+@mixin layout_btn {
+  @include length-wh01;
+  &:before {font-size:1.75rem; }//28px
+  &:hover, &.on {&:before {font-weight:bold;}}
+  &:hover {&:before {color:$color-blue-01;}}
+  &.on    {&:before {color:$color-gray-09;}}
+} // ex) @include layout_btn; ????
+
+@mixin btnbase {
+  min-width:$btn-type01; height:$btn-type01; background-color: $color-bas;
+  float: left; margin:0 10px 0 0; &:last-of-type {margin:0;}
+  @include border01(1px,$color-white-01,0.7); padding:0 10px;
+  &:before {
+    @include flex-midddle; position: absolute; top:0; left:-1px;
+    width:$btn-type01; height:$btn-type01; font-size:1.8rem;
+  }
+  @include action_boxbtn;
+} //ex) @include btnbase; ???
+
+@mixin btnbase_type01 {
+  &:before, &:after {width:100%; height:100%;}
+  &:before {@include flex-midddle; position: absolute; z-index:1; top:0; left:0;  font-size:1.4rem; }
+  &:after {content:""; display: inline-block;}
+  &:hover:after  {background-color: $color-blue-01;}
+  &:hover:before {color:$color-white-01;}
+  &:active:after {background-color: $color-ac;}
+  &.on:after  {background-color: $color-on;}
+} //ex) @include btnbase_type01;  ???
+
+
+// checkbox_set
+$cslwidth:80px;
+@mixin checkbox_set {
+  position:relative; width:auto !important; height:$btn-type03 !important; float: left;
+  & > *:not(span) {width:100%; height:$btn-type03;}
+  &, & > label {@include flexbase; @include flex-align-items-center; }
+  & > input {position: absolute; z-index:10;top:0;left:0;opacity:0; margin:0; height:100%; cursor: pointer; }
+  & > span {margin:0 10px; & + input {left:auto !important; right:0; margin:0;} }
+} // @include checkbox_set;
+
+@mixin csl_style01 {
+  /*
+    <div class="checkbox_set csl_style01">
+        <input type="checkbox"  name="" />
+        <label></label>
+        <span>자동로그인</span>
+    </div>
+    */
+
+  &, & > input, & > label {@include length03;}
+
+  & > label {
+    @include flex-justify-content-center;
+    &:before {content:"\e901"; font-size:1.2rem; opacity: 0.3; z-index:1;}
+    &:after  {
+      content:""; opacity: 0.8; position: absolute; width:24px; height:24px;
+      @include border-radius(200px); background-color: rgba(0,0,0,0.5);
+    }
+  }
+
+  & > input {
+    &:checked + label, &.on + label {
+      &:before {
+        @include text-shadow(1px, 3px, 4px, #000, 0.4);
+        font-size:1.6rem; font-weight:bold; opacity: 1;
+      }
+      &:after {opacity: 1; width:28px; height:28px; background-color: rgba(0,0,0,0.7); }
+    }
+  }
+} // @include csl_style01;
+
+@mixin csl_style02 {
+  /*
+  <div class="checkbox_set csl_style02">
+      <span>자동로그인</span>
+      <input type="checkbox"  name="" />
+      <label></label>
+  </div>
+  */
+  margin:0 45px 0 0;
+
+  & > input, & > label {width:$cslwidth; min-width:$cslwidth; max-width:$cslwidth;}
+
+  & > label {
+    background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
+    &, &:before {@include border-radius(200px);}
+    &:before {content:""; left:10px; width:20px; height:20px; background-color: $color-gray-01;}
+    &:after  {right:-20px; color:$color-dark-01;}
+  }
+
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      background-color:$color-red-01; border:none;
+      &:before {left:calc(100% - 30px); background-color:$color-white-01;}
+      &:after  {right:5px; color:$color-white-01;}
+    }
+  }
+
+  &.disabled {opacity: 0.6; pointer-events: none;}
+} // @include csl_style02;
+
+@mixin csl_style02_onoff {
+  & > label {
+    &:after  {content:"OFF";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"ON"; }
+    }
+  }
+} // @include csl_style02_onoff;
+
+@mixin csl_style03_noyes {
+  & > label {
+    &:after  {content:"NO";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"YES"; }
+    }
+  }
+} // @include csl_style03_noyes;
+
+@mixin csl_style04_showhide {
+  & > input, & > label {width:($cslwidth + 10px); min-width:90px; max-width:90px;}
+  & > label {
+    &:after  {content:"Hide";  }
+  }
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      &:after  {content:"Show"; }
+    }
+  }
+} // @include csl_style04_showhide;
+
+// tree 공통부분
+$plus_icon_wh:30px; $mt_btn_h:50px; $mt_btn_w:40px; $bar_w:20px; $bar_h:16px;
+@mixin tree-line {content:""; position: absolute; background-color:$color-gray-05; }
+@mixin tree-hover
+{background-color:$color-ho !important; border-color:transparent; color:#fff !important;}
+@mixin tree-on
+{background-color:$color-on; border-color:transparent; color:#fff; opacity: 0.4; &:before {content: "\e92c";} }
+@mixin tree-normal
+{background-color:rgba($color-white-02,1); border-color:$color-gray-01; color:$color-dark-01; opacity: 1 !important;}
+
+@mixin tree-button-action {
+  &:before {
+    content:""; position: absolute; z-index: -1; width:100%; height:100%; top:0; left:0;
+    @include border01(2px,$color-bas,1 ); background-color: $color-bas;
+    //@include box-shadow01(0px, 10px, 8px, -10px, #000, 0.4);
+  }
+
+  &:hover:before {border-color:$color-ho !important;}
+  &:active:before {border-color:$color-ac !important;}
+  &.on:before {border-width:3px; border-color:$color-on !important; background-color: rgba($color-on,0.7);}
+} // @include tree-button-action;
+
+// tree 공통부분
+@mixin treebase2 {
+  /*overflow: auto; */
+  z-index: 1; display: inline-block; position: relative; width:100%; height:100%; margin:0;
+  ul, li {position: relative; @include transition(200ms);}
+
+
+  ul:before, ul:after, li:after, li:before, input + div:after, input + button:after {@include tree-line;}
+  ul:before {z-index: -2;}
+
+  li {
+    &:after {top:21px; left:-20px; bottom:-21px; width:1px;}
+    &:last-of-type:after {display: none;}
+    button {font-weight:normal; white-space: nowrap; font-size:0.9rem; line-height: 0.9rem; font-weight:bold;}
+  }
+
+  & > li ul {
+    position: static; margin:0 0 0 0;
+    li:after {width:1px !important; height: auto;}
+  }
+
+  /*
+  & > li {
+    &:after {display: none;}
+    & > input[type="checkbox"] + button, & > input[type="checkbox"] + div { &:after {display: none;} }
+  } // 첫번째 라인 감추기
+  */
+
+  input[type="checkbox"] {
+    position: absolute; z-index: 5; left:-$mt_btn_w; top:0; margin:0; padding:0;
+    width:$mt_btn_w; height:$mt_btn_w;
+    border:none; background-color: transparent; cursor: pointer; opacity: 0;
+
+    &:hover ~ ul:after {@include tree-hover;}
+
+    & + div, & + button {
+      @include flexbase-inline; @include flex-justify-content-start;
+      position: relative; color:$color-white-01;
+      min-width:120px; min-height:$mt_btn_w; height:auto; padding: 5px 10px; margin:0 0 6px 0;
+      @include noticelevel-style01; @include noticelevel-style02; @include tree-button-action;
+
+      &:after {z-index:-2; top:20px; left:-20px; width:20px; height:1px;}
+      &:before {@include flexbase; @include flex-justify-content-end; font-size:1.7rem; padding:5px;}
+
+      &.level {
+        &-caution, &-warning, &-danger, &-die {padding: 5px 45px 5px 10px;}
+
+        &-caution, &-warning, &-danger { &:before {content:"\e93d";} }
+        &-die     { &:before {content:"\e92f";} }
+      }
+
+    }
+
+    & + div {
+      @include flex-column; @include flex-align-items-start; @include flex-justify-content-center;
+      button {
+        padding: 5px 0; opacity: 0.8; @include flex-justify-content-start; font-weight:normal;
+        &:before {
+          content:"\e92a"; padding:0 5px 0 0; @include transition(0ms);
+        }
+        &:first-of-type { font-weight:bold; opacity: 1; &:before {display: none;} }
+        &:hover {color:$color-ho;}
+        &.on {color:$color-on; font-weight: bold;}
+      }
+    }
+
+    &:checked + div, &:checked + button {
+      & ~ ul {
+        & > li {display: block; height:auto;}
+        &:after {content:"\e92c" !important;}
+      }
+    }
+  }
+
+} // @include treebase2;
+
+// 트리 + - 아이콘
+@mixin plus-iconbase {content: "\e92b"; @include flex-midddle; z-index: 2; background-color: $color-gray-05; color:#fff;}
+// @include plus-iconbase;
+
+@mixin plus-icon-circle {
+  @include plus-iconbase; @include border-radius(200px);
+  width:$plus_icon_wh; height:$plus_icon_wh; top:5px; left:-($mt_btn_w  - 5px);
+  //@include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
+} // @include plus-icon-circle;
+
+@mixin plus-icon-square {
+  @include plus-iconbase; width:$mt_btn_w; height:$mt_btn_w; top:0; left:-($mt_btn_w);
+} // @include plus-icon-square; 데시보드 구역 트리 사용
+
+
+
+
+
 
 
 

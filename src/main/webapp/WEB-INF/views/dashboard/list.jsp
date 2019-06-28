@@ -40,11 +40,11 @@
         <span><spring:message code="dashboard.column.notificationShowOnly"/></span>
     </div>
 
-    <div class="expl">
-        <c:forEach var="critical" items="${criticalList}">
-            <span>${critical.codeName}</span>
-        </c:forEach>
-    </div>
+    <%--<div class="expl">--%>
+        <%--<c:forEach var="critical" items="${criticalList}">--%>
+            <%--<span>${critical.codeName}</span>--%>
+        <%--</c:forEach>--%>
+    <%--</div>--%>
 </div>
 
 <c:set var="areaCntClass" value=""/>
@@ -212,8 +212,8 @@
                                     <!-- 대표 지정 진출입 -->
                                     <div class="s_lbox">
                                         <div class="inout">
-                                            <h3>${childArea.areaName}</h3>
-                                            <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
+                                            <h4><spring:message code="dashboard.column.blinkerSum"/></h4>
+                                            <div valueType="sum" sumAreaId="${childArea.areaId}">
                                                 <p gap>0</p>
                                                 <div>
                                                     <p in>0</p>
@@ -235,11 +235,21 @@
                                                 <!-- 스크롤 영역 시작 -->
                                                 <ul data-duplicated='true' data-direction='up'>
                                             </c:if>
+                                            <li class="inout current_view">
+                                                <h3>${childArea.areaName}</h3>
+                                                <div sumAreaId="${childArea.areaId}" templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
+                                                    <p gap>0</p>
+                                                    <div>
+                                                        <p in>0</p>
+                                                        <p out>0</p>
+                                                    </div>
+                                                </div>
+                                            </li>
                                             <c:forEach var="area" items="${childArea.areas}">
                                                 <c:if test="${area.templateCode=='TMP003'}">
                                                     <li class="inout">
                                                         <h3>${area.areaName}</h3>
-                                                        <div templateCode="${area.templateCode}" areaId="${area.areaId}">
+                                                        <div sumAreaId="${childArea.areaId}" templateCode="${area.templateCode}" areaId="${area.areaId}">
                                                             <p gap>0</p>
                                                             <div>
                                                                 <p in>0</p>
@@ -605,7 +615,7 @@
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/toilet-room-mediator.js?version=${version}"></script>
 
 <script type="text/javascript">
-    var targetMenuId = String('${empty paramBean.areaId?'100000':paramBean.areaId}');
+    var targetMenuId = String('${empty paramBean.subAreaId?(empty paramBean.areaId?'100000':paramBean.areaId):paramBean.subAreaId}');
     var subMenuId = String('${subMenuId}');
     var chartList = {};
     var imageCheckUnload = {};

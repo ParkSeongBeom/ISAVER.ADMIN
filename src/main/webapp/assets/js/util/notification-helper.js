@@ -427,7 +427,7 @@ var NotificationHelper = (
                     var levelTag = $("section[criticalLevelCnt] span["+notiCountList[index]['criticalLevel']+"]");
                     levelTag.text(notiCountList[index]['notiCnt']);
                     if(notiCountList[index]['notiCnt']>0){
-                        modifyElementClass($(".issue_btn"),"level-"+criticalCss[notiCountList[index]['criticalLevel']],'add');
+                        modifyElementClass($(".notice-btn"),"level-"+criticalCss[notiCountList[index]['criticalLevel']],'add');
                     }
                 }
             }
@@ -439,15 +439,19 @@ var NotificationHelper = (
 
         var notificationViewRender = function(notification, flag){
             var notificationTag = templateHelper.getTemplate("notification");
-            notificationTag.on("click",function(){
-                if($(this).hasClass("check")){
-                    $(this).find(".check_input").prop("checked",false);
-                    modifyElementClass($(this),'check','remove');
+            notificationTag.click({notificationId:notification['notificationId']},function(evt){
+                if(evt.target.type=="checkbox"){
+                    if($(this).hasClass("check")){
+                        $(this).find(".check_input").prop("checked",false);
+                        modifyElementClass($(this),'check','remove');
+                    }else{
+                        $(this).find(".check_input").prop("checked",true);
+                        modifyElementClass($(this),'check','add');
+                    }
+                    notificationCancelBtnAction();
                 }else{
-                    $(this).find(".check_input").prop("checked",true);
-                    modifyElementClass($(this),'check','add');
+                    cs.openVideo(evt.data.notificationId);
                 }
-                notificationCancelBtnAction();
             });
 
             var eventAppend = null;
@@ -535,15 +539,15 @@ var NotificationHelper = (
                 // 알림센터 상단 카운트 및 알림아이콘
                 var levelTag = $("section[criticalLevelCnt] span["+notification['criticalLevel']+"]");
                 levelTag.text(Number(levelTag.text())+1);
-                modifyElementClass($(".issue_btn"),"level-"+criticalCss[notification['criticalLevel']],'add');
+                modifyElementClass($(".notice-btn"),"level-"+criticalCss[notification['criticalLevel']],'add');
             }
 
             if(newFlag){
                 /* 애니메이션 */
-                $(".issue_btn").removeClass("on");
+                $(".notice-btn").removeClass("on");
                 try {
                     setTimeout(function() {
-                        $(".issue_btn").addClass("on");
+                        $(".notice-btn").addClass("on");
                     }, 10);
                 } catch(e) {}
 
@@ -692,7 +696,7 @@ var NotificationHelper = (
                     levelTag.text(levelCtn);
 
                     if(levelCtn==0){
-                        modifyElementClass($(".issue_btn"),"level-"+criticalCss[notificationData['criticalLevel']],'remove');
+                        modifyElementClass($(".notice-btn"),"level-"+criticalCss[notificationData['criticalLevel']],'remove');
                     }
 
                     if(notificationTag!=null){
@@ -765,9 +769,9 @@ var NotificationHelper = (
          */
         var notificationBtnRefresh = function(){
             if(_element.find(">li").length>0){
-                modifyElementClass($(".issue_btn"),'issue','add');
+                modifyElementClass($(".notice-btn"),'on','add');
             }else{
-                modifyElementClass($(".issue_btn"),'issue','remove');
+                modifyElementClass($(".notice-btn"),'on','remove');
             }
         };
 
