@@ -1,4 +1,5 @@
 @charset "utf-8";
+@charset "utf-8";
 
 /*
  @at-root {.class { } } 존속받지 않고 root에 위치
@@ -87,6 +88,7 @@ $color-yellow-02:#ef8116; // rgba(239,129,22,1) 차트08
 $color-blue-01:#109dcb;   // rgba(16,157,203,1) 버튼 ON
 $color-blue-02:#259dcf;   // rgba(37,157,207,1) 차트06
 $color-blue-03:#49dbff;   // rgba(37,157,207,1) 차트09
+$color-blue-04:#2A2AFF;
 
 
 $color-purple-01:#cc3dd3; // rgba(204,61,211,1)  차트02
@@ -102,6 +104,7 @@ $color-green-03:#a8d164;  // rgba(168,209,100,1) 들어옴
 
 $color-dark-01:#4c4c4c;   // rgba(76,76,76,1) 버튼기본
 $color-dark-02:#0f0e13;   // rgba(15,14,19,1)
+$color-dark-03:#262223;
 
 $color-white-01:#fff;     //
 $color-white-02:#f5f5f5;  // //rgba(252,252,252,1)  어드민 기본   bg
@@ -840,6 +843,8 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 } // ex) @include infinite;
 
 $d-time:.8s;
+$t-time:1.3s;
+
 @mixin duration($time){ -webkit-animation-duration: $time; animation-duration: $time;} // @include duration($time);
 
 @mixin notice-border {
@@ -921,6 +926,46 @@ $d-time:.8s;
     100% { opacity: 0.5; }
   }
 } // ex) @include notice-opacity; 깜빡임 애니메이션 - 신호등 사용
+
+@mixin notice-plus {
+  animation-name: notice-plus;
+  -webkit-animation-name: notice-plus;
+
+  @include infinite; @include duration($t-time);
+
+  @-webkit-keyframes notice-plus {
+    0%   { opacity: 1;}
+    10%  { opacity: 1; @include scale(1.1); }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; @include scale(1.3);  }
+  }
+  @keyframes notice-plus {
+    0%   { opacity: 1;}
+    10%  { opacity: 1; @include scale(1.1); }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; @include scale(1.3);  }
+  }
+} // ex) @include notice-plus; 돋보기 커짐 애니메이션
+
+@mixin notice-minus {
+  animation-name: notice-minus;
+  -webkit-animation-name: notice-minus;
+
+  @include infinite; @include duration($t-time);
+
+  @-webkit-keyframes notice-minus {
+    0%   { opacity: 1;}
+    10%  { opacity: 1; @include scale(.9); }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; @include scale(.7);  }
+  }
+  @keyframes notice-minus {
+    0%   { opacity: 1;}
+    10%  { opacity: 1; @include scale(.9); }
+    50%  { opacity: 1; }
+    100% { opacity: 0.5; @include scale(.7);  }
+  }
+} // ex) @include notice-minus; 돋보기 작아짐 애니메이션
 
 @mixin die {
   content:"\e93d -Not Connected!";
@@ -1046,7 +1091,7 @@ $d-time:.8s;
 } // ex) @include lidar;
 @mixin lidar-bg($color) {
   content:"";
-  @include lidar; overflow: hidden; @include border01(1px,$color,.8 ); opacity: .6;
+  @include lidar; overflow: hidden; opacity: .6; //@include border01(0px,$color,.8 );
   //background-size: 100%; background-repeat: no-repeat; background-position: 50% 50%;
   //background-color: rgba($color,.1) !important; background-image: url("../images/map/lidar.svg");
   background:url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba($color,0) 0%,rgba($color,.3) 50%,rgba($color,.2) 50.1%,rgba($color,0) 100%) !important;
@@ -1675,6 +1720,10 @@ $plus_icon_wh:30px; $mt_btn_h:50px; $mt_btn_w:40px; $bar_w:20px; $bar_h:16px;
     &:after {top:21px; left:-20px; bottom:-21px; width:1px;}
     &:last-of-type:after {display: none;}
     button {font-weight:normal; white-space: nowrap; font-size:0.9rem; line-height: 0.9rem; font-weight:bold;}
+  }
+
+  li:last-child {
+    &:after {bottom:25px !important;}
   }
 
   & > li ul {

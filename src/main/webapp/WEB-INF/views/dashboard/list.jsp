@@ -54,6 +54,9 @@
     </c:when>
     <c:when test="${fn:length(childAreas)==2}">
         <c:set var="areaCntClass" value="area02"/>
+        <c:if test="${mainTarget.targetId=='pnit'}">
+            <c:set var="areaCntClass" value="area02 warea02"/>
+        </c:if>
     </c:when>
     <c:when test="${fn:length(childAreas)>=3 and fn:length(childAreas)<=4}">
         <c:set var="areaCntClass" value="area04"/>

@@ -632,8 +632,8 @@
             return false;
         }
 
-        var marginWidth = (5000-width)/2;
-        var marginHeight = (5000-height)/2;
+        var marginWidth = (10000-width)/2;
+        var marginHeight = (10000-height)/2;
         var target = $("#drawElement div.on");
         return {
             x : (Number(target.css("left").split("px")[0])+(target.width()/2)-marginWidth-(cutX?cutX:0))/10

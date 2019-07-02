@@ -549,6 +549,7 @@ h4 {
     &:after {font-size:1rem;}
     span{margin: 0 5px 0 0;}
   }
+  &.hide{position:fixed;top:-41px;background-color: none;}
 }
 .dashboard_mode.view_mode > .wrap .sub_title_area h3{@include font-size-h2;}
 
@@ -952,21 +953,21 @@ h4 {
 
 
         .fencebtn_set {
-          display: none; position: absolute; z-index:10; bottom:10px; right:10px;
+          display: none; position: absolute; z-index:10; bottom:15px; right:75px;
 
           //&:before {content:"Fence Setting";}
 
           & > button {
             @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
-            margin:5px 0;
-            &, & * {color:$color-yellow-01; }
+            height:50px; margin:0;
+            &, & * {color:$color-white-01; }
             &:before {
-              @include flex-midddle; width:30px; height:30px; @include border-radius(200px); @include border01(2px,$color-yellow-01,1 );
+              @include flex-midddle; width:30px; height:30px; @include border-radius(200px); @include border01(2px,$color-white-01,1 );
               order:2;
             }
-            &:after {order:1; font-size:0.9rem; opacity: 0.7; width:40px; text-align: left; margin:0 10px 0 0;}
+            &:after {order:1; font-size:1rem; opacity: 1; width:40px; text-align: left; margin:0 10px 0 0;}
 
-            &:hover {color:$color-ho; &:before {border-color:$color-ho;} }
+            &:hover {color:#D4FF00; &:before {border-color:#D4FF00;} }
           }
 
           .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";}}
@@ -983,6 +984,8 @@ h4 {
 
         &:before { @include bbl(2,0,0,auto,0,100%,1px,$color-bline);}
 
+        & > .skew_map{position: absolute;width:320px; background:#3c3c3c;border:1px solid #040404;height: 100%;}
+
         & > * {position: relative; z-index: 1; border-color: transparent;}
 
         select {@include flex-option(0, 1, 100%);max-width:185px;}
@@ -996,21 +999,23 @@ h4 {
         button.btn {
           @include btn-itype01b; margin:0;
           &:before {background-color:rgba( $color-bas, .6);}
-          &:nth-of-type(1){
+          &:nth-of-type(1){@include mmwidth(100px);
+          }
+          &:nth-of-type(2){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(2){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
-          &:nth-of-type(3){
+          &:nth-of-type(3){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(4){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(4){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
-          &:nth-of-type(5){
+          &:nth-of-type(5){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(6){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(6){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(7){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
         }
         input  {max-width:60px;}
       }
@@ -1675,7 +1680,8 @@ body.taekwon_mode {
     // btn-set 정의 End
 
     // button  Start
-    .notice-area{display: flex; width: 24px; height: 100%; order:4; border-left: 0.5px solid #040404;
+    .notice-area{display: flex; width: 24px; height: 100%; order:4; //border-left: 0.5px solid #040404;
+      &:before{@include bbl(9,0,auto,0,0,1px,100%,$color-bline);}
       .notice-btn{width:24px; height:100%; @include noticelevel-style01; @include noticelevel-motion-01; @include noticelevel-ani03;}
     }
     aside.db_area > article{position: relative;}
@@ -2034,6 +2040,7 @@ body.taekwon_mode {
           h3{font-size:1.8rem; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
           .navigation{display: inline-block;}
         }
+        & > .sub_title_area.hide{margin-top: -41px;}
         & > .watch_area > div > header{display: block;}
         & > .popup-layer > .popupbase{
           h2{flex:auto;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}

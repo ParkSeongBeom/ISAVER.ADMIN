@@ -439,21 +439,25 @@ var NotificationHelper = (
 
         var notificationViewRender = function(notification, flag){
             var notificationTag = templateHelper.getTemplate("notification");
-            notificationTag.click({notificationId:notification['notificationId']},function(evt){
-                if(evt.target.type=="checkbox"){
-                    if($(this).hasClass("check")){
-                        $(this).find(".check_input").prop("checked",false);
-                        modifyElementClass($(this),'check','remove');
-                    }else{
-                        $(this).find(".check_input").prop("checked",true);
-                        modifyElementClass($(this),'check','add');
-                    }
-                    notificationCancelBtnAction();
+
+            notificationTag.on("click",function(evt){
+                if($(this).hasClass("check")){
+                    $(this).find(".check_input").prop("checked",false);
+                    modifyElementClass($(this),'check','remove');
                 }else{
-                    cs.openVideo(evt.data.notificationId);
+                    $(this).find(".check_input").prop("checked",true);
+                    modifyElementClass($(this),'check','add');
                 }
+                notificationCancelBtnAction();
             });
 
+            if(notification['fenceId']!=null && cs.isRecording(notification['fenceId'])) {
+                notificationTag.find(".video_btn").click({notificationId:notification['notificationId']},function(evt){
+                    cs.openVideo(evt.data.notificationId);
+                });
+            }else{
+                notificationTag.find(".video_btn").remove();
+            }
             var eventAppend = null;
             if(notification['fenceName']!=null){
                 eventAppend = '('+notification['fenceName']+')';

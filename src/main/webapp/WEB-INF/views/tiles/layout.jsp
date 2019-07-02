@@ -682,6 +682,7 @@
         function menuBarToggle(_this){
             $("#menu").toggleClass("hide");
             $(_this).toggleClass("on")
+            $(".sub_title_area").toggleClass("hide");
         }
 
         /* 대쉬보드 전체 페이지 이동*/

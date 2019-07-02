@@ -24,6 +24,8 @@ var TemplateHelper = (
                 $("<p/>", {id:"eventDatetime"})
             )
         ).append(
+            $("<button/>", {href:"#", class:"video_btn"})
+        ).append(
             $("<button/>", {href:"#", class:"infor_btn"}).append(
                 $("<span/>")
             ).append(

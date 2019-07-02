@@ -16,5 +16,12 @@ function fnCSController(){
 			vmsBindObj.openVideo(notificationId);
 		}
 	};
+
+	objCSController.isRecording = function(fenceId){
+		if(this.isCS){
+			return vmsBindObj.isRecording(fenceId);
+		}
+		return false;
+	};
 	return objCSController;
 }

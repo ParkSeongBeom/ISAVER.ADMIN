@@ -38,6 +38,7 @@ var CustomMapMediator = (
             ,'human-LEV003' : '/assets/images/ico/sico_81_dan.svg'
         };
         var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
+        let _mouseDownInterval = 0;
         var _options = {
             'element' : {
                 'draggable': true // 드래그 기능
@@ -110,8 +111,8 @@ var CustomMapMediator = (
         // 비율 1m : 10px
         var _ratio=10;
         var _scale=_options['element']['zoom']['init'];
-        var _originX = 5000;
-        var _originY = 5000;
+        var _originX = 10000;
+        var _originY = 10000;
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
@@ -275,11 +276,31 @@ var CustomMapMediator = (
                     _translateX = _translateX + (imageX-prevOrigX)*(1-1/_scale);
                     _translateY = _translateY + (imageY-prevOrigY)*(1-1/_scale);
 
-                    if(event.originalEvent.deltaY > 0){if(_scale > _options['element']['zoom']['min']){_scale-=0.1;}}
-                    if(event.originalEvent.deltaY < 0){if(_scale < _options['element']['zoom']['max']){_scale+=0.1;}}
-                    setTransform2d();
-                    savePosition();
+                    if(event.originalEvent.deltaY > 0){_self.startZoomControl('zoomOut');}
+                    if(event.originalEvent.deltaY < 0){_self.startZoomControl('zoomIn');}
                 });
+            }
+
+            if(_element.find(".view_size").length == 0){
+                _mapCanvas.after(
+                    $("<div/>",{class:"view_size on"}).append(
+                        $("<div/>",{class:"view_plus"}).append(
+                            $("<button/>",{'href':'#'}).mousedown(function(){
+                                _self.startZoomControl('zoomIn', true);
+                            }).mouseup(function(){
+                                _self.stopZoomControl();
+                            })
+                        )
+                    ).append(
+                        $("<div/>",{class:"view_minus"}).append(
+                            $("<button/>",{'href':'#'}).mousedown(function(){
+                                _self.startZoomControl('zoomOut', true);
+                            }).mouseup(function(){
+                                _self.stopZoomControl();
+                            })
+                        )
+                    )
+                )
             }
 
             _mapCanvas.css({
@@ -287,6 +308,33 @@ var CustomMapMediator = (
                 , top:(_mapCanvas.parent().height()-_mapCanvas.height())/2
             });
             setTransform2d();
+        };
+
+        /**
+         * zoom control
+         * @author psb
+         */
+        this.startZoomControl = function(actionType, continueFlag){
+            switch (actionType){
+                case "zoomIn" :
+                    if(_scale < _options['element']['zoom']['max']){_scale+=0.1;}
+                    break;
+                case "zoomOut" :
+                    if(_scale > _options['element']['zoom']['min']){_scale-=0.1;}
+                    break;
+            }
+            setTransform2d();
+            savePosition();
+
+            if(continueFlag!=null && continueFlag){
+                _mouseDownInterval = setInterval(function(){
+                    _self.startZoomControl(actionType);
+                }, 500);
+            }
+        };
+
+        this.stopZoomControl = function(){
+            clearInterval(_mouseDownInterval);
         };
 
         var savePosition = function(){

@@ -154,16 +154,16 @@ function MenuView(model) {
                 var menuBtnAppendTag = $("<button/>",{'name':_menu['menuId']});
                 var menuNavAppendTag = $("<nav/>",{'name':_menu['menuId']}).append(
                     $("<h2/>").text(_menu['menuName'])
-                ).append(
-                    $("<button/>",{'class':'pin','data-title':'Fix navigation'}).click(function(){
-                        $(this).toggleClass("on");
-                        $(this).parent().toggleClass("pin");
-                        if($(".pin").hasClass("on")){
-                            $("menu").addClass("pin");
-                        }else{
-                            $("menu").removeClass("pin");
-                        }
-                    })
+                //).append(
+                //    $("<button/>",{'class':'pin','data-title':'Fix navigation'}).click(function(){
+                //        $(this).toggleClass("on");
+                //        $(this).parent().toggleClass("pin");
+                //        if($(".pin").hasClass("on")){
+                //            $("menu").addClass("pin");
+                //        }else{
+                //            $("menu").removeClass("pin");
+                //        }
+                //    })
                 ).append(
                     $("<ul/>")
                 );
@@ -234,7 +234,7 @@ function MenuView(model) {
                     _childMenuLiTag.append($("<ul/>"));
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
                 }else{
-                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['parentAreaId']+"','"+_area['areaId']+"');");
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+parentAreaId+"','"+_area['areaId']+"');");
                 }
 
                 if(parentAreaId=='100000'){

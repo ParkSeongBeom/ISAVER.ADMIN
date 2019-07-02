@@ -1611,6 +1611,10 @@ h4 {
       font-size: 1rem; }
     .sub_title_area .checkbox_set.csl_style01 span {
       margin: 0 5px 0 0; }
+  .sub_title_area.hide {
+    position: fixed;
+    top: -41px;
+    background-color: none; }
 
 .dashboard_mode.view_mode > .wrap .sub_title_area h3 {
   font-size: 1.8rem; }
@@ -2999,8 +3003,8 @@ h4 {
         display: none;
         position: absolute;
         z-index: 10;
-        bottom: 10px;
-        right: 10px; }
+        bottom: 15px;
+        right: 75px; }
         .map_sett_box .map > div:first-of-type .fencebtn_set > button {
           display: -webkit-box;
           display: -moz-box;
@@ -3020,9 +3024,10 @@ h4 {
           -webkit-justify-content: space-between;
           -ms-flex-pack: justify;
           justify-content: space-between;
-          margin: 5px 0; }
+          height: 50px;
+          margin: 0; }
           .map_sett_box .map > div:first-of-type .fencebtn_set > button, .map_sett_box .map > div:first-of-type .fencebtn_set > button * {
-            color: #f6b900; }
+            color: #fff; }
           .map_sett_box .map > div:first-of-type .fencebtn_set > button:before {
             display: -webkit-box;
             display: -moz-box;
@@ -3050,19 +3055,19 @@ h4 {
             -khtml-border-radius: 200px;
             border-style: solid;
             border-width: 2px;
-            border-color: #f6b900;
+            border-color: white;
             order: 2; }
           .map_sett_box .map > div:first-of-type .fencebtn_set > button:after {
             order: 1;
-            font-size: 0.9rem;
-            opacity: 0.7;
+            font-size: 1rem;
+            opacity: 1;
             width: 40px;
             text-align: left;
             margin: 0 10px 0 0; }
           .map_sett_box .map > div:first-of-type .fencebtn_set > button:hover {
-            color: #32a0be; }
+            color: #D4FF00; }
             .map_sett_box .map > div:first-of-type .fencebtn_set > button:hover:before {
-              border-color: #32a0be; }
+              border-color: #D4FF00; }
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-pdel:before {
           content: "\e92c"; }
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-pdel:after {
@@ -3114,6 +3119,12 @@ h4 {
         left: 0;
         width: 100%;
         height: 1px; }
+      .map_sett_box .map > div:nth-of-type(2) > .skew_map {
+        position: absolute;
+        width: 320px;
+        background: #3c3c3c;
+        border: 1px solid #040404;
+        height: 100%; }
       .map_sett_box .map > div:nth-of-type(2) > * {
         position: relative;
         z-index: 1;
@@ -3209,10 +3220,14 @@ h4 {
         .map_sett_box .map > div:nth-of-type(2) button.btn:before {
           background-color: rgba(83, 83, 83, 0.6); }
         .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(1) {
+          width: 100px !important;
+          min-width: 100px !important;
+          max-width: 100px !important; }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2) {
           border-style: solid;
           border-width: 0 1px 0 0;
           border-color: #040404; }
-          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(1):before {
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2):before {
             content: "\e902";
             transform: rotate(90deg);
             ms-transform: rotate(90deg);
@@ -3220,7 +3235,7 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2):before {
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(3):before {
           content: "\e902";
           transform: rotate3d(1, 1, 0, 180deg);
           ms-transform: rotate3d(1, 1, 0, 180deg);
@@ -3228,11 +3243,11 @@ h4 {
           -moz-transform: rotate3d(1, 1, 0, 180deg);
           -webkit-transform: rotate3d(1, 1, 0, 180deg);
           -o-transform: rotate3d(1, 1, 0, 180deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(3) {
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4) {
           border-style: solid;
           border-width: 0 1px 0 0;
           border-color: #040404; }
-          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(3):before {
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4):before {
             content: "\e902";
             transform: rotate(90deg);
             ms-transform: rotate(90deg);
@@ -3240,7 +3255,7 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4):before {
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(5):before {
           content: "\e902";
           transform: rotate3d(1, 1, 0, 180deg);
           ms-transform: rotate3d(1, 1, 0, 180deg);
@@ -3248,11 +3263,11 @@ h4 {
           -moz-transform: rotate3d(1, 1, 0, 180deg);
           -webkit-transform: rotate3d(1, 1, 0, 180deg);
           -o-transform: rotate3d(1, 1, 0, 180deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(5) {
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6) {
           border-style: solid;
           border-width: 0 1px 0 0;
           border-color: #040404; }
-          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(5):before {
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6):before {
             content: "\e902";
             transform: rotate(90deg);
             ms-transform: rotate(90deg);
@@ -3260,7 +3275,7 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6):before {
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(7):before {
           content: "\e902";
           transform: rotate3d(1, 1, 0, 180deg);
           ms-transform: rotate3d(1, 1, 0, 180deg);
@@ -5405,8 +5420,18 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
     display: flex;
     width: 24px;
     height: 100%;
-    order: 4;
-    border-left: 0.5px solid #040404; }
+    order: 4; }
+    .dashboard_mode.view_mode > .wrap .notice-area:before, .admin_mode.view_mode > .wrap .notice-area:before {
+      content: "";
+      position: absolute;
+      background-color: #040404;
+      z-index: 9;
+      top: 0;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      height: 100%; }
     .dashboard_mode.view_mode > .wrap .notice-area .notice-btn, .admin_mode.view_mode > .wrap .notice-area .notice-btn {
       width: 24px;
       height: 100%;
@@ -6127,6 +6152,8 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
       font-size: 0.9rem;
       line-height: 0.9rem;
       font-weight: bold; }
+    .dashboard_mode.view_mode > .wrap .tree-vertical-circle li:last-child:after, .dashboard_mode.view_mode > .wrap .tree-vertical-square li:last-child:after, .admin_mode.view_mode > .wrap .tree-vertical-circle li:last-child:after, .admin_mode.view_mode > .wrap .tree-vertical-square li:last-child:after {
+      bottom: 25px !important; }
     .dashboard_mode.view_mode > .wrap .tree-vertical-circle > li ul, .dashboard_mode.view_mode > .wrap .tree-vertical-square > li ul, .admin_mode.view_mode > .wrap .tree-vertical-circle > li ul, .admin_mode.view_mode > .wrap .tree-vertical-square > li ul {
       position: static;
       margin: 0 0 0 0; }
@@ -6459,6 +6486,8 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
       font-size: 0.9rem;
       line-height: 0.9rem;
       font-weight: bold; }
+    .dashboard_mode.view_mode > .wrap .tree-horizontal-square li:last-child:after, .dashboard_mode.view_mode > .wrap .tree-horizontal-circle li:last-child:after, .dashboard_mode.view_mode > .wrap .tree-horizontal-view li:last-child:after, .admin_mode.view_mode > .wrap .tree-horizontal-square li:last-child:after, .admin_mode.view_mode > .wrap .tree-horizontal-circle li:last-child:after, .admin_mode.view_mode > .wrap .tree-horizontal-view li:last-child:after {
+      bottom: 25px !important; }
     .dashboard_mode.view_mode > .wrap .tree-horizontal-square > li ul, .dashboard_mode.view_mode > .wrap .tree-horizontal-circle > li ul, .dashboard_mode.view_mode > .wrap .tree-horizontal-view > li ul, .admin_mode.view_mode > .wrap .tree-horizontal-square > li ul, .admin_mode.view_mode > .wrap .tree-horizontal-circle > li ul, .admin_mode.view_mode > .wrap .tree-horizontal-view > li ul {
       position: static;
       margin: 0 0 0 0; }
@@ -6806,6 +6835,8 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
       font-size: 0.9rem;
       line-height: 0.9rem;
       font-weight: bold; }
+    .dashboard_mode.view_mode > .wrap .tree-rolemenu li:last-child:after, .admin_mode.view_mode > .wrap .tree-rolemenu li:last-child:after {
+      bottom: 25px !important; }
     .dashboard_mode.view_mode > .wrap .tree-rolemenu > li ul, .admin_mode.view_mode > .wrap .tree-rolemenu > li ul {
       position: static;
       margin: 0 0 0 0; }
@@ -7496,6 +7527,8 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
     max-height: 40px !important; }
   .admin_mode.view_mode > .wrap > main > article > .sub_title_area .navigation {
     display: inline-block; }
+.admin_mode.view_mode > .wrap > main > article > .sub_title_area.hide {
+  margin-top: -41px; }
 .admin_mode.view_mode > .wrap > main > article > .watch_area > div > header {
   display: block; }
 .admin_mode.view_mode > .wrap > main > article > .popup-layer > .popupbase h2 {
