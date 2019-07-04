@@ -207,6 +207,7 @@ body.dashboard_mode {}
     }
   }
 
+
   &.area01,&.area04 { .entrance_ico:after {padding:8%;} }
   &.area02 {
     .treffic_set {@include scale(0.7);}
@@ -809,10 +810,11 @@ $treffic_w:32%;
 
 
   .device_box {
+    &:before {@include bbl(1,0,auto,0,0,1px,100%,$color-bline);}
     position: relative !important; @include mmwidth(0); padding:0;
-    &.on {@include mmwidth($ds-w + 10px); padding:70px 5px 5px 5px;}
+    &.on {@include mmwidth($ds-w + 10px); padding:5px 5px 5px 5px;}
 
-    .device_set {@include mmwidth($ds-w);}
+    .device_set {@include mmwidth($ds-w);overflow-y:auto;}
   }
 
 }

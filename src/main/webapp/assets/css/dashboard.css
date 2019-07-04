@@ -882,6 +882,8 @@
 .level-caution .ts-caution {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
+  animation-duration: 5s;
+  -webkit-animation-duration: 5s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -1009,6 +1011,8 @@
 .level-warning .ts-warning {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
+  animation-duration: 5s;
+  -webkit-animation-duration: 5s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -1136,6 +1140,8 @@
 .level-danger .ts-danger {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
+  animation-duration: 5s;
+  -webkit-animation-duration: 5s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -1720,6 +1726,8 @@
 .detector_set .detector_set li.ts-die, .detector_set .detector_set li.level-die {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
+  animation-duration: 5s;
+  -webkit-animation-duration: 5s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -2222,15 +2230,27 @@
   min-width: 0 !important;
   max-width: 0 !important;
   padding: 0; }
+  .guard_set .device_box:before {
+    content: "";
+    position: absolute;
+    background-color: #040404;
+    z-index: 1;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    height: 100%; }
   .guard_set .device_box.on {
     width: 210px !important;
     min-width: 210px !important;
     max-width: 210px !important;
-    padding: 70px 5px 5px 5px; }
+    padding: 5px 5px 5px 5px; }
   .guard_set .device_box .device_set {
     width: 200px !important;
     min-width: 200px !important;
-    max-width: 200px !important; }
+    max-width: 200px !important;
+    overflow-y: auto; }
 
 .vxgplayer-loader {
   margin: -25px 0 0 -25px !important; }
@@ -3218,6 +3238,8 @@
   .icon-tof.level-die, .icon-ptz.level-die {
     animation-name: notice-scale-01;
     -webkit-animation-name: notice-scale-01;
+    animation-duration: 5s;
+    -webkit-animation-duration: 5s;
     animation-iteration-count: infinite;
     -webkit-animation-iteration-count: infinite;
     animation-timing-function: linear;

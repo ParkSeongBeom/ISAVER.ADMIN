@@ -890,6 +890,9 @@ $t-time:1.3s;
 @mixin notice-scale-01 {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
+  animation-duration : 5s;
+  -webkit-animation-duration: 5s;
+
 
   @include infinite; @include duration($d-time);
 

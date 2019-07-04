@@ -111,8 +111,8 @@ var CustomMapMediator = (
         // 비율 1m : 10px
         var _ratio=10;
         var _scale=_options['element']['zoom']['init'];
-        var _originX = 10000;
-        var _originY = 10000;
+        var _originX = 5000; // 전체 가로 사이즈의 2/1
+        var _originY = 5000; // 전체 세로 사이즈의 2/1
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
@@ -607,7 +607,7 @@ var CustomMapMediator = (
                     for(var index in _marker[_MARKER_TYPE[1]]){
                         for(var i in _marker[_MARKER_TYPE[1]][index]){
                             if(targetData['targetId']==_marker[_MARKER_TYPE[1]][index][i]['data']['deviceId']){
-                                _self.saveFence(index, i);
+                                _self.saveFence({deviceId:index, fenceId:i});
                             }
                         }
                     }
@@ -632,17 +632,18 @@ var CustomMapMediator = (
          * save fence name
          * @author psb
          */
-        this.saveFence = function(deviceId, fenceId, fenceName, fenceType, location){
-            if(_marker[_MARKER_TYPE[1]][deviceId]!=null && _marker[_MARKER_TYPE[1]][deviceId][fenceId]!=null){
+        this.saveFence = function(data){
+            if(_marker[_MARKER_TYPE[1]][data['deviceId']]!=null && _marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]!=null){
                 _self.addMarker(
                     _MARKER_TYPE[1]
                     , {
-                        'uuid':_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['uuid']
-                        ,'id' : fenceId
-                        ,'deviceId':_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['deviceId']
-                        ,'fenceType':fenceType!=null?fenceType:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceType']
-                        ,'fenceName':fenceName!=null?fenceName:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']
-                        ,'location':location!=null?location:_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['location']
+                        'uuid':_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['uuid']
+                        ,'id' : data['fenceId']
+                        ,'deviceId':_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['deviceId']
+                        ,'fenceType':data['fenceType']!=null?data['fenceType']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['fenceType']
+                        ,'fenceName':data['fenceName']!=null?data['fenceName']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['fenceName']
+                        ,'zMin':data['zMin']!=null?data['zMin']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['zMin']
+                        ,'location':data['location']!=null?data['location']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['location']
                     }
                 );
             }
@@ -803,6 +804,7 @@ var CustomMapMediator = (
                             fenceName = data['fenceName']!=null?data['fenceName']:_marker[messageType][data['deviceId']][data['id']]['data']['fenceName'];
                             _marker[messageType][data['deviceId']][data['id']]['data']['fenceName'] = fenceName;
                             _marker[messageType][data['deviceId']][data['id']]['data']['fenceType'] = data['fenceType'];
+                            _marker[messageType][data['deviceId']][data['id']]['data']['zMin'] = data['zMin'];
                         }else{
                             fenceName = data['fenceName']?data['fenceName']:data['id'];
                             const svgPolygon = _canvasSvg.polygon(points, {fenceId:data['id']});
@@ -834,6 +836,7 @@ var CustomMapMediator = (
                                     ,'uuid' : data['uuid']
                                     ,'deviceId' : data['deviceId']
                                     ,'fenceType' : data['fenceType']
+                                    ,'zMin' : data['zMin']
                                     ,'fenceId' : data['id']
                                     ,'fenceName' : fenceName
                                 }
@@ -858,7 +861,7 @@ var CustomMapMediator = (
                                             const lng = Number(loc[1])+(Number(evt.pageY)-Number(pointerY))/_scale;
                                             pointList.push([lat,lng]);
                                         }
-                                        _self.saveFence(data['deviceId'], data['id'], null, null, _self.convertFenceLocationOrigin(data['deviceId'],pointList));
+                                        _self.saveFence({deviceId:data['deviceId'], fenceId:data['id'], location:_self.convertFenceLocationOrigin(data['deviceId'],pointList)});
                                         pointerY = evt.pageY;
                                         pointerX = evt.pageX;
                                     }
@@ -1082,6 +1085,7 @@ var CustomMapMediator = (
                     ,"id":_fenceId
                     ,"fenceType":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceType']
                     ,"fenceName":fenceName==null?_fenceId:(index==0?fenceName:(fenceName+"_"+index))
+                    ,"zMin":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['zMin']
                     ,"location":_self.convertFenceLocationOrigin(deviceId,cutPoints[index])
                 });
             }

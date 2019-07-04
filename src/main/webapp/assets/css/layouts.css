@@ -3125,6 +3125,8 @@ h4 {
         background: #3c3c3c;
         border: 1px solid #040404;
         height: 100%; }
+        .map_sett_box .map > div:nth-of-type(2) > .skew_map > btn, .map_sett_box .map > div:nth-of-type(2) > .skew_map > input, .map_sett_box .map > div:nth-of-type(2) > .skew_map > span {
+          display: flex; }
       .map_sett_box .map > div:nth-of-type(2) > * {
         position: relative;
         z-index: 1;
@@ -3844,6 +3846,18 @@ h4 {
               -webkit-box-flex: 1;
               -ms-flex: 0 1 100%;
               border-right-color: transparent; }
+              .map_sett_box .list ul li > section .fence_list .fence_name input:nth-of-type(1) {
+                flex: 0 1 130%;
+                -webkit-flex: 0 1 130%;
+                flexbox: 0 1 130%;
+                -webkit-box-flex: 1;
+                -ms-flex: 0 1 130%; }
+              .map_sett_box .list ul li > section .fence_list .fence_name input:nth-of-type(2) {
+                flex: 0 1 70%;
+                -webkit-flex: 0 1 70%;
+                flexbox: 0 1 70%;
+                -webkit-box-flex: 1;
+                -ms-flex: 0 1 70%; }
             .map_sett_box .list ul li > section .fence_list .fence_name select {
               width: 95px;
               min-width: 95px;
@@ -7508,9 +7522,7 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
           height: 6px; }
       .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover {
         line-height: 1px; }
-  .dashboard_mode.view_mode > .wrap > main > article > .watch_area > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area > div > header {
-    display: none; }
-  .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header {
+  .dashboard_mode.view_mode > .wrap > main > article > .watch_area > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header {
     display: flex; }
 
 .admin_mode.view_mode > .wrap > main > menu *, .admin_mode.view_mode > .wrap > main > menu *:after, .admin_mode.view_mode > .wrap > main > menu *:before {

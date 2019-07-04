@@ -310,11 +310,11 @@ var CustomMapPopup = (
                                                 ).on("keypress",function(){isNumber(this);})
                                             ).append(
                                                 $("<input/>", {
-                                                        type: "text",
-                                                        placeholder:"row",
-                                                        name:"row",
-                                                        value:"1",
-                                                        maxLength:"3"}
+                                                    type: "text",
+                                                    placeholder:"row",
+                                                    name:"row",
+                                                    value:"1",
+                                                    maxLength:"3"}
                                                 ).on("keypress",function(){isNumber(this);})
                                             ).append(
                                                 $("<button/>", {class:"btn"}).click({
@@ -343,7 +343,21 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, $(this).val());
+                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()});
+                                                })
+                                            ).append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'zMin',
+                                                    value: (data['zMin']?data['zMin']:0),
+                                                    maxLength:"10"
+                                                }).on("keypress",function(){
+                                                    isNumberWithPoint(this);
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()});
                                                 })
                                             ).append(
                                                 $("<select/>", {name: 'fenceType'}).append(
@@ -357,11 +371,11 @@ var CustomMapPopup = (
                                                         selected: data['fenceType'] == 'ignore'
                                                     }).text("ignore")
                                                 ).change({
-                                                        deviceId: data['deviceId'],
-                                                        fenceId: data['fenceId']
-                                                    }, function (evt) {
-                                                        _customMapMediator.saveFence(evt.data.deviceId, evt.data.fenceId, null, $(this).val());
-                                                    })
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()});
+                                                })
                                             )
                                         )
                                     ).append(

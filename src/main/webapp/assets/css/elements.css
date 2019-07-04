@@ -3574,7 +3574,7 @@ button.btn ~ button.btn {
   .g-line polyline.level-danger {
     stroke: #c30202; }
   .g-ignore_fence {
-    fill: rgba(117, 117, 117, 0.2) !important;
-    stroke: #757575 !important; }
+    fill: rgba(117, 117, 117, 0.5) !important;
+    stroke: #4c4c4c !important; }
 
 /*# sourceMappingURL=elements.css.map */

@@ -27,6 +27,8 @@ public class FenceBean {
     private String fenceType;
     /* 장치 ID*/
     private String deviceId;
+    /* 펜스 높이*/
+    private Double zMin;
 
     /* 펜스명*/
     private String fenceName;
@@ -93,5 +95,13 @@ public class FenceBean {
 
     public void setFenceType(String fenceType) {
         this.fenceType = fenceType;
+    }
+
+    public Double getzMin() {
+        return zMin;
+    }
+
+    public void setzMin(Double zMin) {
+        this.zMin = zMin;
     }
 }

@@ -12,7 +12,7 @@ package com.icent.isaver.admin.bean;
  *
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
- *  2018. 7. 9.     psb           최초 생성
+ *  2018. 7. 9.     psb           최초 생성ㄹ
  * </pre>
  */
 public class FenceLocationBean {
