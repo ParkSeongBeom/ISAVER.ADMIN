@@ -836,7 +836,7 @@ var CustomMapMediator = (
                                     ,'uuid' : data['uuid']
                                     ,'deviceId' : data['deviceId']
                                     ,'fenceType' : data['fenceType']
-                                    ,'zMin' : data['zMin']
+                                    ,'zMin' : (data['zMin']?data['zMin']:0)
                                     ,'fenceId' : data['id']
                                     ,'fenceName' : fenceName
                                 }
