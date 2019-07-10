@@ -138,6 +138,89 @@ function MenuView(model) {
         });
     };
 
+
+    /**
+     * [Draw] 상위 메뉴바 그리기
+     * @param obj
+     */
+    MenuView.beforeSetTopMenuBar = function (menuBarModel, areaList) {
+        if(menuBarModel==null){
+            console.error("[MenuView.setTopMenuBar]load error - menu model is null");
+            return false;
+        }
+
+        var mainMenuTag = $("<ul/>",{menu_main:''});
+        var childMenuLiTag = $("<li/>").append(
+            $("<button/>", {href:"#"})
+        ).append(
+            $("<ul/>")
+        );
+
+        for(var index in menuBarModel){
+            var _menu = menuBarModel[index];
+            if(_menu['menuDepth']==0){
+                var _childMenuLiTag = childMenuLiTag.clone();
+                _childMenuLiTag.attr("name",_menu['menuId']);
+                _childMenuLiTag.find("button").text(_menu['menuName']);
+
+                switch (_menu['menuId']){
+                    case "000000" : // ADMINISRATION
+                        break;
+                    case "100000" : // DASHBOARD
+                        _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard();");
+                        break;
+                    case "200000" : // STATISTICS
+                        break;
+                }
+                mainMenuTag.append(_childMenuLiTag);
+            }else{
+                if (_menu['menuFlag'] == 'M') {
+                    var _childMenuLiTag = childMenuLiTag.clone();
+                    _childMenuLiTag.attr("name", _menu['menuId']);
+                    _childMenuLiTag.find("button").text(_menu['menuName']);
+
+                    if(_menu['menuPath']!="/"){
+                        _childMenuLiTag.find("button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
+                    }
+
+                    if(mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul > li").length==0 && _menu['menuPath']!="/"){
+                        mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > button").attr("onclick", "javascript:location.href='" + MenuView._model.getRootUrl() + _menu['menuPath'] + "';");
+                    }
+                    mainMenuTag.find("li[name='"+_menu['parentMenuId']+"'] > ul").append(_childMenuLiTag);
+                }
+            }
+        }
+
+        for(var index in areaList){
+            var _area = areaList[index];
+            if(_area['parentAreaId']==null){
+                var _childMenuLiTag = childMenuLiTag.clone();
+                _childMenuLiTag.attr("name", _area['areaId']);
+                _childMenuLiTag.find("button").text(_area['areaName']);
+                if(_area['childAreaIds']!=null){
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+                }
+                mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
+            }
+        }
+
+        $("#topMenu").append(mainMenuTag);
+
+        if(!setSelectedMenu(MenuView._model.getTargetMenuId())){
+            setSelectedMenu(MenuView._model.getParentMenuId());
+        }
+
+        function setSelectedMenu(_targetMenuId){
+            var targetTag = $("li[name='"+_targetMenuId+"']");
+            if(targetTag.length > 0){
+                targetTag.find("> button").addClass("on");
+                setSelectedMenu(targetTag.parent().parent().attr("name"));
+                return true;
+            }
+            return false;
+        }
+    };
+
     /**
      * [Draw] 상위 메뉴바 그리기
      * @param obj

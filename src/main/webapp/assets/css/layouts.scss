@@ -984,13 +984,6 @@ h4 {
 
         &:before { @include bbl(2,0,0,auto,0,100%,1px,$color-bline);}
 
-        & > .skew_map{position: absolute;width:320px; background:#3c3c3c;border:1px solid #040404;height: 100%;
-          & > btn, & > input, & > span{display: flex;}
-
-
-
-        }
-
         & > * {position: relative; z-index: 1; border-color: transparent;}
 
         select {@include flex-option(0, 1, 100%);max-width:185px;}
@@ -1004,25 +997,52 @@ h4 {
         button.btn {
           @include btn-itype01b; margin:0;
           &:before {background-color:rgba( $color-bas, .6);}
-          &:nth-of-type(1){@include mmwidth(100px);
-          }
-          &:nth-of-type(2){
+          &:nth-of-type(1){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(3){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
-          &:nth-of-type(4){
+          &:nth-of-type(2){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(3){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(5){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
-          &:nth-of-type(6){
+          &:nth-of-type(4){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(5){
             @include border01(0 1px 0 0,$color-bline,1 );
             &:before {content:"\e902";  @include rotate(90deg);}
           }
-          &:nth-of-type(7){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          &:nth-of-type(6){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
         }
-        input  {max-width:60px;}
+        input{max-width:60px;}
+
+
+        & > .skew_map{position: absolute; bottom:120px; left:184px; display:flex; width:200px; background:#3c3c3c; height: 100%; flex-wrap: wrap;
+          &:before { @include bbl(2,0,0,auto,0,100%,1px,$color-bline);}
+          & > .btn, & > input, & > span{display: flex;}
+
+          button.btn {
+            @include btn-itype01b; margin:0;
+            &:before {background-color:rgba( $color-bas, .6);}
+            &:nth-of-type(1){
+              @include border01(0 1px 0 0,$color-bline,1 );
+              &:before {content:"\e902";  @include rotate(90deg);}
+            }
+            &:nth-of-type(2){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+            &:nth-of-type(3){
+              @include border01(0 1px 0 0,$color-bline,1 );
+              &:before {content:"\e902";  @include rotate(90deg);}
+            }
+            &:nth-of-type(4){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+            &:nth-of-type(5){
+              @include border01(0 1px 0 0,$color-bline,1 );
+              &:before {content:"\e902";  @include rotate(90deg);}
+            }
+            &:nth-of-type(6){ &:before {content:"\e902";  @include rotate-3d(1, 1, 0, 180deg);} }
+          }
+          input{max-width:60px;border:none;}
+        }
+
+
       }
     }
   }
@@ -1412,6 +1432,7 @@ h4 {
           div{
             div{padding-bottom:15px;border-bottom:1px dashed #fff;
               &:last-child{padding-bottom:0;border-bottom: none;}
+              &.col{float:left;}
             }
           }
         }
@@ -1439,7 +1460,7 @@ h4 {
         */
         & > div {
           &, & > * {width:100%;}
-          p {margin:0 0 5px 0;}
+          p {display:inline-block;margin:0 0 5px 0;}
           & > div {
             @include flexbase;  margin:0 0 15px 0;
             input, select {width:100%; margin:0 5px 0 0;}
@@ -1664,7 +1685,7 @@ body.taekwon_mode {
 
     // h 테그 서정 시작
     h2{
-      @include flex-option(0, 1, 50px); @include flexbase; @include flex-align-items-center;
+      @include flex-option(0, 1, 100%); @include flexbase; @include flex-align-items-center;
       min-height:50px; max-height:50px; padding:10px;
     }
     h2 {font-size:1.6rem; opacity: 0.7; }

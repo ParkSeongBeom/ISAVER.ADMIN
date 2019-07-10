@@ -581,7 +581,6 @@ div[contenteditable] {}
 ////// -----------------  MAP 설정 Start
 .map_images {
   @include flex-midddle; position: absolute; z-index: 1;
-  width:10000px !important; height:10000px !important;
 
   background-repeat:no-repeat; background-position: center;
   &:before {content:""; position: absolute; z-index:-1; /*background-color: rgba(#fff,0.4);*/ }
@@ -589,7 +588,7 @@ div[contenteditable] {}
   &:before {
     /*width:1px; height:100%; left:50%; top:0;*/
     width:100%; height:100%;
-    background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center02.svg");
+    background-image: url("../images/bg/gbg02.svg");
     background-repeat:repeat, no-repeat;
   }
 
@@ -685,7 +684,7 @@ div[contenteditable] {}
     width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-e{right:-16px;} .ui-resizable-s{bottom:-23px;}
-    .ui-resizable-se {right:-16px; bottom:-16px;}
+    .ui-resizable-se {right:0; bottom:0;}
 
     &.on {
       background-color: $color-on;
@@ -700,7 +699,7 @@ div[contenteditable] {}
       &.ui-resizable-handle.ui-resizable-s:before{background:none;}
       &:after {@include lidar-bg($color-lidar); @include lidar; @include border-radius(10000px);}
     }
-    &.level-die > div{@include mhwidth(0px);}
+    &.level-die > div{@include mhwidth(10px);}
 
     &.wh-01 > div {&, &:after { @include mmwidth($g-wh-01); @include mmheight($g-wh-01); } }
     &.wh-03 > div {&, &:after { @include mmwidth($g-wh-03); @include mmheight($g-wh-03); } }

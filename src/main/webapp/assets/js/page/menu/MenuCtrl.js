@@ -270,7 +270,11 @@ function MenuEvent(model) {
      * @param actionType
      */
     MenuEvent.menuTopBarSuccessHandler = function (data, dataType, actionType) {
-        menuView.setTopMenuBar(data['menuBarList'], data['areaList']);
+        if(targetId=='nonsan'){
+            menuView.beforeSetTopMenuBar(data['menuBarList'], data['areaList']);
+        }else{
+            menuView.setTopMenuBar(data['menuBarList'], data['areaList']);
+        }
     };
 
     /**

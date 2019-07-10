@@ -327,7 +327,7 @@
                     )
                     SELECT  array_to_string(array_agg(e.area_id),',')
                     FROM    AREA_HIERACHY e
-                    WHERE	 e.area_id <![CDATA[<>]]>  a.area_id
+                    WHERE	 e.area_id <![CDATA[<>]]> a.area_id
                     ) as childAreaIds
         FROM        AREA_HIERACHY hierachy
         INNER JOIN  isaver.area a

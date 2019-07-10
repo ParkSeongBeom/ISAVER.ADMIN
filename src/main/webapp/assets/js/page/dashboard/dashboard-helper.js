@@ -206,9 +206,10 @@ var DashboardHelper = (
                         }else if(_guardList[areaId][_MEDIATOR_TYPE[1]] instanceof CustomMapMediator){
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
-                            _guardList[areaId][_MEDIATOR_TYPE[1]].setObjectTypeCustom(_templateSetting['safeGuardObjectTypeHuman'], _templateSetting['safeGuardObjectTypeUnknown']);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
-                                'custom' : {
+                                'element' : {
+                                    'saveLastPosition' : false
+                                }, 'custom' : {
                                     'websocketSend':false
                                     ,'fenceView':true
                                     ,'openLinkFlag':false

@@ -696,33 +696,63 @@
         }
     </script>
 </head>
-<body class="admin_mode view_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''}">
+<body class="admin_mode ${mainTarget.targetId=='taekwon'?'taekwon_mode':''} ${mainTarget.targetId!='nonsan'?'view_mode':''}">
     <!-- wrap Start -->
     <div class="wrap">
-        <main>
-            <menu id="menu">
-                <div class="menu-btnset">
-                    <!-- 데시보드, 통계, 어드민 링크 버튼 -->
-                    <div class="group-menubtn" id="menuBtnGroup"></div>
-                    <div class="ignore"></div>
-                    <!-- 기능 버튼 -->
-                    <div class="group-functionbtn">
-                        <button class="funcbtn-info info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"><spring:message code="dashboard.title.license"/></button>
-                        <button class="funcbtn-user user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"><spring:message code="dashboard.title.profile"/></button>
-                        <c:if test="${mainTarget.targetId!='nonsan'}">
-                            <button class="funcbtn-reso reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"><spring:message code="dashboard.title.resourceMonitoring"/></button>
-                        </c:if>
-                        <button class="funcbtn-logi loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"><spring:message code="dashboard.title.logout"/></button>
-                        <button class="funcbtn-mscr" onclick="javascript:menuBarToggle(this);" data-content="SHOW MENU BAR"><p>HIDE MENU BAR</p></button>
+        <c:if test="${mainTarget.targetId=='nonsan'}">
+            <header id="header">
+                <div class="header_area">
+                    <h1><a href="#" onclick="javascript:moveDashboard(); return false;"></a></h1>
+
+                    <!-- menu Start -->
+                    <menu id="topMenu"></menu>
+                    <!-- menu End -->
+
+                    <!-- 시계 + 알림 + 사용자 + 로그아웃 버튼 영역 -->
+                    <div class="header_right_area">
+                        <div class="datetime_set">
+                            <span id="nowTime"></span>
+                        </div>
+                        <div class="header_btn_set">
+                            <button class="notice-btn issue_btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+                            <button class="user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"></button>
+                            <button class="info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"></button>
+                            <button class="loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"></button>
+                            <!-- 다국어 지원 추가 -->
+                            <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
+                                <%--<option value="ko_KR" ${pageContext.response.locale=='ko_KR'?'selected':''}><spring:message code="common.selectbox.korean"/></option>--%>
+                                <%--<option value="en_US" ${pageContext.response.locale=='en_US'?'selected':''}><spring:message code="common.selectbox.english"/></option>--%>
+                            <%--</select>--%>
+                        </div>
                     </div>
                 </div>
+            </header>
+        </c:if>
 
-                <div class="menu-navset" id="menuNav"></div>
-            </menu>
+        <main>
+            <c:if test="${mainTarget.targetId!='nonsan'}">
+                <menu id="menu">
+                    <div class="menu-btnset">
+                        <!-- 데시보드, 통계, 어드민 링크 버튼 -->
+                        <div class="group-menubtn" id="menuBtnGroup"></div>
+                        <div class="ignore"></div>
+                        <!-- 기능 버튼 -->
+                        <div class="group-functionbtn">
+                            <button class="funcbtn-info info_btn" onclick="javascript:getLicense(this); event.stopPropagation();" title="<spring:message code="dashboard.title.license"/>"><spring:message code="dashboard.title.license"/></button>
+                            <button class="funcbtn-user user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"><spring:message code="dashboard.title.profile"/></button>
+                            <button class="funcbtn-reso reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"><spring:message code="dashboard.title.resourceMonitoring"/></button>
+                            <button class="funcbtn-logi loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"><spring:message code="dashboard.title.logout"/></button>
+                            <button class="funcbtn-mscr" onclick="javascript:menuBarToggle(this);" data-content="SHOW MENU BAR"><p>HIDE MENU BAR</p></button>
+                        </div>
+                    </div>
 
-            <div class="notice-area">
-                <button class="notice-btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
-            </div>
+                    <div class="menu-navset" id="menuNav"></div>
+                </menu>
+
+                <div class="notice-area">
+                    <button class="notice-btn" onclick="javascript:layerShowHide('list');" title="<spring:message code="dashboard.title.alarmCenter"/>"></button>
+                </div>
+            </c:if>
 
             <!-- 알림센터 -->
             <aside class="db_area">

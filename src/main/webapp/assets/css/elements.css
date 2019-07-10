@@ -2514,8 +2514,6 @@ button.btn ~ button.btn {
   justify-content: center;
   position: absolute;
   z-index: 1;
-  width: 10000px !important;
-  height: 10000px !important;
   background-repeat: no-repeat;
   background-position: center;
   /*&:after  {width:100%; height:1px; left:0; top:50%;}*/ }
@@ -2528,7 +2526,7 @@ button.btn ~ button.btn {
     /*width:1px; height:100%; left:50%; top:0;*/
     width: 100%;
     height: 100%;
-    background-image: url("../images/bg/gbg02.svg"), url("../images/bg/gbg_center02.svg");
+    background-image: url("../images/bg/gbg02.svg");
     background-repeat: repeat, no-repeat; }
   .map_images .g-angle {
     width: 100%;
@@ -2775,8 +2773,8 @@ button.btn ~ button.btn {
     .g-ico .ui-resizable-s {
       bottom: -23px; }
     .g-ico .ui-resizable-se {
-      right: -16px;
-      bottom: -16px; }
+      right: 0;
+      bottom: 0; }
     .g-ico.on {
       background-color: #b42d6e; }
       .g-ico.on:hover .ui-resizable-se {
@@ -2872,12 +2870,12 @@ button.btn ~ button.btn {
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); } }
     .g-ico.level-die > div {
-      width: 0px !important;
-      min-width: 0px !important;
-      max-width: 0px !important;
-      height: 0px !important;
-      min-height: 0px !important;
-      max-height: 0px !important; }
+      width: 10px !important;
+      min-width: 10px !important;
+      max-width: 10px !important;
+      height: 10px !important;
+      min-height: 10px !important;
+      max-height: 10px !important; }
     .g-ico.wh-01 > div, .g-ico.wh-01 > div:after {
       width: 400px !important;
       min-width: 400px !important;

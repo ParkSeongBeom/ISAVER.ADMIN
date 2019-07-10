@@ -34,7 +34,7 @@ var CustomMapMediator = (
             ,'unknown-LEV003' : '/assets/images/ico/sico_39_dan.svg'
             ,'human' : '/assets/images/ico/sico_81.svg'
             ,'human-LEV001' : '/assets/images/ico/sico_81_cau.svg'
-             ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
+            ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
             ,'human-LEV003' : '/assets/images/ico/sico_81_dan.svg'
         };
         var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
@@ -43,7 +43,7 @@ var CustomMapMediator = (
             'element' : {
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
-                ,'saveLastPosition': true // 마지막에 머무른 값 쿠키 저장 기능
+                ,'saveLastPosition': false // 마지막에 머무른 값 쿠키 저장 기능
                 ,'zoom' : {
                     'init' : 1
                     ,'min' : 0.3
@@ -81,7 +81,7 @@ var CustomMapMediator = (
                 , 'changeConfig': null // 회전 / X축,Y축 기울기 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
-                , 'moveFenceHide': true // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
+                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnTimeout':null // 펜스로 이동 후 해당 펜스의 메인장치로 복귀
@@ -111,8 +111,12 @@ var CustomMapMediator = (
         // 비율 1m : 10px
         var _ratio=10;
         var _scale=_options['element']['zoom']['init'];
-        var _originX = 5000; // 전체 가로 사이즈의 2/1
-        var _originY = 5000; // 전체 세로 사이즈의 2/1
+        var _canvasSize = {
+            'width' : 5000
+            ,'height' : 5000
+        };
+        var _originX = _canvasSize['width']/2;
+        var _originY = _canvasSize['height']/2;
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
@@ -125,6 +129,7 @@ var CustomMapMediator = (
         var _fileUploadPath;
         var _messageConfig;
         var _self = this;
+        var _initFlag = false;
 
         /**
          * initialize
@@ -149,15 +154,6 @@ var CustomMapMediator = (
          */
         this.setMessageConfig = function(messageConfig){
             _messageConfig = messageConfig;
-        };
-
-        this.setObjectTypeCustom = function(human, unknown){
-            if(human!=null && human!=""){
-                _OBJECT_TYPE_CUSTOM['human'] = human;
-            }
-            if(unknown!=null && unknown!=""){
-                _OBJECT_TYPE_CUSTOM['unknown'] = unknown;
-            }
         };
 
         /**
@@ -302,12 +298,6 @@ var CustomMapMediator = (
                     )
                 )
             }
-
-            _mapCanvas.css({
-                left:(_mapCanvas.parent().width()-_mapCanvas.width())/2
-                , top:(_mapCanvas.parent().height()-_mapCanvas.height())/2
-            });
-            setTransform2d();
         };
 
         /**
@@ -441,22 +431,7 @@ var CustomMapMediator = (
          * set icon image
          * @author psb
          */
-        var setDefsMarkerRef = function(templateSetting, iconFileList){
-            try{
-                for(var settingId in templateSetting){
-                    if(settingId.indexOf("safeGuardMapIcon") > -1){
-                        var objectType = settingId.split("safeGuardMapIcon-")[1];
-                        for(var index in iconFileList){
-                            let iconFile = iconFileList[index];
-                            if(iconFile['fileId'] == templateSetting[settingId] && _defsMarkerRef[objectType]!=null){
-                                _defsMarkerRef[objectType] = _fileUploadPath+iconFile['physicalFileName'];
-                            }
-                        }
-                    }
-                }
-            }catch(e){
-                console.error("[CustomMapMediator][setDefsMarkerRef] set error - "+e.message);
-            }
+        var setDefsMarkerRef = function(){
             if(_mapCanvas.find("#drawElement").data('svgwrapper')){
                 _mapCanvas.find("#drawElement").svg('destroy');
             }
@@ -599,8 +574,8 @@ var CustomMapMediator = (
         var setTranslate = function (targetData, targetElement){
             if(targetData['deviceCode']=='DEV013' && targetData['mainFlag']=='Y'){
                 targetData['translate'] = {
-                    'x' : parseInt(targetElement.css("left")) + (_mapCanvas.width()-targetData['x1']-targetData['x2'])/2
-                    ,'y' : parseInt(targetElement.css("top")) + (_mapCanvas.height()-targetData['y1']-targetData['y2'])/2
+                    'x' : parseInt(targetElement.css("left")) + parseInt(targetElement.width())/2
+                    ,'y' : parseInt(targetElement.css("top")) + parseInt(targetElement.height())/2
                 };
 
                 if(targetData.hasOwnProperty("setFenceList")){
@@ -1493,8 +1468,62 @@ var CustomMapMediator = (
                 case 'list':
                     _fileUploadPath = data['fileUploadPath'];
                     if(data['templateSetting']!=null && data['iconFileList']!=null){
-                        setDefsMarkerRef(data['templateSetting'], data['iconFileList']);
+                        var templateSetting = data['templateSetting'];
+                        var iconFileList = data['iconFileList'];
+                        try{
+                            for(var settingId in templateSetting){
+                                if(templateSetting[settingId]!=null && templateSetting[settingId]!=""){
+                                    switch (settingId){
+                                        case "safeGuardObjectTypeHuman" :
+                                            _OBJECT_TYPE_CUSTOM['human'] = templateSetting[settingId];
+                                            break;
+                                        case "safeGuardObjectTypeUnknown" :
+                                            _OBJECT_TYPE_CUSTOM['unknown'] = templateSetting[settingId];
+                                            break;
+                                        case "moveFenceScale" :
+                                            _options['custom']['moveFenceScale'] = Number(templateSetting[settingId]);
+                                            break;
+                                        case "moveReturnDelay" :
+                                            _options['custom']['moveReturnDelay'] = Number(templateSetting[settingId])*1000;
+                                            break;
+                                        case "safeGuardMapIcon-human" :
+                                        case "safeGuardMapIcon-human-LEV001" :
+                                        case "safeGuardMapIcon-human-LEV002" :
+                                        case "safeGuardMapIcon-human-LEV003" :
+                                        case "safeGuardMapIcon-unknown" :
+                                        case "safeGuardMapIcon-unknown-LEV001" :
+                                        case "safeGuardMapIcon-unknown-LEV002" :
+                                        case "safeGuardMapIcon-unknown-LEV003" :
+                                            var objectType = settingId.split("safeGuardMapIcon-")[1];
+                                            for(var index in iconFileList){
+                                                let iconFile = iconFileList[index];
+                                                if(iconFile['fileId'] == templateSetting[settingId] && _defsMarkerRef[objectType]!=null){
+                                                    _defsMarkerRef[objectType] = _fileUploadPath+iconFile['physicalFileName'];
+                                                }
+                                            }
+                                            break;
+                                        case "safeGuardCanvasWidth" :
+                                            _canvasSize['width'] = Number(templateSetting[settingId]);
+                                            break;
+                                        case "safeGuardCanvasHeight" :
+                                            _canvasSize['height'] = Number(templateSetting[settingId]);
+                                            break;
+                                    }
+                                }
+                            }
+                        }catch(e){
+                            console.error("[CustomMapMediator] templateSetting set error - "+e.message);
+                        }
+
                     }
+                    _mapCanvas.css({
+                        left:(_mapCanvas.parent().width()-_canvasSize['width'])/2
+                        , top:(_mapCanvas.parent().height()-_canvasSize['height'])/2
+                        , width:_canvasSize['width']
+                        , height:_canvasSize['height']
+                    });
+                    setTransform2d();
+                    setDefsMarkerRef();
                     _self.setBackgroundImage(data['area']['physicalFileName'],true);
                     _self.setAngleXClass(data['area']['angleClass'],true);
                     if(_options['custom']['childListLoad']!=null && typeof _options['custom']['childListLoad'] == "function"){

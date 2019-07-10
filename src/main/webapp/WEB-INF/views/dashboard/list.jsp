@@ -627,8 +627,6 @@
     var fileUploadPath = '${fileUploadPath}';
     var templateSetting = {
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
-        ,'safeGuardObjectTypeHuman' : '${templateSetting['safeGuardObjectTypeHuman']}'
-        ,'safeGuardObjectTypeUnknown' : '${templateSetting['safeGuardObjectTypeUnknown']}'
     };
 
     /*

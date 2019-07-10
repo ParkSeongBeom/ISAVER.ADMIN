@@ -345,6 +345,19 @@
                                 </select>
                             </li>
                             <li>
+                                <span>Canvas Size</span>
+                                <div>
+                                    <p>Width</p>
+                                    <div>
+                                        <input type="text" name="safeGuardCanvasWidth" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
+                                    </div>
+                                    <p>Height</p>
+                                    <div>
+                                        <input type="text" name="safeGuardCanvasHeight" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
                                 <span>Object Type</span>
                                 <div>
                                     <p>Human</p>
@@ -360,6 +373,19 @@
                                             <option value="human">Human</option>
                                             <option value="unknown" selected="selected">Unknown</option>
                                         </select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Fence Tracking</span>
+                                <div>
+                                    <p>Zoom Scale</p>
+                                    <div>
+                                        <input type="text" name="moveFenceScale" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumberWithPoint();"/>
+                                    </div>
+                                    <p>Return Delay (Second)</p>
+                                    <div>
+                                        <input type="text" name="moveReturnDelay" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
                                     </div>
                                 </div>
                             </li>
