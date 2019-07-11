@@ -346,29 +346,29 @@
                             </li>
                             <li>
                                 <span>Canvas Size</span>
-                                <div>
-                                    <p>Width</p>
+                                <div class="col-out">
                                     <div>
+                                        <p>Width</p>
                                         <input type="text" name="safeGuardCanvasWidth" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
                                     </div>
-                                    <p>Height</p>
                                     <div>
+                                        <p>Height</p>
                                         <input type="text" name="safeGuardCanvasHeight" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <span>Object Type</span>
-                                <div>
-                                    <p>Human</p>
+                                <div class="col-out">
                                     <div>
+                                        <p>Human</p>
                                         <select name="safeGuardObjectTypeHuman">
                                             <option value="human" selected="selected">Human</option>
                                             <option value="unknown">Unknown</option>
                                         </select>
                                     </div>
-                                    <p>Object</p>
                                     <div>
+                                        <p>Object</p>
                                         <select name="safeGuardObjectTypeUnknown">
                                             <option value="human">Human</option>
                                             <option value="unknown" selected="selected">Unknown</option>
@@ -378,29 +378,29 @@
                             </li>
                             <li>
                                 <span>Fence Tracking</span>
-                                <div>
-                                    <p>Zoom Scale</p>
+                                <div class="col-out">
                                     <div>
+                                        <p>Zoom Scale</p>
                                         <input type="text" name="moveFenceScale" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumberWithPoint();"/>
                                     </div>
-                                    <p>Return Delay (Second)</p>
                                     <div>
+                                        <p>Return Delay (Second)</p>
                                         <input type="text" name="moveReturnDelay" placeholder="<spring:message code="resource.placeholder.emptyDefault"/>" onkeypress="javascript:isNumber();"/>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <span>Custom Icon</span>
-                                <div>
-                                    <p>Human Icon</p>
+                                <div class="col-in">
                                     <div>
+                                        <p>Human Icon</p>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human" allModel="true" fileType="${iConFileType}" allText="Normal"/>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV001" allModel="true" fileType="${iConFileType}" allText="Caution"/>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV002" allModel="true" fileType="${iConFileType}" allText="Warning"/>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-human-LEV003" allModel="true" fileType="${iConFileType}" allText="Danger"/>
                                     </div>
-                                    <p>Object Icon</p>
                                     <div>
+                                        <p>Object Icon</p>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown" allModel="true" fileType="${iConFileType}" allText="Normal"/>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown-LEV001" allModel="true" fileType="${iConFileType}" allText="Caution"/>
                                         <isaver:fileSelectBox htmlTagName="safeGuardMapIcon-unknown-LEV002" allModel="true" fileType="${iConFileType}" allText="Warning"/>

@@ -81,6 +81,18 @@
     </insert>
 
     <!--
+      Custom Map 설정을 수정한다.
+      @author psb
+    -->
+    <update id="saveCustomMapLocation" parameterType="map" >
+        update	isaver.custom_map_location
+        set	    x1 = x1*${widthRatio}
+                , x2 = x2*${widthRatio}
+                , y1 = y1*${heightRatio}
+                , y2 = y2*${heightRatio}
+    </update>
+
+    <!--
       Custom Map 설정을 제거한다.
       @author psb
     -->

@@ -580,7 +580,7 @@ div[contenteditable] {}
 
 ////// -----------------  MAP 설정 Start
 .map_images {
-  @include flex-midddle; position: absolute; z-index: 1;
+  @include flex-midddle; position: absolute; z-index: 1; width:5000px;height:5000px;
 
   background-repeat:no-repeat; background-position: center;
   &:before {content:""; position: absolute; z-index:-1; /*background-color: rgba(#fff,0.4);*/ }
@@ -677,6 +677,7 @@ div[contenteditable] {}
     $g-wh-01 : 400px;
     $g-wh-02 : 800px; //기본값
     $g-wh-03 : 1200px;
+    $g-wh-04 : 1600px;
 
     $g-r10 : 10deg;  $g-r20 : 20deg;  $g-r30 : 30deg;  $g-r40 : 40deg;  $g-r50 : 50deg;
     $g-r60 : 60deg;  $g-r70 : 70deg;  $g-r80 : 80deg;  $g-r90 : 90deg;  $g-r100 : 100deg;
@@ -684,7 +685,7 @@ div[contenteditable] {}
     width:$devi_w; height:$devi_w;
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
     .ui-resizable-e{right:-16px;} .ui-resizable-s{bottom:-23px;}
-    .ui-resizable-se {right:0; bottom:0;}
+    .ui-resizable-se {margin-top:10px; margin-left: 10px;}
 
     &.on {
       background-color: $color-on;
@@ -693,7 +694,7 @@ div[contenteditable] {}
     &.lidar > div {display: block !important; cursor: move;}
     & > div {
       z-index: -1; display: none;
-      &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-02); }
+      &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-04); }
       &:not(.ui-resizable-handle), &:after:not(.ui-resizable-handle) {@include mhwidth(10px);}
       &.ui-resizable-handle, &.ui-resizable-handle:after{@include mhwidth(10px);}
       &.ui-resizable-handle.ui-resizable-s:before{background:none;}

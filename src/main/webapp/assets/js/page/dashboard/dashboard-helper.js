@@ -208,7 +208,7 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'element' : {
-                                    'saveLastPosition' : false
+                                    'lastPositionUseFlag' : true
                                 }, 'custom' : {
                                     'websocketSend':false
                                     ,'fenceView':true

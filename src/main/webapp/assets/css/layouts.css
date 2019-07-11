@@ -590,19 +590,23 @@ main {
     -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+  main > aside {
+    order: 3; }
   main > article {
+    order: 1;
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
     flexbox: 0 1 100%;
     -webkit-box-flex: 1;
     -ms-flex: 0 1 100%;
     overflow: hidden;
-    order: 3;
     -webkit-box-orient: column;
     -webkit-box-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column; }
+  main > section, main .common-popup-layer {
+    order: 2; }
 
 aside.db_area {
   order: 5;
@@ -670,7 +674,7 @@ aside.db_area {
     max-height: 60px !important; }
     aside.db_area h2 span {
       width: 100%;
-      padding: 10px 0 0 0; }
+      padding: 5px 10px; }
   aside.db_area .issue_board {
     display: -webkit-box;
     display: -moz-box;
@@ -1406,9 +1410,11 @@ aside.db_area {
       right: 320px; }
 
 menu button {
+  padding: 0 10px;
+  height: 40px;
   text-align: left;
   word-break: break-all;
-  height: 31px; }
+  min-width: 200px; }
   menu button:hover {
     background-color: #32a0be; }
   menu button:active {
@@ -2492,9 +2498,6 @@ h4 {
   min-height: 40px !important;
   max-height: 40px !important; }
 
-.common-popup-layer {
-  order: 1; }
-
 .tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {
   background-color: #535353;
   color: #f5f5f5;
@@ -2522,10 +2525,10 @@ h4 {
   position: absolute;
   z-index: 101;
   width: 320px;
-  bottom: 0;
-  left: -640px;
+  top: 0;
+  right: -640px;
   border-style: solid;
-  border-width: 1px 1px 0 0;
+  border-width: 0 0 1px 1px;
   border-color: #040404; }
   .tpopupbase ::-webkit-scrollbar, .tpopupbase ::-webkit-scrollbar-corner, .tpopupbase ::-webkit-scrollbar-track, .tpopup-personal ::-webkit-scrollbar, .tpopup-personal ::-webkit-scrollbar-corner, .tpopup-personal ::-webkit-scrollbar-track, .tpopup-info ::-webkit-scrollbar, .tpopup-info ::-webkit-scrollbar-corner, .tpopup-info ::-webkit-scrollbar-track, .tpopup-resource ::-webkit-scrollbar, .tpopup-resource ::-webkit-scrollbar-corner, .tpopup-resource ::-webkit-scrollbar-track {
     background-color: #262626; }
@@ -2554,7 +2557,7 @@ h4 {
     background-color: #535353;
     border-color: #262626; }
   .tpopupbase.on, .tpopup-personal.on, .tpopup-info.on, .tpopup-resource.on {
-    left: 40px; }
+    right: 0px; }
   .tpopupbase > *, .tpopup-personal > *, .tpopup-info > *, .tpopup-resource > * {
     position: relative;
     width: 100%;
@@ -2696,7 +2699,7 @@ h4 {
 .tpopup-resource {
   width: 800px;
   height: 400px;
-  left: -1280px; }
+  right: -1280px; }
   .tpopup-resource > h2 {
     margin: 5px 0;
     height: 38px !important;
@@ -4830,6 +4833,10 @@ h4 {
           border-bottom: none; }
         .opatin_list > div > input:checked + ul li div div.col {
           float: left; }
+      .opatin_list > div > input:checked + ul li:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0; }
   .opatin_list > div > ul {
     display: -webkit-box;
     display: -moz-box;
@@ -4911,6 +4918,7 @@ h4 {
         display: inline-block;
         margin: 0 0 5px 0; }
       .opatin_list > div > ul li > div > div {
+        flex-wrap: wrap;
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
@@ -4920,6 +4928,41 @@ h4 {
         display: box;
         margin: 0 0 15px 0; }
         .opatin_list > div > ul li > div > div input, .opatin_list > div > ul li > div > div select {
+          width: 100%;
+          margin: 0 5px 0 0; }
+      .opatin_list > div > ul li > div.col-out {
+        display: flex; }
+        .opatin_list > div > ul li > div.col-out {
+          width: 100%; }
+        .opatin_list > div > ul li > div.col-out p {
+          margin: 0 0 5px 0; }
+        .opatin_list > div > ul li > div.col-out > div {
+          flex-wrap: wrap;
+          border-bottom: none !important;
+          margin: 0;
+          padding-bottom: 0 !important; }
+          .opatin_list > div > ul li > div.col-out > div input, .opatin_list > div > ul li > div.col-out > div select {
+            width: 100%;
+            margin: 0 5px 0 0; }
+      .opatin_list > div > ul li > div.col-in, .opatin_list > div > ul li > div.col-in > * {
+        width: 100%; }
+      .opatin_list > div > ul li > div.col-in p {
+        position: absolute;
+        top: 0;
+        margin: 0 0 5px 0; }
+      .opatin_list > div > ul li > div.col-in > div {
+        flex-wrap: nowrap;
+        position: relative;
+        padding-top: 30px;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        margin: 0 0 15px 0; }
+        .opatin_list > div > ul li > div.col-in > div input, .opatin_list > div > ul li > div.col-in > div select {
           width: 100%;
           margin: 0 5px 0 0; }
   .opatin_list > div.safeguard_option > ul:before {
@@ -5170,11 +5213,12 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
     z-index: 20;
     left: auto;
     right: 0;
+    top: 0;
     /*background-color: rgba(0,0,0,0.5);*/
     min-width: 160px;
     max-width: 160px;
     width: 160px;
-    height: 100%;
+    height: auto;
     padding: 0 0 10px 0; }
     .bmt .copybox_area:hover {
       overflow: overlay; }
@@ -5343,6 +5387,398 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
     content: "\e904"; }
   .dashboard_mode.view_mode > .wrap .ico-thum:before, .admin_mode.view_mode > .wrap .ico-thum:before {
     content: "\e903"; }
+  .dashboard_mode.view_mode > .wrap .tpopupbase, .dashboard_mode.view_mode > .wrap .tpopup-personal, .dashboard_mode.view_mode > .wrap .tpopup-info, .dashboard_mode.view_mode > .wrap .tpopup-resource, .admin_mode.view_mode > .wrap .tpopupbase, .admin_mode.view_mode > .wrap .tpopup-personal, .admin_mode.view_mode > .wrap .tpopup-info, .admin_mode.view_mode > .wrap .tpopup-resource {
+    background-color: #535353;
+    color: #f5f5f5;
+    background-color: #3c3c3c !important;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 60px 100px -50px black;
+    -webkit-box-shadow: 0px 60px 100px -50px black;
+    -moz-box-shadow: 0px 60px 100px -50px black;
+    position: absolute;
+    z-index: 101;
+    width: 320px;
+    bottom: 0;
+    top: auto;
+    left: -640px;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+    border-color: #040404; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-track {
+      background-color: #262626; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-thumb {
+      background-color: #535353;
+      border-color: #262626; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-input-placeholder, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-info ::-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-moz-placeholder, .admin_mode.view_mode > .wrap .tpopupbase ::-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-personal ::-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-info ::-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-resource ::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    .dashboard_mode.view_mode > .wrap .tpopupbase :-ms-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-personal :-ms-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-info :-ms-input-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-resource :-ms-input-placeholder, .admin_mode.view_mode > .wrap .tpopupbase :-ms-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-personal :-ms-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-info :-ms-input-placeholder, .admin_mode.view_mode > .wrap .tpopup-resource :-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    .dashboard_mode.view_mode > .wrap .tpopupbase :-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-personal :-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-info :-moz-placeholder, .dashboard_mode.view_mode > .wrap .tpopup-resource :-moz-placeholder, .admin_mode.view_mode > .wrap .tpopupbase :-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-personal :-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-info :-moz-placeholder, .admin_mode.view_mode > .wrap .tpopup-resource :-moz-placeholder {
+      color: rgba(255, 255, 255, 0.4); }
+    .dashboard_mode.view_mode > .wrap .tpopupbase input, .dashboard_mode.view_mode > .wrap .tpopupbase textarea, .dashboard_mode.view_mode > .wrap .tpopupbase select, .dashboard_mode.view_mode > .wrap .tpopupbase div[contenteditable], .dashboard_mode.view_mode > .wrap .tpopup-personal input, .dashboard_mode.view_mode > .wrap .tpopup-personal textarea, .dashboard_mode.view_mode > .wrap .tpopup-personal select, .dashboard_mode.view_mode > .wrap .tpopup-personal div[contenteditable], .dashboard_mode.view_mode > .wrap .tpopup-info input, .dashboard_mode.view_mode > .wrap .tpopup-info textarea, .dashboard_mode.view_mode > .wrap .tpopup-info select, .dashboard_mode.view_mode > .wrap .tpopup-info div[contenteditable], .dashboard_mode.view_mode > .wrap .tpopup-resource input, .dashboard_mode.view_mode > .wrap .tpopup-resource textarea, .dashboard_mode.view_mode > .wrap .tpopup-resource select, .dashboard_mode.view_mode > .wrap .tpopup-resource div[contenteditable], .admin_mode.view_mode > .wrap .tpopupbase input, .admin_mode.view_mode > .wrap .tpopupbase textarea, .admin_mode.view_mode > .wrap .tpopupbase select, .admin_mode.view_mode > .wrap .tpopupbase div[contenteditable], .admin_mode.view_mode > .wrap .tpopup-personal input, .admin_mode.view_mode > .wrap .tpopup-personal textarea, .admin_mode.view_mode > .wrap .tpopup-personal select, .admin_mode.view_mode > .wrap .tpopup-personal div[contenteditable], .admin_mode.view_mode > .wrap .tpopup-info input, .admin_mode.view_mode > .wrap .tpopup-info textarea, .admin_mode.view_mode > .wrap .tpopup-info select, .admin_mode.view_mode > .wrap .tpopup-info div[contenteditable], .admin_mode.view_mode > .wrap .tpopup-resource input, .admin_mode.view_mode > .wrap .tpopup-resource textarea, .admin_mode.view_mode > .wrap .tpopup-resource select, .admin_mode.view_mode > .wrap .tpopup-resource div[contenteditable] {
+      color: #fff !important;
+      border-style: solid;
+      border-width: 1px;
+      border-color: black;
+      background-color: #262626; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase select, .dashboard_mode.view_mode > .wrap .tpopupbase input[type="date"], .dashboard_mode.view_mode > .wrap .tpopup-personal select, .dashboard_mode.view_mode > .wrap .tpopup-personal input[type="date"], .dashboard_mode.view_mode > .wrap .tpopup-info select, .dashboard_mode.view_mode > .wrap .tpopup-info input[type="date"], .dashboard_mode.view_mode > .wrap .tpopup-resource select, .dashboard_mode.view_mode > .wrap .tpopup-resource input[type="date"], .admin_mode.view_mode > .wrap .tpopupbase select, .admin_mode.view_mode > .wrap .tpopupbase input[type="date"], .admin_mode.view_mode > .wrap .tpopup-personal select, .admin_mode.view_mode > .wrap .tpopup-personal input[type="date"], .admin_mode.view_mode > .wrap .tpopup-info select, .admin_mode.view_mode > .wrap .tpopup-info input[type="date"], .admin_mode.view_mode > .wrap .tpopup-resource select, .admin_mode.view_mode > .wrap .tpopup-resource input[type="date"] {
+      background-image: url(../images/ico/select_allow_w.svg) !important; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-track, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-corner, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-track, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-corner, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-track {
+      background-color: #262626; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-thumb, .dashboard_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopupbase ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-personal ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-info ::-webkit-scrollbar-thumb, .admin_mode.view_mode > .wrap .tpopup-resource ::-webkit-scrollbar-thumb {
+      background-color: #535353;
+      border-color: #262626; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase.on, .dashboard_mode.view_mode > .wrap .tpopup-personal.on, .dashboard_mode.view_mode > .wrap .tpopup-info.on, .dashboard_mode.view_mode > .wrap .tpopup-resource.on, .admin_mode.view_mode > .wrap .tpopupbase.on, .admin_mode.view_mode > .wrap .tpopup-personal.on, .admin_mode.view_mode > .wrap .tpopup-info.on, .admin_mode.view_mode > .wrap .tpopup-resource.on {
+      left: 40px; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase > *, .dashboard_mode.view_mode > .wrap .tpopup-personal > *, .dashboard_mode.view_mode > .wrap .tpopup-info > *, .dashboard_mode.view_mode > .wrap .tpopup-resource > *, .admin_mode.view_mode > .wrap .tpopupbase > *, .admin_mode.view_mode > .wrap .tpopup-personal > *, .admin_mode.view_mode > .wrap .tpopup-info > *, .admin_mode.view_mode > .wrap .tpopup-resource > * {
+      position: relative;
+      width: 100%;
+      padding: 0 20px;
+      margin: 0 0 20px 0; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase button, .dashboard_mode.view_mode > .wrap .tpopup-personal button, .dashboard_mode.view_mode > .wrap .tpopup-info button, .dashboard_mode.view_mode > .wrap .tpopup-resource button, .admin_mode.view_mode > .wrap .tpopupbase button, .admin_mode.view_mode > .wrap .tpopup-personal button, .admin_mode.view_mode > .wrap .tpopup-info button, .admin_mode.view_mode > .wrap .tpopup-resource button {
+      z-index: 1;
+      width: 100%;
+      max-width: 160px;
+      height: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button, .dashboard_mode.view_mode > .wrap .tpopupbase button:before, .dashboard_mode.view_mode > .wrap .tpopupbase button:after, .dashboard_mode.view_mode > .wrap .tpopup-personal button, .dashboard_mode.view_mode > .wrap .tpopup-personal button:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:after, .dashboard_mode.view_mode > .wrap .tpopup-info button, .dashboard_mode.view_mode > .wrap .tpopup-info button:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:after, .dashboard_mode.view_mode > .wrap .tpopup-resource button, .dashboard_mode.view_mode > .wrap .tpopup-resource button:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:after, .admin_mode.view_mode > .wrap .tpopupbase button, .admin_mode.view_mode > .wrap .tpopupbase button:before, .admin_mode.view_mode > .wrap .tpopupbase button:after, .admin_mode.view_mode > .wrap .tpopup-personal button, .admin_mode.view_mode > .wrap .tpopup-personal button:before, .admin_mode.view_mode > .wrap .tpopup-personal button:after, .admin_mode.view_mode > .wrap .tpopup-info button, .admin_mode.view_mode > .wrap .tpopup-info button:before, .admin_mode.view_mode > .wrap .tpopup-info button:after, .admin_mode.view_mode > .wrap .tpopup-resource button, .admin_mode.view_mode > .wrap .tpopup-resource button:before, .admin_mode.view_mode > .wrap .tpopup-resource button:after {
+        transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        color: #f5f5f5; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:before, .admin_mode.view_mode > .wrap .tpopupbase button:before, .admin_mode.view_mode > .wrap .tpopup-personal button:before, .admin_mode.view_mode > .wrap .tpopup-info button:before, .admin_mode.view_mode > .wrap .tpopup-resource button:before {
+        content: "";
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 1.5rem !important;
+        font-weight: normal;
+        background-color: transparent !important;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgba(245, 245, 245, 0.8); }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:hover:before, .dashboard_mode.view_mode > .wrap .tpopupbase button:active:before, .dashboard_mode.view_mode > .wrap .tpopupbase button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-info button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button.on:before, .admin_mode.view_mode > .wrap .tpopupbase button:hover:before, .admin_mode.view_mode > .wrap .tpopupbase button:active:before, .admin_mode.view_mode > .wrap .tpopupbase button.on:before, .admin_mode.view_mode > .wrap .tpopup-personal button:hover:before, .admin_mode.view_mode > .wrap .tpopup-personal button:active:before, .admin_mode.view_mode > .wrap .tpopup-personal button.on:before, .admin_mode.view_mode > .wrap .tpopup-info button:hover:before, .admin_mode.view_mode > .wrap .tpopup-info button:active:before, .admin_mode.view_mode > .wrap .tpopup-info button.on:before, .admin_mode.view_mode > .wrap .tpopup-resource button:hover:before, .admin_mode.view_mode > .wrap .tpopup-resource button:active:before, .admin_mode.view_mode > .wrap .tpopup-resource button.on:before {
+        border-width: 2px; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:hover:before, .admin_mode.view_mode > .wrap .tpopupbase button:hover:before, .admin_mode.view_mode > .wrap .tpopup-personal button:hover:before, .admin_mode.view_mode > .wrap .tpopup-info button:hover:before, .admin_mode.view_mode > .wrap .tpopup-resource button:hover:before {
+        border-color: #32a0be; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:hover, .dashboard_mode.view_mode > .wrap .tpopupbase button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:hover, .dashboard_mode.view_mode > .wrap .tpopup-personal button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:hover, .dashboard_mode.view_mode > .wrap .tpopup-info button:hover:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:hover, .dashboard_mode.view_mode > .wrap .tpopup-resource button:hover:before, .admin_mode.view_mode > .wrap .tpopupbase button:hover, .admin_mode.view_mode > .wrap .tpopupbase button:hover:before, .admin_mode.view_mode > .wrap .tpopup-personal button:hover, .admin_mode.view_mode > .wrap .tpopup-personal button:hover:before, .admin_mode.view_mode > .wrap .tpopup-info button:hover, .admin_mode.view_mode > .wrap .tpopup-info button:hover:before, .admin_mode.view_mode > .wrap .tpopup-resource button:hover, .admin_mode.view_mode > .wrap .tpopup-resource button:hover:before {
+        color: #32a0be; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:active:before, .admin_mode.view_mode > .wrap .tpopupbase button:active:before, .admin_mode.view_mode > .wrap .tpopup-personal button:active:before, .admin_mode.view_mode > .wrap .tpopup-info button:active:before, .admin_mode.view_mode > .wrap .tpopup-resource button:active:before {
+        border-color: #00af9b; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button:active, .dashboard_mode.view_mode > .wrap .tpopupbase button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button:active, .dashboard_mode.view_mode > .wrap .tpopup-personal button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-info button:active, .dashboard_mode.view_mode > .wrap .tpopup-info button:active:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button:active, .dashboard_mode.view_mode > .wrap .tpopup-resource button:active:before, .admin_mode.view_mode > .wrap .tpopupbase button:active, .admin_mode.view_mode > .wrap .tpopupbase button:active:before, .admin_mode.view_mode > .wrap .tpopup-personal button:active, .admin_mode.view_mode > .wrap .tpopup-personal button:active:before, .admin_mode.view_mode > .wrap .tpopup-info button:active, .admin_mode.view_mode > .wrap .tpopup-info button:active:before, .admin_mode.view_mode > .wrap .tpopup-resource button:active, .admin_mode.view_mode > .wrap .tpopup-resource button:active:before {
+        color: #00af9b; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-info button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button.on:before, .admin_mode.view_mode > .wrap .tpopupbase button.on:before, .admin_mode.view_mode > .wrap .tpopup-personal button.on:before, .admin_mode.view_mode > .wrap .tpopup-info button.on:before, .admin_mode.view_mode > .wrap .tpopup-resource button.on:before {
+        border-color: #b42d6e; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button.on, .dashboard_mode.view_mode > .wrap .tpopupbase button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button.on, .dashboard_mode.view_mode > .wrap .tpopup-personal button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-info button.on, .dashboard_mode.view_mode > .wrap .tpopup-info button.on:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button.on, .dashboard_mode.view_mode > .wrap .tpopup-resource button.on:before, .admin_mode.view_mode > .wrap .tpopupbase button.on, .admin_mode.view_mode > .wrap .tpopupbase button.on:before, .admin_mode.view_mode > .wrap .tpopup-personal button.on, .admin_mode.view_mode > .wrap .tpopup-personal button.on:before, .admin_mode.view_mode > .wrap .tpopup-info button.on, .admin_mode.view_mode > .wrap .tpopup-info button.on:before, .admin_mode.view_mode > .wrap .tpopup-resource button.on, .admin_mode.view_mode > .wrap .tpopup-resource button.on:before {
+        color: #b42d6e; }
+      .dashboard_mode.view_mode > .wrap .tpopupbase button, .dashboard_mode.view_mode > .wrap .tpopupbase button:before, .dashboard_mode.view_mode > .wrap .tpopup-personal button, .dashboard_mode.view_mode > .wrap .tpopup-personal button:before, .dashboard_mode.view_mode > .wrap .tpopup-info button, .dashboard_mode.view_mode > .wrap .tpopup-info button:before, .dashboard_mode.view_mode > .wrap .tpopup-resource button, .dashboard_mode.view_mode > .wrap .tpopup-resource button:before, .admin_mode.view_mode > .wrap .tpopupbase button, .admin_mode.view_mode > .wrap .tpopupbase button:before, .admin_mode.view_mode > .wrap .tpopup-personal button, .admin_mode.view_mode > .wrap .tpopup-personal button:before, .admin_mode.view_mode > .wrap .tpopup-info button, .admin_mode.view_mode > .wrap .tpopup-info button:before, .admin_mode.view_mode > .wrap .tpopup-resource button, .admin_mode.view_mode > .wrap .tpopup-resource button:before {
+        font-size: 0.9rem; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase h2, .dashboard_mode.view_mode > .wrap .tpopup-personal h2, .dashboard_mode.view_mode > .wrap .tpopup-info h2, .dashboard_mode.view_mode > .wrap .tpopup-resource h2, .admin_mode.view_mode > .wrap .tpopupbase h2, .admin_mode.view_mode > .wrap .tpopup-personal h2, .admin_mode.view_mode > .wrap .tpopup-info h2, .admin_mode.view_mode > .wrap .tpopup-resource h2 {
+      height: 50px !important;
+      min-height: 50px !important;
+      max-height: 50px !important;
+      margin-top: 20px; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase > div, .dashboard_mode.view_mode > .wrap .tpopup-personal > div, .dashboard_mode.view_mode > .wrap .tpopup-info > div, .dashboard_mode.view_mode > .wrap .tpopup-resource > div, .admin_mode.view_mode > .wrap .tpopupbase > div, .admin_mode.view_mode > .wrap .tpopup-personal > div, .admin_mode.view_mode > .wrap .tpopup-info > div, .admin_mode.view_mode > .wrap .tpopup-resource > div {
+      height: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase > section, .dashboard_mode.view_mode > .wrap .tpopup-personal > section, .dashboard_mode.view_mode > .wrap .tpopup-info > section, .dashboard_mode.view_mode > .wrap .tpopup-resource > section, .admin_mode.view_mode > .wrap .tpopupbase > section, .admin_mode.view_mode > .wrap .tpopup-personal > section, .admin_mode.view_mode > .wrap .tpopup-info > section, .admin_mode.view_mode > .wrap .tpopup-resource > section {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
+      overflow-y: auto;
+      overflow-x: hidden; }
+    .dashboard_mode.view_mode > .wrap .tpopupbase input, .dashboard_mode.view_mode > .wrap .tpopupbase select, .dashboard_mode.view_mode > .wrap .tpopup-personal input, .dashboard_mode.view_mode > .wrap .tpopup-personal select, .dashboard_mode.view_mode > .wrap .tpopup-info input, .dashboard_mode.view_mode > .wrap .tpopup-info select, .dashboard_mode.view_mode > .wrap .tpopup-resource input, .dashboard_mode.view_mode > .wrap .tpopup-resource select, .admin_mode.view_mode > .wrap .tpopupbase input, .admin_mode.view_mode > .wrap .tpopupbase select, .admin_mode.view_mode > .wrap .tpopup-personal input, .admin_mode.view_mode > .wrap .tpopup-personal select, .admin_mode.view_mode > .wrap .tpopup-info input, .admin_mode.view_mode > .wrap .tpopup-info select, .admin_mode.view_mode > .wrap .tpopup-resource input, .admin_mode.view_mode > .wrap .tpopup-resource select {
+      background-color: #535353; }
+  .dashboard_mode.view_mode > .wrap .tpopup-personal .form_area span, .dashboard_mode.view_mode > .wrap .tpopup-personal .form_area input, .admin_mode.view_mode > .wrap .tpopup-personal .form_area span, .admin_mode.view_mode > .wrap .tpopup-personal .form_area input {
+    width: 100%; }
+  .dashboard_mode.view_mode > .wrap .tpopup-personal .form_area span, .admin_mode.view_mode > .wrap .tpopup-personal .form_area span {
+    margin: 0 0 5px 0; }
+  .dashboard_mode.view_mode > .wrap .tpopup-personal .form_area input, .admin_mode.view_mode > .wrap .tpopup-personal .form_area input {
+    margin: 0 0 20px 0; }
+  .dashboard_mode.view_mode > .wrap .tpopup-info .d-day, .dashboard_mode.view_mode > .wrap .tpopup-info > section > div, .admin_mode.view_mode > .wrap .tpopup-info .d-day, .admin_mode.view_mode > .wrap .tpopup-info > section > div {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 40px; }
+  .dashboard_mode.view_mode > .wrap .tpopup-info .d-day, .admin_mode.view_mode > .wrap .tpopup-info .d-day {
+    margin-bottom: 50px;
+    background-color: #040404; }
+    .dashboard_mode.view_mode > .wrap .tpopup-info .d-day:before, .dashboard_mode.view_mode > .wrap .tpopup-info .d-day:after, .admin_mode.view_mode > .wrap .tpopup-info .d-day:before, .admin_mode.view_mode > .wrap .tpopup-info .d-day:after {
+      position: absolute;
+      bottom: -40px;
+      font-size: 0.8rem;
+      opacity: 0.8; }
+    .dashboard_mode.view_mode > .wrap .tpopup-info .d-day:before, .admin_mode.view_mode > .wrap .tpopup-info .d-day:before {
+      content: "Type";
+      left: 20px; }
+    .dashboard_mode.view_mode > .wrap .tpopup-info .d-day:after, .admin_mode.view_mode > .wrap .tpopup-info .d-day:after {
+      content: "Quantity";
+      right: 20px; }
+  .dashboard_mode.view_mode > .wrap .tpopup-info > section:before, .admin_mode.view_mode > .wrap .tpopup-info > section:before {
+    content: "";
+    position: absolute;
+    background-color: rgba(4, 4, 4, 0.6);
+    z-index: 1;
+    top: 0;
+    right: 20px;
+    bottom: auto;
+    left: 20px;
+    width: auto;
+    height: 1px; }
+  .dashboard_mode.view_mode > .wrap .tpopup-resource, .admin_mode.view_mode > .wrap .tpopup-resource {
+    width: 800px;
+    height: 400px;
+    left: -1280px; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource > h2, .admin_mode.view_mode > .wrap .tpopup-resource > h2 {
+      margin: 5px 0;
+      height: 38px !important;
+      min-height: 38px !important;
+      max-height: 38px !important; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set {
+      position: relative !important;
+      margin-bottom: 10px;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      padding: 5px 21px 5px 10px;
+      background-color: rgba(0, 0, 0, 0.3);
+      height: 50px !important;
+      min-height: 50px !important;
+      max-height: 50px !important;
+      text-align: right; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button {
+        z-index: 1;
+        font-size: 1rem;
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        height: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button, .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before, .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:after, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:after {
+          color: #f5f5f5;
+          transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before {
+          content: "";
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          box-align: center;
+          -webkit-box-align: center;
+          -moz-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -moz-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          position: absolute;
+          z-index: -1;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          font-size: 1.5rem !important;
+          font-weight: normal;
+          background-color: #2c2c2c; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:hover:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:hover:before {
+          background-color: #32a0be; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:active:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:active:before {
+          background-color: #00af9b; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button.on:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button.on:before {
+          background-color: #b42d6e; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before, .admin_mode.view_mode > .wrap .tpopup-resource > .chart_select_set button:before {
+          z-index: -1 !important; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource > section, .admin_mode.view_mode > .wrap .tpopup-resource > section {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource > section > *, .admin_mode.view_mode > .wrap .tpopup-resource > section > * {
+        position: relative;
+        height: 100%;
+        overflow: hidden; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_view, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_view {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
+        order: 2;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 0 0 0 15px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #040404; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_view:hover .chart_select_set, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_view:hover .chart_select_set {
+          top: 0; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_view h3, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_view h3 {
+          position: absolute;
+          z-index: 10;
+          top: 0;
+          left: 0;
+          font-size: 1.2rem;
+          padding: 10px;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          box-align: center;
+          -webkit-box-align: center;
+          -moz-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.4); }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_list, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_list {
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
+        order: 1;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        -webkit-box-orient: column;
+        -webkit-box-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_list > div, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_list > div {
+          margin: 0 0 5px 0; }
+          .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_list > div select, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_list > div select {
+            width: 100%;
+            height: 50px !important;
+            min-height: 50px !important;
+            max-height: 50px !important; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource > section .resource_list .device_set, .admin_mode.view_mode > .wrap .tpopup-resource > section .resource_list .device_set {
+          flex: 0 1 100%;
+          -webkit-flex: 0 1 100%;
+          flexbox: 0 1 100%;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 100%;
+          overflow-x: hidden; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section {
+      overflow: visible; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_view, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_view {
+      order: 1;
+      margin: 0;
+      z-index: 1; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_view > h3, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_view > h3 {
+        display: none; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list {
+      width: 570px !important;
+      min-width: 570px !important;
+      max-width: 570px !important;
+      position: absolute;
+      right: 20px;
+      top: -102px;
+      order: 1;
+      font-size: 0.8rem; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > div, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > div {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box; }
+        .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > div select, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > div select {
+          height: 35px !important;
+          min-height: 35px !important;
+          max-height: 35px !important;
+          margin-left: 7px;
+          font-size: 0.8 rem; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > .device_set, .admin_mode.view_mode > .wrap .tpopup-resource.type01 > section > .resource_list > .device_set {
+        display: none; }
+    .dashboard_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list, .admin_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list {
+      order: 1; }
+      .dashboard_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list > div > select:nth-of-type(2), .dashboard_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list > div > select:nth-of-type(3), .admin_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list > div > select:nth-of-type(2), .admin_mode.view_mode > .wrap .tpopup-resource.type02 > section > .resource_list > div > select:nth-of-type(3) {
+        display: none; }
   .dashboard_mode.view_mode > .wrap h2, .admin_mode.view_mode > .wrap h2 {
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
@@ -7284,10 +7720,50 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
         content: "ON" !important; }
   .dashboard_mode.view_mode > .wrap > header, .admin_mode.view_mode > .wrap > header {
     display: none; }
-  .dashboard_mode.view_mode > .wrap > main > menu, .admin_mode.view_mode > .wrap > main > menu {
-    z-index: 100;
-    background-color: #393939;
-    order: 2;
+  .dashboard_mode.view_mode > .wrap > main, .admin_mode.view_mode > .wrap > main {
+    width: 100%;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%; }
+    .dashboard_mode.view_mode > .wrap > main, .dashboard_mode.view_mode > .wrap > main > *, .admin_mode.view_mode > .wrap > main, .admin_mode.view_mode > .wrap > main > * {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      position: relative;
+      transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+      -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+    .dashboard_mode.view_mode > .wrap > main > aside, .admin_mode.view_mode > .wrap > main > aside {
+      order: 5; }
+    .dashboard_mode.view_mode > .wrap > main > article, .admin_mode.view_mode > .wrap > main > article {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
+      overflow: hidden;
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      order: 3; }
+    .dashboard_mode.view_mode > .wrap > main .common-popup-layer, .admin_mode.view_mode > .wrap > main .common-popup-layer {
+      order: 1; }
+    .dashboard_mode.view_mode > .wrap > main .notice-area, .admin_mode.view_mode > .wrap > main .notice-area {
+      order: 4; }
+    .dashboard_mode.view_mode > .wrap > main > menu, .admin_mode.view_mode > .wrap > main > menu {
+      z-index: 100;
+      background-color: #393939;
+      order: 2;
        /*
        <!-- 좌측 메뉴 / 기능 버튼 영역 -->
        <menu id="menu">
@@ -7314,105 +7790,60 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
            </div>
        </menu>
        */
-    -webkit-box-pack: start;
-    -moz-box-pack: flex-start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: flex-start;
-    justify-content: flex-start;
-    box-align: start;
-    -webkit-box-align: start;
-    -moz-box-align: flex-start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: flex-start;
-    align-items: flex-start;
-    flex: 1 0 40px;
-    -webkit-flex: 1 0 40px;
-    flexbox: 1 0 40px;
-    -webkit-box-flex: 0;
-    -ms-flex: 1 0 40px;
-    min-width: 40px; }
-    .dashboard_mode.view_mode > .wrap > main > menu.pin, .admin_mode.view_mode > .wrap > main > menu.pin {
-      flex: 1 0 340px;
-      -webkit-flex: 1 0 340px;
-      flexbox: 1 0 340px;
+      -webkit-box-pack: start;
+      -moz-box-pack: flex-start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: flex-start;
+      justify-content: flex-start;
+      box-align: start;
+      -webkit-box-align: start;
+      -moz-box-align: flex-start;
+      -webkit-align-items: flex-start;
+      -ms-flex-align: flex-start;
+      align-items: flex-start;
+      flex: 1 0 40px;
+      -webkit-flex: 1 0 40px;
+      flexbox: 1 0 40px;
       -webkit-box-flex: 0;
-      -ms-flex: 1 0 340px;
-      min-width: 340px; }
-    .dashboard_mode.view_mode > .wrap > main > menu.hide, .admin_mode.view_mode > .wrap > main > menu.hide {
-      overflow: hidden;
-      flex: 1 0 0;
-      -webkit-flex: 1 0 0;
-      flexbox: 1 0 0;
-      -webkit-box-flex: 0;
-      -ms-flex: 1 0 0;
-      min-width: 0 !important; }
-    .dashboard_mode.view_mode > .wrap > main > menu, .dashboard_mode.view_mode > .wrap > main > menu > *, .admin_mode.view_mode > .wrap > main > menu, .admin_mode.view_mode > .wrap > main > menu > * {
-      transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-    .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset, .admin_mode.view_mode > .wrap > main > menu .menu-btnset {
-      -webkit-box-pack: justify;
-      -moz-box-pack: justify;
-      -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      z-index: 10;
-      width: 40px;
-      min-width: 40px;
-      height: 100%;
-      background-color: #393939; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div, .admin_mode.view_mode > .wrap > main > menu .menu-btnset, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        -webkit-box-orient: column;
-        -webkit-box-direction: column;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        position: relative; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset:after {
-        content: "";
-        position: absolute;
-        background-color: #262626;
-        z-index: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: auto;
-        width: 1px;
-        height: 100%; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button {
+      -ms-flex: 1 0 40px;
+      min-width: 40px; }
+      .dashboard_mode.view_mode > .wrap > main > menu button, .admin_mode.view_mode > .wrap > main > menu button {
+        padding: 0;
+        height: 31px;
+        min-width: 120px; }
+      .dashboard_mode.view_mode > .wrap > main > menu.pin, .admin_mode.view_mode > .wrap > main > menu.pin {
+        flex: 1 0 340px;
+        -webkit-flex: 1 0 340px;
+        flexbox: 1 0 340px;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 340px;
+        min-width: 340px; }
+      .dashboard_mode.view_mode > .wrap > main > menu.hide, .admin_mode.view_mode > .wrap > main > menu.hide {
         overflow: hidden;
-        text-align: left;
-        margin: 0;
-        line-height: 1rem;
-        white-space: nowrap;
-        word-wrap: normal;
-        font-size: 1rem;
-        -webkit-box-pack: start;
-        -moz-box-pack: flex-start;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: flex-start;
-        justify-content: flex-start;
-        display: flex;
-        align-items: center;
-        /*& > * {
-          @include flexbase; @include flex-align-items-center; position: absolute; z-index: -1; top:0; left:-300px;
-          font-size:1rem; min-width:170px; height:$menu-width; padding:0 10px; background-color:$color-blue-01;
-        }*/ }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before {
-          width: 40px;
-          min-width: 40px;
-          height: 40px;
-          min-height: 40px; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before {
+        flex: 1 0 0;
+        -webkit-flex: 1 0 0;
+        flexbox: 1 0 0;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 0;
+        min-width: 0 !important; }
+      .dashboard_mode.view_mode > .wrap > main > menu, .dashboard_mode.view_mode > .wrap > main > menu > *, .admin_mode.view_mode > .wrap > main > menu, .admin_mode.view_mode > .wrap > main > menu > * {
+        transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset, .admin_mode.view_mode > .wrap > main > menu .menu-btnset {
+        -webkit-box-pack: justify;
+        -moz-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        z-index: 10;
+        width: 40px;
+        min-width: 40px;
+        height: 100%;
+        background-color: #393939; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div, .admin_mode.view_mode > .wrap > main > menu .menu-btnset, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div {
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
@@ -7420,131 +7851,13 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
           display: flex;
           display: flexbox;
           display: box;
-          box-align: center;
-          -webkit-box-align: center;
-          -moz-box-align: center;
-          -webkit-align-items: center;
-          -ms-flex-align: center;
-          align-items: center;
-          -webkit-box-pack: center;
-          -moz-box-pack: center;
-          -webkit-justify-content: center;
-          -ms-flex-pack: center;
-          justify-content: center; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:after {
-          font-size: 1.5rem; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover {
-          background-color: #32a0be; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active {
-          background-color: #00af9b !important; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.on {
-          background-color: #b42d6e; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.hover {
-          background-color: #32a0be; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > * {
-          left: 50px; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > * {
-          background-color: #01d65a; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-dash:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-dash:before {
-          content: "\e90a"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-stic:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-stic:before {
-          content: "\e908"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-admi:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-admi:before {
-          content: "\e909"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-user:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-user:before {
-          content: "\e90e"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-info:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-info:before {
-          content: "\e946"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-reso:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-reso:before {
-          content: "\e907"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-logi:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-logi:before {
-          content: "\e900"; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-mscr:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-mscr:before {
-          content: "\e903"; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div {
-        -webkit-box-pack: start;
-        -moz-box-pack: flex-start;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: flex-start;
-        justify-content: flex-start;
-        z-index: 10; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div.ignore, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div.ignore {
-          flex: auto; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:hover {
-        width: 200px;
-        min-width: 200px; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:after {
-        display: none; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on {
-        position: fixed !important;
-        left: 0 !important;
-        bottom: 0 !important; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on p, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on p {
-          display: none !important; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before {
-          width: 30px;
-          height: 30px;
-          min-width: 30px;
-          min-height: 30px; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before {
-          content: "\e904";
-          font-size: 1.4rem; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:after {
-          display: block !important;
-          font-size: 0.9rem; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:hover {
-          width: 200px;
-          min-width: 200px; }
-    .dashboard_mode.view_mode > .wrap > main > menu .menu-navset, .admin_mode.view_mode > .wrap > main > menu .menu-navset {
-      position: relative;
-      z-index: -1;
-      height: 100%; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        -webkit-box-orient: column;
-        -webkit-box-direction: column;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -webkit-box-pack: start;
-        -moz-box-pack: flex-start;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: flex-start;
-        justify-content: flex-start;
-        box-align: start;
-        -webkit-box-align: start;
-        -moz-box-align: flex-start;
-        -webkit-align-items: flex-start;
-        -ms-flex-align: flex-start;
-        align-items: flex-start;
-        overflow: hidden;
-        z-index: 10;
-        position: absolute;
-        top: 0;
-        left: -340px;
-        width: 300px;
-        height: 100%;
-        background-color: rgba(38, 38, 38, 0.7);
-        transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-        -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-        -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-        -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-        -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *:after, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *:after {
-          content: "";
-          position: absolute;
-          z-index: -1;
-          width: 100%;
-          height: 100%;
-          opacity: 0.7;
-          background-image: url("../images/bg/bg_spot.svg"); }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *:before, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *:before {
+          -webkit-box-orient: column;
+          -webkit-box-direction: column;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          position: relative; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset:after {
           content: "";
           position: absolute;
           background-color: #262626;
@@ -7555,105 +7868,272 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
           left: auto;
           width: 1px;
           height: 100%; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *.on, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *.on {
-          left: 0; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * > *, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * > * {
-          padding: 10px; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * > ul, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * > ul {
-          flex: 0 1 100%;
-          -webkit-flex: 0 1 100%;
-          flexbox: 0 1 100%;
-          -webkit-box-flex: 1;
-          -ms-flex: 0 1 100%;
-          overflow: auto;
-          position: relative;
-          width: 100%; }
-        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * h3, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * h3 {
-          font-size: 1.1rem;
-          font-weight: bold;
-          margin: 0 0 4px 0;
-          opacity: 0.8; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi.pin {
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button {
+          overflow: hidden;
+          text-align: left;
+          margin: 0;
+          line-height: 1rem;
+          white-space: nowrap;
+          word-wrap: normal;
+          font-size: 1rem;
+          -webkit-box-pack: start;
+          -moz-box-pack: flex-start;
+          -webkit-justify-content: flex-start;
+          -ms-flex-pack: flex-start;
+          justify-content: flex-start;
+          display: flex;
+          align-items: center;
+          /*& > * {
+            @include flexbase; @include flex-align-items-center; position: absolute; z-index: -1; top:0; left:-300px;
+            font-size:1rem; min-width:170px; height:$menu-width; padding:0 10px; background-color:$color-blue-01;
+          }*/ }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before {
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
+            min-height: 40px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: flexbox;
+            display: box;
+            box-align: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:after {
+            font-size: 1.5rem; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover {
+            background-color: #32a0be; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active {
+            background-color: #00af9b !important; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.on {
+            background-color: #b42d6e; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.hover {
+            background-color: #32a0be; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:hover .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > * {
+            left: 50px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button:active .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > *, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button:active .admin_mode.view_mode > .wrap > main > menu .menu-btnset button > * {
+            background-color: #01d65a; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-dash:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-dash:before {
+            content: "\e90a"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-stic:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-stic:before {
+            content: "\e908"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-admi:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.menubtn-admi:before {
+            content: "\e909"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-user:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-user:before {
+            content: "\e90e"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-info:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-info:before {
+            content: "\e946"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-reso:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-reso:before {
+            content: "\e907"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-logi:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-logi:before {
+            content: "\e900"; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-mscr:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset button.funcbtn-mscr:before {
+            content: "\e903"; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div {
+          -webkit-box-pack: start;
+          -moz-box-pack: flex-start;
+          -webkit-justify-content: flex-start;
+          -ms-flex-pack: flex-start;
+          justify-content: flex-start;
+          z-index: 10; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset > div.ignore, .admin_mode.view_mode > .wrap > main > menu .menu-btnset > div.ignore {
+            flex: auto; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:hover {
+          width: 200px;
+          min-width: 200px; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button:after {
+          display: none; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on {
+          position: fixed !important;
+          left: 0 !important;
+          bottom: 0 !important; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on p, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on p {
+            display: none !important; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            min-height: 30px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:before {
+            content: "\e904";
+            font-size: 1.4rem; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:after, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:after {
+            display: block !important;
+            font-size: 0.9rem; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:hover, .admin_mode.view_mode > .wrap > main > menu .menu-btnset .group-functionbtn button.funcbtn-mscr.on:hover {
+            width: 200px;
+            min-width: 200px; }
+      .dashboard_mode.view_mode > .wrap > main > menu .menu-navset, .admin_mode.view_mode > .wrap > main > menu .menu-navset {
         position: relative;
-        z-index: 1;
-        left: 0;
-        background-color: #393939; }
-      .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash button.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic button.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi button.pin {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0; }
-    .dashboard_mode.view_mode > .wrap > main > menu .nav-base, .admin_mode.view_mode > .wrap > main > menu .nav-base {
-      /*
-      <ul class="nav-base">
-        <li>
-            <h3>이벤트</h3>
-            <ul>
-                <li><button>이벤트이력</button></li>
-            </ul>
-        </li>
-      </ul>
-      */ }
-      .dashboard_mode.view_mode > .wrap > main > menu .nav-base h3, .admin_mode.view_mode > .wrap > main > menu .nav-base h3 {
-        min-height: 40px;
-        height: 40px;
-        max-height: 40px;
-        flex: 0 1 50px;
-        -webkit-flex: 0 1 50px;
-        flexbox: 0 1 50px;
-        -webkit-box-flex: 1;
-        -ms-flex: 0 1 50px;
-        padding: 10px 0; }
-      .dashboard_mode.view_mode > .wrap > main > menu .nav-base ul, .dashboard_mode.view_mode > .wrap > main > menu .nav-base li, .admin_mode.view_mode > .wrap > main > menu .nav-base ul, .admin_mode.view_mode > .wrap > main > menu .nav-base li {
-        position: relative;
-        width: 100%; }
-      .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li, .admin_mode.view_mode > .wrap > main > menu .nav-base > li {
-        margin: 0 0 10px 0;
-        padding: 0 0 10px 0; }
-        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li:before {
-          content: "";
+        z-index: -1;
+        height: 100%; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          -webkit-box-orient: column;
+          -webkit-box-direction: column;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-pack: start;
+          -moz-box-pack: flex-start;
+          -webkit-justify-content: flex-start;
+          -ms-flex-pack: flex-start;
+          justify-content: flex-start;
+          box-align: start;
+          -webkit-box-align: start;
+          -moz-box-align: flex-start;
+          -webkit-align-items: flex-start;
+          -ms-flex-align: flex-start;
+          align-items: flex-start;
+          overflow: hidden;
+          z-index: 10;
           position: absolute;
-          background-color: rgba(255, 255, 255, 0.2);
-          z-index: auto;
+          top: 0;
+          left: -340px;
+          width: 300px;
+          height: 100%;
+          background-color: rgba(38, 38, 38, 0.7);
+          transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+          -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *:after, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+            background-image: url("../images/bg/bg_spot.svg"); }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *:before, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *:before {
+            content: "";
+            position: absolute;
+            background-color: #262626;
+            z-index: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: auto;
+            width: 1px;
+            height: 100%; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > *.on, .admin_mode.view_mode > .wrap > main > menu .menu-navset > *.on {
+            left: 0; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * > *, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * > * {
+            padding: 10px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * > ul, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * > ul {
+            flex: 0 1 100%;
+            -webkit-flex: 0 1 100%;
+            flexbox: 0 1 100%;
+            -webkit-box-flex: 1;
+            -ms-flex: 0 1 100%;
+            overflow: auto;
+            position: relative;
+            width: 100%; }
+          .dashboard_mode.view_mode > .wrap > main > menu .menu-navset > * h3, .admin_mode.view_mode > .wrap > main > menu .menu-navset > * h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+            opacity: 0.8; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi.pin {
+          position: relative;
+          z-index: 1;
+          left: 0;
+          background-color: #393939; }
+        .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash button.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic button.pin, .dashboard_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-dash button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-stic button.pin, .admin_mode.view_mode > .wrap > main > menu .menu-navset .nav-admi button.pin {
+          position: absolute;
           top: 0;
           right: 0;
-          bottom: 0;
-          left: 0;
+          padding: 0; }
+      .dashboard_mode.view_mode > .wrap > main > menu .nav-base, .admin_mode.view_mode > .wrap > main > menu .nav-base {
+        /*
+        <ul class="nav-base">
+          <li>
+              <h3>이벤트</h3>
+              <ul>
+                  <li><button>이벤트이력</button></li>
+              </ul>
+          </li>
+        </ul>
+        */ }
+        .dashboard_mode.view_mode > .wrap > main > menu .nav-base h3, .admin_mode.view_mode > .wrap > main > menu .nav-base h3 {
+          min-height: 40px;
+          height: 40px;
+          max-height: 40px;
+          flex: 0 1 50px;
+          -webkit-flex: 0 1 50px;
+          flexbox: 0 1 50px;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 50px;
+          padding: 10px 0; }
+        .dashboard_mode.view_mode > .wrap > main > menu .nav-base ul, .dashboard_mode.view_mode > .wrap > main > menu .nav-base li, .admin_mode.view_mode > .wrap > main > menu .nav-base ul, .admin_mode.view_mode > .wrap > main > menu .nav-base li {
+          position: relative;
+          width: 100%; }
+        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li, .admin_mode.view_mode > .wrap > main > menu .nav-base > li {
+          margin: 0 0 10px 0;
+          padding: 0 0 10px 0; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li:before {
+            content: "";
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px; }
+        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button {
           width: 100%;
-          height: 1px; }
-      .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button {
-        width: 100%;
-        padding: 5px 10px 5px 15px;
-        -webkit-box-pack: start;
-        -moz-box-pack: flex-start;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: flex-start;
-        justify-content: flex-start;
-        line-height: 1px; }
+          padding: 5px 10px 5px 15px;
+          -webkit-box-pack: start;
+          -moz-box-pack: flex-start;
+          -webkit-justify-content: flex-start;
+          -ms-flex-pack: flex-start;
+          justify-content: flex-start;
+          line-height: 1px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover {
+            background-color: #32a0be; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:active, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:active {
+            background-color: #00af9b !important; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on {
+            background-color: #b42d6e; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            width: 4px;
+            height: 4px;
+            background-color: #fff;
+            -moz-border-radius: 200px;
+            -webkit-border-radius: 200px;
+            border-radius: 200px;
+            -khtml-border-radius: 200px; }
+          .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on:before, .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover:before {
+            width: 6px;
+            height: 6px; }
         .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover {
-          background-color: #32a0be; }
-        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:active, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:active {
-          background-color: #00af9b !important; }
-        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on {
-          background-color: #b42d6e; }
-        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:before {
-          content: "";
-          position: absolute;
-          left: 5px;
-          width: 4px;
-          height: 4px;
-          background-color: #fff;
-          -moz-border-radius: 200px;
-          -webkit-border-radius: 200px;
-          border-radius: 200px;
-          -khtml-border-radius: 200px; }
-        .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on:before, .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button.on:before, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover:before {
-          width: 6px;
-          height: 6px; }
-      .dashboard_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover, .admin_mode.view_mode > .wrap > main > menu .nav-base > li > ul > li > button:hover {
-        line-height: 1px; }
-  .dashboard_mode.view_mode > .wrap > main > article > .watch_area > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header {
-    display: flex; }
+          line-height: 1px; }
+    .dashboard_mode.view_mode > .wrap > main > article > .watch_area > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .dashboard_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area02 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area04 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area06 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area08 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area10 > div > header, .admin_mode.view_mode > .wrap > main > article > .watch_area.area12 > div > header {
+      display: flex; }
 
 .admin_mode.view_mode > .wrap > main > menu *, .admin_mode.view_mode > .wrap > main > menu *:after, .admin_mode.view_mode > .wrap > main > menu *:before {
   color: #ffffff; }

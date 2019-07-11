@@ -14,6 +14,17 @@
     </select>
 
     <!--
+      Dashboard Template canvas size 목록을 가져온다.
+      @author psb
+    -->
+    <select id="findListTemplateSettingCanvasSize" resultType="TemplateSettingBean" >
+        select  setting_id as settingId
+                ,value
+        from	isaver.template_setting
+        where	setting_id in ('safeGuardCanvasWidth', 'safeGuardCanvasHeight')
+    </select>
+
+    <!--
       Dashboard Template 환경설정을 저장한다.
       @author psb
     -->

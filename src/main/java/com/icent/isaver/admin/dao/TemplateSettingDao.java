@@ -32,5 +32,11 @@ public interface TemplateSettingDao {
      *
      * @return
      */
+    List<TemplateSettingBean> findListTemplateSettingCanvasSize();
+
+    /**
+     *
+     * @return
+     */
     void upsertTemplateSetting(List<Map<String, String>> parameterList);
 }

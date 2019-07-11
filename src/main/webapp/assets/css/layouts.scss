@@ -163,9 +163,9 @@ main {
   width:100%; @include flex-option(0, 1, 100%);
   &, & > * {@include flexbase; position: relative; @include transition(200ms); }
   & > * {}
-  & > aside   {}
-  & > article {@include flex-option(0, 1, 100%); overflow: hidden;order:3;@include flex-column;}
-  & > section, .common-popup-layer {}
+  & > aside   {order:3;}
+  & > article {order:1; @include flex-option(0, 1, 100%); overflow: hidden;@include flex-column;}
+  & > section, .common-popup-layer {order:2;}
   .popup-layer {} // 특정 화면 기능 수행 팝업
   .common-popup-layer {} // 모든 화면 공통 팝업
 }
@@ -191,7 +191,7 @@ aside.db_area {
 
   h2 {
     @include flex-option(1, 0, $areaHeaderHeight); @include mmheight($areaHeaderHeight);
-    span {width:100%; padding:10px 0 0 0;}
+    span {width:100%; padding:5px 10px;}
   }
 
 
@@ -458,8 +458,7 @@ menu {
   @mixin font-size-menubtn {font-size:1.3rem; }  //ex)  root  @include font-size-menubtn;
 
   button {
-    text-align: left; word-break: break-all;
-    height:31px; @include action_menubtn;
+    padding:0 10px; height: 40px; text-align: left; word-break: break-all; @include action_menubtn; min-width:200px;
   }
 
   & > ul {
@@ -802,9 +801,9 @@ h4 {
 /////..... 팝업 공통 효과 END
 
 // 사용자 보기 팝업, 라이센스정보팝업, 자원모니터링팝업
-.common-popup-layer{order:1;}
+.common-popup-layer{}
 .tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {
-  @include tpopupbase;
+  @include tpopupbase2;
   & input,& select{background-color: #535353;}
 
 }
@@ -838,7 +837,7 @@ h4 {
   }
   /////..... 자원모니터링팝업
   &-resource {
-    width:800px; height:400px; left:-($noticecenter-width * 4);
+    width:800px; height:400px; right:-($noticecenter-width * 4);
 
     & > h2{margin:5px 0;@include mmheight(38px);}
     & > .chart_select_set{
@@ -857,7 +856,7 @@ h4 {
           position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
           @include flexbase; @include flex-align-items-center; background-color: rgba(0,0,0,.4);
         }
-      } 
+      }
       .resource_list {
         @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
         & > div {
@@ -1435,6 +1434,7 @@ h4 {
               &.col{float:left;}
             }
           }
+          &:last-of-type{border-bottom:none; margin-bottom:0; padding-bottom:0;}
         }
       }
     }
@@ -1458,14 +1458,35 @@ h4 {
           background-color: rgba($color-gray-01,0.5);
         }
         */
+
         & > div {
           &, & > * {width:100%;}
           p {display:inline-block;margin:0 0 5px 0;}
-          & > div {
+          & > div {flex-wrap: wrap;
             @include flexbase;  margin:0 0 15px 0;
             input, select {width:100%; margin:0 5px 0 0;}
           }
         }
+
+        & > div.col-out {display:flex;
+          &{width:100%;}
+          // & > * {display:flex;width:100%;}
+          p {margin:0 0 5px 0;}
+          & > div {flex-wrap: wrap; border-bottom:none !important; margin:0;padding-bottom: 0 !important;
+            input, select {width:100%; margin:0 5px 0 0;}
+          }
+        }
+
+        & > div.col-in {
+          &, & > * {width:100%;}
+          p {
+            position: absolute;top:0;margin:0 0 5px 0;}
+          & > div {flex-wrap: nowrap; position: relative; padding-top:30px;
+            @include flexbase;  margin:0 0 15px 0;
+            input, select {width:100%; margin:0 5px 0 0;}
+          }
+        }
+
       }
     }
     &.safeguard_option > ul { &:before {background-image: url(../images/logo/safeguard_w.svg);} }
@@ -1589,8 +1610,8 @@ body.taekwon_mode {
     $bmtwidth:160px;
 
     @include flex-justify-content-start; @include flex-align-items-center;
-    order:2; overflow: hidden; z-index: 20; left:auto; right:0; /*background-color: rgba(0,0,0,0.5);*/
-    min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:100%; padding: 0 0 10px 0;
+    order:2; overflow: hidden; z-index: 20; left:auto; right:0; top:0; /*background-color: rgba(0,0,0,0.5);*/
+    min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:auto; padding: 0 0 10px 0;
 
     //@include perspective01(600px, 50%, 50%);
 
@@ -1681,7 +1702,91 @@ body.taekwon_mode {
       &-thum:before     {content:"\e903";} // 축소
     }
 
+    .tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {
+      @include tpopupbase;
+      & input,& select{background-color: #535353;}
+    }
 
+    .tpopup {
+      /////..... 사용자 보기 팝업
+      &-personal {
+        .form_area {
+          span, input {width:100%;}
+          span  {margin: 0 0 5px 0;}
+          input {margin: 0 0 20px 0;}
+        }
+      }
+      /////..... 라이센스 정보 보기 팝업
+      &-info {
+        .d-day, & > section > div {
+          @include flexbase; @include flex-align-items-center; @include flex-justify-content-between; height:40px;
+        }
+
+        .d-day {
+          margin-bottom:50px; background-color: $color-bline;
+          &:before, &:after {position: absolute; bottom:-40px; font-size: 0.8rem; opacity: 0.8;}
+          &:before {content:"Type";     left:$popup-margin;}
+          &:after  {content:"Quantity"; right:$popup-margin;}
+        }
+
+        & > section {
+          &:before {@include bbl(1,0,$popup-margin,auto,$popup-margin,auto,1px,rgba($color-bline, .6));}
+          & > div {}
+        }
+      }
+      /////..... 자원모니터링팝업
+      &-resource {
+        width:800px; height:400px; left:-($noticecenter-width * 4);
+
+        & > h2{margin:5px 0;@include mmheight(38px);}
+        & > .chart_select_set{
+          position: relative !important;margin-bottom: 10px; z-index:1; top:0; right:0; @include transition(200ms);
+          padding:5px 21px 5px 10px; background-color: rgba(0,0,0,.3); @include mmheight(50px);text-align:right;
+          button {@include btn-itype01b; &:before {z-index: -1 !important;}}
+        }
+        & > section {
+          @include flexbase;
+          & > * {position: relative; height:100%; overflow: hidden; }
+          .resource_view {
+            @include flex-option(0, 1, 100%); order:2;  background-color: rgba(0,0,0,.1);
+            margin:0 0 0 15px; @include border01(1px,$color-bline,1 );
+            &:hover { .chart_select_set {top:0;} }
+            h3 {
+              position: absolute; z-index: 10; top:0; left:0; font-size:1.2rem; padding:10px;
+              @include flexbase; @include flex-align-items-center; background-color: rgba(0,0,0,.4);
+            }
+          }
+          .resource_list {
+            @include mmwidth(200px); order:1; @include flexbase; @include flex-column;
+            & > div {
+              margin:0 0 5px 0;
+              select {width:100%; @include mmheight(50px);}
+            }
+            .device_set {@include flex-option(0, 1, 100%); overflow-x: hidden;}
+          }
+        }
+        &.type01{
+          & > section{overflow: visible;}
+          & > section > .resource_view{order:1;margin:0;z-index: 1;
+            & > h3{display: none;}
+          }
+          & > section > .resource_list{@include mmwidth(570px); position: absolute;
+            right:20px; top:-102px; order:1; font-size: 0.8rem;
+            & > div{@include flexbase;
+              select{@include mmheight(35px);margin-left: 7px; font-size:0.8 rem;}
+            }
+            & > .device_set{display:none;}
+          }
+        }
+
+        &.type02{
+          & > section > .resource_list{order:1;
+            & > div > select:nth-of-type(2),& > div > select:nth-of-type(3){display:none;}
+          }
+        }
+
+      }
+    }
 
     // h 테그 서정 시작
     h2{
@@ -1887,7 +1992,18 @@ body.taekwon_mode {
 
     & > header{display:none;}
     & > main{
-      & > menu{z-index: 100; background-color: $color-not; order:2;
+
+        width:100%; @include flex-option(0, 1, 100%);
+        &, & > * {@include flexbase; position: relative; @include transition(200ms); }
+        & > * {}
+        & > aside   {order:5;}
+        & > article {@include flex-option(0, 1, 100%); overflow: hidden;@include flex-column;order:3;}
+        & > section, .common-popup-layer {}
+        .popup-layer {} // 특정 화면 기능 수행 팝업
+        .common-popup-layer {order:1;} // 모든 화면 공통 팝업
+        .notice-area{order:4;}
+
+      & > menu{z-index: 100; background-color: $color-not;order:2;
 
        /*
        <!-- 좌측 메뉴 / 기능 버튼 영역 -->
@@ -1915,6 +2031,11 @@ body.taekwon_mode {
            </div>
        </menu>
        */
+
+        button {
+          padding:0; height:31px; min-width: 120px;
+        }
+
         @include flex-justify-content-start; @include flex-align-items-start;
         @include flex-option(1, 0, $menu-width); min-width:$menu-width;
         &.pin  {@include flex-option(1, 0, ($menu-width + 300px)); min-width:($menu-width + 300px);}

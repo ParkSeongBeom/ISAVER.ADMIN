@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.icent.isaver.admin.bean.TemplateSettingBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.common.util.TransactionUtil;
+import com.icent.isaver.admin.dao.CustomMapLocationDao;
 import com.icent.isaver.admin.dao.TemplateSettingDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
@@ -55,6 +56,9 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
     @Inject
     private TemplateSettingDao templateSettingDao;
 
+    @Inject
+    private CustomMapLocationDao customMapLocationDao;
+
     @Override
     public Map<String, String> findListTemplateSetting() {
         if(AdminResource.TEMPLATE_SETTING == null){
@@ -78,6 +82,8 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
         List<Map<String, String>> addParamList = new ArrayList<>();
         String[] paramData = parameters.get("paramData").split(AdminResource.COMMA_STRING);
         boolean guardViewModifyFlag = false;
+        Integer newWidth = 5000;
+        Integer newHeight = 5000;
 
         for (String data : paramData) {
             Map<String, String> addParam = new HashMap<>();
@@ -88,12 +94,37 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
                 if(addData[0].equals("safeGuardMapView") && !addData[1].equals(findByTemplateSetting("safeGuardMapView"))){
                     guardViewModifyFlag = true;
                 }
+
+                if(addData[0].equals("safeGuardCanvasWidth")){
+                    newWidth = Integer.parseInt(addData[1]);
+                }else if(addData[0].equals("safeGuardCanvasHeight")){
+                    newHeight = Integer.parseInt(addData[1]);
+                }
             }
             addParamList.add(addParam);
         }
 
+        List<TemplateSettingBean> canvasSizeList = templateSettingDao.findListTemplateSettingCanvasSize();
+        Map<String, Double> updateCanvasParam = new HashMap<>();
+        Double widthRatio = (double)(newWidth/5000);
+        Double heightRatio = (double)(newHeight/5000);
+        if(canvasSizeList!=null){
+            for(TemplateSettingBean canvasSize : canvasSizeList){
+                if(canvasSize.getValue()!=null){
+                    if(canvasSize.getSettingId().equals("safeGuardCanvasWidth")){
+                        widthRatio = newWidth/Double.parseDouble(canvasSize.getValue());
+                    }else if(canvasSize.getSettingId().equals("safeGuardCanvasHeight")){
+                        heightRatio = newHeight/Double.parseDouble(canvasSize.getValue());
+                    }
+                }
+            }
+        }
+        updateCanvasParam.put("widthRatio",widthRatio);
+        updateCanvasParam.put("heightRatio",heightRatio);
+
         try {
             templateSettingDao.upsertTemplateSetting(addParamList);
+            customMapLocationDao.saveCustomMapLocation(updateCanvasParam);
             transactionManager.commit(transactionStatus);
         }catch(DataAccessException e){
             transactionManager.rollback(transactionStatus);

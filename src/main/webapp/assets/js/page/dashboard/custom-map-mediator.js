@@ -43,7 +43,7 @@ var CustomMapMediator = (
             'element' : {
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
-                ,'saveLastPosition': false // 마지막에 머무른 값 쿠키 저장 기능
+                ,'lastPositionUseFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
                 ,'zoom' : {
                     'init' : 1
                     ,'min' : 0.3
@@ -115,8 +115,10 @@ var CustomMapMediator = (
             'width' : 5000
             ,'height' : 5000
         };
-        var _originX = _canvasSize['width']/2;
-        var _originY = _canvasSize['height']/2;
+        var _top = null;
+        var _left = null;
+        var _originX = null;
+        var _originY = null;
         var _translateX = 0;
         var _translateY = 0;
         var _rotate=0;
@@ -197,15 +199,11 @@ var CustomMapMediator = (
                 }
             }
 
-            if(_options['element']['saveLastPosition']){
+            if(_options['element']['lastPositionUseFlag']){
                 var top = $.cookie(_areaId+"MapCanvasTop");
+                if(top != null && top.length > 0){ _top = top; }
                 var left = $.cookie(_areaId+"MapCanvasLeft");
-                if(top != null && top.length > 0 && left != null && left.length > 0){
-                    _mapCanvas.css({
-                        'top':top
-                        ,'left':left
-                    });
-                }
+                if(left != null && left.length > 0){ _left = left; }
                 var originX = $.cookie(_areaId+"MapCanvasOriginX");
                 if(!isNaN(originX)){ _originX = eval(originX); }
                 var originY = $.cookie(_areaId+"MapCanvasOriginY");
@@ -216,7 +214,6 @@ var CustomMapMediator = (
                 if(!isNaN(translateY)){ _translateY = eval(translateY); }
                 var scale = $.cookie(_areaId+"MapCanvasScale");
                 if(!isNaN(scale)){ _scale = eval(scale); }
-                setTransform2d();
             }
             _ajaxCall('list',{areaId:_areaId,deviceCodes:_customDeviceCode.toString()});
         };
@@ -314,7 +311,6 @@ var CustomMapMediator = (
                     break;
             }
             setTransform2d();
-            savePosition();
 
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
@@ -328,15 +324,13 @@ var CustomMapMediator = (
         };
 
         var savePosition = function(){
-            if(_options['element']['saveLastPosition']) {
-                $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
-                $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
-                $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
-                $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
-                $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
-                $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
-                $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(1));
-            }
+            $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
+            $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
+            $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
+            $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
+            $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
+            $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
+            $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(1));
         };
 
         var setTransform2d = function(scale){
@@ -357,6 +351,7 @@ var CustomMapMediator = (
                 ,'-o-transform-origin':orig
                 ,'-ms-transform-origin':orig
             });
+            savePosition();
         };
 
         this.getMapCanvas = function(){
@@ -1514,11 +1509,13 @@ var CustomMapMediator = (
                         }catch(e){
                             console.error("[CustomMapMediator] templateSetting set error - "+e.message);
                         }
-
                     }
+
+                    if(_originX==null){ _originX = _canvasSize['width']/2; }
+                    if(_originY==null){ _originY = _canvasSize['height']/2; }
                     _mapCanvas.css({
-                        left:(_mapCanvas.parent().width()-_canvasSize['width'])/2
-                        , top:(_mapCanvas.parent().height()-_canvasSize['height'])/2
+                        left:_left?_left:(_mapCanvas.parent().width()-_canvasSize['width'])/2
+                        , top:_top?_top:(_mapCanvas.parent().height()-_canvasSize['height'])/2
                         , width:_canvasSize['width']
                         , height:_canvasSize['height']
                     });

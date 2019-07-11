@@ -38,5 +38,11 @@ public interface CustomMapLocationDao {
      *
      * @return
      */
+    void saveCustomMapLocation(Map<String, Double> parameters);
+
+    /**
+     *
+     * @return
+     */
     void removeCustomMapLocation(Map<String, String> parameters);
 }

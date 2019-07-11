@@ -1,5 +1,4 @@
 @charset "utf-8";
-@charset "utf-8";
 
 /*
  @at-root {.class { } } 존속받지 않고 root에 위치
@@ -794,10 +793,12 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 } // @include popup-common;
 
 // tpopup 정의 - 사용자 보기 팝업, 라이센스정보팝업, 리소스모니터링팝업
+
+// 트리구조
 @mixin tpopupbase {
   @include popup-common;
 
-  position: absolute; z-index:101; width:$noticecenter-width; bottom:0; left:-($noticecenter-width * 2);
+  position: absolute; z-index:101; width:$noticecenter-width; bottom:0; top:auto; left:-($noticecenter-width * 2);
   @include border01(1px 1px 0 0,$color-bline,1 );
 
   &.on {left:40px;}
@@ -807,6 +808,21 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
   & > div {@include mmheight($headerHeight);}
   & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
 } // @include tpopupbase;
+
+// 기본구조
+@mixin tpopupbase2 {
+  @include popup-common;
+
+  position: absolute; z-index:101; width:$noticecenter-width; top:0; right:-($noticecenter-width * 2);
+  @include border01(0 0 1px 1px,$color-bline,1 );
+
+  &.on {right:0px;}
+  & > * {position: relative;  width:100%; padding:0 $popup-margin; margin: 0 0 $popup-margin 0}
+  button {@include btn-line;}
+  h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin;}
+  & > div {@include mmheight($headerHeight);}
+  & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
+} // @include tpopupbase2;
 
 // safe-guard - 온오프 리스트
 @mixin bottom-base {
@@ -890,11 +906,15 @@ $t-time:1.3s;
 @mixin notice-scale-01 {
   animation-name: notice-scale-01;
   -webkit-animation-name: notice-scale-01;
-  animation-duration : 5s;
-  -webkit-animation-duration: 5s;
 
+  @include duration($d-time);
 
-  @include infinite; @include duration($d-time);
+  animation-iteration-count:         5;
+  -webkit-animation-iteration-count: 5;
+  animation-timing-function:         linear;
+  -webkit-animation-timing-function: linear;
+  animation-fill-mode:         forwards;
+  -webkit-animation-fill-mode: forwards;
 
   @-webkit-keyframes notice-scale-01 {
     0%   { }
