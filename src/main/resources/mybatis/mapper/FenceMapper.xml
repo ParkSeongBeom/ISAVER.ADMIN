@@ -76,7 +76,12 @@
                 ,#{item.fenceType}
                 ,#{item.deviceId}
                 ,#{item.fenceName}
-                ,${item.zMin}
+                <if test="item.zMin != null and item.zMin != ''">
+                    ,${item.zMin}
+                </if>
+                <if test="item.zMin == null">
+                    ,0
+                </if>
             )
         </foreach>
     </insert>

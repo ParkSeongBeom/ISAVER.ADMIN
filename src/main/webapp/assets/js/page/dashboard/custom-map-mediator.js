@@ -46,7 +46,7 @@ var CustomMapMediator = (
                 ,'lastPositionUseFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
                 ,'zoom' : {
                     'init' : 1
-                    ,'min' : 0.3
+                    ,'min' : 0.2
                     ,'max' : 5.0
                 }
                 ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
