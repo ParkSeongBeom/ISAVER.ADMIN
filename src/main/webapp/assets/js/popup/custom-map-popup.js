@@ -401,7 +401,11 @@ var CustomMapPopup = (
                                     _element.find("input[name='"+configName+"']").val(data);
                                     break;
                                 case "fileId":
-                                    _element.find("#fileId option[physicalFileName='"+data+"']").prop("selected",true);
+                                    if(data!=null){
+                                        _element.find("#fileId option[physicalFileName='"+data+"']").prop("selected",true);
+                                    }else{
+                                        _element.find("#fileId").val("");
+                                    }
                                     break;
                                 case "angleClass":
                                     _element.find("#angleClass").val(data).prop("selected",true);
