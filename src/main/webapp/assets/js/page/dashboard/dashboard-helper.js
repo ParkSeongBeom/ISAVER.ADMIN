@@ -111,7 +111,7 @@ var DashboardHelper = (
                             }
                         }
                     }else{
-                        console.warn("[mapMessageEventHandler] areaId or mapMediator is null  - " + resultData['areaId'] + ","+_mapMediator);
+                        console.debug("[mapMessageEventHandler] areaId or mapMediator is null  - " + resultData['areaId'] + ","+_mapMediator);
                     }
                     break;
                 case "moveFence":

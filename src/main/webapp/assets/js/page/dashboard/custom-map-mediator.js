@@ -589,9 +589,9 @@ var CustomMapMediator = (
                     targetElement.on('dblclick', function(evt){
                         setTransform2d(_options['element']['zoom']['init']);
                         _mapCanvas.animate({
-                            'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
-                            ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
-                        },300);
+                            'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
+                            ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
+                        },300,savePosition);
                     });
                     _ajaxCall('fenceList',{deviceId:targetData['targetId']});
                 }
@@ -860,8 +860,8 @@ var CustomMapMediator = (
                             _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
                                 setTransform2d(_options['custom']['moveFenceScale']);
                                 _mapCanvas.animate({
-                                    'top': parseInt(_mapCanvas.css('top')) + _mapCanvas.parent().height()/2 - ($(this).offset().top + $(this)[0].getBoundingClientRect().height/2*(1-1/_scale) - _mapCanvas.parent().offset().top)
-                                    ,'left': parseInt(_mapCanvas.css('left')) + _mapCanvas.parent().width()/2 - ($(this).offset().left + $(this)[0].getBoundingClientRect().width/2*(1-1/_scale) - _mapCanvas.parent().offset().left)
+                                    'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
+                                    ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
                                 },300);
                                 moveReturn(evt.data.deviceId);
                             });
