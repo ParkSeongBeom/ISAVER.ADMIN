@@ -2203,11 +2203,11 @@ body.taekwon_mode {
 .admin_mode.view_mode .wrap h2{flex:auto !important;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
-@media  screen and (max-width: 1024px) {
+@media  screen and (max-width: 1400px) {
   .admin_mode {
     .sub_title_area, .container {padding:0 10px;}
   }
-  
+
 }
 
 

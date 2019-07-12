@@ -8176,7 +8176,7 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
   max-height: 40px !important; }
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1400px) {
   .admin_mode .sub_title_area, .admin_mode .container {
     padding: 0 10px; } }
 

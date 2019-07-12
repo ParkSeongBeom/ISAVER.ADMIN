@@ -695,10 +695,10 @@ var CustomMapMediator = (
                         'targetId' : data['targetId']
                         ,'mainFlag' : data['mainFlag']
                         ,'deviceCode' : data['deviceCode']
-                        ,'x1' : data['useYn']?data['x1']:targetElement.position()['left']
-                        ,'x2' : data['useYn']?data['x2']:_mapCanvas.width()-targetElement.position()['left']-(targetElement.width()/2)
-                        ,'y1' : data['useYn']?data['y1']:targetElement.position()['top']
-                        ,'y2' : data['useYn']?data['y2']:_mapCanvas.height()-targetElement.position()['top']-(targetElement.height()/2)
+                        ,'x1' : data['useYn']?data['x1']:(_canvasSize['width']/2)-(targetElement.width()/2)
+                        ,'x2' : data['useYn']?data['x2']:(_canvasSize['width']/2)-(targetElement.width()/2)
+                        ,'y1' : data['useYn']?data['y1']:(_canvasSize['height']/2)-(targetElement.height()/2)
+                        ,'y2' : data['useYn']?data['y2']:(_canvasSize['height']/2)-(targetElement.height()/2)
                         ,'useYn' : data['useYn']
                     }
                     ,'element' : targetElement

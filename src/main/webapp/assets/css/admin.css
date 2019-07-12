@@ -3407,7 +3407,7 @@ a.fc-more {
   width: calc(50% - 180px); }
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1400px) {
   .tree_table ~ .form_type01,
   .tree_table ~ article,
   .tree_table ~ .chart_table_area,

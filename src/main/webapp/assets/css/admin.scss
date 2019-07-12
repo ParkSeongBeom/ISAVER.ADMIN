@@ -1381,7 +1381,7 @@ a.fc-more {position: relative; z-index: 2;}
 .licensedetail_col {}
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
-@media  screen and (max-width: 1024px) {
+@media  screen and (max-width: 1400px) {
   .tree_table ~ .form_type01,
   .tree_table ~ article,
   .tree_table ~ .chart_table_area,
@@ -1390,7 +1390,7 @@ a.fc-more {position: relative; z-index: 2;}
   .critical-ui .critical-content:before{right:600px;}
   .critical-ui .critical-content:after{right:949px;}
   .critical-ui .list-event{margin-right:10px;}
-  .critical-ui .critical-title > h4:first-of-type{margin-right: 10px;}
+  .critical-ui .critical-title > h4:first-of-type{margin-right: 10px}
 
 }
 
