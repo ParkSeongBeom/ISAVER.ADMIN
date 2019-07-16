@@ -46,7 +46,7 @@ var CustomMapMediator = (
                 ,'lastPositionUseFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
                 ,'zoom' : {
                     'init' : 1
-                    ,'min' : 0.2
+                    ,'min' : 0.1
                     ,'max' : 5.0
                 }
                 ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
@@ -304,10 +304,10 @@ var CustomMapMediator = (
         this.startZoomControl = function(actionType, continueFlag){
             switch (actionType){
                 case "zoomIn" :
-                    if(_scale < _options['element']['zoom']['max']){_scale+=0.1;}
+                    if(_scale.toFixed(1) < _options['element']['zoom']['max']){_scale+=0.1;}
                     break;
                 case "zoomOut" :
-                    if(_scale > _options['element']['zoom']['min']){_scale-=0.1;}
+                    if(_scale.toFixed(1) > _options['element']['zoom']['min']){_scale-=0.1;}
                     break;
             }
             setTransform2d();

@@ -37,6 +37,8 @@ var CustomMapPopup = (
             , 'points' : []
             , 'mapCanvas' : null
             , 'canvasSvg' : null
+            , 'text' : null
+            , 'lineTextList' : []
         };
 
         /**
@@ -462,6 +464,19 @@ var CustomMapPopup = (
                         _addFenceInfo['points'][_addFenceInfo['points'].length-1] = point;
                     }
                     _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
+
+                    if(_addFenceInfo['points'].length>1){
+                        var x = Math.abs(point[0]-_addFenceInfo['points'][_addFenceInfo['points'].length-2][0]);
+                        var y = Math.abs(point[1]-_addFenceInfo['points'][_addFenceInfo['points'].length-2][1]);
+                        var gap = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+
+                        if(_addFenceInfo['text']==null){
+                            const svgText = _addFenceInfo['canvasSvg'].text(point[0], point[1], (gap/10).toFixed(1)+"m", {'text-anchor': "end", 'fill': "white", 'font-size': "5px"});
+                            _addFenceInfo['text'] = $(svgText);
+                        }else{
+                            _addFenceInfo['text'].attr({"x":point[0],"y":point[1]}).text((gap/10).toFixed(1)+"m")
+                        }
+                    }
                 }
             }).on("mouseup", function(event){
                 if (event.which==1) {
@@ -471,6 +486,19 @@ var CustomMapPopup = (
                     }else{
                         _addFenceInfo['points'].push(point);
                     }
+
+                    if(_addFenceInfo['points'].length>1){
+                        var x = Math.abs(point[0]-_addFenceInfo['points'][_addFenceInfo['points'].length-2][0]);
+                        var y = Math.abs(point[1]-_addFenceInfo['points'][_addFenceInfo['points'].length-2][1]);
+                        var gap = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                        const svgText = _addFenceInfo['canvasSvg'].text(
+                            (point[0]+_addFenceInfo['points'][_addFenceInfo['points'].length-2][0])/2
+                            , (point[1]+_addFenceInfo['points'][_addFenceInfo['points'].length-2][1])/2
+                            , (gap/10).toFixed(1)+"m"
+                            , {'text-anchor': "middle", 'fill': "white", 'font-size': "5px"});
+                        _addFenceInfo['lineTextList'].push($(svgText));
+                    }
+
                     var circle = _addFenceInfo['canvasSvg'].circle(event.offsetX,event.offsetY,2);
                     _addFenceInfo['circleList'].push($(circle));
                     _addFenceInfo['fence'].attr("points",_addFenceInfo['points'].join(" "));
@@ -481,12 +509,13 @@ var CustomMapPopup = (
                     _alertMessage("fenceNotEnough");
                     return false;
                 }
+                var points = uniqArrayList(_addFenceInfo['points']);
                 _customMapMediator.addMarker('fence',{
                     "deviceId":deviceId
                     ,"uuid":uuid
                     ,"id":fenceId
                     ,"fenceType":_addFenceInfo['fenceMarker']!=null?_addFenceInfo['fenceMarker']['data']['fenceType']:'normal'
-                    ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,_addFenceInfo['points'])
+                    ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,points)
                 });
                 _self.resetAddFenceInfo();
                 event.stopPropagation();
@@ -520,6 +549,11 @@ var CustomMapPopup = (
                 _addFenceInfo['circleList'][_addFenceInfo['circleList'].length-1].remove();
                 _addFenceInfo['circleList'].splice(-1,1);
             }
+
+            if(_addFenceInfo['circleList'].length==0 && _addFenceInfo['text']!=null){
+                _addFenceInfo['text'].remove();
+                _addFenceInfo['text'] = null;
+            }
         };
 
         this.resetAddFenceInfo = function(){
@@ -533,13 +567,21 @@ var CustomMapPopup = (
             if(_addFenceInfo['fence']!=null){
                 _addFenceInfo['fence'].remove();
             }
+            if(_addFenceInfo['text']!=null){
+                _addFenceInfo['text'].remove();
+            }
+            for(var index in _addFenceInfo['lineTextList']){
+                _addFenceInfo['lineTextList'][index].remove();
+            }
             if(_addFenceInfo['fenceMarker']!=null){
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].show();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].show();
             }
             $(".fenceset_popup").removeClass("on");
             _addFenceInfo['fence'] = null;
+            _addFenceInfo['text'] = null;
             _addFenceInfo['circleList'] = [];
+            _addFenceInfo['lineTextList'] = [];
             _addFenceInfo['points'] = [];
         };
 
