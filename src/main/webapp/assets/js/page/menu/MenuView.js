@@ -306,8 +306,7 @@ function MenuView(model) {
         for(var index in areaList){
             var _area = areaList[index];
             if(_area['templateCode']!='TMP009'){
-                var parentAreaId = _area['parentAreaId']==null?'100000':_area['parentAreaId'];
-                var _childMenuLiTag = $("<li/>",{'name':_area['areaId'],'parentId':parentAreaId}).append(
+                var _childMenuLiTag = $("<li/>",{'name':_area['areaId']}).append(
                     $("<input/>", {'type':"checkbox",'checked':true})
                 ).append(
                     $("<button/>", {'href':"#"}).text(_area['areaName'])
@@ -317,13 +316,13 @@ function MenuView(model) {
                     _childMenuLiTag.append($("<ul/>"));
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
                 }else{
-                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+parentAreaId+"','"+_area['areaId']+"');");
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+(_area['parentAreaId']?_area['parentAreaId']:'')+"','"+_area['areaId']+"');");
                 }
 
-                if(parentAreaId=='100000'){
-                    $("#menuNav").find("nav[name='"+parentAreaId+"'] > ul").append(_childMenuLiTag);
+                if(_area['parentAreaId']==null){
+                    $("#menuNav").find("nav[name='100000'] > ul").append(_childMenuLiTag);
                 }else{
-                    $("#menuNav").find("li[name='"+parentAreaId+"'] > ul").append(_childMenuLiTag);
+                    $("#menuNav").find("li[name='"+_area['parentAreaId']+"'] > ul").append(_childMenuLiTag);
                 }
             }
         }
@@ -369,7 +368,7 @@ function MenuView(model) {
                 if(_flag){
                     targetTag.find("> button").addClass("on");
                 }
-                setSelectedMenu(targetTag.attr("parentId"),false);
+                setSelectedMenu(targetTag.parent().parent().attr("name"),false);
                 return true;
             }
             return false;
