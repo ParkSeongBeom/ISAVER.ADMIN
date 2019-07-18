@@ -315,7 +315,7 @@ var CustomMapMediator = (
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
                     _self.startZoomControl(actionType);
-                }, 10);
+                }, 50);
             }
         };
 
