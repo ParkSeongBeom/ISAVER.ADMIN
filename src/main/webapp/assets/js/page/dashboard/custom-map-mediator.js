@@ -46,7 +46,7 @@ var CustomMapMediator = (
                 ,'lastPositionUseFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
                 ,'zoom' : {
                     'init' : 1
-                    ,'min' : 0.1
+                    ,'min' : 0.01
                     ,'max' : 5.0
                 }
                 ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
@@ -304,10 +304,10 @@ var CustomMapMediator = (
         this.startZoomControl = function(actionType, continueFlag){
             switch (actionType){
                 case "zoomIn" :
-                    if(_scale.toFixed(1) < _options['element']['zoom']['max']){_scale+=0.1;}
+                    if(_scale.toFixed(2) < _options['element']['zoom']['max']){_scale+=0.01;}
                     break;
                 case "zoomOut" :
-                    if(_scale.toFixed(1) > _options['element']['zoom']['min']){_scale-=0.1;}
+                    if(_scale.toFixed(2) > _options['element']['zoom']['min']){_scale-=0.01;}
                     break;
             }
             setTransform2d();
@@ -315,7 +315,7 @@ var CustomMapMediator = (
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
                     _self.startZoomControl(actionType);
-                }, 500);
+                }, 10);
             }
         };
 
@@ -330,7 +330,7 @@ var CustomMapMediator = (
             $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
             $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
             $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
-            $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(1));
+            $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(2));
         };
 
         var setTransform2d = function(scale){
@@ -338,7 +338,7 @@ var CustomMapMediator = (
                 _scale = scale;
             }
             var orig = _originX.toFixed(10) + "px " + _originY.toFixed(10) + "px";
-            var transform2d = "matrix(" + _scale.toFixed(1) + ",0,0," + _scale.toFixed(1) + "," + _translateX.toFixed(1) +"," + _translateY.toFixed(1) + ")";
+            var transform2d = "matrix(" + _scale.toFixed(2) + ",0,0," + _scale.toFixed(2) + "," + _translateX.toFixed(1) +"," + _translateY.toFixed(1) + ")";
             _mapCanvas.css({
                 'transform':transform2d
                 ,'-webkit-transform':transform2d
