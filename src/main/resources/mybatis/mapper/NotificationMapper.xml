@@ -109,6 +109,12 @@
             <if test="deviceCode != null and deviceCode != ''">
                 AND     DEVICE.device_code  = #{deviceCode}
             </if>
+            <if test="eventId != null and eventId != ''">
+                AND     A.event_id  = #{eventId}
+            </if>
+            <if test="fenceId != null and fenceId != ''">
+                AND     A.fence_id  = #{fenceId}
+            </if>
             <if test="criticalLevel != null and criticalLevel != ''">
                 AND     A.critical_level  = #{criticalLevel}
             </if>
