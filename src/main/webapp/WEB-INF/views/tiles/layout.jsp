@@ -181,6 +181,12 @@
                 layerShowHide('list');
             }
             initResourceChart();
+
+            $(document).keyup(function(event){
+                if (event.keyCode == '81') {
+                    menuBarToggle();
+                }
+            });
         });
 
         function initResourceChart(){
@@ -679,9 +685,9 @@
             }
         }
 
-        function menuBarToggle(_this){
+        function menuBarToggle(){
             $("#menu").toggleClass("hide");
-            $(_this).toggleClass("on")
+            $(".mscrBtn").toggleClass("on")
             $(".sub_title_area").toggleClass("hide");
         }
 
@@ -742,7 +748,7 @@
                             <button class="funcbtn-user user_btn" onclick="javascript:getProfile(this); event.stopPropagation();" title="<spring:message code="dashboard.title.profile"/>"><spring:message code="dashboard.title.profile"/></button>
                             <button class="funcbtn-reso reso_btn" onclick="javascript:openResourcePopup(this);" title="<spring:message code="dashboard.title.resourceMonitoring"/>"><spring:message code="dashboard.title.resourceMonitoring"/></button>
                             <button class="funcbtn-logi loginout_btn" onclick="javascript:logout();" title="<spring:message code="dashboard.title.logout"/>"><spring:message code="dashboard.title.logout"/></button>
-                            <button class="funcbtn-mscr" onclick="javascript:menuBarToggle(this);" data-content="SHOW MENU BAR"><p>HIDE MENU BAR</p></button>
+                            <button class="funcbtn-mscr mscrBtn" onclick="javascript:menuBarToggle();" data-content="SHOW MENU BAR"><p>HIDE MENU BAR</p></button>
                         </div>
                     </div>
 
