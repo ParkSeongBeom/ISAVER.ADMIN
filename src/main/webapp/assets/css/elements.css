@@ -2514,8 +2514,6 @@ button.btn ~ button.btn {
   justify-content: center;
   position: absolute;
   z-index: 1;
-  width: 5000px;
-  height: 5000px;
   background-repeat: no-repeat;
   background-position: center;
   /*&:after  {width:100%; height:1px; left:0; top:50%;}*/ }
@@ -3498,7 +3496,6 @@ button.btn ~ button.btn {
         stroke: #757575; }
   .g-line polyline {
     fill: transparent !important;
-    stroke: rgba(18, 18, 201, 0.5);
     stroke-width: 1px; }
   .g-line marker {
     overflow: visible; }

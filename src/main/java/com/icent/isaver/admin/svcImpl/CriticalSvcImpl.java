@@ -2,7 +2,7 @@ package com.icent.isaver.admin.svcImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.icent.isaver.admin.bean.*;
+import com.icent.isaver.admin.bean.CriticalBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.CriticalDao;
 import com.icent.isaver.admin.dao.DeviceDao;

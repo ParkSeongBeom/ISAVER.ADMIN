@@ -8,6 +8,8 @@ import java.util.Map;
 public interface FenceDao {
     List<FenceBean> findListFence(Map<String, String> parameters);
 
+    List<FenceBean> findListFenceForNotification();
+
     List<FenceBean> findListFenceForTest();
 
     void addFence(List<FenceBean> parameterList);

@@ -67,6 +67,8 @@ public class NotificationBean extends ISaverCommonBean {
     private String cancelUserName;
     /* 갯수 */
     private Integer notiCnt;
+    /* 전송갯수 */
+    private Integer sendCnt;
     /* 이벤트 발생일시 String */
     private String eventDatetimeStr;
     /* 확인일시 String */
@@ -298,5 +300,13 @@ public class NotificationBean extends ISaverCommonBean {
 
     public void setTrackingJson(String trackingJson) {
         this.trackingJson = trackingJson;
+    }
+
+    public Integer getSendCnt() {
+        return sendCnt;
+    }
+
+    public void setSendCnt(Integer sendCnt) {
+        this.sendCnt = sendCnt;
     }
 }

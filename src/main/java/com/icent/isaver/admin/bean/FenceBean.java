@@ -38,6 +38,8 @@ public class FenceBean {
      */
     /* 구역 ID*/
     private String areaId;
+    /* 장치명*/
+    private String deviceName;
 
     private List<FenceLocationBean> location;
 
@@ -103,5 +105,13 @@ public class FenceBean {
 
     public void setzMin(Double zMin) {
         this.zMin = zMin;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 }

@@ -43,6 +43,22 @@
     </select>
 
     <!--
+        펜스 목록을 가져온다. (알림이력용)
+        @author psb
+    -->
+    <select id="findListFenceForNotification" resultType="FenceBean">
+        SELECT  A.fence_id as fenceId
+                , A.fence_name as fenceName
+                , A.device_id as deviceId
+                , B.device_name as deviceName
+        FROM    isaver.fence A
+        INNER JOIN isaver.device B
+        ON	A.device_id = B.device_id
+        WHERE	fence_type = 'normal'
+        ORDER BY deviceId, fenceName
+    </select>
+
+    <!--
         펜스 목록을 가져온다. (test)
         @author psb
     -->

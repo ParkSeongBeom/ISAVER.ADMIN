@@ -1,8 +1,12 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.icent.isaver.admin.bean.EventBean;
+import com.icent.isaver.admin.bean.FenceBean;
 import com.icent.isaver.admin.bean.NotificationBean;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.dao.EventDao;
+import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.dao.NotificationDao;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.NotificationSvc;
@@ -60,6 +64,12 @@ public class NotificationSvcImpl implements NotificationSvc {
     @Inject
     private NotificationDao notificationDao;
 
+    @Inject
+    private EventDao eventDao;
+
+    @Inject
+    private FenceDao fenceDao;
+
     @Override
     public ModelAndView findListNotification(Map<String, String> parameters) {
         List<NotificationBean> notifications = notificationDao.findListNotification(parameters);
@@ -67,7 +77,12 @@ public class NotificationSvcImpl implements NotificationSvc {
 
         AdminHelper.setPageTotalCount(parameters, totalCount);
 
+        List<EventBean> eventList = eventDao.findListEvent(null);
+        List<FenceBean> fenceList = fenceDao.findListFenceForNotification();
+
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("eventList",eventList);
+        modelAndView.addObject("fenceList",fenceList);
         modelAndView.addObject("notifications", notifications);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

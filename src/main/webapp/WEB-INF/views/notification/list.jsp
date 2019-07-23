@@ -38,6 +38,24 @@
                     <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true" allText="${allSelectText}"/>
                 </p>
                 <p class="itype_01">
+                    <span><spring:message code="notification.column.eventName" /></span>
+                    <select name="eventId">
+                        <option value=""><spring:message code="common.selectbox.select"/></option>
+                        <c:forEach var="event" items="${eventList}">
+                            <option value="${event.eventId}" <c:if test="${paramBean.eventId==event.eventId}">selected="selected"</c:if>>${event.eventName}</option>
+                        </c:forEach>
+                    </select>
+                </p>
+                <p class="itype_01">
+                    <span><spring:message code="notification.column.fenceName" /></span>
+                    <select name="fenceId">
+                        <option value=""><spring:message code="common.selectbox.select"/></option>
+                        <c:forEach var="fence" items="${fenceList}">
+                            <option value="${fence.fenceId}" <c:if test="${paramBean.fenceId==fence.fenceId}">selected="selected"</c:if>>${fence.deviceName}(${fence.deviceId})-${fence.fenceName}</option>
+                        </c:forEach>
+                    </select>
+                </p>
+                <p class="itype_01">
                     <span><spring:message code="notification.column.criticalLevel" /></span>
                     <isaver:codeSelectBox groupCodeId="LEV" codeId="${paramBean.criticalLevel}" htmlTagName="criticalLevel" allModel="true" allText="${allSelectText}"/>
                 </p>
@@ -82,7 +100,8 @@
                     <col> <!-- 9 해제자-->
                     <col> <!-- 10 해제일시 -->
                     <col> <!-- 11 해제사유 -->
-                    <col> <!-- 12 트래킹보기 -->
+                    <col> <!-- 12 외부전송 -->
+                    <col> <!-- 13 트래킹보기 -->
                 </colgroup>
                 <thead>
                 <tr>
@@ -97,6 +116,7 @@
                     <th><spring:message code="notification.column.cancelUserName"/></th>
                     <th><spring:message code="notification.column.cancelDatetime"/></th>
                     <th><spring:message code="notification.column.cancelDesc"/></th>
+                    <th><spring:message code="notification.column.externalSendLog"/></th>
                     <th><spring:message code="notification.column.trackingJson"/></th>
                 </tr>
                 </thead>
@@ -126,6 +146,11 @@
                                     </c:if>
                                 </td>
                                 <td>
+                                    <c:if test="${notification.sendCnt>0}">
+                                        <button class="eventdetail_btn" onclick="openSendLogDetailPopup('${notification.notificationId}');"></button>
+                                    </c:if>
+                                </td>
+                                <td>
                                     <c:if test="${notification.trackingJson!=null}">
                                         <button class="eventdetail_btn"
                                                 data-notification-id="${notification.notificationId}"
@@ -143,7 +168,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="12"><spring:message code="common.message.emptyData"/></td>
+                            <td colspan="13"><spring:message code="common.message.emptyData"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -157,6 +182,23 @@
 </section>
 
 <section class="popup-layer">
+    <div class="popupbase admin_popup eventSendLogPopup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="notification.column.externalSendLog"/></h2>
+                    <button onclick="closeSendLogDetailPopup();"></button>
+                </header>
+                <article>
+                    <div class="search_area">
+                        <div class="editable02" id="eventSendLogText"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closeSendLogDetailPopup();"></div>
+    </div>
+
     <div class="popupbase admin_popup eventdetail_popup">
         <div>
             <div>
@@ -231,6 +273,7 @@
         'listUrl':'${rootPath}/notification/list.html'
         ,'excelUrl':'${rootPath}/notification/excel.html'
         ,'videoListUrl':'${rootPath}/videoHistory/notiList.json'
+        ,'notiSendLogUrl':'${rootPath}/notiSendLog/list.json'
     };
 
     var searchConfig = {
@@ -326,6 +369,98 @@
     }
 
     /*
+     close 이벤트 해제사유 popup
+     @author psb
+     */
+    function closeCancelDescPopup(){
+        $("#cancelDescText").text("");
+        $(".eventdetail_popup").fadeOut();
+    }
+
+    function openSendLogDetailPopup(notificationId){
+        callAjax('notiSendLog',{'notificationId':notificationId});
+    }
+
+    /*
+     close 이벤트 해제사유 popup
+     @author psb
+     */
+    function closeSendLogDetailPopup(){
+        $("#eventSendLogText").empty();
+        $(".eventSendLogPopup").fadeOut();
+    }
+
+    /*
+     ajax call
+     @author psb
+     */
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,notification_successHandler,notification_errorHandler,actionType);
+    }
+
+    /*
+     ajax success handler
+     @author psb
+     */
+    function notification_successHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'videoList':
+                $("#videoList").empty();
+                var videoHistoryList = data['videoHistoryList'];
+                if(videoHistoryList.length>0){
+                    $(".video_area").show();
+                }else{
+                    $(".video_area").hide();
+                }
+                for(var index in videoHistoryList){
+                    var videoHistory = videoHistoryList[index];
+                    var fenceName = '';
+                    if(videoHistory['fenceName']!=null){
+                        fenceName = "("+videoHistory['fenceName']+")";
+                    }
+                    $("#videoList").append(
+                        $("<li/>").click({videoFileUrl:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['videoFileName']},function(evt){
+                            openVideo(this,evt.data.videoFileUrl);
+                        }).append(
+                            $("<div/>").append(
+                                $("<img/>",{src:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']})
+                            )
+                        ).append(
+                            $("<div/>").append(
+                                $("<span/>").text(videoHistory['areaName']?videoHistory['areaName']:'')
+                            ).append(
+                                $("<span/>").text(videoHistory['deviceName']?videoHistory['deviceName']:'')
+                            ).append(
+                                $("<p/>").text((videoHistory['eventName']?videoHistory['eventName']:'')+fenceName)
+                            ).append(
+                                $("<span/>").text(new Date(videoHistory['videoDatetime']).format("MM/dd HH:mm:ss"))
+                            )
+                        )
+                    );
+                }
+                break;
+            case 'notiSendLog':
+                var notiSendLogList = data['notiSendLogList'];
+                for(var index in notiSendLogList){
+                    var notiSendLog = notiSendLogList[index];
+                    $("#eventSendLogText").append(
+                        $("<p/>").text(notiSendLog['sendDatetimeStr'] + ' [' + notiSendLog['sendCode']+'] - '+notiSendLog['sendUrl'])
+                    )
+                }
+                $(".eventSendLogPopup").fadeIn();
+                break;
+        }
+    }
+
+    /*
+     ajax error handler
+     @author psb
+     */
+    function notification_errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
+    }
+
+    /*
      open 이동경로 이력 popup
      @author psb
      */
@@ -371,49 +506,7 @@
                     ,'pointShiftCnt' : null
                 }
             });
-
-            sendAjaxPostRequest(
-                urlConfig['videoListUrl']
-                ,{'notificationId':data['notificationId'],'videoType':'event'}
-                ,function successHandler(data, dataType, actionType){
-                    $("#videoList").empty();
-                    var videoHistoryList = data['videoHistoryList'];
-                    if(videoHistoryList.length>0){
-                        $(".video_area").show();
-                    }else{
-                        $(".video_area").hide();
-                    }
-                    for(var index in videoHistoryList){
-                        var videoHistory = videoHistoryList[index];
-                        var fenceName = '';
-                        if(videoHistory['fenceName']!=null){
-                            fenceName = "("+videoHistory['fenceName']+")";
-                        }
-                        $("#videoList").append(
-                            $("<li/>").click({videoFileUrl:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['videoFileName']},function(evt){
-                                openVideo(this,evt.data.videoFileUrl);
-                            }).append(
-                                $("<div/>").append(
-                                    $("<img/>",{src:data['videoUrl']+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']})
-                                )
-                            ).append(
-                                $("<div/>").append(
-                                    $("<span/>").text(videoHistory['areaName']?videoHistory['areaName']:'')
-                                ).append(
-                                    $("<span/>").text(videoHistory['deviceName']?videoHistory['deviceName']:'')
-                                ).append(
-                                    $("<p/>").text((videoHistory['eventName']?videoHistory['eventName']:'')+fenceName)
-                                ).append(
-                                    $("<span/>").text(new Date(videoHistory['videoDatetime']).format("MM/dd HH:mm:ss"))
-                                )
-                            )
-                        );
-                    }
-                }
-                ,function errorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-                    alertMessage(actionType + 'Failure');
-                }
-            );
+            ajaxCall('videoList',{'notificationId':data['notificationId'],'videoType':'event'});
         }catch(e){
             console.error("[openTrackingHistoryPopup] custom map mediator init error - "+ e.message);
         }
@@ -433,15 +526,6 @@
 
         $("#videoSource").attr("src",videoFileUrl);
         $("#videoElement")[0].load();
-    }
-
-    /*
-     close 이벤트 해제사유 popup
-     @author psb
-     */
-    function closeCancelDescPopup(){
-        $("#cancelDescText").text("");
-        $(".eventdetail_popup").fadeOut();
     }
 
     /*

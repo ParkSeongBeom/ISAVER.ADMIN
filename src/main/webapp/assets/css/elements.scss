@@ -580,7 +580,7 @@ div[contenteditable] {}
 
 ////// -----------------  MAP 설정 Start
 .map_images {
-  @include flex-midddle; position: absolute; z-index: 1; width:5000px;height:5000px;
+  @include flex-midddle; position: absolute; z-index: 1;
 
   background-repeat:no-repeat; background-position: center;
   &:before {content:""; position: absolute; z-index:-1; /*background-color: rgba(#fff,0.4);*/ }
@@ -864,7 +864,7 @@ div[contenteditable] {}
   }
 
   &-line {
-    polyline {fill: transparent !important; stroke:rgba(#1212C9,0.5); stroke-width:1px;}
+    polyline {fill: transparent !important; stroke-width:1px;}
     marker {overflow: visible;} image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
 
     // 마크 반경표시

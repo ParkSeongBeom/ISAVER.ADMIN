@@ -70,6 +70,7 @@ var CustomMapMediator = (
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
+                , 'rotatable': false // 회전 조절 기능
                 , 'resizable': false // 사이즈 조절 기능
                 , 'nameView': true // 이름 표시 여부
                 , 'websocketSend': false // getdevice 요청 여부
@@ -200,20 +201,7 @@ var CustomMapMediator = (
             }
 
             if(_options['element']['lastPositionUseFlag']){
-                var top = $.cookie(_areaId+"MapCanvasTop");
-                if(top != null && top.length > 0){ _top = top; }
-                var left = $.cookie(_areaId+"MapCanvasLeft");
-                if(left != null && left.length > 0){ _left = left; }
-                var originX = $.cookie(_areaId+"MapCanvasOriginX");
-                if(!isNaN(originX)){ _originX = eval(originX); }
-                var originY = $.cookie(_areaId+"MapCanvasOriginY");
-                if(!isNaN(originY)){ _originY = eval(originY); }
-                var translateX = $.cookie(_areaId+"MapCanvasTranslateX");
-                if(!isNaN(translateX)){ _translateX = eval(translateX); }
-                var translateY = $.cookie(_areaId+"MapCanvasTranslateY");
-                if(!isNaN(translateY)){ _translateY = eval(translateY); }
-                var scale = $.cookie(_areaId+"MapCanvasScale");
-                if(!isNaN(scale)){ _scale = eval(scale); }
+                loadPosition();
             }
             _ajaxCall('list',{areaId:_areaId,deviceCodes:_customDeviceCode.toString()});
         };
@@ -310,17 +298,34 @@ var CustomMapMediator = (
                     if(_scale.toFixed(2) > _options['element']['zoom']['min']){_scale-=0.01;}
                     break;
             }
-            setTransform2d();
+            setTransform2d(null,true);
 
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
                     _self.startZoomControl(actionType);
-                }, 50);
+                }, 10);
             }
         };
 
         this.stopZoomControl = function(){
             clearInterval(_mouseDownInterval);
+        };
+
+        var loadPosition = function(){
+            var top = $.cookie(_areaId+"MapCanvasTop");
+            if(top != null && top.length > 0){ _top = top; }
+            var left = $.cookie(_areaId+"MapCanvasLeft");
+            if(left != null && left.length > 0){ _left = left; }
+            var originX = $.cookie(_areaId+"MapCanvasOriginX");
+            if(!isNaN(originX)){ _originX = eval(originX); }
+            var originY = $.cookie(_areaId+"MapCanvasOriginY");
+            if(!isNaN(originY)){ _originY = eval(originY); }
+            var translateX = $.cookie(_areaId+"MapCanvasTranslateX");
+            if(!isNaN(translateX)){ _translateX = eval(translateX); }
+            var translateY = $.cookie(_areaId+"MapCanvasTranslateY");
+            if(!isNaN(translateY)){ _translateY = eval(translateY); }
+            var scale = $.cookie(_areaId+"MapCanvasScale");
+            if(!isNaN(scale)){ _scale = eval(scale); }
         };
 
         var savePosition = function(){
@@ -333,7 +338,7 @@ var CustomMapMediator = (
             $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(2));
         };
 
-        var setTransform2d = function(scale){
+        var setTransform2d = function(scale,saveFlag){
             if(scale!=null){
                 _scale = scale;
             }
@@ -351,7 +356,10 @@ var CustomMapMediator = (
                 ,'-o-transform-origin':orig
                 ,'-ms-transform-origin':orig
             });
-            savePosition();
+
+            if(saveFlag){
+                savePosition();
+            }
         };
 
         this.getMapCanvas = function(){
@@ -496,6 +504,16 @@ var CustomMapMediator = (
                 console.error("[CustomMapMediator][getMarkerList] unknown type - "+type);
                 return false;
             }
+
+            switch (type){
+                case _MARKER_TYPE[1] :
+                    for(var deviceId in _marker[type]){
+                        for(var fenceId in _marker[type][deviceId]){
+                            _self.computePolyPoints({deviceId:deviceId, fenceId:fenceId});
+                        }
+                    }
+                    break;
+            }
             return _marker[type];
         };
 
@@ -587,7 +605,7 @@ var CustomMapMediator = (
                     _marker[_MARKER_TYPE[2]][targetData['targetId']] = {};
 
                     targetElement.on('dblclick', function(evt){
-                        setTransform2d(_options['element']['zoom']['init']);
+                        setTransform2d(_options['element']['zoom']['init'],true);
                         _mapCanvas.animate({
                             'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
                             ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
@@ -599,7 +617,7 @@ var CustomMapMediator = (
         };
 
         /**
-         * save fence name
+         * save fence
          * @author psb
          */
         this.saveFence = function(data){
@@ -754,22 +772,17 @@ var CustomMapMediator = (
                 switch (messageType){
                     case _MARKER_TYPE[1] : // Fence
                         let points = [];
-                        let latMin=null,latMax=null,lngMin=null,lngMax=null;
                         let fenceName;
                         for(let index in data['location']){
                             let location = data['location'][index];
                             location['uuid'] = data['uuid'];
                             const lat = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(location['lat'])*_ratio);
                             const lng = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(location['lng'])*_ratio);
-                            if(latMin==null || latMin > lat){ latMin = lat; }
-                            if(latMax==null || latMax < lat){ latMax = lat; }
-                            if(lngMin==null || lngMin > lng){ lngMin = lng; }
-                            if(lngMax==null || lngMax < lng){ lngMax = lng; }
                             points.push([lat,lng]);
                         }
 
                         if(_marker[messageType][data['deviceId']][data['id']]!=null){
-                            _marker[messageType][data['deviceId']][data['id']]['element'].attr("points",points.join(" ")).off('click');
+                            _marker[messageType][data['deviceId']][data['id']]['element'].attr("points",points.join(" "));
                             _marker[messageType][data['deviceId']][data['id']]['data']['location'] = data['location'];
                             fenceName = data['fenceName']!=null?data['fenceName']:_marker[messageType][data['deviceId']][data['id']]['data']['fenceName'];
                             _marker[messageType][data['deviceId']][data['id']]['data']['fenceName'] = fenceName;
@@ -800,6 +813,8 @@ var CustomMapMediator = (
                             _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : $(svgPolygon)
                                 ,'textElement' : null
+                                ,'circleElement' : null
+                                ,'polylineElement' : null
                                 ,'copyBoxElement' : copyBoxElement
                                 ,'data' : {
                                     'location' : data['location']
@@ -809,6 +824,8 @@ var CustomMapMediator = (
                                     ,'zMin' : (data['zMin']?data['zMin']:0)
                                     ,'fenceId' : data['id']
                                     ,'fenceName' : fenceName
+                                    ,'transX' : null
+                                    ,'transY' : null
                                 }
                                 ,'notification' : $.extend(true,{},criticalList)
                             };
@@ -823,12 +840,15 @@ var CustomMapMediator = (
                                         pointerX = evt.pageX;
                                     }
                                     ,drag : function(evt, ui) {
+                                        _self.computePolyPoints({deviceId:data['deviceId'], fenceId:data['id']});
                                         var locations = $(this).attr("points").split(" ");
+                                        var transX = (Number(evt.pageX)-Number(pointerX))/_scale;
+                                        var transY = (Number(evt.pageY)-Number(pointerY))/_scale;
                                         var pointList = [];
                                         for(let index in locations){
                                             const loc = locations[index].split(",");
-                                            const lat = Number(loc[0])+(Number(evt.pageX)-Number(pointerX))/_scale;
-                                            const lng = Number(loc[1])+(Number(evt.pageY)-Number(pointerY))/_scale;
+                                            const lat = Number(loc[0])+transX;
+                                            const lng = Number(loc[1])+transY;
                                             pointList.push([lat,lng]);
                                         }
                                         _self.saveFence({deviceId:data['deviceId'], fenceId:data['id'], location:_self.convertFenceLocationOrigin(data['deviceId'],pointList)});
@@ -838,34 +858,88 @@ var CustomMapMediator = (
                                 });
                             }
 
+                            if(!_options['custom']['moveFenceHide']){
+                                _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
+                                    setTransform2d(_options['custom']['moveFenceScale'],false);
+                                    _mapCanvas.animate({
+                                        'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
+                                        ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
+                                    },300);
+                                    moveReturn(evt.data.deviceId);
+                                });
+                            }
+
                             if(_options['custom']['changeFence']!=null && typeof _options['custom']['changeFence'] == "function"){
                                 _options['custom']['changeFence']('add',_marker[messageType][data['deviceId']][data['id']]['data']);
                             }
                         }
 
-                        if(data['fenceType']==_FENCE_TYPE[1]){
-                            _marker[messageType][data['deviceId']][data['id']]['element'].addClass('g-ignore_fence');
-                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) {
-                                _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
-                                _marker[messageType][data['deviceId']][data['id']]['textElement'] = null;
+                        setTimeout(function(){
+                            var elRect = _marker[messageType][data['deviceId']][data['id']]['element'][0].getBoundingClientRect();
+                            var svgRect = _mapCanvas.find("svg")[0].getBoundingClientRect();
+                            var transX = ((elRect.left - svgRect.left) + (elRect.right - svgRect.left))/2/_scale;
+                            var transY = ((elRect.top - svgRect.top) + (elRect.bottom - svgRect.top))/2/_scale;
+                            _marker[messageType][data['deviceId']][data['id']]['data']['transX'] = transX;
+                            _marker[messageType][data['deviceId']][data['id']]['data']['transY'] = transY;
+
+                            if(_marker[messageType][data['deviceId']][data['id']]['polylineElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['polylineElement'].remove(); }
+                            if(_marker[messageType][data['deviceId']][data['id']]['circleElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['circleElement'].remove(); }
+                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['textElement'].remove(); }
+
+                            if(_options['custom']['rotatable']){
+                                this.Left = (elRect.left - svgRect.left)/_scale - transX;
+                                this.Right = (elRect.right - svgRect.left)/_scale - transX;
+                                this.Top = (elRect.top - svgRect.top)/_scale - transY;
+                                this.Bottom = (elRect.bottom - svgRect.top)/_scale - transY;
+                                var transf = 'translate('+transX + ',' + transY+')';
+                                var svgPolyline = _canvasSvg.polyline(
+                                    [[this.Left,this.Top],[this.Right,this.Top],[this.Right,this.Bottom],[this.Left,this.Bottom],[this.Left,this.Top]]
+                                    ,{"fill":'none',"stroke": "#f6b900",'stroke-dasharray': '5,5','transform':transf}
+                                );
+                                var svgCircle = _canvasSvg.circle(
+                                    this.Left, this.Top, 5
+                                    ,{"fill":'#f6b900',"cursor": "alias",'transform':transf}
+                                );
+                                var A = Math.atan2(elRect.height / 2, elRect.width / 2);
+                                $(svgPolyline).prependTo(_mapCanvas.find("svg"));
+                                _marker[messageType][data['deviceId']][data['id']]['polylineElement'] = $(svgPolyline);
+                                _marker[messageType][data['deviceId']][data['id']]['circleElement'] = $(svgCircle);
+                                _marker[messageType][data['deviceId']][data['id']]['circleElement'].draggable({
+                                    cursor: "alias"
+                                    ,containment: "parent"
+                                    ,drag : function(evt, ui) {
+                                        var polygon = _marker[messageType][data['deviceId']][data['id']]['element'];
+                                        var _transX = _marker[messageType][data['deviceId']][data['id']]['data']['transX'];
+                                        var _transY = _marker[messageType][data['deviceId']][data['id']]['data']['transY'];
+                                        var _svgRect = _mapCanvas.find("svg")[0].getBoundingClientRect();
+                                        var rotate = (Math.atan2(_transY - Math.round(evt.clientY - _svgRect.top)/_scale, _transX - Math.round(evt.clientX - _svgRect.left)/_scale) - A) * (180 / Math.PI);
+                                        var _transf = 'translate(' + _transX + ',' + _transY + ') rotate(' + rotate + ')';
+                                        if(!polygon[0].hasAttribute("transform")){
+                                            var locations = polygon.attr("points").split(" ");
+                                            var pointList = [];
+                                            for(let index in locations){
+                                                const loc = locations[index].split(",");
+                                                const lat = Number(loc[0])-Number(_transX);
+                                                const lng = Number(loc[1])-Number(_transY);
+                                                pointList.push([lat,lng]);
+                                            }
+                                            _marker[messageType][data['deviceId']][data['id']]['element'].attr("points",pointList.join(" "));
+                                        }
+                                        _marker[messageType][data['deviceId']][data['id']]['element'][0].setAttributeNS(null,'transform',_transf);
+                                        this.setAttributeNS(null, 'transform', _transf);
+                                        $(svgPolyline)[0].setAttributeNS(null, 'transform', _transf);
+                                    }
+                                });
                             }
-                        } else {
-                            _marker[messageType][data['deviceId']][data['id']]['element'].removeClass('g-ignore_fence');
-                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']==null){
-                                const svgText = _canvasSvg.text((latMin+latMax)/2, (lngMin+lngMax)/2, fenceName, $.extend({"fenceId": data['id']}, _options[_MARKER_TYPE[1]]['text']));
+
+                            if(data['fenceType']==_FENCE_TYPE[1]){
+                                _marker[messageType][data['deviceId']][data['id']]['element'].addClass('g-ignore_fence');
+                            } else {
+                                _marker[messageType][data['deviceId']][data['id']]['element'].removeClass('g-ignore_fence');
+                                const svgText = _canvasSvg.text(transX, transY, fenceName, _options[_MARKER_TYPE[1]]['text']);
                                 _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);
-                            }else{
-                                _marker[messageType][data['deviceId']][data['id']]['textElement'].attr({x:(latMin+latMax)/2,y:(lngMin+lngMax)/2}).text(fenceName);
                             }
-                            _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
-                                setTransform2d(_options['custom']['moveFenceScale']);
-                                _mapCanvas.animate({
-                                    'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
-                                    ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
-                                },300);
-                                moveReturn(evt.data.deviceId);
-                            });
-                        }
+                        },10);
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
                         break;
                     case _MARKER_TYPE[2] : // Object
@@ -926,6 +1000,26 @@ var CustomMapMediator = (
             }
         };
 
+        this.computePolyPoints = function(data){
+            var polygon = _marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['element'][0];
+            var sCTM = polygon.getCTM();
+            var pointsList = polygon.points;
+            var n = pointsList.numberOfItems;
+            var points = [];
+            for(var m=0;m<n;m++){
+                var mySVGPoint = _mapCanvas.find("svg")[0].createSVGPoint();
+                mySVGPoint.x = pointsList.getItem(m).x;
+                mySVGPoint.y = pointsList.getItem(m).y;
+                var mySVGPointTrans = mySVGPoint.matrixTransform(sCTM);
+                points.push([mySVGPointTrans.x,mySVGPointTrans.y])
+            }
+            //---force removal of transform--
+            data['location'] = _self.convertFenceLocationOrigin(data['deviceId'],points);
+            polygon.setAttribute("transform","");
+            polygon.removeAttribute("transform");
+            _self.saveFence(data);
+        };
+
         /**
          * fence partition (펜스 자르기 기능)
          * deviceId(String), fenceId(String), partition(가로:w, 세로:h -> {'w':?,'h':?})
@@ -936,6 +1030,7 @@ var CustomMapMediator = (
                 console.log("fence null");
                 return false;
             }
+            _self.computePolyPoints({deviceId:deviceId, fenceId:fenceId});
 
             let locations = _marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['location'];
             let fenceName = _marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']!=fenceId?_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceName']:null;
@@ -1096,6 +1191,8 @@ var CustomMapMediator = (
                     if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['id']]!=null){
                         if(_marker[messageType][data['deviceId']][data['id']]['element']!=null) _marker[messageType][data['deviceId']][data['id']]['element'].remove();
                         if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['circleElement']!=null) _marker[messageType][data['deviceId']][data['id']]['circleElement'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['polylineElement']!=null) _marker[messageType][data['deviceId']][data['id']]['polylineElement'].remove();
                         if(_options['custom']['changeFence']!=null && typeof _options['custom']['changeFence'] == "function"){
                             _options['custom']['changeFence']('remove',_marker[messageType][data['deviceId']][data['id']]['data']);
                         }
@@ -1448,9 +1545,15 @@ var CustomMapMediator = (
             }
 
             _options['custom']['moveReturnTimeout'] = setTimeout(function() {
-                if(_marker[_MARKER_TYPE[4]][deviceId]!=null){
-                    _marker[_MARKER_TYPE[4]][deviceId]['element'].trigger('dblclick');
-                }
+                //if(_marker[_MARKER_TYPE[4]][deviceId]!=null){
+                //    _marker[_MARKER_TYPE[4]][deviceId]['element'].trigger('dblclick');
+                //}
+                loadPosition();
+                _mapCanvas.css({
+                    left:_left
+                    , top:_top
+                });
+                setTransform2d(null,false);
             }, _options['custom']['moveReturnDelay']);
         };
 
@@ -1519,7 +1622,7 @@ var CustomMapMediator = (
                         , width:_canvasSize['width']
                         , height:_canvasSize['height']
                     });
-                    setTransform2d();
+                    setTransform2d(null,true);
                     setDefsMarkerRef();
                     _self.setBackgroundImage(data['area']['physicalFileName'],true);
                     _self.setAngleXClass(data['area']['angleClass'],true);

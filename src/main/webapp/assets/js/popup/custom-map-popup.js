@@ -115,7 +115,7 @@ var CustomMapPopup = (
                 customParamList.push(customMap);
             }
 
-            var fenceList = _customMapMediator.getMarker('fence');
+            var fenceList = _customMapMediator.getMarkerList('fence');
             var fenceParamList = [];
             for(var index in fenceList){
                 for(var i in fenceList[index]){
@@ -171,6 +171,7 @@ var CustomMapPopup = (
                 _customMapMediator.init(areaId,{
                     'custom' : {
                         'draggable': true
+                        , 'rotatable': true
                         , 'resizable': true
                         , 'fenceView': true
                         , 'openLinkFlag': false
@@ -198,10 +199,7 @@ var CustomMapPopup = (
                                             targetId: target['targetId'],
                                             deviceCode: target['deviceCode']
                                         }, function (evt) {
-                                            _customMapMediator.targetRender({
-                                                targetId: evt.data.targetId,
-                                                deviceCode: evt.data.deviceCode
-                                            });
+                                            _customMapMediator.targetRender({targetId: evt.data.targetId,deviceCode: evt.data.deviceCode});
                                         })
                                     ).append(
                                         $("<div/>").append(
@@ -345,7 +343,7 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()});
+                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()});
                                                 })
                                             ).append(
                                                 $("<input/>", {
@@ -359,7 +357,7 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()});
+                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()});
                                                 })
                                             ).append(
                                                 $("<select/>", {name: 'fenceType'}).append(
@@ -376,7 +374,7 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.saveFence({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()});
+                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()});
                                                 })
                                             )
                                         )
@@ -443,6 +441,8 @@ var CustomMapPopup = (
             if(_addFenceInfo['fenceMarker']!=null){
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].hide();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].hide();
+                if(_addFenceInfo['fenceMarker']['circleElement']!=null) _addFenceInfo['fenceMarker']['circleElement'].hide();
+                if(_addFenceInfo['fenceMarker']['polylineElement']!=null) _addFenceInfo['fenceMarker']['polylineElement'].hide();
                 uuid = _addFenceInfo['fenceMarker']['data']['uuid'];
                 deviceId = _addFenceInfo['fenceMarker']['data']['deviceId'];
             }else{
@@ -509,13 +509,12 @@ var CustomMapPopup = (
                     _alertMessage("fenceNotEnough");
                     return false;
                 }
-                var points = uniqArrayList(_addFenceInfo['points']);
                 _customMapMediator.addMarker('fence',{
                     "deviceId":deviceId
                     ,"uuid":uuid
                     ,"id":fenceId
                     ,"fenceType":_addFenceInfo['fenceMarker']!=null?_addFenceInfo['fenceMarker']['data']['fenceType']:'normal'
-                    ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,points)
+                    ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,uniqArrayList(_addFenceInfo['points']))
                 });
                 _self.resetAddFenceInfo();
                 event.stopPropagation();
@@ -550,6 +549,11 @@ var CustomMapPopup = (
                 _addFenceInfo['circleList'].splice(-1,1);
             }
 
+            if(_addFenceInfo['lineTextList'][_addFenceInfo['lineTextList'].length-1]!=null){
+                _addFenceInfo['lineTextList'][_addFenceInfo['lineTextList'].length-1].remove();
+                _addFenceInfo['lineTextList'].splice(-1,1);
+            }
+
             if(_addFenceInfo['circleList'].length==0 && _addFenceInfo['text']!=null){
                 _addFenceInfo['text'].remove();
                 _addFenceInfo['text'] = null;
@@ -576,6 +580,8 @@ var CustomMapPopup = (
             if(_addFenceInfo['fenceMarker']!=null){
                 if(_addFenceInfo['fenceMarker']['element']!=null) _addFenceInfo['fenceMarker']['element'].show();
                 if(_addFenceInfo['fenceMarker']['textElement']!=null) _addFenceInfo['fenceMarker']['textElement'].show();
+                if(_addFenceInfo['fenceMarker']['circleElement']!=null) _addFenceInfo['fenceMarker']['circleElement'].show();
+                if(_addFenceInfo['fenceMarker']['polylineElement']!=null) _addFenceInfo['fenceMarker']['polylineElement'].show();
             }
             $(".fenceset_popup").removeClass("on");
             _addFenceInfo['fence'] = null;

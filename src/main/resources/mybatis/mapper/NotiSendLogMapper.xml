@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.NotiSendLogDao" >
+
+    <!--
+        외부연동용 이벤트 전송 이력 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListNotiSendLog" resultType="NotiSendLogBean" parameterType="map" >
+        SELECT  notification_id as notificationId
+                , send_code as sendCode
+                , send_url as sendUrl
+                , to_char(send_datetime,'yyyy-MM-dd HH24:MI:ss') as sendDatetimeStr
+        FROM    external.noti_send_log
+        order by send_datetime DESC
+    </select>
+</mapper>

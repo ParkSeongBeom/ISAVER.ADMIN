@@ -174,6 +174,7 @@ var NotificationHelper = (
                     updateNotificationList(resultData['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
+                    //cancelNotificationList({'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     break;
                 case "addEvent": // 일반이벤트 등록
@@ -661,6 +662,16 @@ var NotificationHelper = (
                 if(_element.find(">li:visible").length < _notiPageObj['viewMaxCnt']){
                     selectBoxChangeHandler('reset');
                 }
+            }
+        };
+
+        /**
+         * 감지해제 notification List
+         * @author psb
+         * @param notifications
+         */
+        var cancelNotificationList = function(notifications){
+            if(notifications!=null){
             }
         };
 
