@@ -506,7 +506,7 @@
                     ,'pointShiftCnt' : null
                 }
             });
-            ajaxCall('videoList',{'notificationId':data['notificationId'],'videoType':'event'});
+            callAjax('videoList',{'notificationId':data['notificationId'],'videoType':'event'});
         }catch(e){
             console.error("[openTrackingHistoryPopup] custom map mediator init error - "+ e.message);
         }
