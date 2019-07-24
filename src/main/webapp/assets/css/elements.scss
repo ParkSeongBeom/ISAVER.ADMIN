@@ -913,3 +913,24 @@ div[contenteditable] {}
 }
 ////// ----------------- OFFINLE MAP 설정  End
 
+.fencebtn_set{width:164px !important;
+  button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
+    background-color: #FF8400 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
+    &:hover{background-color: #32A0BE !important; color:#fff !important; }
+    &:after{content: "NORMAL MODE";margin:0 !important;}
+  }
+  .box_area{display: none; flex-direction: row;height: 50px;padding-top:5px;
+    input{float:left;width:70px !important;}
+    span{float:left;padding:10px 7px 0;font-weight: bold;}
+  }
+}
+.fencebtn_set.custom-mode{
+  button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
+    background-color: #C00606 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
+    &:hover{background-color: #32A0BE !important; color:#fff !important; }
+    &:after{content: "CUSTOM MODE";margin:0 !important;}
+  }
+  .btn-pdel{display: none !important;}
+  .box_area{display: flex;}
+}
+

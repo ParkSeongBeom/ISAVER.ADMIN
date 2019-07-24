@@ -969,8 +969,8 @@ h4 {
             &:hover {color:#D4FF00; &:before {border-color:#D4FF00;} }
           }
 
-          .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";}}
-          .btn-canc { &:before {content:"\e91a";} &:after {content:"Cancle";}}
+          .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";width:auto;}}
+          .btn-canc { &:before {content:"\e91a";} &:after {content:"Cancle";width:auto;}}
         }
         &.cursor_cros {
           .fencebtn_set {@include flexbase; @include flex-column;}
@@ -1015,7 +1015,7 @@ h4 {
         input{max-width:60px;}
 
 
-        & > .skew_map{position: absolute; bottom:120px; left:184px; display:flex; width:200px; background:#3c3c3c; height: 100%; flex-wrap: wrap;
+        & > .skew_map{position: absolute; bottom:120px; left:184px; display:none; width:200px; background:#3c3c3c; height: 100%; flex-wrap: wrap;
           &:before { @include bbl(2,0,0,auto,0,100%,1px,$color-bline);}
           & > .btn, & > input, & > span{display: flex;}
 

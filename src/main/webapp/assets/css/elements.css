@@ -3574,4 +3574,60 @@ button.btn ~ button.btn {
     fill: rgba(117, 117, 117, 0.5) !important;
     stroke: #4c4c4c !important; }
 
+.fencebtn_set {
+  width: 164px !important; }
+  .fencebtn_set button.btn-custom {
+    height: 35px !important;
+    min-height: 35px !important;
+    max-height: 35px !important;
+    max-width: 164px !important;
+    width: 164px !important;
+    z-index: 1;
+    border-radius: 0 !important;
+    background-color: #FF8400 !important;
+    font-size: 0.9rem;
+    display: inline-block !important;
+    text-align: center; }
+    .fencebtn_set button.btn-custom:hover {
+      background-color: #32A0BE !important;
+      color: #fff !important; }
+    .fencebtn_set button.btn-custom:after {
+      content: "NORMAL MODE";
+      margin: 0 !important; }
+  .fencebtn_set .box_area {
+    display: none;
+    flex-direction: row;
+    height: 50px;
+    padding-top: 5px; }
+    .fencebtn_set .box_area input {
+      float: left;
+      width: 70px !important; }
+    .fencebtn_set .box_area span {
+      float: left;
+      padding: 10px 7px 0;
+      font-weight: bold; }
+
+.fencebtn_set.custom-mode button.btn-custom {
+  height: 35px !important;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  max-width: 164px !important;
+  width: 164px !important;
+  z-index: 1;
+  border-radius: 0 !important;
+  background-color: #C00606 !important;
+  font-size: 0.9rem;
+  display: inline-block !important;
+  text-align: center; }
+  .fencebtn_set.custom-mode button.btn-custom:hover {
+    background-color: #32A0BE !important;
+    color: #fff !important; }
+  .fencebtn_set.custom-mode button.btn-custom:after {
+    content: "CUSTOM MODE";
+    margin: 0 !important; }
+.fencebtn_set.custom-mode .btn-pdel {
+  display: none !important; }
+.fencebtn_set.custom-mode .box_area {
+  display: flex; }
+
 /*# sourceMappingURL=elements.css.map */

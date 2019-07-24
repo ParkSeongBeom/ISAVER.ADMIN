@@ -938,6 +938,7 @@ var CustomMapMediator = (
                                 _marker[messageType][data['deviceId']][data['id']]['element'].removeClass('g-ignore_fence');
                                 const svgText = _canvasSvg.text(transX, transY, fenceName, _options[_MARKER_TYPE[1]]['text']);
                                 _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);
+                                $(svgText).prependTo(_mapCanvas.find("svg"));
                             }
                         },10);
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");

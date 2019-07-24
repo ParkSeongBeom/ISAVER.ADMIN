@@ -3074,11 +3074,13 @@ h4 {
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-pdel:before {
           content: "\e92c"; }
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-pdel:after {
-          content: "Point Del"; }
+          content: "Point Del";
+          width: auto; }
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-canc:before {
           content: "\e91a"; }
         .map_sett_box .map > div:first-of-type .fencebtn_set .btn-canc:after {
-          content: "Cancle"; }
+          content: "Cancle";
+          width: auto; }
       .map_sett_box .map > div:first-of-type.cursor_cros .fencebtn_set {
         display: -webkit-box;
         display: -moz-box;
@@ -3282,7 +3284,7 @@ h4 {
         position: absolute;
         bottom: 120px;
         left: 184px;
-        display: flex;
+        display: none;
         width: 200px;
         background: #3c3c3c;
         height: 100%;

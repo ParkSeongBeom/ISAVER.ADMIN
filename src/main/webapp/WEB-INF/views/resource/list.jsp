@@ -433,8 +433,14 @@
                         <div>
                             <div id="mapElement" class="map_images"></div>
                             <div class="fencebtn_set">
+                                <button class="btn-custom" onclick="javascript:customMapPopup.changeFenceMode();"></button>
+                                <div class="box_area">
+                                    <input type="number" id="customFenceWidth" value="1" />
+                                    <span>X</span>
+                                    <input type="number" id="customFenceHeight" value="1" />
+                                </div>
                                 <button class="btn-pdel" onclick="javascript:customMapPopup.removePointFence();"></button>
-                                <button class="btn-canc" onclick="javascript:customMapPopup.resetAddFenceInfo();"></button>
+                                <button class="btn-canc" onclick="javascript:customMapPopup.resetAddFenceInfo(true);"></button>
                             </div>
                         </div>
                         <div>
