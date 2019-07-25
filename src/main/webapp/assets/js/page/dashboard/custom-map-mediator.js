@@ -158,6 +158,10 @@ var CustomMapMediator = (
             _messageConfig = messageConfig;
         };
 
+        this.getRatio = function(){
+            return _ratio;
+        };
+
         /**
          * get custom area/device list
          * @author psb
