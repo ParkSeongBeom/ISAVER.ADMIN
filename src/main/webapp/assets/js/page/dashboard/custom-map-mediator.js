@@ -132,7 +132,6 @@ var CustomMapMediator = (
         var _fileUploadPath;
         var _messageConfig;
         var _self = this;
-        var _initFlag = false;
 
         /**
          * initialize
@@ -250,10 +249,8 @@ var CustomMapMediator = (
                     var prevOrigX = (_originX*_scale).toFixed(2);
                     var prevOrigY = (_originY*_scale).toFixed(2);
                     // set origin to current cursor position
-                    var newOrigX = imageX/_scale;
-                    var newOrigY = imageY/_scale;
-                    _originX = newOrigX;
-                    _originY = newOrigY;
+                    _originX = imageX/_scale;
+                    _originY = imageY/_scale;
                     _translateX = _translateX + (imageX-prevOrigX)*(1-1/_scale);
                     _translateY = _translateY + (imageY-prevOrigY)*(1-1/_scale);
 
@@ -268,7 +265,7 @@ var CustomMapMediator = (
                         $("<div/>",{class:"view_plus"}).append(
                             $("<button/>",{'href':'#'}).mousedown(function(){
                                 _self.startZoomControl('zoomIn', true);
-                            }).mouseup(function(){
+                            }).on("mouseup mouseout",function(){
                                 _self.stopZoomControl();
                             })
                         )
@@ -276,7 +273,7 @@ var CustomMapMediator = (
                         $("<div/>",{class:"view_minus"}).append(
                             $("<button/>",{'href':'#'}).mousedown(function(){
                                 _self.startZoomControl('zoomOut', true);
-                            }).mouseup(function(){
+                            }).on("mouseup mouseout",function(){
                                 _self.stopZoomControl();
                             })
                         )
@@ -303,7 +300,7 @@ var CustomMapMediator = (
             if(continueFlag!=null && continueFlag){
                 _mouseDownInterval = setInterval(function(){
                     _self.startZoomControl(actionType);
-                }, 10);
+                }, 30);
             }
         };
 
