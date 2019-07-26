@@ -162,7 +162,7 @@ body {
   width: 100%;
   height: 100%;
   min-width: 1024px;
-  min-height: 576px;
+  min-height: 300px;
   /*
   ::-webkit-scrollbar-button {
     display: inline-block; width: 12px; height: 7px;
@@ -3112,7 +3112,8 @@ h4 {
       align-items: center;
       height: 40px !important;
       min-height: 40px !important;
-      max-height: 40px !important; }
+      max-height: 40px !important;
+      justify-content: flex-end; }
       .map_sett_box .map > div:nth-of-type(2):before {
         content: "";
         position: absolute;
@@ -3157,9 +3158,7 @@ h4 {
         -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
-        width: 60px !important;
-        min-width: 60px !important;
-        max-width: 60px !important;
+        width: 60px;
         height: 100%;
         padding: 0 !important; }
       .map_sett_box .map > div:nth-of-type(2) select + span {
@@ -3220,7 +3219,7 @@ h4 {
           background-color: rgba(83, 83, 83, 0.6); }
         .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(1) {
           border-style: solid;
-          border-width: 0 1px 0 0;
+          border-width: 1px 1px 0 0;
           border-color: #040404; }
           .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(1):before {
             content: "\e902";
@@ -3230,17 +3229,21 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2):before {
-          content: "\e902";
-          transform: rotate3d(1, 1, 0, 180deg);
-          ms-transform: rotate3d(1, 1, 0, 180deg);
-          -ms-transform: rotate3d(1, 1, 0, 180deg);
-          -moz-transform: rotate3d(1, 1, 0, 180deg);
-          -webkit-transform: rotate3d(1, 1, 0, 180deg);
-          -o-transform: rotate3d(1, 1, 0, 180deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2) {
+          border-style: solid;
+          border-width: 1px 0 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(2):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
         .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(3) {
           border-style: solid;
-          border-width: 0 1px 0 0;
+          border-width: 1px 1px 0 0;
           border-color: #040404; }
           .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(3):before {
             content: "\e902";
@@ -3250,17 +3253,21 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4):before {
-          content: "\e902";
-          transform: rotate3d(1, 1, 0, 180deg);
-          ms-transform: rotate3d(1, 1, 0, 180deg);
-          -ms-transform: rotate3d(1, 1, 0, 180deg);
-          -moz-transform: rotate3d(1, 1, 0, 180deg);
-          -webkit-transform: rotate3d(1, 1, 0, 180deg);
-          -o-transform: rotate3d(1, 1, 0, 180deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4) {
+          border-style: solid;
+          border-width: 1px 0 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(4):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
         .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(5) {
           border-style: solid;
-          border-width: 0 1px 0 0;
+          border-width: 1px 1px 0 0;
           border-color: #040404; }
           .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(5):before {
             content: "\e902";
@@ -3270,14 +3277,66 @@ h4 {
             -moz-transform: rotate(90deg);
             -webkit-transform: rotate(90deg);
             -o-transform: rotate(90deg); }
-        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6):before {
-          content: "\e902";
-          transform: rotate3d(1, 1, 0, 180deg);
-          ms-transform: rotate3d(1, 1, 0, 180deg);
-          -ms-transform: rotate3d(1, 1, 0, 180deg);
-          -moz-transform: rotate3d(1, 1, 0, 180deg);
-          -webkit-transform: rotate3d(1, 1, 0, 180deg);
-          -o-transform: rotate3d(1, 1, 0, 180deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6) {
+          border-style: solid;
+          border-width: 1px 0 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(6):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(7) {
+          border-style: solid;
+          border-width: 1px 1px 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(7):before {
+            content: "\e902";
+            transform: rotate(90deg);
+            ms-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -o-transform: rotate(90deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(8) {
+          border-style: solid;
+          border-width: 1px 0 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(8):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(9) {
+          border-style: solid;
+          border-width: 1px 1px 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(9):before {
+            content: "\e902";
+            transform: rotate(90deg);
+            ms-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -o-transform: rotate(90deg); }
+        .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(10) {
+          border-style: solid;
+          border-width: 1px 0 0 0;
+          border-color: #040404; }
+          .map_sett_box .map > div:nth-of-type(2) button.btn:nth-of-type(10):before {
+            content: "\e902";
+            transform: rotate3d(1, 1, 0, 180deg);
+            ms-transform: rotate3d(1, 1, 0, 180deg);
+            -ms-transform: rotate3d(1, 1, 0, 180deg);
+            -moz-transform: rotate3d(1, 1, 0, 180deg);
+            -webkit-transform: rotate3d(1, 1, 0, 180deg);
+            -o-transform: rotate3d(1, 1, 0, 180deg); }
       .map_sett_box .map > div:nth-of-type(2) input {
         max-width: 60px; }
       .map_sett_box .map > div:nth-of-type(2) > .skew_map {
@@ -3510,6 +3569,9 @@ h4 {
             position: absolute;
             left: 0;
             width: 20px; }
+        .map_sett_box .list ul li > div > button.on {
+          padding: 5px 0 5px 20px;
+          color: #EEB508; }
         .map_sett_box .list ul li > div > div {
          /*
         <div class="checkbox_set csl-check">

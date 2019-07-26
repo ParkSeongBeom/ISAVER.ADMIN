@@ -209,7 +209,7 @@ var CustomMapPopup = (
                                                 name: 'useYn',
                                                 checked: target['useYn'] == 'Y'
                                             }).click({targetId: target['targetId']}, function (evt) {
-                                                _checkChildTarget(evt.data.targetId, $(this).is(":checked"));
+                                                _customMapMediator.setDisplayTarget(evt.data.targetId,$(this).is(":checked"));
                                             })
                                         ).append(
                                             $("<label/>")
@@ -390,7 +390,9 @@ var CustomMapPopup = (
                             }
                         }
                         , 'change': function (data) {
-                            _checkChildTarget(data['targetId'], data['useYn'] == 'Y');
+                            _element.find("#childList button").removeClass("on");
+                            _element.find("#childList li[targetId='"+data['targetId']+"'] div[name='custom'] button").addClass("on");
+                            _customMapMediator.setSelectTarget(data['targetId']);
                             _updateTargetValue(data);
                         }
                         , 'changeConfig': function (configName, data) {
@@ -687,22 +689,6 @@ var CustomMapPopup = (
             _element.find("input[name='x2']").val(data['x2']);
             _element.find("input[name='y1']").val(data['y1']);
             _element.find("input[name='y2']").val(data['y2']);
-        };
-
-        /**
-         * chlid list click event
-         * @author psb
-         */
-        var _checkChildTarget = function(targetId, flag){
-            var resultFlag = _customMapMediator.setDisplayTarget(targetId,flag);
-            if(!resultFlag){
-                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] button").removeClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] input[name='useYn']").prop("checked",false);
-            }else{
-                _element.find("#childList button").removeClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] button").addClass("on");
-                _element.find("#childList li[targetId='"+targetId+"'] div[name='custom'] input[name='useYn']").prop("checked",true);
-            }
         };
 
         /**

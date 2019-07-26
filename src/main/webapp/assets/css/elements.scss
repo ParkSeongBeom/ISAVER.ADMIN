@@ -917,7 +917,7 @@ div[contenteditable] {}
   button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
     background-color: #FF8400 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
     &:hover{background-color: #32A0BE !important; color:#fff !important; }
-    &:after{content: "NORMAL MODE";margin:0 !important;}
+    &:after{content: "NORMAL MODE";}
   }
   .box_area{display: none; flex-direction: row;height: 50px;padding-top:5px;
     input{float:left;width:70px !important;}
@@ -928,9 +928,23 @@ div[contenteditable] {}
   button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
     background-color: #C00606 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
     &:hover{background-color: #32A0BE !important; color:#fff !important; }
-    &:after{content: "CUSTOM MODE";margin:0 !important;}
+    &:after{content: "CUSTOM MODE";}
   }
   .btn-pdel{display: none !important;}
   .box_area{display: flex;}
 }
 
+// map설정 skew레이어 
+.skew-btn{margin-right:auto;padding: 0 10px; background: #393939; height:100%; width:160px; border-right:1px solid #040404 !important;background:#1D80A0;
+    &:hover{background-color: #32A0BE;}
+    &:active{background-color: $color-ac;}
+    &.on{background-color: $color-on;}
+}
+.skew-popup{display:none; position:absolute !important; bottom:40px; left:0; width:240px; background-color:#3C3C3C; border-top:1px solid #393939;
+    span{float:left; height:40px !important;clear:both; border-top:1px solid #040404 !important;border-left:0 !important;width:100px !important;}
+    input{float:left; display: block; border-bottom:none !important;}
+    .btn{float:left;}
+    &.on{display: block;}
+    select#angleClass{width:140px;border-bottom:none;border-left: none;}
+    h4{float:left; color:#fff; padding: 5px; font-size:16px; font-weight:bold; width:100%; background-color:#0F4151; border-right:1px solid #040404;border-top:1px solid #040404;}
+}

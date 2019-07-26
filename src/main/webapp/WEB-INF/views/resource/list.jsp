@@ -444,33 +444,38 @@
                             </div>
                         </div>
                         <div>
+                            <button class="skew-btn" onclick="javascript:$('.skew-popup').toggleClass('on')">Options</button>
+                            <div class="skew-popup">
+                                <h4>Map</h4>
+                                <span>SkewX</span>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <input name="skewX" id="skewX" type="number" onchange="javascript:customMapPopup.setImageConfig('skewX','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                <span>SkewY</span>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <input name="skewY" id="skewY" type="number" onchange="javascript:customMapPopup.setImageConfig('skewY','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                <span>AngleX Class</span>
+                                <select id="angleClass">
+                                    <option value=""><spring:message code="common.column.selectNo"/></option>
+                                    <option value="deg10">10</option>
+                                    <option value="deg15">15</option>
+                                    <option value="deg20">20</option>
+                                    <option value="deg25">25</option>
+                                    <option value="deg30">30</option>
+                                    <option value="deg35">35</option>
+                                    <option value="deg40">40</option>
+                                    <option value="deg45">45</option>
+                                    <option value="deg50">50</option>
+                                </select>
+                                <h4>Background Image</h4>
+                                <span>Rotate</span>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setImageConfig('rotate','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                            </div>
                             <select id="fileId">
                                 <option value=""><spring:message code="common.column.selectNo"/></option>
-                            </select>
-                            <span>SkewX</span>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <input name="skewX" id="skewX" type="number" onchange="javascript:customMapPopup.setImageConfig('skewX','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
-                            <span>SkewY</span>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <input name="skewY" id="skewY" type="number" onchange="javascript:customMapPopup.setImageConfig('skewY','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
-                            <span>Rotate</span>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                            <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setImageConfig('rotate','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
-                            <span>AngleX</span>
-                            <select id="angleClass">
-                                <option value=""><spring:message code="common.column.selectNo"/></option>
-                                <option value="deg10">10</option>
-                                <option value="deg15">15</option>
-                                <option value="deg20">20</option>
-                                <option value="deg25">25</option>
-                                <option value="deg30">30</option>
-                                <option value="deg35">35</option>
-                                <option value="deg40">40</option>
-                                <option value="deg45">45</option>
-                                <option value="deg50">50</option>
                             </select>
                             <span>X1</span>
                             <input name="x1" type="number" onkeypress="isNumberWithPoint(this);"/>

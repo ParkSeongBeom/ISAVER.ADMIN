@@ -381,15 +381,24 @@ var CustomMapMediator = (
             }
 
             if(flag){
-                _mapCanvas.find(".on").removeClass("on");
                 _marker[_MARKER_TYPE[4]][targetId]['data']['useYn'] = 'Y';
-                _marker[_MARKER_TYPE[4]][targetId]['element'].addClass("on").show();
-                return true;
+                _marker[_MARKER_TYPE[4]][targetId]['element'].show();
             }else{
                 _marker[_MARKER_TYPE[4]][targetId]['data']['useYn'] = 'N';
                 _marker[_MARKER_TYPE[4]][targetId]['element'].hide();
+            }
+        };
+
+        /**
+         * set target display
+         * @author psb
+         */
+        this.setSelectTarget = function(targetId){
+            if(_marker[_MARKER_TYPE[4]][targetId]==null){
                 return false;
             }
+            _mapCanvas.find(".on").removeClass("on");
+            _marker[_MARKER_TYPE[4]][targetId]['element'].addClass("on");
         };
 
         /**
@@ -725,7 +734,7 @@ var CustomMapMediator = (
                 };
 
                 if(data['useYn']=='N'){
-                    _self.setDisplayTarget(data['targetId'],false);
+                    targetElement.hide();
                 }
                 positionChangeEventHandler(data['targetId'],'init');
             }else{
