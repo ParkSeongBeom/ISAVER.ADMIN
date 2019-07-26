@@ -596,17 +596,24 @@ var CustomMapMediator = (
          */
         var setTranslate = function (targetData, targetElement){
             if(targetData['deviceCode']=='DEV013' && targetData['mainFlag']=='Y'){
+                // 펜스 갱신전에 회전값에 따른 계산 우선 수행
+                if(targetData.hasOwnProperty("setFenceList")){
+                    if(_marker[_MARKER_TYPE[1]][targetData['targetId']]!=null){
+                        for(var fenceId in _marker[_MARKER_TYPE[1]][targetData['targetId']]){
+                            _self.computePolyPoints({deviceId:targetData['targetId'], fenceId:fenceId});
+                        }
+                    }
+                }
+
                 targetData['translate'] = {
                     'x' : parseInt(targetElement.css("left")) + parseInt(targetElement.width())/2
                     ,'y' : parseInt(targetElement.css("top")) + parseInt(targetElement.height())/2
                 };
 
                 if(targetData.hasOwnProperty("setFenceList")){
-                    for(var index in _marker[_MARKER_TYPE[1]]){
-                        for(var i in _marker[_MARKER_TYPE[1]][index]){
-                            if(targetData['targetId']==_marker[_MARKER_TYPE[1]][index][i]['data']['deviceId']){
-                                _self.saveFence({deviceId:index, fenceId:i});
-                            }
+                    if(_marker[_MARKER_TYPE[1]][targetData['targetId']]!=null){
+                        for(var fenceId in _marker[_MARKER_TYPE[1]][targetData['targetId']]){
+                            _self.saveFence({deviceId:targetData['targetId'], fenceId:fenceId});
                         }
                     }
                 }else if(_options['custom']['fenceView']){
@@ -1013,22 +1020,24 @@ var CustomMapMediator = (
 
         this.computePolyPoints = function(data){
             var polygon = _marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['element'][0];
-            var sCTM = polygon.getCTM();
-            var pointsList = polygon.points;
-            var n = pointsList.numberOfItems;
-            var points = [];
-            for(var m=0;m<n;m++){
-                var mySVGPoint = _mapCanvas.find("svg")[0].createSVGPoint();
-                mySVGPoint.x = pointsList.getItem(m).x;
-                mySVGPoint.y = pointsList.getItem(m).y;
-                var mySVGPointTrans = mySVGPoint.matrixTransform(sCTM);
-                points.push([mySVGPointTrans.x,mySVGPointTrans.y])
+            if(polygon.hasAttribute("transform")){
+                var sCTM = polygon.getCTM();
+                var pointsList = polygon.points;
+                var n = pointsList.numberOfItems;
+                var points = [];
+                for(var m=0;m<n;m++){
+                    var mySVGPoint = _mapCanvas.find("svg")[0].createSVGPoint();
+                    mySVGPoint.x = pointsList.getItem(m).x;
+                    mySVGPoint.y = pointsList.getItem(m).y;
+                    var mySVGPointTrans = mySVGPoint.matrixTransform(sCTM);
+                    points.push([mySVGPointTrans.x,mySVGPointTrans.y])
+                }
+                //---force removal of transform--
+                data['location'] = _self.convertFenceLocationOrigin(data['deviceId'],points);
+                polygon.setAttribute("transform","");
+                polygon.removeAttribute("transform");
+                _self.saveFence(data);
             }
-            //---force removal of transform--
-            data['location'] = _self.convertFenceLocationOrigin(data['deviceId'],points);
-            polygon.setAttribute("transform","");
-            polygon.removeAttribute("transform");
-            _self.saveFence(data);
         };
 
         /**
