@@ -460,7 +460,7 @@ var NotificationHelper = (
                 event.stopPropagation();
             });
 
-            if(notification['fenceId']==null) {
+            if(notification['fenceId']==null || !cs.isRecording(notification['fenceId'])) {
                 notificationTag.find(".video_btn").remove();
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();
