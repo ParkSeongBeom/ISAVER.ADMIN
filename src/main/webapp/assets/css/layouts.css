@@ -1014,7 +1014,7 @@ aside.db_area {
             opacity: 1; }
           aside.db_area .db_list_box > ul li > button.on:after {
             opacity: 1; }
-        aside.db_area .db_list_box > ul li:hover > button:after {
+        aside.db_area .db_list_box > ul li > button:hover:after {
           opacity: 1; }
         aside.db_area .db_list_box > ul li .infor_set {
           flex: 0 1 100%;
@@ -8238,6 +8238,16 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
   height: 40px !important;
   min-height: 40px !important;
   max-height: 40px !important; }
+
+.video_btn:before {
+  content: "\e91c" !important;
+  background: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  font-size: 30px;
+  position: absolute;
+  left: 7px !important;
+  top: 7px !important; }
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
 @media screen and (max-width: 1400px) {

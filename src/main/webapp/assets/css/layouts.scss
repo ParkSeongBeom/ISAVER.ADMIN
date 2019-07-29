@@ -319,7 +319,7 @@ aside.db_area {
           }
         }
 
-        &:hover { & > button:after {opacity: 1;} }
+        & > button:hover:after{opacity: 1;}
 
         .infor_set {@include listbase;}
 
@@ -2228,6 +2228,12 @@ body.taekwon_mode {
 }
 
 .admin_mode.view_mode .wrap h2{flex:auto !important;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
+
+.video_btn{
+  &:before{content:"\e91c" !important;background: none !important; width: 0 !important; height: 0 !important; font-size:30px;
+    position: absolute; left: 7px !important; top: 7px !important;
+  }
+}
 
 /* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
 @media  screen and (max-width: 1400px) {

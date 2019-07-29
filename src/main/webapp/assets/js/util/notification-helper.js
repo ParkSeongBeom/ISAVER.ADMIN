@@ -174,7 +174,7 @@ var NotificationHelper = (
                     updateNotificationList(resultData['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
-                    //cancelNotificationList({'notification':resultData['notification'],'cancel':resultData['cancelList']});
+                    cancelNotificationList(resultData['cancelList']);
                     callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     break;
                 case "addEvent": // 일반이벤트 등록
@@ -452,12 +452,18 @@ var NotificationHelper = (
                 notificationCancelBtnAction();
             });
 
-            if(notification['fenceId']!=null && cs.isRecording(notification['fenceId'])) {
-                notificationTag.find(".video_btn").click({notificationId:notification['notificationId']},function(evt){
-                    cs.openVideo(evt.data.notificationId);
-                });
-            }else{
+            notificationTag.find(".video_btn").click({notificationId:notification['notificationId']},function(evt){
+                var _noti = _self.getNotification('data',evt.data.notificationId);
+                if(_noti!=null && _noti['updateDatetime']!=null){
+                    cs.openVideo(_noti['notificationId'],_noti['fenceId'],_noti['eventDatetime'],_noti['updateDatetime']);
+                }
+                event.stopPropagation();
+            });
+
+            if(notification['fenceId']==null || !cs.isRecording(notification['fenceId'])) {
                 notificationTag.find(".video_btn").remove();
+            }else if(notification['updateDatetime']==null){
+                notificationTag.find(".video_btn").hide();
             }
             var eventAppend = null;
             if(notification['fenceName']!=null){
@@ -670,8 +676,15 @@ var NotificationHelper = (
          * @author psb
          * @param notifications
          */
-        var cancelNotificationList = function(notifications){
-            if(notifications!=null){
+        var cancelNotificationList = function(cancelList){
+            if(cancelList!=null){
+                for(var index in cancelList){
+                    var cancel = cancelList[index];
+                    if(_notificationList[cancel['notificationId']]!=null){
+                        _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['eventDatetime'];
+                        _notificationList[cancel['notificationId']]['element'].find(".video_btn").show();
+                    }
+                }
             }
         };
 
