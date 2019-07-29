@@ -455,7 +455,7 @@ var NotificationHelper = (
             notificationTag.find(".video_btn").click({notificationId:notification['notificationId']},function(evt){
                 var _noti = _self.getNotification('data',evt.data.notificationId);
                 if(_noti!=null && _noti['updateDatetime']!=null){
-                    cs.openVideo(_noti['notificationId'],_noti['fenceId'],_noti['eventDatetime'],_noti['updateDatetime']);
+                    cs.openVideo(_noti['notificationId'],_noti['fenceId'],_noti['eventDatetime'].format("yyyy-MM-dd HH:mm:ss"),_noti['updateDatetime'].format("yyyy-MM-dd HH:mm:ss"));
                 }
                 event.stopPropagation();
             });
