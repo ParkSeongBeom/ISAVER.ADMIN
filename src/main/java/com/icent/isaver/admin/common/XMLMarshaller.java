@@ -1,7 +1,7 @@
 package com.icent.isaver.admin.common;
 
-import com.icent.isaver.admin.common.util.ListUtils;
 import com.icent.isaver.admin.common.util.ResourceFinder;
+import com.meous.common.util.ListUtils;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.util.CollectionUtils;
 

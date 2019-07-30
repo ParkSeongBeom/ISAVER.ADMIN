@@ -319,7 +319,7 @@ aside.db_area {
           }
         }
 
-        & > button:hover:after{opacity: 1;}
+        &:hover { & > button:after {opacity: 1;} }
 
         .infor_set {@include listbase;}
 
@@ -746,15 +746,15 @@ h4 {
       .video_area   {
         @include flex-option(1, 0, 500px); @include flex-column; max-height:none; margin:0 0 0 10px;
         & > *:last-of-type {margin : 10px 0 0 0;}
-      }
-    }
-  }
+      } 
+    } 
+  } 
 
   &.critical_pop {& > div > div {width:570px; max-width:570px; min-width: 570px;} }
 
 
   &.iocount_popup, &.ir_popup {
-    position: absolute !important; top:0;
+    position: absolute !important; top:0;z-index:99;
   }
   /////.......... 진출입 조회주기설정 팝업 시작
   &.iocount_popup {
@@ -989,7 +989,7 @@ h4 {
 
         span {
           @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
-          width:60px; height:100%; padding: 0 !important;
+          @include mmwidth(60px); height:100%; padding: 0 !important;
         }
         select + span {min-width:60px !important;}
         span, button {}
@@ -1106,8 +1106,7 @@ h4 {
             position: relative; height:100%; padding:0 0 0 20px;
             &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
           }
-          & > button.on{padding:5px 0 5px 20px; color:#EEB508;
-          }
+          & > button.on{}
 
           & > div {@include checkboxbas; @include checkbox-style01; @include csl-yesno; margin:0 0 0 10px;}
         }
@@ -2229,18 +2228,15 @@ body.taekwon_mode {
 
 .admin_mode.view_mode .wrap h2{flex:auto !important;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
 
-.video_btn{
-  &:before{content:"\e91c" !important;background: none !important; width: 0 !important; height: 0 !important; font-size:30px;
-    position: absolute; left: 7px !important; top: 7px !important;
-  }
-}
-
-/* 1024 이하 화면시 관리자화면 구역/장치 관리 적용 */
+/* 1400 이하 화면시 관리자화면 구역/장치 관리 적용 */
 @media  screen and (max-width: 1400px) {
   .admin_mode {
     .sub_title_area, .container {padding:0 10px;}
   }
-
+  .wrap > header .header_area{width:100%;}
+  .wrap > header .header_area .header_btn_set{
+    width:220px;
+  }
 }
 
 

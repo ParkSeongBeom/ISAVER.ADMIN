@@ -5,7 +5,7 @@ import com.icent.isaver.admin.bean.EventStatisticsBean;
 import com.icent.isaver.admin.dao.EventDao;
 import com.icent.isaver.admin.dao.EventStatisticsDao;
 import com.icent.isaver.admin.svc.EventStatisticsSvc;
-import com.kst.common.resource.CommonResource;
+import com.meous.common.resource.CommonResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 

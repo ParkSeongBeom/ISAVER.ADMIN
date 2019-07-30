@@ -5,7 +5,7 @@ import com.icent.isaver.admin.common.PropertyManager;
 import com.icent.isaver.admin.common.XMLMarshaller;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.util.*;
-import com.kst.common.util.POIExcelView;
+import com.meous.common.util.POIExcelView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -241,8 +241,8 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public POIExcelViewCustom excelDownloadView() {
-        POIExcelViewCustom view=new POIExcelViewCustom();
+    public POIExcelView excelDownloadView() {
+        POIExcelView view=new POIExcelView();
         view.setFileExtension(".xls");
         return view;
     }

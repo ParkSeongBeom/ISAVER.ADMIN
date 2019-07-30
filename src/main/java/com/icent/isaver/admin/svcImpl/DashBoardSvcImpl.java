@@ -6,7 +6,7 @@ import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
-import com.kst.common.resource.CommonResource;
+import com.meous.common.resource.CommonResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

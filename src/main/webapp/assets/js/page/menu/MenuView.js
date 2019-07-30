@@ -197,8 +197,11 @@ function MenuView(model) {
                 var _childMenuLiTag = childMenuLiTag.clone();
                 _childMenuLiTag.attr("name", _area['areaId']);
                 _childMenuLiTag.find("button").text(_area['areaName']);
+
                 if(_area['childAreaIds']!=null){
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
+                }else{
+                    _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+(_area['parentAreaId']?_area['parentAreaId']:'')+"','"+_area['areaId']+"');");
                 }
                 mainMenuTag.find("li[name='100000'] > ul").append(_childMenuLiTag);
             }

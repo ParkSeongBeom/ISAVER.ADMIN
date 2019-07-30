@@ -6,7 +6,7 @@ import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.dao.VideoHistoryDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.VideoHistorySvc;
-import com.kst.common.util.StringUtils;
+import com.meous.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

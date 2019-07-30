@@ -12,9 +12,10 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
-import com.kst.common.spring.TransactionUtil;
-import com.kst.common.util.POIExcelUtil;
-import com.kst.common.util.StringUtils;
+import com.meous.common.spring.TransactionUtil;
+import com.meous.common.util.ListUtils;
+import com.meous.common.util.POIExcelUtil;
+import com.meous.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -136,7 +137,7 @@ public class NotificationSvcImpl implements NotificationSvc {
          * @date 2018.1.11
          */
         try {
-//            List<List<Map<String, String>>> ret = CommonUtil.splitList(parameterList, 200);
+//            List<List<Map<String, String>>> ret = ListUtils.splitList(parameterList, 200);
 //            for (List<Map<String, String>> param : ret) {
 //                Map websocketParam = new HashMap();
 //                websocketParam.put("notification", param);

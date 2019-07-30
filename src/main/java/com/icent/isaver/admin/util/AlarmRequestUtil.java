@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.ResultBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.ResultState;
-import com.kst.common.util.StringUtils;
+import com.meous.common.util.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,8 +28,7 @@ import java.util.Map;
 
 /**
  * 알림 전송 관련 유틸리티
- * @author dhj
- * @date 2016.11.24
+ * @author psb
  */
 public class AlarmRequestUtil {
 
@@ -116,7 +115,6 @@ public class AlarmRequestUtil {
         }
         return null;
     }
-
 
     public static ResultBean sendRequestFuncJson(StringEntity stringEntity, String requestHttpUrl) {
         CloseableHttpClient commonHttpClient = null;

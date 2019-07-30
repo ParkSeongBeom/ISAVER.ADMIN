@@ -2,7 +2,7 @@ package com.icent.isaver.admin.util;
 
 import com.icent.isaver.admin.bean.CodeBean;
 import com.icent.isaver.admin.dao.CodeDao;
-import com.kst.common.resource.CommonResource;
+import com.meous.common.resource.CommonResource;
 
 import javax.inject.Inject;
 import java.util.HashMap;

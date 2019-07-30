@@ -10,8 +10,8 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
-import com.kst.common.spring.TransactionUtil;
-import com.kst.common.util.StringUtils;
+import com.meous.common.spring.TransactionUtil;
+import com.meous.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -109,7 +109,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
 
         modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
 
-        List<FileBean> iconFileList = fileDao.findListFile(new HashMap<String, String>(){{put("fileType", AdminResource.FILE_TYPE.get("icon")); put("useYn", com.kst.common.resource.CommonResource.YES);}});
+        List<FileBean> iconFileList = fileDao.findListFile(new HashMap<String, String>(){{put("fileType", AdminResource.FILE_TYPE.get("icon")); put("useYn", com.meous.common.resource.CommonResource.YES);}});
         modelAndView.addObject("iconFileList", iconFileList);
 
         try{

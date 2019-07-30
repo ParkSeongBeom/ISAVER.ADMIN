@@ -228,15 +228,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: kstcu_lib_v0.943">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/common/kstcu_lib_v0.943.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Gradle: kst_digest_lib_v0.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/common/kst_digest_lib_v0.1.jar!/" />
@@ -881,6 +872,15 @@
       <library name="Gradle: poi-scratchpad-3.8-20120326">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/common/poi-scratchpad-3.8-20120326.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: meous_lib_v0.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/common/meous_lib_v0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

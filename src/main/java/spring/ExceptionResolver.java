@@ -7,7 +7,7 @@ import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.util.CommonUtil;
-import com.kst.common.util.StringUtils;
+import com.meous.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
