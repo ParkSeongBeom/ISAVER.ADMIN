@@ -241,8 +241,8 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public POIExcelView excelDownloadView() {
-        POIExcelView view=new POIExcelView();
+    public POIExcelViewCustom excelDownloadView() {
+        POIExcelViewCustom view=new POIExcelViewCustom();
         view.setFileExtension(".xls");
         return view;
     }
