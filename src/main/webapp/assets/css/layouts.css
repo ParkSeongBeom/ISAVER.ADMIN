@@ -8274,6 +8274,9 @@ body.taekwon_mode .watch_area .chart_area:hover .chart_select_set {
     width: 100%; }
 
   .wrap > header .header_area .header_btn_set {
-    width: 220px; } }
+    width: 220px; }
+
+  menu button {
+    min-width: 150px; } }
 
 /*# sourceMappingURL=layouts.css.map */
