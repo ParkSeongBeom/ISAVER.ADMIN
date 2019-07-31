@@ -463,7 +463,7 @@ var NotificationHelper = (
             });
 
             if(notification['fenceId']==null || !cs.isRecording(notification['fenceId'])) {
-                //notificationTag.find(".video_btn").remove();
+                notificationTag.find(".video_btn").remove();
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();
             }
