@@ -3020,6 +3020,7 @@ h4 {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin: 0;
 }
 
 .popupbase.ir_popup input {
@@ -6254,12 +6255,36 @@ h4 {
   background-color: #d2a01e !important;
 }
 
+.level-caution.confirm, .level-caution .m_marqueebox:after.confirm, .level-caution.copybox:after.confirm {
+  background-color: #259dcf !important;
+}
+
+.level-caution.confirm {
+  background-color: #259dcf !important;
+}
+
 .level-warning, .level-warning .m_marqueebox:after, .level-warning.copybox:after {
   background-color: #f06400 !important;
 }
 
+.level-warning.confirm, .level-warning .m_marqueebox:after.confirm, .level-warning.copybox:after.confirm {
+  background-color: #259dcf !important;
+}
+
+.level-warning.confirm {
+  background-color: #259dcf !important;
+}
+
 .level-danger, .level-danger .m_marqueebox:after, .level-danger.copybox:after {
   background-color: #c30202 !important;
+}
+
+.level-danger.confirm, .level-danger .m_marqueebox:after.confirm, .level-danger.copybox:after.confirm {
+  background-color: #259dcf !important;
+}
+
+.level-danger.confirm {
+  background-color: #259dcf !important;
 }
 
 .level-caution.type-list *, .level-caution.type-list *:before, .level-caution.type-list *:after, .level-caution .watch_area > div *, .level-caution .watch_area > div *:before, .level-caution .watch_area > div *:after, .level-warning.type-list *, .level-warning.type-list *:before, .level-warning.type-list *:after, .level-warning .watch_area > div *, .level-warning .watch_area > div *:before, .level-warning .watch_area > div *:after, .level-danger.type-list *, .level-danger.type-list *:before, .level-danger.type-list *:after, .level-danger .watch_area > div *, .level-danger .watch_area > div *:before, .level-danger .watch_area > div *:after {

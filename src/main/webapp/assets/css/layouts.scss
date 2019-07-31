@@ -784,7 +784,7 @@ h4 {
 
   &.ir_popup {
     & > div > div {max-width:250%; min-width:25%; max-height:30%; min-height:30%;}
-    article { @include flex-midddle; }
+    article { @include flex-midddle; margin:0;}
     input {width:300px;}
   }
   /////.......... 구역 / 장치 관리 설정 옵션 팝업 시작
@@ -1531,15 +1531,24 @@ h4 {
 
   &-caution {
     background-color: rgba($color-caution,1);
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-caution,1) !important;}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-caution,1) !important;
+        &.confirm{background-color: rgba($color-blue-02,1) !important;}
+    }
+    &.confirm{background-color: rgba($color-blue-02,1) !important;}
   } // .level-caution 주의
 
   &-warning {
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-warning,1) !important;}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-warning,1) !important;
+        &.confirm{background-color: rgba($color-blue-02,1)!important;}
+    }
+    &.confirm{background-color: rgba($color-blue-02,1)!important;}
   } // .level-warning 경고
 
   &-danger  {
-    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-danger,1) !important;}
+    &, .m_marqueebox:after, &.copybox:after {background-color: rgba($color-danger,1) !important;
+        &.confirm{background-color: rgba($color-blue-02,1)!important;}
+    }
+    &.confirm{background-color: rgba($color-blue-02,1)!important;}
   } // .level-danger  위험
 
   &-die  {

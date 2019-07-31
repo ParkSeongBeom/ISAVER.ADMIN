@@ -38,8 +38,6 @@ import java.net.UnknownHostException;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by icent on 2016. 11. 25..

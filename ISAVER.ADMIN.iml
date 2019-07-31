@@ -228,15 +228,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: kst_digest_lib_v0.1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/common/kst_digest_lib_v0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Gradle: libphonenumber-7.2.2">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/common/libphonenumber-7.2.2.jar!/" />
@@ -878,9 +869,72 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: meous_lib_v0.1">
+      <library name="Gradle: meous_lib_v0.02">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/common/meous_lib_v0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/common/meous_lib_v0.02.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: jetty-client-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/jetty-client-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: jetty-http-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/jetty-http-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: jetty-io-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/jetty-io-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: jetty-util-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/jetty-util-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: websocket-api-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/websocket-api-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: websocket-client-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/websocket-client-9.4.6.v20170531.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: websocket-common-9.4.6.v20170531">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ws/websocket-common-9.4.6.v20170531.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
