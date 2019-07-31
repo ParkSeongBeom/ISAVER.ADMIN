@@ -319,7 +319,7 @@ aside.db_area {
           }
         }
 
-        &:hover { & > button:after {opacity: 1;} }
+        & > button:hover:after{opacity: 1;}
 
         .infor_set {@include listbase;}
 
@@ -1106,7 +1106,7 @@ h4 {
             position: relative; height:100%; padding:0 0 0 20px;
             &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
           }
-          & > button.on{}
+          & > button.on{padding:5px 0 5px 20px; color:#EEB508;}
 
           & > div {@include checkboxbas; @include checkbox-style01; @include csl-yesno; margin:0 0 0 10px;}
         }
@@ -1661,7 +1661,7 @@ body.taekwon_mode {
       display:none;
       @include flex-justify-content-center; @include flex-align-items-start;
       @include transition(200ms);  // @include rotate-y(-20deg);
-      order: 2; width:calc(100% - 20px); min-height:calc(auto); padding: 10px; margin:10px; margin-bottom:0;
+      order: 2; width:calc(100% - 20px); min-height:auto; padding: 10px; margin:10px; margin-bottom:0;
       @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
 
       &.level-danger {order:1 !important;}
@@ -2236,6 +2236,13 @@ body.taekwon_mode {
 }
 
 .admin_mode.view_mode .wrap h2{flex:auto !important;font-size:1.7rem; color:#ffffff; padding: 0 0 0 15px; font-weight:bold;display:inline-block; @include mmheight($headerHeight);}
+
+.video_btn{
+  &:before{content:"\e91c" !important;background: none !important; width: 0 !important; height: 0 !important; font-size:30px;
+    position: absolute; left: 7px !important; top: 7px !important;
+  }
+  &{}
+}
 
 /* 1400 이하 화면시 관리자화면 구역/장치 관리 적용 */
 @media  screen and (max-width: 1400px) {

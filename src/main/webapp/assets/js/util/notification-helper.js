@@ -456,12 +456,14 @@ var NotificationHelper = (
                 var _noti = _self.getNotification('data',evt.data.notificationId);
                 if(_noti!=null && _noti['updateDatetime']!=null){
                     cs.openVideo(_noti['notificationId'],_noti['fenceId'],new Date(_noti['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(_noti['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
+                }else{
+                    alert("Detect cancel event does not exist.");
                 }
                 event.stopPropagation();
             });
 
             if(notification['fenceId']==null || !cs.isRecording(notification['fenceId'])) {
-                notificationTag.find(".video_btn").remove();
+                //notificationTag.find(".video_btn").remove();
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();
             }
