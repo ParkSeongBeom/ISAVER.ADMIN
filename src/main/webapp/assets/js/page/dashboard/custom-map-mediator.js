@@ -1037,7 +1037,9 @@ var CustomMapMediator = (
                 polygon.setAttribute("transform","");
                 polygon.removeAttribute("transform");
                 _self.saveFence(data);
+                return true;
             }
+            return false;
         };
 
         /**

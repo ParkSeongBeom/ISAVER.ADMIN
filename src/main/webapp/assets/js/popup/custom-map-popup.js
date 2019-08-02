@@ -343,7 +343,10 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()});
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
                                                 })
                                             ).append(
                                                 $("<input/>", {
@@ -357,7 +360,10 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()});
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
                                                 })
                                             ).append(
                                                 $("<select/>", {name: 'fenceType'}).append(
@@ -374,7 +380,10 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    _customMapMediator.computePolyPoints({deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()});
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
                                                 })
                                             )
                                         )
