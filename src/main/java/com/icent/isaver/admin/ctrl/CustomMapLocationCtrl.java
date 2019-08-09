@@ -68,4 +68,18 @@ public class CustomMapLocationCtrl {
         ModelAndView modelAndView = customMapLocationSvc.saveCustomMapLocation(parameters);
         return modelAndView;
     }
+
+    /**
+     * Custom Map 설정을 저장한다. (SIOC 서버 적용)
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/sync")
+    public ModelAndView syncCustomMapLocation(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        ModelAndView modelAndView = customMapLocationSvc.syncCustomMapLocation(parameters);
+        return modelAndView;
+    }
 }

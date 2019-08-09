@@ -3,6 +3,7 @@ package com.icent.isaver.admin.svcImpl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.bean.*;
+import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.*;
 import com.icent.isaver.admin.resource.AdminResource;
@@ -171,8 +172,17 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
             transactionManager.rollback(transactionStatus);
             throw new IsaverException("");
         }
+
         locationSync(parameters);
         return new ModelAndView();
+    }
+
+    @Override
+    public ModelAndView syncCustomMapLocation(Map<String, String> parameters) {
+        ModelAndView modelAndView = new ModelAndView();
+        locationSync(parameters);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
     }
 
     private void locationSync(Map<String, String> parameters){

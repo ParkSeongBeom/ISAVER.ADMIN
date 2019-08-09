@@ -346,6 +346,7 @@
                     <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <button class="refl_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','safeGuard'); return false;" title="<spring:message code='resource.title.serverSync'/>"></button>
                             <!-- 구역 하나로 확장 area -->
                             <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
@@ -437,7 +438,7 @@
                         <article>
                             <section class="entrance_set">
                                 <!-- 클라우드 이미지-->
-                                <button class="ir_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}');"></button>
+                                <button class="ir_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','toiletRoom');"></button>
                                 <div class="s_lbox">
                                     <canvas name="toiletRoom-canvas"></canvas>
                                 </div>
@@ -639,6 +640,7 @@
         ,saveInoutConfigurationUrl : "${rootPath}/inoutConfiguration/save.json"
         ,inoutConfigAreaTreeUrl : "${rootPath}/area/list.json"
         ,authorizeCheckUrl : "${rootPath}/authCheck.json"
+        ,customMapLocationSyncUrl : "${rootPath}/customMapLocation/sync.json"
     };
 
     var messageConfig = {
@@ -978,9 +980,13 @@
      * 사용자 인증 팝업 열기
      * @author psb
      */
-    function openAuthorizePopup(_this, areaId){
+    function openAuthorizePopup(_this, areaId, actionType){
         if($(_this).hasClass("on")){
-            dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:areaId,'imageMode':'bg'});
+            switch (actionType){
+                case "toiletRoom" :
+                    dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:areaId,'imageMode':'bg'});
+                    break;
+            }
         }else{
             $("#authrizeAreaId").val(areaId);
             $("#authrizePassword").val('');
@@ -989,7 +995,7 @@
             $("#authrizePassword").bind("keyup", function(evt){
                 var code = evt.keyCode || evt.which;
                 if(code == 13){
-                    confirmAuthorize();
+                    confirmAuthorize(actionType);
                 }
             });
         }
@@ -1007,7 +1013,7 @@
      * 사용자 인증
      * @author psb
      */
-    function confirmAuthorize(){
+    function confirmAuthorize(actionType){
         if($("#authrizePassword").val().trim().length==0){
             alertMessage('emptyPassword');
             return false;
@@ -1015,6 +1021,7 @@
         var param = {
             'userPassword' : $("#authrizePassword").val()
             ,'areaId' : $("#authrizeAreaId").val()
+            ,'actionType' : actionType
         };
         callAjax('authorizeCheck',param);
     }
@@ -1032,11 +1039,21 @@
         switch(actionType){
             case 'authorizeCheck':
                 if(data['result']!=null && Boolean(data['result'])){
-                    dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:data['paramBean']['areaId'],'imageMode':'ir'});
+                    switch (data['paramBean']['actionType']){
+                        case "toiletRoom" :
+                            dashboardHelper.toiletRoomSendMessage({messageType:'imageMode',areaId:data['paramBean']['areaId'],'imageMode':'ir'});
+                            break;
+                        case "safeGuard" :
+                            callAjax('customMapLocationSync', {areaId:data['paramBean']['areaId']});
+                            break;
+                    }
                     closeAuthorizePopup();
                 }else{
                     alertMessage(actionType+'Failure');
                 }
+                break;
+            case 'customMapLocationSync':
+                console.info("["+new Date().format("yyyy-MM-dd HH:mm:ss")+"] "+data['paramBean']['areaId']+" sync success");
                 break;
             case 'chart':
                 chartRender(data);

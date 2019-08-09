@@ -606,8 +606,8 @@ var CustomMapMediator = (
                 }
 
                 targetData['translate'] = {
-                    'x' : parseInt(targetElement.css("left")) + parseInt(targetElement.width())/2
-                    ,'y' : parseInt(targetElement.css("top")) + parseInt(targetElement.height())/2
+                    'x' : parseInt(targetElement.css("left")) + parseInt(_canvasSize['width']-targetData['x1']-targetData['x2'])/2
+                    ,'y' : parseInt(targetElement.css("top")) + parseInt(_canvasSize['height']-targetData['y1']-targetData['y2'])/2
                 };
 
                 if(targetData.hasOwnProperty("setFenceList")){

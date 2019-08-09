@@ -34,4 +34,10 @@ public interface CustomMapLocationSvc {
      * @author psb
      */
     ModelAndView saveCustomMapLocation(Map<String, String> parameters);
+
+    /**
+     * SIOC 서버 동기화 한다.
+     * @author psb
+     */
+    ModelAndView syncCustomMapLocation(Map<String, String> parameters);
 }

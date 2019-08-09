@@ -151,7 +151,7 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <c:if test="${notification.trackingJson!=null}">
+                                    <c:if test="${notification.trackingJson!=null && notification.trackingJson!='[]'}">
                                         <button class="eventdetail_btn"
                                                 data-notification-id="${notification.notificationId}"
                                                 data-critical-level="${notification.criticalLevel}"

@@ -73,6 +73,9 @@ public class DashBoardSvcImpl implements DashBoardSvc {
             Map<String, String> deviceParam = new HashMap<>();
             deviceParam.put("areaId",area.getAreaId());
             deviceParam.put("delYn", CommonResource.NO);
+            if(!area.getTemplateCode().equals("TMP004")){
+                deviceParam.put("ignoreEventValue", "Y");
+            }
             area.setDevices(deviceDao.findListDevice(deviceParam));
             area.setAreas(areaDao.findListAreaForDashboard(deviceParam));
         }

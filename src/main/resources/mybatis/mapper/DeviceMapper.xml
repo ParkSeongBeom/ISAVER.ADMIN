@@ -60,17 +60,22 @@
                 , B.sub_url as subUrl
                 , B.stream_server_url as streamServerUrl
                 , B.link_url as linkUrl
-                , (
-                      SELECT value
-                      FROM  isaver.event_log c
-                      INNER JOIN isaver.event_log_info d
-                      ON    c.event_log_id = d.event_log_id
-                      AND	 d.key = 'value'
-                      WHERE c.device_id = b.device_id
-                      AND	c.event_datetime between (to_char(now(),'yyyy-mm-dd'))::timestamp and now()
-                      ORDER BY event_datetime DESC
-                      limit 1
-                ) as evtValue
+                  <if test="ignoreEventValue != null and ignoreEventValue != ''">
+                      , 0 as evtValue
+                  </if>
+                  <if test="ignoreEventValue == null">
+                      , (
+                          SELECT value
+                          FROM  isaver.event_log c
+                          INNER JOIN isaver.event_log_info d
+                          ON    c.event_log_id = d.event_log_id
+                          AND	 d.key = 'value'
+                          WHERE c.device_id = b.device_id
+                          AND	c.event_datetime between (to_char(now(),'yyyy-mm-dd'))::timestamp and now()
+                          ORDER BY event_datetime DESC
+                          limit 1
+                      ) as evtValue
+                  </if>
       FROM  DEVICE_HIERACHY A
       INNER JOIN  isaver.device B
       ON	A.deviceId = b.device_id

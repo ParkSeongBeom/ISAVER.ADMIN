@@ -88,7 +88,8 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-        List<DeviceBean> deviceList = deviceDao.findListDevice(null);
+        parameters.put("ignoreEventValue","Y");
+        List<DeviceBean> deviceList = deviceDao.findListDevice(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("devices", deviceList);
@@ -98,6 +99,7 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDeviceForResource(Map<String, String> parameters) {
+        parameters.put("ignoreEventValue","Y");
         List<DeviceBean> deviceList = deviceDao.findListDevice(parameters);
 
         Map<String, Object> resourceParam = new HashMap<>();
