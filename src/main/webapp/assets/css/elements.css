@@ -2824,7 +2824,7 @@ button.btn ~ button.btn {
         -webkit-animation-fill-mode: forwards;
         overflow: hidden;
         opacity: .6;
-        background: url("../images/map/lidar.svg2") no-repeat center, -webkit-linear-gradient(top, rgba(37, 157, 207, 0) 0%, rgba(37, 157, 207, 0.3) 50%, rgba(37, 157, 207, 0.2) 50.1%, rgba(37, 157, 207, 0) 100%) !important;
+        background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba(37, 157, 207, 0) 0%, rgba(37, 157, 207, 0.3) 50%, rgba(37, 157, 207, 0.2) 50.1%, rgba(37, 157, 207, 0) 100%) !important;
         animation-name: lidar;
         -webkit-animation-name: lidar;
         -webkit-animation-duration: 5s;
@@ -3027,7 +3027,7 @@ button.btn ~ button.btn {
       -webkit-animation-fill-mode: forwards;
       overflow: hidden;
       opacity: .6;
-      background: url("../images/map/lidar.svg2") no-repeat center, -webkit-linear-gradient(top, rgba(210, 160, 30, 0) 0%, rgba(210, 160, 30, 0.3) 50%, rgba(210, 160, 30, 0.2) 50.1%, rgba(210, 160, 30, 0) 100%) !important; }
+      background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba(210, 160, 30, 0) 0%, rgba(210, 160, 30, 0.3) 50%, rgba(210, 160, 30, 0.2) 50.1%, rgba(210, 160, 30, 0) 100%) !important; }
 @-webkit-keyframes lidar {
   0% {
     transform: rotate(0);
@@ -3061,7 +3061,7 @@ button.btn ~ button.btn {
       -webkit-animation-fill-mode: forwards;
       overflow: hidden;
       opacity: .6;
-      background: url("../images/map/lidar.svg2") no-repeat center, -webkit-linear-gradient(top, rgba(240, 100, 0, 0) 0%, rgba(240, 100, 0, 0.3) 50%, rgba(240, 100, 0, 0.2) 50.1%, rgba(240, 100, 0, 0) 100%) !important; }
+      background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba(240, 100, 0, 0) 0%, rgba(240, 100, 0, 0.3) 50%, rgba(240, 100, 0, 0.2) 50.1%, rgba(240, 100, 0, 0) 100%) !important; }
 @-webkit-keyframes lidar {
   0% {
     transform: rotate(0);
@@ -3095,7 +3095,7 @@ button.btn ~ button.btn {
       -webkit-animation-fill-mode: forwards;
       overflow: hidden;
       opacity: .6;
-      background: url("../images/map/lidar.svg2") no-repeat center, -webkit-linear-gradient(top, rgba(195, 2, 2, 0) 0%, rgba(195, 2, 2, 0.3) 50%, rgba(195, 2, 2, 0.2) 50.1%, rgba(195, 2, 2, 0) 100%) !important;
+      background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba(195, 2, 2, 0) 0%, rgba(195, 2, 2, 0.3) 50%, rgba(195, 2, 2, 0.2) 50.1%, rgba(195, 2, 2, 0) 100%) !important;
       cursor: move; }
 @-webkit-keyframes lidar {
   0% {
@@ -3168,7 +3168,7 @@ button.btn ~ button.btn {
       -webkit-animation-fill-mode: forwards;
       overflow: hidden;
       opacity: .6;
-      background: url("../images/map/lidar.svg2") no-repeat center, -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.2) 50.1%, transparent 100%) !important;
+      background: url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.2) 50.1%, transparent 100%) !important;
       animation-play-state: paused;
       top: auto;
       left: auto; }
@@ -3680,5 +3680,39 @@ button.btn ~ button.btn {
     background-color: #0F4151;
     border-right: 1px solid #040404;
     border-top: 1px solid #040404; }
+
+.uplist {
+  left: 1px;
+  width: 40px !important; }
+  .uplist > button:before {
+    content: "\e917" !important;
+    font-size: 1rem !important;
+    border: 1px solid #f5f5f5; }
+  .uplist > button:after {
+    display: none; }
+  .uplist > button.on:before {
+    content: "\e917" !important;
+    transform: rotateX(180deg); }
+  .uplist .ico-up {
+    padding-top: 5px !important;
+    color: #f5f5f5 !important;
+    background-color: #3c3c3c;
+    z-index: 9; }
+  .uplist .ico-up:hover {
+    color: #32a0be !important; }
+    .uplist .ico-up:hover:before {
+      border-color: #32a0be !important; }
+
+.btn-tarea {
+  width: 30px !important; }
+  .btn-tarea:before {
+    content: "\e92e" !important; }
+
+.ico-up {
+  padding-top: 5px !important;
+  color: #f5f5f5 !important; }
+
+.ico-up.on {
+  color: #f5f5f5 !important; }
 
 /*# sourceMappingURL=elements.css.map */

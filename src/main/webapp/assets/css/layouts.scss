@@ -989,7 +989,7 @@ h4 {
 
         span {
           @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
-          @include mmwidth(60px); height:100%; padding: 0 !important;
+          width:60px; height:100%; padding: 0 !important;
         }
         select + span {min-width:60px !important;}
         span, button {}
@@ -1099,28 +1099,29 @@ h4 {
     ul {
       overflow: auto; overflow: overlay; @include flex-option(0, 1, 100%); height:100%;
       li {
-        min-height:60px;
+        min-height:60px;position: relative;
         & > div {
           & > button {
             @include transition(200ms); @include flex-option(0, 1, 100%);
             position: relative; height:100%; padding:0 0 0 20px;
             &:after {content:"ㆍ"; position: absolute; left:0; width:20px; }
           }
-          & > button.on{padding:5px 0 5px 20px; color:#EEB508;}
+          & > button.on{padding:5px 0 0 20px; color:#EEB508;}
 
           & > div {@include checkboxbas; @include checkbox-style01; @include csl-yesno; margin:0 0 0 10px;}
         }
 
         & > section {
-          @include flex-option(0, 1, 100%); margin: 10px 0 10px 50px; position: relative;
-
+          @include flex-option(0, 1, 100%); margin: 11px 0 10px 50px; position: relative; display:none;
+          &:last-of-type{display:block;}
+          &.on{display:block;}
           &:before, &:after {content:""; position: absolute; background-color:$color-gray-01}
           &:before {left:-20px; top:18px; width:18px; height:1px;}
-          &:after  {left:-20px; top:-18px; width:1px; bottom:0;}
+          &:after  {left:-20px; top:-16px; width:1px; bottom:0;}
 
           &:last-of-type {
             margin-bottom:25px;
-            &:after {bottom:auto; top:-10px; height:28px;}
+            &:after {bottom:auto; top:-16px; height:35px;}
           }
 
           & > div {
@@ -1138,7 +1139,7 @@ h4 {
 
           button.btn {
             &-del, &-edi, &-cut {
-              width:30px; min-width:30px; max-width:30px; @include flex-justify-content-end; padding:0 4px 0 0;
+              width:30px; min-width:30px; max-width:30px; @include flex-justify-content-end; padding:0 2px 0 0;
             }
             &-del { &:before {content:"\e91a";} }
             &-edi { &:before {content:"\e905";} }
@@ -1197,11 +1198,21 @@ h4 {
               span{float:left;height:auto;width:100px;}
             }
             .fence_cut.on{display:flex;}
-
+            .fence_tarea{
+              display:none; position: absolute; left:0; background-color: #535353; padding: 5px 10px; z-index: 99;
+              border:3px solid #040404; height: 155px; background-image: url(../../assets/images/bg/bg_spot.svg);
+              button:hover{color:#ffffff;}
+              input{margin-top: 20px;}
+              button{margin-top: 20px;}
+              span{float:left;height:auto;width:100px;}
+              & > P{width: 100%; height:auto; font-size:16px;}
+              .textboard{margin-top: 4px; height:110px;}
+            }
+            .fence_tarea.on{display:block;}
             .fence_name {
               input  {@include flex-option(0, 1, 100%); border-right-color:transparent;
-                &:nth-of-type(1){@include flex-option(0, 1, 130%);}
-                &:nth-of-type(2){@include flex-option(0, 1, 70%);}
+                &:nth-of-type(1){@include flex-option(0, 1, 150%);}
+                &:nth-of-type(2){@include flex-option(0, 1, 50%);}
               }
               select {width:95px; min-width:95px; max-width:95px;}
             }

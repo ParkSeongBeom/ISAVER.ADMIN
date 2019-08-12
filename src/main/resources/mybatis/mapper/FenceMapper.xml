@@ -10,6 +10,7 @@
         <result property="deviceId" column="deviceId"/>
         <result property="fenceName" column="fenceName"/>
         <result property="zMin" column="zMin"/>
+        <result property="config" column="config"/>
         <collection property="location" ofType="FenceLocationBean">
             <result property="lat" column="lat"/>
             <result property="lng" column="lng"/>
@@ -28,6 +29,7 @@
                 , C.area_id as areaId
                 , A.fence_name as fenceName
                 , A.z_min as zMin
+                , A.config as config
                 , b.lat as lat
                 , b.lng as lng
         FROM    isaver.fence A
@@ -69,6 +71,7 @@
                 , device_id as deviceId
                 , fence_name as fenceName
                 , z_min as zMin
+                , config as config
         FROM    isaver.fence
     </select>
 
@@ -84,6 +87,7 @@
             , device_id
             , fence_name
             , z_min
+            , config
         ) VALUES
         <foreach collection="list" item="item" separator="," close=";">
             (
@@ -97,6 +101,12 @@
                 </if>
                 <if test="item.zMin == null">
                     ,0
+                </if>
+                <if test="item.config != null and item.config != ''">
+                    ,#{item.config}
+                </if>
+                <if test="item.config == null">
+                    ,null
                 </if>
             )
         </foreach>

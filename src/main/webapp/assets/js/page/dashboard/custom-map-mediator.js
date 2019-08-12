@@ -116,6 +116,7 @@ var CustomMapMediator = (
             'width' : 5000
             ,'height' : 5000
         };
+        var _mainDevices = [];
         var _top = null;
         var _left = null;
         var _originX = null;
@@ -160,6 +161,26 @@ var CustomMapMediator = (
 
         this.getRatio = function(){
             return _ratio;
+        };
+
+        this.getImagePoint = function(width, height, cutX, cutY){
+            if(width==null || height==null){
+                console.error("width or height is null - width : "+width+", heigth : "+height);
+                return false;
+            }
+            var marginWidth = (_canvasSize['width']-width)/2;
+            var marginHeight = (_canvasSize['height']-height)/2;
+
+            for(var index in _mainDevices){
+                var targetData = _marker[_MARKER_TYPE[4]][_mainDevices[index]]['data'];
+                console.log({
+                    deviceId : _mainDevices[index]
+                    ,sensor_x : (targetData['translate']['x']-marginWidth-(cutX?cutX:0))/10
+                    ,sensor_y : (targetData['translate']['y']-marginHeight-(cutY?cutY:0))/10
+                    ,org_sensor_x : (targetData['translate']['x']-marginWidth)/10
+                    ,org_sensor_y : (targetData['translate']['y']-marginHeight)/10
+                });
+            }
         };
 
         /**
@@ -648,6 +669,7 @@ var CustomMapMediator = (
                         ,'fenceType':data['fenceType']!=null?data['fenceType']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['fenceType']
                         ,'fenceName':data['fenceName']!=null?data['fenceName']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['fenceName']
                         ,'zMin':data['zMin']!=null?data['zMin']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['zMin']
+                        ,'config':data['config']!=null?data['config']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['config']
                         ,'location':data['location']!=null?data['location']:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['location']
                     }
                 );
@@ -734,13 +756,13 @@ var CustomMapMediator = (
                         ,'x2' : data['useYn']?data['x2']:(_canvasSize['width']/2)-(targetElement.width()/2)
                         ,'y1' : data['useYn']?data['y1']:(_canvasSize['height']/2)-(targetElement.height()/2)
                         ,'y2' : data['useYn']?data['y2']:(_canvasSize['height']/2)-(targetElement.height()/2)
-                        ,'useYn' : data['useYn']
+                        ,'useYn' : data['useYn']?data['useYn']:"N"
                     }
                     ,'element' : targetElement
                     ,'notification' : $.extend(true,{},criticalList)
                 };
 
-                if(data['useYn']=='N'){
+                if(data['useYn']==null || data['useYn']=='N'){
                     targetElement.hide();
                 }
                 positionChangeEventHandler(data['targetId'],'init');
@@ -805,6 +827,7 @@ var CustomMapMediator = (
                             _marker[messageType][data['deviceId']][data['id']]['data']['fenceName'] = fenceName;
                             _marker[messageType][data['deviceId']][data['id']]['data']['fenceType'] = data['fenceType'];
                             _marker[messageType][data['deviceId']][data['id']]['data']['zMin'] = data['zMin'];
+                            _marker[messageType][data['deviceId']][data['id']]['data']['config'] = data['config'];
                         }else{
                             fenceName = data['fenceName']?data['fenceName']:data['id'];
                             const svgPolygon = _canvasSvg.polygon(points, {fenceId:data['id']});
@@ -839,6 +862,7 @@ var CustomMapMediator = (
                                     ,'deviceId' : data['deviceId']
                                     ,'fenceType' : data['fenceType']
                                     ,'zMin' : (data['zMin']?data['zMin']:0)
+                                    ,'config' : (data['config']?data['config']:null)
                                     ,'fenceId' : data['id']
                                     ,'fenceName' : fenceName
                                     ,'transX' : null
@@ -1173,6 +1197,7 @@ var CustomMapMediator = (
                     ,"fenceType":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['fenceType']
                     ,"fenceName":fenceName==null?_fenceId:(index==0?fenceName:(fenceName+"_"+index))
                     ,"zMin":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['zMin']
+                    ,"config":_marker[_MARKER_TYPE[1]][deviceId][fenceId]['data']['config']
                     ,"location":_self.convertFenceLocationOrigin(deviceId,cutPoints[index])
                 });
             }
@@ -1654,6 +1679,9 @@ var CustomMapMediator = (
                     var childList = data['childList'];
                     for(var index in childList){
                         _self.targetRender(childList[index]);
+                        if(childList[index]['mainFlag']=='Y'){
+                            _mainDevices.push(childList[index]['targetId']);
+                        }
                     }
                     _self.setImageConfig('rotate',"directInput", data['area']['rotate']);
                     _self.setImageConfig('skewX',"directInput", data['area']['skewX']);

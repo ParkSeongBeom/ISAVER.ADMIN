@@ -29,6 +29,8 @@ public class FenceBean {
     private String deviceId;
     /* 펜스 높이*/
     private Double zMin;
+    /* 설정정보 */
+    private String config;
 
     /* 펜스명*/
     private String fenceName;
@@ -113,5 +115,13 @@ public class FenceBean {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
     }
 }

@@ -23,6 +23,9 @@ var CustomMapPopup = (
             ,"DEV013" : "ico-m8"
             ,"DEV015" : "ico-qguard"
         };
+        var _options = {
+            "initFenceListShow" : true
+        };
         var _areaId = null;
         var _mouseDownInterval = 0;
         var _customMapMediator;
@@ -66,6 +69,17 @@ var CustomMapPopup = (
                     _customMapMediator.setAngleXClass($(this).find("option:selected").val(),false);
                 }
             });
+
+            _element.on("click",function(event){
+                if (!$(event.target).closest(".fence_cut, .btn-cut").length) {
+                    $(".btn-cut").removeClass("on");
+                    $(".fence_cut").removeClass("on");
+                }
+                if (!$(event.target).closest(".fence_tarea, .btn-tarea").length) {
+                    $(".btn-tarea").removeClass("on");
+                    $(".fence_tarea").removeClass("on");
+                }
+            });
         };
 
         /**
@@ -82,6 +96,14 @@ var CustomMapPopup = (
          */
         this.setMessageConfig = function(messageConfig){
             _messageConfig = messageConfig;
+        };
+
+        /**
+         * set message config
+         * @author psb
+         */
+        this.getImagePoint = function(width, height, cutX, cutY){
+            _customMapMediator.getImagePoint(width, height, cutX, cutY);
         };
 
         /**
@@ -121,6 +143,15 @@ var CustomMapPopup = (
             for(var index in fenceList){
                 for(var i in fenceList[index]){
                     var fenceMap = $.extend({}, fenceList[index][i]['data']);
+                    if(fenceMap['config']!=null && fenceMap['config']!=''){
+                        try{
+                            JSON.parse(fenceMap['config']);
+                        }catch(e){
+                            alert("[CustomMapPopup] save json parse error");
+                            console.error("[CustomMapPopup] save json parse error string - " + fenceMap['config']);
+                            return false;
+                        }
+                    }
                     fenceMap['areaId'] = _areaId;
                     fenceParamList.push(fenceMap);
                 }
@@ -215,6 +246,13 @@ var CustomMapPopup = (
                                             $("<label/>")
                                         )
                                     )
+                                ).append(
+                                    $("<div/>", {class: "uplist"}).append(
+                                        $("<button/>",{class:'ico-up'+(_options['initFenceListShow']?' on':'')}).click(function (evt) {
+                                            $(this).toggleClass("on");
+                                            $(this).parent().parent().find("section").toggleClass("on");
+                                        })
+                                    )
                                 );
                                 _element.find("#childList").append(targetElement);
 
@@ -259,28 +297,37 @@ var CustomMapPopup = (
 
                                     var fenceElement = $("<section/>", {
                                         fenceId: data['fenceId'],
-                                        deviceId: data['deviceId']
+                                        deviceId: data['deviceId'],
+                                        class:_options['initFenceListShow']?"on":""
                                     }).append(
                                         $("<div/>", {class: "fence_list"}).append(
                                             $("<div/>", {class: "fence_title"}).append(
                                                 $("<p/>").text(data['fenceId'])
                                             ).append(
-                                                $("<button/>", {class: "btn-cut", fenceId:data['fenceId'], deviceId: data['deviceId']}).click({
+                                                $("<button/>", {class: "btn-tarea", title:"Configuration"}).click({
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
                                                     $(this).toggleClass("on");
-                                                    $("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'].fence_cut").toggleClass("on");
+                                                    $("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] .fence_tarea").toggleClass("on");
                                                 })
                                             ).append(
-                                                $("<button/>", {class: "btn-edi"}).click({
+                                                $("<button/>", {class: "btn-cut", title:"Cutting"}).click({
+                                                    fenceId: data['fenceId'],
+                                                    deviceId: data['deviceId']
+                                                }, function (evt) {
+                                                    $(this).toggleClass("on");
+                                                    $("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] .fence_cut").toggleClass("on");
+                                                })
+                                            ).append(
+                                                $("<button/>", {class: "btn-edi", title:"Modify"}).click({
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
                                                     _self.addFence(evt.data.fenceId, evt.data.deviceId);
                                                 })
                                             ).append(
-                                                $("<button/>", {class: "btn-del"}).click({
+                                                $("<button/>", {class: "btn-del", title:"Delete"}).click({
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
@@ -294,7 +341,21 @@ var CustomMapPopup = (
                                                 })
                                             )
                                         ).append(
-                                            $("<div/>", {class: "fence_cut", fenceId:data['fenceId'], deviceId: data['deviceId']}).append(
+                                            $("<div/>", {class: "fence_tarea"}).append(
+                                                $("<p/>").text("Fence Config")
+                                            ).append(
+                                                $("<textarea/>", {name:"config", class:"textboard"}).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, config:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                }).text((data['config']?data['config']:""))
+                                            )
+                                        ).append(
+                                            $("<div/>", {class: "fence_cut"}).append(
                                                 $("<div/>", {class:"tit_guide"}).append(
                                                     $("<span/>").text("Column")
                                                 ).append(
@@ -321,15 +382,15 @@ var CustomMapPopup = (
                                                     fenceId: data['fenceId'],
                                                     deviceId: data['deviceId']
                                                 }, function (evt) {
-                                                    var wCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='column']").val());
-                                                    var hCut = Number($("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='row']").val());
+                                                    var wCut = Number($("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='column']").val());
+                                                    var hCut = Number($("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] input[name='row']").val());
                                                     if(wCut<=0 || hCut<=0){
                                                         _alertMessage("cutValueNotEnough");
                                                         return false;
                                                     }
                                                     _customMapMediator.fencePartition(evt.data.deviceId,evt.data.fenceId,{'w':wCut,'h':hCut});
-                                                    $(".btn-cut[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"']").removeClass("on");
-                                                    $("div[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'].fence_cut").removeClass("on");
+                                                    $("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] .btn-cut").removeClass("on");
+                                                    $("section[deviceId='"+evt.data.deviceId+"'][fenceId='"+evt.data.fenceId+"'] .fence_cut").removeClass("on");
                                                 }).text("CUT")
                                             )
                                         ).append(
@@ -399,7 +460,7 @@ var CustomMapPopup = (
                             }
                         }
                         , 'change': function (data) {
-                            _element.find("#childList button").removeClass("on");
+                            _element.find("#childList div[name='custom'] button").removeClass("on");
                             _element.find("#childList li[targetId='"+data['targetId']+"'] div[name='custom'] button").addClass("on");
                             _customMapMediator.setSelectTarget(data['targetId']);
                             _updateTargetValue(data);

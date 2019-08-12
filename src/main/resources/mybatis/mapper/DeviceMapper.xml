@@ -619,5 +619,8 @@
         UPDATE  isaver.device
         SET     main_flag = 'N'
         WHERE   parent_device_id = #{parentDeviceId}
+        <if test="deviceId != null and deviceId != ''">
+            AND device_id <![CDATA[ <> ]]> #{deviceId}
+        </if>
     </update>
 </mapper>
