@@ -3496,7 +3496,8 @@ button.btn ~ button.btn {
         stroke: #757575; }
   .g-line polyline {
     fill: transparent !important;
-    stroke-width: 1px; }
+    stroke-width: 1px;
+    stroke: #d2a01e; }
   .g-line marker {
     overflow: visible; }
   .g-line image {

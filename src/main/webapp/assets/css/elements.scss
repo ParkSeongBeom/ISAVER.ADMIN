@@ -864,8 +864,9 @@ div[contenteditable] {}
   }
 
   &-line {
-    polyline {fill: transparent !important; stroke-width:1px;}
-    marker {overflow: visible;} image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");} polyline.object {stroke: $color-caution;}
+    polyline {fill: transparent !important; stroke-width:1px; stroke: $color-caution;}
+    marker {overflow: visible;} image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");}
+    polyline.object {stroke: $color-caution;}
 
     // 마크 반경표시
     marker circle{

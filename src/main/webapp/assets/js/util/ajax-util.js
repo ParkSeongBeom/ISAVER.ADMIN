@@ -156,8 +156,12 @@ function sendAjaxFileRequest(reqUrl,form,successCallback,errorCallback,actionTyp
             }
         );
     }else{ // etc
-        //var formData = new FormData(form);
-        var formData = new FormData();
+        var formData;
+        try{
+            formData = new FormData(form);
+        }catch(e){
+            formData = new FormData();
+        }
         form.find('input:text').each(function(){
             formData.append($(this).attr('name'),$(this).val());
         });

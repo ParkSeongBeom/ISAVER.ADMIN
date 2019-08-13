@@ -221,7 +221,7 @@ public class FileSvcImpl implements FileSvc {
 
             AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
         } catch (Exception e) {
-            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
+            logger.warn("File Device Sync failure - {}",e.getMessage());
         }
     }
 
