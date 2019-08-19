@@ -13,8 +13,6 @@ var WebSocketHelper = (
             'cnt' : 10
             , 'delay' : 1000
         };
-        var messageEventHandler;
-
         var _self = this;
 
         /**

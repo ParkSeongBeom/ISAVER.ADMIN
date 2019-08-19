@@ -12,7 +12,10 @@
                 ,a.device_id as deviceId
                 ,area.area_name as areaName
                 ,b.event_name as eventName
+                ,b.fence_id as fenceId
                 ,b.fence_name as fenceName
+                ,b.event_datetime as eventDatetime
+                ,b.update_datetime as updateDatetime
                 ,c.device_name as deviceName
                 ,a.video_file_name as videoFileName
                 ,a.thumbnail_file_name as thumbnailFileName
@@ -21,9 +24,12 @@
                 ,a.video_size as videoSize
         FROM	isaver.video_history a
         LEFT OUTER JOIN (
-            SELECT	notification_id
-                    ,event_name
-                    ,fence_name
+            SELECT	noti.notification_id
+                    ,evt.event_name
+                    ,noti.fence_id
+                    ,fnc.fence_name
+                    ,noti.event_datetime
+                    ,noti.update_datetime
             FROM	isaver.notification noti
             INNER JOIN isaver.event evt
             ON	    noti.event_id = evt.event_id

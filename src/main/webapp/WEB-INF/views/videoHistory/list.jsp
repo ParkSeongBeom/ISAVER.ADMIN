@@ -158,12 +158,21 @@
         search();
     });
 
-    function openVideo(_this, videoFileName){
+    function openVideo(_this, videoFileName, index){
         $(".video_list li").removeClass("on");
         $(_this).addClass("on");
 
-        $("#videoSource").attr("src",videoUrl+videoFileName);
-        $("#videoElement")[0].load();
+        try{
+            var videoHistory = videoHistoryList[index];
+            if(videoHistory!=null && videoHistory['fenceId']!=null && cs.isRecording(videoHistory['fenceId']) && videoHistory['eventDatetime']!=null && videoHistory['updateDatetime']!=null){
+                cs.openVideo(videoHistory['notificationId'],videoHistory['fenceId'],new Date(videoHistory['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(videoHistory['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
+            }else{
+                $("#videoSource").attr("src",videoUrl+videoFileName);
+                $("#videoElement")[0].load();
+            }
+        }catch(e){
+            console.error(e);
+        }
     }
 
     function validate(){
@@ -193,7 +202,7 @@
         while (index<=pageConfig['viewMaxCnt']){
             if(pageConfig['elementIndex']<videoHistoryList.length){
                 var videoHistory = videoHistoryList[pageConfig['elementIndex']];
-                addVideoHistory(videoHistory);
+                addVideoHistory(videoHistory, index);
             }else{
                 break;
             }
@@ -208,13 +217,13 @@
         }
     }
 
-    function addVideoHistory(videoHistory){
+    function addVideoHistory(videoHistory,index){
         var videoTag = videoElementTag.clone();
         var fenceName = '';
         if(videoHistory['fenceName']!=null){
             fenceName = "("+videoHistory['fenceName']+")";
         }
-        videoTag.attr("onclick","openVideo(this,'"+videoHistory['videoType']+"/"+videoHistory['videoFileName']+"');");
+        videoTag.attr("onclick","openVideo(this,'"+videoHistory['videoType']+"/"+videoHistory['videoFileName']+"',"+index+");");
         videoTag.find("#thumbnail").attr("src","${videoUrl}"+videoHistory['videoType']+"/"+videoHistory['thumbnailFileName']);
         videoTag.find("#areaName").text(videoHistory['areaName']?videoHistory['areaName']:'');
         videoTag.find("#deviceName").text(videoHistory['deviceName']?videoHistory['deviceName']:'');

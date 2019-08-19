@@ -183,7 +183,7 @@
             initResourceChart();
 
             $(document).keyup(function(event){
-                if (event.keyCode == '81') {
+                if (!$(event.target).closest("input[type='text'], textarea").length && event.keyCode == '81') {
                     menuBarToggle();
                 }
             });

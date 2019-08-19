@@ -45,7 +45,13 @@ public class VideoHistoryBean {
     /* 이벤트명 */
     private String eventName;
     /* 펜스명 */
+    private String fenceId;
+    /* 펜스명 */
     private String fenceName;
+    /* 이벤트 발생 일시 */
+    private Date eventDatetime;
+    /* */
+    private Date  updateDatetime;
 
     public String getVideoHistoryId() {
         return videoHistoryId;
@@ -141,5 +147,29 @@ public class VideoHistoryBean {
 
     public void setFenceName(String fenceName) {
         this.fenceName = fenceName;
+    }
+
+    public String getFenceId() {
+        return fenceId;
+    }
+
+    public void setFenceId(String fenceId) {
+        this.fenceId = fenceId;
+    }
+
+    public Date getEventDatetime() {
+        return eventDatetime;
+    }
+
+    public void setEventDatetime(Date eventDatetime) {
+        this.eventDatetime = eventDatetime;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 }
