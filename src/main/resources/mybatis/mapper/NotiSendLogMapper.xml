@@ -12,6 +12,7 @@
                 , send_url as sendUrl
                 , to_char(send_datetime,'yyyy-MM-dd HH24:MI:ss') as sendDatetimeStr
         FROM    external.noti_send_log
+        WHERE   notification_id = #{notificationId}
         order by send_datetime DESC
     </select>
 </mapper>
