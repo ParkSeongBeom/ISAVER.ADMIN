@@ -44,7 +44,7 @@ var PtzControlPopup = (
         var initialize = function(rootPath, ptzWebSocketUrl){
             _rootPath = rootPath;
             _ptzWebSocketUrl = ptzWebSocketUrl;
-            webSocketHelper.addWebSocketList("ptz", _ptzWebSocketUrl, null, ptzMessageEventHandler);
+            webSocketHelper.addWebSocketList("ptz", _ptzWebSocketUrl, ptzMessageEventHandler);
             console.log('[PtzControlPopup] initialize complete');
         };
 

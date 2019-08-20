@@ -8,6 +8,8 @@
 <c:set value="100000" var="subMenuId"/>
 
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-helper.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/util/stomp.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/util/stomp-helper.js?version=${version}"></script>
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
@@ -625,7 +627,10 @@
     var imageCheckUnload = {};
     var renderDatetime = new Date();
     var dashboardHelper = new DashboardHelper("${rootPath}","${version}");
+    var stompHelper = new StompHelper();
     var fileUploadPath = '${fileUploadPath}';
+    var socketMode = '${socketMode}';
+
     var templateSetting = {
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
     };
@@ -680,7 +685,11 @@
         });
 
         dashboardHelper.setConfig(messageConfig, fileUploadPath, templateSetting);
-        dashboardHelper.setWebsocket(webSocketHelper, {'map':"${mapWebSocketUrl}",'toiletRoom':"${toiletRoomWebSocketUrl}"});
+        if(socketMode=='stomp'){
+            dashboardHelper.setWebsocket(stompHelper, {'map':"${webSocketIp}",'toiletRoom':"${webSocketIp}"});
+        }else{
+            dashboardHelper.setWebsocket(webSocketHelper, {'map':"ws://${webSocketIp}:8820/ISAVER.SOCKET/map",'toiletRoom':"ws://${webSocketIp}:8820/ISAVER.SOCKET/toiletRoom"});
+        }
         dashboardHelper.setNotificationOption(String('${empty area.areaId?'100000':area.areaId}'));
         dashboardHelper.initAreaTemplate();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);

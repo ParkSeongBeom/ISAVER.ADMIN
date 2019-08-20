@@ -5,92 +5,90 @@
  * @author psb
  * @type {Function}
  */
-var WebSocketHelper = (
+var StompHelper = (
     function(){
-        var webSocketList = {};
-        var CONNECT_STATUS = ["connect","disconnect"];
-        var SEND_MESSAGE_RETRY = {
+        let webSocketList = {};
+        let CONNECT_STATUS = ["connect","disconnect"];
+        let SEND_MESSAGE_RETRY = {
             'cnt' : 10
             , 'delay' : 1000
         };
-        var _self = this;
+        let RECONNECT_DELAY = 3000;
+        let CONNECT_HEADERS = {
+            login: 'icent',
+            passcode: 'dkdltpsxm'
+        };
+        let STOMP_PORT = 15674;
+        let _self = this;
 
         /**
          * initialize
          * @author psb
          */
-        this._initialize = function(){
+        this._initialize = function(serverIp){
+        };
+
+
+        /**
+         * initialize
+         * @author psb
+         */
+        this._initialize = function(serverIp){
         };
 
         /**
          * add WebSocket List
          * @author psb
          * @param _target
-         * @param _webSocketUrl
+         * @param _webSocketIp
          * @param _messageEventHandler
          */
-        this.addWebSocketList = function(_target, _webSocketUrl, _messageEventHandler){
+        this.addWebSocketList = function(_target, _webSocketIp, _messageEventHandler){
             if(_target==null){
-                console.error("[WebSocketHelper][addWebSocketList] target is null");
+                console.error("[StompHelper][addWebSocketList] target is null");
                 return false;
             }
 
             if(webSocketList[_target]!=null){
-                console.error("[WebSocketHelper][addWebSocketList] exist target - " + _target);
+                console.error("[StompHelper][addWebSocketList] exist target - " + _target);
                 return false;
             }
 
-            if(_webSocketUrl==null){
-                console.error("[WebSocketHelper][addWebSocketList] webSocketUrl is null");
+            if(_webSocketIp==null){
+                console.error("[StompHelper][addWebSocketList] webSocketIp is null");
                 return false;
             }
 
             if(_messageEventHandler==null || typeof _messageEventHandler != "function"){
-                console.error('[WebSocketHelper][addWebSocketList] messageEventHandler is null or type error');
+                console.error('[StompHelper][addWebSocketList] messageEventHandler is null or type error');
                 return false;
             }
 
             webSocketList[_target] = {
-                "url" : _webSocketUrl,
-                "options" : {
-                    "reConnectFlag" : true
-                    ,"reConnectDelay" : 5000
-                },
+                "url" : "ws://"+_webSocketIp+":"+STOMP_PORT+"/ws",
+                "header" : CONNECT_HEADERS,
                 "messageEventHandler" : _messageEventHandler,
                 "ws" : null
             };
         };
 
-        /**
-         * ws Connect
-         * @author psb
-         * @param _target
-         */
         this.wsConnect = function(_target){
             if(_target==null || webSocketList[_target]==null){
-                console.error("[WebSocketHelper][wsConnect] target is null or not in webSocketList");
+                console.error("[StompHelper][subscribe] target is null or not in webSocketList");
                 return false;
             }
 
-            setTimeout(function() {
-                webSocketList[_target]['ws'] = new WebSocket(webSocketList[_target]['url']);
-                webSocketList[_target]['ws'].onopen = function () {
-                    webSocketList[_target]['conn'] = CONNECT_STATUS[0];
-                    console.log(_target+' websocket opened');
-                };
-
-                webSocketList[_target]['ws'].onmessage = webSocketList[_target]['messageEventHandler'];
-                webSocketList[_target]['ws'].onclose = function (event) {
-                    webSocketList[_target]['conn'] = CONNECT_STATUS[1];
-
-                    if (webSocketList[_target]['options']['reConnectFlag']) {
-                        setTimeout(function() {
-                            _self.wsConnect(_target);
-                        }, webSocketList[_target]['options']['reConnectDelay']);
-                    }
-                };
-            }, 250);
+            webSocketList[_target]['ws'] = Stomp.client(webSocketList[_target]['url']);
+            webSocketList[_target]['ws'].reconnect_delay = RECONNECT_DELAY;
+            webSocketList[_target]['ws'].connect(webSocketList[_target]['header'], function() {
+                webSocketList[_target]['conn'] = CONNECT_STATUS[0];
+                webSocketList[_target]['ws'].subscribe("/topic/"+_target, webSocketList[_target]['messageEventHandler']);
+                console.log(_target+' websocket opened');
+            }, function(error) {
+                webSocketList[_target]['conn'] = CONNECT_STATUS[1];
+            });
         };
+
 
         /**
          * ws DisConnect
@@ -103,8 +101,7 @@ var WebSocketHelper = (
                 return false;
             }
 
-            webSocketList[_target]['ws'].onclose = null;
-            webSocketList[_target]['ws'].close();
+            webSocketList[_target]['ws'].unsubscribe();
             webSocketList[_target]['ws'] = null;
             webSocketList[_target]['conn'] = CONNECT_STATUS[1];
             console.log(_target+' websocket closed');
@@ -126,7 +123,7 @@ var WebSocketHelper = (
                 if(typeof _text=="object"){
                     _text = JSON.stringify(_text);
                 }
-                webSocketList[_target]['ws'].send(_text);
+                webSocketList[_target]['ws'].send("/topic/"+_target,{},_text);
             }else{
                 if(_count == null){
                     _count = SEND_MESSAGE_RETRY['cnt'];
@@ -140,19 +137,6 @@ var WebSocketHelper = (
                 }else{
                     console.error('[WebSocketHelper][sendMessage] failure - retry count over',_target, _text);
                 }
-            }
-        };
-
-        /**
-         * get WebSocket List
-         * @author psb
-         * @param _target
-         */
-        this.getWebSocketList = function(_target){
-            if(_target!=null && webSocketList[_target]!=null){
-                return webSocketList[_target]
-            }else{
-                return webSocketList;
             }
         };
 

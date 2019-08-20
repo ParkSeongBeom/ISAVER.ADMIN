@@ -119,7 +119,7 @@ var NotificationHelper = (
             for(let index in param){
                 switch (index) {
                     case "notification":
-                        _webSocketHelper.addWebSocketList(index, param[index], null, notificationMessageEventHandler);
+                        _webSocketHelper.addWebSocketList(index, param[index], notificationMessageEventHandler);
                         _webSocketHelper.wsConnect(index);
                         break;
                 }

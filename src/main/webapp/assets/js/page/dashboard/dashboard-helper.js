@@ -61,13 +61,13 @@ var DashboardHelper = (
                 switch (index) {
                     case "map":
                         if($("div[templateCode='TMP005']").length>0){
-                            _webSocketHelper.addWebSocketList(index, param[index], null, mapMessageEventHandler);
+                            _webSocketHelper.addWebSocketList(index, param[index], mapMessageEventHandler);
                             _webSocketHelper.wsConnect(index);
                         }
                         break;
                     case "toiletRoom":
                         if($("div[templateCode='TMP008']").length>0){
-                            _webSocketHelper.addWebSocketList(index, param[index], null, toiletRoomMessageEventHandler);
+                            _webSocketHelper.addWebSocketList(index, param[index], toiletRoomMessageEventHandler);
                             _webSocketHelper.wsConnect(index);
                         }
                         break;
@@ -82,9 +82,14 @@ var DashboardHelper = (
         var mapMessageEventHandler = function(message) {
             var resultData;
             try{
-                resultData = JSON.parse(message.data);
+                if(typeof message.data!='undefined'){
+                    resultData = message.data;
+                }else if(typeof message.body!='undefined'){
+                    resultData = message.body;
+                }
+                resultData = JSON.parse(resultData);
             }catch(e){
-                console.warn("[mapMessageEventHandler] json parse error - " + message.data);
+                console.warn("[mapMessageEventHandler] json parse error - " + message);
                 return false;
             }
 
@@ -131,7 +136,12 @@ var DashboardHelper = (
         var toiletRoomMessageEventHandler = function(message) {
             let resultData;
             try{
-                resultData = JSON.parse(message.data);
+                if(message.hasOwnProperty("data")){
+                    resultData = message.data;
+                }else if(message.hasOwnProperty("body")){
+                    resultData = message.body;
+                }
+                resultData = JSON.parse(resultData);
             }catch(e){
                 console.warn("[toiletRoomMessageEventHandler] json parse error - " + message.data);
                 return false;
