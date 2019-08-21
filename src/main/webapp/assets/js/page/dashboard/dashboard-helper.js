@@ -219,6 +219,7 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'element' : {
                                     'lastPositionUseFlag' : true
+                                    ,'lastPositionSaveFlag' : true
                                 }, 'custom' : {
                                     'websocketSend':false
                                     ,'fenceView':true

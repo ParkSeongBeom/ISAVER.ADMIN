@@ -44,6 +44,7 @@ var CustomMapMediator = (
                 'draggable': true // 드래그 기능
                 ,'mousewheel': true // zoom in/out 기능
                 ,'lastPositionUseFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
+                ,'lastPositionSaveFlag': false // 마지막에 머무른 값 쿠키값 사용 기능
                 ,'zoom' : {
                     'init' : 1
                     ,'min' : 0.01
@@ -52,8 +53,8 @@ var CustomMapMediator = (
                 ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
                 ,'skewYIncrementValue': 1 // Y 기울기 클릭시 증가치
                 ,'rotateIncrementValue': 1 // 회전 클릭시 증가치
-                ,'guardInfo' : true
-                ,'guardInfoCnt' : false
+                ,'guardInfo' : true // 우측 펜스별 상세정보 사용여부
+                ,'guardInfoCnt' : false // 우측 펜스별 상세정보에 인원수 카운팅 여부
             }
             ,'fence' : {
                 'text' : {
@@ -351,13 +352,15 @@ var CustomMapMediator = (
         };
 
         var savePosition = function(){
-            $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
-            $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
-            $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
-            $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
-            $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
-            $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
-            $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(2));
+            if(_options['element']['lastPositionSaveFlag']){
+                $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
+                $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
+                $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
+                $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
+                $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
+                $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
+                $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(2));
+            }
         };
 
         var setTransform2d = function(scale,saveFlag){
