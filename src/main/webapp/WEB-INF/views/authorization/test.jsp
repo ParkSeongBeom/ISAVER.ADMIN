@@ -367,8 +367,8 @@
                 case 'guard':
                 case 'guardIn':
                 case 'guardOut':
-                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']").show();
-                    $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV013']:eq(0)").prop("selected",true).trigger("change");
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"']").filter("[deviceCode='DEV013'],[deviceCode='DEV020']").show();
+                    $(deviceTag).find("option[areaId='"+$(this).val()+"']").filter("[deviceCode='DEV013'],[deviceCode='DEV020']").filter(":eq(0)").prop("selected",true).trigger("change");
                     break;
                 case 'co':
                     $(deviceTag).find("option[areaId='"+$(this).val()+"'][deviceCode='DEV905']").show();
