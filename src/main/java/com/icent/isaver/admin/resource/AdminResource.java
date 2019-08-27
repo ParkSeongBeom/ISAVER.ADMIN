@@ -180,6 +180,8 @@ public class AdminResource {
             put("DEV016","ico-server"); // 압전서버
             put("DEV017","ico-shock"); // 압전센서
             put("DEV018",""); // 원격 I/O 제어기
+            put("DEV019","ico-qguard"); // Robotics Server
+            put("DEV020","ico-m8"); // PUCK (벨로다인)
             put("DEV800","ico-server"); // Host
             put("DEV801","ico-docker"); // container
             put("DEV900","ico-gate"); // 게이트웨이

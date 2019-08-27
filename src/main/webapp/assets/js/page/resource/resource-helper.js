@@ -20,7 +20,9 @@ var ResourceHelper = (
         var _messageConfig;
         var _areaList = {};
         var _deviceList = {};
-        var _parentDeviceCode = ['DEV001','DEV003','DEV900','DEV015','DEV016'];
+        // 라이다 메인장치 코드
+        var _mainDeviceCode = ['DEV013','DEV020'];
+        var _parentDeviceCode = ['DEV001','DEV003','DEV900','DEV015','DEV016','DEV019'];
         var _self = this;
 
         /**
@@ -58,8 +60,7 @@ var ResourceHelper = (
                 }
 
                 var form = $("#deviceForm");
-                // 장치구분이 M8일경우에만 메인여부 활성화
-                if($(this).val()=='DEV013'){
+                if(_mainDeviceCode.indexOf($(this).val())>-1){
                     form.find("#mainFlagCB").prop("disabled",false);
                 }else{
                     form.find("#mainFlagCB").prop("disabled",true).prop("checked",false).trigger("change");
@@ -146,29 +147,45 @@ var ResourceHelper = (
                 }
             }
 
-            if(deviceCode=='DEV013'){
-                if(parentDeviceId==null || parentDeviceId=='' || _deviceList[parentDeviceId]['data']['deviceCode']!='DEV015'){
-                    _alertMessage('requiredM8');
-                    return false;
-                }
-            }
-
-            if(deviceCode=='DEV015'){
-                if(parentDeviceId!=''){
-                    var parentData = _deviceList[parentDeviceId]['data'];
-                    if(parentData['deviceCode']!="DEV003"){
-                        _alertMessage('requiredQnServer');
+            switch (deviceCode){
+                case "DEV013" :
+                    if(parentDeviceId==null || parentDeviceId=='' || _deviceList[parentDeviceId]['data']['deviceCode']!='DEV015'){
+                        _alertMessage('requiredM8');
                         return false;
                     }
+                    break;
+                case "DEV015" :
+                    if(parentDeviceId!=''){
+                        var parentData = _deviceList[parentDeviceId]['data'];
+                        if(parentData['deviceCode']!="DEV003"){
+                            _alertMessage('requiredQnServer');
+                            return false;
+                        }
 
-                    for(var index in _deviceList){
-                        var _data = _deviceList[index]['data'];
-                        if(_data['parentDeviceId']==parentDeviceId && _data['deviceCode']==deviceCode && _data['deviceId']!=deviceId){
-                            _alertMessage('onlyOneServer');
+                        for(var index in _deviceList){
+                            var _data = _deviceList[index]['data'];
+                            if(_data['parentDeviceId']==parentDeviceId && _data['deviceCode']==deviceCode && _data['deviceId']!=deviceId){
+                                _alertMessage('onlyOneServer');
+                                return false;
+                            }
+                        }
+                    }
+                    break;
+                case "DEV019" :
+                    if(parentDeviceId!=''){
+                        var parentData = _deviceList[parentDeviceId]['data'];
+                        if(parentData['deviceCode']!="DEV003"){
+                            _alertMessage('requiredRoServer');
                             return false;
                         }
                     }
-                }
+                    break;
+                case "DEV020" :
+                    if(parentDeviceId==null || parentDeviceId=='' || _deviceList[parentDeviceId]['data']['deviceCode']!='DEV019'){
+                        _alertMessage('requiredPUCK');
+                        return false;
+                    }
+                    break;
             }
             return true;
         };

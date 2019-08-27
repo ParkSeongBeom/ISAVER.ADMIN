@@ -590,6 +590,8 @@
         ,   existsSerialNo        :"<spring:message code='device.message.existsSerialNo'/>"
         ,   requiredM8            :"<spring:message code='device.message.requiredM8'/>"
         ,   requiredQnServer      :"<spring:message code='device.message.requiredQnServer'/>"
+        ,   requiredRoServer      :"<spring:message code='device.message.requiredRoServer'/>"
+        ,   requiredPUCK          :"<spring:message code='device.message.requiredPUCK'/>"
         ,   onlyOneServer         :"<spring:message code='device.message.onlyOneServer'/>"
         ,   expireLicense         :"<spring:message code='common.message.expireLicense'/>"
         ,   excessLicense         :"<spring:message code='common.message.excessLicense'/>"

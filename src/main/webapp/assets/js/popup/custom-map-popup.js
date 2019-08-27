@@ -22,10 +22,14 @@ var CustomMapPopup = (
             ,"DEV008" : "ico-wlight"
             ,"DEV013" : "ico-m8"
             ,"DEV015" : "ico-qguard"
+            ,"DEV019" : "ico-qguard"
+            ,"DEV020" : "ico-m8"
         };
         var _options = {
             "initFenceListShow" : true
         };
+        // 라이다 메인장치 코드
+        var _mainDeviceCode = ['DEV013','DEV020'];
         var _areaId = null;
         var _mouseDownInterval = 0;
         var _customMapMediator;
@@ -258,7 +262,8 @@ var CustomMapPopup = (
                                 );
                                 _element.find("#childList").append(targetElement);
 
-                                if (target['deviceCode'] == "DEV013" && target['mainFlag'] == "Y" && targetElement.find("#addSection").length == 0) {
+                                console.log(target['deviceCode'], _mainDeviceCode.indexOf(target['deviceCode'])>-1, target['mainFlag'] == "Y");
+                                if (_mainDeviceCode.indexOf(target['deviceCode'])>-1 && target['mainFlag'] == "Y" && targetElement.find("#addSection").length == 0) {
                                     targetElement.append(
                                         $("<section/>", {id: "addSection"}).append(
                                             $("<button/>", {class: "btn-add"}).click({deviceId: target['targetId']}, function (evt) {

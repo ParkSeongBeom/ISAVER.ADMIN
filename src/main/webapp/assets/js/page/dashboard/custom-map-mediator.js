@@ -104,8 +104,13 @@ var CustomMapMediator = (
             ,"DEV015" : "g-ico g-qguard"
             ,"DEV016" : "g-ico g-server"
             ,"DEV017" : "g-ico g-shock"
+            ,"DEV019" : "g-ico g-qguard"
+            ,"DEV020" : "g-ico g-m8"
         };
-        var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017'];
+        // 라이다 메인장치 코드
+        var _mainDeviceCode = ['DEV013','DEV020'];
+        // Map에 표출되는 장치코드
+        var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017','DEV020'];
         // true :사람만보기
         // false:전체보기
         var _objectViewFlag=false;
@@ -614,12 +619,12 @@ var CustomMapMediator = (
 
         /**
          * 기준 설정
-         * 장치코드 DEV013(M8)이고 메인여부가 Y일 경우 object, fence의 기준장치로 설정함
+         * 장치코드 DEV013(M8) DEV020(벨로다인)이고 메인여부가 Y일 경우 object, fence의 기준장치로 설정함
          * Custom-map-popup에서 m8장치 이동 및 사이즈 변경시 fence를 새로그림
          * @author psb
          */
         var setTranslate = function (targetData, targetElement){
-            if(targetData['deviceCode']=='DEV013' && targetData['mainFlag']=='Y'){
+            if(_mainDeviceCode.indexOf(targetData['deviceCode'])>-1 && targetData['mainFlag']=='Y'){
                 // 펜스 갱신전에 회전값에 따른 계산 우선 수행
                 if(targetData.hasOwnProperty("setFenceList")){
                     if(_marker[_MARKER_TYPE[1]][targetData['targetId']]!=null){
@@ -744,7 +749,7 @@ var CustomMapMediator = (
                     targetElement.append( $("<span/>").text(data["targetName"]) );
                 }
 
-                if(!_options['custom']['lidarHideFlag'] && data['deviceCode']=='DEV013'){
+                if(!_options['custom']['lidarHideFlag'] && _mainDeviceCode.indexOf(data['deviceCode'])>-1){
                     targetElement.addClass("lidar");
                 }
                 targetElement.append( $("<div/>") );
