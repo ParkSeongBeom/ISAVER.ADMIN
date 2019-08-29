@@ -104,6 +104,9 @@
           <element id="library" level="module" name="Gradle: spring-webmvc-portlet-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
           <element id="library" level="module" name="Gradle: spring-websocket-4.3.18.RELEASE" module-name="ISAVER.ADMIN" />
           <element id="library" level="project" name="common" />
+          <element id="library" level="module" name="Gradle: meous_lib_v0.02" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: org.eclipse.paho.client.mqttv3-1.2.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: json-simple-1.1.1" module-name="ISAVER.ADMIN" />
         </element>
         <element id="directory" name="classes">
           <element id="module-output" name="ISAVER.ADMIN" />

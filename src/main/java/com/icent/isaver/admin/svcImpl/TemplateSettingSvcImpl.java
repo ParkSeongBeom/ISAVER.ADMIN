@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.TemplateSettingBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.common.util.TransactionUtil;
@@ -9,6 +10,7 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -52,6 +54,12 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
 
     @Value("${ws.server.urlSendMap}")
     private String wsUrlSendMap = null;
+
+    @Value("${socketMode}")
+    private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
 
     @Inject
     private TemplateSettingDao templateSettingDao;
@@ -146,17 +154,23 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
     }
 
     private void sendGuardViewSetting(){
+        Map websocketParam = new HashMap();
+        websocketParam.put("messageType","setMode");
+        websocketParam.put("settingId","safeGuardMapView");
+        websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
+
         /**
-         * = 웹소켓 서버로 설정 전송
+         * = 웹소켓 서버로 알림 전송
          * @author psb
          * @date 2018.06.27
          */
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("messageType","setMode");
-            websocketParam.put("settingId","safeGuardMapView");
-            websocketParam.put("value",findByTemplateSetting("safeGuardMapView"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", null);
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("map",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendMap, "form", null);
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }

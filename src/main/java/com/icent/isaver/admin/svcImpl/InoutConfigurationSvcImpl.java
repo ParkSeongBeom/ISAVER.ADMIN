@@ -1,11 +1,13 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.InoutConfigurationBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.InoutConfigurationDao;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.InoutConfigurationSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.resource.CommonResource;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.ListUtils;
@@ -56,6 +58,12 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
     @Value("${ws.server.urlSendEvent}")
     private String wsUrlSendEvent = null;
 
+    @Value("${socketMode}")
+    private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
+
     @Inject
     private InoutConfigurationDao inoutConfigurationDao;
 
@@ -97,21 +105,25 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
             }
         }
 
+        Map websocketParam = new HashMap();
+        websocketParam.put("messageType","refreshBlinker");
+        websocketParam.put("areaId", parameters.get("areaId"));
+
         /**
          * = 웹소켓 서버로 알림 전송
          * @author psb
          * @date 2016.12.15
          */
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("messageType","refreshBlinker");
-            websocketParam.put("areaId", parameters.get("areaId"));
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
-
-        ModelAndView modelAndView = new ModelAndView();
-        return modelAndView;
+        return new ModelAndView();
     }
 }

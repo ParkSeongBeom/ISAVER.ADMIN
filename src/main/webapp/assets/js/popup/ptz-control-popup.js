@@ -5,9 +5,8 @@
  * @type {Function}
  */
 var PtzControlPopup = (
-    function(rootPath, ptzWebSocketUrl){
+    function(rootPath){
         var _rootPath;
-        var _ptzWebSocketUrl;
         var _initFlag = false;
         var _mouseDownInterval = 0;
         var _presetList = {};
@@ -41,10 +40,9 @@ var PtzControlPopup = (
         /**
          * initialize
          */
-        var initialize = function(rootPath, ptzWebSocketUrl){
+        var initialize = function(rootPath){
             _rootPath = rootPath;
-            _ptzWebSocketUrl = ptzWebSocketUrl;
-            webSocketHelper.addWebSocketList("ptz", _ptzWebSocketUrl, ptzMessageEventHandler);
+            webSocketHelper.addWebSocketList("ptz", ptzMessageEventHandler, true);
             console.log('[PtzControlPopup] initialize complete');
         };
 
@@ -63,9 +61,14 @@ var PtzControlPopup = (
         var ptzMessageEventHandler = function(message){
             var resultData;
             try{
-                resultData = JSON.parse(message.data);
+                if(typeof message.data!='undefined'){
+                    resultData = message.data;
+                }else if(typeof message.body!='undefined'){
+                    resultData = message.body;
+                }
+                resultData = JSON.parse(resultData);
             }catch(e){
-                console.warn("[ptzMessageEventHandler] json parse error - " + message.data);
+                console.warn("[mapMessageEventHandler] json parse error - " + message);
                 return false;
             }
 
@@ -290,6 +293,6 @@ var PtzControlPopup = (
             _initFlag = true;
         };
 
-        initialize(rootPath, ptzWebSocketUrl);
+        initialize(rootPath);
     }
 );

@@ -6,8 +6,9 @@
  * @type {Function}
  */
 var WebSocketHelper = (
-    function(){
+    function(webSocketIp){
         var webSocketList = {};
+        let WEBSOCKET_IP = null;
         var CONNECT_STATUS = ["connect","disconnect"];
         var SEND_MESSAGE_RETRY = {
             'cnt' : 10
@@ -19,17 +20,18 @@ var WebSocketHelper = (
          * initialize
          * @author psb
          */
-        this._initialize = function(){
+        var initialize = function(_webSocketIp){
+            WEBSOCKET_IP = _webSocketIp;
         };
 
         /**
          * add WebSocket List
          * @author psb
          * @param _target
-         * @param _webSocketUrl
          * @param _messageEventHandler
+         * @param _conFlag
          */
-        this.addWebSocketList = function(_target, _webSocketUrl, _messageEventHandler){
+        this.addWebSocketList = function(_target, _messageEventHandler, _notConnectFlag){
             if(_target==null){
                 console.error("[WebSocketHelper][addWebSocketList] target is null");
                 return false;
@@ -40,18 +42,13 @@ var WebSocketHelper = (
                 return false;
             }
 
-            if(_webSocketUrl==null){
-                console.error("[WebSocketHelper][addWebSocketList] webSocketUrl is null");
-                return false;
-            }
-
             if(_messageEventHandler==null || typeof _messageEventHandler != "function"){
                 console.error('[WebSocketHelper][addWebSocketList] messageEventHandler is null or type error');
                 return false;
             }
 
             webSocketList[_target] = {
-                "url" : _webSocketUrl,
+                "url" : "ws://"+WEBSOCKET_IP+":8820/ISAVER.SOCKET/"+_target,
                 "options" : {
                     "reConnectFlag" : true
                     ,"reConnectDelay" : 5000
@@ -59,6 +56,10 @@ var WebSocketHelper = (
                 "messageEventHandler" : _messageEventHandler,
                 "ws" : null
             };
+
+            if(!_notConnectFlag){
+                _self.wsConnect(_target);
+            }
         };
 
         /**
@@ -178,5 +179,7 @@ var WebSocketHelper = (
             }
             return resultFlag;
         };
+
+        initialize(webSocketIp);
     }
 );

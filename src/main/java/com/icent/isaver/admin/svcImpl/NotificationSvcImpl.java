@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.EventBean;
 import com.icent.isaver.admin.bean.FenceBean;
 import com.icent.isaver.admin.bean.NotificationBean;
@@ -12,6 +13,7 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.NotificationSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.POIExcelUtil;
 import com.meous.common.util.StringUtils;
@@ -55,11 +57,17 @@ public class NotificationSvcImpl implements NotificationSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
+    @Value("${socketMode}")
+    private String socketMode = null;
+
     @Value("${ws.server.urlSendEvent}")
     private String wsUrlSendEvent = null;
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;
+
+    @Inject
+    private MqttUtil mqttUtil;
 
     @Inject
     private NotificationDao notificationDao;
@@ -130,23 +138,22 @@ public class NotificationSvcImpl implements NotificationSvc {
             throw new IsaverException("");
         }
 
+        Map websocketParam = new HashMap();
+        websocketParam.put("notification", parameterList);
+        websocketParam.put("messageType","updateNotification");
+
         /**
          * = 웹소켓 서버로 알림 전송
          * @author psb
          * @date 2018.1.11
          */
         try {
-//            List<List<Map<String, String>>> ret = ListUtils.splitList(parameterList, 200);
-//            for (List<Map<String, String>> param : ret) {
-//                Map websocketParam = new HashMap();
-//                websocketParam.put("notification", param);
-//                websocketParam.put("messageType","updateNotification");
-//                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
-//            }
-            Map websocketParam = new HashMap();
-            websocketParam.put("notification", parameterList);
-            websocketParam.put("messageType","updateNotification");
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
@@ -177,16 +184,22 @@ public class NotificationSvcImpl implements NotificationSvc {
             throw new IsaverException("");
         }
 
+        Map websocketParam = new HashMap();
+        websocketParam.put("messageType","allCancelNotification");
+        websocketParam.put("paramBean",parameters);
+
         /**
          * = 웹소켓 서버로 알림 전송
          * @author psb
          * @date 2018.1.11
          */
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("messageType","allCancelNotification");
-            websocketParam.put("paramBean",parameters);
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }

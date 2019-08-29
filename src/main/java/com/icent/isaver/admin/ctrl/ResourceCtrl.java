@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.InetAddress;
 import java.util.Map;
 
 @Controller
@@ -42,11 +41,6 @@ public class ResourceCtrl {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("resourceList");
         modelAndView.addObject("iConFileType", AdminResource.FILE_TYPE.get("icon"));
-
-        try {
-            InetAddress address = InetAddress.getByName(wsAddress);
-            modelAndView.addObject("ptzWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsPtzUrlConnect);
-        }catch (Exception e){}
         return modelAndView;
     }
 }

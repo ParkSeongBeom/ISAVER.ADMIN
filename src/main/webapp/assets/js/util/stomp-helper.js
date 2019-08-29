@@ -6,8 +6,10 @@
  * @type {Function}
  */
 var StompHelper = (
-    function(){
-        let webSocketList = {};
+    function(webSocketIp){
+        let topicList = {};
+        let ws = null;
+        let WEBSOCKET_IP = null;
         let CONNECT_STATUS = ["connect","disconnect"];
         let SEND_MESSAGE_RETRY = {
             'cnt' : 10
@@ -21,41 +23,58 @@ var StompHelper = (
         let STOMP_PORT = 15674;
         let _self = this;
 
-        /**
-         * initialize
-         * @author psb
-         */
-        this._initialize = function(serverIp){
+        var setConnectStatus = function(_target, connFlag){
+            topicList[_target]['conn'] = CONNECT_STATUS[(connFlag?0:1)];
+            console.log("[StompHelper] " + (connFlag?'subscribe':'unsubscribe') + " target : "+_target);
         };
 
-
         /**
          * initialize
          * @author psb
          */
-        this._initialize = function(serverIp){
+        var initialize = function(_webSocketIp){
+            WEBSOCKET_IP = _webSocketIp;
+            ws = Stomp.client("ws://"+WEBSOCKET_IP+":"+STOMP_PORT+"/ws");
+            ws.reconnect_delay = RECONNECT_DELAY;
+            ws.connect(CONNECT_HEADERS, function() {
+                console.log('[StompHelper] Stomp WebSocket Connect');
+                for(var index in topicList){
+                    _self.wsConnect(index);
+                }
+            }, function(e){
+                try{
+                    if(e.headers.subscription!=null){
+                        for(var index in topicList){
+                            if(e.headers.subscription==index){
+                                setConnectStatus(index,false);
+                                _self.wsConnect(index);
+                            }
+                        }
+                    }
+                }catch(e){}
+            }, function(e){
+                console.log('[StompHelper] Stomp WebSocket DisConnect');
+                for(var index in topicList){
+                    setConnectStatus(index,false);
+                }
+            });
         };
 
         /**
          * add WebSocket List
          * @author psb
          * @param _target
-         * @param _webSocketIp
          * @param _messageEventHandler
+         * @param _notConnectFlag
          */
-        this.addWebSocketList = function(_target, _webSocketIp, _messageEventHandler){
+        this.addWebSocketList = function(_target, _messageEventHandler, _notConnectFlag){
             if(_target==null){
                 console.error("[StompHelper][addWebSocketList] target is null");
                 return false;
             }
 
-            if(webSocketList[_target]!=null){
+            if(topicList[_target]!=null){
                 console.error("[StompHelper][addWebSocketList] exist target - " + _target);
-                return false;
-            }
-
-            if(_webSocketIp==null){
-                console.error("[StompHelper][addWebSocketList] webSocketIp is null");
                 return false;
             }
 
@@ -64,31 +83,32 @@ var StompHelper = (
                 return false;
             }
 
-            webSocketList[_target] = {
-                "url" : "ws://"+_webSocketIp+":"+STOMP_PORT+"/ws",
-                "header" : CONNECT_HEADERS,
+            topicList[_target] = {
                 "messageEventHandler" : _messageEventHandler,
-                "ws" : null
+                "conn" : CONNECT_STATUS[1]
             };
+
+            if(!_notConnectFlag){
+                _self.wsConnect(_target);
+            }
         };
 
         this.wsConnect = function(_target){
-            if(_target==null || webSocketList[_target]==null){
-                console.error("[StompHelper][subscribe] target is null or not in webSocketList");
+            if(_target==null || topicList[_target]==null){
+                console.error("[StompHelper][subscribe] target is null or not in topicList");
                 return false;
             }
 
-            webSocketList[_target]['ws'] = Stomp.client(webSocketList[_target]['url']);
-            webSocketList[_target]['ws'].reconnect_delay = RECONNECT_DELAY;
-            webSocketList[_target]['ws'].connect(webSocketList[_target]['header'], function() {
-                webSocketList[_target]['conn'] = CONNECT_STATUS[0];
-                webSocketList[_target]['ws'].subscribe("/topic/"+_target, webSocketList[_target]['messageEventHandler']);
-                console.log(_target+' websocket opened');
-            }, function(error) {
-                webSocketList[_target]['conn'] = CONNECT_STATUS[1];
-            });
+            if(!_self.isConnect(_target)){
+                try{
+                    let result = ws.subscribe("/topic/"+_target, topicList[_target]['messageEventHandler'],{id:_target});
+                    topicList[_target]['id'] = result['id'];
+                    setConnectStatus(_target,true);
+                }catch(e){
+                    setConnectStatus(_target,false);
+                }
+            }
         };
-
 
         /**
          * ws DisConnect
@@ -96,15 +116,12 @@ var StompHelper = (
          * @param _target
          */
         this.wsDisConnect = function(_target){
-            if(_target==null || webSocketList[_target]==null){
-                console.error("[WebSocketHelper][wsDisConnect] target is null or not in webSocketList");
+            if(_target==null || topicList[_target]==null){
+                console.error("[StompHelper][unsubscribe] target is null or not in topicList");
                 return false;
             }
-
-            webSocketList[_target]['ws'].unsubscribe();
-            webSocketList[_target]['ws'] = null;
-            webSocketList[_target]['conn'] = CONNECT_STATUS[1];
-            console.log(_target+' websocket closed');
+            ws.unsubscribe(topicList[_target]['id']);
+            setConnectStatus(_target,false);
         };
 
         /**
@@ -114,8 +131,8 @@ var StompHelper = (
          * @param _text
          */
         this.sendMessage = function(_target, _text, _count){
-            if(_target==null || webSocketList[_target]==null){
-                console.error("[WebSocketHelper][sendMessage] target is null or not in webSocketList");
+            if(_target==null || topicList[_target]==null){
+                console.error("[StompHelper][sendMessage] target is null or not in topicList");
                 return false;
             }
 
@@ -123,19 +140,19 @@ var StompHelper = (
                 if(typeof _text=="object"){
                     _text = JSON.stringify(_text);
                 }
-                webSocketList[_target]['ws'].send("/topic/"+_target,{},_text);
+                ws.send("/topic/"+_target,{},_text);
             }else{
                 if(_count == null){
                     _count = SEND_MESSAGE_RETRY['cnt'];
                 }
-                console.warn('[WebSocketHelper][sendMessage] websocket is disconnect - retry '+ (SEND_MESSAGE_RETRY['cnt']-_count));
+                console.warn('[StompHelper][sendMessage] websocket is disconnect - retry '+ (SEND_MESSAGE_RETRY['cnt']-_count));
 
                 if(_count > 0){
                     setTimeout(function(){
                         _self.sendMessage(_target, _text, _count - 1);
                     },SEND_MESSAGE_RETRY['delay']);
                 }else{
-                    console.error('[WebSocketHelper][sendMessage] failure - retry count over',_target, _text);
+                    console.error('[StompHelper][sendMessage] failure - retry count over',_target, _text);
                 }
             }
         };
@@ -146,13 +163,13 @@ var StompHelper = (
          * @param _target
          */
         this.isConnect = function(_target){
-            if(_target==null || webSocketList[_target]==null){
-                console.error("[WebSocketHelper][isConnect] target is null or not in webSocketList");
+            if(_target==null || topicList[_target]==null){
+                console.error("[StompHelper][isConnect] target is null or not in topicList");
                 return false;
             }
 
             var resultFlag = false;
-            switch (webSocketList[_target]['conn']) {
+            switch (topicList[_target]['conn']) {
                 case CONNECT_STATUS[0] :
                     resultFlag = true;
                     break;
@@ -162,5 +179,7 @@ var StompHelper = (
             }
             return resultFlag;
         };
+
+        initialize(webSocketIp);
     }
 );

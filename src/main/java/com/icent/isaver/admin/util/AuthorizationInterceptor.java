@@ -42,6 +42,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${ws.server.eventUrlConnect}")
     private String wsEventUrlConnect = null;
 
+    @Value("${socketMode}")
+    private String socketMode = null;
+
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
 
@@ -130,8 +133,13 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
 
-        InetAddress address = InetAddress.getByName(wsAddress);
-        modelAndView.addObject("eventWebSocketUrl", "ws://" + address.getHostAddress() + ":" + wsPort + "/" + wsProjectName + wsEventUrlConnect);
+        try{
+            InetAddress address = InetAddress.getByName(wsAddress);
+            modelAndView.addObject("webSocketIp", address.getHostAddress());
+            modelAndView.addObject("socketMode", socketMode);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         super.postHandle(request, response, handler, modelAndView);
     }
 

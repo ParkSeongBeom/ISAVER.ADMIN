@@ -49,9 +49,6 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private AreaDao areaDao;
 
@@ -89,14 +86,6 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         try{
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            InetAddress address = InetAddress.getByName(wsAddress);
-            modelAndView.addObject("webSocketIp", address.getHostAddress());
-            modelAndView.addObject("socketMode", socketMode);
         }catch(Exception e){
             e.printStackTrace();
         }

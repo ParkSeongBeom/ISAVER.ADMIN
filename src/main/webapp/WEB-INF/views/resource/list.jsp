@@ -560,7 +560,7 @@
     var resourceHelper = new ResourceHelper(String('${rootPath}'));
     var templateSettingPopup = new TemplateSettingPopup(String('${rootPath}'));
     var customMapPopup = new CustomMapPopup(String('${rootPath}'),String('${version}'));
-    var ptzControlPopup = new PtzControlPopup(String('${rootPath}'), String('${ptzWebSocketUrl}'));
+    var ptzControlPopup = new PtzControlPopup(String('${rootPath}'));
 
     var messageConfig = {
         // 공통

@@ -37,6 +37,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.xml.MarshallingView;
 
 import javax.inject.Inject;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,12 +274,26 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public MqttUtil mqttUtil() {
+        MqttUtil mqttUtil=new MqttUtil();
+        try{
+            InetAddress address = InetAddress.getByName(propertyManager.getProperty("mqtt.server.domain"));
+            mqttUtil.connect("tcp://"+ address.getHostAddress() +":"+propertyManager.getProperty("mqtt.server.port"),propertyManager.getProperty("mqtt.server.userName"),propertyManager.getProperty("mqtt.server.password"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return mqttUtil;
+    }
+
+    @Bean
     public String printVersion() {
         String version = null;
         StringBuilder loggerBuiler = new StringBuilder();
         loggerBuiler.append("\n==============================");
-        loggerBuiler.append("\n= iSaver Admin Version : ").append(propertyManager.getProperty("cnf.server.minorVersion"));
+        loggerBuiler.append("\n= iSaver Admin");
+        loggerBuiler.append("\n= Version : ").append(propertyManager.getProperty("cnf.server.minorVersion"));
         loggerBuiler.append("\n= DeployMode : ").append(propertyManager.getProperty("deployMode"));
+        loggerBuiler.append("\n= SocketMode : ").append(propertyManager.getProperty("socketMode"));
         loggerBuiler.append("\n==============================");
         version = loggerBuiler.toString();
         loggerBuiler.setLength(0);

@@ -114,16 +114,9 @@ var NotificationHelper = (
          * set websocket
          * @author psb
          */
-        this.setWebsocket = function(webSocketHelper, param){
+        this.setWebsocket = function(webSocketHelper){
             _webSocketHelper = webSocketHelper;
-            for(let index in param){
-                switch (index) {
-                    case "notification":
-                        _webSocketHelper.addWebSocketList(index, param[index], notificationMessageEventHandler);
-                        _webSocketHelper.wsConnect(index);
-                        break;
-                }
-            }
+            _webSocketHelper.addWebSocketList("eventAlarm", notificationMessageEventHandler);
         };
 
         /**
@@ -134,8 +127,14 @@ var NotificationHelper = (
             var resultData;
             var status = 0;
             try{
-                resultData = JSON.parse(message.data);
+                if(typeof message.data!='undefined'){
+                    resultData = message.data;
+                }else if(typeof message.body!='undefined'){
+                    resultData = message.body;
+                }
+                resultData = JSON.parse(resultData);
             }catch(e){
+                console.warn("[mapMessageEventHandler] json parse error - " + message);
                 return false;
             }
 

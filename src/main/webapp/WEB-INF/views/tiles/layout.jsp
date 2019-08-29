@@ -38,6 +38,8 @@
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.iframe-post-form.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/elements-util.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/template/template-helper.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/stomp.js?version=${version}"></script>
+    <script type="text/javascript" src="${rootPath}/assets/js/util/stomp-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/websocket-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/notification-helper.js?version=${version}"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js?version=${version}"></script>
@@ -55,7 +57,8 @@
         serverDatetime.setTime(${serverDatetime});
         var datetimeGap = new Date().getTime() - serverDatetime.getTime();
         var _eventDatetime = new Date();
-        var webSocketHelper = new WebSocketHelper();
+        var socketMode = '${socketMode}';
+        var webSocketHelper = socketMode=="mqtt" ? new StompHelper('${webSocketIp}') : new WebSocketHelper('${webSocketIp}');
         var notificationHelper = new NotificationHelper(rootPath);
         var dashboardFlag = false;
 
@@ -165,7 +168,7 @@
             notificationHelper.setElement($("#notificationList"));
             notificationHelper.createEventListener();
             notificationHelper.getNotificationList();
-            notificationHelper.setWebsocket(webSocketHelper, {'notification':"${eventWebSocketUrl}"});
+            notificationHelper.setWebsocket(webSocketHelper);
             aliveSend("${aliveCheckDelay}");
 
             alarmPlayer = document.getElementsByTagName("audio")[0];

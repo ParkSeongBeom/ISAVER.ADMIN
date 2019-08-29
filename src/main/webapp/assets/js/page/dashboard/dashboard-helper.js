@@ -58,17 +58,15 @@ var DashboardHelper = (
         this.setWebsocket = function(webSocketHelper, param){
             _webSocketHelper = webSocketHelper;
             for(let index in param){
-                switch (index) {
+                switch (param[index]) {
                     case "map":
                         if($("div[templateCode='TMP005']").length>0){
-                            _webSocketHelper.addWebSocketList(index, param[index], mapMessageEventHandler);
-                            _webSocketHelper.wsConnect(index);
+                            _webSocketHelper.addWebSocketList(param[index], mapMessageEventHandler);
                         }
                         break;
                     case "toiletRoom":
                         if($("div[templateCode='TMP008']").length>0){
-                            _webSocketHelper.addWebSocketList(index, param[index], toiletRoomMessageEventHandler);
-                            _webSocketHelper.wsConnect(index);
+                            _webSocketHelper.addWebSocketList(param[index], toiletRoomMessageEventHandler);
                         }
                         break;
                 }
