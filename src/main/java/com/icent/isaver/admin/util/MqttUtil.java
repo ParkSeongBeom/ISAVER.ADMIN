@@ -16,10 +16,10 @@ public class MqttUtil implements MqttCallbackExtended {
     private static MemoryPersistence persistence;
     private static MqttConnectOptions connOpts;
 
-    public void connect(String broker, String username, String password){
+    public void connect(String broker, String clientId, String username, String password){
         try {
             persistence = new MemoryPersistence();
-            Client = new MqttAsyncClient(broker, "isaverAdmin", persistence);
+            Client = new MqttAsyncClient(broker, clientId, persistence);
             Client.setCallback(this);
 
             connOpts = new MqttConnectOptions();
