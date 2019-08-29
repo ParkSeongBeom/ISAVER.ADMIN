@@ -14,6 +14,7 @@ export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize=512m"
 export JAVA_OPTS="$JAVA_OPTS -XX:+UseParNewGC"
 export JAVA_OPTS="$JAVA_OPTS -XX:ParallelGCThreads=8"
 export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+export JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8"
 
 export JAVA_OPTS="$JAVA_OPTS -Dtomcat.port.shutdown=8809"
 export JAVA_OPTS="$JAVA_OPTS -Dtomcat.port.http=8800"
