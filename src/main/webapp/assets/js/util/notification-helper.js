@@ -682,7 +682,7 @@ var NotificationHelper = (
                 for(var index in cancelList){
                     var cancel = cancelList[index];
                     if(_notificationList[cancel['notificationId']]!=null){
-                        _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['eventDatetime'];
+                        _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['updateDatetime'];
                         _notificationList[cancel['notificationId']]['element'].find(".video_btn").show();
                     }
                 }
