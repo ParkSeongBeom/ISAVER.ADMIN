@@ -38,16 +38,7 @@
                 </p>
                 <p class="itype_01">
                     <span><spring:message code='deviceStatusHistory.column.areaName'/></span>
-                    <span>
-                        <select name="areaId">
-                            <option value=""><spring:message code='common.column.useAll'/></option>
-                            <c:forEach items="${areas}" var="areas">
-                                <c:if test="${areas.delYn == 'N'}">
-                                    <option value="${areas.areaId}" <c:if test="${paramBean.areaId == areas.areaId}">selected="selected"</c:if>>${areas.path}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
-                    </span>
+                    <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" areaId="${paramBean.areaId}" allText="${allSelectText}"/></span>
                 </p>
                 <p class="itype_01">
                     <span><spring:message code="deviceStatusHistory.column.deviceStat" /></span>
