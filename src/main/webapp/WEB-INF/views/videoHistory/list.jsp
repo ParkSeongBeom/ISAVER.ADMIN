@@ -165,7 +165,7 @@
         try{
             var videoHistory = videoHistoryList[index];
             if(videoHistory!=null && videoHistory['fenceId']!=null && cs.isRecording(videoHistory['fenceId']) && videoHistory['eventDatetime']!=null && videoHistory['updateDatetime']!=null){
-                cs.openVideo(videoHistory['notificationId'],videoHistory['fenceId'],new Date(videoHistory['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(videoHistory['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
+                cs.openVideo(videoHistory['notificationId'],videoHistory['fenceId'],new Date(videoHistory['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(videoHistory['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"),videoFileName);
             }else{
                 $("#videoSource").attr("src",videoUrl+videoFileName);
                 $("#videoElement")[0].load();

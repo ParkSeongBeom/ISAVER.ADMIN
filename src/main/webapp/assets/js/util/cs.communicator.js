@@ -11,9 +11,9 @@ function fnCSController(){
 		}
 	};
 
-	objCSController.openVideo = function(notificationId,fenceId,eventDatetime,cancelDatetime){
+	objCSController.openVideo = function(notificationId,fenceId,eventDatetime,cancelDatetime,videoFileName){
 		if(this.isCS){
-			vmsBindObj.openVideo(notificationId,fenceId,eventDatetime,cancelDatetime);
+			vmsBindObj.openVideo(notificationId,fenceId,eventDatetime,cancelDatetime,videoFileName);
 		}
 	};
 
