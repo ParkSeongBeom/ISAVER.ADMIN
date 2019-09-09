@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.DeviceSyncRequestBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.DeviceSyncRequestDao;
@@ -8,6 +9,7 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +61,12 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
 
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
+
+    @Value("${socketMode}")
+    private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
 
     @Override
     public ModelAndView findListDeviceSyncRequest(Map<String, String> parameters) {
@@ -125,12 +133,16 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
             throw new IsaverException("");
         }
 
+        Map websocketParam = new HashMap();
+        websocketParam.put("allFlag","Y");
+        websocketParam.put("messageType","deviceSync");
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("allFlag","Y");
-            websocketParam.put("messageType","deviceSync");
-
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }

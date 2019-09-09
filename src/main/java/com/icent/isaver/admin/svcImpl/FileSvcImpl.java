@@ -1,15 +1,18 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.bean.FileBean;
 import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.dao.FileDao;
+import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSyncRequestSvc;
 import com.icent.isaver.admin.svc.FileSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
 import com.icent.isaver.admin.util.FileUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.helper.FileTransfer;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.StringUtils;
@@ -67,6 +70,12 @@ public class FileSvcImpl implements FileSvc {
 
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
+
+    @Value("${socketMode}")
+    private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
 
     @Inject
     private FileDao fileDao;
@@ -213,14 +222,18 @@ public class FileSvcImpl implements FileSvc {
     }
 
     private void deviceSync(){
+        Map websocketParam = new HashMap();
+        websocketParam.put("allFlag", CommonResource.YES);
+        websocketParam.put("messageType","alarmFileSync");
         try {
-            Map websocketParam = new HashMap();
-            websocketParam.put("allFlag", CommonResource.YES);
-            websocketParam.put("messageType","alarmFileSync");
-
-            AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+            if(socketMode.equals("mqtt")){
+                ObjectMapper mapper = new ObjectMapper();
+                mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
+            }else {
+                AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+            }
         } catch (Exception e) {
-            logger.warn("File Device Sync failure - {}",e.getMessage());
+            throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }
     }
 

@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.bean.*;
@@ -10,6 +11,7 @@ import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.CustomMapLocationSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -68,6 +70,13 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
 
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
+
+    @Value("${socketMode}")
+    private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
+
 
     @Inject
     private CustomMapLocationDao customMapLocationDao;
@@ -189,12 +198,17 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
 
         if(deviceList!=null && deviceList.size() > 0){
             for(DeviceBean device : deviceList){
+                Map websocketParam = new HashMap();
+                websocketParam.put("deviceId", device.getDeviceId());
+                websocketParam.put("messageType","locationSync");
+
                 try {
-                    Map websocketParam = new HashMap();
-//                    websocketParam.put("allFlag", CommonResource.YES);
-                    websocketParam.put("deviceId", device.getDeviceId());
-                    websocketParam.put("messageType","locationSync");
-                    AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+                    if(socketMode.equals("mqtt")){
+                        ObjectMapper mapper = new ObjectMapper();
+                        mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
+                    }else {
+                        AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSync, "form", null);
+                    }
                 } catch (Exception e) {
                     throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
                 }
