@@ -15,25 +15,32 @@ public class MqttUtil implements MqttCallbackExtended {
     private static MqttMessage message;
     private static MemoryPersistence persistence;
     private static MqttConnectOptions connOpts;
+    private Boolean isMqtt;
 
-    public void connect(String socketMode, String broker, String clientId, String username, String password){
-        if(socketMode.equals("mqtt")){
-            try {
-                persistence = new MemoryPersistence();
-                Client = new MqttAsyncClient(broker, clientId, persistence);
-                Client.setCallback(this);
+    public Boolean getIsMqtt() {
+        return isMqtt;
+    }
 
-                connOpts = new MqttConnectOptions();
-                connOpts.setUserName(username);
-                connOpts.setPassword(password.toCharArray());
-                connOpts.setCleanSession(true);
-                connOpts.setAutomaticReconnect(true);
-                logger.info("[MQTT] Connecting to broker : {}",broker);
-                Client.connect(connOpts);
-                message = new MqttMessage();
-            } catch(MqttException me) {
-                logger.error("[MQTT] Connect Failure reason : {}, msg : {}, loc : {}, cause : {}, excep : {}",me.getReasonCode(),me.getMessage(),me.getLocalizedMessage(),me.getCause(),me);
-            }
+    public void setIsMqtt(Boolean isMqtt) {
+        this.isMqtt = isMqtt;
+    }
+
+    public void connect(String broker, String clientId, String username, String password){
+        try {
+            persistence = new MemoryPersistence();
+            Client = new MqttAsyncClient(broker, clientId, persistence);
+            Client.setCallback(this);
+
+            connOpts = new MqttConnectOptions();
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
+            connOpts.setCleanSession(true);
+            connOpts.setAutomaticReconnect(true);
+            logger.info("[MQTT] Connecting to broker : {}",broker);
+            Client.connect(connOpts);
+            message = new MqttMessage();
+        } catch(MqttException me) {
+            logger.error("[MQTT] Connect Failure reason : {}, msg : {}, loc : {}, cause : {}, excep : {}",me.getReasonCode(),me.getMessage(),me.getLocalizedMessage(),me.getCause(),me);
         }
     }
 

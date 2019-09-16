@@ -57,9 +57,6 @@ public class NotificationSvcImpl implements NotificationSvc {
     @Value("${ws.server.projectName}")
     private String wsProjectName = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Value("${ws.server.urlSendEvent}")
     private String wsUrlSendEvent = null;
 
@@ -148,7 +145,7 @@ public class NotificationSvcImpl implements NotificationSvc {
          * @date 2018.1.11
          */
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
             }else {
@@ -194,7 +191,7 @@ public class NotificationSvcImpl implements NotificationSvc {
          * @date 2018.1.11
          */
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
             }else {

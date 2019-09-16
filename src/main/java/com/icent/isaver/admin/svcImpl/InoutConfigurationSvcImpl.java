@@ -58,9 +58,6 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
     @Value("${ws.server.urlSendEvent}")
     private String wsUrlSendEvent = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private MqttUtil mqttUtil;
 
@@ -115,7 +112,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
          * @date 2016.12.15
          */
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
             }else {

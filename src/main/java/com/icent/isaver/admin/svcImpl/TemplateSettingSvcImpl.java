@@ -55,9 +55,6 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
     @Value("${ws.server.urlSendMap}")
     private String wsUrlSendMap = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private MqttUtil mqttUtil;
 
@@ -165,7 +162,7 @@ public class TemplateSettingSvcImpl implements TemplateSettingSvc {
          * @date 2018.06.27
          */
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("map",mapper.writeValueAsString(websocketParam),0);
             }else {

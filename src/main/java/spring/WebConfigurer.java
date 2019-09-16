@@ -276,15 +276,17 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public MqttUtil mqttUtil() {
         MqttUtil mqttUtil=new MqttUtil();
-        try{
-            InetAddress address = InetAddress.getByName(propertyManager.getProperty("mqtt.server.domain"));
-            mqttUtil.connect(propertyManager.getProperty("socketMode")
-                    ,"tcp://"+ address.getHostAddress() +":"+propertyManager.getProperty("mqtt.server.port")
-                    ,propertyManager.getProperty("mqttClientId")
-                    ,propertyManager.getProperty("mqtt.server.userName")
-                    ,propertyManager.getProperty("mqtt.server.password"));
-        }catch(Exception e){
-            e.printStackTrace();
+        mqttUtil.setIsMqtt(propertyManager.getProperty("socketMode").equals("mqtt"));
+        if(mqttUtil.getIsMqtt()){
+            try{
+                InetAddress address = InetAddress.getByName(propertyManager.getProperty("mqtt.server.domain"));
+                mqttUtil.connect("tcp://"+ address.getHostAddress() +":"+propertyManager.getProperty("mqtt.server.port")
+                        ,propertyManager.getProperty("mqttClientId")
+                        ,propertyManager.getProperty("mqtt.server.userName")
+                        ,propertyManager.getProperty("mqtt.server.password"));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
         return mqttUtil;
     }

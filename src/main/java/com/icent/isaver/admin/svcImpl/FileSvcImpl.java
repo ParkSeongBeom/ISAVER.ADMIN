@@ -71,9 +71,6 @@ public class FileSvcImpl implements FileSvc {
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private MqttUtil mqttUtil;
 
@@ -226,7 +223,7 @@ public class FileSvcImpl implements FileSvc {
         websocketParam.put("allFlag", CommonResource.YES);
         websocketParam.put("messageType","alarmFileSync");
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
             }else {

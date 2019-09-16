@@ -62,9 +62,6 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private MqttUtil mqttUtil;
 
@@ -137,7 +134,7 @@ public class DeviceSyncRequestSvcImpl implements DeviceSyncRequestSvc {
         websocketParam.put("allFlag","Y");
         websocketParam.put("messageType","deviceSync");
         try {
-            if(socketMode.equals("mqtt")){
+            if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
                 mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
             }else {

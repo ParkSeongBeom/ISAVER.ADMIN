@@ -71,9 +71,6 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
     @Value("${ws.server.urlSync}")
     private String wsUrlSync = null;
 
-    @Value("${socketMode}")
-    private String socketMode = null;
-
     @Inject
     private MqttUtil mqttUtil;
 
@@ -203,7 +200,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
                 websocketParam.put("messageType","locationSync");
 
                 try {
-                    if(socketMode.equals("mqtt")){
+                    if(mqttUtil.getIsMqtt()){
                         ObjectMapper mapper = new ObjectMapper();
                         mqttUtil.publish("sync",mapper.writeValueAsString(websocketParam),0);
                     }else {
