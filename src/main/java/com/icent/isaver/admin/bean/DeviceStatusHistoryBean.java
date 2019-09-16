@@ -21,6 +21,7 @@ public class DeviceStatusHistoryBean {
     private String areaName;
     private String deviceCode;
     private String deviceCodeName;
+    private String logDatetimeStr;
 
     public String getLogId() {
         return logId;
@@ -92,5 +93,13 @@ public class DeviceStatusHistoryBean {
 
     public void setDeviceCodeName(String deviceCodeName) {
         this.deviceCodeName = deviceCodeName;
+    }
+
+    public String getLogDatetimeStr() {
+        return logDatetimeStr;
+    }
+
+    public void setLogDatetimeStr(String logDatetimeStr) {
+        this.logDatetimeStr = logDatetimeStr;
     }
 }

@@ -4,10 +4,15 @@ import com.icent.isaver.admin.bean.DeviceStatusHistoryBean;
 import com.icent.isaver.admin.dao.DeviceStatusHistoryDao;
 import com.icent.isaver.admin.svc.DeviceStatusHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.meous.common.util.POIExcelUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +46,20 @@ public class DeviceStatusHistorySvcImpl implements DeviceStatusHistorySvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("deviceStatusHistoryList", deviceStatusHistoryList);
         modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView findListDeviceStatusHistoryForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
+        List<DeviceStatusHistoryBean> deviceStatusHistoryList = deviceStatusHistoryDao.findListDeviceStatusHistoryForExcel(parameters);
+
+        String[] heads = new String[]{"Device Id","Device Name","Device Code Name","Area Name","Device Status","Log Datetime","Description"};
+        String[] columns = new String[]{"deviceId","deviceName","deviceCodeName","areaName","deviceStat","logDatetimeStr","description"};
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        ModelAndView modelAndView = new ModelAndView();
+        POIExcelUtil.downloadExcel(modelAndView, "isaver_device_status_history_" + sdf.format(new Date()), deviceStatusHistoryList, columns, heads, "DeviceStatusHistory");
         return modelAndView;
     }
 }

@@ -88,4 +88,54 @@
             </if>
         </where>
     </select>
+
+
+    <!--
+        장치상태이력 목록을 가져온다. - 엑셀다운로드용
+        @author psb
+    -->
+    <select id="findListDeviceStatusHistoryForExcel" resultType="DeviceStatusHistoryBean" parameterType="map">
+        SELECT  A.log_id as logId
+                , A.device_id as deviceId
+                , CASE
+                    WHEN a.device_stat='Y' THEN '사용'
+                    ELSE '미사용'
+                END as deviceStat
+                , to_char(a.log_datetime,'yyyy-MM-dd HH24:MI:ss') as logDatetimeStr
+                , C.area_name as areaName
+                , B.device_name as deviceName
+                , DEV02.code_name as deviceCodeName
+                , A.description as description
+        FROM  isaver.device_status_history A
+        INNER JOIN isaver.device b
+        ON      a.device_id = b.device_id
+        INNER JOIN isaver.area c
+        ON      b.area_id = c.area_id
+        INNER JOIN (
+        SELECT    code_id, code_name FROM isaver.code
+        WHERE     group_code_id = 'DEV'
+        ) AS DEV02
+        ON      B.device_code = DEV02.code_id
+        <where>
+            <if test="deviceId != null and deviceId != ''">
+                AND     a.device_id = #{deviceId}
+            </if>
+            <if test="areaId != null and areaId != ''">
+                AND     c.area_id = #{areaId}
+            </if>
+            <if test="deviceCode != null and deviceCode != ''">
+                AND     B.device_code = #{deviceCode}
+            </if>
+            <if test="deviceStat != null and deviceStat != ''">
+                AND     a.device_stat = #{deviceStat}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     A.log_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     A.log_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </where>
+        ORDER BY A.log_datetime DESC
+    </select>
 </mapper>

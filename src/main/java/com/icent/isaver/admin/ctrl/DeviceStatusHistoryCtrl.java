@@ -54,4 +54,12 @@ public class DeviceStatusHistoryCtrl {
         modelAndView.setViewName("deviceStatusHistoryList");
         return modelAndView;
     }
+
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
+    public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = deviceStatusHistorySvc.findListDeviceStatusHistoryForExcel(request, response, parameters);
+        modelAndView.setViewName("excelDownloadView");
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
 }

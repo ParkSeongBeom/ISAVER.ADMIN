@@ -2,6 +2,8 @@ package com.icent.isaver.admin.svc;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -28,4 +30,11 @@ public interface DeviceStatusHistorySvc {
      * @return
      */
     ModelAndView findListDeviceStatusHistory(Map<String, String> parameters);
+
+    /**
+     *
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListDeviceStatusHistoryForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters);
 }
