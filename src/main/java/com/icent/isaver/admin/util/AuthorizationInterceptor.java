@@ -33,17 +33,14 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${ws.server.address}")
     private String wsAddress = null;
 
-    @Value("${ws.server.port}")
-    private String wsPort = null;
-
-    @Value("${ws.server.projectName}")
-    private String wsProjectName = null;
-
-    @Value("${ws.server.eventUrlConnect}")
-    private String wsEventUrlConnect = null;
+    @Value("${mqtt.server.domain}")
+    private String mqttAddress = null;
 
     @Value("${socketMode}")
     private String socketMode = null;
+
+    @Inject
+    private MqttUtil mqttUtil;
 
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
@@ -134,9 +131,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
 
         try{
-            InetAddress address = InetAddress.getByName(wsAddress);
-            modelAndView.addObject("webSocketIp", address.getHostAddress());
-            modelAndView.addObject("socketMode", socketMode);
+            InetAddress address = InetAddress.getByName(mqttUtil.getIsMqtt()?mqttAddress:wsAddress);
+            modelAndView.addObject("socketIp", address.getHostAddress());
+            modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
         }catch(Exception e){
             e.printStackTrace();
         }

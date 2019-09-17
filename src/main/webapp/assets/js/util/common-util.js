@@ -195,8 +195,20 @@ function addAsynchronousScript(_src){
  * @author psb
  */
 function toRound(value, places) {
+    value = numValidate(value);
     var multiplier = Math.pow(10, places);
     return (Math.round(value * multiplier) / multiplier);
+}
+
+/**
+ * 숫자형 확인 (지수표기법일경우 제거)
+ * @author psb
+ */
+function numValidate(value) {
+    if(value.toString().indexOf('e')>0){
+        value = Number(value.toString().slice(0,value.toString().indexOf('e')));
+    }
+    return value;
 }
 
 function isPassive() {

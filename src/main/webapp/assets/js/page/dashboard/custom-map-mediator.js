@@ -1000,8 +1000,8 @@ var CustomMapMediator = (
                         if(data['location'] instanceof Array){
                             data['location'] = data['location'][0];
                         }
-                        const left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(data['location']['lat'])*_ratio);
-                        const top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(data['location']['lng'])*_ratio);
+                        const left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location']['lat'],2))*_ratio);
+                        const top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location']['lng'],2))*_ratio);
                         let element;
 
                         if(_marker[messageType][data['deviceId']][data['id']]!=null){
