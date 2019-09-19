@@ -15,6 +15,7 @@ public class MqttUtil implements MqttCallbackExtended {
     private static MqttMessage message;
     private static MemoryPersistence persistence;
     private static MqttConnectOptions connOpts;
+    private static String _broker;
     private Boolean isMqtt;
 
     public Boolean getIsMqtt() {
@@ -28,7 +29,8 @@ public class MqttUtil implements MqttCallbackExtended {
     public void connect(String broker, String clientId, String username, String password){
         try {
             persistence = new MemoryPersistence();
-            Client = new MqttAsyncClient(broker, clientId, persistence);
+            _broker = broker;
+            Client = new MqttAsyncClient(_broker, clientId, persistence);
             Client.setCallback(this);
 
             connOpts = new MqttConnectOptions();
@@ -36,12 +38,48 @@ public class MqttUtil implements MqttCallbackExtended {
             connOpts.setPassword(password.toCharArray());
             connOpts.setCleanSession(true);
             connOpts.setAutomaticReconnect(true);
-            logger.info("[MQTT] Connecting to broker : {}",broker);
-            Client.connect(connOpts);
             message = new MqttMessage();
+            initServerConnectCheck();
         } catch(MqttException me) {
             logger.error("[MQTT] Connect Failure reason : {}, msg : {}, loc : {}, cause : {}, excep : {}",me.getReasonCode(),me.getMessage(),me.getLocalizedMessage(),me.getCause(),me);
+        } catch(Exception e){
+            logger.error("[MQTT] Connect Failure reason : {}",e.getMessage());
         }
+    }
+
+    /**
+     * mqtt server connect check.
+     *
+     * @throws Exception the exception
+     */
+    public void initServerConnectCheck() throws Exception {
+        Thread thread = new Thread() {
+            public void run() {
+                boolean initFlag = false;
+                while (!Client.isConnected()) {
+                    try {
+                        if (initFlag) {
+                            logger.info("[MQTT] Connecting retry to broker : {}",_broker);
+                            Client.reconnect();
+                        }else{
+                            logger.info("[MQTT] Connecting to broker : {}",_broker);
+                            Client.connect(connOpts);
+                        }
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                    }
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        logger.error(e.getMessage());
+                    }
+                    initFlag = true;
+                }
+            }
+        };
+        thread.setName("Mqtt HeartBeat Thread");
+        thread.start();
     }
 
     public void disconnect(){
