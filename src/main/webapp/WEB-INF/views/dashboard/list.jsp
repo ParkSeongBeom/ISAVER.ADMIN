@@ -626,6 +626,7 @@
     var renderDatetime = new Date();
     var dashboardHelper = new DashboardHelper("${rootPath}","${version}");
     var fileUploadPath = '${fileUploadPath}';
+    var authCheckActionType;
 
     var templateSetting = {
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
@@ -992,11 +993,12 @@
             $("#authrizeAreaId").val(areaId);
             $("#authrizePassword").val('');
             $(".ir_popup").fadeIn(200);
+            authCheckActionType = actionType;
 
             $("#authrizePassword").bind("keyup", function(evt){
                 var code = evt.keyCode || evt.which;
                 if(code == 13){
-                    confirmAuthorize(actionType);
+                    confirmAuthorize(authCheckActionType);
                 }
             });
         }
@@ -1022,7 +1024,7 @@
         var param = {
             'userPassword' : $("#authrizePassword").val()
             ,'areaId' : $("#authrizeAreaId").val()
-            ,'actionType' : actionType
+            ,'actionType' : actionType?actionType:authCheckActionType
         };
         callAjax('authorizeCheck',param);
     }

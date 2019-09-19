@@ -195,9 +195,13 @@ function addAsynchronousScript(_src){
  * @author psb
  */
 function toRound(value, places) {
-    value = numValidate(value);
-    var multiplier = Math.pow(10, places);
-    return (Math.round(value * multiplier) / multiplier);
+    var result = 0;
+    if(value!=null){
+        value = numValidate(value);
+        var multiplier = Math.pow(10, places);
+        result = (Math.round(value * multiplier) / multiplier);
+    }
+    return result;
 }
 
 /**
@@ -205,7 +209,7 @@ function toRound(value, places) {
  * @author psb
  */
 function numValidate(value) {
-    if(value.toString().indexOf('e')>0){
+    if(value!=null && value.toString().indexOf('e')>0){
         value = Number(value.toString().slice(0,value.toString().indexOf('e')));
     }
     return value;
