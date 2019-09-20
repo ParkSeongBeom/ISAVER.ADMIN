@@ -40,15 +40,6 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Value("${cnf.fileAttachedUploadPath}")
     private String fileAttachedUploadPath = null;
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
-
-    @Value("${ws.server.port}")
-    private String wsPort = null;
-
-    @Value("${ws.server.projectName}")
-    private String wsProjectName = null;
-
     @Inject
     private AreaDao areaDao;
 

@@ -30,8 +30,8 @@ import java.util.Date;
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("${ws.server.address}")
-    private String wsAddress = null;
+    @Value("${cnf.hostIp}")
+    private String hostIp = null;
 
     @Value("${mqtt.server.domain}")
     private String mqttAddress = null;
@@ -131,7 +131,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
 
         try{
-            InetAddress address = InetAddress.getByName(mqttUtil.getIsMqtt()?mqttAddress:wsAddress);
+            InetAddress address = InetAddress.getByName(hostIp);
             modelAndView.addObject("socketIp", address.getHostAddress());
             modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
         }catch(Exception e){
