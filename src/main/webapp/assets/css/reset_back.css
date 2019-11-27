@@ -1,0 +1,291 @@
+﻿/*****************************************************************
+ * filename			:	reset_back.css
+ * description		:	CSS
+ * date				:	2016. 06. 23
+ 현병춘 차장
+******************************************************************/
+* {
+    padding:0; margin:0; text-decoration:none; list-style-type:none; border:0 none;
+    font-style:normal; font-weight:normal; letter-spacing:-0.01rem;
+    -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+    /*-webkit-user-select: none; -ms-user-select: none;  -moz-user-select: none;*/
+    outline: none; cursor: default;
+}
+*, *:after, *:before {-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+
+
+html {
+    font-size:16px;
+    font-family:'맑은고딕','Malgun Gothic';
+    -ms-text-size-adjust:     100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-overflow-scrolling : touch;
+    /*iOS와 IE에서 기기 회전시에 사용자가 확대하지 않아도 글씨 크기가 재조정되는 것을 예방*/
+}
+
+body {
+    /*min-width:1800px; min-height:900px;*/
+    padding:0; margin:0; outline: none;
+    -webkit-overflow-scrolling: touch;
+    -webkit-touch-callout:       none;
+    -webkit-appearance:          none;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    background-color:#f5f5f5;
+    color:#3c3c3c;
+
+}
+
+
+code,kbd,pre,samp {font-family: monospace, monospace; font-size: 1em; /*모든 브라우저에서 글꼴과 글꼴 크기가 다른 것을 해결. */}
+article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary {display:block;}
+/* IE8/9에서 정의되지 않은 HTML5 요소를 'block'으로 지정 */
+/* IE10/11, Firefox에서 정의되지 않은 `detail` 혹은 `summary` 를 `block`으로 지정 */
+/* IE11에서 정의되지 않은 `main`을 `block`으로 지정 */
+
+audio,canvas,video {
+    display: inline-block;    /* IE8/9에서 `inline-block`으로 정의되지 않은 것을 올바르게 지정. */
+    vertical-align: baseline; /* Chrome, Firefox, Opera에서 `progress`의 세로 정렬을 표준화. */
+}
+audio:not([controls]) {display: none; height: 0;}
+/* 모던 브라우저들에서 controls 속성없이 audio 요소가 렌더링 되는 것을 예방,iOS 5 기기에서 높이를 초과하는 것을 제거 */
+
+[hidden], template {display: none;}
+/* [hidden]` 속성의 스타일이 IE 8/9/10에서 존재하지 않는 것을 해결, IE 8/9/10/11, Safari, Firefox < 22 에서 `template` 요소를 숨김. */
+
+form {display: block; width:100%;}
+table {/*table-layout:fixed;*/border-spacing:0; /*border-collapse:collapse; */}
+
+/*
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    table {border-collapse:separate;}
+}
+*/
+
+@supports (-ms-ime-align:auto) {
+    table {border-collapse:separate;}
+}
+
+table td, table th {overflow: hidden;}
+
+dl,ul,ol,menu,li {list-style:none; /* 리스트 초기화 */}
+fieldset,img  {border:0 none}
+span,address  {display: inline-block;}
+blockquote, q {quotes:none}
+blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}
+label {text-shadow:none !important;}
+hr, legend {visibility:hidden;overflow:hidden;position:absolute;text-align:left;width:0;height:0;top:0;left:-999em;font-size:0;line-height:0;}
+/* 모든 브라우저에서 `pre` 요소의 `overfolow` 값을 통일 */
+
+pre {overflow: auto;}
+caption  {position:static;}
+optgroup {font-weight: bold;}
+img {
+    vertical-align:middle;width:100%;height:auto;margin:0;padding:0;border:0;
+    -webkit-transition-property:width; -webkit-transition-property:height; -webkit-transition-duration:.3s;
+}
+abbr[title] {border-bottom: 1px dotted; /* IE 8/9/10/11, Safari, Chrome에서 존재하지 않는 스타일을 부여 */}
+sub, sup {position:relative;vertical-align:baseline;font-size:75%;line-height:0;}
+/*`sub`과 `sup`요소가 모든 브라우저에서 `line-height`에 영향을 미치는 것을 예방 */
+
+sup {top: -0.5em;} sub {bottom: -0.25em;}
+small {display:block;font-size:80%;opacity:0.6;}
+b,strong {font-weight: bold; /* Firefox 4+, Safari, Chrome에서 `bolder`로 설정되어 있는 것을 `bold`로 수정 */ }
+svg:not(:root) {overflow: hidden; /* IE 9/10/11에서 `svg` 요소가 영역의 크기를 벗어나지 않도록 수정 */}
+textarea {overflow: auto; /* IE 8/9/10/11에서 기본 세로 스크롤바를 제거 */}
+
+/* a , button 테그 */
+label, label:before, label:after, optgroup, input, select, textarea, a, button,
+h1, h2, h3, h4, h5, h6, div[contenteditable]  {
+    display: inline-block; position:relative; margin:0; outline: none;
+    font: inherit; color:inherit; line-height: normal;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+    transition:        all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -moz-transition:   all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -webkit-transition:all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -o-transition:     all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    -ms-transition:    all 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+a,button {
+    vertical-align:middle; text-decoration:none; cursor:pointer;
+    border:0 none;border-radius:0; outline: 0;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+}
+
+
+/* 버튼 */
+button {-webkit-appearance:button;background-color:transparent}
+button, select {text-transform:none}
+button::-moz-focus-inner,input::-moz-focus-inner {border:0;padding:0}
+button[disabled], html input[disabled] {cursor:default}
+
+label, optgroup, textarea, a {-webkit-appearance:none;}
+input, select {vertical-align: middle;}
+/*input + span {margin:0 10px 0 0;}*/
+
+input, textarea, select, div[contenteditable]
+{color:#3c3c3c; padding:7px 10px; border-style:solid; border-width:1px; border-color:#a9a9a9; }
+input[disabled], textarea[disabled], select[disabled], div[contenteditable][disabled] {
+    background-color: rgba(0,0,0,0.05);
+}
+input, textarea, select {height:40px; padding:7px 10px;}
+
+input:focus, select:focus, select option, textarea:focus, div[contenteditable]:focus
+{ border-color: #109dcb !important; border-width:1px !important; }
+/*<div contenteditable="true" placeholder="알림해제 사유를 입력하여 주세요"></div>  pointer-events: none;*/
+div[contenteditable]
+{overflow-y: auto; width:100%; padding:10px; background-color: #fff;}
+div[contenteditable]:empty:before {content: attr(placeholder); display: block; opacity: 0.5;}
+
+select::-ms-expand { display: none;}
+select,input[type="date"] {
+    -webkit-appearance:none; -moz-appearance:none; -moz-appearance: none; appearance: none;
+    background-position: calc(100% - 6px) 50%;
+    background-size: 15px; background-repeat: no-repeat;
+    background-image: url(../images/ico/select_allow_b.svg);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {opacity: 0;}
+input[type="date"]::-webkit-inner-spin-button {height: 100%;}
+input[type="date"]::-webkit-clear-button {position: relative; font-size: 30px; right: 5px; margin-right: 5px;}
+select {padding:0 30px 0 10px; cursor: pointer; }
+select[disabled] {background-image: none;}
+select option[disabled], select option[selected] {opacity: 0.5; color:rgba(0,0,0,0.5);}
+select:focus option[disabled] {display: none;}
+select.bold {font-size:1.2rem; font-weight:bold;}
+
+input[type="date"] {padding:0 10px;}
+
+input[type="text"],input[type="password"],input[type="email"],
+input[type="number"],input[type="search"],input[type="image"],
+input[type="tel"], input[type="button"], input[type="reset"],
+input[type="submit"], input[type="date"]
+{text-align: left; vertical-align:middle; font-style:normal; border-radius:0; cursor:pointer;}
+/* 체크박스, 레디오버튼 정의 */
+
+input[type="checkbox"], input[type="radio"] {
+    width:18px; -moz-width:18px; height:18px;
+    padding:0;border:0; margin:0 10px 0 0;background-color:transparent !important;
+}
+span + input[type="checkbox"], span + input[type="radio"] {margin:0 10px 0 10px;}
+
+input[type="number"] {-moz-appearance:textfield;}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button
+{height: auto; display: none; -webkit-appearance:none;}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration
+{-webkit-appearance:none;}
+
+::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+:-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+:-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+@font-face {
+    font-family: 'svgbase';
+    src:  url('../fonts/svgbase.eot?2qkwbi');
+    src:  url('../fonts/svgbase.eot?2qkwbi#iefix') format('embedded-opentype'),
+    url('../fonts/svgbase.ttf?2qkwbi') format('truetype'),
+    url('../fonts/svgbase.woff?2qkwbi') format('woff'),
+    url('../fonts/svgbase.svg?2qkwbi#svgbase') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*.svgbase:before, button:before, button:after, label:before, a:before,
+.sett_btn:before, .refl_btn:before, .mc_bico:before, .dbc_contents:before,
+.toast_popup:before, .tp_contents:before,
+.change_btn:before, .mp_header:before,
+.btn_x:before, .toast_popup:before,
+.time_select_list > li:before,
+.check_th thead th:before,
+.personnel > div > div > em:before,
+span.dynatree-expander:before,
+.ui-datepicker .ui-datepicker-header > a > span:before,
+.menu_tree_set li ul:after,
+.device_popup li:before, !* 디바이스 보기 목록 아이콘 *!
+.dynatree-expander:after, !* 다이나 트리 + 아이콘 *!
+.personnel_set > div p:before, !* 진출입 아이콘 *!
+.personnel_set > div p:after,
+.in_sensor span:before,
+.blinker_set p:after, !* 진출입 화살표 아이콘 *!
+.safeeye_set .s_lbox:before, !* safeeye 아이콘 *!
+section:before,*/
+*:before, *:after
+{
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'svgbase' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.sico_01:before {content: "\e900";}    .sico_11:before {content: "\e90a";}     .sico_21:before {content: "\e914";}
+.sico_02:before {content: "\e901";}    .sico_12:before {content: "\e90b";}     .sico_22:before {content: "\e915";}
+.sico_03:before {content: "\e902";}    .sico_13:before {content: "\e90c";}     .sico_23:before {content: "\e916";}
+.sico_04:before {content: "\e903";}    .sico_14:before {content: "\e90d";}     .sico_24:before {content: "\e917";}
+.sico_05:before {content: "\e904";}    .sico_15:before {content: "\e90e";}     .sico_25:before {content: "\e918";}
+.sico_06:before {content: "\e905";}    .sico_16:before {content: "\e90f";}     .sico_26:before {content: "\e919";}
+.sico_07:before {content: "\e906";}    .sico_17:before {content: "\e910";}     .sico_27:before {content: "\e91a";}
+.sico_08:before {content: "\e907";}    .sico_18:before {content: "\e911";}     .sico_28:before {content: "\e91b";}
+.sico_09:before {content: "\e908";}    .sico_19:before {content: "\e912";}     .sico_29:before {content: "\e91c";}
+.sico_10:before {content: "\e909";}    .sico_20:before {content: "\e913";}     .sico_30:before {content: "\e91d";}
+
+
+.sico_31:before {content: "\e91e";}    .sico_41:before {content: "\e928";}     .sico_51:before {content: "\e932";}
+.sico_32:before {content: "\e91f";}    .sico_42:before {content: "\e929";}     .sico_52:before {content: "\e933";}
+.sico_33:before {content: "\e920";}    .sico_43:before {content: "\e92a";}     .sico_53:before {content: "\e934";}
+.sico_34:before {content: "\e921";}    .sico_44:before {content: "\e92b";}     .sico_54:before {content: "\e935";}
+.sico_35:before {content: "\e922";}    .sico_45:before {content: "\e92c";}     .sico_55:before {content: "\e936";}
+.sico_36:before {content: "\e923";}    .sico_46:before {content: "\e92d";}     .sico_56:before {content: "\e937";}
+.sico_37:before {content: "\e924";}    .sico_47:before {content: "\e92e";}     .sico_57:before {content: "\e938";}
+.sico_38:before {content: "\e925";}    .sico_48:before {content: "\e92f";}     .sico_58:before {content: "\e939";}
+.sico_39:before {content: "\e926";}    .sico_49:before {content: "\e930";}     .sico_59:before {content: "\e93a";}
+.sico_40:before {content: "\e927";}    .sico_50:before {content: "\e931";}     .sico_60:before {content: "\e93b";}
+
+
+.sico_61:before {content: "\e93c";}    .sico_71:before {content: "\e946";}     .sico_81:before {content: "\e950";}
+.sico_62:before {content: "\e93d";}    .sico_72:before {content: "\e947";}     .sico_82:before {content: "\e951";}
+.sico_63:before {content: "\e93e";}    .sico_73:before {content: "\e948";}     .sico_83:before {content: "\e952";}
+.sico_64:before {content: "\e93f";}    .sico_74:before {content: "\e949";}     .sico_84:before {content: "\e953";}
+.sico_65:before {content: "\e940";}    .sico_75:before {content: "\e94a";}     .sico_85:before {content: "\e954";}
+.sico_66:before {content: "\e941";}    .sico_76:before {content: "\e94b";}     .sico_86:before {content: "\e955";}
+.sico_67:before {content: "\e942";}    .sico_77:before {content: "\e94c";}     .sico_87:before {content: "\e956";}
+.sico_68:before {content: "\e943";}    .sico_78:before {content: "\e94d";}     .sico_88:before {content: "\e957";}
+.sico_69:before {content: "\e944";}    .sico_79:before {content: "\e94e";}     .sico_89:before {content: "\e958";}
+.sico_70:before {content: "\e945";}    .sico_80:before {content: "\e94f";}     .sico_90:before {content: "\e959";}
+
+
+.sico_91:before {content: "\e95a";}    .sico_101:before {content: "\e964";}    .sico_111:before {content: "\e96e";}
+.sico_92:before {content: "\e95b";}    .sico_102:before {content: "\e965";}    .sico_112:before {content: "\e96f";}
+.sico_93:before {content: "\e95c";}    .sico_103:before {content: "\e966";}    .sico_113:before {content: "\e970";}
+.sico_94:before {content: "\e95d";}    .sico_104:before {content: "\e967";}    .sico_114:before {content: "\e971";}
+.sico_95:before {content: "\e95e";}    .sico_105:before {content: "\e968";}    .sico_115:before {content: "\e972";}
+.sico_96:before {content: "\e95f";}    .sico_106:before {content: "\e969";}    .sico_116:before {content: "\e973";}
+.sico_97:before {content: "\e960";}    .sico_107:before {content: "\e96a";}    .sico_117:before {content: "\e974";}
+.sico_98:before {content: "\e961";}    .sico_108:before {content: "\e96b";}    .sico_118:before {content: "\e975";}
+.sico_99:before {content: "\e962";}    .sico_109:before {content: "\e96c";}    .sico_119:before {content: "\e976";}
+.sico_100:before {content: "\e963";}   .sico_110:before {content: "\e96d";}    .sico_120:before {content: "\e977";}
+
+
+.sico_121:before {content: "\e978";}   .sico_131:before {content: "\e982";}
+.sico_122:before {content: "\e979";}   .sico_132:before {content: "\e983";}
+.sico_123:before {content: "\e97a";}   .sico_133:before {content: "\e984";}
+.sico_124:before {content: "\e97b";}   .sico_134:before {content: "\e985";}
+.sico_125:before {content: "\e97c";}   .sico_135:before {content: "\e986";}
+.sico_126:before {content: "\e97d";}   .sico_136:before {content: "\e987";}
+.sico_127:before {content: "\e97e";}   .sico_137:before {content: "\e988";}
+.sico_128:before {content: "\e97f";}   .sico_138:before {content: "\e989";}
+.sico_129:before {content: "\e980";}
+.sico_130:before {content: "\e981";}

@@ -7,18 +7,7 @@
         @author psb
     -->
     <select id="findListGroupCode" resultType="GroupCodeBean">
-        SELECT      group_code_id         as groupCodeId
-                    ,group_name           as groupName
-        FROM        isaver.group_code
-        ORDER BY    GROUP_CODE_ID;
-    </select>
-
-    <!--
-        그룹코드 상세를 가져온다.
-        @author psb
-    -->
-    <select id="findByGroupCode" parameterType="map" resultType="GroupCodeBean">
-        SELECT     a.group_code_id         as groupCodeId
+        SELECT      a.group_code_id         as groupCodeId
                     ,a.group_name           as groupName
                     ,a.insert_user_id       as insertUserId
                     ,a.insert_datetime      as insertDatetime
@@ -26,8 +15,8 @@
                     ,a.update_datetime      as updateDatetime
                     ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserName
                     ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserName
-        FROM       isaver.group_code a
-        WHERE      a.group_code_id=#{groupCodeId}
+        FROM        isaver.group_code a
+        ORDER BY    a.GROUP_CODE_ID;
     </select>
 
     <!--

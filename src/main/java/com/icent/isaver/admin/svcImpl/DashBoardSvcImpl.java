@@ -1,21 +1,29 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.AreaBean;
+import com.icent.isaver.admin.bean.DeviceBean;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
 import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
 import com.meous.common.resource.CommonResource;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import java.net.InetAddress;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.gte;
 
 /**
  * 대쉬보드 Service Implements
@@ -49,6 +57,9 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     @Inject
     private TemplateSettingSvc templateSettingSvc;
 
+    @Inject
+    private MongoDatabase mongoDatabase;
+
     @Override
     public ModelAndView findListDashBoard(Map<String, String> parameters) {
         List<AreaBean> navList = areaDao.findListAreaNav(parameters);
@@ -58,10 +69,37 @@ public class DashBoardSvcImpl implements DashBoardSvc {
             Map<String, String> deviceParam = new HashMap<>();
             deviceParam.put("areaId",area.getAreaId());
             deviceParam.put("delYn", CommonResource.NO);
-            if(!area.getTemplateCode().equals("TMP004")){
-                deviceParam.put("ignoreEventValue", "Y");
+            List<DeviceBean> deviceList = deviceDao.findListDevice(deviceParam);
+
+            try{
+                MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
+                Calendar cal = Calendar.getInstance();
+                cal.set( Calendar.HOUR_OF_DAY, 0 );
+                cal.set( Calendar.MINUTE, 0 );
+                cal.set( Calendar.SECOND, 0 );
+                cal.set( Calendar.MILLISECOND, 0 );
+
+                for(DeviceBean device : deviceList){
+                    Document eventLog = collection.find(
+                            and(
+                                    eq("deviceId", device.getDeviceId()),
+                                    gte("eventDatetime", cal.getTime())
+                            )
+                    ).sort(Sorts.descending("eventDatetime")).first();
+
+                    if(eventLog!=null){
+                        if(eventLog.get("value")!=null){
+                            device.setEvtValue(eventLog.get("value").toString());
+                        }
+                        if(eventLog.get("format")!=null){
+                            device.setFormat(eventLog.get("format").toString());
+                        }
+                    }
+                }
+            }catch(Exception e){
+                throw new IsaverException("");
             }
-            area.setDevices(deviceDao.findListDevice(deviceParam));
+            area.setDevices(deviceList);
             area.setAreas(areaDao.findListAreaForDashboard(deviceParam));
         }
         AreaBean area = areaDao.findByArea(parameters);

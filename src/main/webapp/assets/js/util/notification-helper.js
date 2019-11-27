@@ -125,7 +125,6 @@ var NotificationHelper = (
          */
         var notificationMessageEventHandler = function(message) {
             var resultData;
-            var status = 0;
             try{
                 if(typeof message.data!='undefined'){
                     resultData = message.data;
@@ -139,9 +138,6 @@ var NotificationHelper = (
             }
 
             switch (resultData['messageType']) {
-                case "refreshBlinker": // 진출입 갱신
-                    callBackEvent(resultData['messageType'], {'areaId':resultData['areaId']});
-                    break;
                 case "addNotification": // 알림센터 이벤트 등록
                     if(resultData['dashboardAlarmFileUrl']!=null){
                         setAlarmAudio(resultData['dashboardAlarmFileUrl']);
@@ -176,30 +172,15 @@ var NotificationHelper = (
                     cancelNotificationList(resultData['cancelList']);
                     callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
                     break;
-                case "addEvent": // 일반이벤트 등록
-                    resourceUpdate(resultData['eventLog']);
-                    callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog']});
-                    break;
-                case "editDeviceStatus": // 장치 상태 변경
-                    for(let index in resultData['deviceStatusList']){
-                        const deviceStatus = resultData['deviceStatusList'][index];
-                        if(deviceStatus['deviceStat']=='Y'){
-                            $("li[deviceId='"+deviceStatus['deviceId']+"']").removeClass('level-die');
-                        }else{
-                            $("li[deviceId='"+deviceStatus['deviceId']+"']").addClass('level-die');
-                        }
-                    }
-                    callBackEvent(resultData['messageType'], {'deviceStatusList':resultData['deviceStatusList']});
-                    break;
                 case "licenseStatus": // 라이센스 상태
                     var license = resultData['license'];
+                    var status = 0;
                     if(license!=null){
                         status = license['status'];
                     }
+                    _self.licenseStatusChangeHandler(status);
                     break;
             }
-
-            _self.licenseStatusChangeHandler(status);
         };
 
         this.licenseStatusChangeHandler = function(status) {
@@ -278,13 +259,13 @@ var NotificationHelper = (
                 case 'confirmNotification':
                 case 'cancelNotification':
                     if(data['paramBean']['remainCnt']==0){
-                        setLoading('noti', false);
+                        _self.setLoading('noti', false);
                         layerShowHide('notificationCancel','hide');
                         _alertMessage(actionType+'Success');
                     }
                     break;
                 case 'allCancelNotification':
-                    setLoading('noti', false);
+                    _self.setLoading('noti', false);
                     _alertMessage(actionType+'Success');
                     break;
                 case 'notificationDetail':
@@ -299,7 +280,7 @@ var NotificationHelper = (
          */
         var _failureHandler = function(XMLHttpRequest, textStatus, errorThrown, actionType){
             if(XMLHttpRequest['status']!="0"){
-                setLoading('noti', false);
+                _self.setLoading('noti', false);
                 _alertMessage(actionType + 'Failure');
             }
         };
@@ -411,7 +392,7 @@ var NotificationHelper = (
          * @param notifications
          */
         var addNotificationList = function(notifications, notiCountList){
-            setLoading('area', true);
+            _self.setLoading('area', true);
 
             if(notifications!=null){
                 for(var index in notifications){
@@ -433,7 +414,7 @@ var NotificationHelper = (
             }
             setTimeout(function () {
                 callBackEvent('addNotification', {'notification':notifications});
-                setLoading('area', false);
+                _self.setLoading('area', false);
             }, 10);
         };
 
@@ -622,7 +603,7 @@ var NotificationHelper = (
             if(paramData.length==0){
                 return false;
             }
-            setLoading('noti', true);
+            _self.setLoading('noti', true);
             saveNoti(actionType, paramData, cancelDesc);
         };
 
@@ -633,7 +614,7 @@ var NotificationHelper = (
          */
         this.allCancelNotification = function(){
             if(confirm(_messageConfig['confirmAllCancelNotification'])){
-                setLoading('noti', true);
+                _self.setLoading('noti', true);
                 var areaId = $("#areaType option:selected").val();
                 var param = {
                     criticalLevel:$("#criticalLevel option:selected").val()
@@ -681,7 +662,7 @@ var NotificationHelper = (
             if(cancelList!=null){
                 for(var index in cancelList){
                     var cancel = cancelList[index];
-                    if(_notificationList[cancel['notificationId']]!=null){
+                    if(_notificationList[cancel['notificationId']]!=null && _notificationList[cancel['notificationId']]['element']!=null){
                         _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['updateDatetime'];
                         _notificationList[cancel['notificationId']]['element'].find(".video_btn").show();
                     }
@@ -827,7 +808,7 @@ var NotificationHelper = (
          * @author psb
          */
         var selectBoxChangeHandler = function(type){
-            setLoading('noti', true);
+            _self.setLoading('noti', true);
             setTimeout(function(){
                 try{
                     var limitCnt = 0;
@@ -883,7 +864,7 @@ var NotificationHelper = (
                 }catch(e){
                     console.error("[selectBoxChangeHandler] error - " + e );
                 }
-                setLoading('noti', false);
+                _self.setLoading('noti', false);
             },10);
         };
 
@@ -906,7 +887,7 @@ var NotificationHelper = (
             }
         };
 
-        var setLoading = function(type, flag){
+        this.setLoading = function(type, flag){
             var _target = null;
             switch(type){
                 case "noti":

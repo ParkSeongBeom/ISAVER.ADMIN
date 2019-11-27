@@ -1,0 +1,104 @@
+﻿@charset "utf-8";
+@import "filters";
+@import "layout";
+
+@mixin monitor-margin{margin:10px 10px 10px 10px;} //  @include monitor-margin;
+@mixin monitor-margin2{margin:10px 10px 0px 10px;} //  @include monitor-margin2;
+@mixin monitor-margin3{margin:0px 10px 0px 10px;}  //  @include monitor-margin3;
+@mixin monitor-margin4{margin:0px 10px 10px 10px;}  //  @include monitor-margin4;
+@mixin monitor-margin5{margin:0px 10px 0px 0;}  //  @include monitor-margin5;
+
+
+$resourcecenter-width:100%;
+$resourcecenter2-width:100%;
+
+.resource-popup {
+  position: fixed;overflow:hidden;@include z-index-notice;top:$headerHeight; bottom:0; right:-($resourcecenter-width * 2); width:$resourcecenter-width;
+  @include border01(0 0 0 1px,#111,1);
+  &:before {content:""; z-index: -1; position: absolute; width:$screen-width; height:$screen-height; background-color: #2c2c2c; }
+  &.on {right:0;}
+  & * {color:$color-white-01;}
+  & > * {width:$screen-width;}
+  &, section, section > div {@include flexbase;}
+  &, section, .db_cancel_set {@include flex-column; @include transition(200ms);}
+  h2 {span {width:$screen-width; padding:5px 10px;}}
+
+  .monitor-list {@include monitor-margin;width:$screen-width;
+    select{min-width:482px;}
+  }
+  article{width:98%;top:60px;height:450px;
+    .chart_area{margin:33px 0 0 0;height:$screen-height;
+      .chart_box{margin:8px 0 0;height:410px;}
+    }
+    .chart_select_set{top:110px;left:6px;}
+  }
+
+  .list-objec{
+    margin-top:0;height:349px;overflow-y:auto;padding-bottom:10px;
+    .btn_set{@include monitor-margin2;}
+    .event-box{display:none;@include monitor-margin3;background-color: rgba(83,83,83,0.4);padding:0;
+      li{@include border01(0px 0 1px 0,$color-white-01,0.7 );display:flex;@include flexbase;@include flex-justify-content-center;font-size:0.9rem;
+        cursor:pointer;
+
+        &:last-of-type{border-bottom:none;}
+        & button{width:$screen-width;hegiht:$screen-height;padding:10px 5px;
+          &:hover{@include action_boxbtn;}
+        }
+        &:hover{@include border01(0px 0 1px 0,$color-white-01,0.3 );
+          &:last-of-type{border-bottom:none;}
+        }
+      }
+    }
+    li.on .event-box{display:block;}
+  }
+}
+
+.resource-popup02{
+  position: fixed;overflow:hidden;height:600px;@include z-index-notice;top:$headerHeight; bottom:0; right:-($resourcecenter2-width * 2); width:$resourcecenter2-width;
+  @include border01(0 0 0 1px,#111,1);
+  &:before {content:""; z-index: -1; position: absolute; width:$screen-width; height:$screen-height; background-color: #2c2c2c; }
+  &.on {right:0;}
+  & * {color:$color-white-01;}
+  & > * {width:$screen-width;}
+  &, section, section > div {@include flexbase;}
+  &, section, .db_cancel_set {@include flex-column; @include transition(200ms);}
+  h2 {
+    padding:0 0 10px 0;
+    span {width:$screen-width; padding:5px 10px;color:$color-white-01;}
+  }
+  .monitor-width{
+    @include flexbase;@include flex-justify-content-between;@include flex-row-wrap;
+     article{
+       width:75%;top:60px;height:450px;
+      .chart_area{margin:44px 0 0 0;height:$screen-height;
+          .chart_box{margin:8px 0 0;height:410px;}
+      }
+      .chart_select_set{top:58px;left:6px;}
+     }
+    & > section{
+      width:25%;
+      .monitor-list {@include monitor-margin4;padding-right:20px;width:100%;
+        select{margin-right:10px;width:$screen-width;}
+      }
+      .list-objec{
+        @include monitor-margin5;height:492px;overflow-y:auto;padding-bottom:10px;
+      .btn_set{@include monitor-margin2;}
+      .event-box{display:none;@include monitor-margin3;background-color: rgba(83,83,83,0.4);padding:0;
+        li{@include border01(0px 0 1px 0,$color-white-01,0.7 );display:flex;@include flexbase;@include flex-justify-content-center;font-size:0.9rem;
+        cursor:pointer;
+
+        &:last-of-type{border-bottom:none;}
+        & button{width:$screen-width;hegiht:$screen-height;padding:10px 5px;
+          &:hover{@include action_boxbtn;}
+        }
+        &:hover{@include border01(0px 0 1px 0,$color-white-01,0.3 );
+          &:last-of-type{border-bottom:none;}
+        }
+      }
+      }
+      li.on .event-box{display:block;}
+      }
+    }
+  }
+}
+

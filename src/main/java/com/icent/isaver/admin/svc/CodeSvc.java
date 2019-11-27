@@ -31,15 +31,6 @@ public interface CodeSvc {
     public ModelAndView findListCode(Map<String, String> parameters);
 
     /**
-     * 코드 상세정보를 가져온다.
-     *
-     * @author kst
-     * @param parameters
-     * @return
-     */
-    public ModelAndView findByCode(Map<String, String> parameters);
-
-    /**
      * 코드를 등록한다.
      *
      * @author kst

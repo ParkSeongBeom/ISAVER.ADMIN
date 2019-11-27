@@ -29,7 +29,7 @@ public class EventLogCtrl {
     /**
      * 이벤트 로그 목록을 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param request
      * @param parameters
      * @return
@@ -79,22 +79,6 @@ public class EventLogCtrl {
         return modelAndView;
     }
 
-    /**
-     *  이벤트 로그 정보를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
-    public ModelAndView findByEventLog(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("eventLogDeatil");
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/excel")
     public ModelAndView downloadExcel(HttpServletRequest request,  HttpServletResponse response, @RequestParam Map<String, String> parameters){
         ModelAndView modelAndView = eventLogSvc.findListEventLogForExcel(request, response, parameters);
@@ -116,7 +100,7 @@ public class EventLogCtrl {
     }
 
     /**
-     * 이벤트 로그 차트를 가져온다.
+     * 자원 모니터링 차트를 가져온다.
      *
      * @author psb
      * @param parameters

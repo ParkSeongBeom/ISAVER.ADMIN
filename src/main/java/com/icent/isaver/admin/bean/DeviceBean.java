@@ -68,6 +68,7 @@ public class DeviceBean extends ISaverCommonBean {
     private String vendorCodeName;
     private String deviceTypeCodeName;
     private String deviceCodeName;
+    private String deviceCodeCss;
     private String areaName;
 
     private String path;
@@ -76,6 +77,7 @@ public class DeviceBean extends ISaverCommonBean {
 
     private String fenceId;
     private String fenceName;
+    private String format;
 
     public String getParentDeviceName() {
         return parentDeviceName;
@@ -339,5 +341,21 @@ public class DeviceBean extends ISaverCommonBean {
 
     public void setFenceName(String fenceName) {
         this.fenceName = fenceName;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getDeviceCodeCss() {
+        return deviceCodeCss;
+    }
+
+    public void setDeviceCodeCss(String deviceCodeCss) {
+        this.deviceCodeCss = deviceCodeCss;
     }
 }

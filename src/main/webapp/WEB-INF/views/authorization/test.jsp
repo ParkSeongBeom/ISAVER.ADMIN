@@ -445,7 +445,7 @@
         var data = {
             'deviceId' : deviceTag.val()
             ,'eventDatetime' : new Date().format("yyyy-MM-dd HH:mm:ss.000")
-            ,'infos' : [{'key':'eventFlag','value':'D'}]
+            ,'eventFlag' : 'D'
         };
 
         switch(actionType){
@@ -471,22 +471,22 @@
                 break;
             case 'in' :
                 data['eventId'] = "EVT300";
-                data['infos'].push({'key':'inCount','value':valueTag.val()});
-                data['infos'].push({'key':'outCount','value':0});
-                data['infos'].push({'key':'direction','value':"test"});
+                data['inCount'] = Number(valueTag.val());
+                data['outCount'] = 0;
+                data['direction'] = "test";
                 valueValidateFlag = true;
                 break;
             case 'out':
                 data['eventId'] = "EVT301";
-                data['infos'].push({'key':'inCount','value':0});
-                data['infos'].push({'key':'outCount','value':valueTag.val()});
-                data['infos'].push({'key':'direction','value':"test"});
+                data['inCount'] = 0;
+                data['outCount'] = Number(valueTag.val());
+                data['direction'] = "test";
                 valueValidateFlag = true;
                 break;
             case 'worker':
                 data['eventId'] = "EVT013";
-                data['infos'].push({'key':'riskFlag','value':0});
-                data['infos'].push({'key':'targetCount','value':valueTag.val()});
+                data['riskFlag'] = 0;
+                data['targetCount'] = valueTag.val();
                 break;
             case 'guardIn':
                 data['eventId'] = "EVT314";
@@ -506,7 +506,7 @@
                 alert("수치값을 입력해 주세요.");
                 return false;
             }
-            data['infos'].push({'key':'value','value':valueTag.val()});
+            data['value'] = Number(valueTag.val());
         }
 
         if(fenceValidateFlag){
@@ -514,8 +514,8 @@
                 alert("펜스를 선택해 주세요.");
                 return false;
             }
-            data['infos'].push({'key':'fenceId','value':fenceTag.val()});
-            data['infos'].push({'key':'objectId','value':valueTag.val()});
+            data['fenceId'] = fenceTag.val();
+            data['objectId'] = valueTag.val();
         }
         ajaxCall(actionType, {eventData:JSON.stringify(data)});
     }
@@ -525,10 +525,8 @@
             'deviceId' : $("select[name='customDeviceId'] option:selected").val()
             ,'eventId' : $("select[name='customEventId'] option:selected").val()
             ,'eventDatetime' : new Date().format("yyyy-MM-dd HH:mm:ss.000")
-            ,'infos' : [
-                {'key':'eventFlag','value':'D'}
-                ,{'key':'value','value':$("input[name='customValue']").val()}
-            ]
+            ,'eventFlag' : 'D'
+            ,'value': $("input[name='customValue']").val()
         };
 
         ajaxCall('custom', {eventData:JSON.stringify(data)});
@@ -543,6 +541,7 @@
             failureLog(actionType,data['result']);
             return false;
         }
+        data['paramBean'] = JSON.parse(data['paramBean']);
 
         var logTag = $("<div/>");
 
@@ -560,16 +559,10 @@
                     $("<div/>").text("장치구분 : "+$("select[name='customDeviceId'] option:selected").text())
                 );
 
-                var infos = data['paramBean']['infos'];
-                for(var index in infos){
-                    var info = infos[index];
-                    switch(info['key']) {
-                        case 'value':
-                            logTag.append(
-                                $("<div/>").text("임계치 수치 : "+info['value'])
-                            );
-                            break;
-                    }
+                if(data['paramBean']['value']!=null){
+                    logTag.append(
+                        $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
+                    );
                 }
                 _intervalInfo['param'] = {eventData:JSON.stringify(data['paramBean'])};
                 _intervalInfo['actionType'] = actionType;
@@ -583,27 +576,20 @@
                     $("<div/>").text("장치구분 : "+$("select[device][eventType='"+actionType+"'] option:selected").attr("deviceName"))
                 );
 
-                var infos = data['paramBean']['infos'];
-                for(var index in infos){
-                    var info = infos[index];
-
-                    switch(info['key']) {
-                        case 'value':
-                            logTag.append(
-                                $("<div/>").text("임계치 수치 : "+info['value'])
-                            );
-                            break;
-                        case 'fenceId':
-                            logTag.append(
-                                $("<div/>").text("펜스ID : "+info['value'])
-                            );
-                            break;
-                        case 'objectId':
-                            logTag.append(
-                                $("<div/>").text("ObjectId : "+info['value'])
-                            );
-                            break;
-                    }
+                if(data['paramBean']['value']!=null){
+                    logTag.append(
+                        $("<div/>").text("임계치 수치 : "+data['paramBean']['value'])
+                    );
+                }
+                if(data['paramBean']['fenceId']!=null){
+                    logTag.append(
+                        $("<div/>").text("펜스ID : "+data['paramBean']['fenceId'])
+                    );
+                }
+                if(data['paramBean']['objectId']!=null){
+                    logTag.append(
+                        $("<div/>").text("ObjectId : "+data['paramBean']['objectId'])
+                    );
                 }
                 _intervalInfo['param'] = {eventData:JSON.stringify(data['paramBean'])};
                 _intervalInfo['actionType'] = actionType;

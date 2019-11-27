@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * 이벤트 로그 Service 관리
- * @author : dhj
+ * @author : psb
  * @version : 1.0
  * @since : 2016. 6. 13.
  * <pre>
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  *  수정일            수정자         수정내용
  * -------------- ------------- ---------------------------
- *  2016. 6. 13.     dhj           최초 생성
+ *  2016. 6. 13.     psb           최초 생성
  * </pre>
  */
 public interface EventLogSvc {
@@ -25,7 +25,7 @@ public interface EventLogSvc {
     /**
      * 이벤트 로그 목록을 가져온다.
      *
-     * @author dhj
+     * @author psb
      * @param parameters
      * @return
      */
@@ -66,24 +66,6 @@ public interface EventLogSvc {
      * @return
      */
     ModelAndView findByEventLogToiletRoomForArea(Map<String, String> parameters);
-
-    /**
-     * 이벤트 로그 상세을 가져온다.
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    ModelAndView findByEventLog(Map<String, String> parameters);
-
-    /**
-     * 대쉬보드 데이터를 가져온다.
-     *
-     * @author dhj
-     * @param parameters
-     * @return
-     */
-    ModelAndView findListEventLogForDashboard(Map<String, String> parameters);
 
     /**
      *

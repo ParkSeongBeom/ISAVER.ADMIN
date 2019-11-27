@@ -32,14 +32,6 @@ public interface GroupCodeDao {
     public List<GroupCodeBean> findListGroupCode();
 
     /**
-     * 그룹코드 정보를 가져온다.
-     *
-     * @author kst
-     * @return
-     */
-    public GroupCodeBean findByGroupCode(Map<String, String> parameters);
-
-    /**
      * 그룹코드를 등록한다.
      *
      * @author kst

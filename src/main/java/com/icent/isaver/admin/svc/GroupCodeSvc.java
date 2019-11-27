@@ -19,25 +19,6 @@ import java.util.Map;
  */
 public interface GroupCodeSvc {
 
-
-    /**
-     * 그룹코드 목록ㅇ르 가져온다.
-     *
-     * @author kst
-     * @param parameters
-     * @return
-     */
-    public ModelAndView findListGroupCode(Map<String, String> parameters);
-
-    /**
-     * 그룹코드 정보를 가져온다.
-     *
-     * @author kst
-     * @param parameters
-     * @return
-     */
-    public ModelAndView findByGroupCode(Map<String, String> parameters);
-
     /**
      * 그룹코드를 등록한다.
      *

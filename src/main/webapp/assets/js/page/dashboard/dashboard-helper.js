@@ -18,6 +18,7 @@ var DashboardHelper = (
         let _templateSetting;
         let _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
+            ,deviceListUrl : "/device/list.json"
         };
         let _options ={
             marquee : false
@@ -69,7 +70,41 @@ var DashboardHelper = (
                             _webSocketHelper.addWebSocketList(param[index], toiletRoomMessageEventHandler);
                         }
                         break;
+                    case "eventLog":
+                        _webSocketHelper.addWebSocketList(param[index], eventHandler);
+                        break;
                 }
+            }
+        };
+
+        /**
+         * Event 웹소켓 메세지 리스너
+         * @param message
+         */
+        var eventHandler = function(message) {
+            var resultData;
+            try{
+                if(typeof message.data!='undefined'){
+                    resultData = message.data;
+                }else if(typeof message.body!='undefined'){
+                    resultData = message.body;
+                }
+                resultData = JSON.parse(resultData);
+            }catch(e){
+                console.warn("[eventHandler] json parse error - " + message);
+                return false;
+            }
+
+            switch (resultData['messageType']) {
+                case "refreshBlinker": // 진출입 갱신
+                    _self.getBlinker(resultData['areaId']);
+                    break;
+                case "addEvent" : // 일반 이벤트
+                    addEvent(resultData);
+                    break;
+                case "editDeviceStatus": // 장치 상태
+                    editDeviceStatus(resultData);
+                    break;
             }
         };
 
@@ -164,7 +199,7 @@ var DashboardHelper = (
         this.initAreaTemplate = function(){
             let blinkerAreaIds = "";
 
-            $.each($(".watch_area div[areaId]"), function(){
+            $.each($(".watch_area div[areaId][templatecode]"), function(){
                 const areaId = $(this).attr("areaId");
                 const templateCode = $(this).attr("templateCode");
                 _areaList[areaId] = {
@@ -222,8 +257,12 @@ var DashboardHelper = (
                                     'websocketSend':false
                                     ,'fenceView':true
                                     ,'openLinkFlag':false
-                                    ,'click':function(targetId,deviceCode){
-                                        if(deviceCode=='area'){ moveDashboard(areaId,targetId); }
+                                    ,'click':function(data){
+                                        if(data['deviceCode']=='area'){
+                                            moveDashboard(areaId,data['targetId']);
+                                        }else if(data['deviceCode']=='DEV002'){
+                                            cs.openCamera({"deviceId":data['targetId'],"deviceName":data['targetName']})
+                                        }
                                     }
                                 }
                             });
@@ -234,6 +273,28 @@ var DashboardHelper = (
                         _toiletRoomList[areaId] = new ToiletRoomMediator(_rootPath);
                         _toiletRoomList[areaId].setElement($(this));
                         _toiletRoomList[areaId].init(areaId);
+                        break;
+                    case "TMP010" :
+                        _guardList[areaId] = {};
+                        _guardList[areaId][_MEDIATOR_TYPE[1]] = new CustomMapMediator(_rootPath);
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
+                            'element' : {
+                                'lastPositionUseFlag' : true
+                                ,'lastPositionSaveFlag' : true
+                            }, 'custom' : {
+                                'openLinkFlag':false
+                                ,'childAnimateFlag':true
+                                ,'click':function(data){
+                                    if($("#controlDeviceId").val()!=data['targetId']){
+                                        _ajaxCall('deviceList', {deviceId:data['targetId'], parentDeviceId:data['targetId'],farmFlag:'Y'});
+                                    }else{
+                                        openDetailPopup();
+                                    }
+                                }
+                            }
+                        });
                         break;
                 }
             });
@@ -262,30 +323,6 @@ var DashboardHelper = (
          */
         this.appendEventHandler = function(messageType, data){
             switch (messageType) {
-                case "refreshBlinker": // 진출입 갱신
-                    _self.getBlinker(data['areaId']);
-                    break;
-                case "addEvent" : // 일반 이벤트
-                    switch (_self.getArea("templateCode", data['eventLog']['areaId'])){
-                        case "TMP001": // 신호등
-                            break;
-                        case "TMP002": // safe-eye
-                            break;
-                        case "TMP003": // blinker
-                            blinkerUpdate(data['eventLog']);
-                            break;
-                        case "TMP004": // detector
-                            detectorUpdate(data['eventLog']);
-                            break;
-                        case "TMP005": // guard
-                            break;
-                        case "TMP008": // 화장실재실
-                            if(data['eventLog']['areaId']!=null && _toiletRoomList[data['eventLog']['areaId']]!=null){
-                                _toiletRoomList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
-                            }
-                            break;
-                    }
-                    break;
                 case "addNotification": // 알림이벤트 등록
                     if(Array.isArray(data['notification'])){
                         for(let index in data['notification']){
@@ -293,8 +330,12 @@ var DashboardHelper = (
                         }
                     }else{
                         if(data['areaId']!=null && _guardList[data['areaId']]!=null && data['status']!="C"){
-                            _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
-                            _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
+                            if(_guardList[data['areaId']][_MEDIATOR_TYPE[0]]!=null){
+                                _guardList[data['areaId']][_MEDIATOR_TYPE[0]].setAnimate("add",data['criticalLevel'],data);
+                            }
+                            if(_guardList[data['areaId']][_MEDIATOR_TYPE[1]]!=null){
+                                _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
+                            }
                         }
                         notificationUpdate(messageType, data);
                         notificationMarqueeUpdate(data['areaId'], data);
@@ -302,8 +343,12 @@ var DashboardHelper = (
                     break;
                 case "removeNotification": // 알림이벤트 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
-                        _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
-                        _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                        if(_guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]]!=null){
+                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                        }
+                        if(_guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]]!=null){
+                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['notification']['criticalLevel'],data['notification']);
+                        }
                     }
                     notificationUpdate(messageType, data['notification']);
                     notificationMarqueeUpdate(data['areaId']);
@@ -314,13 +359,6 @@ var DashboardHelper = (
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                             _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
                         }
-                    }
-                    break;
-                case "editDeviceStatus": // 장치 상태
-                    _self.setDeviceStatusList(data['deviceStatusList']);
-                    for(let index in _guardList){
-                        _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
-                        _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
                     }
                     break;
             }
@@ -434,6 +472,62 @@ var DashboardHelper = (
                 case 'blinkerList':
                     blinkerRender(data['eventLog']);
                     break;
+                case 'deviceList':
+                    let parentDevice = data['device'];
+                    if(parentDevice!=null){
+                        $("#controlDeviceId").val(parentDevice['deviceId']);
+                        $("#controlParentSerialNo").val(parentDevice['serialNo']);
+                        $("#controlAreaId").val(parentDevice['areaId']);
+                    }
+
+                    let deviceList = data['devices'];
+                    $("#controlDeviceList").empty();
+                    for(var index in deviceList){
+                        let device = deviceList[index];
+                        let deviceElement = $("<div/>",{deviceId:device['deviceId'],serialNo:device['serialNo'],deviceCode:device['deviceCode'],class:device['deviceCodeCss']}).append(
+                            $("<p/>").text(device['deviceName'])
+                        );
+
+                        let evtValue;
+                        if(device['deviceCode']=='DEV006'){
+                            evtValue = device['evtValue']==1?"ON":"OFF";
+                        }else{
+                            evtValue = (Number(device['evtValue'])?Number(device['evtValue']):0).toFixed(2)+' '+(device['format']?device['format']:"");
+                        }
+                        deviceElement.append(
+                            $("<p/>",{name:'evtValue'}).text(evtValue)
+                        );
+
+                        if(device['deviceTypeCode']=='D00001'){
+                            if(device['deviceCode']=='DEV006'){
+                                deviceElement.append(
+                                    $("<div/>",{style:'position:absolute; right:0; margin-right:-40px; width:auto;'}).append(
+                                        $("<div/>",{class:'checkbox_set csl_style02'}).append(
+                                            $("<input/>",{type:'checkbox',id:device['serialNo']+'Led',checked:device['evtValue']==1}).change({serialNo:device['serialNo']},function(evt){
+                                                deviceControl('led',evt.data.serialNo,$(this).is(":checked")?1:0);
+                                            })
+                                        ).append(
+                                            $("<label/>")
+                                        )
+                                    )
+                                );
+                            }else{
+                                deviceElement.append(
+                                    $("<div/>",{style:'position:absolute; right:0; margin-right:10px; width:auto;'}).append(
+                                        $("<input/>",{type:'text',style:'width:100px;',id:device['serialNo']+'Temp'})
+                                    ).append(
+                                        $("<button/>",{class:'btn',style:'width:80px; border: solid 1px;'}).text("전송").click({serialNo:device['serialNo']},function(evt){
+                                            console.log(evt);
+                                            deviceControl('temp',evt.data.serialNo,$("#"+evt.data.serialNo+'Temp').val());
+                                        })
+                                    )
+                                );
+                            }
+                        }
+                        $("#controlDeviceList").append(deviceElement);
+                    }
+                    openDetailPopup();
+                    break;
             }
         };
 
@@ -511,6 +605,48 @@ var DashboardHelper = (
             blinkerSumUpdate();
         };
 
+        var editDeviceStatus = function(data){
+            for(let index in data['deviceStatusList']){
+                const deviceStatus = data['deviceStatusList'][index];
+                if(deviceStatus['deviceStat']=='Y'){
+                    $("li[deviceId='"+deviceStatus['deviceId']+"']").removeClass('level-die');
+                }else{
+                    $("li[deviceId='"+deviceStatus['deviceId']+"']").addClass('level-die');
+                }
+            }
+
+            _self.setDeviceStatusList(data['deviceStatusList']);
+            for(let index in _guardList){
+                _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
+                _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
+            }
+        };
+
+        var addEvent = function(data){
+            switch (_self.getArea("templateCode", data['eventLog']['areaId'])){
+                case "TMP001": // 신호등
+                    break;
+                case "TMP002": // safe-eye
+                    break;
+                case "TMP003": // blinker
+                    blinkerUpdate(data['eventLog']);
+                    break;
+                case "TMP004": // detector
+                    detectorUpdate(data['eventLog']);
+                    break;
+                case "TMP005": // guard
+                    break;
+                case "TMP008": // 화장실재실
+                    if(data['eventLog']['areaId']!=null && _toiletRoomList[data['eventLog']['areaId']]!=null){
+                        _toiletRoomList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
+                    }
+                    break;
+                case "TMP010": // 스마트팜
+                    farmUpdate(data['eventLog']);
+                    break;
+            }
+        };
+
         /**
          * Notification marquee Update
          */
@@ -581,7 +717,7 @@ var DashboardHelper = (
             if(areaComponent==null){
                 areaComponent = _self.getArea("child", data['areaId']);
                 if(areaComponent==null){
-                    console.warn("[DashboardHelper][notificationUpdate] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
+                    console.debug("[DashboardHelper][notificationUpdate] do not need to work on '" + data['areaId'] + "' area - " + data['notificationId']);
                     return false;
                 }
             }
@@ -628,9 +764,9 @@ var DashboardHelper = (
                 const childNotification = childDevice[i]['notification'];
                 for(let index in childNotification){
                     if(childNotification[index].length > 0){
-                        childElement.addClass("ts-"+criticalCss[index]);
+                        childElement.addClass("level-"+criticalCss[index]);
                     }else{
-                        childElement.removeClass("ts-"+criticalCss[index]);
+                        childElement.removeClass("level-"+criticalCss[index]);
                     }
                 }
             }
@@ -649,22 +785,14 @@ var DashboardHelper = (
             const eventDatetime = new Date(data['eventDatetime']);
 
             if(eventDatetime>=startDatetime && eventDatetime<=endDatetime){
-                let inCount = 0;
-                let outCount = 0;
-                for(let index in data['infos']){
-                    const info = data['infos'][index];
-                    if(info['key']=="inCount"){
-                        inCount = info['value'];
-                    }else if(info['key']=="outCount"){
-                        outCount = info['value'];
-                    }
-                }
+                let inCount = Number(data['inCount'])?Number(data['inCount']):0;
+                let outCount = Number(data['outCount'])?Number(data['outCount']):0;
 
                 if(inCount>0 || outCount>0){
                     const inTag = element.find("[in]");
                     const outTag = element.find("[out]");
-                    inTag.text(Number(inCount) + Number(inTag.text()));
-                    outTag.text(Number(outCount) + Number(outTag.text()));
+                    inTag.text(inCount + Number(inTag.text()));
+                    outTag.text(outCount + Number(outTag.text()));
                     element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
                 }else{
                     console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
@@ -745,26 +873,21 @@ var DashboardHelper = (
             }
 
             const element = _self.getArea("element", data['areaId']);
-            const notification = _self.getArea("notification", data['areaId']);
             const childDevice = _self.getArea("childDevice", data['areaId']);
 
             if(childDevice[data['deviceId']] != null){
                 const deviceElement = childDevice[data['deviceId']]['element'];
                 let updateFlag = false;
-                let eventValue;
-                for(let index in data['infos']){
-                    const info = data['infos'][index];
-
-                    if(info['key']=="value"){
-                        eventValue = info['value'];
-                        try{
-                            deviceElement.find("p[evtValue]").text(Number(eventValue).toFixed(2));
-                        }catch(e){
-                            deviceElement.find("p[evtValue]").text(eventValue);
-                            console.error("[DashboardHelper][detectorUpdate] parse error - "+ e.message);
-                        }
-                        updateFlag = true;
+                let eventValue = 0;
+                if(data['value']!=null){
+                    eventValue = Number(data['value'])?Number(data['value']):0;
+                    try{
+                        deviceElement.find("p[evtValue]").text(eventValue.toFixed(2));
+                    }catch(e){
+                        deviceElement.find("p[evtValue]").text(eventValue);
+                        console.error("[DashboardHelper][detectorUpdate] parse error - "+ e.message);
                     }
+                    updateFlag = true;
                 }
 
                 if(deviceElement.hasClass("on") && updateFlag){
@@ -810,6 +933,24 @@ var DashboardHelper = (
                             console.error("[DashboardHelper][detectorUpdate] series index error - "+e);
                         }
                     }
+                }
+            }
+        };
+
+        /**
+         * farm update
+         */
+        var farmUpdate = function(data){
+            if($("#controlAreaId").val()!=data['areaId']){
+                return false;
+            }
+            const deviceElement = $("#controlDeviceList div[deviceId='"+data['deviceId']+"']");
+            if(data['value']!=null){
+                let evtValue = Number(data['value'])?Number(data['value']):0;
+                if(deviceElement.attr("deviceCode")=='DEV006'){
+                    deviceElement.find("p[name='evtValue']").text(evtValue==1?"ON":"OFF");
+                }else{
+                    deviceElement.find("p[name='evtValue']").text(evtValue.toFixed(2)+" "+(data['format']!=null?data['format']:""));
                 }
             }
         };

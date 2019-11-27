@@ -34,24 +34,6 @@ public class UsersBean extends ISaverCommonBean {
     /* 연락처 */
     private String telephone;
 
-    /* 등록자 */
-    private String insertUserId = null;
-
-    /* 등록일자 */
-    private Date insertDatetime = null;
-
-    /* 수정자 */
-    private String updateUserId = null;
-
-    /* 수정일자 */
-    private Date updateDatetime = null;
-
-    /* 등록자명 */
-    private String insertUserName = null;
-
-    /* 수정자명 */
-    private String updateUserName = null;
-
     /* etc */
     private String roleName = null;
 
@@ -109,54 +91,6 @@ public class UsersBean extends ISaverCommonBean {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getInsertUserId() {
-        return insertUserId;
-    }
-
-    public void setInsertUserId(String insertUserId) {
-        this.insertUserId = insertUserId;
-    }
-
-    public Date getInsertDatetime() {
-        return insertDatetime;
-    }
-
-    public void setInsertDatetime(Date insertDatetime) {
-        this.insertDatetime = insertDatetime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public String getInsertUserName() {
-        return insertUserName;
-    }
-
-    public void setInsertUserName(String insertUserName) {
-        this.insertUserName = insertUserName;
-    }
-
-    public String getUpdateUserName() {
-        return updateUserName;
-    }
-
-    public void setUpdateUserName(String updateUserName) {
-        this.updateUserName = updateUserName;
     }
 
     public String getRoleName() {

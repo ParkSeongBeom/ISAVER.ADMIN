@@ -1,10 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
-import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.LicenseSvc;
-import com.icent.isaver.admin.util.AdminHelper;
-import com.meous.common.util.MapUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +18,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value="/license/*")
 public class LicenseCtrl {
-
-    @Value("${cnf.defaultPageSize}")
-    private String defaultPageSize;
-
     @Inject
     private LicenseSvc licenseSvc;
 
@@ -42,126 +34,4 @@ public class LicenseCtrl {
         ModelAndView modelAndView = licenseSvc.findListLicense(parameters);
         return modelAndView;
     }
-
-//    /**
-//     * 라이센스 목록을 가져온다.(관리자용)
-//     *
-//     * @author dhj
-//     * @param request
-//     * @param parameters
-//     * @return
-//     */
-//    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
-//    public ModelAndView findListLicense(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
-//        parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
-//        AdminHelper.setPageParam(parameters, defaultPageSize);
-//
-//        ModelAndView modelAndView = licenseSvc.findListLicense(parameters);
-//        modelAndView.setViewName("licenseList");
-//        modelAndView.addObject("paramBean",parameters);
-//        modelAndView.addObject("viewOnly", false);
-//        return modelAndView;
-//    }
-
-    /**
-     * 라이센스 목록을 가져온다.(사용자용)
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/listView")
-    public ModelAndView findListViewOnlyLicense(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters) {
-        parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
-        AdminHelper.setPageParam(parameters, defaultPageSize);
-
-        ModelAndView modelAndView = licenseSvc.findListLicense(parameters);
-        modelAndView.setViewName("licenseList");
-        modelAndView.addObject("paramBean",parameters);
-        modelAndView.addObject("viewOnly", true);
-        return modelAndView;
-    }
-    /**
-     *  라이센스 정보를 가져온다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
-    public ModelAndView findByLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = licenseSvc.findByLicense(parameters);
-        modelAndView.setViewName("licenseDetail");
-        modelAndView.addObject("paramBean",parameters);
-        return modelAndView;
-    }
-
-    private final static String[] addLicenseParam = new String[]{"licenseKey","deviceCode","expireDate", "licenseCount"};
-
-    /**
-     *  라이센스를 등록 한다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/add")
-    public ModelAndView addLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
-        if(MapUtils.nullCheckMap(parameters, addLicenseParam)){
-            throw new IsaverException("");
-        }
-
-        parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = licenseSvc.addLicense(request, parameters);
-        return modelAndView;
-    }
-
-    private final static String[] saveLicenseParam = new String[]{"licenseKey","deviceCode","expireDate", "licenseCount"};
-
-    /**
-     *  라이센스를 수정 한다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/save")
-    public ModelAndView saveLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
-        if(MapUtils.nullCheckMap(parameters, saveLicenseParam)){
-            throw new IsaverException("");
-        }
-
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = licenseSvc.saveLicense(request, parameters);
-        return modelAndView;
-    }
-
-    private final static String[] removeLicenseParam = new String[]{"licenseKey"};
-
-    /**
-     *  라이센스를 제거 한다.
-     *
-     * @author dhj
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/remove")
-    public ModelAndView removeLicense(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
-
-        if(MapUtils.nullCheckMap(parameters, removeLicenseParam)){
-            throw new IsaverException("");
-        }
-
-        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
-        ModelAndView modelAndView = licenseSvc.removeLicense(parameters);
-        return modelAndView;
-    }
-
 }

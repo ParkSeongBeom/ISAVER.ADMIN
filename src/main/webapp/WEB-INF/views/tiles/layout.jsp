@@ -14,6 +14,7 @@
     <link href="${rootPath}/assets/css/elements.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/css/popup.css?version=${version}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
     <title>iSaver Admin</title>
@@ -383,15 +384,7 @@
             }
 
             let updateFlag = false;
-            let eventValue;
-            for(let index in data['infos']){
-                const info = data['infos'][index];
-
-                if(info['key']=="value"){
-                    eventValue = info['value'];
-                    updateFlag = true;
-                }
-            }
+            let eventValue = Number(data['value'])?Number(data['value']):0;
 
             if(updateFlag){
                 let _eventDate = new Date(data['eventDatetime']).format("HH:mm:ss");
@@ -495,7 +488,6 @@
                     break;
                 case 'resourceChart':
                     var paramBean = data['paramBean'];
-
                     if($("#resourceAreaId option:selected").val()!=paramBean['areaId']){
                         return false;
                     }
@@ -668,6 +660,10 @@
         * @param endTime
          */
         function playSegment(startTime, endTime){
+            if(location.hostname=='localhost'){
+                return false;
+            }
+
             if (startTime == undefined) {
                 startTime = 0;
             }
@@ -845,27 +841,26 @@
                 <!-- 자원 모니터링 팝업 -->
                 <div class="tpopup-resource type01">
                     <h2><spring:message code="dashboard.title.resourceMonitoring"/></h2>
-                    <div class="chart_select_set" id="resourceDateSelType">
-                        <button value="300" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">5<spring:message code="common.column.minute"/></button>
-                        <button value="600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">10<spring:message code="common.column.minute"/></button>
-                        <button value="1800" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">30<spring:message code="common.column.minute"/></button>
-                        <button value="3600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">60<spring:message code="common.column.minute"/></button>
+                    <div>
+                        <div class="left">
+                            <isaver:areaSelectBox htmlTagId="resourceAreaId" templateCode="TMP009" allModel="true" allText="${allSelectText}"/>
+                            <select id="resourceDeviceId" onchange="findListResourceChart();">
+                                <option value=""><spring:message code="common.selectbox.select"/></option>
+                            </select>
+                            <select id="resourceEventId" onchange="findListResourceChart();">
+                                <option value=""><spring:message code="common.selectbox.select"/></option>
+                            </select>
+                        </div>
+
+                        <div class="right" id="resourceDateSelType">
+                            <button value="300" class="on" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">5<spring:message code="common.column.minute"/></button>
+                            <button value="600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">10<spring:message code="common.column.minute"/></button>
+                            <button value="1800" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">30<spring:message code="common.column.minute"/></button>
+                            <button value="3600" href="#" onclick="javascript:resourceDateSelTypeClick(this); return false;">60<spring:message code="common.column.minute"/></button>
+                        </div>
                     </div>
                     <section>
-                        <div class="resource_view">
-                            <div class="chart_box chart01" id="resourceChartElement"></div>
-                        </div>
-                        <div class="resource_list">
-                            <div>
-                                <isaver:areaSelectBox htmlTagId="resourceAreaId" templateCode="TMP009" allModel="true" allText="${allSelectText}"/>
-                                <select id="resourceDeviceId" onchange="findListResourceChart();">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                </select>
-                                <select id="resourceEventId" onchange="findListResourceChart();">
-                                    <option value=""><spring:message code="common.selectbox.select"/></option>
-                                </select>
-                            </div>
-                        </div>
+                        <div class="chart_box chart01" id="resourceChartElement"></div>
                     </section>
                 </div>
 

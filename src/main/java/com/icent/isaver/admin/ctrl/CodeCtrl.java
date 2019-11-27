@@ -1,9 +1,11 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.meous.common.util.MapUtils;
+import com.meous.common.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,43 +39,22 @@ public class CodeCtrl {
     @Inject
     private CodeSvc codeSvc;
 
-    private final static String[] findListCodeParam = new String[]{"groupCodeId"};
-
     /**
      * 코드 목록을 가져온다.
      *
-     * @author kst
+     * @author psb
      * @param request
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST}, value="/list")
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        if(MapUtils.nullCheckMap(parameters, findListCodeParam)){
-            throw new IsaverException("");
+        ModelAndView modelAndView = new ModelAndView();
+        if(StringUtils.notNullCheck(parameters.get("mode")) && parameters.get("mode").equals(AdminResource.SEARCH_MODE)){
+            modelAndView = codeSvc.findListCode(parameters);
+        }else{
+            modelAndView.setViewName("codeList");
         }
-
-        ModelAndView modelAndView = codeSvc.findListCode(parameters);
-        return modelAndView;
-    }
-
-    private final static String[] findByCodeParam = new String[]{"groupCodeId"};
-
-    /**
-     * 코드 상세정보를 가져온다.
-     *
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
-    public ModelAndView findByCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        if(MapUtils.nullCheckMap(parameters, findByCodeParam)){
-            throw new IsaverException("");
-        }
-
-        ModelAndView modelAndView = codeSvc.findByCode(parameters);
-        modelAndView.setViewName("codeDetail");
         return modelAndView;
     }
 

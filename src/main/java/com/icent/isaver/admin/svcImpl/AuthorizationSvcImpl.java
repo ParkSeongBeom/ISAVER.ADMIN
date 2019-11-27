@@ -48,6 +48,9 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Value("${cnf.server.majorVersion}")
     private String majorVersion = null;
 
+    @Value("${createComp}")
+    private String createComp = null;
+
     @Inject
     private UsersDao usersDao;
 
@@ -65,6 +68,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());
         modelAndView.addObject("majorVersion", majorVersion);
+        modelAndView.addObject("createComp", createComp);
         return modelAndView;
     }
 

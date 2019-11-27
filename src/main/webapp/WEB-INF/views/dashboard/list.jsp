@@ -87,6 +87,7 @@
             TMP004 : Detector
             TMP005 : Safe-Guard
             TMP008 : 화장실재실
+            TMP010 : Smart Farm
             -->
             <c:forEach var="childArea" items="${childAreas}">
                 <c:if test="${childArea.templateCode=='TMP001'}">
@@ -481,6 +482,60 @@
                         </article>
                     </div>
                 </c:if>
+
+                <c:if test="${childArea.templateCode=='TMP010'}">
+                    <!-- Farm -->
+                    <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <header>
+                            <h3>${childArea.areaName}</h3>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <c:if test="${childArea.childAreaIds!=null}">
+                                <!-- 구역에 구역이 존재할 때 area -->
+                                <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                            </c:if>
+                            <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
+                            </c:if>
+                        </header>
+                        <article>
+                            <section class="guard_set">
+                                <div class="s_lbox">
+                                    <div name="map-canvas" class="map_images"></div>
+                                </div>
+                                <div class="s_rbox">
+                                    <ul ptzPlayers></ul>
+                                </div>
+                                <div class="device_box">
+                                    <div class="device_set">
+                                        <c:forEach var="device" items="${childArea.devices}">
+                                            <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
+                                                 data-device-id="${device.deviceId}"
+                                                 data-device-code="${device.deviceCode}"
+                                                 data-ip-address="${device.ipAddress}"
+                                                 data-port="${device.port}"
+                                                 data-device-user-id="${device.deviceUserId}"
+                                                 data-device-password="${device.devicePassword}"
+                                                 data-sub-url="${device.subUrl}"
+                                                 data-link-url="${device.linkUrl}"
+                                                 data-stream-server-url="${device.streamServerUrl}"
+                                                 data-device-stat="${device.deviceStat}"
+                                                 data-device-name="${device.deviceName}"
+                                                    >
+                                                <p>${device.deviceName}</p>
+                                                <p></p>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="m_marqueebox">
+                                <!-- <span>에 내용 삽입 -->
+                                <p messageBox></p>
+                            </div>
+                        </article>
+                    </div>
+                </c:if>
             </c:forEach>
         </c:when>
     </c:choose>
@@ -492,6 +547,7 @@
             <div>
                 <header>
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
+                    <button class="save_btn" onclick="javascript:saveInoutConfiguration();"><spring:message code="common.button.save"/></button>
                     <button class="close_btn" onclick="javascript:closeInoutConfigListPopup();"></button>
                 </header>
                 <article>
@@ -585,6 +641,24 @@
         </div>
         <div class="bg" onclick="javascript:closeAuthorizePopup();"></div>
     </div>
+
+    <div class="popupbase detail_popup" style="z-index: 99;">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="dashboard.title.detail"/></h2>
+                    <button onclick="closeDetailPopup();"></button>
+                </header>
+                <article>
+                    <input type="hidden" id="controlDeviceId" />
+                    <input type="hidden" id="controlParentSerialNo" />
+                    <input type="hidden" id="controlAreaId" />
+                    <div class="device_set" id="controlDeviceList"></div>
+                </article>
+            </div>
+        </div>
+        <div class="bg" onclick="closeDetailPopup();"></div>
+    </div>
 </section>
 
 <%-- VXG Player를 통한 RTSP Stream --%>
@@ -632,6 +706,17 @@
         'safeGuardMapView' : '${templateSetting['safeGuardMapView']}'
     };
 
+    function deviceControl(type,serialNo,value){
+        switch (type){
+            case "temp":
+                webSocketHelper.sendMessage('control',{"parentSerialNo":$("#controlParentSerialNo").val(),"serialNo":serialNo,'type':'temp','value':value});
+                break;
+            case "led":
+                webSocketHelper.sendMessage('control',{"parentSerialNo":$("#controlParentSerialNo").val(),"serialNo":serialNo,'type':'led','value':value});
+                break;
+        }
+    }
+
     /*
      url defind
      @author psb
@@ -664,9 +749,9 @@
     });
 
     $(document).ready(function(){
-        for(var key in criticalCss){
-            modifyElementClass($(".treffic_set div[criticalLevel='"+key+"']"),"ts-"+criticalCss[key],'add');
-        }
+//        for(var key in criticalCss){
+//            modifyElementClass($(".treffic_set div[criticalLevel='"+key+"']"),"ts-"+criticalCss[key],'add');
+//        }
 
         // 조회주기 체크 제어
         $(".iotime_set .checkbox_set > input[type='checkbox']").click(function(){
@@ -682,7 +767,7 @@
         });
 
         dashboardHelper.setConfig(messageConfig, fileUploadPath, templateSetting);
-        dashboardHelper.setWebsocket(webSocketHelper, ['map','toiletRoom']);
+        dashboardHelper.setWebsocket(webSocketHelper, ['map','toiletRoom','eventLog']);
         dashboardHelper.setNotificationOption(String('${empty area.areaId?'100000':area.areaId}'));
         dashboardHelper.initAreaTemplate();
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
@@ -826,7 +911,7 @@
             $(_this).parent().find("button").removeClass("on");
             $(_this).addClass("on");
 
-            findListChart(_areaId, $(".watch_area div[areaId='"+_areaId+"'] li[deviceId].on").attr("deviceId"));
+            findListChart(_areaId, $(".device_set div[areaId='"+_areaId+"'][deviceId].on").attr("deviceId"));
         }
     }
 
@@ -1012,6 +1097,14 @@
         $('.ir_popup').fadeOut(200);
     }
 
+    function openDetailPopup(){
+        $('.detail_popup').fadeIn(200);
+    }
+
+    function closeDetailPopup(){
+        $('.detail_popup').fadeOut(200);
+    }
+
     /**
      * 사용자 인증
      * @author psb
@@ -1060,6 +1153,7 @@
                 break;
             case 'chart':
                 chartRender(data);
+                notificationHelper.setLoading('area', false);
                 break;
             case 'inoutConfigList':
                 inoutConfigListRender(data['inoutConfigList']);
@@ -1119,23 +1213,8 @@
 
     function findListChart(_chartAreaId, _deviceId){
         var dateSelType = $("div[dateSelType='"+_chartAreaId+"'] button.on").attr("value");
-        var truncType;
-
-        switch (dateSelType){
-            case 'day':
-                truncType = 'hour';
-                break;
-            case 'week':
-                truncType = 'day';
-                break;
-            case 'month':
-                truncType = 'week';
-                break;
-            case 'year':
-                truncType = 'month';
-                break;
-        }
-        callAjax('chart',{areaId:_chartAreaId, deviceId:_deviceId, truncType: truncType, dateType: dateSelType});
+        notificationHelper.setLoading('area', true);
+        callAjax('chart',{areaId:_chartAreaId, deviceId:_deviceId, dateType: dateSelType});
     }
 
     /**
@@ -1178,48 +1257,64 @@
     }
 
     /**
-     * 차트 가공 진출입
+     * 차트 가공
      * @author psb
      */
     function chartRender(data) {
         var paramBean = data['paramBean'];
-
         if(chartList[paramBean['areaId']]==null || chartList[paramBean['areaId']] == undefined){
             return false;
         }
 
-        if (data['eventLogChartList'] != null) {
-            var eventLogChartList = data['eventLogChartList'];
-            var _chartList = [];
-            var _eventDateList = [];
+        let chartDataSet = {};
+        if(data['chartDateList'] !=null){
+            var chartDateList = data['chartDateList'];
+            for(var i=0; i<chartDateList.length-1; i++){
+                var _eventDate = new Date(chartDateList[i]);
+//                _eventDate.setTime(index);
+                let key = _eventDate.format("yyyy-MM-dd HH:mm:ss");
+                chartDataSet[key] = {
+                    'date' : "",
+                    'value' : 0
+                };
 
-            for(var index in eventLogChartList){
-                var item = eventLogChartList[index];
-                var _eventDate = new Date();
-                _eventDate.setTime(item['eventDatetime']);
-                _chartList.push(item['value']);
-                switch (paramBean['truncType']){
-                    case 'hour':
-                        _eventDateList.push(_eventDate.format("HH"));
-                        break;
+                switch (paramBean['dateType']){
                     case 'day':
-                        _eventDateList.push(_eventDate.format("es"));
+                        chartDataSet[key]['date'] = _eventDate.format("HH");
                         break;
                     case 'week':
-                        _eventDateList.push(_eventDate.getWeekOfMonth()+"주");
+                        chartDataSet[key]['date'] = _eventDate.format("es");
                         break;
                     case 'month':
-                        _eventDateList.push(_eventDate.format("MM"));
+                        chartDataSet[key]['date'] = _eventDate.getWeekOfMonth()+"주";
+                        break;
+                    case 'year':
+                        chartDataSet[key]['date'] = _eventDate.format("MM");
                         break;
                 }
             }
-            _chartList.reverse();
-            _eventDateList.reverse();
-
-            chartList[paramBean['areaId']].data.series[0] = _chartList;
-            chartList[paramBean['areaId']].data.labels = _eventDateList;
-            chartList[paramBean['areaId']].update();
         }
+
+        if (data['eventLogs'] != null) {
+            var eventLogList = data['eventLogs'];
+            for(var index in eventLogList){
+                var item = eventLogList[index];
+                if(chartDataSet[item['_id']]!=null){
+                    chartDataSet[item['_id']]['value'] = item['value'];
+                }
+            }
+        }
+
+        var _chartList = [];
+        var _eventDateList = [];
+        for(var index in chartDataSet){
+            _eventDateList.push(chartDataSet[index]['date']);
+            _chartList.push(chartDataSet[index]['value']);
+        }
+
+        chartList[paramBean['areaId']].data.series[0] = _chartList;
+        chartList[paramBean['areaId']].data.labels = _eventDateList;
+        chartList[paramBean['areaId']].update();
     }
 
     /*
@@ -1229,6 +1324,10 @@
     function dashBoardFailureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
         if(XMLHttpRequest['status']!="0"){
             alertMessage(actionType + 'Failure');
+        }
+
+        if(actionType=='chart'){
+            notificationHelper.setLoading('area', false);
         }
     }
 

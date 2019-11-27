@@ -24,7 +24,7 @@
     opacity: 0.5;
     width: 70px;
     height: 70px;
-    border-width: 1; } }
+    border-width: 1px; } }
 @-moz-keyframes radar {
   0% {
     opacity: 0;
@@ -38,7 +38,7 @@
     opacity: 0.5;
     width: 70px;
     height: 70px;
-    border-width: 1; } }
+    border-width: 1px; } }
 @-o-keyframes radar {
   0% {
     opacity: 0;
@@ -52,7 +52,7 @@
     opacity: 0.5;
     width: 70px;
     height: 70px;
-    border-width: 1; } }
+    border-width: 1px; } }
 @keyframes radar {
   0% {
     opacity: 0;
@@ -66,22 +66,53 @@
     opacity: 0.5;
     width: 70px;
     height: 70px;
-    border-width: 1; } }
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px; }
+    border-width: 1px; } }
+/*
 
-::-webkit-scrollbar-thumb {
-  background-clip: content-box;
-  border-width: 1px;
-  border-style: solid; }
+// 1.8 대시보드
+::-webkit-scrollbar {width:12px; height:12px;}
+::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #32a0be !important; }
+::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
 
-::-webkit-scrollbar-thumb:active {
-  background-color: #00af9b !important; }
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-gray-09; }
+} // ex) @include webkit_scroll_dashboard;
 
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4);}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4);}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4);}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4);}
+
+  background-color: $color-bas; color:$color-white-02;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,#000,1); background-color: $color-gray-09;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include dashboard-bg;  백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c !important; @include border01(1px,$color-gray-01,1 ); background-color: #fff;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include admin-bg;  백그라운드 공통
+*/
 [data-title]:after {
   content: attr(data-title);
   visibility: hidden;
@@ -763,17 +794,14 @@ div[contenteditable]:empty:before {
 .sico_120:before {
   content: "\e977"; }
 
-.sico_121:before {
-  content: "\e978"; }
-
-.sico_131:before {
-  content: "\e982"; }
-
 .sico_122:before {
   content: "\e979"; }
 
 .sico_132:before {
   content: "\e983"; }
+
+.sico_141:before {
+  content: "\e98c"; }
 
 .sico_123:before {
   content: "\e97a"; }
@@ -781,17 +809,35 @@ div[contenteditable]:empty:before {
 .sico_133:before {
   content: "\e984"; }
 
+.sico_142:before {
+  content: "\e98d"; }
+
 .sico_124:before {
   content: "\e97b"; }
 
 .sico_134:before {
   content: "\e985"; }
 
+.sico_143:before {
+  content: "\e98e"; }
+
+.sico_121:before {
+  content: "\e978"; }
+
+.sico_131:before {
+  content: "\e982"; }
+
+.sico_144:before {
+  content: "\e98f"; }
+
 .sico_125:before {
   content: "\e97c"; }
 
 .sico_135:before {
   content: "\e986"; }
+
+.sico_145:before {
+  content: "\e990"; }
 
 .sico_126:before {
   content: "\e97d"; }

@@ -44,27 +44,6 @@ public class GroupCodeSvcImpl implements GroupCodeSvc {
     private DataSourceTransactionManager transactionManager;
 
     @Override
-    public ModelAndView findListGroupCode(Map<String, String> parameters) {
-        List<GroupCodeBean> groupCodes = groupCodeDao.findListGroupCode();
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("groupCodes", groupCodes);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findByGroupCode(Map<String, String> parameters) {
-        GroupCodeBean groupCode = null;
-        if(StringUtils.notNullCheck(parameters.get("groupCodeId"))){
-            groupCode = groupCodeDao.findByGroupCode(parameters);
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("groupCode",groupCode);
-        return modelAndView;
-    }
-
-    @Override
     public ModelAndView addGroupCode(Map<String, String> parameters) {
         TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
         try{

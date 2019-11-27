@@ -8,6 +8,7 @@ import com.meous.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.util.UrlPathHelper;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -121,21 +122,26 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Date serverDatetime = new Date();
-        modelAndView.addObject("serverDatetime", serverDatetime.getTime());
-        modelAndView.addObject("rootPath", request.getContextPath());
-        modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
-        modelAndView.addObject("aliveCheckDelay", aliveCheckDelay);
-        modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
-        modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
-        modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
+        String requestPath = request.getRequestURI();
+        String typeFormat = requestPath.substring(requestPath.lastIndexOf(AdminResource.PERIOD_STRING) + 1, requestPath.length());
 
-        try{
-            InetAddress address = InetAddress.getByName(hostIp);
-            modelAndView.addObject("socketIp", address.getHostAddress());
-            modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
-        }catch(Exception e){
-            e.printStackTrace();
+        if(typeFormat.equals("html")){
+            Date serverDatetime = new Date();
+            modelAndView.addObject("serverDatetime", serverDatetime.getTime());
+            modelAndView.addObject("rootPath", request.getContextPath());
+            modelAndView.addObject("version", AdminResource.DEPLOY_DATETIME);
+            modelAndView.addObject("aliveCheckDelay", aliveCheckDelay);
+            modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
+            modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
+            modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
+
+            try{
+                InetAddress address = InetAddress.getByName(hostIp);
+                modelAndView.addObject("socketIp", address.getHostAddress());
+                modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
         super.postHandle(request, response, handler, modelAndView);
     }

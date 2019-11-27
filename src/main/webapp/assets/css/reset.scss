@@ -171,13 +171,16 @@ div[contenteditable] { &:empty:before {content: attr(placeholder); display: bloc
 .sico_100:before {content: "\e963";}   .sico_110:before {content: "\e96d";}    .sico_120:before {content: "\e977";}
 
 
-.sico_121:before {content: "\e978";}   .sico_131:before {content: "\e982";}
-.sico_122:before {content: "\e979";}   .sico_132:before {content: "\e983";}
-.sico_123:before {content: "\e97a";}   .sico_133:before {content: "\e984";}
-.sico_124:before {content: "\e97b";}   .sico_134:before {content: "\e985";}
-.sico_125:before {content: "\e97c";}   .sico_135:before {content: "\e986";}
+.sico_122:before {content: "\e979";}   .sico_132:before {content: "\e983";}    .sico_141:before {content: "\e98c";}
+.sico_123:before {content: "\e97a";}   .sico_133:before {content: "\e984";}    .sico_142:before {content: "\e98d";}
+.sico_124:before {content: "\e97b";}   .sico_134:before {content: "\e985";}    .sico_143:before {content: "\e98e";}
+.sico_121:before {content: "\e978";}   .sico_131:before {content: "\e982";}    .sico_144:before {content: "\e98f";}
+.sico_125:before {content: "\e97c";}   .sico_135:before {content: "\e986";}    .sico_145:before {content: "\e990";}
 .sico_126:before {content: "\e97d";}   .sico_136:before {content: "\e987";}
 .sico_127:before {content: "\e97e";}   .sico_137:before {content: "\e988";}
 .sico_128:before {content: "\e97f";}   .sico_138:before {content: "\e989";}
 .sico_129:before {content: "\e980";}   .sico_139:before {content: "\e98a";}
 .sico_130:before {content: "\e981";}   .sico_140:before {content: "\e98b";}
+
+
+

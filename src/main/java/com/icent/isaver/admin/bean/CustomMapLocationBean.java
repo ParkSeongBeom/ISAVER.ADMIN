@@ -1,5 +1,7 @@
 package com.icent.isaver.admin.bean;
 
+import java.util.List;
+
 /**
  * Custom Map Bean
  *
@@ -43,6 +45,8 @@ public class CustomMapLocationBean {
     private String linkUrl;
     /* 메인Flag*/
     private String mainFlag;
+
+    private List<DeviceBean> childDeviceList;
 
     public String getAreaId() {
         return areaId;
@@ -138,5 +142,13 @@ public class CustomMapLocationBean {
 
     public void setMainFlag(String mainFlag) {
         this.mainFlag = mainFlag;
+    }
+
+    public List<DeviceBean> getChildDeviceList() {
+        return childDeviceList;
+    }
+
+    public void setChildDeviceList(List<DeviceBean> childDeviceList) {
+        this.childDeviceList = childDeviceList;
     }
 }

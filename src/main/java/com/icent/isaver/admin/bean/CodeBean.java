@@ -28,12 +28,6 @@ public class CodeBean extends ISaverCommonBean {
     /* 정렬 순서 */
     private Integer sortOrder;
 
-    /* 등록자명 */
-    private String insertUserName = null;
-
-    /* 수정자명 */
-    private String updateUserName = null;
-
     /* ETC */
     /* 장치수량 */
     private int deviceCnt;
@@ -84,22 +78,6 @@ public class CodeBean extends ISaverCommonBean {
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
-    }
-
-    public String getInsertUserName() {
-        return insertUserName;
-    }
-
-    public void setInsertUserName(String insertUserName) {
-        this.insertUserName = insertUserName;
-    }
-
-    public String getUpdateUserName() {
-        return updateUserName;
-    }
-
-    public void setUpdateUserName(String updateUserName) {
-        this.updateUserName = updateUserName;
     }
 
     public int getDeviceCnt() {

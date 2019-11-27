@@ -1,5 +1,7 @@
 package com.icent.isaver.admin.bean;
 
+import java.util.Date;
+
 /**
  * [Bean] 진출입 환경설정
  *
@@ -31,6 +33,9 @@ public class InoutConfigurationBean extends ISaverCommonBean {
     private String inoutEndtime;
 
     /* ETC */
+    private Date startDatetime;
+    private Date endDatetime;
+
     /* 현재 시작시간 */
     private String nowInoutStarttime;
     /* 현재 종료시간 */
@@ -110,5 +115,21 @@ public class InoutConfigurationBean extends ISaverCommonBean {
 
     public void setBeforeInoutEndtime(String beforeInoutEndtime) {
         this.beforeInoutEndtime = beforeInoutEndtime;
+    }
+
+    public Date getStartDatetime() {
+        return startDatetime;
+    }
+
+    public void setStartDatetime(Date startDatetime) {
+        this.startDatetime = startDatetime;
+    }
+
+    public Date getEndDatetime() {
+        return endDatetime;
+    }
+
+    public void setEndDatetime(Date endDatetime) {
+        this.endDatetime = endDatetime;
     }
 }

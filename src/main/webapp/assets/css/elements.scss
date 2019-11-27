@@ -28,8 +28,8 @@
   &-area:before     {content:"\e91b" !important;} // 장소
   &-tof:before      {content:"\e962" !important;} // TOF 센서
   &-m8:before       {content:"\e95f" !important;} // m8 센서
-  &-ptz:before      {content:"\e961" !important;} // PTZ 카메라
-  &-camera:before   {content:"\e964" !important;} // PTZ 카메라
+  &-ptz:before, &-camera:before
+                    {content:"\e961" !important;} // PTZ 카메라
   &-chart:before    {content:"\e908" !important;} // 차트
   &-four:before     {content:"\e938" !important;} // 4분할
   &-gate:before     {content:"\e92f" !important;} // 게이트 웨이 센서
@@ -48,11 +48,18 @@
   &-shock:before    {content:"\e942" !important;} // 압전센서
   &-server:before   {content:"\e96b" !important;} // 서버
   &-check:before    {content:"\e901" !important;} // 체크
-  &-open:before     {content:"\e917" !important;} // 열기
-  &-save:before     {content:"\e927" !important;} // 저장
+  &-open:before, &-up:before, &-add:before
+                    {content:"\e917" !important;} // 열기
+  &-save:before     {content:"\e98e" !important;} // 저장
   &-reso:before     {content:"\e964" !important;} // 리소스 모니터링
   &-docker:before   {content:"\e938" !important;} // 도커
   &-qguard:before   {content:"\e96c" !important;} // Q가드
+  &-play:before     {content:"\e97a" !important;} // 플레이
+  &-copy:before     {content:"\e98d" !important;} // 복사
+  &-chartb:before   {content:"\e98f" !important;} // 바 복사
+  &-chartl:before   {content:"\e990" !important;} // 라인 차트
+  &-chartt:before   {content:"\e98c" !important;} // 테이블 차트
+  &-option:before   {content:"\e959" !important;} // 옵션, 메뉴
 }
 
 .cursor_cros {cursor:crosshair !important;}
@@ -81,7 +88,7 @@
 
 
 ////// btn_set 정의 Start
-.btn_set  {
+.btn_set {
   @include flexbase; @include flex-justify-content-between;
   position: relative;
   & > button {
@@ -117,7 +124,7 @@ input.datepicker {width:100px;}
 button.ui-datepicker-trigger {
   @include length01; @include border(1px 1px 1px 0,$color-gray-01);
   background-color: #fff;
-  &:before {content:"\e91f"; font-size:1.8rem; margin:0 1px 0 0; color:$color-dark-01;}
+  &:before {content:"\e91f" !important; font-size:1.8rem; margin:0 1px 0 0; color:$color-dark-01;}
   &:hover:before {color:$color-red-01;}
 }
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br
@@ -238,7 +245,10 @@ input.datepicker + button + .in-timepicker {z-index:1; left:-1px; margin:0;}
 .csl_style03 {@include csl-yesno;} // YES or NO
 .csl_style04 {@include csl-showhide;} // SHOW or HIDE
 .csl_style05 {@include csl-icon;} // 아이콘 사각
+.csl_style06 {@include csl-useunused;} // YES or NO
 ///// input[type="checkbox"] checkBox label base 정의 End
+
+
 
 
 /////...... button base 정의 Start
@@ -247,18 +257,18 @@ a.btn {@include flex-midddle; span {width:100%; text-align:center;} }
 .btn      {@include btn-box;}        // 160_40 박스 버튼
 .btn-line {@include btn-line; }      // 160_40 라인 버튼
 
-.btn-itype03b   {@include btn-itype03b;  }   // 40_40 정사각 버튼
-.btn-itype01b   {@include btn-itype01b;  }   // 50_50 정사각 버튼
-.btn-itype03b-t {@include btn-itype03b-t;}   // 40_40 정사각 투명 버튼
-.btn-itype01b-t {@include btn-itype01b-t;}   // 50_50 정사각 투명 버튼
-.btn-itype03b-l {@include btn-itype03b-l;}   // 40_40 정사각 라인 버튼
-.btn-itype01b-l {@include btn-itype01b-l;}   // 50_50 정사각 라인 버튼
-.btn-itype03c   {@include btn-itype03c;  }   // 40_40 원형 버튼
-.btn-itype01c   {@include btn-itype01c;  }   // 50_50 원형 버튼
-.btn-itype03c-t {@include btn-itype03c-t;}   // 40_40 원형 투명 버튼
-.btn-itype01c-t {@include btn-itype01c-t;}   // 50_50 원형 투명 버튼
-.btn-itype03c-l {@include btn-itype03c-l;}   // 40_40 원형 라인 버튼
-.btn-itype01c-l {@include btn-itype01c-l;}   // 50_50 원형 라인 버튼
+.btn-itype03b   {@include btn-itype03b;  }   // 50_50 정사각 버튼
+.btn-itype01b   {@include btn-itype01b;  }   // 40_40 정사각 버튼
+.btn-itype03b-t {@include btn-itype03b-t;}   // 50_50 정사각 투명 버튼
+.btn-itype01b-t {@include btn-itype01b-t;}   // 40_40 정사각 투명 버튼
+.btn-itype03b-l {@include btn-itype03b-l;}   // 50_50 정사각 라인 버튼
+.btn-itype01b-l {@include btn-itype01b-l;}   // 40_40 정사각 라인 버튼
+.btn-itype03c   {@include btn-itype03c;  }   // 50_50 원형 버튼
+.btn-itype01c   {@include btn-itype01c;  }   // 40_40 원형 버튼
+.btn-itype03c-t {@include btn-itype03c-t;}   // 50_50 원형 투명 버튼
+.btn-itype01c-t {@include btn-itype01c-t;}   // 40_40 원형 투명 버튼
+.btn-itype03c-l {@include btn-itype03c-l;}   // 50_50 원형 라인 버튼
+.btn-itype01c-l {@include btn-itype01c-l;}   // 40_40 원형 라인 버튼
 
 .dim {@include dim_btn; } // 버튼 비활성화
 
@@ -380,6 +390,7 @@ div[contenteditable] {}
     .ct-line  { stroke-width: 1px !important; }
     .ct-point { stroke-width: 7px !important; }
     .ct-bar {opacity: 0.7;  }
+    fill-opacity: .1;
   }
 
   &-a {
@@ -561,10 +572,13 @@ div[contenteditable] {}
   position:relative; width:100%; height:40px; margin:20px 0;
   &, & > div {@include flex-midddle; }
   button {
-    @include btn-itype01b-l; margin:0 2px;
+    @include btn-itype01b-l; @include mhwidth($btn-type01); margin:0 2px;
 
-    &,&:before {color:$color-a-text;}
-    &:before {border-color:rgba($color-a-text,.8); background-color:rgba($color-white-01,.8) !important; }
+    &,&:before { @include flex-midddle; color:$color-a-text;}
+    &:before, &:after {position: absolute; }
+    &:after {
+      border-color:rgba($color-a-text,.8); background-color:rgba($color-white-01,.8) !important;
+    }
   }
 
   & > button {
@@ -622,10 +636,10 @@ div[contenteditable] {}
 
   & > * {position: absolute !important;}
   .map_bg {
-    z-index: -1;background-repeat:no-repeat;background-position: center;
+    z-index: -1;background-repeat:no-repeat;background-position: center; opacity: 0.4;
     &, &:before, &:after {position: absolute; width:100%; height:100%;}
     &:before, &:after {content:"";}
-    &:after { opacity: .4; /* background-image: url("../images/map/map.jpg"); */ background-position:center; background-repeat:no-repeat;}
+    &:after { background-position:center; background-repeat:no-repeat;}
   }
   //&.cursor_cros {}
 }
@@ -633,11 +647,10 @@ div[contenteditable] {}
 .g-ico {}
 .g-tracking {}
 
-
 .g {
   /*
   */
-  &-ico  {z-index: 50;}
+  &-ico  {z-index: 50; &:before {font-size:1.2rem !important;}}
   &-tracking,&-line {z-index: 100;}
   &-area  {z-index:10;}
   &-fence {z-index: 5;}
@@ -653,14 +666,11 @@ div[contenteditable] {}
     // 디바이스, 구역 이름표
     & > span {
       @include flex-midddle; position: absolute; width: max-content; bottom:-17px;
-      padding:3px 10px; font-size:0.9rem;
-      /*padding:0 10px 2px 10px; font-size:0.9rem; height:20px; bottom:-($devi_w - 5px); */line-height: 0.9rem;
-      background-color:$color-gray-09; @include border-radius(200px);
-      @include scale(0.4);
+      padding:3px 10px; font-size:0.9rem; line-height: 0.9rem;
+      background-color:$color-gray-09; @include border-radius(200px); @include scale(0.4);
     }
     &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
     &.on {&, & > span {background-color: $color-on;}}
-
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
@@ -683,50 +693,76 @@ div[contenteditable] {}
     $g-r60 : 60deg;  $g-r70 : 70deg;  $g-r80 : 80deg;  $g-r90 : 90deg;  $g-r100 : 100deg;
 
     width:$devi_w; height:$devi_w;
+
     .ui-resizable-e, .ui-resizable-s {display: none !important;}
-    .ui-resizable-e{right:-16px;} .ui-resizable-s{bottom:-23px;}
+    .ui-resizable-e {right:-16px;} .ui-resizable-s {bottom:-23px;}
     .ui-resizable-se {margin-top:10px; margin-left: 10px;}
+
+    & > span + div {
+      z-index: -1; &, &:after, &:before {overflow: hidden; position: absolute;}
+    }
 
     &.on {
       background-color: $color-on;
       &:hover { .ui-resizable-se {display: block !important;} }
-    }
-    &.lidar > div {display: block !important; cursor: move;}
-    & > div {
-      z-index: -1; display: none;
-      &, &:after {overflow: hidden; position: absolute; @include mhwidth($g-wh-04); }
-      &:not(.ui-resizable-handle), &:after:not(.ui-resizable-handle) {@include mhwidth(10px);}
-      &.ui-resizable-handle, &.ui-resizable-handle:after{@include mhwidth(10px);}
-      &.ui-resizable-handle.ui-resizable-s:before{background:none;}
-      &:after {@include lidar-bg($color-lidar); @include lidar; @include border-radius(10000px);}
-    }
-    &.level-die > div{@include mhwidth(10px);}
-
-    &.wh-01 > div {&, &:after { @include mmwidth($g-wh-01); @include mmheight($g-wh-01); } }
-    &.wh-03 > div {&, &:after { @include mmwidth($g-wh-03); @include mmheight($g-wh-03); } }
-
-    &.half {
-      & > div {bottom:($devi_w / 2);  @include mmheight($g-wh-02 / 2); @include origin(50%, 100%);}
-
-      &.wh-01 > div {  @include mmheight($g-wh-01 / 2); }
-      &.wh-03 > div {  @include mmheight($g-wh-03 / 2); }
-    }
-
-    &.quarter {
-      & > div {
-        right:(0 + ($devi_w / 2)); bottom:($devi_w / 2);  @include origin(100%, 100%);
-        @include mmwidth($g-wh-02 / 2); @include mmheight($g-wh-02 / 2);
+      & > span + div {
+        display: none;
+        &, &:after, &:before {@include mhwidth(0);}
       }
-
-      &.wh-01 > div {@include mmwidth($g-wh-01 / 2);  @include mmheight($g-wh-01 / 2); }
-      &.wh-03 > div {@include mmwidth($g-wh-03 / 2);  @include mmheight($g-wh-03 / 2); }
     }
 
+    &.lidar {
+      & > span + div {
+        z-index: -1;
+        &, &:after, &:before {@include mhwidth($g-wh-04);}
+      }
+      &.wh {
+        &-01 > span + div { &, &:after, &:before {@include mhwidth($g-wh-01);} }
+        &-02 > span + div { &, &:after, &:before {@include mhwidth($g-wh-02);} }
+        &-03 > span + div { &, &:after, &:before {@include mhwidth($g-wh-03);} }
+        &-04 > span + div { &, &:after, &:before {@include mhwidth($g-wh-04);} }
+      }
+      &.half {
+        & > div {bottom:($devi_w / 2);  @include mmheight($g-wh-02 / 2); @include origin(50%, 100%);}
 
+        &.wh {
+          &-01 > div {@include mmheight($g-wh-01 / 2 ); &:before, &:after {@include mhwidth($g-wh-01);} }
+          &-02 > div {@include mmheight($g-wh-02 / 2 ); &:before, &:after {@include mhwidth($g-wh-02);} }
+          &-03 > div {@include mmheight($g-wh-03 / 2 ); &:before, &:after {@include mhwidth($g-wh-03);} }
+          &-04 > div {@include mmheight($g-wh-04 / 2 ); &:before, &:after {@include mhwidth($g-wh-04);} }
+        }
+      }
+      &.quarter {
+        & > div {
+          right:(0 + ($devi_w / 2)); bottom:($devi_w / 2);  @include origin(100%, 100%);
+          @include mmwidth($g-wh-02 / 2); @include mmheight($g-wh-02 / 2);
+        }
 
+        &.wh {
+          &-01 > div {
+            @include mmwidth($g-wh-01 / 2); @include mmheight($g-wh-01 / 2);
+            &:before, &:after {@include mhwidth($g-wh-01);}
+          }
+          &-02 > div {
+            @include mmwidth($g-wh-02 / 2); @include mmheight($g-wh-02 / 2);
+            &:before, &:after {@include mhwidth($g-wh-02);}
+          }
+          &-03 > div {
+            @include mmwidth($g-wh-03 / 2); @include mmheight($g-wh-03 / 2);
+            &:before, &:after {@include mhwidth($g-wh-03);}
+          }
+          &-04 > div {
+            @include mmwidth($g-wh-04 / 2); @include mmheight($g-wh-04 / 2);
+            &:before, &:after {@include mhwidth($g-wh-04);}
+          }
+        }
 
+      }
+    }
 
+    &.level-die > div {@include mhwidth(10px);}
 
+    // 설정화면에서의 아이콘
     &.level {
       &-caution,&-warning,&-danger,&-die {
         &:before {
@@ -738,65 +774,41 @@ div[contenteditable] {}
       &-caution {
         &,& > span {background-color:$color-caution;}
         &:before {border-color:$color-caution; }
-        & > div { &:after {@include lidar-bg($color-caution);} }
       }
 
       &-warning {
         &,& > span {background-color:$color-warning;}
         &:before {border-color:$color-warning;}
-        & > div { &:after {@include lidar-bg($color-warning);} }
       }
 
       &-danger  {
         &,& > span {background-color:$color-danger;}
         &:before {border-color:$color-danger; }
-        & > div {&:after {@include lidar-bg($color-danger);cursor: move;}}
       }
 
       &-die     {
         &,& > span {background-color:$color-die;}
         &:before {border-color:$color-die;}
 
-        & > div {
-
-          &:after {@include die02; @include lidar-bg($color-die);  animation-play-state: paused; top:auto;left:auto;}
+        & > span + div {
+          &:before {@include die02; animation-play-state: paused; top:auto;left:auto; opacity: .5;}
+          &:after {display: none !important;}
         }
       }
+    }
+
+    // 감시화면에서의 아이콘
+    &.lidar.level {
+
+      &-caution { & > span + div { @include lidar-bg($color-caution); } }
+
+      &-warning { & > span + div { @include lidar-bg($color-warning); } }
+
+      &-danger  { & > span + div {@include lidar-bg($color-danger); } }
+
+      &-die     { & > span + div {@include lidar-bg($color-die);} }
     }
   }
-
-  /*&-ico.lidar {
-    &:after {overflow: hidden; @include mhwidth(800px); @include lidar-bg($color-lidar); @include lidar;}
-
-    &.w100:after { @include mhwidth(1000px);}
-    &.w120:after { @include mhwidth(1200px);}
-    &.w160:after { @include mhwidth(1600px);}
-
-    &.level {
-      &-caution,&-warning,&-danger { &:after {} }
-      &-caution { &:after {@include lidar-bg($color-caution);} }
-      &-warning { &:after {@include lidar-bg($color-warning);} }
-      &-danger  { &:after {@include lidar-bg($color-danger);}  }
-      &-die {
-        &:after {
-          @include lidar-bg($color-die); @include mhwidth(100px); animation-play-state: paused; top:auto;left:auto;
-        }
-      }
-    }
-
-    & > div {display: none !important;}
-  }*/
-
-  &-ico:before     {font-size:1.2rem !important;}
-  &-m8:before      {content:"\e95f";} // M8 센서
-  &-camera:before  {content:"\e961";} // PTZ 카메라
-  &-wlight:before  {content:"\e93b";} // 경광등
-  &-led:before     {content:"\e963";} // LED
-  &-speaker:before {content:"\e93a";} // 스피커
-  &-qguard:before  {content:"\e96c";} // Q가드
-  &-shock:before   {content:"\e942";} // 압전센서
-  &-server:before  {content:"\e96b";} // 서버
-
 
   &-tracking {
     width:24px; height:24px; background-color: transparent;
@@ -869,7 +881,7 @@ div[contenteditable] {}
     polyline.object {stroke: $color-caution;}
 
     // 마크 반경표시
-    marker circle{
+    marker circle {
       margin: 0 auto;
       animation-name: radar;
       animation-direction: normal;
@@ -912,61 +924,247 @@ div[contenteditable] {}
   &-ignore_fence {fill: rgba($color-gray-05, 0.5) !important;  stroke: $color-gray-07 !important;}
 
 }
+
+
 ////// ----------------- OFFINLE MAP 설정  End
 
-.fencebtn_set{width:164px !important;
-  button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
-    background-color: #FF8400 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
-    &:hover{background-color: #32A0BE !important; color:#fff !important; }
-    &:after{content: "NORMAL MODE";}
-  }
-  .box_area{display: none; flex-direction: row;height: 50px;padding-top:5px;
-    input{float:left;width:70px !important;}
-    span{float:left;padding:10px 7px 0;font-weight: bold;}
-  }
-}
-.fencebtn_set.custom-mode{
-  button.btn-custom{@include mmheight(35px);max-width: 164px !important;width:164px !important;z-index: 1;border-radius: 0 !important;
-    background-color: #C00606 !important; font-size:0.9rem;display:inline-block !important; text-align:center;
-    &:hover{background-color: #32A0BE !important; color:#fff !important; }
-    &:after{content: "CUSTOM MODE";}
-  }
-  .btn-pdel{display: none !important;}
-  .box_area{display: flex;}
-}
+/////..... 감시화면 옵션 버튼 셋 Start
+$cbs-w:200px;
+$cbs-h:60px;
+@mixin cbs-checkbtn {
 
-// map설정 skew레이어 
-.skew-btn{margin-right:auto;padding: 0 10px; background: #393939; height:100%; width:160px; border-right:1px solid #040404 !important;background:#1D80A0;
-    &:hover{background-color: #32A0BE;}
-    &:active{background-color: $color-ac;}
-    &.on{background-color: $color-on;}
-}
-.skew-popup{display:none; position:absolute !important; bottom:40px; left:0; width:240px; background-color:#3C3C3C; border-top:1px solid #393939;
-    span{float:left; height:40px !important;clear:both; border-top:1px solid #040404 !important;border-left:0 !important;width:100px !important;}
-    input{float:left; display: block; border-bottom:none !important;}
-    .btn{float:left;}
-    &.on{display: block;}
-    select#angleClass{width:140px;border-bottom:none;border-left: none;}
-    h4{float:left; color:#fff; padding: 5px; font-size:16px; font-weight:bold; width:100%; background-color:#0F4151; border-right:1px solid #040404;border-top:1px solid #040404;}
-}
-.uplist{left:1px; width:40px !important;
-  & > button{
-    &:before{content:"\e917" !important; font-size:1rem !important; border:1px solid #f5f5f5;}
-    &:after{content:"" !important; background-color: #a9a9a9; height: 14px; width: 1px !important; top: -9px; left: 29px !important;}
-    &.on{
-      &:before{content:"\e917" !important; transform: rotateX(180deg);}
+  width:100%; height:$cbs-h; padding:10px;
+
+  input {
+    opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
+    cursor:pointer; padding:0; margin:0;
+  }
+  label {
+    @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
+    position: relative; height:100%; opacity: 0.7;
+    &:before {
+      @include flex-midddle; @include mhwidth($cbs-h - 10px);
+      font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);
+    }
+    &:after {
+      letter-spacing: 0; line-height: 0.9rem; padding:0 10px;
+      text-align: left; font-size:0.9rem; font-weight: bold;
     }
   }
-  .ico-up{padding-top:5px !important; color:#f5f5f5 !important; background-color: #3c3c3c; z-index: 9;
+
+  input:hover + label {color:$color-ho; opacity: 1;}
+  input:checked + label {
+    opacity: 1;
+    &:before, &:after {color:$color-on; }
+    &:before {}
   }
-  .ico-up:hover{color:#32a0be !important;
-    &:before{border-color:#32a0be !important;}
- }
+
+} // @include cbs-checkbtn;
+@mixin cbs-base {
+  position: absolute; z-index: 80 !important; background-color: rgba(#000,0.2);
+  @include transition(200ms);
+} // @include cbs-base;
+
+/////..... 온오프 리스트 버튼
+.check_btn_menu {
+  @include cbs-base; @include cbs-checkbtn; width:$cbs-w !important; left:0; bottom:0;
+  label {
+    &:before {content:"\e959";  }
+    &:after  {content:"VIEW OPTIONS";}
+  }
+  input:checked + label {
+    &:before {content:"\e92c"; }
+    &:after {content:"VIEW OPTIONS"; }
+  }
+}
+.check_btn_menu.on + .check_btn_set{left:0;}
+
+/////..... 온오프 리스트 메뉴
+.check_btn_set {
+
+  @include flexbase; @include flex-column; @include flex-align-items-start;
+  @include flex-justify-content-start; @include cbs-base; left:-100%;
+
+  width:$cbs-w; bottom:$cbs-h;
+
+  & > div {
+    @include cbs-checkbtn; position: relative;
+
+    &.range_check {
+
+      label {
+        &:before {content:"\e95b";  }
+        &:after  {content:"LIDAR RANGE";}
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        &:before {content:"\e97f"; }
+        &:after {content:"LIDAR RANGE OFF"; }
+      }
+    }
+
+    &.object_check {
+
+      label {
+        &:before {content:"\e943";  }
+        &:after  {content:"SHOW TRACKING";}
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        &:before {content:"\e926"; }
+        &:after {content:"HIDE TRACKING"; }
+      }
+    }
+
+    &.human_check {
+      label {
+        &:before {content:"\e906";  }
+        &:after  {content:"ALL OBJECT ";}
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        &:before {content:"\e950"; }
+        &:after {content:"ONLY HUMAN"; }
+      }
+    }
+
+    &.fence_check {
+      label {
+        &:before {content:"\e941";  }
+        &:after  {content:"FENCE TRACKING";}
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        &:before {content:"\e921"; }
+        &:after {content:"FENCE TRACKING OFF"; }
+      }
+    }
+  }
+
 }
 
-.btn-tarea{width:30px !important;
-  &:before{content:"\e92e" !important;}
+/////..... 화면 플러스 마이너스 메뉴 Start
+.view_size {
+
+  @include cbs-base; right:0; bottom:0;
+
+  //&.on{right:0;}
+
+  & > div {
+    position: relative;
+
+    button {
+      @include flex-midddle; color:$color-white-01; @include mhwidth($cbs-h);
+      &:before { font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
+      &:hover:before {color: $color-ho;}
+    }
+
+    &.view_plus {
+      button {
+        &:before {content:"\e95d"; }
+        &:hover {@include notice-plus;}
+      }
+    }
+    &.view_minus {
+      button {
+        &:before {content:"\e95c"; }
+        &:hover {@include notice-minus;}
+      }
+    }
+
+  }
+}
+/////..... 감시화면 옵션 버튼 셋 End
+
+.fencebtn_set {
+  @include cbs-base; @include flexbase; @include flex-column; bottom:-100%; right:$cbs-h; width:150px;
+
+  &.on {bottom:0; }
+  &, .box_area {background-color: rgba(#000, 0.4);}
+  &.custom-mode {
+    .btn-custom {
+      &:before {content:"CUSTOM MODE"; }
+      &:after {background-color: $color-on;}
+    }
+    .box_area {@include flexbase;}
+  }
+  & > button {
+    @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+    width:100%; height:$cbs-h; margin:0; padding:0 10px;
+    &, & * {color:$color-white-01; }
+    &:before {order:2; @include flex-midddle;}
+    &:after {order:1; opacity: 1; text-align: left; padding:0 10px 0 0;}
+
+  }
+  .btn-custom {
+    @include btn-box; width:100%; max-width:none; height:($cbs-h - 20px);
+    &:before {width:100%; height:100%; content:"NORMAL MODE";}
+  }
+
+  .btn-pdel, .btn-canc {
+    &:hover {&:before, &:after {color:$color-ho; border-color:$color-ho; } }
+    &:before {
+      @include mhwidth($cbs-h / 2); @include border-radius(200px);
+      @include border01(3px,$color-white-01,1 );
+    }
+  }
+
+  .btn-pdel { &:before {content:"\e92c";} &:after {content:"Point Del";width:auto;}}
+  .btn-canc { &:before {content:"\e91a";} &:after {content:"Cancle";width:auto;}}
+
+  .box_area {
+    display:none; @include cbs-base; top:-($cbs-h); left:0;
+    width:100%; @include mmheight($cbs-h); padding:10px; @include border01(1px,$color-on,1 );
+    span {display: none;}
+    input {
+      width: 100%;
+      &:nth-of-type(1) {order:1;}
+      &:nth-of-type(2) {order:3;}
+    }
+    &:before {content:"\e91a"; order:2; @include flex-midddle; @include mmwidth(30px); height:100%;}
+  }
 }
 
-.ico-up{padding-top:5px !important;color:#f5f5f5 !important;}
-.ico-up.on{color:#f5f5f5 !important; }
+.skew {
+  &-btn {
+    @include btn-itype01b; margin:0 auto 0 0;
+    & * {border:none !important;}
+    &:before {content:"\e959";}
+  }
+
+  &-popup{
+    $skew-width:250px; @include transition(200ms);
+    @include flexbase; @include flex-row-wrap; @include flex-align-content-start; padding:0 0 20px 0 !important;
+    position:absolute !important; z-index: 10; bottom:40px; left:-($skew-width + 1);
+    width:$skew-width; background-color: rgba($color-popup,0.8);
+    @include border01(1px,$color-on,1 ); border-color:$color-on !important;
+
+    &.on {left:0;}
+    & > * {padding:0 15px !important;}
+
+    h4,h5 {@include mmwidth(100%);}
+    h4 {color:$color-white-01; }
+    h5 { @include h5; &:before {left: 15px;}}
+
+    button {
+      @include btn-itype01b; margin:0;
+      &:before {position: absolute; content:"\e902";}
+      &:after {@include border01(1px 0 1px 1px,#000,1 );}
+    }
+
+    .set-item > div > button {
+      &:nth-of-type(1) {
+        &:before {content:"\e902";}
+        &:hover:before {@include xloding;}
+      }
+      &:nth-of-type(2) {
+        &:before {content:"\e988";}
+        &:hover:before {@include loding;}
+      }
+    }
+  }
+}

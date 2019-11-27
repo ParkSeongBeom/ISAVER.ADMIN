@@ -7,44 +7,28 @@
         @author dhj
     -->
     <select id="findListCode" parameterType="map" resultType="CodeBean">
-        SELECT      group_code_id     as groupCodeId
-                    ,code_id            as codeId
-                    ,code_name         as codeName
-                    ,code_desc         as codeDesc
-                    ,use_yn             as useYn
-                    ,sort_order        as sortOrder
-                    ,insert_user_id    as insertUserId
-                    ,insert_datetime   as insertDatetime
-                    ,update_user_id    as updateUserId
-                    ,update_datetime   as updateDatetime
-        FROM        isaver.code
-        WHERE       group_code_id = #{groupCodeId}
-        <if test="useYn != null">
-            AND     use_yn=#{useYn}
-        </if>
-        ORDER BY    sort_order;
-    </select>
-
-    <!--
-        코드 상세을 가져온다.
-        @author dhj
-    -->
-    <select id="findByCode" parameterType="CodeBean" resultType="CodeBean">
-        SELECT      group_code_id     as groupCodeId
-                    ,code_id            as codeId
-                    ,code_name         as codeName
-                    ,code_desc         as codeDesc
-                    ,use_yn            as useYn
-                    ,sort_order        as sortOrder
+        SELECT      a.group_code_id     as groupCodeId
+                    ,a.code_id            as codeId
+                    ,a.code_name         as codeName
+                    ,a.code_desc         as codeDesc
+                    ,a.use_yn             as useYn
+                    ,a.sort_order        as sortOrder
                     ,a.insert_user_id    as insertUserId
                     ,a.insert_datetime   as insertDatetime
                     ,a.update_user_id    as updateUserId
                     ,a.update_datetime   as updateDatetime
                     ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.insert_user_id) as insertUserName
                     ,(SELECT user_name FROM isaver.users b WHERE b.user_id = a.update_user_id) as updateUserName
-        FROM        isaver.code AS a
-        WHERE       a.group_code_id=#{groupCodeId}
-        AND         a.code_id=#{codeId}
+        FROM        isaver.code a
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="groupCodeId != null and groupCodeId != ''">
+                AND     a.group_code_id = #{groupCodeId}
+            </if>
+            <if test="useYn != null">
+                AND     a.use_yn=#{useYn}
+            </if>
+        </trim>
+        ORDER BY    a.sort_order;
     </select>
 
     <!--

@@ -114,7 +114,7 @@ public class InoutConfigurationSvcImpl implements InoutConfigurationSvc {
         try {
             if(mqttUtil.getIsMqtt()){
                 ObjectMapper mapper = new ObjectMapper();
-                mqttUtil.publish("eventAlarm",mapper.writeValueAsString(websocketParam),0);
+                mqttUtil.publish("eventLog",mapper.writeValueAsString(websocketParam),0);
             }else {
                 AlarmRequestUtil.sendAlarmRequestFunc(websocketParam, "http://" + wsDomain + ":" + wsPort + "/" + wsProjectName + wsUrlSendEvent, "form", "jsonData");
             }

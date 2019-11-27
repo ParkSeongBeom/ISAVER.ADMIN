@@ -90,27 +90,29 @@ var CustomMapMediator = (
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
                 , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
                 , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
+                , 'childAnimateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부(하위장치포함)
             }
         };
         var _targetClass = {
             'area' : "g-area"
             ,'object' : "g-tracking"
             ,'fence' : "g-fence"
-            ,"DEV002" : "g-ico g-camera"
-            ,"DEV006" : "g-ico g-led"
-            ,"DEV007" : "g-ico g-speaker"
-            ,"DEV008" : "g-ico g-wlight"
-            ,"DEV013" : "g-ico g-m8"
-            ,"DEV015" : "g-ico g-qguard"
-            ,"DEV016" : "g-ico g-server"
-            ,"DEV017" : "g-ico g-shock"
-            ,"DEV019" : "g-ico g-qguard"
-            ,"DEV020" : "g-ico g-m8"
+            ,"DEV002" : "g-ico ico-camera"
+            ,"DEV006" : "g-ico ico-led"
+            ,"DEV007" : "g-ico ico-speaker"
+            ,"DEV008" : "g-ico ico-wlight"
+            ,"DEV013" : "g-ico ico-m8"
+            ,"DEV015" : "g-ico ico-qguard"
+            ,"DEV016" : "g-ico ico-server"
+            ,"DEV017" : "g-ico ico-shock"
+            ,"DEV019" : "g-ico ico-qguard"
+            ,"DEV020" : "g-ico ico-m8"
+            ,"DEV003" : "g-ico ico-server"
         };
         // 라이다 메인장치 코드
         var _mainDeviceCode = ['DEV013','DEV020'];
         // Map에 표출되는 장치코드
-        var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017','DEV020'];
+        var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017','DEV020','DEV003'];
         // true :사람만보기
         // false:전체보기
         var _objectViewFlag=false;
@@ -122,22 +124,23 @@ var CustomMapMediator = (
             'width' : 5000
             ,'height' : 5000
         };
-        var _mainDevices = [];
-        var _top = null;
-        var _left = null;
-        var _originX = null;
-        var _originY = null;
-        var _translateX = 0;
-        var _translateY = 0;
-        var _rotate=0;
-        var _skewX=0;
-        var _skewY=0;
-        var _element;
-        var _copyBoxElement;
-        var _mapCanvas;
-        var _canvasSvg;
-        var _fileUploadPath;
-        var _messageConfig;
+        let _mainDevices = [];
+        let _top = null;
+        let _left = null;
+        let _originX = null;
+        let _originY = null;
+        let _translateX = 0;
+        let _translateY = 0;
+        let _rotate=0;
+        let _skewX=0;
+        let _skewY=0;
+        let _element;
+        let _copyBoxElement;
+        let _mapCanvas;
+        let _canvasSvg;
+        let _fileUploadPath;
+        let _messageConfig;
+        let _ignoreShowFlag = true;
         var _self = this;
 
         /**
@@ -690,15 +693,15 @@ var CustomMapMediator = (
          */
         this.targetRender = function(data){
             if(_marker[_MARKER_TYPE[4]][data['targetId']]==null){
-                var targetElement = $("<div/>",{targetId:data['targetId'],deviceCode:data['deviceCode'],linkUrl:data['linkUrl'],class:_targetClass[data['deviceCode']]});
+                var targetElement = $("<div/>",{targetId:data['targetId'],class:_targetClass[data['deviceCode']]});
                 targetElement.on("click",function(){
                     if(_options['custom']['click']!=null && typeof _options['custom']['click'] == "function"){
-                        _options['custom']['click']($(this).attr("targetId"),$(this).attr("deviceCode"));
+                        _options['custom']['click'](_marker[_MARKER_TYPE[4]][data['targetId']]['data']);
                     }else{
-                        positionChangeEventHandler($(this).attr("targetId"));
+                        positionChangeEventHandler(data['targetId']);
                     }
 
-                    var linkUrl = $(this).attr("linkUrl");
+                    var linkUrl = data['linkUrl'];
                     if(_options['custom']['openLinkFlag'] && linkUrl!=null && linkUrl!=''){
                         openLink(linkUrl);
                     }
@@ -720,7 +723,7 @@ var CustomMapMediator = (
                             ui.size.height = newHeight;
                         }
                         ,stop: function(){
-                            positionChangeEventHandler($(this).attr("targetId"),'update');
+                            positionChangeEventHandler(data['targetId'],'update');
                         }
                     });
                 }
@@ -740,7 +743,7 @@ var CustomMapMediator = (
                             ui.position.left = (evt.pageX - canvasOffset.left) / _scale - pointerX;
                         }
                         ,stop: function(){
-                            positionChangeEventHandler($(this).attr("targetId"),'update');
+                            positionChangeEventHandler(data['targetId'],'update');
                         }
                     });
                 }
@@ -760,11 +763,13 @@ var CustomMapMediator = (
                         'targetId' : data['targetId']
                         ,'mainFlag' : data['mainFlag']
                         ,'deviceCode' : data['deviceCode']
+                        ,'targetName' : data["targetName"]
                         ,'x1' : data['useYn']?data['x1']:(_canvasSize['width']/2)-(targetElement.width()/2)
                         ,'x2' : data['useYn']?data['x2']:(_canvasSize['width']/2)-(targetElement.width()/2)
                         ,'y1' : data['useYn']?data['y1']:(_canvasSize['height']/2)-(targetElement.height()/2)
                         ,'y2' : data['useYn']?data['y2']:(_canvasSize['height']/2)-(targetElement.height()/2)
                         ,'useYn' : data['useYn']?data['useYn']:"N"
+                        ,'childDeviceList' : data['childDeviceList']
                     }
                     ,'element' : targetElement
                     ,'notification' : $.extend(true,{},criticalList)
@@ -803,7 +808,7 @@ var CustomMapMediator = (
                 return false;
             }
             if(data['deviceId']==null || _marker[_MARKER_TYPE[4]][data['deviceId']]==null){
-                console.error("[CustomMapMediator][addMarker] target M8 device is null - deviceId : " + data['deviceId']);
+                console.debug("[CustomMapMediator][addMarker] target M8 device is null - deviceId : " + data['deviceId']);
                 return false;
             }
             if(_marker[messageType]==null){
@@ -924,6 +929,7 @@ var CustomMapMediator = (
                         }
 
                         setTimeout(function(){
+                            _marker[messageType][data['deviceId']][data['id']]['element'].show();
                             var elRect = _marker[messageType][data['deviceId']][data['id']]['element'][0].getBoundingClientRect();
                             var svgRect = _mapCanvas.find("svg")[0].getBoundingClientRect();
                             var transX = ((elRect.left - svgRect.left) + (elRect.right - svgRect.left))/2/_scale;
@@ -946,7 +952,7 @@ var CustomMapMediator = (
                                     ,{"fill":'none',"stroke": "#f6b900",'stroke-dasharray': '5,5','transform':transf}
                                 );
                                 var svgCircle = _canvasSvg.circle(
-                                    this.Left, this.Top, 5
+                                    this.Left, this.Top, 3
                                     ,{"fill":'#f6b900',"cursor": "alias",'transform':transf}
                                 );
                                 var A = Math.atan2(elRect.height / 2, elRect.width / 2);
@@ -988,6 +994,12 @@ var CustomMapMediator = (
                                 const svgText = _canvasSvg.text(transX, transY, fenceName, _options[_MARKER_TYPE[1]]['text']);
                                 _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);
                                 $(svgText).prependTo(_mapCanvas.find("svg"));
+                            }
+
+                            if(data['fenceType']==_FENCE_TYPE[1] && !_ignoreShowFlag){
+                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['element'].hide();
+                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['circleElement'].hide();
+                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['polylineElement'].hide();
                             }
                         },10);
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
@@ -1348,7 +1360,11 @@ var CustomMapMediator = (
                 return false;
             }
 
-            if(_options[_MARKER_TYPE[4]]['animateFlag']){
+            if(_options[_MARKER_TYPE[4]]['childAnimateFlag']){
+                data['childDeviceId'] = data['deviceId'];
+            }
+
+            if(_options[_MARKER_TYPE[4]]['animateFlag'] || _options[_MARKER_TYPE[4]]['childAnimateFlag']){
                 var customMarker = _self.getMarker(_MARKER_TYPE[4], data);
                 if(customMarker!=null){
                     var customKey = data['notificationId'];
@@ -1376,7 +1392,7 @@ var CustomMapMediator = (
                         }
                     }
                 }else{
-                    console.warn("[CustomMapMediator][setAnimate] not found custom marker");
+                    console.debug("[CustomMapMediator][setAnimate] not found custom marker");
                 }
             }
 
@@ -1431,7 +1447,7 @@ var CustomMapMediator = (
                         }
                     }
                 }else{
-                    console.warn("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
+                    console.debug("[CustomMapMediator][setAnimate] not found fence marker or child object - fenceId : " + data['fenceId'] + ", objectId : " + data['objectId']);
                 }
             }
 
@@ -1464,7 +1480,7 @@ var CustomMapMediator = (
                         objectMarker['element'].attr("marker-end","url(#"+customObjectType+")");
                     }
                 }else{
-                    console.warn("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
+                    console.debug("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);
                 }
             }
         };
@@ -1497,6 +1513,16 @@ var CustomMapMediator = (
                     }else if(data['deviceId']!=null){
                         if(_marker[messageType][data['deviceId']]!=null){
                             return _marker[messageType][data['deviceId']];
+                        }else if(data['childDeviceId']!=null){
+                            for(var index in _marker[messageType]){
+                                if(_marker[messageType][index]['data']['childDeviceList']!=null){
+                                    for(var i in _marker[messageType][index]['data']['childDeviceList']){
+                                        if(_marker[messageType][index]['data']['childDeviceList'][i]['deviceId']==data['childDeviceId']){
+                                            return _marker[messageType][index];
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
@@ -1513,6 +1539,31 @@ var CustomMapMediator = (
          */
         var _ajaxCall = function(actionType, data){
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
+        };
+
+        this.setIgnoreShowFlag = function(flag){
+            if(flag!=null){
+                _ignoreShowFlag = flag;
+            }
+
+            let markerList = _marker[_MARKER_TYPE[1]];
+            for(let deviceId in markerList){
+                let fenceList = markerList[deviceId];
+                for(let fenceId in fenceList){
+                    var fence = fenceList[fenceId];
+                    if(fence['data']['fenceType']==_FENCE_TYPE[1]){
+                        if(_ignoreShowFlag){
+                            fence['element'].show();
+                            fence['circleElement'].show();
+                            fence['polylineElement'].show();
+                        }else{
+                            fence['element'].hide();
+                            fence['circleElement'].hide();
+                            fence['polylineElement'].hide();
+                        }
+                    }
+                }
+            }
         };
 
         this.setImageConfig = function(settingType, type, deg){

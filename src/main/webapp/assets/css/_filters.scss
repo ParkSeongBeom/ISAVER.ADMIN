@@ -10,7 +10,7 @@
 @mixin font-size48 {font-size:3rem;}              //ex)  @include font-size48;
 @mixin font-size64 {font-size:4rem;}              //ex)  @include font-size64;
 
-@mixin font-size-h2 {font-size:1.8rem;}            //ex)  32px   @include font-size-h2;
+@mixin font-size-h2 {font-size:1.7rem;}            //ex)  32px   @include font-size-h2;
 @mixin font-size-h3 {font-size:1.5rem;}           //ex)  24px   @include font-size-h3;
 @mixin event_icon_b {font-size:6.6rem;}           //ex)  112px  @include event_icon_b;
 
@@ -45,7 +45,7 @@ $ks_ssize:($ks_bsize / 4.5);
 $color-bas:#535353; //rgba(83,83,83,1)     데시보드 기본 bg
 $color-adm:#f5f5f5; //rgba(252,252,252,1)  어드민 기본   bg
 $color-not:#393939; //rgba(15,14,19,1)   #0f0e13   알림센터 기본 bg
-$color-popup:#3c3c3c; // 팝업 기본컬러
+$color-popup:#4c4c4c; // 팝업 기본컬러
 $color-btn:#2c2c2c; //버튼 기본컬러
 $color-d-text:#f5f5f5;  // 데시보드 기본 텍스트 컬러
 $color-a-text:#3c3c3c; // 어드민 기본 텍스트 컬러
@@ -130,8 +130,8 @@ $noticecenter-onwidth:calc(100% - 340px); // 알림센터 <aside>
 $body-minwidth:1024px;
 $body-minwidth2:1450px;
 $dash-margin:15px;
-$popup-margin:20px;
-$admin-margin : 150px;
+$popup-margin:10px;
+$admin-margin:30px;
 $video-width:400px;
 $issueWidth:80px;
 
@@ -150,12 +150,11 @@ $headerHeight:40px; // wrap > header의 height
 $areaHeaderHeight:60px;
 $padpay:80px; //admin 공통 padding 값
 $td-height:55px;
-$tree-area-width:400px;
+$tree-area-width:20%;
 
 $loding-size:220px;
 $thwidth:180px;
 $tdwidth:calc(50% - 180px);
-$tree-table-width:350px;
 
 $margin:15px; // root article 상하좌우 마진값
 $m_lr:15px; // 감시구역 상하좌우 마진값
@@ -372,6 +371,12 @@ $display-inline-block:inline-block;
 @mixin scale($deg){transform:scale($deg); ms-transform:scale($deg); -ms-transform:scale($deg); -moz-transform:scale($deg); -webkit-transform:scale($deg); -o-transform:scale($deg);}
 // ex) @include scale(1);
 
+@mixin scaleX($deg){transform:scaleX($deg); ms-transform:scaleX($deg); -ms-transform:scaleX($deg); -moz-transform:scaleX($deg); -webkit-transform:scaleX($deg); -o-transform:scaleX($deg);}
+// ex) @include scaleX(1);
+
+// scale Y
+@mixin scaleY($deg){transform:scaleY($deg); ms-transform:scaleY($deg); -ms-transform:scaleY($deg); -moz-transform:scaleY($deg); -webkit-transform:scaleY($deg); -o-transform:scaleY($deg);}
+// ex) @include scaleY(1);
 
 // rotate 회전
 @mixin rotate($deg){transform:rotate($deg); ms-transform:rotate($deg); -ms-transform:rotate($deg); -moz-transform:rotate($deg); -webkit-transform:rotate($deg); -o-transform:rotate($deg);}
@@ -432,6 +437,10 @@ $display-inline-block:inline-block;
 // ex) @include border01(2px 0 0 4px,$컬러지정,1 );
 @mixin borderwidth($px){border-style:solid; border-width:$px;}
 // ex) @include borderwidth(2px 0 0 4px);
+@mixin border02 {
+  $shdow:$color-gray-01;
+  box-shadow: 1px 1px 0 0 $shdow, 1px 1px 0 0 $shdow inset;
+} // @include border02;
 
 //triangle 삼각도형
 @mixin triangle {width:0; height:0; border-style:solid;}
@@ -499,14 +508,16 @@ $display-inline-block:inline-block;
   */
 }  // ex) @include webkit_scroll; 스크롤 기본 설정
 
-@mixin webkit_scroll_dashboard {
-  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09 !important;}
-  ::-webkit-scrollbar-thumb {background-color: $color-bas !important; border-color:$color-gray-09 !important; }
-} // ex) @include webkit_scroll_dashboard;
 @mixin webkit_scroll_admin {
   ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
   ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
 } // ex) @include webkit_scroll_admin
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-btn;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-btn; }
+} // ex) @include webkit_scroll_dashboard;
+
 
 @mixin at-root-dashbg {
   &, & * { @include webkit_scroll_dashboard; }
@@ -525,12 +536,12 @@ $display-inline-block:inline-block;
 
   background-color: $color-bas !important; color:$color-white-02 !important;
   input, textarea, select, div[contenteditable] {
-    color:$color-white-01 !important; background-color: $color-bas !important; border:1px solid #000;
+    color:$color-white-01 !important; background-color: $color-a-text !important;
+    border-style:solid; border-width:1px; border-color:#000;
   }
   select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
 
   .sub_title_area {padding:0 15px; margin:0 ;}
-
 } //ex) @include dashboard-bg;
 // admin 백그라운드 공통
 @mixin admin-bg {
@@ -545,7 +556,7 @@ $display-inline-block:inline-block;
   }
   select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg);}
 
-  .sub_title_area {padding:0; margin:0 0 10px 0;}
+  .sub_title_area {padding:0 $admin-margin; margin:20px 0;}
 } //ex) @include admin-bg;
 
 
@@ -576,7 +587,7 @@ $cslwidth:80px;  $cslwidth01:25px;  $cslwidth02:40px;  $cslwidth03:50px;
   & > input, & > label {@include mmwidth($cslwidth);}
 
   & > label {
-    background-color:$color-white-01;  @include border01(1px,$color-gray-01,1 );
+    background-color:rgba($color-white-01,0.8);  @include border01(1px,$color-gray-01,1 );
     &, &:before {@include border-radius(200px); }
 
     &:after, &:before {position: absolute; }
@@ -592,6 +603,27 @@ $cslwidth:80px;  $cslwidth01:25px;  $cslwidth02:40px;  $cslwidth03:50px;
     }
   }
 } // @include checkbox-style01;
+
+@mixin checkbox-style02 {
+
+  @include checkbox-style01;
+
+  & > input, & > label {@include mmwidth($cslwidth + 20px);}
+
+  & > label {
+
+    & {@include border-radius(0); }
+
+    &:before {left: 10px;}
+    &:after  {left: 40%;  padding:0 0 2px 0;}}
+
+  & > input, &.on {
+    &:checked + label , &.on + label, label {
+      background-color:$color-yellow-02;
+      &:after  {left: 20px;}
+    }
+  }
+} // @include checkbox-style02;
 
 @mixin csl-check {
   @include checkboxbas; height:$cslwidth02;
@@ -622,11 +654,26 @@ $cslwidth:80px;  $cslwidth01:25px;  $cslwidth02:40px;  $cslwidth03:50px;
   & > input, &.on { &:checked + label , &.on + label, label { &:after  {content:"ON"; } } }
 } // @include csl-onoff;
 
+@mixin csl-onoff-02 {
+  @include csl-onoff; height:$cslwidth03;
+
+  & > label {
+    &{@include border-radius(0); }
+  }
+  & > input, &.on { &:checked + label , &.on + label, label {background-color:$color-yellow-02; &:after  {content:"USE"; } } }
+} // @include csl-onoff-02;
+
 @mixin csl-yesno {
   @include checkbox-style01;
   & > label:after { content:"NO";  }
   & > input, &.on { &:checked + label , &.on + label, label { &:after  {content:"YES"; } } }
 } // @include csl-yesno;
+
+@mixin csl-useunused {
+  @include checkbox-style02;
+  & > label:after { content:"사용";text-decoration:line-through; }
+  & > input, &.on { &:checked + label , &.on + label, label { &:after  {content:"사용"; text-decoration:none; } } }
+} // @include csl-useunused;
 
 @mixin csl-showhide {
   @include checkbox-style01;
@@ -654,71 +701,88 @@ $cslwidth:80px;  $cslwidth01:25px;  $cslwidth02:40px;  $cslwidth03:50px;
 
 
 
-
 // button base 정의 Start
 $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px 버튼 */
 
-@mixin length01 {@include mmwidth($btn-type01); @include mmheight($btn-type01); }
-// ex) @include length01; 40_40 아이콘 버튼
-@mixin length02 {width:100%; max-width:160px; @include mmheight($btn-type01);}
+@mixin btn_before {&:before {content:""; position: relative; z-index:-1; font-size:1.5rem !important; font-weight: normal;}} //ex) @include btn_before;
+@mixin btn_after  {&:after  {content:""; position: absolute; z-index:-2; top:0; left:0;}} //ex) @include btn_after;
+
+@mixin btn_base {
+  position: relative; @include flex-midddle;
+  & > * {
+    @include flex-midddle; min-width:80px; height:100%; padding:0 10px 0 0;
+    color:$color-white-01 !important; background-color: transparent !important;
+  }
+  &:after,&:before {content:""; top:0; left:0; @include flex-midddle; }
+  &:before {position: relative;  font-size:1.5rem !important; font-weight: normal; }
+  &:after  {position: absolute; z-index:-1; width:100%; height:100%;}
+} //ex) @include btn_base;
+
+
+@mixin length01 {
+  @include btn_base; min-width:$btn-type01; @include mmheight($btn-type01);
+  &:before {@include mhwidth($btn-type01); }
+
+}  // ex) @include length01; 40_40 아이콘 버튼
+@mixin length02 {
+  @include btn_after;
+  position: relative; width:100%; max-width:160px; @include mmheight($btn-type01);
+  &:after {width:100% ; height:100%;}
+}
 // ex) @include length02; btn 박스형
-@mixin length03 {@include mmwidth($btn-type03); @include mmheight($btn-type03);}
-// ex) @include length03; 50_50  아이콘 버튼
+@mixin length03 {
+  @include btn_base; min-width:$btn-type03; @include mmheight($btn-type03);
+  &:before {@include mhwidth($btn-type03); }
+
+}  // ex) @include length03; 50_50  아이콘 버튼
 
 
-@mixin btn_before {
-  content:""; @include flex-midddle; position: absolute; z-index:-1; top:0; left:0; width:100%; height:100%;
-  font-size:1.5rem !important; font-weight: normal;
-} //ex) @include btn_before;
 @mixin ibtn_fontsize {font-size:1rem; } //ex) @include ibtn_fontsize;
-
 @mixin btn_fontsize  {font-size:0.9rem; font-weight: bold;}  //ex) @include btn_fontsize;
-
-@mixin abtn_fontsize  { &, &:before {font-size:0.9rem;} }  //ex) @include abtn_fontsize;
+@mixin abtn_fontsize { &, &:before {font-size:0.9rem;} }  //ex) @include abtn_fontsize;
 
 
 @mixin action_boxbtn {
   z-index: 1;
   &, &:before, &:after {color:$color-d-text; @include transition(200ms);}
-  &:before {@include btn_before; background-color: $color-btn;}
-  &:hover:before  {background-color: $color-ho;}
-  &:active:before {background-color: $color-ac;}
-  &.on:before     {background-color: $color-on;}
+  &:after {@include btn_before; background-color: $color-btn;}
+  &:hover:after  {background-color: $color-ho !important; opacity: 1 !important;}
+  &:active:after {background-color: $color-ac !important; opacity: 1 !important;}
+  &.on:after     {background-color: $color-on !important; opacity: 1 !important;}
 } // ex) @include action_boxbtn; 박스버튼 액션
 
 @mixin action_linebtn {
   z-index: 1;
   &, &:before, &:after {@include transition(200ms); color:$color-d-text;}
-  &:before {@include btn_before; background-color: transparent !important; @include border01(1px,$color-d-text,.8 );}
-
+  &:after {@include btn_before; background-color: transparent !important; @include border01(1px,$color-d-text,.8 );}
 
   &:hover,&:active,&.on {&:before {border-width:2px;} }
-  &:hover  { &:before {border-color: $color-ho;} &,&:before {color:$color-ho;} }
-  &:active { &:before {border-color: $color-ac;} &,&:before {color:$color-ac;} }
-  &.on     { &:before {border-color: $color-on;} &,&:before {color:$color-on;} }
+  &:hover  { &:after {border-color: $color-ho;} &,&:before {color:$color-white-01;} }
+  &:active { &:after {border-color: $color-ac;} &,&:before {color:$color-white-01;} }
+  &.on     { &:after {border-color: $color-on;} &,&:before {color:$color-white-01;} }
 } // ex) @include action_linebtn; 라이버튼 액션
 
 @mixin action_textbtn {
   z-index: 1;
   &, &:before, &:after {@include transition(200ms);}
-  &:hover  {&,&:before {color: $color-ho;}}
-  &:active {&,&:before {color: $color-ac;}}
-  &.on     {&,&:before {color: $color-on;}}
+  &:hover  {&,&:after {color: $color-ho;}}
+  &:active {&,&:after {color: $color-ac;}}
+  &.on     {&,&:after {color: $color-on;}}
 } // ex) @include action_textbtn; 테스트버튼 액션
 
 @mixin action_menubtn {
   @include action_boxbtn;
-  &:before {background-color: transparent;}
-  &:hover,&:active,&.on {&, &:before {opacity: 1;} }
+  &:after {background-color: transparent;}
+  &:hover,&:active,&.on {&, &:after {opacity: 1;} }
 } // ex) @include action_menubtn; 메뉴, 네비 버튼 액션
 
 @mixin action_criti {
   z-index: 1;
   &, &:before, &:after {color: $color-d-text; @include transition(200ms);}
   &:after, &:before {@include btn_before; background-color: transparent;}
-  &:hover:before  {background-color: rgba(0,0,0,0.4) !important;}
-  &:active:before {background-color: $color-ac; opacity:1;}
-  &.on:before     {background-color: rgba(0,0,0,0.7) !important;}
+  &:hover:after  {background-color: rgba(0,0,0,0.4) !important;}
+  &:active:after {background-color: $color-ac !important; opacity:1 !important;}
+  &.on:after     {background-color: rgba(0,0,0,0.7) !important;}
 } // ex) @include action_criti; 투명버튼 액션
 
 @mixin dim_btn {
@@ -726,12 +790,12 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
   &[disabled], &:disabled, &.dim { opacity: 0.5 !important; pointer-events: none;}
 } // ex) @include dim_btn; 버튼 DIM 처리
 
-@mixin btn-line  {@include action_linebtn; @include abtn_fontsize; @include length02;}
-// ex) @include btn-line;
+
 
 @mixin btn-box  {@include action_boxbtn; @include abtn_fontsize; @include length02;}
 // ex) @include btn-box; 어드민 일반 버튼
-
+@mixin btn-line  {@include action_linebtn; @include abtn_fontsize; @include length02;}
+// ex) @include btn-line;
 @mixin btn-iconbase {@include action_boxbtn; @include ibtn_fontsize;   }
 // ex) @include btn-iconbase; 박스 사각
 
@@ -740,7 +804,7 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 
 @mixin btn-iconbase-t {@include action_criti; @include ibtn_fontsize; }
 // ex) @include btn-iconbase-t; 박스 사각 투명
-@mixin btn-icontype-c {&, &:before {@include border-radius(500px); }  }
+@mixin btn-icontype-c {&, &:after {@include border-radius(500px); }  }
 // ex) @include btn-icontype-c; 박스 원 투명
 
 // 아이콘 백그라운드 버튼
@@ -773,17 +837,6 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 @mixin btn-itype03c-t {@include btn-itype03b-t; @include btn-icontype-c;}
 // ex) @include btn-itype03c-t;  원형 50_50 아이콘 버튼
 
-// 메뉴버튼 전용
-@mixin menu_fontsize {font-size:1rem; &:before, &:after {font-size:1.5rem;} } //ex) @include menu_fontsize;
-@mixin menu-length01 {width:$menu-width; min-width:$menu-width;  height:$menu-width; min-height:$menu-width;} // ex) @include menu-length01;
-@mixin menu-length { &,&:before {@include menu-length01;} &:before {@include flex-midddle;} } // 메뉴 버튼 버튼 사이즈
-@mixin menu_btn {
-  overflow: hidden; text-align: left; margin:0; line-height: 1rem; white-space:nowrap; word-wrap:normal;
-  @include menu-length; @include menu_fontsize; @include action_menubtn; @include flex-justify-content-start;
-}  // ex) @include menu_btn; 메뉴버튼만 사용
-
-
-// button base 정의 End
 
 //화면을 덥는 팝업 백그라운드 정의, 데시보드 백그라운드와 동일
 @mixin popup-common {
@@ -798,14 +851,19 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 @mixin tpopupbase {
   @include popup-common;
 
-  position: absolute; z-index:101; width:$noticecenter-width; bottom:0; top:auto; left:-($noticecenter-width * 2);
-  @include border01(1px 1px 0 0,$color-bline,1 );
+  position: absolute; z-index:101; width:$noticecenter-width; bottom:-100%; top:auto; left:40px;
+  @include border01(1px 1px 0 0,$color-bline,1 );  padding: 0 0 $popup-margin 0;
 
-  &.on {left:40px;}
-  & > * {position: relative;  width:100%; padding:0 $popup-margin; margin: 0 0 $popup-margin 0}
-  button {@include btn-line;}
-  h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin;}
+  &.on {bottom:0;}
+
+  & > * {position: relative;  width:100%; padding:0 $popup-margin;}
+
+  button {}
+
+  h2 { @include mmheight($headerHeight + 20px);  }
+
   & > div {@include mmheight($headerHeight);}
+
   & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
 } // @include tpopupbase;
 
@@ -831,16 +889,16 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 
 @mixin resize {
   .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
-    display: none !important; position: absolute; width:$resi_w; height:$resi_w;
+    display: none; position: absolute; @include mhwidth($resi_w);
 
     &:before {
       content:"";
       @include flex-midddle; width:100%; height:100%; @include border-radius(500px);
       background-image: url(../images/map/arrow.svg); background-size:contain; background-repeat: no-repeat;
       background-position: 50% 50%; background-color: $color-blue-01;
-      /*content:"\e935"; color:#000; font-weight: bold;  font-size:0.5rem; background-color: $color-white-01;*/
     }
-    &:hover:before { /*background-color: $color-blue-01;*/ background-color: $color-red-01; color:$color-white-01;}
+    &:hover:before {background-color: $color-red-01; color:$color-white-01;}
+    &:after {display:none !important;}
   }
   .ui-resizable-e:before  {@include rotate(180deg);  }
   .ui-resizable-s:before  {@include rotate(-90deg);  }
@@ -1112,13 +1170,34 @@ $t-time:1.3s;
     100% {@include rotate(360deg);}
   }
 } // ex) @include lidar;
+
+@mixin lidar-before($color) {
+  @include border01(1px,$color,1 );
+  background:-webkit-linear-gradient(top, rgba($color,0) 0%,rgba($color,.3) 50%,rgba($color,.2) 50.1%,rgba($color,0) 100%), url("../images/map/lidar_b.svg") no-repeat center, url("../images/map/lidar_ring_w.svg") no-repeat center;
+  background-size: auto,100%,auto;
+} // @include lidar-before($color);
+@mixin lidar-after($color) {
+  @include border01(20px,$color,1 );  background-color: rgba($color,.3);
+  animation-name: lidar-after;
+  -webkit-animation-name: lidar-after;
+
+  @include infinite; @include duration(2s);
+
+  @-webkit-keyframes lidar-after {
+    0%   {@include scale(0);}
+    100% {@include scale(1); opacity: 0;}
+
+  }
+  @-webkit-keyframes lidar-after {
+    0%   {@include scale(0);}
+    100% {@include scale(1); opacity: 0;}
+  }
+} // @include lidar-after($color);
 @mixin lidar-bg($color) {
-  content:"";
-  @include lidar; overflow: hidden; opacity: .6; //@include border01(0px,$color,.8 );
-  //background-size: 100%; background-repeat: no-repeat; background-position: 50% 50%;
-  //background-color: rgba($color,.1) !important; background-image: url("../images/map/lidar.svg");
-  background:url("../images/map/lidar.svg") no-repeat center, -webkit-linear-gradient(top, rgba($color,0) 0%,rgba($color,.3) 50%,rgba($color,.2) 50.1%,rgba($color,0) 100%) !important;
-} // @include ridar-bg($color-lidar);
+  &:before, &:after {content:""; overflow: hidden; opacity: .6; @include lidar; @include border-radius(10000px);}
+  &:before {@include lidar-before($color);}
+  &:after  {@include lidar-after($color);}
+} // @include lidar-bg($color);
 
 // 로딩바 애니메이션
 @mixin loding {
@@ -1138,6 +1217,24 @@ $t-time:1.3s;
     100% {@include rotate(360deg); }
   }
 } // ex) @include loding;
+
+@mixin xloding {
+  animation-name: xloding;
+  -webkit-animation-name: xloding;
+  /*  animation-delay:         2s;
+    -webkit-animation-delay: 2s;*/
+  @include duration(1s);
+  @include infinite;
+
+  @-webkit-keyframes xloding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(-360deg); }
+  }
+  @keyframes xloding {
+    0%   {@include rotate(0);}
+    100% {@include rotate(-360deg); }
+  }
+} // ex) @include xloding;
 
 @mixin loding02 {
   animation-name: loding02;
@@ -1209,7 +1306,7 @@ $mt_btn_w:40px;
 
 // tree 공통부분
 @mixin treebase {
-  width:100%; height:100%; max-height:600px; margin:50px 0;
+  width:100%; height:100%;  margin:50px 0;
   ul, li {position: relative; @include transition(400ms);}
 
   ul:before, ul:after, li:after, li:before, .dynatree-expander:before
@@ -1246,7 +1343,7 @@ $mt_btn_w:40px;
   z-index: 2;  top:9px; left:-($mt_btn_w - 1px);
   @include border-radius(200px);
   @include box-shadow01(0px, 7px, 6px, -6px, #000, 0.4);
-
+  @include border01(1px,$color-gray-01,1 );
 } // @include plus_icon;
 
 
@@ -1261,14 +1358,6 @@ $mt_btn_w:40px;
   }
 } // @include listbase;
 
-
-// h2 타이틀 아이콘 공통 부분
-@mixin title_icon {
-  padding:0 0 0 15px; font-weight:bold;
-  &:before {
-    content:""; position: absolute; left:0; top:9px; bottom:6px; width:5px; background-color: $color-blue-01;
-  }
-}
 
 // SVG애니메이션
 $main-width: 70px;
@@ -1305,10 +1394,11 @@ $main-width: 70px;
     opacity: 0.5;
     width: $main-width;
     height: $main-width;
-    border-width: 1;
+    border-width: 1px;
   }
 }
 
+/*
 
 // 1.8 대시보드
 ::-webkit-scrollbar {width:12px; height:12px;}
@@ -1353,6 +1443,7 @@ $main-width: 70px;
   select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
   @include webkit_scroll_dashboard;
 } //ex) @include admin-bg;  백그라운드 공통
+*/
 
 
 
@@ -1806,7 +1897,6 @@ $plus_icon_wh:30px; $mt_btn_h:50px; $mt_btn_w:40px; $bar_w:20px; $bar_h:16px;
       }
     }
   }
-
 } // @include treebase2;
 
 // 트리 + - 아이콘
@@ -1824,6 +1914,48 @@ $plus_icon_wh:30px; $mt_btn_h:50px; $mt_btn_w:40px; $bar_w:20px; $bar_h:16px;
 } // @include plus-icon-square; 데시보드 구역 트리 사용
 
 
+////// ----------------- 타이틀 하단 디자인 요소
+@mixin htitled {
+  position: relative; width:100%; font-weight: bold;
+  &:before {
+    content:""; position: absolute; bottom:0; left:$admin-margin; width:30px; height:3px;
+    background-color: rgba($color-orange-01,1); @include border-radius(500px);
+  }
+} //@include htitled;
+
+
+//////---------------- flex layout 요소
+////// 플랙스 레이아웃 Start - 이벤트 통계 UI 적용
+@mixin flex-display {@include flexbase; position: relative; width:100%; height:100%; }
+// @include flex-display;
+
+@mixin flex-align-display {
+  @include flexbase; @include flex-align-items-start; @include flex-justify-content-start;
+  overflow: hidden; position: relative;
+}  // @include flex-align-display;
+
+@mixin flex-column-display {@include flex-align-display; @include flex-column;}
+// @include flex-column-display;
+
+@mixin flex-display-row {
+  @include flexbase; @include flex-row-wrap; @include flex-align-content-start; position: relative; width:100%;
+} // @include flex-display-row;
+
+@mixin flex-padding {padding-right:$admin-margin; padding-left:$admin-margin;} // @include flex-padding;
+@mixin h-display {@include flexbase; @include flex-align-items-center; @include flex-width-one(1); } // @include h-display;
+
+// h2, h3 타이틀 아이콘 공통 부분
+@mixin title_icon {
+  @include flexbase; @include flex-align-items-center;
+  @include font-size-h2; font-weight:bold;
+  &:before {
+    content:""; display:inline-block; position: relative;
+    top:0; width:6px; height:65%; margin: 0 10px 0 0; background-color: $color-blue-01;
+  }
+} // @include title_icon;
+@mixin h4 {@include h-display; @include mmheight(40px); text-decoration: underline; font-weight:bold; font-size:1.6rem;} // @include h4;
+@mixin h5 {@include h-display; @include mmheight(50px); min-width: 100%; padding:0 $admin-margin; @include htitled; font-size:1.4rem;}
+// @include h5;
 
 
 

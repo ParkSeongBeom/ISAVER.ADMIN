@@ -39,14 +39,6 @@ public interface CodeDao {
     public List<CodeBean> findListCodeDevice();
 
     /**
-     * 코드 상세정보를 가져온다.
-     *
-     * @author kst
-     * @return
-     */
-    public CodeBean findByCode(Map<String, String> parameters);
-
-    /**
      * 코드를 등록한다.
      *
      * @author kst

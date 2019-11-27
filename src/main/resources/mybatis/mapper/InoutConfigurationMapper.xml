@@ -17,6 +17,37 @@
     </select>
 
     <!--
+        구역별 진출입 환경설정 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListInoutConfigurationForArea" parameterType="map" resultType="InoutConfigurationBean">
+        SELECT  a.area_id as areaId
+            ,CASE
+                WHEN inout.startDatetime is null THEN (to_char(now(),'yyyy-mm-dd 00:00:00'))::timestamp
+                ELSE inout.startDatetime
+            END as startDatetime
+            ,CASE
+                WHEN inout.endDatetime is null THEN (to_char(now(),'yyyy-mm-dd 23:59:59'))::timestamp
+                ELSE inout.endDatetime
+            END as endDatetime
+        FROM    isaver.area a
+        LEFT OUTER JOIN(
+            SELECT	area_id
+                    ,(to_char(now(),'yyyy-mm-dd') || ' ' || inout_starttime)::timestamp as startDatetime
+                    ,(to_char(now(),'yyyy-mm-dd') || ' ' || inout_endtime)::timestamp as endDatetime
+            FROM	isaver.inout_configuration
+            WHERE   user_id = #{userId}
+            AND		to_char(now(),'hh24:mi:ss') between inout_starttime and inout_endtime
+        ) inout
+        ON      a.area_id = inout.area_id
+        WHERE	a.area_id in
+        <foreach collection="areaIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <!--
         진출입환경설정을 등록한다.
         @author psb
     -->

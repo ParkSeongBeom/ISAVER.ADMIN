@@ -1,0 +1,831 @@
+@charset "utf-8";
+@import "filters";
+
+/////..... 팝업 공통 효과 START
+.bodyohidden {overflow: hidden !important;;}
+
+.popupbase {
+
+  /*
+   <div class="popupbase">
+       <div>
+           <div>
+               <header>
+                   <h2><span>(구역명 삽입)</span> 진출입 조회주기 설정</h2>
+                   <button class="close_btn"></button>
+               </header>
+
+               <article>
+                   <!-- 진출입 모두 보기 셋션 -->
+                   <section></section>
+                   <!-- 진출입 설정 셋션 -->
+                   <section></section>
+               </article>
+
+               <footer>
+                   <button class="btn">저장</button>
+               </footer>
+
+           </div>
+       </div>
+       <div class="bg"></div>
+   </div>
+   */
+
+  display: none; position: absolute; @include z-index-popup; background-color: transparent !important;
+  top:0; right:0; bottom:0; left:0; width:auto !important; @include transition(200ms);
+
+  &.on {display: block;}
+
+  & > div {
+    @include flex-midddle; position: relative; width:100%; height:100%;
+
+    & > div {
+      @include popup-common; @include flex-justify-content-start;
+
+      overflow: hidden; z-index: 10; padding:$popup-margin;  @include border01(1px,$color-bline,1 );
+      position: relative; height:100%; max-width:60%; min-width:30%; max-height:60%; min-height:50%;
+
+      & > * { position: relative; width:100%; margin: 10px 0 0 0;}
+
+      & > header {
+        overflow: unset; @include mmheight(50px); min-width:0; background-color: transparent; padding:0; margin:0 0 10px 0;
+        h2 {@include title_icon; @include mmheight($headerHeight);}
+        h2 , h3  {  margin:0 auto 0 0;   }
+
+        button {
+          @include btn-itype03b; @include translate3d(0, -$popup-margin, 0);
+          &:before {content:"\e91a";}
+
+          &.save_btn  {
+            &:before {content:"\e98e"; /* @include mmwidth( $btn-type03 * 2);*/ }
+            &:after {background-color: $color-yellow-02;}
+          }
+          &.close_btn { &:before {content:"\e91a";} }
+        } // 팝업의 닫기 버튼
+
+        &:before {display: none !important;}
+      }
+
+      & > article {
+        overflow: auto; max-height: 600px; height:100%; margin:0 !important;
+        @include flexbase; @include flex-column;
+
+        &.map_sett_box, &.onvif_sett_box {@include flex-column-row;} // MAP 설정 팝업
+      }
+
+      & > footer {
+        max-height:40px; height:40px;
+        display: inline-block; text-align: right;
+        button {right:0; @include btn-line;}
+      }
+    }
+  }
+
+  & > .bg {
+    display: inline-block !important; position:absolute !important;
+    left:0; top:0; width:100% !important; height:100% !important;
+    background-color: rgba($color-dark-01,0.8);
+  }
+
+  &.map_pop , &.onvif_pop {
+    //&.on {right:($noticecenter-width + $dash-margin + 10px);}
+    & > div > div {
+      position: absolute;  max-width:none; max-height:none; top:0; bottom:0; left:0; right:0;
+      & > article { max-height: none; height:100%; @include flex-column-row;}
+      & > footer {}
+    }
+
+    .trackinghistory-box {
+      @include flexbase; @include flex-option(0, 1, 100%);
+      & > * {height:100%;}
+      .map_sett_box {@include flex-option(0, 1, 100%);}
+      .video_area   {
+        @include flex-option(1, 0, 500px); @include flex-column; max-height:none;
+        margin:0 0 0 10px; padding:0;
+        & > *:last-of-type {margin : 10px 0 0 0;}
+      }
+    }
+  }
+
+  &.critical_pop {& > div > div {width:570px; max-width:570px; min-width: 570px;} }
+
+  &.iocount_popup, &.ir_popup {
+    position: absolute !important; top:0;z-index:99;
+  }
+  /////.......... 진출입 조회주기설정 팝업 시작
+  &.iocount_popup {
+    .table_title_area {margin:0 0 20px 0 !important; padding: 0 !important;}
+    .table_btn_set button {@include btn-line; max-width:none;}
+    & > div > div {
+      max-height:70%; height:100%;
+      & > article {
+        @include flex-column-row;
+        & > * {
+          position: relative;
+          &:first-of-type  { @include mmwidth(350px); margin:0 90px 0 0; & > .tree_table {width:100% !important;} }
+          &:nth-of-type(2) { @include mmwidth(500px); }
+        }
+
+        section > h3 {margin:0 0 20px 0;}
+
+        .iotime_set {
+          .timepicker > input {width:100%; margin:0;}
+          li {
+            @include flex-justify-content-end;
+            &:last-of-type {padding:0;}
+          }
+        }
+      }
+    }
+  }
+  /////.......... 진출입 조회주기설정 팝업 끝
+
+  &.ir_popup {
+    & > div > div {max-width:250%; min-width:25%; max-height:30%; min-height:30%;}
+    article { @include flex-midddle; margin:0;}
+    input {width:300px;}
+  }
+  /////.......... 구역 / 장치 관리 설정 옵션 팝업 시작
+
+  &.network_popup {
+    position: fixed; top:0; z-index:501;
+    & > div > div {max-width:700px; min-width:400px; max-height:600px;  width:auto; height:auto;}
+  }
+}
+
+
+/////..... 팝업 공통 효과 END
+
+// 사용자 보기 팝업, 라이센스정보팝업, 자원모니터링팝업
+.common-popup-layer{}
+.tpopupbase, .tpopup-personal, .tpopup-info, .tpopup-resource {
+  @include tpopupbase;
+  & input,& select{background-color: $color-gray-09;}
+}
+
+.tpopup {
+
+  /////..... 사용자 보기 팝업
+  &-personal {
+    .form_area {
+      span, input {width:100%;}
+      span  {margin: 0 0 5px 0;}
+      input {margin: 0 0 20px 0;}
+    }
+
+    button {@include btn-line;}
+  }
+  /////..... 라이센스 정보 보기 팝업
+  &-info {
+
+    .d-day, & > section > div {
+      @include flexbase; @include flex-align-items-center; @include flex-justify-content-between; height:40px;
+    }
+
+    .d-day {
+      margin-bottom:50px; background-color: rgba(#000,.1);
+      &:before, &:after {position: absolute; bottom:-40px; font-size: 0.8rem; opacity: 0.8;}
+      &:before {content:"Type";     left:$popup-margin;}
+      &:after  {content:"Quantity"; right:$popup-margin;}
+    }
+
+    & > section {
+      &:before {@include bbl(1,0,$popup-margin,auto,$popup-margin,auto,1px,rgba($color-bline, .6));}
+      & > div {}
+    }
+  }
+
+
+  /////..... 자원모니터링팝업
+  &-resource {
+    width:800px; height:400px;
+
+    & > h2 {}
+
+    & > div {
+      &, & > * {@include flexbase}
+      @include flex-justify-content-between;
+      & > * {@include flex-option(0, 1, 100%);}
+      .left  {
+        & > * {margin:0 3px 0 0;}
+      }
+      .right {
+        @include flex-justify-content-end;
+        & > * {margin:0 0 0 3px;}
+        button {@include btn-itype01b; &:before {display: none;} @include mmwidth(40px);}
+      }
+    }
+
+    & > section {
+      &, & > * {overflow: hidden;}
+      & > * {position: absolute; top:5px; left:0; width:100%; height:100%; background-color: rgba(#000,.1);}
+    }
+
+    /*
+    &.type01{
+      & > section{overflow: visible;}
+      & > section > .resource_view{order:1;margin:0;z-index: 1;
+        & > h3{display: none;}
+      }
+      & > section > .resource_list{@include mmwidth(570px); position: absolute;
+        right:20px; top:-102px; order:1; font-size: 0.8rem;
+        & > div{@include flexbase;
+          select{@include mmheight(35px);margin-left: 7px; font-size:0.8 rem;}
+        }
+        & > .device_set{display:none;}
+      }
+    }
+
+
+    &.type02{
+      & > section > .resource_list {
+        order:1;
+        & > div > select:nth-of-type(2),& > div > select:nth-of-type(3) {display:none;}
+      }
+    }
+*/
+  }
+}
+/////..... 토스트 팝업 시작
+.toast_popup {
+  display: none;
+  position: fixed; @include z-index-toast; top:($headerHeight - 10px); right:135px;
+  width:($noticecenter-width - 80px);
+
+  &.on {display: block;}
+
+  & > div {
+    position: relative; width:100%; padding:$popup-margin; margin:10px 0 0 0;
+    @include box-shadow02(0px, 30px, 50px, -20px, 0, 0, 0, 1);
+    & * {color:$color-white-01; @include text-shadow(0, 1px, 2px, #000, 0.7);}
+    .btn_x {
+      position: absolute; top:10px; right:10px;
+      &:before {content:"\e91a"; font-size:20px;}
+    }
+    .tp_contents {
+      text-align: left; width:calc(100% - 10px);
+      span {
+        width:100%;
+        &:first-of-type {font-size:1.1rem; padding:0 0 5px 0;}
+        &:last-of-type  {font-size:1.3rem; font-weight:bold;}
+      }
+    }
+
+    &.level {
+      &-caution { background-color: rgba($color-caution,1) !important;  }    // &-caution 주의
+      &-warning { background-color: rgba($color-warning,1) !important;}    // &-warning 경고
+      &-danger  { background-color: rgba($color-danger,1) !important;   }    // &-danger  위험
+    }
+  }
+}
+/////..... 토스트 팝업 끝
+
+/////......  구역 / 장치 관리 MAP 설정 시작
+.map_sett_box {
+  $sec_h:450px; $sec_m:800px; $sec_l:400px; $sec_c:500px; $ch_width:90px; $ch_margin:20px; $li-height:50px;
+  @include flexbase; @include flex-column-row;
+  & > section {
+    overflow: hidden; position: relative; margin:0 0 0 10px; height:100%;
+    @include flexbase; @include flex-column; @include flex-option(0, 1, 100%); @include border01(1px,$color-bline,1 );
+
+    & > * {width:100%; position: relative;  }
+
+    &:nth-of-type(1) {
+      @include flex-option(0,1,100%); margin:0;
+    }
+
+    &:nth-of-type(2) {
+      & > * {position: relative; width: 100%; }
+    }
+
+    h3 {
+      overflow: auto; margin:($ch_margin - 5px) 0; @include mmheight(($ch_margin * 2 +10px)); font-size:1.6rem !important;
+      @include htitled; &:before {left:($ch_margin / 2) !important;}
+    }
+  }
+
+  .map {
+    & > div {
+      position: relative;
+
+      &:first-of-type {
+        overflow: hidden; height:100%; background-color: $color-bas;
+        &, & * {color:$color-white-02;}
+
+        &.cursor_cros {
+          svg, .g-fence {cursor:crosshair !important;}
+        }
+      }
+
+      &:nth-of-type(2) {
+        @include flexbase; @include flex-align-items-center;
+        @include flex-justify-content-end; @include mmheight(40px);
+        background-color: $color-a-text;
+
+        &:before { @include bbl(2,-1px,0,auto,0,100%,1px,$color-bline);}
+
+        & > * {position: relative; z-index: 1;  border-color: transparent;}
+
+        & > select {min-width:160px;}
+        & > input { @include mmwidth(90px); }
+        span {
+          @include border01(0 1px,$color-bline,1 ); @include flex-midddle;
+          min-width:50px; height:100%; padding: 0 10px !important; background-color: #333;
+        }
+
+      }
+    }
+  }
+
+  .list {
+    @include flex-option(1, 0, $sec_l); max-width:$sec_l; min-width:$sec_l; width:$sec_l;
+
+    & > div {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px; }
+
+    & > div, ul li > div , ul li button, .camera_list ul li, .fence_list > div, .fence_list p, .camera_list > div
+    {@include flexbase; @include flex-align-items-center;}
+
+    h3, h3 + div{padding: 0 ($ch_margin / 2);}
+
+    ul {
+      overflow-y: auto;   @include flex-option(0, 1, 100%); height:100%; padding: 0 0 $ch_margin 0;
+      li {
+        min-height:$li-height; position: relative; margin:0 0 ($ch_margin / 4) 0;
+        & > div {
+          height:$li-height; opacity: 0.6; @include scale(0.96); @include transition(200ms);
+          &:before,&:after { content:""; position: absolute; left:0; width:100%;}
+          //&:before {z-index: 1; bottom:-2px; height:0; background-color: transparent;}
+          &:after {top:0;  height:100%; background-color: rgba(0, 0, 0, 0.2);}
+
+          &.on {
+            opacity: 1; @include scale(1);
+            //&:before { height:2px; background-color: $color-on;}
+            //&:after  { background-color: rgba(0, 0, 0, 0.2);}
+            & > h4 {
+              font-size:1.1rem; font-weight:bold;
+              &:before {font-size:1.8rem !important;}
+            }
+          }
+
+          & > h4 {
+            order:1;
+            @include flexbase; @include flex-align-items-center; @include flex-option(0, 1, 100%);
+            position: relative; height:100%; font-size:1rem; color:$color-white-01;
+            padding:0 ($ch_margin / 2);
+            &:before {font-size:1.6rem !important;}
+            //&.on {opacity: 1;}
+          }
+          & > div, & > button {border-style:solid; border-width:0 0 0 1px; border-color:#000;}
+          & > div {order:4;  @include checkboxbas; @include csl-onoff-02; margin:0 !important; }
+          & > button {
+            @include btn-itype03b; margin:0;
+            //&:nth-of-type(1):after {opacity: 0;}
+
+            &.ico {
+              &-up {
+                order:2;
+                &:before {@include rotate(180deg);}
+                &.on:before {@include rotate(0deg);}
+                &.dim {@include box-blur(1px); background-color: #000 !important;}
+              }
+              &-plus {order:3; &:after {opacity: 0;}}
+            }
+          }
+
+        }
+
+        & > section {
+          display: none; @include flex-option(0, 1, 100%);
+
+          position: relative;  padding: 15px 20px 20px 44px;
+
+          &.on {display: inline-block;}
+          &:before, &:after {content:""; position: absolute; background-color:$color-gray-01}
+          &:before {left:25px; top:33px; width:15px; height:1px;}
+          &:after  {left:25px; top:0;    width:1px;  bottom:0;}
+
+          &:last-of-type {
+            &:after {bottom:auto; top:0; height:33px;}
+          }
+
+          & > div {
+            padding: 0 0 0 40px;
+            select, input {width:100%;}
+          }
+
+          .set-item {
+            height:100%;
+            &:before {display: none;}
+            h4 {color:$color-white-01;}
+          }
+
+          .btn {
+            &-del { &:before {content:"\e91a" !important;} }
+            &-edi { &:before {content:"\e905" !important;} }
+            &-cut { &:before {content:"\e98b" !important;} }
+            &-tarea {&:before{content:"\e92e" !important;} }
+            &-cam {
+              width:100%; padding:0 0 0 20px; @include flex-justify-content-start;
+              &:before {content:"ㆍ"; position: absolute; left:0; width:20px;}
+            }
+            &-add {
+              @include btn-itype01c-l; top:-1px; left:-1px;
+              &:before {content:"\e92b";}
+            }
+          }
+
+          .fence-set {
+            @include flex-column; @include flex-align-items-start;
+            margin: 0 0 10px 0;
+
+            & > * {position: relative;}
+
+            .set-item {
+              padding: 0 10px 10px 10px;
+              & > button {margin: 0;}
+            }
+          }
+
+          @mixin fence-display01 {
+            display:none; @include flex-row-wrap; @include flex-align-content-start;
+            background-color: rgba($color-btn, .5); @include border01(1px,$color-on,1 );
+            &.on{@include flexbase;}
+          } //  @include fence-display01;
+          .tarea, .cut {@include fence-display01;}
+          .title {
+
+            @include flexbase; @include flex-row-wrap; @include flex-align-content-start; @include flex-justify-content-end;
+            height:auto; min-height:$headerHeight;
+
+            &:before {
+              content:"\e904" !important; @include flexbase; @include flex-align-items-center;
+              position: absolute; top:0; left:-($headerHeight); width:$headerHeight; height:$headerHeight; font-size:1.6rem;
+            }
+
+            & > p {@include mmwidth(100%); word-break: break-all; letter-spacing: 0.1rem; margin: 0 0 10px 0;}
+
+            & > button {
+              @include btn-itype01b; @include mmwidth(40px);
+              &:after {border-style:solid; border-width:0 0 0 1px; border-color:rgba(#000,0.1);}
+
+              &:nth-of-type(1n):after {background-color: #93999d;}
+              &:nth-of-type(2n):after {background-color: #7f8487;}
+              &:nth-of-type(3n):after {background-color: #6f7376;}
+              &:nth-of-type(4n):after {background-color: #616567;}
+
+            }
+
+          }
+          .tarea {
+            height: 200px;
+            .set-item {
+              @include flex-row-nowrap; @include flex-column;
+              & > div {height:100%;}
+            }
+            textarea {width:100%; height:100%; resize: none; }
+          }
+          .cut {
+            .set-item {min-width:50%; button {  @include mmwidth(100%); @include btn-line; &:before {display: none;}} }
+          }
+
+        }
+      }
+    }
+
+    & > div, ul li > div {
+      position: relative; width: 100%;
+      & > * {
+        &:nth-child(1) {
+          @include flex-option(0, 1, 100%); margin:0; text-align: left;
+          &:before {font-size:1.2rem; margin:0 10px 0 0;}
+        }
+        &:nth-child(2) {@include flex-option(1, 0, 80px); text-align: center; margin:0 0 0 10px;}
+      }
+    }
+
+    & > div {
+      display: none;
+      /*
+      <div>
+          <p>구역명/장치명</p>
+          <p>보기/감추기</p>
+          <p>적용여부</p>
+      </div>
+       */
+      @include flex-option(1, 0, 40px); min-height:40px; max-height:40px; opacity: 0.6; margin:10px 0;
+      & > * {font-size:0.9rem; }
+      &:before {
+        content:""; position: absolute; bottom:0; left:$ch_margin; right:$ch_margin;
+        @include border01(0 0 1px 0,$color-gray-06,1 );
+      }
+    } // 펜스 셋팅 팝업
+
+    .uplist{
+      display: none;
+      left:1px; width:40px !important;
+      & > button{
+        &:before{content:"\e917" !important; font-size:1rem !important; border:1px solid #f5f5f5;}
+        &:after{content:"" !important; background-color: #a9a9a9; height: 14px; width: 1px !important; top: -9px; left: 29px !important;}
+        &.on{
+          &:before{content:"\e917" !important; transform: rotateX(180deg);}
+        }
+      }
+      .ico-up{padding-top:5px !important; color:#f5f5f5 !important; background-color: #3c3c3c; z-index: 9;
+      }
+      .ico-up:hover{color:#32a0be !important;
+        &:before{border-color:#32a0be !important;}
+      }
+    }
+  }
+
+  .onvif {background-color: #000; @include flex-justify-content-center;}
+  .controls {
+    @include flex-option(1, 0, $sec_c); max-width:$sec_c; min-width:$sec_c; width:$sec_c;
+
+    & > * {padding-left:10px; padding-right:10px;}
+    & > div {
+      @include flexbase; @include flex-justify-content-between; margin: 30px 0 40px 0;
+
+      $btw:60px;
+
+      .direction_set.type01 {
+        width:($btw * 3); height:($btw * 3);
+        & > * {width:$btw; height:$btw; float: left;}
+
+        button {
+          @include flex-midddle;
+          &:before, &:after {}
+          &:before {content:"\e918"; position: absolute; font-size:1.4rem; font-weight:bold;}
+
+          &:nth-of-type(1):before {@include rotate(45deg);}
+          &:nth-of-type(2):before {@include rotate(90deg);}
+          &:nth-of-type(3):before {@include rotate(135deg);}
+
+          &:nth-of-type(4):before {}
+          &:nth-of-type(5):before {@include rotate(180deg);}
+
+          &:nth-of-type(6):before {@include rotate(-45deg);}
+          &:nth-of-type(7):before {@include rotate(-90deg);}
+          &:nth-of-type(8):before {@include rotate(-135deg);}
+
+          &:after {
+            content:""; display: inline-block; width:($btw - 10px); height:($btw - 10px);
+            @include border01(1px,$color-gray-01,1 ); @include border-radius(600px);
+          }
+        }
+      }
+
+      .direction_set {
+        @include flex-midddle; position: relative; width:($btw * 3 + 40px); height:($btw * 3 + 40px);
+        @include box-shadow01(0px, 30px, 15px, -15px, #000, 0.2); background-color: $color-bas;
+
+        &, &:before { @include border-radius(1000px); }
+        & > * {position: absolute !important;}
+
+        &:before {
+          content:""; position: absolute; z-index: 1; width:($btw + 40px); height:($btw + 40px);
+          background-color: $color-adm; //@include box-shadow01(0px, 0px, 15px, 0px, #000, 0.5);
+        }
+
+        span {
+          z-index:10; display: inline-block; width:($btw/3); height:($btw/3); background-color:$color-bas;
+          @include border-radius(1000px); @include transition01(200ms); //@include box-inset-shadow(0px, 2px, 8px, #000, 1);
+        }
+
+        button {
+
+          @include btn-itype03c-t;
+
+          &:before {content:"\e918"; font-weight:bold; color:$color-white-01;}
+          &:after {display: none; width:($btw - 10px); height:($btw - 10px); @include border-radius(600px);}
+
+          &:hover:after {display: inline-block;}
+          &:active ~ span {background-color: $color-red-01;}
+
+          &:nth-of-type(1){
+            top:26px; left:26px;
+            &:before {@include rotate(45deg);}
+            &:active ~ span {margin:-20px 0 0 -20px;}
+          }
+          &:nth-of-type(2){
+            top:0;
+            &:before {@include rotate(90deg);}
+            &:active ~ span {margin:-20px 0 0 0;}
+          }
+          &:nth-of-type(3){
+            top:26px; right:26px;
+            &:before {@include rotate(135deg);}
+            &:active ~ span {margin: -20px 0 0 20px;}
+          }
+          &:nth-of-type(4){
+            left:0;
+            &:before {@include rotate(0);}
+            &:active ~ span {margin:0 0 0 -20px;}
+          }
+          &:nth-of-type(5){
+            right:0;
+            &:before {@include rotate(180deg);}
+            &:active ~ span {margin:0 0 0 20px;}
+          }
+          &:nth-of-type(6){
+            left:26px; bottom:26px;
+            &:before {@include rotate(-45deg);}
+            &:active ~ span { margin: 20px 0 0 -20px;}
+          }
+          &:nth-of-type(7){
+            bottom:0;
+            &:before {@include rotate(-90deg);}
+            &:active ~ span {margin: 20px 0 0 0;}
+          }
+          &:nth-of-type(8){
+            right:26px; bottom:26px;
+            &:before {@include rotate(-135deg);}
+            &:active ~ span {margin: 20px 0 0 20px;}
+          }
+
+        }
+
+      }
+
+      .function_set {
+        @include flexbase; @include flex-column; @include flex-justify-content-center;
+
+        & > div {
+          @include flexbase; @include flex-align-items-center; @include flex-justify-content-end; margin:0 0 10px 0;
+          &:before {padding:0 10px 0 0; text-align: right;}
+        }
+
+        button {
+          @include btn-line; @include mmwidth(60px);
+          &:before {font-size:1.5rem !important;}
+          &:first-of-type:after {
+            @include border-radius(200px 0 0 200px); border-width:1px 0 1px 1px;
+          }
+          &:last-of-type:after  {
+            @include border-radius(0 200px 200px 0 ); border-width:1px;
+          }
+
+        }
+        .zoom {
+          &:before {content:"zoom";}
+          button:first-of-type:before {content:"\e95c";}
+          button:last-of-type:before  {content:"\e95d";}
+        }
+        .focus {
+          &:before {content:"focus";}
+          button:first-of-type:before {content:"\e903";}
+          button:last-of-type:before  {content:"\e904";}
+        }
+      }
+    }
+
+    & > ul {
+      overflow: auto; overflow: overlay; @include flex-width-one(1);
+      li {
+        @include flexbase; margin:0 0 10px 0;
+        @include border01(1px,#000,1 );
+        &.on {@include border01(2px,$color-on,1 );}
+
+        &.setting {
+          & > div select, .cp_btn, .cd_btn {display: inline-block;}
+        }
+
+        & > div {
+          position: relative; height:40px;  @include flex-option(0, 1, 100%);
+          input, select {width:100%; border:none;}
+          select {position: absolute; z-index: 1; top:0; left:0; height:100%; }
+        }
+
+        .cp_btn, .cd_btn {display: none;}
+
+        button {
+          @include btn-itype01b; &:after {  @include border01(0 0 0 1px,#000,1 ); }
+
+          &.cs_btn {
+            order:3;
+            &:before {content:"\e909";}
+            &.on:before {content:"\e927";}
+          } // 설정 저장 버튼
+
+          &.cp_btn { &:before {content:"\e941";} } // 프리셋 보기 버튼
+          &.cd_btn { &:before {content:"\e91a";} } // 설정 삭제 버튼
+        }
+
+      }
+    }
+  }
+}
+/////..... 펜스 셋팅 팝업 시작
+.fenceset-popup {
+
+  display:none;
+  position: absolute !important; z-index: 10; top:0; left:0;
+  width:100%; @include mmheight(100%); opacity: 1 !important; margin:0 !important; padding:0 !important;
+  background-color: rgba($color-dark-01,0.8); @include transition01(200ms);
+
+  &:before {display: none;}
+  &.on {display: inline-block !important;}
+
+  & > div {
+    @include notice-opacity; @include flex-midddle; @include flex-column; width:100%; height:100%;
+    color:$color-white-01;
+    &:after, &:before {position: relative; }
+    &:after  {content:"Fence Setting"; padding:10px 0 0 0; font-size:1.2rem;}
+    &:before {
+      content:"\e905";
+      @include loding; @include duration(3s); font-size:4rem !important;
+      border: none; bottom:auto; left:auto; right:auto;
+    }
+  }
+
+}
+/////..... 펜스 셋팅 팝업 끝
+
+// 구역 / 장치 관리 옵션 시작
+.opatin_list {
+  & > div {
+    @include flexbase; @include flex-align-items-start; @include flex-justify-content-start;
+
+    & > input {
+      width:40px; height:40px; opacity: 0;
+      &:hover + ul:after {@include tree-hover;}
+      &:checked + ul {
+        &:after {content:"\e92c" !important;}
+        li {height:auto; min-height:40px; padding: 15px 0;}
+      }
+    }
+
+    & > ul {
+      @include flexbase; @include flex-column;
+      position: relative; width:100%; padding:50px 0 15px 0;
+      &:before, &:after {position: absolute; left:0;}
+      &:after {
+        @include plus_icon; top:5px; z-index: -1; left:-37px !important;
+      }
+      &:before {
+        content:""; top:0; width:100%; height:40px;
+        background-position: 0 8px; background-repeat: no-repeat; background-size: auto 28px;
+      }
+
+      li {
+        overflow: hidden;  @include flexbase; @include flex-align-items-start; @include flex-justify-content-start;
+        position: relative; width:100%; height:0; padding:0;
+
+        &:before {content:"\e92a"; padding:5px 10px 0 0;}
+        & > span {@include mmwidth(180px); font-size:1.2rem; opacity: 0.6;}
+
+        & > div {
+
+          @mixin flayout {@include flexbase; @include flex-row-wrap; } // @include flayout;
+          $fmargin:5px;
+
+          @include flayout; width:100%;
+
+          p {@include mmwidth(100%); margin:0 0 $fmargin 0; font-size:0.9rem;}
+
+          & > div {
+            @include flayout; @include flex-width-one(1);
+            min-width:50%; padding:0 0 ($fmargin * 2) 0;
+
+            & > * {min-width:calc(50% - 5px); @include flex-width-one(1);}
+            input, select {margin:0 $fmargin $fmargin 0;}
+          }
+        }
+        /*
+
+        & > div.col-out {
+
+          & {width:100%;}
+          // & > * {display:flex;width:100%;}
+          p {margin:0 0 5px 0;}
+          & > div {flex-wrap: wrap; border-bottom:none !important; margin:0;padding-bottom: 0 !important;
+            input, select {width:100%; margin:0 5px 0 0;}
+          }
+        }
+
+        & > div.col-in {
+          &, & > * {width:100%;}
+          p {
+            position: absolute;top:0;margin:0 0 5px 0;}
+          & > div {flex-wrap: nowrap; position: relative; padding-top:30px;
+            @include flexbase;  margin:0 0 15px 0;
+            input, select {width:100%; margin:0 5px 0 0;}
+          }
+        }
+        */
+
+      }
+    }
+    &.safeguard_option > ul { &:before {background-image: url(../images/logo/safeguard_w.svg);} }
+    &.safeeye_option > ul   { &:before {background-image: url(../images/logo/safeeye_w.svg);}   }
+    &.blinker_option > ul   { &:before {background-image: url(../images/logo/blinker_w.svg);}   }
+    &.detector_option > ul  { &:before {background-image: url(../images/logo/detector_w.svg);}  }
+  }
+}
+/////......  구역 / 장치 관리 MAP 설정 End
+
+
+
+
+

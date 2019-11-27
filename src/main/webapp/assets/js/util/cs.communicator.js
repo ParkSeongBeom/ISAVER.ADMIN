@@ -17,6 +17,12 @@ function fnCSController(){
 		}
 	};
 
+	objCSController.openCamera = function(jsonStr){
+		if(this.isCS){
+			vmsBindObj.openCamera(JSON.stringify(jsonStr));
+		}
+	};
+
 	objCSController.isRecording = function(fenceId){
 		if(this.isCS){
 			return vmsBindObj.isRecording(fenceId);

@@ -97,8 +97,6 @@ public class TestSvcImpl implements TestSvc {
 
     @Override
     public ModelAndView eventSend(HttpServletRequest request, Map<String, String> parameters) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
-        EventLogBean eventLogBean = gson.fromJson(parameters.get("eventData"), new TypeToken<EventLogBean>(){}.getType());
         ResultBean result = new ResultBean();
         try {
             result = AlarmRequestUtil.sendRequestFuncJson(new StringEntity(parameters.get("eventData")), "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl);
@@ -108,14 +106,14 @@ public class TestSvcImpl implements TestSvc {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("result",result);
-        modelAndView.addObject("paramBean",eventLogBean);
+        modelAndView.addObject("paramBean",parameters.get("eventData"));
         return modelAndView;
     }
 
     @Override
     public ModelAndView guard(HttpServletRequest request, Map<String, String> parameters) {
         String osName = System.getProperty("os.name");
-        if(osName.toLowerCase().indexOf("windows") == -1) {
+        if(!osName.toLowerCase().contains("windows")) {
             StringBuilder sb = new StringBuilder();
             Process p = null;
             BufferedReader br;

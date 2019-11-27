@@ -1,5 +1,6 @@
 package com.icent.isaver.admin.ctrl;
 
+import com.icent.isaver.admin.bean.UsersBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.UsersSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -53,7 +54,11 @@ public class UsersCtrl {
     public ModelAndView findListUser(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "userList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
-        parameters.put("roleId", AdminHelper.getAdminInfo(request).getRoleId());
+
+        UsersBean usersBean = AdminHelper.getAdminInfo(request);
+        if(usersBean != null) {
+            parameters.put("roleId", usersBean.getRoleId());
+        }
 
         ModelAndView modelAndView = usersSvc.findListUser(parameters);
         modelAndView.setViewName("userList");

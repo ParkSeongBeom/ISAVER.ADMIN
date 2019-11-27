@@ -2,9 +2,6 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <!--suppress ALL -->
 <tiles-definitions>
-    <!-- ############# -->
-    <!-- [START] 안전 방재 -->
-    <!-- ############# -->
     <definition name="base" template="/WEB-INF/views/tiles/layout.jsp"></definition>
 
     <!--
@@ -114,16 +111,8 @@
         코드관리
         @author kst
      -->
-    <definition name="groupCodeList" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/groupcode/list.jsp" />
-    </definition>
-
-    <definition name="groupCodeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/groupcode/detail.jsp" />
-    </definition>
-
-    <definition name="codeDetail" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/code/detail.jsp" />
+    <definition name="codeList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/code/list.jsp" />
     </definition>
 
     <!--
@@ -190,17 +179,6 @@
         <put-attribute name="body" value="/WEB-INF/views/eventStatistics/list.jsp" />
     </definition>
 
-
-    <!-- ############# -->
-    <!-- [END] 안전 방재 -->
-    <!-- ############# -->
-
-    <!--
-        웹소켓 테스트
-        @author dhj
-    -->
-    <definition name="webSocketTest" template="/WEB-INF/views/websocket/test.jsp" />
-
     <!--
         파일 관리
         @author psb
@@ -253,8 +231,22 @@
     </definition>
 
     <!--
+        시스템로그 관리
+        @author psb
+    -->
+    <definition name="systemLogList" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/systemLog/list.jsp" />
+    </definition>
+
+    <!--
         시뮬레이터용 테스트페이지
         @author psb
     -->
     <definition name="testList" template="/WEB-INF/views/authorization/test.jsp" />
+
+    <!--
+        테스트
+        @author psb
+    -->
+    <definition name="testDev" template="/WEB-INF/views/dev/test.jsp" />
 </tiles-definitions>

@@ -1,6 +1,7 @@
 package com.icent.isaver.admin.util;
 
 import com.icent.isaver.admin.bean.UsersBean;
+import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.meous.common.resource.CommonResource;
 import com.meous.common.util.BeanUtils;
@@ -137,6 +138,18 @@ public class AdminHelper {
         }
 
         return bean;
+    }
+
+    /**
+     * map에 페이징 관련 인자를 설정한다.
+     *
+     * @author psb
+     * @param parameters
+     * @param totalCount
+     */
+    public static void setPageTotalCount(Map<String, String> parameters, Long totalCount){
+        parameters.put("totalCount", String.valueOf(totalCount));
+        parameters.put("pageTotalCount", String.valueOf((int) Math.ceil(totalCount / Double.valueOf(parameters.get("pageRowNumber")))));
     }
 
     /**
@@ -349,7 +362,7 @@ public class AdminHelper {
                 }
             }
         }catch(Exception e){
-            e.printStackTrace();
+            throw new IsaverException("");
         }
         return parameters;
     }
@@ -420,45 +433,48 @@ public class AdminHelper {
         return str != null ? str : "";
     }
 
-
-    public static List<String> findListDateTimeForType(String searchDatetime, String type) {
+    public static List<Date> findListDateTimeForType(String searchDatetime, String type, int addNum) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         try {
-            cal.setTime(sdf.parse(searchDatetime));
+            if(searchDatetime!=null){
+                cal.setTime(sdf.parse(searchDatetime));
+            }
+            cal.set( Calendar.HOUR_OF_DAY, 0 );
+            cal.set( Calendar.MINUTE, 0 );
+            cal.set( Calendar.SECOND, 0 );
+            cal.set( Calendar.MILLISECOND, 0 );
         } catch (Exception e) {
         }
 
-        List<String> dateLists = new LinkedList<>();
-        SimpleDateFormat reSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Date> dateLists = new LinkedList<>();
 
         switch (type){
             case "day":
-                for (int i = 0; i < 24; i++) {
-                    dateLists.add(i,reSdf.format(cal.getTime()));
+                for (int i = 0; i < 24+addNum; i++) {
+                    dateLists.add(i,cal.getTime());
                     cal.add(Calendar.HOUR, 1);
                 }
                 break;
             case "week":
                 cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                for (int i = 0; i < 7; i++) {
-                    dateLists.add(i,reSdf.format(cal.getTime()));
+                for (int i = 0; i < 7+addNum; i++) {
+                    dateLists.add(i,cal.getTime());
                     cal.add(Calendar.DATE, 1);
                 }
                 break;
             case "month":
                 cal.set(Calendar.DAY_OF_MONTH, 1);
-
-                for (int i = 0; i < cal.getMaximum(Calendar.DAY_OF_MONTH); i++) {
-                    dateLists.add(i,reSdf.format(cal.getTime()));
+                for (int i = 0; i < cal.getMaximum(Calendar.DAY_OF_MONTH)+addNum; i++) {
+                    dateLists.add(i,cal.getTime());
                     cal.add(Calendar.DATE, 1);
                 }
                 break;
             case "year":
+                cal.set(Calendar.DAY_OF_MONTH, 1);
                 cal.set(Calendar.MONTH, Calendar.JANUARY);
-
-                for (int i = 0; i < 12; i++) {
-                    dateLists.add(i,reSdf.format(cal.getTime()));
+                for (int i = 0; i < 12+addNum; i++) {
+                    dateLists.add(i,cal.getTime());
                     cal.add(Calendar.MONTH, 1);
                 }
                 break;
@@ -467,4 +483,49 @@ public class AdminHelper {
         return dateLists;
     }
 
+    public static List<Date> findListDateTimeForType(Date startDatetime, Date endDatetime, String type) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        List<Date> dateLists = new LinkedList<>();
+
+        try {
+            cal.setTime(startDatetime);
+            switch (type){
+                case "day":
+                    cal.set( Calendar.MINUTE, 0 );
+                    cal.set( Calendar.SECOND, 0 );
+                    cal.set( Calendar.MILLISECOND, 0 );
+                    while (cal.getTime().getTime()<=endDatetime.getTime()){
+                        dateLists.add(cal.getTime());
+                        cal.add(Calendar.HOUR, 1);
+                    }
+                    break;
+                case "week":
+                case "month":
+                    cal.set( Calendar.HOUR_OF_DAY, 0 );
+                    cal.set( Calendar.MINUTE, 0 );
+                    cal.set( Calendar.SECOND, 0 );
+                    cal.set( Calendar.MILLISECOND, 0 );
+                    while (cal.getTime().getTime()<=endDatetime.getTime()){
+                        dateLists.add(cal.getTime());
+                        cal.add(Calendar.DATE, 1);
+                    }
+                    break;
+                case "year":
+                    cal.set( Calendar.HOUR_OF_DAY, 0 );
+                    cal.set( Calendar.MINUTE, 0 );
+                    cal.set( Calendar.SECOND, 0 );
+                    cal.set( Calendar.MILLISECOND, 0 );
+                    cal.set( Calendar.DAY_OF_MONTH, 1);
+                    cal.set( Calendar.MONTH, Calendar.JANUARY);
+                    while (cal.getTime().getTime()<=endDatetime.getTime()){
+                        dateLists.add(cal.getTime());
+                        cal.add(Calendar.MONTH, 1);
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+        }
+        return dateLists;
+    }
 }

@@ -192,6 +192,8 @@ public class AdminResource {
             put("DEV905","ico-co"); // CO(일산화탄소) 감지기
             put("DEV906","ico-plug"); // S/P(스마트 플러그)
             put("DEV907","ico-humi"); // 습도 감지기
+            put("DEV908","ico-co"); // 수위 감지기
+            put("DEV909","ico-temp"); // 온도 제어기
         }
     };
 

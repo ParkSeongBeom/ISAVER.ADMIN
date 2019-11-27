@@ -5,14 +5,14 @@
 	 width="800px" height="800px" viewBox="0 0 800 800" enable-background="new 0 0 800 800" xml:space="preserve">
 <g>
 	
-		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="473.6025" y1="1034.9824" x2="80.2023" y2="637.1412" gradientTransform="matrix(-4.371139e-008 1 1 4.371139e-008 -296.1602 -19.4605)">
-		<stop  offset="0" style="stop-color:#000000;stop-opacity:0.6"/>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="597.4473" y1="-111.9426" x2="204.047" y2="285.8986" gradientTransform="matrix(-4.371139e-008 1 -1 -4.371139e-008 626.8796 -143.3054)">
+		<stop  offset="0" style="stop-color:#000000;stop-opacity:0.4"/>
 		<stop  offset="0.5108" style="stop-color:#000000;stop-opacity:0"/>
 	</linearGradient>
 	<path fill="url(#SVGID_1_)" d="M400,0c220.914,0,400,179.086,400,400H399.25L400,0z"/>
 	
-		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="-866.3931" y1="101.8403" x2="-866.3931" y2="504.8403" gradientTransform="matrix(4.371139e-008 -1 -1 -4.371139e-008 901.8398 -466.3931)">
-		<stop  offset="0.6505" style="stop-color:#000000;stop-opacity:0.8"/>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="-785.2378" y1="616.1199" x2="-785.2378" y2="213.1199" gradientTransform="matrix(4.371139e-008 -1 1 4.371139e-008 183.8801 -385.238)">
+		<stop  offset="0.2473" style="stop-color:#000000;stop-opacity:0.3"/>
 		<stop  offset="1" style="stop-color:#000000;stop-opacity:0"/>
 	</linearGradient>
 	<line fill="none" stroke="url(#SVGID_2_)" stroke-miterlimit="10" x1="397" y1="400" x2="800" y2="400"/>

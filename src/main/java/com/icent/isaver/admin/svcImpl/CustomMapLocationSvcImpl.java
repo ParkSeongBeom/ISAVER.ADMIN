@@ -107,6 +107,13 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
             paramBean.put("deviceCodes",parameters.get("deviceCodes").split(","));
         }
         List<CustomMapLocationBean> childList = customMapLocationDao.findListCustomMapLocation(paramBean);
+        for(CustomMapLocationBean customMapLocationBean : childList){
+            if(!customMapLocationBean.getDeviceCode().equals("area")){
+                Map param = new HashMap();
+                param.put("parentDeviceId",customMapLocationBean.getTargetId());
+                customMapLocationBean.setChildDeviceList(deviceDao.findListDevice(param));
+            }
+        }
         AreaBean area = areaDao.findByArea(parameters);
 
         ModelAndView modelAndView = new ModelAndView();

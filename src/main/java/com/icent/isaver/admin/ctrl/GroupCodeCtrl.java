@@ -34,28 +34,6 @@ public class GroupCodeCtrl {
     @Inject
     private GroupCodeSvc groupCodeSvc;
 
-    /**
-     * 그룹코드 목록을 가져온다.
-     *
-     * @author kst
-     * @param request
-     * @param parameters
-     * @return
-     */
-    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
-    public ModelAndView findListGroupCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = groupCodeSvc.findListGroupCode(parameters);
-        modelAndView.setViewName("groupCodeList");
-        return modelAndView;
-    }
-
-    @RequestMapping(method={RequestMethod.POST},value="/detail")
-    public ModelAndView findByGroupCode(HttpServletRequest request, @RequestParam Map<String, String> parameters){
-        ModelAndView modelAndView = groupCodeSvc.findByGroupCode(parameters);
-        modelAndView.setViewName("groupCodeDetail");
-        return modelAndView;
-    }
-
     private final static String[] addGroupCodeParam = new String[]{"groupCodeId","groupName"};
 
     @RequestMapping(method={RequestMethod.POST}, value="/add")
@@ -66,9 +44,6 @@ public class GroupCodeCtrl {
 
         parameters.put("insertUserId",AdminHelper.getAdminIdFromSession(request));
         ModelAndView modelAndView = groupCodeSvc.addGroupCode(parameters);
-        modelAndView.setViewName("groupCodeDetail");
-
-
         return modelAndView;
     }
 

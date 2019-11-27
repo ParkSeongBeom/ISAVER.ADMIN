@@ -426,7 +426,7 @@
             <div>
                 <header>
                     <h2><spring:message code="resource.title.mapSetting"/></h2>
-                    <button onclick="javascript:customMapPopup.closePopup();"></button>
+                    <button class="close_btn" onclick="javascript:customMapPopup.closePopup();"></button>
                 </header>
                 <article class="map_sett_box">
                     <section id="customMapSection" class="map">
@@ -444,36 +444,58 @@
                             </div>
                         </div>
                         <div>
-                            <button class="skew-btn" onclick="javascript:$('.skew-popup').toggleClass('on')">Options</button>
                             <div class="skew-popup">
-                                <h4>Map</h4>
-                                <span>SkewX</span>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <input name="skewX" id="skewX" type="number" onchange="javascript:customMapPopup.setImageConfig('skewX','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
-                                <span>SkewY</span>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <input name="skewY" id="skewY" type="number" onchange="javascript:customMapPopup.setImageConfig('skewY','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
-                                <span>AngleX Class</span>
-                                <select id="angleClass">
-                                    <option value=""><spring:message code="common.column.selectNo"/></option>
-                                    <option value="deg10">10</option>
-                                    <option value="deg15">15</option>
-                                    <option value="deg20">20</option>
-                                    <option value="deg25">25</option>
-                                    <option value="deg30">30</option>
-                                    <option value="deg35">35</option>
-                                    <option value="deg40">40</option>
-                                    <option value="deg45">45</option>
-                                    <option value="deg50">50</option>
-                                </select>
-                                <h4>Background Image</h4>
-                                <span>Rotate</span>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
-                                <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setImageConfig('rotate','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                <h5>Map</h5>
+                                <div class="set-item">
+                                    <h4>SkewX</h4>
+                                    <div>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewX','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <input name="skewX" id="skewX" type="number" onchange="javascript:customMapPopup.setImageConfig('skewX','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                    </div>
+                                    <h4>SkewY</h4>
+                                    <div>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('skewY','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <input name="skewY" id="skewY" type="number" onchange="javascript:customMapPopup.setImageConfig('skewY','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                    </div>
+                                    <h4>AngleX Class</h4>
+                                    <div>
+                                        <select id="angleClass">
+                                            <option value=""><spring:message code="common.column.selectNo"/></option>
+                                            <option value="deg10">10</option>
+                                            <option value="deg15">15</option>
+                                            <option value="deg20">20</option>
+                                            <option value="deg25">25</option>
+                                            <option value="deg30">30</option>
+                                            <option value="deg35">35</option>
+                                            <option value="deg40">40</option>
+                                            <option value="deg45">45</option>
+                                            <option value="deg50">50</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h5>Background Image</h5>
+                                <div class="set-item">
+                                    <h4>Rotate</h4>
+                                    <div>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','decrease', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <button class="btn" onmousedown="javascript:customMapPopup.setImageConfig('rotate','increase', null, true);" onmouseup="javascript:customMapPopup.stopMouseDownInterval();"></button>
+                                        <input name="rotate" id="rotate" type="number" onchange="javascript:customMapPopup.setImageConfig('rotate','directInput',this.value);" onkeypress="isNumberWithPointWithPhone(this);"/>
+                                    </div>
+                                </div>
                             </div>
+
+                            <button class="skew-btn" onclick="javascript:$('.skew-popup').toggleClass('on')">
+                                <span>OPTION</span>
+                            </button>
+
+                            <span>Ignore Fence</span>
+                            <select id="ignoreHide" onchange="javascript:customMapPopup.ignoreShow(this);">
+                                <option value="show"><spring:message code="resource.select.show"/></option>
+                                <option value="hide"><spring:message code="resource.select.hide"/></option>
+                            </select>
+                            <span>Map</span>
                             <select id="fileId">
                                 <option value=""><spring:message code="common.column.selectNo"/></option>
                             </select>
@@ -489,12 +511,8 @@
                     </section>
                     <section class="list">
                         <h3 id="areaName"></h3>
-                        <div>
-                            <p><spring:message code="resource.column.resourceTarget"/></p>
-                            <p><spring:message code="resource.column.useYn"/></p>
-                        </div>
                         <ul id="childList"></ul>
-                        <div class="fenceset_popup">
+                        <div class="fenceset-popup fence-edi">
                             <div></div>
                         </div>
                     </section>

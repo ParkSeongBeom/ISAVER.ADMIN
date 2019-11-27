@@ -2,7 +2,16 @@
 @import "filters";
 
 /////..... 데시보드 입력폼 스타일 시작
-body.dashboard_mode {}
+body.dashboard_mode {
+  @include webkit_scroll_dashboard; @include dashboard-bg;
+
+  .sub_title_area {
+    @include flex-option(1, 0, $headerHeight); @include mmheight($headerHeight);
+    //background-color: rgba($color-dark-01, 0.05);
+    &.hide{margin-top: -75px;}
+  }
+
+}
 /////..... 데시보드 입력폼 스타일 끝
 
 
@@ -13,8 +22,15 @@ body.dashboard_mode {}
 } // @include notice-common-01;
 
 
+
+
+
 /////..... 구역 표시 영역
 .watch_area {
+
+  @include flexbase; @include flex-row-wrap;
+  @include flex-option(0, 1, 100%); position: relative; width:100%; height:100%;
+  &:before {@include bbl(12,0,0,auto,0,100%,1px,$color-bline);}
 
   & > div {
 
@@ -306,11 +322,12 @@ body.dashboard_mode {}
   &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
 
 }
-
+/*
 .watch_area.area04 div:nth-of-type(2):before,.watch_area.area04 div:nth-of-type(4):before{background:none;}
 .watch_area.area06 div:nth-of-type(3):before,.watch_area.area06 div:nth-of-type(6):before{background:none;}
 .watch_area.area08 div:nth-of-type(3):before,.watch_area.area08 div:nth-of-type(6):before{background:none;}
 .watch_area.area09 div:nth-of-type(3):before,.watch_area.area09 div:nth-of-type(6):before,.watch_area.area09 div:nth-of-type(9):before{background:none;}
+*/
 
 
 /////..... .watch_area > div > article > * >  좌 / 우
@@ -559,7 +576,6 @@ $treffic_w:32%;
 }
 /////..... safeeye section End
 
-
 /////..... NHR section Start
 .detector_set {
 
@@ -600,138 +616,13 @@ $treffic_w:32%;
   .s_lbox {
     @include flex-midddle; overflow: hidden;
 
-/////..... 온오프 리스트 버튼 Start
-    .check_btn_menu{
-      position: absolute; z-index: 80 !important; left:15px; bottom:15px; width:50px; height:50px;
-      input {
-        opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
-        cursor:pointer; padding:0; margin:0;
-      }
-
-      label {
-        @include flex-midddle; position: relative; opacity: 0.7;
-        &:before { font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
-        &:after {
-          letter-spacing: 0; line-height: 0.9rem;
-          position: absolute; left:55px;  text-align: left; font-size:0.8rem;
-        }
-      }
-
-      input:hover + label { opacity: 1;}
-      input:checked + label {
-        opacity: 1;
-        &:before, &:after {color:$color-ho;}
-        &:before {}
-      }
-
-      label {
-        &:before {content:"\e959";  }
-        &:after  {content:"VIEW OPTIONS";}
-      }
-
-      input:hover + label { opacity: 1;}
-      input:checked + label {
-        &:before {content:"\e92c"; }
-        &:after {content:"VIEW OPTIONS"; }
-      }
-    }
-    .check_btn_menu.on + .check_btn_set{bottom:65px;}
-/////..... 온오프 리스트 버튼 End
-
-/////..... 온오프 리스트 메뉴 Start
-    .check_btn_set {
-      position: absolute; z-index: 80 !important;  left:15px; bottom:65px; @include bottom-base;
-
-      & > div {
-        position: relative; width:50px; height:60px;
-        input, label {width:100%; height:100%;}
-
-        input {
-          opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
-          cursor:pointer; padding:0; margin:0;
-        }
-
-        label {
-          @include flex-midddle; position: relative; opacity: 0.7;
-          &:before { font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
-          &:after {
-            letter-spacing: 0; line-height: 0.9rem;
-            position: absolute; left:55px;  text-align: left; font-size:0.8rem;
-          }
-        }
-
-        input:hover + label { opacity: 1;}
-        input:checked + label {
-          opacity: 1;
-          &:before, &:after {color:$color-ho;}
-          &:before {}
-        }
-
-        &.range_check {
-
-          label {
-            &:before {content:"\e95b";  }
-            &:after  {content:"LIDAR RANGE";}
-          }
-
-          input:hover + label { opacity: 1;}
-          input:checked + label {
-            &:before {content:"\e97f"; }
-            &:after {content:"LIDAR RANGE OFF"; }
-          }
-        }
-
-        &.object_check {
-
-          label {
-            &:before {content:"\e943";  }
-            &:after  {content:"SHOW TRACKING";}
-          }
-
-          input:hover + label { opacity: 1;}
-          input:checked + label {
-            &:before {content:"\e926"; }
-            &:after {content:"HIDE TRACKING"; }
-          }
-        }
-
-        &.human_check {
-          label {
-            &:before {content:"\e906";  }
-            &:after  {content:"ALL OBJECT ";}
-          }
-
-          input:hover + label { opacity: 1;}
-          input:checked + label {
-            &:before {content:"\e950"; }
-            &:after {content:"ONLY HUMAN"; }
-          }
-        }
-
-        &.fence_check {
-          label {
-            &:before {content:"\e941";  }
-            &:after  {content:"FENCE TRACKING";}
-          }
-
-          input:hover + label { opacity: 1;}
-          input:checked + label {
-            &:before {content:"\e921"; }
-            &:after {content:"FENCE TRACKING OFF"; }
-          }
-        }
-
-      }
-
-    }
-/////..... 온오프 리스트 메뉴 End
-
     .gm-style {
       &-pbc { opacity: 1 !important; & + div * {box-shadow: none !important;} }
       iframe + div, .gmnoprint {display: none !important;}
     }
 
   }
+
   .s_rbox {
     right:0; background-color: #000;
     &, & * {margin:0; padding:0;}
@@ -808,7 +699,6 @@ $treffic_w:32%;
 
   &.sma { .s_rbox {@include flex-option(0, 0, 0);} }
 
-
   .device_box {
     &:before {@include bbl(1,0,auto,0,0,1px,100%,$color-bline);}
     position: relative !important; @include mmwidth(0); padding:0;
@@ -816,14 +706,11 @@ $treffic_w:32%;
 
     .device_set {@include mmwidth($ds-w);overflow-y:auto;height:100%;}
   }
-
 }
 
 .vxgplayer-loader {margin:-25px 0 0 -25px !important;}
 .vxgplayer-error  {margin:-60px 0 0 0 !important;}
 /////.......................................... Guard End
-
-/////.....  section Start
 
 
 /////..... entrance section Start 재실감시
@@ -932,8 +819,6 @@ $treffic_w:32%;
 
 /////..... device section Start
 $ds-sw:50px; // 스크린설정 가로 넓이
-
-
 .device_box ,.screen_box {
   @include flexbase; @include flex-align-items-start; @include transition(200ms);
   @include flex-option(0, 0, 0); width:0; height:100%;
@@ -1095,9 +980,13 @@ $ds-sw:50px; // 스크린설정 가로 넓이
   }
 }
 .chart_select_set {
+  @include flexbase;
   position: absolute !important; z-index:1; top:-100px; right:0; @include transition(200ms);
   padding:10px; background-color: rgba(0,0,0,.3);
-  button {@include btn-itype01b; &:before {z-index: -1 !important;}}
+  button {
+    @include btn-itype01b;
+    &:before {z-index: -1 !important; position: absolute;}
+  }
 }
 .chart_box {position: relative; width:100%; height:100%; margin:10px 0; }
 .date_select {
@@ -1223,58 +1112,3 @@ $ds-sw:50px; // 스크린설정 가로 넓이
 /////.......... 디바이스 보기 Popup End
 
 
-/////..... 화면 플러스 마이너스 메뉴 Start
-.view_size {
-  position: absolute !important; z-index: 80 !important;  right:15px; bottom:15px; display: none;
-
-  &.on{display: block;}
-
-  & > div {
-    position: relative; width:50px; height:50px;
-    input, label {width:100%; height:100%;}
-
-    button {
-      opacity: 0; position: absolute; z-index: 1; top:0; left:0; width:100%; height:100%;
-      cursor:pointer; padding:0; margin:0;
-      @include flex-midddle; position: relative; opacity: 1;color:#FFFFFF;
-      &:before { font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);}
-      &:after {
-        letter-spacing: 0; line-height: 0.9rem;
-        position: absolute; left:55px;  text-align: left; font-size:0.8rem;
-      }
-    }
-
-    label {
-
-    }
-
-    button:hover{ opacity: 1;}
-
-    &.view_plus {
-      button {
-        &:before {content:"\e95d";  }
-        &:after  {}
-      }
-      button:hover{ opacity: 1; @include notice-plus;}
-      button:checked{
-        &:before {content:"\e95d"; }
-        &:after {}
-      }
-    }
-
-    &.view_minus {
-      button {
-        &:before {content:"\e95c";  }
-        &:after  {}
-      }
-      button:hover{ opacity: 1;@include notice-minus;}
-      button:checked{
-        &:before {content:"\e95c"; }
-        &:after {}
-      }
-    }
-
-  }
-}
-
-/////..... 화면 플러스 마이너스 메뉴 End

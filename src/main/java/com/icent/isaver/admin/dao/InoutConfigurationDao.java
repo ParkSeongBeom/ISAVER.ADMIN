@@ -24,6 +24,8 @@ public interface InoutConfigurationDao {
 
     List<InoutConfigurationBean> findListInoutConfiguration(Map<String, String> parameters);
 
+    List<InoutConfigurationBean> findListInoutConfigurationForArea(Map<String, String> parameters);
+
     /**
      *
      * @param parameterList

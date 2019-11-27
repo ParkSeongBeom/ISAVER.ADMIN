@@ -19,12 +19,6 @@ public class GroupCodeBean extends ISaverCommonBean {
     /* 그룹 명 */
     private String groupName;
 
-    /* 등록자명 */
-    private String insertUserName = null;
-
-    /* 수정자명 */
-    private String updateUserName = null;
-
     public String getGroupCodeId() {
         return groupCodeId;
     }
@@ -39,21 +33,5 @@ public class GroupCodeBean extends ISaverCommonBean {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public String getInsertUserName() {
-        return insertUserName;
-    }
-
-    public void setInsertUserName(String insertUserName) {
-        this.insertUserName = insertUserName;
-    }
-
-    public String getUpdateUserName() {
-        return updateUserName;
-    }
-
-    public void setUpdateUserName(String updateUserName) {
-        this.updateUserName = updateUserName;
     }
 }

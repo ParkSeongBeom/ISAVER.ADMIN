@@ -103,6 +103,10 @@
           <element id="library" level="module" name="Gradle: meous_lib_v0.02" module-name="ISAVER.ADMIN" />
           <element id="library" level="module" name="Gradle: org.eclipse.paho.client.mqttv3-1.2.1" module-name="ISAVER.ADMIN" />
           <element id="library" level="module" name="Gradle: json-simple-1.1.1" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: mongo-java-driver-3.6.4" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: mongodb-driver-core-3.6.4" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-data-commons-1.13.14.RELEASE" module-name="ISAVER.ADMIN" />
+          <element id="library" level="module" name="Gradle: spring-data-mongodb-1.10.14.RELEASE" module-name="ISAVER.ADMIN" />
         </element>
       </element>
     </root>

@@ -207,6 +207,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
                 , "classpath:properties/message/target"
                 , "classpath:properties/message/user"
                 , "classpath:properties/message/videoHistory"
+                , "classpath:properties/message/systemLog"
         );
         return messageSource;
     }
@@ -267,6 +268,12 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public ExcuteHelper excuteHelper() {
+        ExcuteHelper excuteHelper=new ExcuteHelper();
+        return excuteHelper;
+    }
+
+    @Bean
     public HaspLicenseUtil haspLicenseUtil() {
         HaspLicenseUtil haspLicenseUtil=new HaspLicenseUtil();
         haspLicenseUtil.setHasp(propertyManager.getProperty("cnf.hostIp"), propertyManager.getProperty("cnf.noneLicenseTargets"), propertyManager.getProperty("deployMode"));
@@ -278,15 +285,10 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         MqttUtil mqttUtil=new MqttUtil();
         mqttUtil.setIsMqtt(propertyManager.getProperty("socketMode").equals("mqtt"));
         if(mqttUtil.getIsMqtt()){
-            try{
-                InetAddress address = InetAddress.getByName(propertyManager.getProperty("mqtt.server.domain"));
-                mqttUtil.connect("tcp://"+ address.getHostAddress() +":"+propertyManager.getProperty("mqtt.server.port")
-                        ,propertyManager.getProperty("mqttClientId")
-                        ,propertyManager.getProperty("mqtt.server.userName")
-                        ,propertyManager.getProperty("mqtt.server.password"));
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+            mqttUtil.connect("tcp://"+ propertyManager.getProperty("mqtt.server.domain") +":"+propertyManager.getProperty("mqtt.server.port")
+                    ,propertyManager.getProperty("mqttClientId")
+                    ,propertyManager.getProperty("mqtt.server.userName")
+                    ,propertyManager.getProperty("mqtt.server.password"));
         }
         return mqttUtil;
     }

@@ -6,7 +6,10 @@ import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.bean.EventBean;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.dao.*;
+import com.icent.isaver.admin.dao.AreaDao;
+import com.icent.isaver.admin.dao.DeviceDao;
+import com.icent.isaver.admin.dao.EventDao;
+import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.DeviceSvc;
@@ -16,6 +19,11 @@ import com.icent.isaver.admin.util.HaspLicenseUtil;
 import com.icent.isaver.admin.util.MqttUtil;
 import com.meous.common.resource.CommonResource;
 import com.meous.common.spring.TransactionUtil;
+import com.meous.common.util.StringUtils;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +36,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.gte;
 
 /**
  * 장치 Service Implements
@@ -83,20 +96,48 @@ public class DeviceSvcImpl implements DeviceSvc {
     private EventDao eventDao;
 
     @Inject
-    private LicenseDao licenseDao;
-
-    @Inject
     private DeviceSyncRequestSvc deviceSyncRequestSvc;
 
     @Inject
     private HaspLicenseUtil haspLicenseUtil;
 
+    @Inject
+    private MongoDatabase mongoDatabase;
+
     @Override
     public ModelAndView findListDevice(Map<String, String> parameters) {
-        parameters.put("ignoreEventValue","Y");
         List<DeviceBean> deviceList = deviceDao.findListDevice(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
+        if(StringUtils.notNullCheck(parameters.get("farmFlag"))){
+            DeviceBean parentDevice = deviceDao.findByDevice(parameters);
+            modelAndView.addObject("device", parentDevice);
+            try{
+                MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
+                Calendar cal = Calendar.getInstance();
+                cal.set( Calendar.HOUR_OF_DAY, 0 );
+                cal.set( Calendar.MINUTE, 0 );
+                cal.set( Calendar.SECOND, 0 );
+                cal.set( Calendar.MILLISECOND, 0 );
+
+                for(DeviceBean device : deviceList){
+                    Document eventLog = collection.find(
+                            and(
+                                    eq("deviceId", device.getDeviceId()),
+                                    gte("eventDatetime", cal.getTime())
+                            )
+                    ).sort(Sorts.descending("eventDatetime")).first();
+
+                    if(eventLog!=null){
+                        device.setEvtValue(eventLog.get("value").toString());
+                        device.setFormat(eventLog.get("format")!=null?eventLog.get("format").toString():null);
+                    }
+                    device.setDeviceCodeCss(AdminResource.DEVICE_CODE_CSS.get(device.getDeviceCode()));
+                }
+            }catch(Exception e){
+                throw new IsaverException("");
+            }
+        }
         modelAndView.addObject("devices", deviceList);
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
@@ -104,7 +145,6 @@ public class DeviceSvcImpl implements DeviceSvc {
 
     @Override
     public ModelAndView findListDeviceForResource(Map<String, String> parameters) {
-        parameters.put("ignoreEventValue","Y");
         List<DeviceBean> deviceList = deviceDao.findListDevice(parameters);
 
         Map<String, Object> resourceParam = new HashMap<>();

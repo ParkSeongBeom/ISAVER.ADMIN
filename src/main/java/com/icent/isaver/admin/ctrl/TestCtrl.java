@@ -40,6 +40,11 @@ public class TestCtrl {
         return modelAndView;
     }
 
+    @RequestMapping(method={RequestMethod.GET}, value="/dev")
+    public ModelAndView dev(HttpServletRequest request, @RequestParam Map<String, String> parameters){
+        return new ModelAndView("testDev");
+    }
+
     public final static String[] eventAddParam = new String[]{"eventData"};
 
     @RequestMapping(method={RequestMethod.POST}, value="/event")

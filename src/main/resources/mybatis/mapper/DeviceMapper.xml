@@ -18,7 +18,14 @@
               WHERE   group_code_id = 'DEV'
           ) AS DEV01
           ON      device_code = DEV01.code_id
-          WHERE   parent_device_id is NULL
+          <where>
+              <if test="parentDeviceId != null and parentDeviceId != ''">
+                  AND     parent_device_id = #{parentDeviceId}
+              </if>
+              <if test="parentDeviceId == null or parentDeviceId == ''">
+                  AND     parent_device_id is NULL
+              </if>
+          </where>
           UNION ALL
           SELECT  a.device_id
                    ,path || ' > ' || DEV01.code_name || '(' || a.device_id || ')'
@@ -60,22 +67,6 @@
                 , B.sub_url as subUrl
                 , B.stream_server_url as streamServerUrl
                 , B.link_url as linkUrl
-                  <if test="ignoreEventValue != null and ignoreEventValue != ''">
-                      , 0 as evtValue
-                  </if>
-                  <if test="ignoreEventValue == null">
-                      , (
-                          SELECT value
-                          FROM  isaver.event_log c
-                          INNER JOIN isaver.event_log_info d
-                          ON    c.event_log_id = d.event_log_id
-                          AND	 d.key = 'value'
-                          WHERE c.device_id = b.device_id
-                          AND	c.event_datetime between (to_char(now(),'yyyy-mm-dd'))::timestamp and now()
-                          ORDER BY event_datetime DESC
-                          limit 1
-                      ) as evtValue
-                  </if>
       FROM  DEVICE_HIERACHY A
       INNER JOIN  isaver.device B
       ON	A.deviceId = b.device_id
@@ -238,7 +229,7 @@
             , #{devicePassword,jdbcType=VARCHAR}
             , #{deviceDesc,jdbcType=VARCHAR}
             , 'N'
-            , 'N'
+            , 'Y'
             , 'N'
             <if test="mainFlag != null and mainFlag != ''">
                 , #{mainFlag,jdbcType=VARCHAR}
@@ -578,6 +569,17 @@
         WHERE   del_yn='N'
         AND     device_code = 'DEV002'
         ORDER BY device_id ASC
+    </select>
+
+
+    <!--
+      장치 목록을 가져온다. 이벤트로그용
+      @author psb
+    -->
+    <select id="findListDeviceForEventLog" resultType="java.lang.String">
+        select  device_id as deviceId
+        FROM    isaver.device
+        WHERE   device_code = #{deviceCode}
     </select>
 
     <!--

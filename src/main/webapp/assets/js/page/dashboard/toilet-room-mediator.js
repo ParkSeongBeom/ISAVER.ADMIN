@@ -139,14 +139,7 @@ var ToiletRoomMediator = (
          * @author psb
          */
         this.setAnimate = function(data){
-            var status = null;
-            for(var index in data['infos']){
-                var info = data['infos'][index];
-                if(info['key']=="status"){
-                    status = info['value'];
-                }
-            }
-            modifyData(status, data['eventDatetime']);
+            modifyData(data['status'], data['eventDatetime']);
         };
 
         var modifyData = function(status, eventDatetime){

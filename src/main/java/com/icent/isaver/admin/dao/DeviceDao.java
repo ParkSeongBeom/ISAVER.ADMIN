@@ -118,6 +118,12 @@ public interface DeviceDao {
 
     /**
      *
+     * @return
+     */
+    List<String> findListDeviceForEventLog(Map<String, String> parameters);
+
+    /**
+     *
      * @param parameters
      * @return
      */

@@ -20,6 +20,7 @@ var StompHelper = (
             login: 'icent',
             passcode: 'dkdltpsxm'
         };
+        let SOKCET_CONNECTED = false;
         let STOMP_PORT = 15674;
         let _self = this;
 
@@ -38,6 +39,7 @@ var StompHelper = (
             ws.reconnect_delay = RECONNECT_DELAY;
             ws.connect(CONNECT_HEADERS, function() {
                 console.log('[StompHelper] Stomp WebSocket Connect');
+                SOKCET_CONNECTED = true;
                 for(var index in topicList){
                     _self.wsConnect(index);
                 }
@@ -54,6 +56,7 @@ var StompHelper = (
                 }catch(e){}
             }, function(e){
                 console.log('[StompHelper] Stomp WebSocket DisConnect');
+                SOKCET_CONNECTED = false;
                 for(var index in topicList){
                     setConnectStatus(index,false);
                 }
@@ -127,20 +130,20 @@ var StompHelper = (
         /**
          * send message
          * @author psb
-         * @param _target
+         * @param _topic
          * @param _text
          */
-        this.sendMessage = function(_target, _text, _count){
-            if(_target==null || topicList[_target]==null){
-                console.error("[StompHelper][sendMessage] target is null or not in topicList");
+        this.sendMessage = function(_topic, _text, _count){
+            if(_topic==null){
+                console.error("[StompHelper][sendMessage] topic is null");
                 return false;
             }
 
-            if(_self.isConnect(_target)){
+            if(SOKCET_CONNECTED){
                 if(typeof _text=="object"){
                     _text = JSON.stringify(_text);
                 }
-                ws.send("/topic/"+_target,{},_text);
+                ws.send("/topic/"+_topic,{},_text);
             }else{
                 if(_count == null){
                     _count = SEND_MESSAGE_RETRY['cnt'];
@@ -149,10 +152,10 @@ var StompHelper = (
 
                 if(_count > 0){
                     setTimeout(function(){
-                        _self.sendMessage(_target, _text, _count - 1);
+                        _self.sendMessage(_topic, _text, _count - 1);
                     },SEND_MESSAGE_RETRY['delay']);
                 }else{
-                    console.error('[StompHelper][sendMessage] failure - retry count over',_target, _text);
+                    console.error('[StompHelper][sendMessage] failure - retry count over',_topic, _text);
                 }
             }
         };

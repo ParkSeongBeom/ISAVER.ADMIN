@@ -22,87 +22,94 @@
 <!-- section Start -->
 <section class="container sub_area">
     <!-- 트리 영역 Start -->
-    <article class="table_area tree_table">
-        <div class="table_title_area">
-            <div class="table_btn_set">
-                <button class="btn btype01 bstyle01" onclick="javascript:search(); return false;"><spring:message code="common.button.search"/></button>
+    <article class="flex-area-w eventStatistics">
+        <!-- 목록 -->
+        <section class="box-list">
+            <!-- 목록 상단 버튼 영역 -->
+            <div class="set-btn type-01">
+                <button class="ico-plus" onclick="detailRender();"></button>
             </div>
-        </div>
-        <div class="table_contents">
-            <div class="tree_box">
-                <div class="search_contents">
-                    <p>
-                        <span><spring:message code="statistics.column.area"/></span>
-                        <spring:message code="common.selectbox.select" var="allSelectText"/>
-                        <span><isaver:areaSelectBox htmlTagId="areaId" allModel="true" allText="${allSelectText}"/></span>
-                    </p>
-                    <p>
-                        <span><spring:message code="statistics.column.datetime"/></span>
-                        <span>
-                            <select id="mode">
-                                <option value="hour"><spring:message code="statistics.selectbox.hour"/></option>
-                                <option value="day"><spring:message code="statistics.selectbox.day"/></option>
-                                <option value="dow"><spring:message code="statistics.selectbox.dow"/></option>
-                                <option value="week"><spring:message code="statistics.selectbox.week"/></option>
-                                <option value="month"><spring:message code="statistics.selectbox.month"/></option>
-                                <option value="year"><spring:message code="statistics.selectbox.year"/></option>
-                            </select>
-                        </span>
-                    </p>
+            <!--
+            목록 영역
 
-                    <!-- 기간 선택에 따라 항목 나타남 -->
-                    <p>
-                        <span>
-                            <input type="text" name="startDt" class="datepicker dpk_normal_type" disabled placeholder='<spring:message code="statistics.placeholder.start"/>'/>
+            1. 선택된 항목에 <li>에 class "on"을 추가 시 반응
+            2. 선택 차트 저장 항목에 선택 차트 class 부여.
+                ex) <i class="ico-chartl"></i> 라인차트 선택되어 자장 시 class "ico-chartl" 삽입하여
+                    해당 항목에 선택 저장된 차트 아이콘 표출.
+            -->
+            <ul class="set-ul eventstatistics" id="statisticsList"></ul>
+        </section>
+
+        <!-- 상세 -->
+        <section class="box-detail">
+            <!-- 상세 상단 버튼 영역 -->
+            <div class="set-btn type-01">
+                <button class="ico-play" title="<spring:message code="statistics.placeholder.play"/>" onclick="search();"></button>
+                <button class="ico-copy" title="<spring:message code="statistics.placeholder.copy"/>" onclick="addStatistics();"></button>
+                <button class="ico-save" title="<spring:message code="statistics.placeholder.save"/>" onclick="saveStatistics();"></button>
+            </div>
+            <!--
+            1. 상세 각 항목은 <div class="set-item"> 안에 삽입.
+            2. 열고 닫기가 필요한 항목은  <div class="set-itembox"> 레이어 안에 삽입.
+                <button class="ico-open"> 클릭 시 열고 닫기 작동.
+            -->
+            <div class="set-area">
+                <input type="hidden" id="statisticsId" />
+                <div class="set-item">
+                    <h4>Name</h4>
+                    <div>
+                        <input type="text" id="statisticsName" />
+                    </div>
+                    <h4>Type</h4>
+                    <div>
+                        <select class="select-chart" id="chartType">
+                            <option value=""><spring:message code="common.selectbox.select"/></option>
+                            <option value="line">Line Chart</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="pie">Pie Chart</option>
+                            <option value="table">Data Table</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="set-itembox" id="xAxis">
+                    <h4>X-Axis</h4>
+                    <div class="set-item">
+                        <h4>Interval</h4>
+                        <div>
+                            <select name="interval">
+                                <option value="day">Day</option>
+                                <option value="week">Week</option>
+                                <option value="month">Month</option>
+                                <option value="year">Year</option>
+                            </select>
+                        </div>
+                        <h4>Term</h4>
+                        <div>
+                            <input type="text" id="startDatetime" class="datepicker dpk_normal_type" disabled placeholder='<spring:message code="statistics.placeholder.start"/>'/>
                             <select id="startDtHour"></select>
-                        </span>
-                        <span>
-                            <input type="text" name="endDt" class="datepicker dpk_normal_type" disabled placeholder='<spring:message code="statistics.placeholder.end"/>'/>
+                        </div>
+                        <div>
+                            <input type="text" id="endDatetime" class="datepicker dpk_normal_type" disabled placeholder='<spring:message code="statistics.placeholder.end"/>'/>
                             <select id="endDtHour"></select>
-                        </span>
-                    </p>
-
-                    <p>
-                        <span><spring:message code="statistics.column.event"/></span>
-                        <span>
-                            <select id="eventSelect">
-                                <option value=""><spring:message code="common.selectbox.select"/></option>
-                                <c:forEach var="event" items="${eventList}">
-                                    <option value="${event.eventId}" statisticsName="${event.statisticsName}">${event.eventName} - (${event.statisticsName})</option>
-                                </c:forEach>
-                            </select>
-                        </span>
-                    </p>
-
-                    <!-- 이벤트 선택에 따라 항목 나타남 -->
-                    <p class="add_p"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- 차트 -->
+        <section class="box-chart"></section>
+
+        <!-- 로딩바 -->
+        <section class="loding_bar"></section>
+
+        <!-- 조회전 조건 입력 안내 멘트 -->
+        <section class="ment box-ment">
+            <div>Click the after-view button</div>
+        </section>
     </article>
     <!-- 트리 영역 End -->
-
-    <!-- 조회전 조건 입력 안내 멘트 추가    조회 후 아래 <article> display : none 처리 -->
-    <article class="ment">
-        <div>Click the after-view button</div>
-    </article>
-
-    <article class="chart_table_area type02" style="display:none;">
-        <div class="table_title_area">
-            <div class="month_btn_set">
-                <button onclick="javascript:search('before'); return false;"></button>
-                <p id="searchDatetime"></p>
-                <button onclick="javascript:search('after'); return false;"></button>
-            </div>
-            <div class="depthtabs_btn_set">
-                <button rel="chartView"><spring:message code="statistics.tab.graph"/></button>
-                <button rel="tableView"><spring:message code="statistics.tab.table"/></button>
-            </div>
-        </div>
-
-        <div id="eventStatisticsList" class="depthtabs_set"></div>
-        <!-- 차트 1SET End-->
-    </article>
 
     <div id="excelEventStatisticsList" style="display:none;"></div>
 </section>
@@ -112,434 +119,451 @@
     var subMenuId = String('${subMenuId}');
 
     var urlConfig = {
-        'listUrl':'${rootPath}/eventStatistics/search.json'
+        'listUrl':'${rootPath}/eventStatistics/list.json'
+        ,'searchUrl':'${rootPath}/eventStatistics/search.json'
+        ,'addUrl':'${rootPath}/eventStatistics/add.json'
+        ,'saveUrl':'${rootPath}/eventStatistics/save.json'
+        ,'removeUrl':'${rootPath}/eventStatistics/remove.json'
     };
 
     var messageConfig = {
-        'emptyArea':'<spring:message code="statistics.message.emptyArea"/>'
-        ,'emptyEvent':'<spring:message code="statistics.message.emptyEvent"/>'
-        ,'notExistEvent':'<spring:message code="statistics.message.notExistEvent"/>'
-        ,'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
+        'searchFailure':'<spring:message code="statistics.message.searchFailure"/>'
         ,'emptyStartDatetime':'<spring:message code="statistics.message.emptyStartDatetime"/>'
         ,'emptyEndDatetime':'<spring:message code="statistics.message.emptyEndDatetime"/>'
         ,'earlyDatetime':'<spring:message code="statistics.message.earlyDatetime"/>'
-        ,'hourViewCondition':'<spring:message code="statistics.message.hourViewCondition"/>'
-        ,'dayViewCondition':'<spring:message code="statistics.message.dayViewCondition"/>'
-        ,'weekViewCondition':'<spring:message code="statistics.message.weekViewCondition"/>'
-        ,'dowViewCondition':'<spring:message code="statistics.message.dowViewCondition"/>'
-        ,'monthViewCondition':'<spring:message code="statistics.message.monthViewCondition"/>'
-        ,'yearViewCondition':'<spring:message code="statistics.message.yearViewCondition"/>'
+        ,   addConfirmMessage  :'<spring:message code="common.message.addConfirm"/>'
+        ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
+        ,   removeConfirmMessage  :'<spring:message code="common.message.removeConfirm"/>'
+        ,   addComplete        :'<spring:message code="common.message.addComplete"/>'
+        ,   saveComplete        :'<spring:message code="common.message.saveComplete"/>'
+        ,   removeComplete        :'<spring:message code="common.message.removeComplete"/>'
+        ,   addFailure         :'<spring:message code="common.message.addFailure"/>'
+        ,   saveFailure         :'<spring:message code="common.message.saveFailure"/>'
+        ,   removeFailure         :'<spring:message code="common.message.removeFailure"/>'
     };
 
-    var searchParam = {
-        'mode' : ''
-        ,'areaId' : ''
-        ,'eventIds' : ''
-        ,'startDatetime' : null
-        ,'endDatetime' : null
-        ,'chartData' : null
+    var chartClass = {
+        'line' : 'ico-chartl'
+        ,'bar' : 'ico-chartb'
+        ,'table' : 'ico-chartt'
     };
+    var statisticsList;
 
-    var chartDivTag = $("<div/>",{class:'depthTabsChild chartView'}).append(
-        $("<div/>",{class:'chart_box chart01 chartDiv'})
+    var conditionTag = $("<div/>",{name:'condition'}).append(
+        $("<input/>",{type:'text',name:'key'})
     ).append(
-        $("<div/>",{class:'chart_label'})
-    );
-
-    var tableDivTag = $("<div/>",{class:'depthTabsChild tableView'}).append(
-        $("<div/>",{class:'table_title_area'}).append(
-            $("<div/>",{class:'table_btn_set'}).append(
-                $("<button/>",{class:'btn btype01 bstyle03', onclick:"javascript:excelDownload(); return false;"}).text("<spring:message code="common.button.excelDownload"/>")
-            )
-        )
-    ).append(
-        $("<div/>",{class:'d_defalut d_type01'}).append(
-            $("<div/>",{class:'d_thead'}).append(
-                $("<div/>",{class:'theadDiv'}).append(
-                    $("<span/>").text("<spring:message code="statistics.column.gubn"/>")
-                )
-            )
+        $("<select/>",{name:'type'}).append(
+            $("<option/>",{value:'$eq'}).text("=")
         ).append(
-            $("<div/>",{class:'d_tbody'}).append(
-                $("<div/>",{id:"gubnBody"})
-            )
+            $("<option/>",{value:'$gt'}).text("<")
+        ).append(
+            $("<option/>",{value:'$lt'}).text(">")
+        ).append(
+            $("<option/>",{value:'$gte'}).text("<=")
+        ).append(
+            $("<option/>",{value:'$lte'}).text(">=")
         )
+    ).append(
+        $("<input/>",{type:'text',name:'value'})
+    ).append(
+        $("<button/>",{class:'ico-close'})
     );
 
     $(document).ready(function(){
-        modifyElementClass($("body"),'chart_mode','add');
-
-        calendarHelper.load($('input[name=startDt]'));
-        calendarHelper.load($('input[name=endDt]'));
-
+        calendarHelper.load($('#startDatetime'));
+        calendarHelper.load($('#endDatetime'));
         setHourDataToSelect($('#startDtHour'),"00");
         setHourDataToSelect($('#endDtHour'),"23");
-
-        $("#mode").on("change",function(){
-            switch ($(this).val()){
-                case 'hour':
-                    $("#startDtHour").prop("disabled",false);
-                    $("#endDtHour").prop("disabled",false);
-                    break;
-                case 'day':
-                case 'dow':
-                case 'week':
-                case 'month':
-                case 'year':
-                    $("#startDtHour").prop("disabled",true);
-                    $("#endDtHour").prop("disabled",true);
-                    break;
-            }
-        });
-
-        $(".depthtabs_btn_set > button").on('click',function(){
-            if(!$(this).hasClass("tabs_on")){
-                tabShowHide(this);
-            }
-        });
-
-        $("#areaId").on("change",function(){
-            $(".add_p > span").remove();
-            $("#eventSelect option").not("[value='']").prop("disabled",true);
-
-            switch ($(this).find("option:selected").attr("templateCode")){
-                case 'TMP001': // 신호등 (default)
-                    $("#eventSelect option").prop("disabled",false);
-                    break;
-                case 'TMP002': // Safe-Eye
-                    $("#eventSelect option[value='EVT013'], option[value='EVT014']").prop("disabled",false);
-                    break;
-                case 'TMP003': // Blinker
-                    $("#eventSelect option[value='EVT300'], option[value='EVT301']").prop("disabled",false);
-                    break;
-                case 'TMP004': // Detector
-                    $("#eventSelect option[value='EVT302'], option[value='EVT303'], option[value='EVT304'], option[value='EVT305'], option[value='EVT306'], option[value='EVT307'], option[value='EVT308'], option[value='EVT309'], option[value='EVT310'], option[value='EVT311'], option[value='EVT312'], option[value='EVT313']").prop("disabled",false);
-                    break;
-                case 'TMP005': // Safe-Guard
-                    $("#eventSelect option[value='EVT314'], option[value='EVT315'], option[value='EVT316'], option[value='EVT317']").prop("disabled",false);
-                    break;
-                case 'TMP008': // 화장실재실
-                    $("#eventSelect option[value='EVT017'], option[value='EVT018'], option[value='EVT019'], option[value='EVT020']").prop("disabled",false);
-                    break;
-                case 'TMP009': // 자원모니터링
-                    $("#eventSelect option[value='EVT800'], option[value='EVT801'], option[value='EVT802'], option[value='EVT803']").prop("disabled",false);
-                    break;
-            }
-        });
-
-        $("#eventSelect").on("change",function(){
-            var eventId = $(this).val();
-            var eventName = $(this).find("option:selected").text();
-            var statisticsName = $(this).find("option:selected").attr("statisticsName");
-
-            if($(".add_p input[name='eventId']").length>0 && $(".add_p input[name='eventId']:eq(0)").attr("statisticsName")!=statisticsName){
-                alertMessage("notExistEvent");
-            }else{
-                var eventTag = templateHelper.getTemplate("statisticsEvent");
-                eventTag.find("input[name='eventId']").attr("statisticsName",statisticsName);
-                eventTag.find("input[name='eventId']").attr("eventId",eventId);
-                eventTag.find("input[name='eventId']").val(eventName);
-                eventTag.find(".del").on("click",function(){
-                    var parentSpan = $(this).parent();
-                    var eventId = parentSpan.find("input[name='eventId']").attr("eventId");
-                    parentSpan.remove();
-                    $("#eventSelect option[value='"+eventId+"']").prop("disabled",false);
-                });
-                $(".add_p").append(eventTag);
-
-                $(this).find("option:selected").prop("disabled",true);
-            }
-
-            $(this).val("");
-            event.stopPropagation();
-        });
-
-        $(".depthtabs_btn_set > button:eq(0)").trigger('click');
+        getList();
     });
 
-    /*
-     tab Show Hide
-     @author psb
-     */
-    function tabShowHide(_this){
-        var rel = $(_this).attr("rel");
-        $(".depthtabs_btn_set > button").removeClass("tabs_on");
-        $(_this).addClass("tabs_on");
+    function getParam(){
+        var jsonData = {
+            "xAxis" : {
+                'interval' : $("select[name='interval'] option:selected").val()
+                ,'startDatetime' : $("#startDatetime").val() + " " + $("#startDtHour option:selected").val()+":00:00"
+                ,'endDatetime' : $("#endDatetime").val() + " " + $("#endDtHour option:selected").val()+":59:59"
+            },
+            "yAxis" : []
+        };
 
-        $(".depthTabsChild").hide();
-        $("."+rel).show();
+        var index = 0;
+        $.each($("div[name='yAxis']"),function(){
+            let yAxis = {
+                'aggregation' : $(this).find("select[name='aggregation'] option:selected").val()
+                ,'field' : $(this).find("input[name='field']").val()
+                ,'label' : $(this).find("input[name='label']").val()
+                ,'index' : index
+                ,'condition' : []
+            };
+            $.each($(this).find("div[name='condition']"),function(){
+                let condition = {
+                    'key' : $(this).find("input[name='key']").val()
+                    ,'value' : $(this).find("input[name='value']").val()
+                    ,'type' : $(this).find("select[name='type'] option:selected").val()
+                };
+                yAxis['condition'].push(condition);
+            });
+            jsonData['yAxis'].push(yAxis);
+            index++;
+        });
 
-        if(rel=="chartView" && searchParam['chartData']!=null){
-            chartRender(searchParam['chartData']);
-        }
+        return {
+            'statisticsId' : $("#statisticsId").val()
+            ,'statisticsName' : $("#statisticsName").val()
+            ,'chartType' : $("#chartType option:selected").val()
+            ,'jsonData' : JSON.stringify(jsonData)
+        };
     }
 
-    function dateValidate(mode, start, end){
-        var _start = new Date(start);
-        switch (mode){
-            case 'hour':
-                _start.setHours(_start.getHours()+24);
-                break;
-            case 'day':
-                _start.setDate(_start.getDate()+31);
-                break;
-            case 'dow':
-                _start.setDate(_start.getDate()+14);
-                break;
-            case 'week':
-                _start.setDate(_start.getDate()+(10*7));
-                break;
-            case 'month':
-                _start.setMonth(_start.getMonth()+12);
-                break;
-            case 'year':
-                _start.setYear(_start.getFullYear()+10);
-                break;
-        }
-
-        if(_start < end){
-            return false;
-        }else{
-            return true;
-        }
+    /*
+     get List
+     @author psb
+     */
+    function getList(){
+        callAjax('list',{mode:'search'});
     }
 
     /*
      search
      @author psb
      */
-    function search(type){
-        switch (type){
-            case 'before':
-                switch (searchParam['mode']){
-                    case 'hour':
-                    case 'day':
-                        searchParam['startDatetime'].setDate(searchParam['startDatetime'].getDate()-1);
-                        searchParam['endDatetime'].setDate(searchParam['endDatetime'].getDate()-1);
-                        break;
-                    case 'dow':
-                    case 'week':
-                        searchParam['startDatetime'].setDate(searchParam['startDatetime'].getDate()-7);
-                        searchParam['endDatetime'].setDate(searchParam['endDatetime'].getDate()-7);
-                        break;
-                    case 'month':
-                        searchParam['startDatetime'].setMonth(searchParam['startDatetime'].getMonth()-1);
-                        searchParam['endDatetime'].setMonth(searchParam['endDatetime'].getMonth()-1);
-                        break;
-                    case 'year':
-                        searchParam['startDatetime'].setFullYear(searchParam['startDatetime'].getFullYear()-1);
-                        searchParam['endDatetime'].setFullYear(searchParam['endDatetime'].getFullYear()-1);
-                        break;
-                }
-                break;
-            case 'after':
-                switch (searchParam['mode']){
-                    case 'hour':
-                    case 'day':
-                        searchParam['startDatetime'].setDate(searchParam['startDatetime'].getDate()+1);
-                        searchParam['endDatetime'].setDate(searchParam['endDatetime'].getDate()+1);
-                        break;
-                    case 'dow':
-                    case 'week':
-                        searchParam['startDatetime'].setDate(searchParam['startDatetime'].getDate()+7);
-                        searchParam['endDatetime'].setDate(searchParam['endDatetime'].getDate()+7);
-                        break;
-                    case 'month':
-                        searchParam['startDatetime'].setMonth(searchParam['startDatetime'].getMonth()+1);
-                        searchParam['endDatetime'].setMonth(searchParam['endDatetime'].getMonth()+1);
-                        break;
-                    case 'year':
-                        searchParam['startDatetime'].setFullYear(searchParam['startDatetime'].getFullYear()+1);
-                        searchParam['endDatetime'].setFullYear(searchParam['endDatetime'].getFullYear()+1);
-                        break;
-                }
-                break;
-            default :
-                var eventIds =  $(".add_p input[name='eventId']").map(function(){return $(this).attr("eventId")}).get();
-                var mode = $("#mode option:selected").val();
-                var areaId = $("#areaId option:selected").val();
-                var startDatetime = $("input[name='startDt']").val();
-                var endDatetime = $("input[name='endDt']").val();
-                var startDatetimeHour = " " + $("#startDtHour").val() + ":00:00";
-                var endDatetimeHour = " " + $("#endDtHour").val() + ":00:00";
-
-                if(areaId==null || areaId==""){
-                    alertMessage("emptyArea");
-                    return false;
-                }
-                if(eventIds==null || eventIds==""){
-                    alertMessage("emptyEvent");
-                    return false;
-                }
-                if(startDatetime==null || startDatetime==""){
-                    alertMessage("emptyStartDatetime");
-                    return false;
-                }
-                if(endDatetime==null || endDatetime==""){
-                    alertMessage("emptyEndDatetime");
-                    return false;
-                }
-
-                var start = new Date(startDatetime+startDatetimeHour);
-                var end = new Date(endDatetime+endDatetimeHour);
-                if(start>end){
-                    alertMessage("earlyDatetime");
-                    return false;
-                }
-
-                if(!dateValidate(mode, start, end)){
-                    alertMessage(mode+"ViewCondition");
-                    return false;
-                }
-
-                searchParam['mode'] = mode;
-                searchParam['areaId'] = areaId;
-                searchParam['eventIds'] = eventIds.join(",");
-                searchParam['startDatetime'] = start;
-                searchParam['endDatetime'] = end;
-                break;
-        }
-
-        var param = {
-            'mode' : searchParam['mode']
-            ,'areaId' : searchParam['areaId']
-            ,'eventIds' : searchParam['eventIds']
-            ,'startDatetime' : searchParam['startDatetime'].format("yyyy-MM-dd HH:mm:ss")
-            ,'endDatetime' : searchParam['endDatetime'].format("yyyy-MM-dd HH:mm:ss")
-        };
-
-        $("#searchDatetime").text(searchParam['startDatetime'].format("yyyy.MM.dd") + " ~ " + searchParam['endDatetime'].format("yyyy.MM.dd"));
-        callAjax('list',param);
+    function search(){
+        $(".box-chart").empty().removeClass("on");
+        $(".loding_bar").addClass("on");
+        callAjax('search',getParam());
     }
 
+    function addStatistics(){
+        callAjax('add',getParam());
+    }
+
+    function saveStatistics(){
+        if($("#statisticsId").val()!=null && $("#statisticsId").val()!=''){
+            callAjax('save',getParam());
+        }else{
+            addStatistics();
+        }
+    }
 
     /*
      list Render
      @author psb
      */
     function listRender(data){
-        $("#eventStatisticsList").empty();
+        $("#statisticsList").empty();
+        statisticsList = {};
 
-        var chartDivHtml = chartDivTag.clone();
-        var tableDivHtml = tableDivTag.clone();
-        searchParam['chartData'] = {
-            labels: []
-            ,series: []
-        };
+        for(var index in data){
+            let statistics = data[index];
+            statisticsList[statistics['statisticsId']] = statistics;
 
-        var resultList = data['eventStatisticsList'];
-        var eventSeries = {};
-
-        if($(".add_p input[name='eventId']:eq(0)").attr("statisticsName")=="Count"){
-            tableDivHtml.find("#gubnBody").append(
-                $("<span/>").text("합계")
-            );
+            $("#statisticsList").append(
+                $("<li/>").append(
+                    $("<div/>").append(
+                        $("<p/>").text(statistics['statisticsName']).click({'statisticsId':statistics['statisticsId']},function(evt){
+                            $("#statisticsList > li").removeClass("on");
+                            $(this).parent().parent().addClass("on");
+                            detailRender(evt.data.statisticsId);
+                        })
+                    ).append(
+                        $("<i/>").addClass(chartClass[statistics['chartType']])
+                    ).append(
+                        $("<button/>").click({'statisticsId':statistics['statisticsId'],title:"<spring:message code='statistics.placeholder.remove'/>"},function(evt){
+                            if(confirm(messageConfig['removeConfirmMessage'])){
+                                callAjax('remove',{'statisticsId':evt.data.statisticsId});
+                            }
+                        })
+                    )
+                )
+            )
         }
+    }
 
-        for(var index in resultList){
-            var resultMap = resultList[index];
-            var infos = resultMap['infos'];
-            var datetimeText;
-            switch (searchParam['mode']){
-                case 'hour':
-                    datetimeText = new Date(resultMap['stDt']).format("HH") + "<spring:message code="common.column.hour"/>" ;
-                    break;
-                case 'day':
-                    datetimeText = new Date(resultMap['stDt']).format("dd") + "<spring:message code="common.column.day"/>" ;
-                    break;
-                case 'dow':
-                    datetimeText = new Date(resultMap['stDt']).format("e");
-                    break;
-                case 'week':
-                    datetimeText = resultMap['week'] + "<spring:message code="common.column.week"/>" ;
-                    break;
-                case 'month':
-                    datetimeText = resultMap['stDtStr'].split("-")[1] + "<spring:message code="common.column.month"/>" ;
-                    break;
-                case 'year':
-                    datetimeText = resultMap['stDtStr'] + "<spring:message code="common.column.year"/>" ;
-                    break;
+    function detailRender(statisticsId){
+        $(".box-detail div[name='yAxis']").remove();
+
+        if(statisticsId==null || statisticsList[statisticsId]==null){
+            // addMode
+            $(".ico-copy").hide();
+            $("#statisticsId").val("");
+            $("#statisticsName").val("");
+            $("#chartType").val("").prop("selected", true);
+            $("#xAxis").find("select[name='interval']:eq(0)").prop("selected", true);
+            $("#startDatetime").val("");
+            $("#startDtHour").val("00").prop("selected", true);
+            $("#endDatetime").val("");
+            $("#endDtHour").val("23").prop("selected", true);
+            addYaxis(null, false);
+        }else{
+            // saveMode
+            $(".ico-copy").show();
+            var statistics = statisticsList[statisticsId];
+            $("#statisticsId").val(statistics['statisticsId']);
+            $("#statisticsName").val(statistics['statisticsName']);
+            $("#chartType").val(statistics['chartType']).prop("selected", true);
+
+            var jsonData = statistics['jsonData'];
+            try{
+                jsonData = JSON.parse(jsonData);
+            }catch(e){
+                console.warn("[detailRender] json parse error - " + jsonData);
+                return false;
             }
+            let xAxis = jsonData['xAxis'];
+            let startDt = new Date(xAxis['startDatetime']);
+            let endDt = new Date(xAxis['endDatetime']);
+            $("#startDatetime").val(startDt.format("yyyy-MM-dd"));
+            $("#startDtHour").val(startDt.format("HH")).prop("selected", true);
+            $("#endDatetime").val(endDt.format("yyyy-MM-dd"));
+            $("#endDtHour").val(endDt.format("HH")).prop("selected", true);
+            $("select[name='interval']").val(xAxis['interval']).prop("selected", true);
 
-            tableDivHtml.find("#gubnBody").append(
-                $("<span/>",{desc:datetimeText}).text(datetimeText)
-            );
-
-            searchParam['chartData']['labels'].push(datetimeText);
-
-            for(var i in infos){
-                var info = infos[i];
-                if(tableDivHtml.find(".theadDiv span[eventId='"+info['eventId']+"']").length==0){
-                    tableDivHtml.find(".theadDiv").append(
-                        $("<span/>",{eventId:info['eventId']}).text(info['eventName'])
-                    );
-                }
-
-                if(chartDivHtml.find(".chart_label span[eventId='"+info['eventId']+"']").length==0){
-                    chartDivHtml.find(".chart_label").append(
-                        $("<span/>",{eventId:info['eventId']}).text(info['eventName'])
-                    );
-                }
-
-                var value = info['value']!=null?info['value']:0;
-
-                if(tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").length==0){
-                    tableDivHtml.find(".d_tbody").append(
-                        $("<div/>",{eventId:info['eventId']})
-                    );
-
-                    if($(".add_p input[name='eventId']:eq(0)").attr("statisticsName")=="Count"){
-                        tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").append(
-                            $("<span/>",{id:"sum"}).text(0)
-                        );
-                    }
-                }
-
-                tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"']").append(
-                    $("<span/>").text(value)
-                );
-
-                var sumValue = tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"'] span[id='sum']").text();
-                tableDivHtml.find(".d_tbody div[eventId='"+info['eventId']+"'] span[id='sum']").text(Number(sumValue)+Number(value));
-
-                if(eventSeries[info['eventId']]==null){
-                    eventSeries[info['eventId']] = [value];
-                }else{
-                    eventSeries[info['eventId']].push(value);
-                }
+            let yAxis = jsonData['yAxis'];
+            for(var index in yAxis){
+                addYaxis(yAxis[index]);
             }
         }
 
-        for(var index in eventSeries){
-            searchParam['chartData']['series'].push(eventSeries[index]);
-        }
+        $(".box-detail").addClass("on");
+    }
 
-        $("#eventStatisticsList").append(chartDivHtml).append(tableDivHtml);
-        $("article.ment").hide();
-        $(".chart_table_area").show();
-        tabShowHide($(".depthtabs_btn_set > button.tabs_on"));
+    function addYaxis(data, focusFlag){
+        let yAxisTag = $("<div/>",{class:'set-itembox',name:'yAxis'}).append(
+            $("<h4/>").text("Y-Axis")
+        ).append(
+            $("<button/>",{class:'ico-open on',title:"<spring:message code='statistics.placeholder.openAndClose'/>"}).click(function(){
+                $(this).toggleClass("on");
+            })
+        ).append(
+            $("<button/>",{class:'ico-plus',title:"<spring:message code='statistics.placeholder.add'/>"}).click(function(){
+                addYaxis(null, true);
+            })
+        ).append(
+            $("<button/>",{class:'ico-close',title:"<spring:message code='statistics.placeholder.remove'/>"}).click(function(){
+                if($("div[name='yAxis']").length>1){
+                    $(this).parent().remove();
+                }
+            })
+        ).append(
+            $("<div/>",{class:'set-item'}).append(
+                $("<h4/>").text("Aggregation")
+            ).append(
+                $("<div/>").append(
+                    $("<select/>",{name:'aggregation'}).append(
+                        $("<option/>",{value:'count'}).text("Count")
+                    ).append(
+                        $("<option/>",{value:'avg'}).text("Avg")
+                    ).append(
+                        $("<option/>",{value:'sum'}).text("Sum")
+                    ).append(
+                        $("<option/>",{value:'min'}).text("Min")
+                    ).append(
+                        $("<option/>",{value:'max'}).text("Max")
+                    )
+                )
+            ).append(
+                $("<h4/>").text("Field")
+            ).append(
+                $("<div/>").append(
+                    $("<input/>",{type:'text',name:'field'})
+                )
+            ).append(
+                $("<h4/>").text("Custom Label")
+            ).append(
+                $("<div/>").append(
+                    $("<input/>",{type:'text',name:'label'})
+                )
+            ).append(
+                $("<h4/>").text("Condition")
+            ).append(
+                $("<button/>",{class:'ico-plus'}).click(function(){
+                    let condition = conditionTag.clone();
+                    condition.find(".ico-close").click(function(){
+                        $(this).parent().remove();
+                    });
+                    $(this).parent().append(condition);
+                })
+            )
+        );
+
+        if(data!=null){
+            yAxisTag.find("select[name='aggregation']").val(data['aggregation']).prop("selected",true);
+            yAxisTag.find("input[name='field']").val(data['field']);
+            yAxisTag.find("input[name='label']").val(data['label']);
+            for(var index in data['condition']){
+                let condition = data['condition'][index];
+                let _conditionTag = conditionTag.clone();
+                _conditionTag.find(".ico-close").click(function(){
+                    $(this).parent().remove();
+                });
+                _conditionTag.find("input[name='key']").val(condition['key']);
+                _conditionTag.find("select[name='type']").val(condition['type']).prop("selected",true);
+                _conditionTag.find("input[name='value']").val(condition['value']);
+                yAxisTag.find(".set-item").append(_conditionTag);
+            }
+        }
+        yAxisTag.insertBefore($("#xAxis"));
+        if(focusFlag){
+            yAxisTag.find("select[name='aggregation']").focus();
+        }
     }
 
     /*
      chart Render
      @author psb
      */
-    function chartRender(data){
-        new Chartist.Bar('.chartDiv', data, {
-            height: 400,
-            seriesBarDistance: 10,
-            axisX: {
-                offset: 60
-            },
-            axisY: {
-                onlyInteger: true,
-                offset: 40,
-                scaleMinSpace: 15
-            },
-            plugins: [
-                Chartist.plugins.tooltip()
-            ]
-        });
+    function chartRender(paramBean, chartList, dataList){
+        function getDateStr(_interval, date){
+            let datetimeText;
+            switch (_interval){
+                case 'day':
+                    datetimeText = date.format("MM-dd HH") + "<spring:message code="common.column.hour"/>";
+                    break;
+                case 'week':
+                case 'month':
+                    datetimeText = date.format("MM-dd") + "<spring:message code="common.column.day"/>";
+                    break;
+                case 'year':
+                    datetimeText = date.format("yyyy-MM") + "<spring:message code="common.column.month"/>";
+                    break;
+            }
+            return datetimeText;
+        }
+
+        let chartTag = $("<div/>",{class:'set-chart'}).append(
+            $("<div/>",{class:'chart_label header'})
+        );
+
+        var _seriesList = [];
+        var _sumSeriesList = [];
+        var _labels = [];
+        for(var index in dataList){
+            _labels.push(getDateStr(paramBean['interval'], new Date(dataList[index])));
+        }
+        for(var index in chartList){
+            var chart = chartList[index];
+            var series = [];
+            var sumValue = 0;
+            for(var i in chart['dataList']){
+                series.push({meta:getDateStr(paramBean['interval'], new Date(chart['dataList'][i]['_id'])),label:index,value:chart['dataList'][i]['value']});
+                sumValue += Number(chart['dataList'][i]['value']);
+            }
+            _seriesList.push(series);
+            _sumSeriesList.push(sumValue);
+            chartTag.find(".header").append(
+                $("<span/>",{label:chart['label']}).text(chart['label']).append(
+                    $("<b/>").text(sumValue)
+                )
+            );
+        }
+
+        switch (paramBean['chartType']){
+            case "line":
+                chartTag.addClass("chart-line");
+                chartTag.append(
+                    $("<div/>",{class:'canvas-chart line'})
+                );
+                $(".box-chart").append(chartTag);
+                new Chartist.Line('.canvas-chart', {
+                    labels: _labels,
+                    series: _seriesList
+                }, {
+                    low: 0,
+                    showArea: true,
+                    showLabel: true,
+                    fullWidth: false,
+                    axisY: {
+                        onlyInteger: true,
+                        offset: 20
+                    },
+                    lineSmooth: Chartist.Interpolation.cardinal({
+                        fillHoles: true
+                    }),
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+                break;
+            case "bar":
+                chartTag.addClass("chart-bar");
+                chartTag.append(
+                    $("<div/>",{class:'canvas-chart bar'})
+                );
+                $(".box-chart").append(chartTag);
+                new Chartist.Bar('.canvas-chart', {
+                    labels: _labels,
+                    series: _seriesList
+                }, {
+                    height: 400,
+                    seriesBarDistance: 10,
+                    axisX: {
+                        offset: 60
+                    },
+                    axisY: {
+                        onlyInteger: true,
+                        offset: 40,
+                        scaleMinSpace: 15
+                    },
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+                break;
+            case "pie":
+                chartTag.addClass("chart-pie");
+                chartTag.append(
+                    $("<div/>",{class:'canvas-chart pie'})
+                );
+                $(".box-chart").append(chartTag);
+                new Chartist.Pie('.canvas-chart', {
+                    series: _sumSeriesList
+                }, {
+                    labelInterpolationFnc: function(value) {
+                        return Math.round(value / _sumSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%';
+                    },
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+                break;
+            case "table":
+                chartTag.addClass("chart-ex");
+                chartTag.prepend(
+                    $("<div/>",{class:'set-btn type-01'}).append(
+                        $("<button/>",{class:'ico-chartt'}).click(function(){
+                            excelDownload();
+                        }).append(
+                            $("<p/>").text("<spring:message code='common.button.excelDownload'/>")
+                        )
+                    )
+                );
+                chartTag.append(
+                    $("<div/>",{class:'excel'})
+                );
+                for(var index in _labels){
+                    let childTag = $("<div/>").append(
+                        $("<p/>").text(_labels[index])
+                    ).append(
+                        $("<div/>",{class:'chart_label'})
+                    );
+                    for(var i=0; i<_seriesList.length;i++){
+                        childTag.find(".chart_label").append(
+                            $("<span/>",{label:_labels[index]}).text(0)
+                        )
+                    }
+                    chartTag.find(".excel").append(childTag);
+                }
+                for(var index in _seriesList){
+                    for(var i in _seriesList[index]){
+                        let series = _seriesList[index][i];
+                        chartTag.find("span[label='"+series['meta']+"']:eq("+index+")").text(series['value'])
+                    }
+                }
+                $(".box-chart").append(chartTag);
+                break;
+        }
+        $(".box-chart").addClass("on");
     }
     
     /*
@@ -555,7 +579,25 @@
      @author psb
      */
     function successHandler(data, dataType, actionType){
-        listRender(data);
+        switch (actionType){
+            case "list":
+                listRender(data['statisticsList']);
+                break;
+            case "search":
+                $(".loding_bar").removeClass("on");
+                if(data['paramBean']!=null && data['chartList']!=null && data['dateList']!=null){
+                    chartRender(data['paramBean'], data['chartList'], data['dateList']);
+                }else{
+                    alertMessage(actionType+['Failure']);
+                }
+                break;
+            case "add":
+            case "save":
+            case "remove":
+                alertMessage(actionType+['Complete']);
+                getList();
+                break;
+        }
     }
 
     /*
@@ -563,8 +605,7 @@
      @author psb
      */
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
-        console.error(messageConfig['searchFailure']);
-//        alertMessage('searchFailure');
+        alertMessage(actionType+['Failure']);
     }
 
     /*
@@ -579,45 +620,47 @@
      excel download
      @author psb
      */
-    function excelDownload(type){
+    function excelDownload(){
         $("#excelEventStatisticsList").empty();
 
         var excelDownloadHtml = $("<table/>",{id:"excelDownloadTb"}).append(
             $("<thead/>").append(
-                $("<tr/>").append()
+                $("<tr/>").append(
+                    $("<th/>").text("<spring:message code='statistics.column.gubn'/>")
+                ).append(
+                    $("<th/>").text("<spring:message code='statistics.column.sum'/>")
+                )
             )
         ).append(
             $("<tbody/>")
         );
 
-        var excelTag = $(".tableView");
+        var excelTag = $(".excel");
 
-        excelTag.find(".theadDiv span").each(function (key) {
-            if(key==0){
-                excelDownloadHtml.find("thead tr").append(
-                    $("<th/>").text($(this).text())
-                );
-
-                excelTag.find("#gubnBody span").each(function () {
-                    excelDownloadHtml.find("thead tr").append(
-                        $("<th/>").text($(this).text())
-                    );
-                });
-            }else{
-                excelDownloadHtml.find("tbody").append(
-                    $("<tr/>",{id:"excelBody"+key}).append(
-                        $("<td/>").text($(this).text())
-                    )
-                );
-
-                excelTag.find(".d_tbody div:eq("+key+") span").each(function () {
-                    excelDownloadHtml.find("#excelBody"+key).append(
-                        $("<td/>").text($(this).text())
-                    );
-                });
-            }
+        // header
+        excelTag.find("p").each(function(){
+            excelDownloadHtml.find("thead tr").append(
+                $("<th/>").text($(this).text())
+            );
         });
 
+        // 구분 & 합계
+        $(".header span").each(function(){
+            excelDownloadHtml.append(
+                $("<tr/>",{label:$(this).attr("label")}).append(
+                    $("<td/>").text($(this).contents().get(0).nodeValue)
+                ).append(
+                    $("<td/>").text($(this).find("b").text())
+                )
+            )
+        });
+
+        // 요소
+        excelTag.find(">div span").each(function(){
+            excelDownloadHtml.find("tbody tr[label='"+$(this).attr("label")+"']").append(
+                $("<td/>").text($(this).text())
+            )
+        });
         $("#excelEventStatisticsList").append(excelDownloadHtml);
 
         var uri = $("#excelDownloadTb").excelexportjs({

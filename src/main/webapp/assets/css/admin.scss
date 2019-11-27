@@ -1,14 +1,45 @@
 @charset "utf-8";
 @import "filters";
 
-body.admin_mode {}
+$tree-table-width:400px;
+$admin-boxline:rgba($color-dark-01,0.15);
 
+body.admin_mode {
+  @include webkit_scroll_admin; @include webkit_scroll; @include admin-bg;
+
+  button p {color: $color-dark-01;}
+
+  .sub_title_area {
+    @include mmheight(70px); margin:0; padding: 0 $admin-margin;
+    .navigation {
+      display: inline-block; margin:0 0 0 30px; padding: 10px 0 0 0;
+      span {pointer-events: none;}
+    }
+    &:before {
+      content:""; position: absolute; left:0; bottom:0;
+      width:100%; height:1px; background-color: $admin-boxline;
+    }
+    &.hide{margin-top: -75px;}
+  }
+
+}
+
+.container {
+  overflow: hidden; /*display: inline-block;*/
+  @include flexbase; @include flex-column;
+  @include flex-option(0, 1, 100%); position: relative; width:100%; height:100%;
+}
 
 ////// 어드민 검색영역  Start
 .search_area {
   @include flexbase; @include flex-align-items-center;
-  width:100%; min-height:65px; padding:5px 0;
-  @include border01(1px 0,$color-gray-06,1);
+  position: relative; width:100%; /*min-height:65px;*/ padding:5px $admin-margin !important;
+  //@include border01(1px 0,$color-gray-06,1);
+  background-color: rgba($color-dark-01,0.08);
+  /*&:before {
+    content:""; position: absolute; top:0; left:0; width:100%; height: 100%; opacity: 0.1;
+    background-image: url("../images/bg/bg_spot.svg");
+  }*/
 
   .tabs_content > & {@include borderwidth(0 0 1px 0);}
   .search_contents {@include flex-option(0, 1, 100%); }
@@ -21,15 +52,13 @@ body.admin_mode {}
   float: left; position: relative; padding: 0 20px 0 0; margin: 5px 0; letter-spacing: -1px;
   &, & > * {@include flexbase;  @include flex-align-items-center;}
   & > *:not(select) { height: 100%;  }
-
   & > span {
     & > em  {padding:0 3px;}
     &:first-child {padding:0 10px 0 0;}
     & > input, & > select {max-width:170px;}
-    & > input.hasDatepicker {width:110px;}
-    & > input.hasDatepicker ~ select {width: 80px; border-left-width:0;}
+    & > input.datepicker {width:110px;}
+    & > input.datepicker ~ select {width: 80px; border-left-width:0;}
   }
-
 }
 
 .tree_box .search_contents > * {
@@ -45,7 +74,7 @@ body.admin_mode {}
         background-color: $color-red-01;
         &:before {content:"\e92c"};}
     }
-    input.hasDatepicker {
+    input.datepicker {
       & + button + select {max-width: 80px; min-width:80px; border-left-width:0 !important;}
     }
   }
@@ -55,12 +84,15 @@ body.admin_mode {}
 
 
 /////...... Table_layout 정의 Start
-.table_area {width:100%;}
+.table_area {
+  @include flexbase; @include flex-column; width:100%; height:100%;
+  & > *:not(form) {padding: 0 $admin-margin;}
+}
 .layer_contents .table_area
 {overflow: auto; @include flex-option(0, 1, 100%); padding: 0;}
 .table_set, .table_contents {position: relative; }
 .table_set {display: inline-block;}
-.table_contents {width:100%; }
+.table_contents {width:100%; padding-top:$admin-margin !important;}
 
 /*
 .tablebase : table, div 모두 허용
@@ -192,7 +224,7 @@ div.tablebase, .d_defalut {display: inline-block;}
           &:last-child {border:none;}
         }
 
-        & > button { @include flex-midddle; padding:0; }
+        & > button { @include flex-midddle; padding:0; @include mmheight(100%); }
 
         & > span {
           @include flex-align-items-center; @include flex-justify-content-center; max-width:30px; padding:0;
@@ -316,10 +348,11 @@ div.tablebase, .d_defalut {display: inline-block;}
 
 // div 테이블 base 정의 Start
 div.d_defalut {
+  @include flexbase; @include box-shadow01(0, 3px, 15px, 0, #000, 0);
   & > div > div > * {min-width:45px;}
   // 이벤트 통계 좌우 스크롤 테이블 타입
   &.d_type01 {
-    & > div {float:left;}
+    & > div {position: relative; }
     .d_thead {
       position: relative; z-index:2;  width:($thwidth - 30px);
       & > div {
@@ -332,7 +365,7 @@ div.d_defalut {
       }
     }
     .d_tbody {
-      overflow-x: auto; position: absolute;  z-index:1; width:100%; padding:0 0 0 ($thwidth - 30px);
+      overflow-x: auto;   z-index:1; width:100%; /*padding:0 0 0 ($thwidth - 30px);*/
       & > div:first-of-type > * {
         color:$color-white-01; background-color: $color-gray-05; border-color:$color-gray-03;
         @include borderwidth(1px 1px 1px 0);
@@ -410,13 +443,15 @@ ul.u_defalut {
       &:nth-of-type(1) {margin:0;}
     }
   }
-  & + * {margin-left:$tree-area-width + 80px;}
+  & + * {margin-left:$tree-area-width + 2%;}
 
 }
 // 메뉴관리권한
 .menu_tree_set {
 
   @include treebase;
+
+  overflow: auto; padding-top:$admin-margin !important; padding-bottom:$admin-margin !important; margin:0;
 
   button, input { width:220px; min-width:220px; height:$mt_btn_h;}
   button {
@@ -572,7 +607,8 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
   } // @include critical-rotate(20deg,.95,5px);
 
   @include flexbase; @include flex-column; @include flex-align-items-start; overflow: hidden;
-  position: relative; width:1620px;  height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;
+  position: relative; width:1620px; height:calc(100vh - 120px); padding: 30px 0 0 0 !important; margin:auto;
+  /*width:1620px; height:calc(100vh - 180px); max-height:780px; padding: 50px 0 0 0;*/
 
   input, select, button {height:$criwidth; }
 
@@ -582,7 +618,7 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
     padding: 0 $crimargin 0 0;
     & > button {
       @include btn-itype03b;
-      &.on ~ .zoom-box {display: inline-block; background-color: $color-on;}
+      &.on ~ .zoom-box {display: inline-block; width:calc(100% - 80px); background-color: $color-on;}
     }
   }
 
@@ -640,6 +676,7 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 
     &.on, &.show {
       & > div {
+
         & > button {display: block;}
         &:after {opacity: 1;}
         @include critical-rotate(0deg,1,0);
@@ -683,15 +720,16 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
         & > div:before {background-color: $color-dark-01;}
       }
     }
+
     &-objec {li > div:after {display: none;}}
   }
 
   .zoom-box {
     display: none; position: absolute; top:0; left:0; z-index: 1;
-    width:100%; min-width:100%; padding:10px; @include placeholder-white;
+    width:100%; padding:10px; @include placeholder-white;
 
     & > * {width:100%;}
-    & * {color:$color-white-01;}
+    & * {color:$color-white-01 !important;}
 
     h4 {
       @include wauto(100%); padding:0;
@@ -721,6 +759,7 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
     }
   }
 }
+
 
 
 //구역 디바이스 관리
@@ -809,10 +848,14 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 
 }
 // 트리탭
-.tree_tab_set > ul {
-  display: none;
-  &.on {display: block;}
+.tree_tab_set {
+
+  & > ul {
+    display: none;
+    &.on {display: block;}
+  }
 }
+
 /////  tree UI 정의 끝
 
 
@@ -916,9 +959,15 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 /////..... 트리 테이블 시작
 .tree_table  {
 
-  position: absolute; z-index: 1; width:$tree-table-width !important; float: left;
-  margin:20px 0 0 0;  padding:$dash-margin; @include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
-  @include border01(1px,$color-bline,.4 );
+  position: absolute; z-index: 1; top:0; left:0; bottom:0;
+  width:$tree-table-width !important; height:auto;
+
+  //@include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
+  //@include border01(1px,$color-bline,.4 );
+
+  &:before {
+    @include bbl(1,0,0,0,auto,1px,100%,$admin-boxline);
+  }
 
   .dashboard_mode &, .iocount_popup & {
     @include flexbase; @include flex-column;
@@ -930,19 +979,25 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
     }
   }
 
-
   .table_title_area {
-    height:40px; @include flex-option(1, 0, 40px);
+    @include flex-option(1, 0, 40px); @include mmheight(40px);
+    padding:0 $admin-margin; margin:($admin-margin / 2) 0;
+
+    &:before {
+      content:""; position: absolute; left:0; bottom:-($dash-margin); right:0;
+      height:1px; background-color:$admin-boxline;
+    }
+
     .table_btn_set button {max-width: none;}
   }
 
   .tree_box {
-    $tree-bwidth:26px; max-height:650px;
-    overflow-x: auto; width:100%; margin:20px 0;
-
+    $tree-bwidth:26px;
+    overflow: auto; width:100%; height:100%; padding:($admin-margin / 2) 0;
+    & > * {padding:0 $admin-margin;}
     ul {
       font-size: 16px; white-space: nowrap;
-      &, li, a, span { padding: 0; margin: 0; background-color:transparent; border:none;}
+      li, a, span { padding: 0; margin: 0; background-color:transparent; border:none;}
       span.dynatree-icon { display: none;}
 
       a {position: relative;}
@@ -1006,15 +1061,22 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 
   }
 
+  .table_contents {
+    @include flexbase; @include flex-column; height:100%; padding:0 !important;
+    & > * {width:100%;}
+    .tree_tab_set {
+      overflow: auto; height:100%;
+      & > * {padding:($admin-margin / 2) $admin-margin;}
+    }
+  }
+
+  & ~ article, & ~ .chart_table_area, .tr_table, & ~ .form_type01 .table_area, & ~ .form_type01 .tr_table {
+    overflow: auto; position: relative; height:100%; min-height:800px;
+    padding: 0 $admin-margin $admin-margin ($tree-table-width + $admin-margin);
+  }
 }
 
-.tree_table ~ .form_type01,
-.tree_table ~ article,
-.tree_table ~ .chart_table_area,
-.tr_table
-{position: relative; padding: 10px 0 0 ($tree-table-width + 60px); min-height:800px;}
-
-.form_type01 .tr_table {padding-left: 0 !important;}
+.form_type01  {height:100%;}
 
 .tr_table.type01 {
   .ment, .area_table, .device_table {
@@ -1067,11 +1129,16 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 
 /////..... 테이블 타이틀 영역 시작
 .table_title_area {
-  position: relative; width:100%; @include flex-option(1,0,65px); height:65px; min-height:auto !important;
+  position: relative; width:100%; @include flex-option(1,0,65px); @include mmheight(65px);
 
   @include flexbase;  @include flex-align-items-center; @include flex-justify-content-between;
 
   & > h4 {border:none;}
+
+  & + .table_contents, & ~ .table_contents,
+  & + .area_table, & ~ area_table,
+  & + .area_table .table_contents, & ~ .area_table .table_contents
+  {padding-top:0 !important;}
 }
 /////..... 테이블 타이틀 영역 끝
 
@@ -1104,16 +1171,11 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
   }
 
   &.type03 {
-    margin:$dash-margin 0 25px 0; height:60px;
-
-    &:before {
-      content:""; position: absolute; top:0; left:-$dash-margin; right:-$dash-margin;
-      height:1px; background-color:$color-gray-06;
-    }
+    @include mmheight(60px); @include flex-midddle; margin: 0; padding:0 $admin-margin;
 
     button {
       @include flex-midddle; color:$color-bas; font-size:1rem; @include action_textbtn;
-      &:before {height:3px !important; bottom:0; top:auto;}
+      &:after {height:3px !important; bottom:0; top:auto;}
     }
   }
 
@@ -1153,6 +1215,7 @@ a.fc-more {position: relative; z-index: 2;}
     position: relative; float:left; margin:40px 0 0 0;
     &.table_title_area {margin:0;}
   }
+
   &.type01 {
     & > div {
       min-width:50%; height:320px;
@@ -1174,6 +1237,7 @@ a.fc-more {position: relative; z-index: 2;}
       td:last-of-type {padding:0 4px 0 22px;}
     }
   }
+
   &.type02 > div {width:100%;}
 
   .depthtabs_set {
@@ -1200,16 +1264,18 @@ a.fc-more {position: relative; z-index: 2;}
 ////// 영상이력 레이아웃 Start
 #videoHistoryForm select[name="areaId"] {width:250px;}
 .video_area {
-  @include flexbase; margin:5px 0 0 0; height:calc(100% - 100px);
+  overflow: hidden; @include flexbase; padding: $admin-margin;
+  @include flex-option(0, 1, 100%);  /*height:calc(100% - 100px);*/
 
   & > * {overflow: hidden; height:100%;}
 
   & > *:first-of-type {
+    position: relative; overflow: hidden;
     @include flex-option(0, 1, 100%); @include flex-midddle; background-color: #000;
 
     & > div {
-      position: relative; display: inline-block;
-
+      overflow: hidden; @include flex-midddle; position: relative; width:100%; height:100%;
+      video {width:auto !important; height:100%;}
       .speed {
         opacity: 1; position: absolute; right:46px; bottom:0; @include transition(400ms);
         & > button {
@@ -1229,29 +1295,29 @@ a.fc-more {position: relative; z-index: 2;}
     @include flexbase; @include flex-align-items-start; @include flex-column;
     @include flex-option(1, 0, 350px); margin:0 0 0 10px;
 
-    .table_btn_set {@include flex-option(1, 0, 40px); min-height:40px; max-height:40px;}
+    .table_btn_set {width:100%; min-height:40px; max-height:40px;}
 
     ul {
       overflow-y:auto; @include flex-option(0, 1, 100%); width:100%;
       li {
 
-        @include flexbase; @include flex-align-items-center; cursor: pointer;
-        position: relative; margin:0 0 5px 0; height:95px;
-
+        @include flexbase; @include flex-align-items-start; cursor: pointer;
+        position: relative; margin:0 0 7px 0; height:95px; padding:0 5px 0 0;
 
         &:before {
           content:""; position: absolute; width:100%; height:100%; background-color: transparent;
+          border-style:solid; border-width:0; border-color:transparent; z-index: 1;
           /*opacity: 0;  @include border01(1px,$color-ho,1 );*/
-          border-style:solid; border-color:rgba($color-gray-09,0.2); border-width:0 0 1px 0;
+          //border-style:solid; border-color:rgba($color-gray-09,0.2); border-width:0 0 1px 0;
         }
 
         &:hover:before {border-color:$color-ho; border-width:1px;}
         &.on:before {opacity: 1 !important; border-width:2px; border-color:$color-on;}
         & > div {
           &:first-of-type {
-            @include flex-option(1, 0, 168px); width:168px; max-width:168px; height:100%;
-            background-color: $color-gray-02;
-            margin:0 10px 0 0;
+            @include flex-option(1, 0, 168px); position: relative; overflow: hidden;
+            width:168px; max-width:168px; height:100%;
+            background-color: $color-gray-02; margin:0 10px 0 0;
           }
 
           &:last-of-type {
@@ -1278,6 +1344,414 @@ a.fc-more {position: relative; z-index: 2;}
 }
 ////// 영상이력 레이아웃 End
 
+
+.flex-area {
+  $title-h:50px;
+  &-w,&-h {
+    h4 {@include h4;} h5 {@include h5;}
+
+  }
+  &-w {
+    @include flex-display;
+    /*
+      <article class="flex-area-w">
+          <section class="box-list"></section> <!-- 목록 -->
+          <section class="box-detail"></section> <!-- 상세 -->
+          <section class="box-chart"></section> <!-- 차트 -->
+      </article>
+      */
+
+    & > * {
+      @include flex-column-display;  height:100%;
+
+      & > * {width:100%;}
+    }
+
+    .box {
+
+      &-list, &-detail {
+        width:$tree-area-width; max-width:$tree-area-width; @include flex-option(1, 0, $tree-area-width);
+        &:before {@include bbl(1,0,0,0,auto,1px,100%,$admin-boxline);}
+      }
+
+      &-list {
+        & > * {}
+      } // 목록
+
+      &-detail {} // 상세
+
+      &-chart {
+        @include flex-midddle;  width:100%; @include flex-option(0, 1, 100%);
+        & > * {}
+
+        .chart_label {
+          @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
+          @include mmheight(50px); margin:$admin-margin 0 ($admin-margin / 2) 0;
+
+          & > * > * {font-weight: bold; font-size:1.4rem; padding:0 0 0 15px;}
+        }
+      } // 차트
+
+      &-ment {
+        position: relative;
+        &, & > div {width:100%; }
+        & > div {
+          @include flex-midddle; @include flex-column; height:100%; font-size:1.3rem;
+          &:before {
+            content:"\e925"; font-size:5rem; display: block; text-align: center; padding:0 0 30px 0;
+          }
+        }
+      }
+    }
+
+    &.eventStatistics {
+      .box {
+        &-detail, &-chart {width:0; @include flex-option(0, 0, 0);}
+        &-detail.on {width:$tree-area-width; @include flex-option(1, 0, $tree-area-width);}
+        &-chart.on {
+          width:100%; @include flex-option(0, 1, 100%);
+          & + .box-ment, & ~ .box-ment {width:0; @include flex-option(0, 0, 0);}
+        }
+
+      }
+    }
+
+    .loding_bar {
+      position: relative;
+      &.on {& + .box-ment, & ~ .box-ment {width:0; @include flex-option(0, 0, 0);}}
+    }
+  }
+  &-h {
+    overflow: auto; position: relative; width:100%; height:100%;
+    /*
+     <article class="flex-area-h">
+         <section></section> <!-- 목록 -->
+     </article>
+     */
+
+    h4 {min-width:100%; @include mmheight(50px);}
+    & > section {
+      @include flex-display-row;
+
+      /*box-shadow: 1px 1px 0 0 $color-gray-01, 1px 1px 0 0 $color-gray-01 inset;*/
+
+      .box-contents {
+        @include flex-display-row; @include flex-width-one(1); min-width: 50%;
+        //box-shadow: 1px 1px 0 0 $color-gray-01 ;
+
+        &:after {
+          content:""; z-index: -1; position: absolute; top:0; left:0; width:100%; height:100%;
+          @include border01(0 1px 1px 0,$color-dark-01,0.15);
+        }
+
+
+        & > *:not(h5) {
+          @include flex-width-one(1); @include flex-align-content-start;
+          width:auto; padding: $admin-margin !important; padding-top:($admin-margin / 2) !important;
+          &:before {display: none;}
+        }
+      }
+
+    } // <section>
+
+   /* & > * {
+      @include flexbase; @include flex-column;
+      @include flex-align-items-start; @include flex-justify-content-start;
+      @include flex-width-one(1); position: relative; min-width:50%;
+      &:before {@include bbl(-1,auto,0,1px,0,100%,1px,$admin-boxline);}
+    }*/
+
+    .box {
+      &-align {}
+      &-section {}
+      &-flow {
+        @include flexbase; @include flex-row-wrap; @include flex-justify-content-start;
+        @include flex-align-items-start;
+      }
+    }
+  }
+}
+
+
+
+////// 플랙스 레이아웃 End
+
+
+////// set-ul 정의 Start
+.set {
+  &-btn {
+    @include flexbase; @include flex-align-items-start; @include flex-padding;
+
+    &.type {
+      &-01 {
+        margin:$admin-margin 0 ($admin-margin / 2) 0;
+        button {
+          @include btn-itype03b; /*margin:0 2px 0 0;*/
+          &:nth-of-type(3n + 1):after {opacity: 0.4;}
+          &:nth-of-type(2n):after {opacity: 0.7;}
+          &:nth-of-type(3n):after {opacity: 1; }
+        }
+      }
+    }
+
+    .chart_label {
+      margin: auto 0 auto auto !important;
+      span {margin:0 0 0 20px;}
+    }
+
+    & + .chart_label {margin:($admin-margin / 2) 0 !important;}
+  }
+
+  &-ul {
+
+    $set-ul-margin-li:10px;
+    $set-ul-height:50px;
+
+    @mixin set-ul-transform($deg,$scale,$trans) {
+      -webkit-transform:rotateX($deg) scale($scale) translateX($trans);
+      transform:        rotateX($deg) scale($scale) translateX($trans);
+    } // @include set-ul-transform(20deg,.95,5px);
+
+    /*
+    <ul class="set-ul">
+        <li>
+            <div>
+                <p>거수자 감지</p>
+                <i></i>
+                <button></button>
+            </div>
+        </li>
+    </ul>
+    */
+    overflow-y: auto; overflow-x: hidden; height:100%; padding-bottom:$admin-margin;
+    @include flex-padding;
+    &, & > li {
+      @include flexbase; @include flex-column; @include flex-align-items-start;
+      @include flex-justify-content-start; position: relative; width:100%;
+    }
+
+    li {
+      margin:$set-ul-margin-li 0 0 0;
+      @include set-ul-transform(0,1,0);
+
+      &:before {
+        content:"";
+        position: absolute; z-index:-1;  top:0; left:0; opacity: 0.8;
+        width:100%; background-color: $color-gray-07;
+        @include box-shadow01(0px, 10px, 10px, -10px, #000, .8);
+      }
+
+      &:nth-of-type(3n + 1):before {opacity: 0.4;}
+      &:nth-of-type(2n):before {opacity: 0.6;}
+      &:nth-of-type(3n):before {opacity: 0.8;}
+
+
+      &:hover:before {opacity: 1;}
+      &.on {
+
+        &:before {
+          @include set-ul-transform(0,1.15,19px); opacity: 1;
+          background-color: $color-on;
+        }
+      }
+
+      &, &:before {min-height:50px; }
+      &, &:before, & > * {@include transition(200ms);}
+
+      & > * {
+        @include flexbase; @include flex-align-items-center;
+        position: relative; width:100%; height:50px;
+        & > * {z-index: 1;}
+        p {
+          order:2; @include flexbase; @include flex-align-items-center;
+          @include flex-option(0, 1, 100%); height:100%;  padding:0 10px; color:$color-white-01;
+        }
+        i {
+          order:1; @include mhwidth(50px);
+          &, &:before {@include flex-midddle; color:$color-white-01;}
+          &:before {
+            content:""; width:100%; height:100%; font-size:2rem;
+            background-color: rgba(#000,0.2);}
+        }
+        button {
+          order:3; @include btn-itype03b-t;
+        }
+      }
+    }
+
+    &.eventstatistics {
+      & > li > div > button:before {content:"\e91a";}
+    }
+  }
+
+  &-itembox {
+
+    $itemh:40px;
+    @include flexbase; @include flex-row-wrap; @include flex-align-items-start;
+    overflow: hidden; position: relative; width:100%; padding:20px 0; @include flex-padding;
+    @include transition(200ms);
+
+    &:before {@include bbl(1,auto,0,0,0,100%,1px,$admin-boxline);}
+
+    h5 {min-width:auto; @include mmheight(40px); padding:0 20px 0 0; &:before {left:0;} }
+
+    & > button {
+      @include btn-itype01b;
+
+      &.ico-open {
+
+        &:before {@include rotate(180deg);}
+        &:after {opacity: 0.4;}
+        & ~ div {@include scaleY(0); height:0;}
+        &.on {
+          &:before {@include rotate(0deg);}
+          & ~ div {@include scaleY(1); height:auto;}
+        }
+      }
+
+      &.ico-plus {
+
+        &:after {opacity: 0.7;  }
+      }
+    }
+
+    & > div {
+      @include flex-option(1, 0, 100%); padding:0;
+      //&:first-of-type {padding-top:20px;}
+      &:before {display: none;}
+
+    }
+  }
+  /*
+  <div class="set-itembox">
+    <h4></h4>
+    <button></button>
+    <div class="set-item">
+      <h4>
+      <div></div>
+    </div>
+  </div>
+  */
+  &-item {
+    $itemh:30px;
+    @include flexbase; @include flex-row-wrap; @include flex-align-items-start;
+    overflow: hidden; position: relative; @include flex-width-one(1); padding:0 0 10px 0; @include flex-padding;
+    @include transition(200ms);
+
+    button:not(.ui-datepicker-trigger) {
+      @include btn-itype01b; @include mhwidth($btn-type01);  &:before {font-size:1.1rem !important;}
+    }
+
+    input.datepicker {
+      @include flex-width-one(2);
+      & ~ select {@include flex-width-one(1);}
+    }
+    select, input {
+      @include flex-option(0, 1, 100%); width:100%; max-width:none; min-width:auto;
+      & ~ button {margin:0;}
+      & ~ select, & ~ input {border-left-color:transparent !important;}
+    }
+
+    &:before {@include bbl(1,auto,0,0,0,100%,1px,$admin-boxline);}
+    & > * {width:100%; margin:0 0 3px 0;}
+    & > h4 {
+      @include flexbase; @include flex-align-items-end; @include flex-align-self-end;
+      @include flex-width-one(1); @include mmheight($itemh); font-size:0.9rem; padding:0;
+      text-decoration: none !important;
+    }
+    & > button {margin-top:10px;}
+
+    & > div {
+      @include flexbase; @include flex-align-items-start;
+      button:not(.ui-datepicker-trigger):after {opacity: 0.5;}
+    }
+
+  }
+
+  &-area {
+    overflow: auto; position: relative; width:100%; height:100%; padding-bottom:$admin-margin;
+  }
+
+  &-chart {
+    @include flex-midddle; @include flex-column;
+    position: relative; width:100%;  min-height:100%;
+
+    & > * {@include flex-padding;}
+    & > * {width:100%;}
+
+    .canvas-chart {
+      position: relative; width:100%; min-width:60vw; height:100%; padding-bottom:$admin-margin;
+      svg { width:100%; height:100%; }
+    }
+  }
+}
+
+////// excel UI Start
+.excel {
+
+  /*
+  <div class="excel">
+      <div>
+          <b>1</b>
+          <div class="chart_label">
+              <span>12</span>
+              <span>6</span>
+          </div>
+      </div>
+  </div>
+  */
+  $ex-10:(100% / 10);
+  $ex-7:(100% / 7);
+  $ex-5:(100% / 5);
+  $ex-4:(100% / 4);
+
+  overflow: auto; @include flexbase; @include flex-row-wrap;
+  @include flex-align-content-start; @include flex-align-items-start;
+  padding:10px $admin-margin $admin-margin $admin-margin;
+  position: relative; width:100%; height:100%; /*@include border01(1px,$color-gray-02,1 );*/
+
+  .chart_label {
+    @include flex-column;
+    & > * {width:100%; padding:0; padding-top:5px; margin:0;}
+  }
+
+  & > * {
+    overflow: hidden; position: relative; height:auto;
+
+    @include flexbase; @include flex-column;
+    @include flex-align-items-start; @include flex-justify-content-start;
+    @include mmwidth($ex-7); min-height:150px; padding:($admin-margin / 2);
+
+
+    @include border02;
+
+    $borderw:calc(100% - 7px);
+    &:before, &:after {content:""; position: absolute; top:0; left:0;  width:100%; height:100%; }
+
+    //&:after {z-index: -1; background-color: #fff; opacity: 0.6; }
+    //&:nth-of-type(even):after {background-color: #000;  opacity: 0.02;}
+    /*&:nth-of-type(even):after {
+      bottom:0; right:0; opacity: 0.06;
+      background: -moz-linear-gradient(-45deg,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%);
+      background: -webkit-linear-gradient(-45deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
+      background: linear-gradient(135deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );
+    }*/
+
+  }
+
+  p {
+    position: relative; font-weight: lighter; font-size:1.3rem; opacity: 0.7;
+    &:before {
+      content:""; position: absolute; left:0; bottom:-5px;
+      width:100%; height:1px; background-color: rgba($color-dark-01,.3);
+    }
+  }
+
+}
+/////  excel UI End
+
+////// set-ul 정의 End
 
 //이벤트 이력 관리 테이블
 .notification_col {

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.SystemLogDao" >
+
+    <!--
+        시스템로그 이력 목록을 가져온다.
+        @author psb
+    -->
+    <select id="findListSystemLog" resultType="SystemLogBean" parameterType="map" >
+        SELECT	system_log_id as systemLogId
+                ,file_name as fileName
+                ,log_datetime as logDatetime
+        FROM	isaver.system_log
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     log_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     log_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+        ORDER BY log_datetime DESC
+        <if test="pageIndex != null">
+            LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
+        </if>;
+    </select>
+
+    <!--
+        시스템로그 이력 목록 갯수를 가져온다.
+        @author psb
+    -->
+    <select id="findCountSystemLog" parameterType="map" resultType="java.lang.Integer" >
+        SELECT  count(system_log_id)
+        FROM	isaver.system_log
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     log_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     log_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+    </select>
+
+
+    <!--
+        시스템로그 이력 상세를 가져온다.
+        @author psb
+    -->
+    <select id="findBySystemLog" resultType="SystemLogBean" parameterType="map" >
+        SELECT	system_log_id as systemLogId
+                ,file_name as fileName
+                ,log_datetime as logDatetime
+        FROM	isaver.system_log
+        WHERE   system_log_id = #{systemLogId}
+    </select>
+</mapper>

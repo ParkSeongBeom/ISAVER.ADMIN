@@ -1,8 +1,10 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.CodeBean;
+import com.icent.isaver.admin.bean.GroupCodeBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.CodeDao;
+import com.icent.isaver.admin.dao.GroupCodeDao;
 import com.icent.isaver.admin.svc.CodeSvc;
 import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.StringUtils;
@@ -39,28 +41,19 @@ public class CodeSvcImpl implements CodeSvc {
     private DataSourceTransactionManager transactionManager;
 
     @Inject
+    private GroupCodeDao groupCodeDao;
+
+    @Inject
     private CodeDao codeDao;
 
     @Override
     public ModelAndView findListCode(Map<String, String> parameters) {
+        List<GroupCodeBean> groupCodes = groupCodeDao.findListGroupCode();
         List<CodeBean> codes = codeDao.findListCode(parameters);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("codes",codes);
-        return modelAndView;
-    }
-
-    @Override
-    public ModelAndView findByCode(Map<String, String> parameters) {
-        CodeBean code = null;
-        if(StringUtils.notNullCheck(parameters.get("groupCodeId")) && StringUtils.notNullCheck(parameters.get("codeId"))){
-            code = codeDao.findByCode(parameters);
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("code",code);
-        modelAndView.addObject("paramBean",parameters);
-
+        modelAndView.addObject("groupCodeList",groupCodes);
+        modelAndView.addObject("codeList",codes);
         return modelAndView;
     }
 
