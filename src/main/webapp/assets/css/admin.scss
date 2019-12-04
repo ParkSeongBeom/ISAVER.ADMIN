@@ -1383,13 +1383,6 @@ a.fc-more {position: relative; z-index: 2;}
       &-chart {
         @include flex-midddle;  width:100%; @include flex-option(0, 1, 100%);
         & > * {}
-
-        .chart_label {
-          @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
-          @include mmheight(50px); margin:$admin-margin 0 ($admin-margin / 2) 0;
-
-          & > * > * {font-weight: bold; font-size:1.4rem; padding:0 0 0 15px;}
-        }
       } // 차트
 
       &-ment {
@@ -1494,12 +1487,6 @@ a.fc-more {position: relative; z-index: 2;}
       }
     }
 
-    .chart_label {
-      margin: auto 0 auto auto !important;
-      span {margin:0 0 0 20px;}
-    }
-
-    & + .chart_label {margin:($admin-margin / 2) 0 !important;}
   }
 
   &-ul {
@@ -1610,7 +1597,6 @@ a.fc-more {position: relative; z-index: 2;}
       }
 
       &.ico-plus {
-
         &:after {opacity: 0.7;  }
       }
     }
@@ -1657,7 +1643,7 @@ a.fc-more {position: relative; z-index: 2;}
     & > h4 {
       @include flexbase; @include flex-align-items-end; @include flex-align-self-end;
       @include flex-width-one(1); @include mmheight($itemh); font-size:0.9rem; padding:0;
-      text-decoration: none !important;
+      text-decoration: none !important; opacity: 0.7;
     }
     & > button {margin-top:10px;}
 
@@ -1683,6 +1669,42 @@ a.fc-more {position: relative; z-index: 2;}
       position: relative; width:100%; min-width:60vw; height:100%; padding-bottom:$admin-margin;
       svg { width:100%; height:100%; }
     }
+
+    & > .chart_label {
+      $clsb-wh:20px;
+      @include flex-row-wrap; @include flex-align-content-start; @include flex-align-items-start;
+      width:100%; padding: 20px 30px 10px 30px;
+      border-style:solid; border-width:0 0 1px 0; border-color: $admin-boxline;
+       /*margin:($admin-margin / 2) 0;*/
+
+      & > * {
+
+        @include flex-width-one(1); @include flex-column; @include flex-align-items-start;
+        @include mmwidth(100% / 5); padding: 0 60px 15px 0; margin:0;
+
+        & * {position: relative; }
+
+        &:before {
+          order:2; /*@include mhwidth($clsb-wh);*/
+          width:35px; height:5px; margin:7px 0; left:3px;
+        }
+
+        i {
+          order:3;
+          line-height:1.3rem; font-size:1rem; font-weight:bold;
+          word-break: keep-all; letter-spacing: -0.1rem;
+        }
+        b {
+          order:1; opacity: 0.8;
+          min-width:100%; padding:0; line-height: 1.3rem;
+          letter-spacing: -0.05rem;
+        }
+      }
+
+      & > * > * {}
+    }
+
+    &.chart-pie > .chart_label { @include flex-justify-content-start; }
   }
 }
 
@@ -1702,50 +1724,68 @@ a.fc-more {position: relative; z-index: 2;}
   */
   $ex-10:(100% / 10);
   $ex-7:(100% / 7);
+  $ex-6:(100% / 6);
   $ex-5:(100% / 5);
   $ex-4:(100% / 4);
 
-  overflow: auto; @include flexbase; @include flex-row-wrap;
-  @include flex-align-content-start; @include flex-align-items-start;
-  padding:10px $admin-margin $admin-margin $admin-margin;
-  position: relative; width:100%; height:100%; /*@include border01(1px,$color-gray-02,1 );*/
+  overflow: auto; @include flexbase; @include flex-row-wrap; @include flex-align-content-start;
+  position: relative; width:100%; height:100%; padding:0 0 $admin-margin 0;
+
+  /*padding:0 $admin-margin $admin-margin $admin-margin;*/
+  /*@include border01(1px,$color-gray-02,1 );*/
+  //&:before {content:""; display: inline-block; width:100%; height:3px; background-color:$color-gray-01; }
 
   .chart_label {
-    @include flex-column;
-    & > * {width:100%; padding:0; padding-top:5px; margin:0;}
+    //@include flex-column; @include flex-justify-content-start; @include flex-align-items-start;
+    @include flex-row-wrap; @include flex-align-content-start; width:100%;
+    margin:0 !important;
+    & > * {
+
+      @include flex-column; @include flex-align-items-start;
+      @include flex-width-one(1); min-width:50%; @include mmheight(30px);
+      margin:0 0 12px 0; font-size:1rem;
+
+      &:before { order:1; left: 2px; width: 20px; height: 5px; top:0; margin:2px 0 0 0; }
+    }
   }
 
   & > * {
     overflow: hidden; position: relative; height:auto;
 
-    @include flexbase; @include flex-column;
+    @include flexbase; @include flex-column; @include flex-align-content-start;
     @include flex-align-items-start; @include flex-justify-content-start;
-    @include mmwidth($ex-7); min-height:150px; padding:($admin-margin / 2);
+    @include mmwidth($ex-5); min-height:130px; padding:($admin-margin / 2) $admin-margin;
 
-
-    @include border02;
+    /*
+    @mixin border03 {
+      $shdow:$color-gray-01;
+      box-shadow: 1px 1px 0 0 rgba($shdow, 0.7), 1px 1px 0 0 rgba($shdow, 0.7) inset;
+    } // @include border02;
+    @include border03;
+    */
 
     $borderw:calc(100% - 7px);
-    &:before, &:after {content:""; position: absolute; top:0; left:0;  width:100%; height:100%; }
 
-    //&:after {z-index: -1; background-color: #fff; opacity: 0.6; }
-    //&:nth-of-type(even):after {background-color: #000;  opacity: 0.02;}
-    /*&:nth-of-type(even):after {
-      bottom:0; right:0; opacity: 0.06;
-      background: -moz-linear-gradient(-45deg,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%);
-      background: -webkit-linear-gradient(-45deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
-      background: linear-gradient(135deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );
-    }*/
+    &:after {
+      content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%;
+      border-style:solid; border-width:0 1px 1px 0; border-color: $admin-boxline;
+      background-color: rgba(#fff,0.5);
+    }
 
+    &:nth-of-type(odd):after { background-color: rgba(#fff,0.2);}
+
+    &:nth-of-type(5n):after {border-width:0 0 1px 0;}
   }
 
   p {
-    position: relative; font-weight: lighter; font-size:1.3rem; opacity: 0.7;
-    &:before {
-      content:""; position: absolute; left:0; bottom:-5px;
-      width:100%; height:1px; background-color: rgba($color-dark-01,.3);
+    @include flexbase; @include flex-column; @include flex-align-items-start; @include flex-justify-content-start;
+    position: relative; font-weight: lighter; font-size:1.1rem; opacity: 0.7; @include mmheight(50px);
+/*
+    &:after {
+      content:""; display: inline-block; position: relative; left:0; top:10px;
+      width:100%; height:2px; background-color: rgba(#000,.3);
     }
+    */
   }
 
 }

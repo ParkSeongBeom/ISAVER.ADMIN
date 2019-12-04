@@ -583,7 +583,7 @@
     </select>
 
     <!--
-      장치 목록을 가져온다. 영상이력용
+      장치 목록을 가져온다. 싱크용
       @author psb
     -->
     <select id="findListDeviceForLocationSync" resultType="DeviceBean">
@@ -593,6 +593,31 @@
         AND     device_code = 'DEV003'
         AND	    area_id = #{areaId}
     </select>
+
+    <resultMap id="vmsDeviceList" type="map">
+        <result property="deviceId" column="deviceId"/>
+        <result property="deviceName" column="deviceName"/>
+        <result property="fenceId" column="fenceId"/>
+    </resultMap>
+
+    <!--
+      장치 목록을 가져온다. VMS연동용
+      @author psb
+    -->
+    <select id="findListDeviceForVMSSync" resultMap="vmsDeviceList">
+        select  a.device_id as deviceId
+                ,a.device_name as deviceName
+                ,c.fence_id as fenceId
+        FROM    isaver.device a
+        INNER JOIN isaver.fence_device b
+        ON      b.device_id = a.device_id
+        INNER JOIN isaver.fence c
+        ON      b.uuid = c.uuid
+        WHERE   del_yn='N'
+        AND     device_code = 'DEV002'
+        AND	    area_id = #{areaId}
+    </select>
+
     <!--
       장치 목록을 가져온다. 시뮬레이터 테스트용
       @author psb

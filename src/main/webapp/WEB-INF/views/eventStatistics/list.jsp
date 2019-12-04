@@ -452,8 +452,10 @@
             _seriesList.push(series);
             _sumSeriesList.push(sumValue);
             chartTag.find(".header").append(
-                $("<span/>",{label:chart['label']}).text(chart['label']).append(
-                    $("<b/>").text(sumValue)
+                $("<span/>",{label:chart['label']}).append(
+                    $("<b/>").text(commaNum(sumValue))
+                ).append(
+                    $("<i/>").text(chart['label'])
                 )
             );
         }
@@ -557,7 +559,7 @@
                 for(var index in _seriesList){
                     for(var i in _seriesList[index]){
                         let series = _seriesList[index][i];
-                        chartTag.find("span[label='"+series['meta']+"']:eq("+index+")").text(series['value'])
+                        chartTag.find("span[label='"+series['meta']+"']:eq("+index+")").text(commaNum(series['value']))
                     }
                 }
                 $(".box-chart").append(chartTag);

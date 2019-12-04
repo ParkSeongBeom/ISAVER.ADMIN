@@ -3,6 +3,7 @@ package com.icent.isaver.admin.dao;
 
 import com.icent.isaver.admin.bean.DeviceBean;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,6 +133,8 @@ public interface DeviceDao {
     DeviceBean findByParentDevice(Map<String, String> parameters);
 
     List<DeviceBean> findListDeviceForLocationSync(Map<String, String> parameters);
+
+    List<Map> findListDeviceForVMSSync(Map<String, String> parameters);
 
     List<DeviceBean> findListDeviceForTest();
 }

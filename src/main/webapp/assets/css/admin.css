@@ -4142,33 +4142,6 @@ a.fc-more {
     flexbox: 0 1 100%;
     -webkit-box-flex: 1;
     -ms-flex: 0 1 100%; }
-    .flex-area-w .box-chart .chart_label {
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      display: flexbox;
-      display: box;
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: start;
-      -moz-box-pack: flex-start;
-      -webkit-justify-content: flex-start;
-      -ms-flex-pack: flex-start;
-      justify-content: flex-start;
-      height: 50px !important;
-      min-height: 50px !important;
-      max-height: 50px !important;
-      margin: 30px 0 15px 0; }
-      .flex-area-w .box-chart .chart_label > * > * {
-        font-weight: bold;
-        font-size: 1.4rem;
-        padding: 0 0 0 15px; }
   .flex-area-w .box-ment {
     position: relative; }
     .flex-area-w .box-ment, .flex-area-w .box-ment > div {
@@ -4498,12 +4471,6 @@ a.fc-more {
           opacity: 0.7; }
         .set-btn.type-01 button:nth-of-type(3n):after {
           opacity: 1; }
-    .set-btn .chart_label {
-      margin: auto 0 auto auto !important; }
-      .set-btn .chart_label span {
-        margin: 0 0 0 20px; }
-    .set-btn + .chart_label {
-      margin: 15px 0 !important; }
   .set-ul {
     /*
     <ul class="set-ul">
@@ -5195,7 +5162,8 @@ a.fc-more {
       max-height: 30px !important;
       font-size: 0.9rem;
       padding: 0;
-      text-decoration: none !important; }
+      text-decoration: none !important;
+      opacity: 0.7; }
     .set-item > button {
       margin-top: 10px; }
     .set-item > div {
@@ -5261,6 +5229,76 @@ a.fc-more {
       .set-chart .canvas-chart svg {
         width: 100%;
         height: 100%; }
+    .set-chart > .chart_label {
+      -webkit-flex-flow: row wrap;
+      -moz-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
+      -webkit-align-content: flex-start;
+      align-content: flex-start;
+      box-align: start;
+      -webkit-box-align: start;
+      -moz-box-align: flex-start;
+      -webkit-align-items: flex-start;
+      -ms-flex-align: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      padding: 20px 30px 10px 30px;
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-color: rgba(76, 76, 76, 0.15);
+      /*margin:($admin-margin / 2) 0;*/ }
+      .set-chart > .chart_label > * {
+        flex: 1;
+        -webkit-flex: 1;
+        flexbox: 1;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        -webkit-box-orient: column;
+        -webkit-box-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        box-align: start;
+        -webkit-box-align: start;
+        -moz-box-align: flex-start;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: flex-start;
+        align-items: flex-start;
+        width: 20% !important;
+        min-width: 20% !important;
+        max-width: 20% !important;
+        padding: 0 60px 15px 0;
+        margin: 0; }
+        .set-chart > .chart_label > * * {
+          position: relative; }
+        .set-chart > .chart_label > *:before {
+          order: 2;
+          /*@include mhwidth($clsb-wh);*/
+          width: 35px;
+          height: 5px;
+          margin: 7px 0;
+          left: 3px; }
+        .set-chart > .chart_label > * i {
+          order: 3;
+          line-height: 1.3rem;
+          font-size: 1rem;
+          font-weight: bold;
+          word-break: keep-all;
+          letter-spacing: -0.1rem; }
+        .set-chart > .chart_label > * b {
+          order: 1;
+          opacity: 0.8;
+          min-width: 100%;
+          padding: 0;
+          line-height: 1.3rem;
+          letter-spacing: -0.05rem; }
+    .set-chart.chart-pie > .chart_label {
+      -webkit-box-pack: start;
+      -moz-box-pack: flex-start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: flex-start;
+      justify-content: flex-start; }
 
 .excel {
   /*
@@ -5288,32 +5326,109 @@ a.fc-more {
   flex-flow: row wrap;
   -webkit-align-content: flex-start;
   align-content: flex-start;
-  box-align: start;
-  -webkit-box-align: start;
-  -moz-box-align: flex-start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  padding: 10px 30px 30px 30px;
   position: relative;
   width: 100%;
   height: 100%;
+  padding: 0 0 30px 0;
+  /*padding:0 $admin-margin $admin-margin $admin-margin;*/
   /*@include border01(1px,$color-gray-02,1 );*/ }
   .excel .chart_label {
-    -webkit-box-orient: column;
-    -webkit-box-direction: column;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column; }
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    width: 100%;
+    margin: 0 !important; }
     .excel .chart_label > * {
-      width: 100%;
-      padding: 0;
-      padding-top: 5px;
-      margin: 0; }
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      box-align: start;
+      -webkit-box-align: start;
+      -moz-box-align: flex-start;
+      -webkit-align-items: flex-start;
+      -ms-flex-align: flex-start;
+      align-items: flex-start;
+      flex: 1;
+      -webkit-flex: 1;
+      flexbox: 1;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      min-width: 50%;
+      height: 30px !important;
+      min-height: 30px !important;
+      max-height: 30px !important;
+      margin: 0 0 12px 0;
+      font-size: 1rem; }
+      .excel .chart_label > *:before {
+        order: 1;
+        left: 2px;
+        width: 20px;
+        height: 5px;
+        top: 0;
+        margin: 2px 0 0 0; }
   .excel > * {
     overflow: hidden;
     position: relative;
     height: auto;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    box-align: start;
+    -webkit-box-align: start;
+    -moz-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    -moz-box-pack: flex-start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: flex-start;
+    justify-content: flex-start;
+    width: 20% !important;
+    min-width: 20% !important;
+    max-width: 20% !important;
+    min-height: 130px;
+    padding: 15px 30px;
+    /*
+    @mixin border03 {
+      $shdow:$color-gray-01;
+      box-shadow: 1px 1px 0 0 rgba($shdow, 0.7), 1px 1px 0 0 rgba($shdow, 0.7) inset;
+    } // @include border02;
+    @include border03;
+    */ }
+    .excel > *:after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-style: solid;
+      border-width: 0 1px 1px 0;
+      border-color: rgba(76, 76, 76, 0.15);
+      background-color: rgba(255, 255, 255, 0.5); }
+    .excel > *:nth-of-type(odd):after {
+      background-color: rgba(255, 255, 255, 0.2); }
+    .excel > *:nth-of-type(5n):after {
+      border-width: 0 0 1px 0; }
+  .excel p {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -5337,39 +5452,19 @@ a.fc-more {
     -webkit-justify-content: flex-start;
     -ms-flex-pack: flex-start;
     justify-content: flex-start;
-    width: 14.28571% !important;
-    min-width: 14.28571% !important;
-    max-width: 14.28571% !important;
-    min-height: 150px;
-    padding: 15px;
-    box-shadow: 1px 1px 0 0 #a9a9a9, 1px 1px 0 0 #a9a9a9 inset;
-    /*&:nth-of-type(even):after {
-      bottom:0; right:0; opacity: 0.06;
-      background: -moz-linear-gradient(-45deg,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%);
-      background: -webkit-linear-gradient(-45deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
-      background: linear-gradient(135deg,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );
-    }*/ }
-    .excel > *:before, .excel > *:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%; }
-  .excel p {
     position: relative;
     font-weight: lighter;
-    font-size: 1.3rem;
-    opacity: 0.7; }
-    .excel p:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 1px;
-      background-color: rgba(76, 76, 76, 0.3); }
+    font-size: 1.1rem;
+    opacity: 0.7;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    /*
+        &:after {
+          content:""; display: inline-block; position: relative; left:0; top:10px;
+          width:100%; height:2px; background-color: rgba(#000,.3);
+        }
+        */ }
 
 .notification_col colgroup col:nth-of-type(1) {
   width: 120px; }

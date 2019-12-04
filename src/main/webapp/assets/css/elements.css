@@ -266,6 +266,28 @@
   content: "\e98c" !important; }
 .ico-option:before {
   content: "\e959" !important; }
+.ico-straw:before {
+  content: "\e993" !important; }
+.ico-grape:before {
+  content: "\e994" !important; }
+.ico-tomato:before {
+  content: "\e995" !important; }
+.ico-tanger:before {
+  content: "\e996" !important; }
+.ico-ginseng:before {
+  content: "\e997" !important; }
+.ico-straw-x:before {
+  content: "\e998" !important; }
+.ico-grape-x:before {
+  content: "\e999" !important; }
+.ico-tomato-x:before {
+  content: "\e99a" !important; }
+.ico-tanger-x:before {
+  content: "\e99b" !important; }
+.ico-ginseng-x:before {
+  content: "\e99c" !important; }
+.ico-sprout:before {
+  content: "\e99d" !important; }
 
 .cursor_cros {
   cursor: crosshair !important; }
@@ -2928,6 +2950,53 @@ button.btn ~ button.btn {
 .refl_btn:before {
   content: "\e95e" !important; }
 
+.chart_label {
+  /* min-height:50px;*/
+  -webkit-box-pack: start;
+  -moz-box-pack: flex-start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: flex-start;
+  justify-content: flex-start;
+  box-align: start;
+  -webkit-box-align: start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start; }
+  .chart_label, .chart_label > * {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box; }
+  .chart_label > span {
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 0 10px 0;
+    background-color: transparent; }
+    .chart_label > span, .chart_label > span * {
+      position: relative; }
+    .chart_label > span:before {
+      content: "";
+      display: inline-block;
+      position: relative;
+      top: 1px;
+      width: 17px;
+      height: 17px;
+      margin: 0 7px 0 0; }
+    .chart_label > span b {
+      top: -2px;
+      font-weight: bold;
+      padding: 0 0 0 30px;
+      font-size: 1.5rem; }
+
 * {
   /*
    &.co_gren:before {background-color: rgba(0,212,88,  0.4);} !*1 작업자상태, 안전복 미착용*!
@@ -2937,11 +3006,11 @@ button.btn ~ button.btn {
    &.co_viol:before {background-color: rgba(151,83,220,0.4);} !*5  *!
    &.co_blue:before {background-color: rgba(41,161,247,0.4);} !*6  *!
    */ }
-  * .ch_name, * .chart_label span, * .mh_name {
+  * .ch_name, * .mh_name {
     position: relative;
     margin: 0 20px 0 0;
     background-color: transparent; }
-    * .ch_name:before, * .chart_label span:before, * .mh_name:before {
+    * .ch_name:before, * .mh_name:before {
       content: "";
       display: inline-block;
       position: relative;
@@ -2971,43 +3040,142 @@ button.btn ~ button.btn {
   * .check_th tbody tr.top01 td:first-of-type:before,
   * .chart_label > span:nth-of-type(1):before,
   * .mp_header > div > .ch_name:nth-of-type(1):before {
-    background-color: #01d65a; }
+    background-color: #79a523; }
+  * .excel .chart_label > span:nth-of-type(1),
+  * .chart_label > span:nth-of-type(1) > b {
+    color: #79a523; }
   * .check_th tbody tr.top02 td:first-of-type:before,
   * .chart_label > span:nth-of-type(2):before,
   * .mp_header > div > .ch_name:nth-of-type(2):before {
     background-color: #cc3dd3; }
+  * .excel .chart_label > span:nth-of-type(2),
+  * .chart_label > span:nth-of-type(2) > b {
+    color: #cc3dd3; }
   * .check_th tbody tr.top03 td:first-of-type:before,
   * .chart_label > span:nth-of-type(3):before,
   * .mp_header > div > .ch_name:nth-of-type(3):before {
     background-color: #f6b900; }
+  * .excel .chart_label > span:nth-of-type(3),
+  * .chart_label > span:nth-of-type(3) > b {
+    color: #f6b900; }
   * .check_th tbody tr.top04 td:first-of-type:before,
   * .chart_label > span:nth-of-type(4):before,
   * .mp_header > div > .ch_name:nth-of-type(4):before {
     background-color: #be1e1e; }
+  * .excel .chart_label > span:nth-of-type(4),
+  * .chart_label > span:nth-of-type(4) > b {
+    color: #be1e1e; }
   * .check_th tbody tr.top05 td:first-of-type:before,
   * .chart_label > span:nth-of-type(5):before,
   * .mp_header > div > .ch_name:nth-of-type(5):before {
     background-color: #9753dc; }
+  * .excel .chart_label > span:nth-of-type(5),
+  * .chart_label > span:nth-of-type(5) > b {
+    color: #9753dc; }
   * .check_th tbody tr.top06 td:first-of-type:before,
   * .chart_label > span:nth-of-type(6):before,
   * .mp_header > div > .ch_name:nth-of-type(6):before {
     background-color: #259dcf; }
+  * .excel .chart_label > span:nth-of-type(6),
+  * .chart_label > span:nth-of-type(6) > b {
+    color: #259dcf; }
   * .check_th tbody tr.top07 td:first-of-type:before,
   * .chart_label > span:nth-of-type(7):before,
   * .mp_header > div > .ch_name:nth-of-type(7):before {
     background-color: #56c96e; }
+  * .excel .chart_label > span:nth-of-type(7),
+  * .chart_label > span:nth-of-type(7) > b {
+    color: #56c96e; }
   * .check_th tbody tr.top08 td:first-of-type:before,
   * .chart_label > span:nth-of-type(8):before,
   * .mp_header > div > .ch_name:nth-of-type(8):before {
     background-color: #ef8116; }
+  * .excel .chart_label > span:nth-of-type(8),
+  * .chart_label > span:nth-of-type(8) > b {
+    color: #ef8116; }
   * .check_th tbody tr.top09 td:first-of-type:before,
   * .chart_label > span:nth-of-type(9):before,
   * .mp_header > div > .ch_name:nth-of-type(9):before {
     background-color: #49dbff; }
+  * .chart_label > span:nth-of-type(9) > b {
+    color: #49dbff; }
   * .check_th tbody tr.top10 td:first-of-type:before,
   * .chart_label > span:nth-of-type(10):before,
   * .mp_header > div > .ch_name:nth-of-type(10):before {
     background-color: #7894c2; }
+  * .excel .chart_label > span:nth-of-type(10),
+  * .chart_label > span:nth-of-type(10) > b {
+    color: #7894c2; }
+  * .check_th tbody tr.top01 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(11):before,
+  * .mp_header > div > .ch_name:nth-of-type(11):before {
+    background-color: #31a1a2; }
+  * .excel .chart_label > span:nth-of-type(11),
+  * .chart_label > span:nth-of-type(11) > b {
+    color: #31a1a2; }
+  * .check_th tbody tr.top02 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(12):before,
+  * .mp_header > div > .ch_name:nth-of-type(12):before {
+    background-color: #95602c; }
+  * .excel .chart_label > span:nth-of-type(12),
+  * .chart_label > span:nth-of-type(12) > b {
+    color: #95602c; }
+  * .check_th tbody tr.top03 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(13):before,
+  * .mp_header > div > .ch_name:nth-of-type(13):before {
+    background-color: #ca5a35; }
+  * .excel .chart_label > span:nth-of-type(13),
+  * .chart_label > span:nth-of-type(13) > b {
+    color: #ca5a35; }
+  * .check_th tbody tr.top04 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(14):before,
+  * .mp_header > div > .ch_name:nth-of-type(14):before {
+    background-color: #5b9e68; }
+  * .excel .chart_label > span:nth-of-type(14),
+  * .chart_label > span:nth-of-type(14) > b {
+    color: #5b9e68; }
+  * .check_th tbody tr.top05 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(15):before,
+  * .mp_header > div > .ch_name:nth-of-type(15):before {
+    background-color: #9e8163; }
+  * .excel .chart_label > span:nth-of-type(15),
+  * .chart_label > span:nth-of-type(15) > b {
+    color: #9e8163; }
+  * .check_th tbody tr.top06 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(16):before,
+  * .mp_header > div > .ch_name:nth-of-type(16):before {
+    background-color: #a59f93; }
+  * .excel .chart_label > span:nth-of-type(16),
+  * .chart_label > span:nth-of-type(16) > b {
+    color: #a59f93; }
+  * .check_th tbody tr.top07 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(17):before,
+  * .mp_header > div > .ch_name:nth-of-type(17):before {
+    background-color: #e882a9; }
+  * .excel .chart_label > span:nth-of-type(17),
+  * .chart_label > span:nth-of-type(17) > b {
+    color: #e882a9; }
+  * .check_th tbody tr.top08 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(18):before,
+  * .mp_header > div > .ch_name:nth-of-type(18):before {
+    background-color: #cf857a; }
+  * .excel .chart_label > span:nth-of-type(18),
+  * .chart_label > span:nth-of-type(18) > b {
+    color: #cf857a; }
+  * .check_th tbody tr.top09 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(19):before,
+  * .mp_header > div > .ch_name:nth-of-type(19):before {
+    background-color: #9c777e; }
+  * .excel .chart_label > span:nth-of-type(19),
+  * .chart_label > span:nth-of-type(19) > b {
+    color: #9c777e; }
+  * .check_th tbody tr.top10 td:first-of-type:before,
+  * .chart_label > span:nth-of-type(20):before,
+  * .mp_header > div > .ch_name:nth-of-type(20):before {
+    background-color: #bcbcbc; }
+  * .excel .chart_label > span:nth-of-type(20),
+  * .chart_label > span:nth-of-type(20) > b {
+    color: #bcbcbc; }
 
 .ct-series {
   /*
@@ -3029,10 +3197,10 @@ button.btn ~ button.btn {
     .ct-series .ct-bar {
       opacity: 0.7; }
   .ct-series-a .ct-area, .ct-series-a .ct-slice-pie, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
-    fill: #01d65a !important;
-    stroke: #01d65a !important; }
+    fill: #79a523 !important;
+    stroke: #79a523 !important; }
   .ct-series-a .ct-line, .ct-series-a .ct-point {
-    stroke: #01d65a !important; }
+    stroke: #79a523 !important; }
   .ct-series-b .ct-area, .ct-series-b .ct-slice-pie, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
     fill: #cc3dd3 !important;
     stroke: #cc3dd3 !important; }
@@ -3597,22 +3765,19 @@ button.btn ~ button.btn {
   position: absolute;
   z-index: 1;
   background-repeat: no-repeat;
-  background-position: center;
-  /*&:after  {width:100%; height:1px; left:0; top:50%;}*/ }
-  .map_images:before {
+  background-position: center; }
+  .map_images:after {
     content: "";
     position: absolute;
-    z-index: -1;
-    /*background-color: rgba(#fff,0.4);*/ }
-  .map_images:before {
-    /*width:1px; height:100%; left:50%; top:0;*/
+    z-index: -2;
     width: 100%;
     height: 100%;
     background-image: url("../images/bg/gbg02.svg");
-    background-repeat: repeat, no-repeat; }
+    background-repeat: repeat; }
   .map_images .g-angle {
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    z-index: 1; }
     .map_images .g-angle.deg10 > .g-ico > div {
       transform: rotateX(10deg); }
     .map_images .g-angle.deg15 > .g-ico > div {
@@ -3650,19 +3815,29 @@ button.btn ~ button.btn {
   .map_images > * {
     position: absolute !important; }
   .map_images .map_bg {
-    z-index: -1;
+    width: 100%;
+    height: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.4; }
-    .map_images .map_bg, .map_images .map_bg:before, .map_images .map_bg:after {
-      position: absolute;
-      width: 100%;
-      height: 100%; }
-    .map_images .map_bg:before, .map_images .map_bg:after {
-      content: ""; }
-    .map_images .map_bg:after {
-      background-position: center;
-      background-repeat: no-repeat; }
+    /*opacity: 0.4;*/
+    /*
+    &, &:before, &:after {position: absolute; width:100%; height:100%;}
+    &:before, &:after {content:"";}
+    &:after { background-position:center; background-repeat:no-repeat;}
+    */
+    /*
+
+    .grid {
+      position: absolute; z-index:-1 !important;
+      width:100%; height:100%; background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
+    }
+    */
+    /*
+    &:after {
+      content:""; position: absolute; z-index:-1 !important;
+      width:100%; height:100%; background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
+    }
+    */ }
 
 .g {
   /*
@@ -3787,9 +3962,7 @@ button.btn ~ button.btn {
       -moz-transform: scale(0.4);
       -webkit-transform: scale(0.4);
       -o-transform: scale(0.4); }
-    .g-ico:hover, .g-ico:hover > span, .g-area:hover, .g-area:hover > span {
-      background-color: rgba(246, 185, 0, 0.5); }
-    .g-ico.on, .g-ico.on > span, .g-area.on, .g-area.on > span {
+    .g-ico.on:hover, .g-ico.on:hover:before, .g-ico.on:hover > span, .g-area.on:hover, .g-area.on:hover:before, .g-area.on:hover > span {
       background-color: #b42d6e; }
   .g-ico, .g-tracking {
     background-color: #535353; }
@@ -3840,6 +4013,8 @@ button.btn ~ button.btn {
     .g-ico .ui-resizable-se {
       margin-top: 10px;
       margin-left: 10px; }
+    .g-ico:after {
+      background-color: #259dcf; }
     .g-ico > span + div {
       z-index: -1; }
       .g-ico > span + div, .g-ico > span + div:after, .g-ico > span + div:before {
@@ -3861,12 +4036,48 @@ button.btn ~ button.btn {
     .g-ico.lidar > span + div {
       z-index: -1; }
       .g-ico.lidar > span + div, .g-ico.lidar > span + div:after, .g-ico.lidar > span + div:before {
-        width: 1600px !important;
-        min-width: 1600px !important;
-        max-width: 1600px !important;
-        height: 1600px !important;
-        min-height: 1600px !important;
-        max-height: 1600px !important; }
+        width: 800px !important;
+        min-width: 800px !important;
+        max-width: 800px !important;
+        height: 800px !important;
+        min-height: 800px !important;
+        max-height: 800px !important; }
+      .g-ico.lidar > span + div:before {
+        content: "";
+        overflow: hidden;
+        opacity: .6;
+        animation-name: lidar;
+        -webkit-animation-name: lidar;
+        -webkit-animation-duration: 5s;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        -webkit-animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        -webkit-animation-timing-function: linear;
+        animation-fill-mode: forwards;
+        -webkit-animation-fill-mode: forwards;
+        -moz-border-radius: 10000px;
+        -webkit-border-radius: 10000px;
+        border-radius: 10000px;
+        -khtml-border-radius: 10000px; }
+@-webkit-keyframes lidar {
+  0% {
+    transform: rotate(0);
+    ms-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0); }
+  100% {
+    transform: rotate(360deg);
+    ms-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg); } }
+      .g-ico.lidar > span + div:before {
+        background: -webkit-linear-gradient(top, rgba(37, 157, 207, 0) 0%, rgba(37, 157, 207, 0.3) 50%, rgba(37, 157, 207, 0.2) 50.1%, rgba(37, 157, 207, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center;
+        background-size: auto,100%,auto; }
     .g-ico.lidar.wh-01 > span + div, .g-ico.lidar.wh-01 > span + div:after, .g-ico.lidar.wh-01 > span + div:before {
       width: 400px !important;
       min-width: 400px !important;
@@ -4099,90 +4310,32 @@ button.btn ~ button.btn {
     width: 300%;
     height: 300%;
     border-width: 2px; } }
-    .g-ico.level-caution, .g-ico.level-caution > span {
+    .g-ico.level-caution, .g-ico.level-caution:after, .g-ico.level-caution > span {
       background-color: #d2a01e; }
     .g-ico.level-caution:before {
       border-color: #d2a01e; }
-    .g-ico.level-warning, .g-ico.level-warning > span {
+    .g-ico.level-warning, .g-ico.level-warning:after, .g-ico.level-warning > span {
       background-color: #f06400; }
     .g-ico.level-warning:before {
       border-color: #f06400; }
-    .g-ico.level-danger, .g-ico.level-danger > span {
+    .g-ico.level-danger, .g-ico.level-danger:after, .g-ico.level-danger > span {
       background-color: #c30202; }
     .g-ico.level-danger:before {
       border-color: #c30202; }
-    .g-ico.level-die, .g-ico.level-die > span {
-      background-color: #000; }
-    .g-ico.level-die:before {
-      border-color: #000; }
-    .g-ico.level-die > span + div:before {
-      content: "\e93d";
-      z-index: 10;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      display: flexbox;
-      display: box;
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      -moz-box-pack: center;
-      -webkit-justify-content: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      background-color: #000;
-      color: #f6b900;
-      font-size: 1.4rem;
-      animation-name: die02;
-      -webkit-animation-name: die02;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 2s;
-      animation-duration: 2s;
-      animation-play-state: paused;
-      top: auto;
-      left: auto;
-      opacity: .5; }
-@-webkit-keyframes die02 {
-  0% {
-    opacity: 0.2; }
-  10% {
-    opacity: 1; }
-  30% {
-    opacity: 1; }
-  80% {
-    opacity: 0.2; }
-  100% {
-    opacity: 0.2; } }
-@keyframes die02 {
-  0% {
-    opacity: 0.2; }
-  10% {
-    opacity: 1; }
-  30% {
-    opacity: 1; }
-  80% {
-    opacity: 0.2; }
-  100% {
-    opacity: 0.2; } }
-    .g-ico.level-die > span + div:after {
-      display: none !important; }
-    .g-ico.lidar.level-caution > span + div:before, .g-ico.lidar.level-caution > span + div:after {
+    .g-ico.level-die {
+      /*
+              & > span + div {
+                &:before {@include die02; animation-play-state: paused; top:auto;left:auto; opacity: .5;}
+                &:after {display: none !important;}
+              }
+              */ }
+      .g-ico.level-die, .g-ico.level-die:after, .g-ico.level-die > span {
+        background-color: #000; }
+      .g-ico.level-die:before {
+        border-color: #000; }
+      .g-ico.level-die > span + div:before {
+        display: none; }
+    .g-ico.lidar.level-caution > span + div:before {
       content: "";
       overflow: hidden;
       opacity: .6;
@@ -4216,59 +4369,9 @@ button.btn ~ button.btn {
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); } }
     .g-ico.lidar.level-caution > span + div:before {
-      border-style: solid;
-      border-width: 1px;
-      border-color: #d2a01e;
-      background: -webkit-linear-gradient(top, rgba(210, 160, 30, 0) 0%, rgba(210, 160, 30, 0.3) 50%, rgba(210, 160, 30, 0.2) 50.1%, rgba(210, 160, 30, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center, url("../images/map/lidar_ring_w.svg") no-repeat center;
+      background: -webkit-linear-gradient(top, rgba(210, 160, 30, 0) 0%, rgba(210, 160, 30, 0.3) 50%, rgba(210, 160, 30, 0.2) 50.1%, rgba(210, 160, 30, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center;
       background-size: auto,100%,auto; }
-    .g-ico.lidar.level-caution > span + div:after {
-      border-style: solid;
-      border-width: 20px;
-      border-color: #d2a01e;
-      background-color: rgba(210, 160, 30, 0.3);
-      animation-name: lidar-after;
-      -webkit-animation-name: lidar-after;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 2s;
-      animation-duration: 2s; }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-    .g-ico.lidar.level-warning > span + div:before, .g-ico.lidar.level-warning > span + div:after {
+    .g-ico.lidar.level-warning > span + div:before {
       content: "";
       overflow: hidden;
       opacity: .6;
@@ -4302,59 +4405,9 @@ button.btn ~ button.btn {
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); } }
     .g-ico.lidar.level-warning > span + div:before {
-      border-style: solid;
-      border-width: 1px;
-      border-color: #f06400;
-      background: -webkit-linear-gradient(top, rgba(240, 100, 0, 0) 0%, rgba(240, 100, 0, 0.3) 50%, rgba(240, 100, 0, 0.2) 50.1%, rgba(240, 100, 0, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center, url("../images/map/lidar_ring_w.svg") no-repeat center;
+      background: -webkit-linear-gradient(top, rgba(240, 100, 0, 0) 0%, rgba(240, 100, 0, 0.3) 50%, rgba(240, 100, 0, 0.2) 50.1%, rgba(240, 100, 0, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center;
       background-size: auto,100%,auto; }
-    .g-ico.lidar.level-warning > span + div:after {
-      border-style: solid;
-      border-width: 20px;
-      border-color: #f06400;
-      background-color: rgba(240, 100, 0, 0.3);
-      animation-name: lidar-after;
-      -webkit-animation-name: lidar-after;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 2s;
-      animation-duration: 2s; }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-    .g-ico.lidar.level-danger > span + div:before, .g-ico.lidar.level-danger > span + div:after {
+    .g-ico.lidar.level-danger > span + div:before {
       content: "";
       overflow: hidden;
       opacity: .6;
@@ -4388,144 +4441,10 @@ button.btn ~ button.btn {
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); } }
     .g-ico.lidar.level-danger > span + div:before {
-      border-style: solid;
-      border-width: 1px;
-      border-color: #c30202;
-      background: -webkit-linear-gradient(top, rgba(195, 2, 2, 0) 0%, rgba(195, 2, 2, 0.3) 50%, rgba(195, 2, 2, 0.2) 50.1%, rgba(195, 2, 2, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center, url("../images/map/lidar_ring_w.svg") no-repeat center;
+      background: -webkit-linear-gradient(top, rgba(195, 2, 2, 0) 0%, rgba(195, 2, 2, 0.3) 50%, rgba(195, 2, 2, 0.2) 50.1%, rgba(195, 2, 2, 0) 100%), url("../images/map/lidar_b.svg") no-repeat center;
       background-size: auto,100%,auto; }
-    .g-ico.lidar.level-danger > span + div:after {
-      border-style: solid;
-      border-width: 20px;
-      border-color: #c30202;
-      background-color: rgba(195, 2, 2, 0.3);
-      animation-name: lidar-after;
-      -webkit-animation-name: lidar-after;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 2s;
-      animation-duration: 2s; }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-    .g-ico.lidar.level-die > span + div:before, .g-ico.lidar.level-die > span + div:after {
-      content: "";
-      overflow: hidden;
-      opacity: .6;
-      animation-name: lidar;
-      -webkit-animation-name: lidar;
-      -webkit-animation-duration: 5s;
-      animation-duration: 5s;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -moz-border-radius: 10000px;
-      -webkit-border-radius: 10000px;
-      border-radius: 10000px;
-      -khtml-border-radius: 10000px; }
-@-webkit-keyframes lidar {
-  0% {
-    transform: rotate(0);
-    ms-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -moz-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    -o-transform: rotate(0); }
-  100% {
-    transform: rotate(360deg);
-    ms-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg); } }
-    .g-ico.lidar.level-die > span + div:before {
-      border-style: solid;
-      border-width: 1px;
-      border-color: black;
-      background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.2) 50.1%, transparent 100%), url("../images/map/lidar_b.svg") no-repeat center, url("../images/map/lidar_ring_w.svg") no-repeat center;
-      background-size: auto,100%,auto; }
-    .g-ico.lidar.level-die > span + div:after {
-      border-style: solid;
-      border-width: 20px;
-      border-color: black;
-      background-color: rgba(0, 0, 0, 0.3);
-      animation-name: lidar-after;
-      -webkit-animation-name: lidar-after;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-      animation-timing-function: linear;
-      -webkit-animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-      -webkit-animation-duration: 2s;
-      animation-duration: 2s; }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
-@-webkit-keyframes lidar-after {
-  0% {
-    transform: scale(0);
-    ms-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
-    -o-transform: scale(0); }
-  100% {
-    transform: scale(1);
-    ms-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    opacity: 0; } }
+    .g-ico.lidar.level-die {
+      /*& > span + div {@include lidar-bg($color-die);}*/ }
   .g-tracking {
     width: 24px;
     height: 24px;
@@ -5093,14 +5012,24 @@ button.btn ~ button.btn {
       opacity: 1; }
       .check_btn_set > div input:checked + label:before, .check_btn_set > div input:checked + label:after {
         color: #b42d6e; }
+    .check_btn_set > div.ignore_check label:before {
+      content: "\e992"; }
+    .check_btn_set > div.ignore_check label:after {
+      content: "SHOW IGNORE FENCE"; }
+    .check_btn_set > div.ignore_check input:hover + label {
+      opacity: 1; }
+    .check_btn_set > div.ignore_check input:checked + label:before {
+      content: "\e991"; }
+    .check_btn_set > div.ignore_check input:checked + label:after {
+      content: "HIDE IGNORE FENCE"; }
     .check_btn_set > div.range_check label:before {
-      content: "\e95b"; }
+      content: "\e97f"; }
     .check_btn_set > div.range_check label:after {
       content: "LIDAR RANGE"; }
     .check_btn_set > div.range_check input:hover + label {
       opacity: 1; }
     .check_btn_set > div.range_check input:checked + label:before {
-      content: "\e97f"; }
+      content: "\e978"; }
     .check_btn_set > div.range_check input:checked + label:after {
       content: "LIDAR RANGE OFF"; }
     .check_btn_set > div.object_check label:before {

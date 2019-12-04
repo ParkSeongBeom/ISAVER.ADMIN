@@ -89,6 +89,7 @@ var CustomMapMediator = (
                 , 'moveReturnTimeout':null // 펜스로 이동 후 해당 펜스의 메인장치로 복귀
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
                 , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
+                , 'ignoreHide': false // 무시영역 숨김 처리
                 , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
                 , 'childAnimateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부(하위장치포함)
             }
@@ -140,7 +141,6 @@ var CustomMapMediator = (
         let _canvasSvg;
         let _fileUploadPath;
         let _messageConfig;
-        let _ignoreShowFlag = true;
         var _self = this;
 
         /**
@@ -217,6 +217,12 @@ var CustomMapMediator = (
             if(lidarHideFlag != null && lidarHideFlag.length > 0){
                 _options['custom']['lidarHideFlag'] = lidarHideFlag == "true";
                 _element.find("input[name='lidarCkb']").prop("checked",_options['custom']['lidarHideFlag']);
+            }
+
+            var ignoreHideFlag = $.cookie(_areaId+"ignoreHideFlag");
+            if(ignoreHideFlag != null && ignoreHideFlag.length > 0){
+                _options['custom']['ignoreHide'] = ignoreHideFlag == "true";
+                _element.find("input[name='ignoreCkb']").prop("checked",_options['custom']['ignoreHide']);
             }
 
             var moveFenceHideFlag = $.cookie(_areaId+"moveFenceHideFlag");
@@ -437,6 +443,7 @@ var CustomMapMediator = (
          * set guard option
          * lidarHide : 라이다반경표시 on/off
          * objectView : 전체보기/사람만보기
+         * ignoreHide : 무시영역표시 on/off
          * pointsHide : 트래킹 잔상 보기/숨기기
          * moveFenceHideFlag : 이벤트 발생시 펜스로이동/이동안함
          * @author psb
@@ -455,15 +462,20 @@ var CustomMapMediator = (
                 case "lidarHide" :
                     _options['custom']['lidarHideFlag'] = flag;
                     if(flag){
-                        _mapCanvas.find(".g-m8").removeClass("lidar");
+                        _mapCanvas.find(".ico-m8").removeClass("lidar");
                     }else{
-                        _mapCanvas.find(".g-m8").addClass("lidar");
+                        _mapCanvas.find(".ico-m8").addClass("lidar");
                     }
                     $.cookie(_areaId+'lidarHideFlag',flag);
                     break;
                 case "pointsHide" :
                     _options['object']['pointsHideFlag'] = flag;
                     $.cookie(_areaId+'pointsHideFlag',flag);
+                    break;
+                case "ignoreHide" :
+                    _options['custom']['ignoreHide'] = flag;
+                    $.cookie(_areaId+'ignoreHideFlag',flag);
+                    _self.setIgnoreHide();
                     break;
                 case "moveFenceHide" :
                     _options['custom']['moveFenceHide'] = flag;
@@ -996,7 +1008,7 @@ var CustomMapMediator = (
                                 $(svgText).prependTo(_mapCanvas.find("svg"));
                             }
 
-                            if(data['fenceType']==_FENCE_TYPE[1] && !_ignoreShowFlag){
+                            if(data['fenceType']==_FENCE_TYPE[1] && _options[_MARKER_TYPE[4]]['ignoreHide']){
                                 _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['element'].hide();
                                 _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['circleElement'].hide();
                                 _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['polylineElement'].hide();
@@ -1541,9 +1553,9 @@ var CustomMapMediator = (
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
         };
 
-        this.setIgnoreShowFlag = function(flag){
+        this.setIgnoreHide = function(flag){
             if(flag!=null){
-                _ignoreShowFlag = flag;
+                _options[_MARKER_TYPE[4]]['ignoreHide'] = flag;
             }
 
             let markerList = _marker[_MARKER_TYPE[1]];
@@ -1552,14 +1564,26 @@ var CustomMapMediator = (
                 for(let fenceId in fenceList){
                     var fence = fenceList[fenceId];
                     if(fence['data']['fenceType']==_FENCE_TYPE[1]){
-                        if(_ignoreShowFlag){
-                            fence['element'].show();
-                            fence['circleElement'].show();
-                            fence['polylineElement'].show();
+                        if(_options[_MARKER_TYPE[4]]['ignoreHide']){
+                            if(fence['element']!=null){
+                                fence['element'].hide();
+                            }
+                            if(fence['circleElement']!=null){
+                                fence['circleElement'].hide();
+                            }
+                            if(fence['polylineElement']!=null){
+                                fence['polylineElement'].hide();
+                            }
                         }else{
-                            fence['element'].hide();
-                            fence['circleElement'].hide();
-                            fence['polylineElement'].hide();
+                            if(fence['element']!=null){
+                                fence['element'].show();
+                            }
+                            if(fence['circleElement']!=null){
+                                fence['circleElement'].show();
+                            }
+                            if(fence['polylineElement']!=null){
+                                fence['polylineElement'].show();
+                            }
                         }
                     }
                 }

@@ -2732,11 +2732,84 @@ body.dashboard_mode {
       opacity: 1; }
     .device_set > * > * {
       width: 100%; }
+    .device_set > *.recording > p:nth-of-type(1):after {
+      content: "";
+      position: relative;
+      display: inline-block;
+      width: 20px !important;
+      min-width: 20px !important;
+      max-width: 20px !important;
+      height: 20px !important;
+      min-height: 20px !important;
+      max-height: 20px !important;
+      margin: 0 0 0 10px;
+      -moz-border-radius: 400px;
+      -webkit-border-radius: 400px;
+      border-radius: 400px;
+      -khtml-border-radius: 400px;
+      border-style: solid;
+      border-width: 4px;
+      border-color: black;
+      animation-name: recording-ani;
+      -webkit-animation-name: recording-ani;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      -webkit-animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -webkit-animation-duration: 1.2s;
+      animation-duration: 1.2s; }
+@-webkit-keyframes recording-ani {
+  0% {
+    background-color: rgba(190, 30, 30, 0);
+    border-width: 4px; }
+  30% {
+    background-color: #be1e1e;
+    border-width: 2px; }
+  70% {
+    background-color: #be1e1e;
+    border-width: 2px; }
+  100% {
+    background-color: rgba(190, 30, 30, 0);
+    border-width: 4px; } }
+@keyframes recording-ani {
+  0% {
+    background-color: rgba(190, 30, 30, 0);
+    border-width: 4px; }
+  30% {
+    background-color: #be1e1e;
+    border-width: 2px; }
+  70% {
+    background-color: #be1e1e;
+    border-width: 2px; }
+  100% {
+    background-color: rgba(190, 30, 30, 0);
+    border-width: 4px; } }
     .device_set > * p {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: justify;
+      -moz-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      position: relative;
       font-size: .9rem;
       word-break: break-word;
       color: #fff;
-      padding: 0 0 0 50px; }
+      padding: 0 5px 0 50px; }
       .device_set > * p:nth-of-type(2) {
         font-size: 1.2rem; }
     .device_set > * select {

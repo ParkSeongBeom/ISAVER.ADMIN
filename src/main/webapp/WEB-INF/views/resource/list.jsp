@@ -491,7 +491,7 @@
                             </button>
 
                             <span>Ignore Fence</span>
-                            <select id="ignoreHide" onchange="javascript:customMapPopup.ignoreShow(this);">
+                            <select id="ignoreHide" onchange="javascript:customMapPopup.ignoreHide(this);">
                                 <option value="show"><spring:message code="resource.select.show"/></option>
                                 <option value="hide"><spring:message code="resource.select.hide"/></option>
                             </select>

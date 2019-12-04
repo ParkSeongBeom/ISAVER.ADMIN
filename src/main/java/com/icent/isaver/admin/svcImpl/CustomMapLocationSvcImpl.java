@@ -186,6 +186,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
         }
 
         locationSync(parameters);
+        vmsSync(parameters);
         return new ModelAndView();
     }
 
@@ -216,6 +217,21 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
                 } catch (Exception e) {
                     throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
                 }
+            }
+        }
+    }
+
+    private void vmsSync(Map<String, String> parameters){
+        List<Map> deviceList = deviceDao.findListDeviceForVMSSync(parameters);
+
+        if(deviceList!=null && deviceList.size() > 0){
+            try {
+                if(mqttUtil.getIsMqtt()) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    mqttUtil.publish("vmsSync", mapper.writeValueAsString(deviceList), 0);
+                }
+            } catch (Exception e) {
+                throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
             }
         }
     }

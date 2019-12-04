@@ -863,15 +863,43 @@ $ds-sw:50px; // 스크린설정 가로 넓이
       padding:10px; font-size:1.6rem; color:$color-white-01;
       @include box-shadow01(0px, 15px, 10px, -15px, #000, 0.5);
     }
-
     &:hover:before  {background-color: $color-ho !important;}
     &:active:before {background-color: $color-ac !important;}
     &.on:before     {border-color:$color-on; border-width:3px; opacity: 1; }
 
     & > * {width:100%; }
+
+    @mixin recording-ani {
+      animation-name: recording-ani;
+      -webkit-animation-name: recording-ani;
+
+      @include infinite; @include duration(1.2s);
+
+      @-webkit-keyframes recording-ani {
+        0%   { background-color: rgba($color-red-01,0); border-width:4px;}
+        30%  { background-color: rgba($color-red-01,1); border-width:2px;}
+        70%  { background-color: rgba($color-red-01,1); border-width:2px;}
+        100% { background-color: rgba($color-red-01,0); border-width:4px;}
+      }
+      @keyframes recording-ani {
+        0%   { background-color: rgba($color-red-01,0); border-width:4px;}
+        30%  { background-color: rgba($color-red-01,1); border-width:2px;}
+        70%  { background-color: rgba($color-red-01,1); border-width:2px;}
+        100% { background-color: rgba($color-red-01,0); border-width:4px;}
+      }
+    } // ex) @include recording-ani;
+
+    &.recording > p:nth-of-type(1) {
+      &:after {
+        content:""; position: relative; display: inline-block; @include mhwidth(20px); margin: 0 0 0 10px;
+        @include border-radius(400px); @include border01(4px ,#000,1 ); @include recording-ani;
+      }
+    }
+
     p {
       //@include flexbase; @include flex-align-items-center;
-      font-size:.9rem; word-break: break-word; color:$color-white-01; padding:0 0 0 50px;
+      @include flexbase; @include flex-align-items-center; @include flex-justify-content-between;
+      position: relative; font-size:.9rem; word-break: break-word; color:$color-white-01; padding:0 5px 0 50px;
       &:nth-of-type(2) {font-size:1.2rem;}
     }
 

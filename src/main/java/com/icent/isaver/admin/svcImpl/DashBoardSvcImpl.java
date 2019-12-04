@@ -97,6 +97,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
                     }
                 }
             }catch(Exception e){
+                e.printStackTrace();
                 throw new IsaverException("");
             }
             area.setDevices(deviceList);

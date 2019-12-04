@@ -198,6 +198,7 @@ var CustomMapPopup = (
             _element.find("#areaName").text(areaName);
             _element.find("#childList section").remove();
             _element.fadeIn();
+            $("#ignoreHide").val("show").prop("selected",true);
 
             _areaId = areaId;
             _customMapMediator = new CustomMapMediator(_rootPath,_version);
@@ -214,6 +215,7 @@ var CustomMapPopup = (
                         , 'fenceView': true
                         , 'openLinkFlag': false
                         , 'lidarHideFlag' : true
+                        , 'ignoreHide' : false
                         , 'moveFenceHide' : false
                         , 'moveReturn' : false
                         , 'childListLoad': function (data) {
@@ -279,9 +281,9 @@ var CustomMapPopup = (
                                     cameraSelectTag.attr("uuid", data['uuid']).on("change", function () {
                                         var selectedOption = $(this).find("option:selected");
                                         if (selectedOption.val() != "") {
-                                            $(this).after(
+                                            $(this).parent().parent().append(
                                                 $("<div/>").append(
-                                                    $("<button/>", {class: "btn-cam"}).text(selectedOption.text())
+                                                    $("<input/>", {type: "text",disabled:true}).val(selectedOption.text())
                                                 ).append(
                                                     $("<button/>", {
                                                         class: "btn-del",
@@ -639,8 +641,8 @@ var CustomMapPopup = (
          * 무시영역 표시/숨김 처리
          * @author psb
          */
-        this.ignoreShow = function(_this){
-            _customMapMediator.setIgnoreShowFlag($(_this).val()=='show');
+        this.ignoreHide = function(_this){
+            _customMapMediator.setIgnoreHide($(_this).val()!='show');
         };
 
         /**

@@ -163,10 +163,10 @@ var ToiletRoomMediator = (
                     break;
             }
             for(var key in _statusCss){
-                _element.find("#statusIco").removeClass(_statusCss[key]);
+                _element.find("div[name='statusIco']").removeClass(_statusCss[key]);
             }
             if(_statusCss[status]!=null){
-                _element.find("#statusIco").addClass(_statusCss[status]);
+                _element.find("div[name='statusIco']").addClass(_statusCss[status]);
             }
         };
 

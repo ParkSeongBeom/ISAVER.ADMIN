@@ -6,7 +6,7 @@
  */
 var DashboardHelper = (
     function(rootPath, version){
-        const _MEDIATOR_TYPE = ['video','map','toiletRoom'];
+        const _MEDIATOR_TYPE = ['video','map'];
         const _defaultTemplateCode = "TMP001";
         const _self = this;
 
@@ -27,6 +27,8 @@ var DashboardHelper = (
         let _areaList = {};
         let _guardList = {};
         let _toiletRoomList = {};
+        let _analysisList = {};
+
 
         /**
          * initialize
@@ -295,6 +297,12 @@ var DashboardHelper = (
                                 }
                             }
                         });
+                        break;
+                    case "TMP011" :
+                        _analysisList[areaId] = {};
+                        _analysisList[areaId] = new AnalysisMediator(_rootPath);
+                        _analysisList[areaId].setElement($(this));
+                        _analysisList[areaId].init(areaId);
                         break;
                 }
             });
@@ -641,8 +649,13 @@ var DashboardHelper = (
                         _toiletRoomList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
                     }
                     break;
-                case "TMP010": // 스마트팜
+                case "TMP010": // smart-farm
                     farmUpdate(data['eventLog']);
+                    break;
+                case "TMP011": // 영상분석
+                    if(data['eventLog']['areaId']!=null && _analysisList[data['eventLog']['areaId']]!=null){
+                        _analysisList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
+                    }
                     break;
             }
         };

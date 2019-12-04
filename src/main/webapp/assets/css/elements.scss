@@ -60,6 +60,21 @@
   &-chartl:before   {content:"\e990" !important;} // 라인 차트
   &-chartt:before   {content:"\e98c" !important;} // 테이블 차트
   &-option:before   {content:"\e959" !important;} // 옵션, 메뉴
+
+  &-straw:before    {content:"\e993" !important;} // 딸기
+  &-grape:before    {content:"\e994" !important;} // 포도
+  &-tomato:before   {content:"\e995" !important;} // 토마토
+  &-tanger:before   {content:"\e996" !important;} // 귤
+  &-ginseng:before  {content:"\e997" !important;} // 인삼
+
+  &-straw-x:before    {content:"\e998" !important;} // 딸기
+  &-grape-x:before    {content:"\e999" !important;} // 포도
+  &-tomato-x:before   {content:"\e99a" !important;} // 토마토
+  &-tanger-x:before   {content:"\e99b" !important;} // 귤
+  &-ginseng-x:before  {content:"\e99c" !important;} // 인삼
+
+  &-sprout:before     {content:"\e99d" !important;} // 새싹
+
 }
 
 .cursor_cros {cursor:crosshair !important;}
@@ -285,10 +300,28 @@ div[contenteditable] {}
 /////...... contenteditable 정의 End
 
 
+.chart_label {
+
+  &, & > * {@include flexbase;  }
+  /* min-height:50px;*/
+  @include flex-justify-content-start; @include flex-align-items-start;
+  & > span {
+    @include flex-align-items-center;
+    overflow: hidden; margin:0 0 10px 0; background-color: transparent;
+    &, & * {position: relative;}
+    &:before {
+      $clsb-wh:17px;
+      content:""; display: inline-block; position: relative;
+      top:1px; width:$clsb-wh; height:$clsb-wh; margin:0 7px 0 0;
+      //@include transform-str(1, -10px, auto, 45deg);
+    }
+    b { top:-2px; font-weight:bold; padding:0 0 0 30px; font-size:1.5rem;  }
+  }
+}
 //////...... 차트 상태 표시 시작
 * {
   // 상태 표시
-  .ch_name, .chart_label span, .mh_name {
+  .ch_name, .mh_name {
     position: relative; margin:0 20px 0 0; background-color: transparent;
     &:before {
       content:""; display: inline-block; position: relative; top:1px;
@@ -314,51 +347,140 @@ div[contenteditable] {}
   .chart_label > span:nth-of-type(1):before,
   .mp_header > div > .ch_name:nth-of-type(1):before
   {background-color: $color-green-01;} // 1 #01d65a 작업자상태, 안전복 미착용
+  .excel .chart_label > span:nth-of-type(1),
+  .chart_label > span:nth-of-type(1) > b {color: $color-green-01;}
 
   .check_th tbody tr.top02 td:first-of-type:before,
   .chart_label > span:nth-of-type(2):before,
   .mp_header > div > .ch_name:nth-of-type(2):before
   {background-color: $color-purple-01;} // 2 #cc3dd3 크레인상태, 헬멧 미착용
+  .excel .chart_label > span:nth-of-type(2),
+  .chart_label > span:nth-of-type(2) > b {color: $color-purple-01;}
 
   .check_th tbody tr.top03 td:first-of-type:before,
   .chart_label > span:nth-of-type(3):before,
   .mp_header > div > .ch_name:nth-of-type(3):before
   {background-color: $color-yellow-01;} // 3 #ffce53 유해가스상태, 배회 쓰러짐
+  .excel .chart_label > span:nth-of-type(3),
+  .chart_label > span:nth-of-type(3) > b {color: $color-yellow-01;}
 
   .check_th tbody tr.top04 td:first-of-type:before,
   .chart_label > span:nth-of-type(4):before,
   .mp_header > div > .ch_name:nth-of-type(4):before
   {background-color: $color-red-01;} // 4 #e41717 위험지역 감지
+  .excel .chart_label > span:nth-of-type(4),
+  .chart_label > span:nth-of-type(4) > b {color: $color-red-01;}
 
   .check_th tbody tr.top05 td:first-of-type:before,
   .chart_label > span:nth-of-type(5):before,
   .mp_header > div > .ch_name:nth-of-type(5):before
   {background-color: $color-purple-02;} // 5 #9753dc
+  .excel .chart_label > span:nth-of-type(5),
+  .chart_label > span:nth-of-type(5) > b {color: $color-purple-02;}
 
   .check_th tbody tr.top06 td:first-of-type:before,
   .chart_label > span:nth-of-type(6):before,
   .mp_header > div > .ch_name:nth-of-type(6):before
   {background-color: $color-blue-02;} // 6 #29a1f7
+  .excel .chart_label > span:nth-of-type(6),
+  .chart_label > span:nth-of-type(6) > b {color: $color-blue-02;}
 
   .check_th tbody tr.top07 td:first-of-type:before,
   .chart_label > span:nth-of-type(7):before,
   .mp_header > div > .ch_name:nth-of-type(7):before
   {background-color: $color-green-02;} // 7 #56c96e
+  .excel .chart_label > span:nth-of-type(7),
+  .chart_label > span:nth-of-type(7) > b {color: $color-green-02;}
 
   .check_th tbody tr.top08 td:first-of-type:before,
   .chart_label > span:nth-of-type(8):before,
   .mp_header > div > .ch_name:nth-of-type(8):before
   {background-color: $color-yellow-02;} // 8 #ff7a39
+  .excel .chart_label > span:nth-of-type(8),
+  .chart_label > span:nth-of-type(8) > b {color: $color-yellow-02;}
 
   .check_th tbody tr.top09 td:first-of-type:before,
   .chart_label > span:nth-of-type(9):before,
   .mp_header > div > .ch_name:nth-of-type(9):before
   {background-color: $color-blue-03;} // 9 #de4ec1
+  .chart_label > span:nth-of-type(9) > b {color: $color-blue-03;}
 
   .check_th tbody tr.top10 td:first-of-type:before,
   .chart_label > span:nth-of-type(10):before,
   .mp_header > div > .ch_name:nth-of-type(10):before
   {background-color: $color-purple-03;} // 10  #7894c2
+  .excel .chart_label > span:nth-of-type(10),
+  .chart_label > span:nth-of-type(10) > b {color: $color-purple-03;}
+
+  .check_th tbody tr.top01 td:first-of-type:before,
+  .chart_label > span:nth-of-type(11):before,
+  .mp_header > div > .ch_name:nth-of-type(11):before
+  {background-color: $color-blue-05;}
+  .excel .chart_label > span:nth-of-type(11),
+  .chart_label > span:nth-of-type(11) > b {color: $color-blue-05;}
+
+  .check_th tbody tr.top02 td:first-of-type:before,
+  .chart_label > span:nth-of-type(12):before,
+  .mp_header > div > .ch_name:nth-of-type(12):before
+  {background-color: $color-yellow-03;}
+  .excel .chart_label > span:nth-of-type(12),
+  .chart_label > span:nth-of-type(12) > b {color: $color-yellow-03;}
+
+  .check_th tbody tr.top03 td:first-of-type:before,
+  .chart_label > span:nth-of-type(13):before,
+  .mp_header > div > .ch_name:nth-of-type(13):before
+  {background-color: $color-orange-03;}
+  .excel .chart_label > span:nth-of-type(13),
+  .chart_label > span:nth-of-type(13) > b {color: $color-orange-03;}
+
+  .check_th tbody tr.top04 td:first-of-type:before,
+  .chart_label > span:nth-of-type(14):before,
+  .mp_header > div > .ch_name:nth-of-type(14):before
+  {background-color: $color-green-04;}
+  .excel .chart_label > span:nth-of-type(14),
+  .chart_label > span:nth-of-type(14) > b {color: $color-green-04;}
+
+  .check_th tbody tr.top05 td:first-of-type:before,
+  .chart_label > span:nth-of-type(15):before,
+  .mp_header > div > .ch_name:nth-of-type(15):before
+  {background-color: $color-yellow-04;}
+  .excel .chart_label > span:nth-of-type(15),
+  .chart_label > span:nth-of-type(15) > b {color: $color-yellow-04;}
+
+  .check_th tbody tr.top06 td:first-of-type:before,
+  .chart_label > span:nth-of-type(16):before,
+  .mp_header > div > .ch_name:nth-of-type(16):before
+  {background-color: $color-gray-12;}
+  .excel .chart_label > span:nth-of-type(16),
+  .chart_label > span:nth-of-type(16) > b {color: $color-gray-12;}
+
+  .check_th tbody tr.top07 td:first-of-type:before,
+  .chart_label > span:nth-of-type(17):before,
+  .mp_header > div > .ch_name:nth-of-type(17):before
+  {background-color: $color-red-03;}
+  .excel .chart_label > span:nth-of-type(17),
+  .chart_label > span:nth-of-type(17) > b {color: $color-red-03;}
+
+  .check_th tbody tr.top08 td:first-of-type:before,
+  .chart_label > span:nth-of-type(18):before,
+  .mp_header > div > .ch_name:nth-of-type(18):before
+  {background-color: $color-red-04;}
+  .excel .chart_label > span:nth-of-type(18),
+  .chart_label > span:nth-of-type(18) > b {color: $color-red-04;}
+
+  .check_th tbody tr.top09 td:first-of-type:before,
+  .chart_label > span:nth-of-type(19):before,
+  .mp_header > div > .ch_name:nth-of-type(19):before
+  {background-color: $color-purple-04;}
+  .excel .chart_label > span:nth-of-type(19),
+  .chart_label > span:nth-of-type(19) > b {color: $color-purple-04;}
+
+  .check_th tbody tr.top10 td:first-of-type:before,
+  .chart_label > span:nth-of-type(20):before,
+  .mp_header > div > .ch_name:nth-of-type(20):before
+  {background-color: $color-gray-06;}
+  .excel .chart_label > span:nth-of-type(20),
+  .chart_label > span:nth-of-type(20) > b {color: $color-gray-06;}
 
 }
 //////...... 차트 상태 표시 끝
@@ -597,16 +719,15 @@ div[contenteditable] {}
   @include flex-midddle; position: absolute; z-index: 1;
 
   background-repeat:no-repeat; background-position: center;
-  &:before {content:""; position: absolute; z-index:-1; /*background-color: rgba(#fff,0.4);*/ }
-  /*&:after  {width:100%; height:1px; left:0; top:50%;}*/
-  &:before {
-    /*width:1px; height:100%; left:50%; top:0;*/
-    width:100%; height:100%;
-    background-image: url("../images/bg/gbg02.svg");
-    background-repeat:repeat, no-repeat;
+
+  &:after {
+    content:""; position: absolute; z-index:-2;
+    width:100%; height:100%; background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
   }
 
-  .g-angle{width:100%;height:100%;
+  .g-angle{
+    width:100%;height:100%; z-index: 1;
+
     &.deg10 > .g-ico > div{transform: rotateX(10deg);}
     &.deg15 > .g-ico > div{transform: rotateX(15deg);}
     &.deg20 > .g-ico > div{transform: rotateX(20deg);}
@@ -636,10 +757,28 @@ div[contenteditable] {}
 
   & > * {position: absolute !important;}
   .map_bg {
-    z-index: -1;background-repeat:no-repeat;background-position: center; opacity: 0.4;
+    width:100%; height:100%; background-repeat:no-repeat; background-position: center;
+    /*opacity: 0.4;*/
+    /*
     &, &:before, &:after {position: absolute; width:100%; height:100%;}
     &:before, &:after {content:"";}
     &:after { background-position:center; background-repeat:no-repeat;}
+    */
+
+    /*
+
+    .grid {
+      position: absolute; z-index:-1 !important;
+      width:100%; height:100%; background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
+    }
+    */
+
+    /*
+    &:after {
+      content:""; position: absolute; z-index:-1 !important;
+      width:100%; height:100%; background-image: url("../images/bg/gbg02.svg"); background-repeat:repeat;
+    }
+    */
   }
   //&.cursor_cros {}
 }
@@ -669,8 +808,8 @@ div[contenteditable] {}
       padding:3px 10px; font-size:0.9rem; line-height: 0.9rem;
       background-color:$color-gray-09; @include border-radius(200px); @include scale(0.4);
     }
-    &:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
-    &.on {&, & > span {background-color: $color-on;}}
+    //&:hover { &, & > span {background-color: rgba($color-yellow-01,0.5);} }
+    &.on:hover {&, &:before, & > span {background-color: $color-on;}}
   }
 
   // 감시, 감지 디바이스, 트레킹 아이콘 공통
@@ -698,6 +837,8 @@ div[contenteditable] {}
     .ui-resizable-e {right:-16px;} .ui-resizable-s {bottom:-23px;}
     .ui-resizable-se {margin-top:10px; margin-left: 10px;}
 
+    &:after {background-color:$color-lidar; }
+
     & > span + div {
       z-index: -1; &, &:after, &:before {overflow: hidden; position: absolute;}
     }
@@ -714,7 +855,8 @@ div[contenteditable] {}
     &.lidar {
       & > span + div {
         z-index: -1;
-        &, &:after, &:before {@include mhwidth($g-wh-04);}
+        &, &:after, &:before {@include mhwidth($g-wh-02);}
+        @include lidar-bg($color-lidar);
       }
       &.wh {
         &-01 > span + div { &, &:after, &:before {@include mhwidth($g-wh-01);} }
@@ -772,30 +914,33 @@ div[contenteditable] {}
       }
 
       &-caution {
-        &,& > span {background-color:$color-caution;}
+        &,&:after,& > span {background-color:$color-caution;}
         &:before {border-color:$color-caution; }
       }
 
       &-warning {
-        &,& > span {background-color:$color-warning;}
+        &,&:after,& > span {background-color:$color-warning;}
         &:before {border-color:$color-warning;}
       }
 
       &-danger  {
-        &,& > span {background-color:$color-danger;}
+        &,&:after,& > span {background-color:$color-danger;}
         &:before {border-color:$color-danger; }
       }
 
       &-die     {
-        &,& > span {background-color:$color-die;}
+        &,&:after,& > span {background-color:$color-die;}
         &:before {border-color:$color-die;}
-
+        & > span + div:before {display: none;}
+/*
         & > span + div {
           &:before {@include die02; animation-play-state: paused; top:auto;left:auto; opacity: .5;}
           &:after {display: none !important;}
         }
+        */
       }
     }
+
 
     // 감시화면에서의 아이콘
     &.lidar.level {
@@ -806,7 +951,7 @@ div[contenteditable] {}
 
       &-danger  { & > span + div {@include lidar-bg($color-danger); } }
 
-      &-die     { & > span + div {@include lidar-bg($color-die);} }
+      &-die     { /*& > span + div {@include lidar-bg($color-die);}*/ }
     }
   }
 
@@ -990,16 +1135,30 @@ $cbs-h:60px;
   & > div {
     @include cbs-checkbtn; position: relative;
 
+    &.ignore_check {
+
+      label {
+        &:before {content:"\e992";  }
+        &:after  {content:"SHOW IGNORE FENCE";}
+      }
+
+      input:hover + label { opacity: 1;}
+      input:checked + label {
+        &:before {content:"\e991"; }
+        &:after {content:"HIDE IGNORE FENCE"; }
+      }
+    }
+
     &.range_check {
 
       label {
-        &:before {content:"\e95b";  }
+        &:before {content:"\e97f";  }
         &:after  {content:"LIDAR RANGE";}
       }
 
       input:hover + label { opacity: 1;}
       input:checked + label {
-        &:before {content:"\e97f"; }
+        &:before {content:"\e978"; }
         &:after {content:"LIDAR RANGE OFF"; }
       }
     }

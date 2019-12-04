@@ -940,7 +940,7 @@ menu {
   h1 {
     min-width: 160px; height:70px;
     background-image: url(../images/logo/icent_isaver_w.svg);
-    background-size:170px; background-repeat: no-repeat; background-position:15px 50%; border:none;
+    background-size:170px; background-repeat: no-repeat; background-position:0 50%; border:none;
     font-size: 1.2rem; font-weight:bold; padding:0 0 0 180px;
     @include flexbase; @include flex-row-wrap; @include flex-align-items-center;
   }
