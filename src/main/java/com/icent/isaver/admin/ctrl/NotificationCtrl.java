@@ -51,6 +51,7 @@ public class NotificationCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListNotification(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "notificationList", parameters);
+        parameters = AdminHelper.checkSearchDate(parameters,3);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
         ModelAndView modelAndView = notificationSvc.findListNotification(parameters);
@@ -126,6 +127,20 @@ public class NotificationCtrl {
         parameters.put("updateUserId", "crontab");
         parameters.put("cancelDesc", "crontab all cancel");
         ModelAndView modelAndView = notificationSvc.allCancelNotification(parameters);
+        return modelAndView;
+    }
+
+    /**
+     * 알림센터 목록을 가져온다. 히트맵용
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/heatMap")
+    public ModelAndView findListNotificationForHeatMap(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = notificationSvc.findListNotificationForHeatMap(parameters);
         return modelAndView;
     }
 }

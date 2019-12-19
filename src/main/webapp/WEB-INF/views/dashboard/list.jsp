@@ -821,27 +821,28 @@
     });
 
     function test(_areaId, _deviceId){
-        if(_areaId==null){
-            _areaId = "AR0000";
+        if(_areaId==null || _deviceId==null){
+            return false;
         }
-        if(_deviceId==null){
-            _deviceId = "DE0012";
-        }
-
-        if(templateSetting['safeGuardMapView']=='online'){
-            webSocketHelper.sendMessage("map",{"messageType":"device","actionType":"add","areaId":_areaId,"id":"DE0000","location":[{"lat": 37.49541728092977,"lng": 127.03102138773158}]});
-            webSocketHelper.sendMessage("map",{"messageType":"fence","actionType":"add","areaId":_areaId,"id":"fence1","location":[
-                {"lat" : "37.495463","lng" : "127.030996"},
-                {"lat" : "37.495473","lng" : "127.031013"},
-                {"lat" : "37.495503","lng" : "127.030998"},
-                {"lat" : "37.495493","lng" : "127.030984"}
-            ]});
-            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1235","location":[{"lat": "37.495463","lng": "127.031004"}]});
-            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","areaId":_areaId,"id":"1234","location":[{"lat": "37.495493","lng": "127.030984"}]});
-        }else{
-            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","objectType":"human","areaId":_areaId,"deviceId":_deviceId,"id":"1235","location":[{"lat": "100","lng": "100"}]});
-            webSocketHelper.sendMessage("map",{"messageType":"object","actionType":"add","objectType":"human","areaId":_areaId,"deviceId":_deviceId,"id":"1234","location":[{"lat": "-100","lng": "-100"}]});
-        }
+        webSocketHelper.sendMessage("map",{
+            "messageType":"object"
+            ,"areaId":_areaId
+            ,"deviceId":_deviceId
+            ,"markerList" : [
+                {
+                    "actionType":"add"
+                    ,"objectType":"heatmap"
+                    ,"id":"1235"
+                    ,"location":[{"lat": "1","lng": "1"}]
+                },
+                {
+                    "actionType":"add"
+                    ,"objectType":"heatmap"
+                    ,"id":"1234"
+                    ,"location":[{"lat": "-1","lng": "-1"}]
+                }
+            ]
+        });
     }
 
     var id = 1;

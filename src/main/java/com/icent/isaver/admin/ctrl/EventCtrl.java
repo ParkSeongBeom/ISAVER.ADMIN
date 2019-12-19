@@ -54,7 +54,7 @@ public class EventCtrl {
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = eventSvc.findByEvent(parameters);
         modelAndView.setViewName("eventDetail");

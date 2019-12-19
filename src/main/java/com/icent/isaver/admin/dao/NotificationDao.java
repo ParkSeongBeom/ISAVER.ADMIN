@@ -46,6 +46,14 @@ public interface NotificationDao {
 
     /**
      *
+     * @param parameters
+     * @author psb
+     * @return
+     */
+    List<NotificationBean> findListNotificationForHeatMap(Map<String, String> parameters);
+
+    /**
+     *
      * @author psb
      * @return
      */

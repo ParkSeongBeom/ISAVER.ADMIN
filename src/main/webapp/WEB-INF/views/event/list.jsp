@@ -41,6 +41,16 @@
                     <spring:message code="common.selectbox.select" var="allSelectText"/>
                     <span><isaver:codeSelectBox groupCodeId="EVT" codeId="${paramBean.eventFlag}" htmlTagName="eventFlag" allModel="true" allText="${allSelectText}"/></span>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="common.column.useYn" /></span>
+                    <span>
+                        <select name="delYn">
+                            <option value="" <c:if test="${paramBean.delYn == ''}">selected="selected"</c:if>><spring:message code="common.column.useAll"/></option>
+                            <option value="N" <c:if test="${paramBean.delYn == 'N'}">selected="selected"</c:if>><spring:message code="common.column.useYes"/></option>
+                            <option value="Y" <c:if test="${paramBean.delYn == 'Y'}">selected="selected"</c:if>><spring:message code="common.column.useNo"/></option>
+                        </select>
+                    </span>
+                </p>
             </div>
             <div class="search_btn">
                 <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>

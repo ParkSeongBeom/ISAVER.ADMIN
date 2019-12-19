@@ -219,4 +219,14 @@ public class NotificationSvcImpl implements NotificationSvc {
         POIExcelUtil.downloadExcel(modelAndView, "isaver_notification_history_" + sdf.format(new Date()), notifications, columns, heads, "NotificationHistory");
         return modelAndView;
     }
+
+    @Override
+    public ModelAndView findListNotificationForHeatMap(Map<String, String> parameters) {
+        List<NotificationBean> notifications = notificationDao.findListNotificationForHeatMap(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("notifications", notifications);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
 }

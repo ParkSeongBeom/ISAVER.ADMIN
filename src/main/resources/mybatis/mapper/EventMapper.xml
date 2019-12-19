@@ -50,16 +50,20 @@
     WHERE     group_code_id = 'ACT'
     ) AS CODE01
     ON      ACT03.action_code = CODE01.code_id
-    WHERE           A.del_yn='N'
-    <if test="eventId != null and eventId != ''">
-      AND     A.event_id like '%${eventId}%'
-    </if>
-    <if test="eventName != null and eventName != ''">
-      AND     A.event_name like '%${eventName}%'
-    </if>
-      <if test="eventFlag != null and eventFlag != ''">
+    <where>
+        <if test="delYn != null and delYn != ''">
+          AND     A.del_yn = #{delYn}
+        </if>
+        <if test="eventId != null and eventId != ''">
+          AND     A.event_id like '%${eventId}%'
+        </if>
+        <if test="eventName != null and eventName != ''">
+          AND     A.event_name like '%${eventName}%'
+        </if>
+        <if test="eventFlag != null and eventFlag != ''">
           AND     A.event_flag = #{eventFlag}
-      </if>
+        </if>
+    </where>
     ORDER BY        A.event_id ASC
     <if test="pageIndex != null">
       LIMIT       ${pageRowNumber} OFFSET ${pageIndex}
@@ -88,17 +92,21 @@
         @author dhj
     -->
   <select id="findCountEvent" resultType="java.lang.Integer" parameterType="map" >
-    select count(A.event_id) from isaver.event as A
-    WHERE           A.del_yn='N'
-    <if test="eventId != null and eventId != ''">
-      AND     A.event_id like '%${eventId}%'
-    </if>
-    <if test="eventName != null and eventName != ''">
-      AND     A.event_name like '%${eventName}%'
-    </if>
-      <if test="eventFlag != null and eventFlag != ''">
-          AND     A.event_flag = #{eventFlag}
-      </if>
+      select count(A.event_id) from isaver.event as A
+      <where>
+          <if test="delYn != null and delYn != ''">
+              AND     A.del_yn = #{delYn}
+          </if>
+          <if test="eventId != null and eventId != ''">
+              AND     A.event_id like '%${eventId}%'
+          </if>
+          <if test="eventName != null and eventName != ''">
+              AND     A.event_name like '%${eventName}%'
+          </if>
+          <if test="eventFlag != null and eventFlag != ''">
+              AND     A.event_flag = #{eventFlag}
+          </if>
+      </where>
   </select>
 
     <!--
@@ -211,13 +219,13 @@
       , insert_user_id
       , insert_datetime
     ) values (
-      #{eventId,jdbcType=CHAR}
-      , #{eventFlag,jdbcType=CHAR}
-      , #{eventName,jdbcType=VARCHAR}
-      , #{eventDesc,jdbcType=VARCHAR}
+      #{eventId}
+      , #{eventFlag}
+      , #{eventName}
+      , #{eventDesc}
       , 'N'
-      , #{statisticsCode,jdbcType=VARCHAR}
-      , #{insertUserId,jdbcType=VARCHAR}
+      , #{statisticsCode}
+      , #{insertUserId}
       , NOW()
       );
   </insert>
@@ -229,11 +237,11 @@
   <update id="saveEvent" parameterType="map" >
 
     update isaver.event
-    set event_flag = #{eventFlag,jdbcType=CHAR},
-      event_name = #{eventName,jdbcType=VARCHAR},
-      event_desc = #{eventDesc,jdbcType=VARCHAR},
-      statistics_code = #{statisticsCode,jdbcType=VARCHAR},
-      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+    set event_flag = #{eventFlag},
+      event_name = #{eventName},
+      event_desc = #{eventDesc},
+      del_yn = #{delYn},
+      update_user_id = #{updateUserId},
       update_datetime = NOW()
     where event_id = #{eventId,jdbcType=CHAR}
   </update>
@@ -245,7 +253,7 @@
   <update id="removeEvent" parameterType="map" >
     update isaver.event
     set del_yn = 'Y'
-      , update_user_id = #{updateUserId,jdbcType=VARCHAR}
+      , update_user_id = #{updateUserId}
       , update_datetime = NOW()
     where event_id = #{eventId,jdbcType=CHAR}
   </update>

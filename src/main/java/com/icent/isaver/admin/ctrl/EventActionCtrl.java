@@ -3,6 +3,7 @@ package com.icent.isaver.admin.ctrl;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.svc.EventSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.meous.common.resource.CommonResource;
 import com.meous.common.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,7 @@ public class EventActionCtrl {
         parameters = AdminHelper.checkReloadList(request, response, "eventActionList", parameters);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
+        parameters.put("delYn", CommonResource.NO);
         ModelAndView modelAndView = eventSvc.findListEvent(parameters);
         modelAndView.setViewName("eventActionList");
         modelAndView.addObject("paramBean",parameters);
@@ -55,7 +57,7 @@ public class EventActionCtrl {
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByEvent(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = eventSvc.findByEvent(parameters);
         modelAndView.setViewName("eventActionDetail");

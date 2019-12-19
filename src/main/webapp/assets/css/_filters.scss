@@ -792,7 +792,13 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 @mixin action_criti {
   z-index: 1;
   &, &:before, &:after {color: $color-d-text; @include transition(200ms);}
-  &:after, &:before {@include btn_before; background-color: transparent;}
+  &:after, &:before {@include btn_before; }
+  &:before {background-color: transparent;}
+
+  &:nth-of-type(3n + 1):after {background-color: rgba(0,0,0,0.1)}
+  &:nth-of-type(2n):after {background-color: rgba(0,0,0,0.15)}
+  &:nth-of-type(3n):after {background-color: rgba(0,0,0,0.2)}
+
   &:hover:after  {background-color: rgba(0,0,0,0.4) !important;}
   &:active:after {background-color: $color-ac !important; opacity:1 !important;}
   &.on:after     {background-color: rgba(0,0,0,0.7) !important;}
@@ -864,16 +870,16 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
 @mixin tpopupbase {
   @include popup-common;
 
-  position: absolute; z-index:101; width:$noticecenter-width; bottom:-100%; top:auto; left:40px;
+  position: absolute; z-index:101; width:$noticecenter-width; bottom:-200%; top:auto; left:40px;
   @include border01(1px 1px 0 0,$color-bline,1 );  padding: 0 0 $popup-margin 0;
 
-  &.on {bottom:0;}
+  &.on {bottom:0; max-height: 100vh;}
 
   & > * {position: relative;  width:100%; padding:0 $popup-margin;}
 
   button {}
 
-  h2 { @include mmheight($headerHeight + 20px);  }
+  h2 { @include mmheight($headerHeight + 20px); font-size:1.2rem; @include flexbase; @include flex-align-items-center;}
 
   & > div {@include mmheight($headerHeight);}
 
@@ -890,10 +896,23 @@ $btnHeight:40px;  $btn-type01:40px; /*50px 버튼*/  $btn-type03:50px; /* 40px �
   &.on {right:0px;}
   & > * {position: relative;  width:100%; padding:0 $popup-margin; margin: 0 0 $popup-margin 0}
   button {@include btn-line;}
-  h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin;}
+  h2 {@include mmheight($headerHeight + 10px); margin-top:$popup-margin; font-size:1.2rem; @include flexbase; @include flex-align-items-center;}
   & > div {@include mmheight($headerHeight);}
   & > section {@include flex-option(0, 1, 100%); overflow-y: auto; overflow-x: hidden;}
 } // @include tpopupbase2;
+
+// 작은 단위 레이어 팝업 입력 폼 스타일 지정
+@mixin laypopup-stlye {
+  @include placeholder-white;
+  input, select {
+    border-width:0 0 1px 0; border-color:$color-white-01;
+    background-color: transparent; padding:0; margin:0 0 30px 0;
+  }
+  select {
+    background-image: url(../images/ico/select_allow_w.svg) !important; color:$color-white-01 !important;
+    option { background-color: $color-bas; }
+  }
+} // @include laypopup-stlye;
 
 // safe-guard - 온오프 리스트
 @mixin bottom-base {
@@ -1667,10 +1686,12 @@ $main-width: 70px;
 @mixin nav_btn {
   width:100%; padding:5px 10px 5px 15px; @include action_menubtn;
   &:before {
-    content:""; position: absolute; left:5px; width:4px; height:4px;
+    content:""; position: absolute; top: 14px; left:5px; width:4px; height:4px;
     background-color: $color-white-01; @include border-radius(200px);
   }
-  &.on, &:hover { &:before {width:6px; height:6px;}}
+  &.on, &:hover {
+    &:before {top: 8px; height: 16px; @include border-radius(0); }
+  }
 
 } // ex) @include nav_btn; 네비게이션 버튼 만 사용
 

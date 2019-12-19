@@ -264,6 +264,8 @@
   content: "\e990" !important; }
 .ico-chartt:before {
   content: "\e98c" !important; }
+.ico-chartc:before {
+  content: "\e916" !important; }
 .ico-option:before {
   content: "\e959" !important; }
 .ico-straw:before {
@@ -402,26 +404,9 @@ input.datepicker {
   width: 100px; }
 
 button.ui-datepicker-trigger {
-  position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  display: flexbox;
-  display: box;
-  box-align: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -moz-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  min-width: 40px;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
   height: 40px !important;
   min-height: 40px !important;
   max-height: 40px !important;
@@ -429,72 +414,9 @@ button.ui-datepicker-trigger {
   border-width: 1px 1px 1px 0;
   border-color: #a9a9a9;
   background-color: #fff; }
-  button.ui-datepicker-trigger > * {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    display: flexbox;
-    display: box;
-    box-align: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    min-width: 80px;
-    height: 100%;
-    padding: 0 10px 0 0;
-    color: #fff !important;
-    background-color: transparent !important; }
-  button.ui-datepicker-trigger:after, button.ui-datepicker-trigger:before {
-    content: "";
-    top: 0;
-    left: 0;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    display: flexbox;
-    display: box;
-    box-align: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center; }
-  button.ui-datepicker-trigger:before {
-    position: relative;
-    font-size: 1.5rem !important;
-    font-weight: normal; }
-  button.ui-datepicker-trigger:after {
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%; }
-  button.ui-datepicker-trigger:before {
-    width: 40px !important;
-    min-width: 40px !important;
-    max-width: 40px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    max-height: 40px !important; }
   button.ui-datepicker-trigger:before {
     content: "\e91f" !important;
-    font-size: 1.8rem;
-    margin: 0 1px 0 0;
+    font-size: 1.5rem;
     color: #4c4c4c; }
   button.ui-datepicker-trigger:hover:before {
     color: #be1e1e; }
@@ -510,9 +432,6 @@ button.ui-datepicker-trigger {
   width: 320px;
   padding: 10px;
   background-color: #fff;
-  border-style: solid;
-  border-width: 1px;
-  border-color: darkgray;
   box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7);
   -webkit-box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0px 30px 40px -20px rgba(0, 0, 0, 0.7); }
@@ -526,93 +445,14 @@ button.ui-datepicker-trigger {
     margin: 10px 0; }
     .ui-datepicker .ui-datepicker-header > a {
       overflow: hidden;
-      position: absolute;
+      position: absolute !important;
       top: 0;
-      position: relative;
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      display: flexbox;
-      display: box;
-      box-align: center;
-      -webkit-box-align: center;
-      -moz-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      -moz-box-pack: center;
-      -webkit-justify-content: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      min-width: 40px;
+      width: 40px !important;
+      min-width: 40px !important;
+      max-width: 40px !important;
       height: 40px !important;
       min-height: 40px !important;
       max-height: 40px !important; }
-      .ui-datepicker .ui-datepicker-header > a > * {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        box-align: center;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        min-width: 80px;
-        height: 100%;
-        padding: 0 10px 0 0;
-        color: #fff !important;
-        background-color: transparent !important; }
-      .ui-datepicker .ui-datepicker-header > a:after, .ui-datepicker .ui-datepicker-header > a:before {
-        content: "";
-        top: 0;
-        left: 0;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        box-align: center;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center; }
-      .ui-datepicker .ui-datepicker-header > a:before {
-        position: relative;
-        font-size: 1.5rem !important;
-        font-weight: normal; }
-      .ui-datepicker .ui-datepicker-header > a:after {
-        position: absolute;
-        z-index: -1;
-        width: 100%;
-        height: 100%; }
-      .ui-datepicker .ui-datepicker-header > a:before {
-        width: 40px !important;
-        min-width: 40px !important;
-        max-width: 40px !important;
-        height: 40px !important;
-        min-height: 40px !important;
-        max-height: 40px !important; }
       .ui-datepicker .ui-datepicker-header > a:hover > span:before {
         color: #be1e1e; }
       .ui-datepicker .ui-datepicker-header > a.ui-datepicker-prev {
@@ -623,6 +463,8 @@ button.ui-datepicker-trigger {
         content: "\e918"; }
       .ui-datepicker .ui-datepicker-header > a.ui-datepicker-next > span:before {
         content: "\e919"; }
+      .ui-datepicker .ui-datepicker-header > a:before, .ui-datepicker .ui-datepicker-header > a:after {
+        display: none !important; }
       .ui-datepicker .ui-datepicker-header > a > span {
         display: -webkit-box;
         display: -moz-box;
@@ -674,11 +516,11 @@ button.ui-datepicker-trigger {
       height: 40px;
       cursor: pointer; }
       .ui-datepicker .ui-datepicker-header .ui-datepicker-title > select {
-        font-size: 1.6rem;
-        line-height: 1.8rem;
+        font-size: 1.4rem;
+        line-height: 1.5rem;
         width: 110px; }
-        .ui-datepicker .ui-datepicker-header .ui-datepicker-title > select:first-of-type {
-          border-right-width: 0; }
+        .ui-datepicker .ui-datepicker-header .ui-datepicker-title > select ~ select {
+          border-left-width: 0; }
       .ui-datepicker .ui-datepicker-header .ui-datepicker-title, .ui-datepicker .ui-datepicker-header .ui-datepicker-title > span {
         font-size: 2rem; }
   .ui-datepicker .ui-datepicker-calendar thead {
@@ -1777,14 +1619,20 @@ a.btn {
     -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .btn-itype03b-t:after, .btn-itype03b-t:before {
+  .btn-itype03b-t:after:before, .btn-itype03b-t:before:before {
+    content: "";
+    position: relative;
+    z-index: -1;
+    font-size: 1.5rem !important;
+    font-weight: normal; }
+  .btn-itype03b-t:before {
     background-color: transparent; }
-    .btn-itype03b-t:after:before, .btn-itype03b-t:before:before {
-      content: "";
-      position: relative;
-      z-index: -1;
-      font-size: 1.5rem !important;
-      font-weight: normal; }
+  .btn-itype03b-t:nth-of-type(3n + 1):after {
+    background-color: rgba(0, 0, 0, 0.1); }
+  .btn-itype03b-t:nth-of-type(2n):after {
+    background-color: rgba(0, 0, 0, 0.15); }
+  .btn-itype03b-t:nth-of-type(3n):after {
+    background-color: rgba(0, 0, 0, 0.2); }
   .btn-itype03b-t:hover:after {
     background-color: rgba(0, 0, 0, 0.4) !important; }
   .btn-itype03b-t:active:after {
@@ -1888,14 +1736,20 @@ a.btn {
     -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .btn-itype01b-t:after, .btn-itype01b-t:before {
+  .btn-itype01b-t:after:before, .btn-itype01b-t:before:before {
+    content: "";
+    position: relative;
+    z-index: -1;
+    font-size: 1.5rem !important;
+    font-weight: normal; }
+  .btn-itype01b-t:before {
     background-color: transparent; }
-    .btn-itype01b-t:after:before, .btn-itype01b-t:before:before {
-      content: "";
-      position: relative;
-      z-index: -1;
-      font-size: 1.5rem !important;
-      font-weight: normal; }
+  .btn-itype01b-t:nth-of-type(3n + 1):after {
+    background-color: rgba(0, 0, 0, 0.1); }
+  .btn-itype01b-t:nth-of-type(2n):after {
+    background-color: rgba(0, 0, 0, 0.15); }
+  .btn-itype01b-t:nth-of-type(3n):after {
+    background-color: rgba(0, 0, 0, 0.2); }
   .btn-itype01b-t:hover:after {
     background-color: rgba(0, 0, 0, 0.4) !important; }
   .btn-itype01b-t:active:after {
@@ -2477,14 +2331,20 @@ a.btn {
     -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .btn-itype03c-t:after, .btn-itype03c-t:before {
+  .btn-itype03c-t:after:before, .btn-itype03c-t:before:before {
+    content: "";
+    position: relative;
+    z-index: -1;
+    font-size: 1.5rem !important;
+    font-weight: normal; }
+  .btn-itype03c-t:before {
     background-color: transparent; }
-    .btn-itype03c-t:after:before, .btn-itype03c-t:before:before {
-      content: "";
-      position: relative;
-      z-index: -1;
-      font-size: 1.5rem !important;
-      font-weight: normal; }
+  .btn-itype03c-t:nth-of-type(3n + 1):after {
+    background-color: rgba(0, 0, 0, 0.1); }
+  .btn-itype03c-t:nth-of-type(2n):after {
+    background-color: rgba(0, 0, 0, 0.15); }
+  .btn-itype03c-t:nth-of-type(3n):after {
+    background-color: rgba(0, 0, 0, 0.2); }
   .btn-itype03c-t:hover:after {
     background-color: rgba(0, 0, 0, 0.4) !important; }
   .btn-itype03c-t:active:after {
@@ -2593,14 +2453,20 @@ a.btn {
     -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-  .btn-itype01c-t:after, .btn-itype01c-t:before {
+  .btn-itype01c-t:after:before, .btn-itype01c-t:before:before {
+    content: "";
+    position: relative;
+    z-index: -1;
+    font-size: 1.5rem !important;
+    font-weight: normal; }
+  .btn-itype01c-t:before {
     background-color: transparent; }
-    .btn-itype01c-t:after:before, .btn-itype01c-t:before:before {
-      content: "";
-      position: relative;
-      z-index: -1;
-      font-size: 1.5rem !important;
-      font-weight: normal; }
+  .btn-itype01c-t:nth-of-type(3n + 1):after {
+    background-color: rgba(0, 0, 0, 0.1); }
+  .btn-itype01c-t:nth-of-type(2n):after {
+    background-color: rgba(0, 0, 0, 0.15); }
+  .btn-itype01c-t:nth-of-type(3n):after {
+    background-color: rgba(0, 0, 0, 0.2); }
   .btn-itype01c-t:hover:after {
     background-color: rgba(0, 0, 0, 0.4) !important; }
   .btn-itype01c-t:active:after {
@@ -3603,45 +3469,43 @@ button.btn ~ button.btn {
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
-    width: 40px !important;
-    min-width: 40px !important;
-    max-width: 40px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    margin: 0 2px;
+    display: inline-block !important;
+    /*@include mhwidth($btn-type01);*/
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
-    margin: 0 2px; }
+    min-width: 40px;
+    max-width: 60px;
+    padding: 0 5px; }
     .page button, .page button:before, .page button:after {
+      color: #f5f5f5;
       transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
       -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
       -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
       -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
-      color: #f5f5f5; }
+      -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
     .page button:after {
-      background-color: transparent !important;
-      border-style: solid;
-      border-width: 1px;
-      border-color: rgba(245, 245, 245, 0.8); }
+      background-color: #2c2c2c; }
       .page button:after:before {
         content: "";
         position: relative;
         z-index: -1;
         font-size: 1.5rem !important;
         font-weight: normal; }
-    .page button:hover:before, .page button:active:before, .page button.on:before {
-      border-width: 2px; }
     .page button:hover:after {
-      border-color: #32a0be; }
-    .page button:hover, .page button:hover:before {
-      color: #fff; }
+      background-color: #32a0be !important;
+      opacity: 1 !important; }
     .page button:active:after {
-      border-color: #00af9b; }
-    .page button:active, .page button:active:before {
-      color: #fff; }
+      background-color: #00af9b !important;
+      opacity: 1 !important; }
     .page button.on:after {
-      border-color: #b42d6e; }
-    .page button.on, .page button.on:before {
-      color: #fff; }
+      background-color: #b42d6e !important;
+      opacity: 1 !important; }
     .page button > * {
       display: -webkit-box;
       display: -moz-box;
@@ -3705,6 +3569,9 @@ button.btn ~ button.btn {
       min-height: 40px !important;
       max-height: 40px !important; }
     .page button, .page button:before {
+      color: #3c3c3c; }
+    .page button:before, .page button:after {
+      position: absolute;
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -3722,13 +3589,22 @@ button.btn ~ button.btn {
       -moz-box-pack: center;
       -webkit-justify-content: center;
       -ms-flex-pack: center;
-      justify-content: center;
-      color: #3c3c3c; }
-    .page button:before, .page button:after {
-      position: absolute; }
+      justify-content: center; }
     .page button:after {
+      border-style: solid;
+      border-width: 1px;
       border-color: rgba(60, 60, 60, 0.8);
       background-color: rgba(255, 255, 255, 0.8) !important; }
+    .page button:hover, .page button:hover:before, .page button.on, .page button.on:before {
+      color: #fff; }
+    .page button:hover:after, .page button.on:after {
+      transform: scale(1.07);
+      ms-transform: scale(1.07);
+      -ms-transform: scale(1.07);
+      -moz-transform: scale(1.07);
+      -webkit-transform: scale(1.07);
+      -o-transform: scale(1.07);
+      border: none; }
   .page > button.pll:before {
     content: "\e935"; }
   .page > button.pl:before {
@@ -4036,12 +3912,12 @@ button.btn ~ button.btn {
     .g-ico.lidar > span + div {
       z-index: -1; }
       .g-ico.lidar > span + div, .g-ico.lidar > span + div:after, .g-ico.lidar > span + div:before {
-        width: 800px !important;
-        min-width: 800px !important;
-        max-width: 800px !important;
-        height: 800px !important;
-        min-height: 800px !important;
-        max-height: 800px !important; }
+        width: 1200px !important;
+        min-width: 1200px !important;
+        max-width: 1200px !important;
+        height: 1200px !important;
+        min-height: 1200px !important;
+        max-height: 1200px !important; }
       .g-ico.lidar > span + div:before {
         content: "";
         overflow: hidden;

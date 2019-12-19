@@ -26,6 +26,7 @@ var CustomMapMediator = (
         var _OBJECT_TYPE_CUSTOM = {
             'human' : 'human'
             ,'unknown' : 'unknown'
+            ,'heatmap' : 'heatmap'
         };
         var _defsMarkerRef = {
             'unknown' : '/assets/images/ico/sico_39.svg'
@@ -49,6 +50,7 @@ var CustomMapMediator = (
                     'init' : 1
                     ,'min' : 0.01
                     ,'max' : 5.0
+                    ,'def' : 0.02
                 }
                 ,'skewXIncrementValue': 1 // X 기울기 클릭시 증가치
                 ,'skewYIncrementValue': 1 // Y 기울기 클릭시 증가치
@@ -299,27 +301,26 @@ var CustomMapMediator = (
                 });
             }
 
-            if(_element.find(".view_size").length == 0){
-                _mapCanvas.after(
-                    $("<div/>",{class:"view_size on"}).append(
-                        $("<div/>",{class:"view_plus"}).append(
-                            $("<button/>",{'href':'#'}).mousedown(function(){
-                                _self.startZoomControl('zoomIn', true);
-                            }).on("mouseup mouseout",function(){
-                                _self.stopZoomControl();
-                            })
-                        )
-                    ).append(
-                        $("<div/>",{class:"view_minus"}).append(
-                            $("<button/>",{'href':'#'}).mousedown(function(){
-                                _self.startZoomControl('zoomOut', true);
-                            }).on("mouseup mouseout",function(){
-                                _self.stopZoomControl();
-                            })
-                        )
+            _element.find(".view_size").remove();
+            _mapCanvas.after(
+                $("<div/>",{class:"view_size on"}).append(
+                    $("<div/>",{class:"view_plus"}).append(
+                        $("<button/>",{'href':'#'}).mousedown(function(){
+                            _self.startZoomControl('zoomIn', true);
+                        }).on("mouseup mouseout",function(){
+                            _self.stopZoomControl();
+                        })
+                    )
+                ).append(
+                    $("<div/>",{class:"view_minus"}).append(
+                        $("<button/>",{'href':'#'}).mousedown(function(){
+                            _self.startZoomControl('zoomOut', true);
+                        }).on("mouseup mouseout",function(){
+                            _self.stopZoomControl();
+                        })
                     )
                 )
-            }
+            )
         };
 
         /**
@@ -329,10 +330,10 @@ var CustomMapMediator = (
         this.startZoomControl = function(actionType, continueFlag){
             switch (actionType){
                 case "zoomIn" :
-                    if(_scale.toFixed(2) < _options['element']['zoom']['max']){_scale+=0.01;}
+                    if(_scale.toFixed(2) < _options['element']['zoom']['max'] && _scale+_options['element']['zoom']['def'] < _options['element']['zoom']['max']){_scale+=_options['element']['zoom']['def'];}
                     break;
                 case "zoomOut" :
-                    if(_scale.toFixed(2) > _options['element']['zoom']['min']){_scale-=0.01;}
+                    if(_scale.toFixed(2) > _options['element']['zoom']['min'] && _scale-_options['element']['zoom']['def'] > _options['element']['zoom']['min']){_scale-=_options['element']['zoom']['def'];}
                     break;
             }
             setTransform2d(null,true);
@@ -505,6 +506,9 @@ var CustomMapMediator = (
                             _canvasSvg.circle(marker,10,11,16,{fill:"none"});
                             _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
                         }
+
+                        let marker = _canvasSvg.marker(defs,'heatmap',10,18,6,6,"0");
+                        _canvasSvg.circle(marker,10,11,6,{fill:"red","fill-opacity":0.02,style:"animation:none"});
                     }
                 });
                 _mapCanvas.find("svg").addClass("g-fence g-line");
@@ -1021,23 +1025,25 @@ var CustomMapMediator = (
                             return false;
                         }
 
-                        if(data['location'] instanceof Array){
-                            data['location'] = data['location'][0];
-                        }
-                        const left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location']['lat'],2))*_ratio);
-                        const top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location']['lng'],2))*_ratio);
                         let element;
 
                         if(_marker[messageType][data['deviceId']][data['id']]!=null){
                             let points = [];
-                            if(_options['object']['pointsHideFlag']){
-                                points = [left+","+top];
-                                _marker[messageType][data['deviceId']][data['id']]['points'] = points;
-                            }else{
-                                points = _marker[messageType][data['deviceId']][data['id']]['points'];
-                                points.push(left+","+top);
-                                if(_options['object']['pointShiftCnt']!=null && points.length > _options['object']['pointShiftCnt']){
-                                    points.shift();
+
+                            for(var index in data['location']){
+                                let left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location'][index]['lat'],2))*_ratio);
+                                let top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location'][index]['lng'],2))*_ratio);
+
+                                if(_options['object']['pointsHideFlag']){
+                                    points.push(left+","+top);
+                                    _marker[messageType][data['deviceId']][data['id']]['points'] = points;
+                                    break;
+                                }else{
+                                    points = _marker[messageType][data['deviceId']][data['id']]['points'];
+                                    points.push(left+","+top);
+                                    if(_options['object']['pointShiftCnt']!=null && points.length > _options['object']['pointShiftCnt']){
+                                        points.shift();
+                                    }
                                 }
                             }
                             element = _marker[messageType][data['deviceId']][data['id']]['element'];
@@ -1053,14 +1059,35 @@ var CustomMapMediator = (
                             }
                             element.attr("points",points.join(" "));
                         }else{
-                            const polyline = _canvasSvg.polyline([[left,top]],{'objectId':data['id'],'marker-end':"url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")"});
+                            let points = [];
+                            let polylinePoints = [];
+                            for(var index in data['location']){
+                                let left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location'][index]['lat'],2))*_ratio);
+                                let top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location'][index]['lng'],2))*_ratio);
+
+                                points.push(left+","+top);
+                                polylinePoints.push([left,top]);
+                                if(_options['object']['pointsHideFlag']){
+                                    break;
+                                }else{
+                                    if(_options['object']['pointShiftCnt']!=null && points.length > _options['object']['pointShiftCnt']){
+                                        points.shift();
+                                    }
+                                }
+                            }
+                            const polyline = _canvasSvg.polyline(polylinePoints,{'objectId':data['id'],'marker-end':"url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")"});
                             element = $(polyline);
                             element.addClass(_targetClass[messageType]);
                             _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : element
-                                ,'points' : [left+","+top]
+                                ,'points' : points
                             };
                         }
+
+                        if(data['objectType']=='heatmap'){
+                            element.attr({"marker-start":"url(#heatmap)","marker-mid":"url(#heatmap)","style":"stroke:none"});
+                        }
+
                         if(_OBJECT_TYPE_CUSTOM[data['objectType']]=='unknown'){
                             element.addClass("object");
                         }else{

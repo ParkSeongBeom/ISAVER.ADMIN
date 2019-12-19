@@ -56,7 +56,7 @@ public class ActionCtrl {
      * @param parameters
      * @return
      */
-    @RequestMapping(method={RequestMethod.POST}, value="/detail")
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/detail")
     public ModelAndView findByAction(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
         ModelAndView modelAndView = actionSvc.findByAction(parameters);
         modelAndView.setViewName("actionDetail");

@@ -64,4 +64,13 @@ public interface NotificationSvc {
      * @return
      */
     ModelAndView allCancelNotification(Map<String, String> parameters);
+
+    /**
+     * 알림센터 목록을 가져온다. 히트맵용
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListNotificationForHeatMap(Map<String, String> parameters);
 }

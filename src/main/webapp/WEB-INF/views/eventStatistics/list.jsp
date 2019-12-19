@@ -11,6 +11,9 @@
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist.min.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.js"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/excelexport/jquery.techbytarun.excelexportjs.js"></script>
+<script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <div class="sub_title_area">
     <h3 class="1depth_title"><spring:message code="common.title.eventStatistics"/></h3>
@@ -38,6 +41,10 @@
                     해당 항목에 선택 저장된 차트 아이콘 표출.
             -->
             <ul class="set-ul eventstatistics" id="statisticsList"></ul>
+            <!-- 목록 상단 버튼 영역 -->
+            <div class="set-btn type-01">
+                <button class="ico-tracker" style="width: 100%;" onclick="openHeatMapPopup();">HeatMap</button>
+            </div>
         </section>
 
         <!-- 상세 -->
@@ -47,6 +54,27 @@
                 <button class="ico-play" title="<spring:message code="statistics.placeholder.play"/>" onclick="search();"></button>
                 <button class="ico-copy" title="<spring:message code="statistics.placeholder.copy"/>" onclick="addStatistics();"></button>
                 <button class="ico-save" title="<spring:message code="statistics.placeholder.save"/>" onclick="saveStatistics();"></button>
+                <div class="set-option">
+                    <button class="ico-option option-open" onclick="$('.set-option').toggleClass('on'); $('.option-popup').toggleClass('on');"></button>
+                    <div class="set-itembox option-popup">
+                        <h4>OPTION</h4>
+                        <div class="set-item">
+                            <h4><spring:message code="statistics.column.autoRefresh"/></h4>
+                            <div>
+                                <select id="autoRefresh" onchange="javascript:autoSearch();">
+                                    <option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>
+                                    <option value="10">10<spring:message code="common.column.second"/></option>
+                                    <option value="30">30<spring:message code="common.column.second"/></option>
+                                    <option value="60">1<spring:message code="common.column.minute"/></option>
+                                    <option value="300">5<spring:message code="common.column.minute"/></option>
+                                    <option value="600">10<spring:message code="common.column.minute"/></option>
+                                    <option value="1800">30<spring:message code="common.column.minute"/></option>
+                                    <option value="3600">1<spring:message code="common.column.hour"/></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!--
             1. 상세 각 항목은 <div class="set-item"> 안에 삽입.
@@ -114,6 +142,56 @@
     <div id="excelEventStatisticsList" style="display:none;"></div>
 </section>
 
+<section class="popup-layer">
+    <!-- 트래킹이력 팝업 -->
+    <div class="popupbase map_pop">
+        <div>
+            <div>
+                <header>
+                    <h2>HeatMap</h2>
+                    <button onclick="closeHeatMapPopup();"></button>
+                </header>
+
+                <article class="search_area" style="height:auto;">
+                    <div class="search_contents">
+                        <spring:message code="common.selectbox.select" var="allSelectText"/>
+                        <!-- 일반 input 폼 공통 -->
+                        <p class="itype_01">
+                            <span><spring:message code="statistics.column.area" /></span>
+                            <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" allText="${allSelectText}"/></span>
+                        </p>
+                        <p class="itype_04">
+                            <span><spring:message code="statistics.column.datetime" /></span>
+                            <span class="plable04">
+                                <input type="text" name="startDatetimeStr" />
+                                <select id="startDatetimeHourSelect" name="startDatetimeHour"></select>
+                                <em>~</em>
+                                <input type="text" name="endDatetimeStr" />
+                                <select id="endDatetimeHourSelect" name="endDatetimeHour"></select>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="search_btn">
+                        <button onclick="searchHeatMap(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                    </div>
+                </article>
+
+                <div class="trackinghistory-box">
+                    <article class="map_sett_box">
+                        <section class="map">
+                            <div>
+                                <div id="mapElement" class="map_images"></div>
+                                <div id="heatmapLoading" class="loding_bar"></div>
+                            </div>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="closeHeatMapPopup();"></div>
+    </div>
+</section>
+
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -124,6 +202,7 @@
         ,'addUrl':'${rootPath}/eventStatistics/add.json'
         ,'saveUrl':'${rootPath}/eventStatistics/save.json'
         ,'removeUrl':'${rootPath}/eventStatistics/remove.json'
+        ,'heatMapUrl':'${rootPath}/notification/heatMap.json'
     };
 
     var messageConfig = {
@@ -131,6 +210,7 @@
         ,'emptyStartDatetime':'<spring:message code="statistics.message.emptyStartDatetime"/>'
         ,'emptyEndDatetime':'<spring:message code="statistics.message.emptyEndDatetime"/>'
         ,'earlyDatetime':'<spring:message code="statistics.message.earlyDatetime"/>'
+        ,'emptyArea':'<spring:message code="statistics.message.emptyArea"/>'
         ,   addConfirmMessage  :'<spring:message code="common.message.addConfirm"/>'
         ,   saveConfirmMessage  :'<spring:message code="common.message.saveConfirm"/>'
         ,   removeConfirmMessage  :'<spring:message code="common.message.removeConfirm"/>'
@@ -145,9 +225,12 @@
     var chartClass = {
         'line' : 'ico-chartl'
         ,'bar' : 'ico-chartb'
+        ,'pie' : 'ico-chartc'
         ,'table' : 'ico-chartt'
     };
     var statisticsList;
+    var autoRefInterval = null;
+    var customMapMediator;
 
     var conditionTag = $("<div/>",{name:'condition'}).append(
         $("<input/>",{type:'text',name:'key'})
@@ -172,8 +255,16 @@
     $(document).ready(function(){
         calendarHelper.load($('#startDatetime'));
         calendarHelper.load($('#endDatetime'));
+        calendarHelper.load($('input[name=startDatetimeStr]'));
+        calendarHelper.load($('input[name=endDatetimeStr]'));
         setHourDataToSelect($('#startDtHour'),"00");
         setHourDataToSelect($('#endDtHour'),"23");
+        setHourDataToSelect($('#startDatetimeHourSelect'),"00");
+        setHourDataToSelect($('#endDatetimeHourSelect'),"23");
+
+        $('input[name=startDatetimeStr]').val(serverDatetime.format("yyyy-MM-dd"));
+        $('input[name=endDatetimeStr]').val(serverDatetime.format("yyyy-MM-dd"));
+        $('#startDatetimeHourSelect').val(serverDatetime.format("HH")).prop("selected",true);
         getList();
     });
 
@@ -224,6 +315,21 @@
         callAjax('list',{mode:'search'});
     }
 
+    function autoSearch(){
+        if(autoRefInterval!=null){
+            clearInterval(autoRefInterval);
+            autoRefInterval = null;
+        }
+
+        let autoRefTime = $("#autoRefresh option:selected").val();
+        if(autoRefTime!=null && autoRefTime!=''){
+            let refDelay = Number(autoRefTime)*1000;
+            autoRefInterval = setInterval(function() {
+                search();
+            }, refDelay);
+        }
+    }
+
     /*
      search
      @author psb
@@ -259,13 +365,18 @@
             statisticsList[statistics['statisticsId']] = statistics;
 
             $("#statisticsList").append(
-                $("<li/>").append(
+                $("<li/>").click({'statisticsId':statistics['statisticsId']},function(evt){
+                    if($(this).hasClass("on")){
+                        $(this).removeClass("on");
+                        $(".box-detail").removeClass("on");
+                    }else{
+                        $("#statisticsList > li").removeClass("on");
+                        $(this).addClass("on");
+                        detailRender(evt.data.statisticsId);
+                    }
+                }).append(
                     $("<div/>").append(
-                        $("<p/>").text(statistics['statisticsName']).click({'statisticsId':statistics['statisticsId']},function(evt){
-                            $("#statisticsList > li").removeClass("on");
-                            $(this).parent().parent().addClass("on");
-                            detailRender(evt.data.statisticsId);
-                        })
+                        $("<p/>").text(statistics['statisticsName'])
                     ).append(
                         $("<i/>").addClass(chartClass[statistics['chartType']])
                     ).append(
@@ -273,6 +384,7 @@
                             if(confirm(messageConfig['removeConfirmMessage'])){
                                 callAjax('remove',{'statisticsId':evt.data.statisticsId});
                             }
+                            evt.stopPropagation();
                         })
                     )
                 )
@@ -599,6 +711,47 @@
                 alertMessage(actionType+['Complete']);
                 getList();
                 break;
+            case "heatMap":
+                var notificationList = data['notifications'];
+                customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
+                try{
+                    $("#heatmapLoading").addClass("on");
+                    customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
+                    customMapMediator.init(data['paramBean']['areaId'],{
+                        'custom' : {
+                            'draggable' : false
+                            ,'fenceView' : true
+                            ,'openLinkFlag' : false
+                            ,'moveFenceHide' : false
+                            ,'moveReturn' : false
+                            ,'onLoad' : function(){
+                                if(notificationList!=null) {
+                                    for(var i in notificationList){
+                                        let noti = notificationList[i];
+                                        var trackingJson = JSON.parse(noti['trackingJson']);
+                                        var marker = {
+                                            'areaId' : noti['areaId']
+                                            ,'deviceId' : noti['deviceId']
+                                            ,'objectType' : 'heatmap'
+                                            ,'id' : noti['objectId']
+                                            ,'location' : trackingJson
+                                        };
+                                        customMapMediator.saveMarker('object', marker);
+                                    }
+                                    $("#heatmapLoading").removeClass("on");
+                                }
+                            }
+                        }
+                        ,'object' :{
+                            'pointsHideFlag' : false
+                            ,'pointShiftCnt' : null
+                        }
+                    });
+                }catch(e){
+                    $("#heatmapLoading").removeClass("on");
+                    console.error("[openHeatMapPopup] custom map mediator init error - "+ e.message);
+                }
+                break;
         }
     }
 
@@ -676,5 +829,59 @@
         link.download = "<spring:message code="common.title.eventStatistics"/>_"+new Date().format("yyyyMMddhhmmss")+".xls";
         link.href = uri;
         link.click();
+    }
+
+    function validate(){
+        var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
+        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
+
+        if(start>end){
+            alertMessage("earlyDatetime");
+            return false;
+        }
+        return true;
+    }
+
+    function searchHeatMap(){
+        if(validate()){
+            let areaId = $("select[name='areaId']").val();
+            if(areaId==null || areaId==''){
+                alertMessage("emptyArea");
+                return false;
+            }
+
+            let startDatetimeStr = $("input[name='startDatetimeStr']").val();
+            if(startDatetimeStr!=null && startDatetimeStr!=''){
+                startDatetimeStr += " " + $("#startDatetimeHourSelect").val() + ":00:00";
+            }
+
+            let endDatetimeStr = $("input[name='endDatetimeStr']").val();
+            if(endDatetimeStr!=null && endDatetimeStr!=''){
+                endDatetimeStr += " " + $("#endDatetimeHourSelect").val() + ":59:59";
+            }
+
+            let param = {
+                'areaId' : areaId
+                ,'startDatetimeStr' : startDatetimeStr
+                ,'endDatetimeStr' : endDatetimeStr
+            };
+            callAjax('heatMap',param);
+        }
+    }
+
+    /*
+     open 히트맵 popup
+     @author psb
+     */
+    function openHeatMapPopup(_this){
+        $(".map_pop").fadeIn();
+    }
+
+    /*
+     close HeatMap popup
+     @author psb
+     */
+    function closeHeatMapPopup(){
+        $(".map_pop").fadeOut();
     }
 </script>

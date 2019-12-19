@@ -59,6 +59,7 @@
   &-chartb:before   {content:"\e98f" !important;} // 바 복사
   &-chartl:before   {content:"\e990" !important;} // 라인 차트
   &-chartt:before   {content:"\e98c" !important;} // 테이블 차트
+  &-chartc:before   {content:"\e916" !important;} // 파이 차트
   &-option:before   {content:"\e959" !important;} // 옵션, 메뉴
 
   &-straw:before    {content:"\e993" !important;} // 딸기
@@ -137,9 +138,9 @@
 input.datepicker {width:100px;}
 // datepicker Start
 button.ui-datepicker-trigger {
-  @include length01; @include border(1px 1px 1px 0,$color-gray-01);
+  @include mhwidth(40px); @include border(1px 1px 1px 0,$color-gray-01);
   background-color: #fff;
-  &:before {content:"\e91f" !important; font-size:1.8rem; margin:0 1px 0 0; color:$color-dark-01;}
+  &:before {content:"\e91f" !important; font-size:1.5rem; color:$color-dark-01;}
   &:hover:before {color:$color-red-01;}
 }
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br
@@ -148,7 +149,7 @@ button.ui-datepicker-trigger {
 .ui-datepicker {
   display: none;
   width:320px; padding:10px; background-color:$color-white-01;
-  @include border01(1px,$color-gray-01,1);
+  //@include border01(1px,$color-gray-01,1);
   @include box-shadow01(0px, 30px, 40px, -20px, #000, 0.7);
 
   table {width: 100%;  font-size: .9em; border-collapse: collapse;}
@@ -159,13 +160,15 @@ button.ui-datepicker-trigger {
 
     // .ui-datepicker-header 좌우 화살표 Start
     & > a {
-      overflow: hidden; position: absolute; top:0;  @include length01;
+      overflow: hidden; position: absolute !important; top:0;  @include mhwidth(40px);
 
       &:hover > span:before {color:$color-red-01;}
       &.ui-datepicker-prev {left:0;}
       &.ui-datepicker-next {right:0;}
       &.ui-datepicker-prev > span:before {content:"\e918";}
       &.ui-datepicker-next > span:before {content:"\e919";}
+
+      &:before, &:after {display: none !important;}
 
       & > span {
         @include flex-midddle; position:relative; width:100%; height:100%;
@@ -178,8 +181,9 @@ button.ui-datepicker-trigger {
       @include flex-midddle;
       position: absolute; top:0; left:40px; right:40px; height:40px; cursor: pointer;
       & > select  {
-        font-size:1.6rem; line-height: 1.8rem; width:110px;
-        &:first-of-type {border-right-width:0;}
+        font-size:1.4rem; line-height: 1.5rem; width:110px;
+        //&:first-of-type {border-right-width:0;}
+        & ~ select {border-left-width:0;}
       }
       &, & > span {font-size:2rem;}
     } // .ui-datepicker-header 타이틀 End
@@ -694,13 +698,18 @@ div[contenteditable] {}
   position:relative; width:100%; height:40px; margin:20px 0;
   &, & > div {@include flex-midddle; }
   button {
-    @include btn-itype01b-l; @include mhwidth($btn-type01); margin:0 2px;
+    @include btn-itype01b; @include text-overflow-ellipsis; margin:0 2px; display: inline-block !important;
+    /*@include mhwidth($btn-type01);*/
+    @include mmheight(40px); min-width:40px; max-width:60px; padding:0 5px;
 
-    &,&:before { @include flex-midddle; color:$color-a-text;}
-    &:before, &:after {position: absolute; }
-    &:after {
-      border-color:rgba($color-a-text,.8); background-color:rgba($color-white-01,.8) !important;
+    &, &:before {color:$color-a-text;}
+    &:before, &:after {position: absolute; @include flex-midddle; }
+    &:after {border-style:solid; border-width:1px; border-color:rgba($color-a-text,.8); background-color:rgba($color-white-01,.8) !important;}
+    &:hover, &.on {
+      &, &:before {color:$color-white-01;}
+      &:after {@include scale(1.07); border:none;}
     }
+
   }
 
   & > button {
@@ -855,7 +864,7 @@ div[contenteditable] {}
     &.lidar {
       & > span + div {
         z-index: -1;
-        &, &:after, &:before {@include mhwidth($g-wh-02);}
+        &, &:after, &:before {@include mhwidth($g-wh-03);}
         @include lidar-bg($color-lidar);
       }
       &.wh {

@@ -38,23 +38,28 @@
                         </td>
                         <th class="point"><spring:message code="event.column.eventName"/></th>
                         <td class="point">
-                            <input type="text" name="eventName" value="${event.eventName}" readonly="readonly" placeholder="<spring:message code="event.message.requireEventName"/>" />
+                            <input type="text" name="eventName" value="${event.eventName}" placeholder="<spring:message code="event.message.requireEventName"/>" />
                         </td>
                     </tr>
                     <tr>
                         <th class="point"><spring:message code="event.column.eventFlag"/></th>
                         <td class="point">
-                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagName="eventFlag" disabled="true"/>
+                            <isaver:codeSelectBox groupCodeId="EVT" codeId="${event.eventFlag}" htmlTagName="eventFlag"/>
                         </td>
-                        <th class="point"><spring:message code="event.column.statisticsCode"/></th>
+                        <th class="point"><spring:message code="common.column.useYn"/></th>
                         <td class="point">
-                            <isaver:codeSelectBox groupCodeId="STS" codeId="${event.statisticsCode}" htmlTagName="statisticsCode" disabled="true"/>
+                            <div class="checkbox_set csl_style03">
+                                <input type="hidden" name="delYn" value="${!empty event && event.delYn == 'Y' ? 'Y' : 'N'}"/>
+                                <input type="checkbox" ${!empty event && event.delYn == 'N' ? 'checked' : ''} onchange="setCheckBoxYn(this,'delYn',true)"/>
+                                <label></label>
+                            </div>
+                            <%--<isaver:codeSelectBox groupCodeId="STS" codeId="${event.statisticsCode}" htmlTagName="statisticsCode" disabled="true"/>--%>
                         </td>
                     </tr>
                     <tr>
                         <th><spring:message code="event.column.eventDesc"/></th>
                         <td colspan="3">
-                            <textarea name="eventDesc" class="textboard" readonly="readonly">${event.eventDesc}</textarea>
+                            <textarea name="eventDesc" class="textboard">${event.eventDesc}</textarea>
                         </td>
                     </tr>
                     <c:if test="${!empty event}">
@@ -81,10 +86,10 @@
                     <%--<c:if test="${empty event}">--%>
                         <%--<button class="btn btype01 bstyle03" onclick="javascript:addEvent(); return false;"><spring:message code="common.button.add"/> </button>--%>
                     <%--</c:if>--%>
-                    <%--<c:if test="${!empty event}">--%>
-                        <%--<button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>--%>
+                    <c:if test="${!empty event}">
+                        <button class="btn btype01 bstyle03" onclick="javascript:saveEvent(); return false;"><spring:message code="common.button.save"/> </button>
                         <%--<button class="btn btype01 bstyle03" onclick="javascript:removeEvent(); return false;"><spring:message code="common.button.remove"/> </button>--%>
-                    <%--</c:if>--%>
+                    </c:if>
                     <button class="btn btype01 bstyle03" onclick="javascript:cancel(); return false;"><spring:message code="common.button.list"/> </button>
                 </div>
             </div>

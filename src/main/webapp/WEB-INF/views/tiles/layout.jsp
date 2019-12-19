@@ -15,6 +15,7 @@
     <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/popup.css?version=${version}" rel="stylesheet" type="text/css" />
+    <link href="${rootPath}/assets/js/common/jquery-ui.css?version=${version}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist.min.css" >
     <link rel="stylesheet" type="text/css" href="${rootPath}/assets/library/chartist/chartist-plugin-tooltip.css" >
     <title>iSaver Admin</title>

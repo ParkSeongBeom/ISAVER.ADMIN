@@ -525,7 +525,6 @@ var DashboardHelper = (
                                         $("<input/>",{type:'text',style:'width:100px;',id:device['serialNo']+'Temp'})
                                     ).append(
                                         $("<button/>",{class:'btn',style:'width:80px; border: solid 1px;'}).text("전송").click({serialNo:device['serialNo']},function(evt){
-                                            console.log(evt);
                                             deviceControl('temp',evt.data.serialNo,$("#"+evt.data.serialNo+'Temp').val());
                                         })
                                     )

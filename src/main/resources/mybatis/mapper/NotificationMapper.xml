@@ -254,4 +254,26 @@
             AND critical_level = #{criticalLevel}
         </if>
     </update>
+
+    <!--
+        알림센터 목록을 가져온다. 히트맵용
+        @author psb
+    -->
+    <select id="findListNotificationForHeatMap" resultType="NotificationBean" parameterType="map" >
+        SELECT  area_id as areaId
+                , device_id as deviceId
+                , object_id as objectId
+                , fence_id as fenceId
+                , tracking_json as trackingJson
+        FROM    isaver.notification
+        WHERE   area_id = #{areaId}
+        AND     tracking_json is not null
+        AND 	tracking_json <![CDATA[ <> ]]> '[]'
+        <if test="startDatetimeStr != null and startDatetimeStr != ''">
+            AND     event_datetime <![CDATA[ >= ]]> #{startDatetimeStr}::timestamp
+        </if>
+        <if test="endDatetimeStr != null and endDatetimeStr != ''">
+            AND     event_datetime <![CDATA[ <= ]]> #{endDatetimeStr}::timestamp
+        </if>
+    </select>
 </mapper>

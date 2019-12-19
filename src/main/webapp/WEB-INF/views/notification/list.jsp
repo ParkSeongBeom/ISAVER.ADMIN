@@ -8,7 +8,6 @@
 <c:set value="2B0010" var="menuId"/>
 <c:set value="2B0000" var="subMenuId"/>
 
-<script src="${rootPath}/assets/js/popup/custom-map-popup.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
@@ -137,7 +136,14 @@
                                 </td>
                                 <td>${notification.confirmUserName}</td>
                                 <td><fmt:formatDate value="${notification.confirmDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                <td>${notification.cancelUserName}</td>
+                                <td>
+                                    <c:if test="${notification.cancelUserName!=null}">
+                                        ${notification.cancelUserName}
+                                    </c:if>
+                                    <c:if test="${notification.cancelUserName==null}">
+                                        ${notification.cancelUserId}
+                                    </c:if>
+                                </td>
                                 <td><fmt:formatDate value="${notification.cancelDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                 <td>
                                     <c:if test="${notification.cancelUserId!=null}">
@@ -484,16 +490,14 @@
                     ,'moveReturn' : false
                     ,'onLoad' : function(){
                         if(trackingJson!=null) {
-                            for(var index in trackingJson){
-                                var marker = {
-                                    'areaId' : data['areaId']
-                                    ,'deviceId' : data['deviceId']
-                                    ,'objectType' : 'human'
-                                    ,'id' : data['objectId']
-                                    ,'location' : trackingJson[index]
-                                };
-                                customMapMediator.saveMarker('object', marker);
-                            }
+                            var marker = {
+                                'areaId' : data['areaId']
+                                ,'deviceId' : data['deviceId']
+                                ,'objectType' : 'human'
+                                ,'id' : data['objectId']
+                                ,'location' : trackingJson
+                            };
+                            customMapMediator.saveMarker('object', marker);
 
                             setTimeout(function(){
                                 customMapMediator.setAnimate('add',data['criticalLevel'],data);

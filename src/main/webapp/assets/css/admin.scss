@@ -33,7 +33,7 @@ body.admin_mode {
 ////// 어드민 검색영역  Start
 .search_area {
   @include flexbase; @include flex-align-items-center;
-  position: relative; width:100%; /*min-height:65px;*/ padding:5px $admin-margin !important;
+  position: relative; width:100%; min-height:65px; padding:5px $admin-margin !important;
   //@include border01(1px 0,$color-gray-06,1);
   background-color: rgba($color-dark-01,0.08);
   /*&:before {
@@ -57,7 +57,7 @@ body.admin_mode {
     &:first-child {padding:0 10px 0 0;}
     & > input, & > select {max-width:170px;}
     & > input.datepicker {width:110px;}
-    & > input.datepicker ~ select {width: 80px; border-left-width:0;}
+    & > input ~ select {width: 80px; border-left-width:0;}
   }
 }
 
@@ -85,7 +85,7 @@ body.admin_mode {
 
 /////...... Table_layout 정의 Start
 .table_area {
-  @include flexbase; @include flex-column; width:100%; height:100%;
+  overflow: auto; @include flexbase; @include flex-column; width:100%; height:100%;
   & > *:not(form) {padding: 0 $admin-margin;}
 }
 .layer_contents .table_area
@@ -726,7 +726,7 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 
   .zoom-box {
     display: none; position: absolute; top:0; left:0; z-index: 1;
-    width:100%; padding:10px; @include placeholder-white;
+    width:100%; padding:10px; @include laypopup-stlye;
 
     & > * {width:100%;}
     & * {color:$color-white-01 !important;}
@@ -737,14 +737,9 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
     }
     p {font-size:0.9rem; opacity: 0.6; margin:0 0 10px 0;}
     input, select {
-      border-width:0 0 1px 0; border-color:$color-white-01;
-      background-color: transparent; padding:0; margin:0 0 30px 0;
       &:last-of-type {margin:0 0 10px 0;}
     }
-    select {
-      background-image: url(../images/ico/select_allow_w.svg) !important; color:$color-white-01 !important;
-      option { background-color: $color-bas; }
-    }
+
 
     button {@include btn-itype03b-t; @include translate3d(10px, -10px, 0); z-index: 1;}
 
@@ -980,11 +975,11 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
   }
 
   .table_title_area {
-    @include flex-option(1, 0, 40px); @include mmheight(40px);
-    padding:0 $admin-margin; margin:($admin-margin / 2) 0;
+    //@include flex-option(1, 0, 40px); @include mmheight(40px);
+    padding:0 $admin-margin; //margin:($admin-margin / 2) 0;
 
     &:before {
-      content:""; position: absolute; left:0; bottom:-($dash-margin); right:0;
+      content:""; position: absolute; left:0; /*bottom:-($dash-margin);*/ bottom: 0; right:0;
       height:1px; background-color:$admin-boxline;
     }
 
@@ -1071,9 +1066,12 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
   }
 
   & ~ article, & ~ .chart_table_area, .tr_table, & ~ .form_type01 .table_area, & ~ .form_type01 .tr_table {
-    overflow: auto; position: relative; height:100%; min-height:800px;
+    overflow: auto; position: relative; height:100%; //min-height:800px;
     padding: 0 $admin-margin $admin-margin ($tree-table-width + $admin-margin);
   }
+
+  & ~ form, & ~ .search_area {padding: 0 0 0 ($tree-table-width);}
+
 }
 
 .form_type01  {height:100%;}
@@ -1247,7 +1245,7 @@ a.fc-more {position: relative; z-index: 2;}
 }
 
 .ment {
-  position: relative; padding:20% 0;
+  position: relative; padding:20% 0; height:100%;
   &, & > div {width:100%; }
   & > div {
     @include flex-midddle; @include flex-column; height:100%; font-size:1.3rem;
@@ -1362,7 +1360,12 @@ a.fc-more {position: relative; z-index: 2;}
       */
 
     & > * {
-      @include flex-column-display;  height:100%;
+      @include flex-column-display; height:100%;
+
+      &:first-of-type {
+        @include mmwidth($tree-table-width);
+        &:before {@include bbl(1,0,0,0,auto,1px,100%,$admin-boxline);}
+      }
 
       & > * {width:100%;}
     }
@@ -1370,7 +1373,7 @@ a.fc-more {position: relative; z-index: 2;}
     .box {
 
       &-list, &-detail {
-        width:$tree-area-width; max-width:$tree-area-width; @include flex-option(1, 0, $tree-area-width);
+        @include flex-option(1, 0, $tree-area-width);
         &:before {@include bbl(1,0,0,0,auto,1px,100%,$admin-boxline);}
       }
 
@@ -1381,7 +1384,7 @@ a.fc-more {position: relative; z-index: 2;}
       &-detail {} // 상세
 
       &-chart {
-        @include flex-midddle;  width:100%; @include flex-option(0, 1, 100%);
+        @include flex-midddle; width:100%; @include flex-option(0, 1, 100%);
         & > * {}
       } // 차트
 
@@ -1400,7 +1403,7 @@ a.fc-more {position: relative; z-index: 2;}
     &.eventStatistics {
       .box {
         &-detail, &-chart {width:0; @include flex-option(0, 0, 0);}
-        &-detail.on {width:$tree-area-width; @include flex-option(1, 0, $tree-area-width);}
+        &-detail.on {width:$tree-table-width; @include flex-option(1, 0, $tree-table-width);}
         &-chart.on {
           width:100%; @include flex-option(0, 1, 100%);
           & + .box-ment, & ~ .box-ment {width:0; @include flex-option(0, 0, 0);}
@@ -1487,6 +1490,10 @@ a.fc-more {position: relative; z-index: 2;}
       }
     }
 
+    &.style {
+      &-01 {& > button {width:100%;} }
+    }
+
   }
 
   &-ul {
@@ -1531,7 +1538,6 @@ a.fc-more {position: relative; z-index: 2;}
       &:nth-of-type(3n + 1):before {opacity: 0.4;}
       &:nth-of-type(2n):before {opacity: 0.6;}
       &:nth-of-type(3n):before {opacity: 0.8;}
-
 
       &:hover:before {opacity: 1;}
       &.on {
@@ -1652,6 +1658,8 @@ a.fc-more {position: relative; z-index: 2;}
       button:not(.ui-datepicker-trigger):after {opacity: 0.5;}
     }
 
+    .dpk_select_type > .ui-datepicker {width:100%;}
+
   }
 
   &-area {
@@ -1659,7 +1667,7 @@ a.fc-more {position: relative; z-index: 2;}
   }
 
   &-chart {
-    @include flex-midddle; @include flex-column;
+    @include flex-midddle; @include flex-column; @include flex-justify-content-start;
     position: relative; width:100%;  min-height:100%;
 
     & > * {@include flex-padding;}
@@ -1705,6 +1713,34 @@ a.fc-more {position: relative; z-index: 2;}
     }
 
     &.chart-pie > .chart_label { @include flex-justify-content-start; }
+  }
+
+  &-option {
+    @include flexbase; @include flex-justify-content-end; @include flex-align-items-start;
+    position: relative; z-index:10; @include flex-option(0, 1, 100%); width:100%;  @include mmheight($btn-type03);
+
+    &.on {
+      & > button {
+        &:after {}
+        @include btn-itype03b-t;
+
+        &.ico-option {
+          &:before {content:"\e91a" !important;}
+          & ~ .set-itembox {@include flexbase;}
+        }
+      }
+    }
+
+    & > button {z-index: 10 !important;}
+    & > select {height:100%;}
+    .set-itembox {
+      display: none; position: absolute; z-index: 1; top:0; right:0;
+      width:($tree-table-width - ($admin-margin * 2)); background-color: $color-on;
+      @include box-shadow01(0px, 10px, 10px, -10px, #000, .8); @include laypopup-stlye;
+
+      &.on {@include flexbase;}
+      & * {color:$color-white-01;}
+    }
   }
 }
 
@@ -1898,8 +1934,7 @@ a.fc-more {position: relative; z-index: 2;}
 @media  screen and (max-width: 1400px) {
   .tree_table ~ .form_type01,
   .tree_table ~ article,
-  .tree_table ~ .chart_table_area,
-  .tr_table
+  .tree_table ~ .chart_table_area,.tr_table
   {position: relative; padding: 10px 0 0 370px; min-height:800px;}
   .critical-ui .critical-content:before{right:600px;}
   .critical-ui .critical-content:after{right:949px;}

@@ -147,7 +147,7 @@ var PageNavigator = (
                 resultHtml[lineCount++] = "</button>";
 
 				// 이전 그룹으로
-                resultHtml[lineCount++] = "<button"
+                resultHtml[lineCount++] = "<button";
                 resultHtml[lineCount++] = getClassTag("pnGroup");
 				if(currentPageGroup <= 0 && _pageNum == 1){
 					resultHtml[lineCount++] = " onclick='javascript:alert(\"현재 첫번째 페이지 입니다.\"); return false;'";

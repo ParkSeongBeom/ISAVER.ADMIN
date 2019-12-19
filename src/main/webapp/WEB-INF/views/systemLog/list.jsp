@@ -19,82 +19,89 @@
 
 <!-- section Start / 메인 "main_area", 서브 "sub_area"-->
 <section class="container sub_area">
-    <form id="systemLogForm" method="POST">
-        <input type="hidden" name="pageNumber"/>
-
-        <article class="search_area">
-            <div class="search_contents">
-                <p class="itype_04">
-                    <span><spring:message code="systemLog.column.logDatetime" /></span>
-                    <span class="plable04">
-                        <input type="text" name="startDatetimeStr" value="${paramBean.startDatetimeStr}" />
-                        <select id="startDatetimeHourSelect" name="startDatetimeHour"></select>
-                        <em>~</em>
-                        <input type="text" name="endDatetimeStr" value="${paramBean.endDatetimeStr}" />
-                        <select id="endDatetimeHourSelect" name="endDatetimeHour"></select>
-                    </span>
-                </p>
+    <article class="flex-area-w">
+        <section>
+            <div class="set-btn type-01 style-01">
+                <button class="ico-plus" onclick="javascript:excuteScript(); return false;">
+                    <span><spring:message code="systemLog.button.saveLog"/></span>
+                </button>
             </div>
-            <div class="search_btn">
-                <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+            <div class="set-item">
+                <div id="logDatetime" class="dpk_select_type"></div>
             </div>
-        </article>
-    </form>
+        </section>
+        <section>
+            <form id="systemLogForm" method="POST">
+                <input type="hidden" name="pageNumber"/>
 
-    <article class="table_area">
-        <div class="table_title_area">
-            <h4></h4>
-            <div class="table_btn_set">
-                <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
+                <article class="search_area">
+                    <div class="search_contents">
+                        <p class="itype_04">
+                            <span><spring:message code="systemLog.column.logDatetime" /></span>
+                            <span class="plable04">
+                                <input type="text" name="startDatetimeStr" value="${paramBean.startDatetimeStr}" />
+                                <select id="startDatetimeHourSelect" name="startDatetimeHour"></select>
+                                <em>~</em>
+                                <input type="text" name="endDatetimeStr" value="${paramBean.endDatetimeStr}" />
+                                <select id="endDatetimeHourSelect" name="endDatetimeHour"></select>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="search_btn">
+                        <button onclick="javascript:search(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                    </div>
+                </article>
+            </form>
 
-                <span><spring:message code="systemLog.column.newDatetime" /></span>
-                <span class="plable04">
-                    <input type="text" id="logDatetime" />
-                </span>
-                <button class="btn btype01 bstyle03" onclick="javascript:excuteScript(); return false;"><spring:message code="systemLog.button.saveLog"/> </button>
-            </div>
-        </div>
+            <article class="table_area">
+                <div class="table_title_area">
+                    <div class="table_btn_set">
+                        <p><span>총<em>${paramBean.totalCount}</em>건</span></p>
+                    </div>
+                </div>
 
-        <div class="table_contents">
-            <!-- 입력 테이블 Start -->
-            <table class="t_defalut t_type01 t_style02">
-                <colgroup>
-                    <col style="width: *;" />
-                    <col style="width: 30%;" />
-                    <col style="width: 30%;" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><spring:message code="systemLog.column.systemLogId"/></th>
-                        <th><spring:message code="systemLog.column.fileName"/></th>
-                        <th><spring:message code="systemLog.column.logDatetime"/></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <c:choose>
-                    <c:when test="${systemLogList != null and fn:length(systemLogList) > 0}">
-                        <c:forEach var="systemLog" items="${systemLogList}">
-                            <tr onclick="downloadFile(String('${systemLog.systemLogId}'));">
-                                <td>${systemLog.systemLogId}</td>
-                                <td>${systemLog.fileName}</td>
-                                <td>
-                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${systemLog.logDatetime}" />
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
+                <div class="table_contents">
+                    <!-- 입력 테이블 Start -->
+                    <table class="t_defalut t_type01 t_style02">
+                        <colgroup>
+                            <col style="width: *;" />
+                            <col style="width: 30%;" />
+                            <col style="width: 30%;" />
+                        </colgroup>
+                        <thead>
                         <tr>
-                            <td colspan="3"><spring:message code="common.message.emptyData"/></td>
+                            <th><spring:message code="systemLog.column.systemLogId"/></th>
+                            <th><spring:message code="systemLog.column.fileName"/></th>
+                            <th><spring:message code="systemLog.column.logDatetime"/></th>
                         </tr>
-                    </c:otherwise>
-                </c:choose>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        <c:choose>
+                            <c:when test="${systemLogList != null and fn:length(systemLogList) > 0}">
+                                <c:forEach var="systemLog" items="${systemLogList}">
+                                    <tr onclick="downloadFile(String('${systemLog.systemLogId}'));">
+                                        <td>${systemLog.systemLogId}</td>
+                                        <td>${systemLog.fileName}</td>
+                                        <td>
+                                            <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${systemLog.logDatetime}" />
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                                    <td colspan="3"><spring:message code="common.message.emptyData"/></td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                        </tbody>
+                    </table>
 
-            <!-- 테이블 공통 페이징 Start -->
-            <div id="pageContainer" class="page" ></div>
-        </div>
+                    <!-- 테이블 공통 페이징 Start -->
+                    <div id="pageContainer" class="page" ></div>
+                </div>
+            </article>
+        </section>
     </article>
 </section>
 <!-- END : contents -->
