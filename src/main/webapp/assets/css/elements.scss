@@ -323,6 +323,55 @@ div[contenteditable] {}
   }
 }
 //////...... 차트 상태 표시 시작
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+
+
+*/
+$chart-color-01:#795547;  $chart-color-11:#009788;  $chart-color-21:#ef6c00;
+$chart-color-02:#f15151;  $chart-color-12:#3f51b5;  $chart-color-22:#4baf4f;
+$chart-color-03:#9e9e9e;  $chart-color-13:#673bb7;  $chart-color-23:#689f39;
+$chart-color-04:#616161;  $chart-color-14:#9c27af;  $chart-color-24:#e53935;
+$chart-color-05:#ff9801;  $chart-color-15:#f54337;  $chart-color-25:#890e4f;
+$chart-color-06:#4cb050;  $chart-color-16:#ea1e63;  $chart-color-26:#4a3f3f;
+$chart-color-07:#8cc34b;  $chart-color-17:#795547;
+$chart-color-08:#cddc39;  $chart-color-18:#921717;
+$chart-color-09:#03a9f5;  $chart-color-19:#424243;
+$chart-color-10:#00bcd5;  $chart-color-20:#bf360c;
+
+$n01:26n+ 1;  $n11:26n+11;  $n21:26n+21;
+$n02:26n+ 2;  $n12:26n+12;  $n22:26n+22;
+$n03:26n+ 3;  $n13:26n+13;  $n23:26n+23;
+$n04:26n+ 4;  $n14:26n+14;  $n24:26n+24;
+$n05:26n+ 5;  $n15:26n+15;  $n25:26n+25;
+$n06:26n+ 6;  $n16:26n+16;  $n26:26n+26;
+$n07:26n+ 7;  $n17:26n+17;
+$n08:26n+ 8;  $n18:26n+18;
+$n09:26n+ 9;  $n19:26n+19;
+$n10:26n+10;  $n20:26n+20;
+
+
 * {
   // 상태 표시
   .ch_name, .mh_name {
@@ -333,172 +382,145 @@ div[contenteditable] {}
     }
   }
 
-  /*
-   &.co_gren:before {background-color: rgba(0,212,88,  0.4);} !*1 작업자상태, 안전복 미착용*!
-   &.co_purp:before {background-color: rgba(204,61,211,0.4);} !*2 크레인상태, 헬멧 미착용 *!
-   &.co_yell:before {background-color: rgba(255,206,83,0.4);} !*3 유해가스상태, 배회 쓰러짐*!
-   &.co_redd:before {background-color: rgba(254,77,59,0.4); } !*4 위험지역 감지  *!
-   &.co_viol:before {background-color: rgba(151,83,220,0.4);} !*5  *!
-   &.co_blue:before {background-color: rgba(41,161,247,0.4);} !*6  *!
-   */
-
   .mp_header {@include flexbase;}
 
   .check_th tbody tr:before, .check_th tbody tr td:first-of-type:before {@include border-radius(200px);}
   .check_th tbody tr.top00 td:first-of-type:before {background-color: #ccc;}
 
   .check_th tbody tr.top01 td:first-of-type:before,
-  .chart_label > span:nth-of-type(1):before,
-  .mp_header > div > .ch_name:nth-of-type(1):before
-  {background-color: $color-green-01;} // 1 #01d65a 작업자상태, 안전복 미착용
-  .excel .chart_label > span:nth-of-type(1),
-  .chart_label > span:nth-of-type(1) > b {color: $color-green-01;}
+  .chart_label > span:nth-of-type(26n+ 1):before, .mp_header > div > .ch_name:nth-of-type(26n+ 1):before
+  {background-color: $chart-color-01;}
+  .excel .chart_label > span:nth-of-type(26n+ 1), .chart_label > span:nth-of-type(26n+ 1) > b
+  {color: $chart-color-01;}
 
-  .check_th tbody tr.top02 td:first-of-type:before,
-  .chart_label > span:nth-of-type(2):before,
-  .mp_header > div > .ch_name:nth-of-type(2):before
-  {background-color: $color-purple-01;} // 2 #cc3dd3 크레인상태, 헬멧 미착용
-  .excel .chart_label > span:nth-of-type(2),
-  .chart_label > span:nth-of-type(2) > b {color: $color-purple-01;}
+  .chart_label > span:nth-of-type(26n + 2):before, .mp_header > div > .ch_name:nth-of-type(26n + 2):before
+  {background-color: $chart-color-02;}
+  .excel .chart_label > span:nth-of-type(26n + 2), .chart_label > span:nth-of-type(26n + 2) > b
+  {color: $chart-color-02;}
 
-  .check_th tbody tr.top03 td:first-of-type:before,
-  .chart_label > span:nth-of-type(3):before,
-  .mp_header > div > .ch_name:nth-of-type(3):before
-  {background-color: $color-yellow-01;} // 3 #ffce53 유해가스상태, 배회 쓰러짐
-  .excel .chart_label > span:nth-of-type(3),
-  .chart_label > span:nth-of-type(3) > b {color: $color-yellow-01;}
+  .chart_label > span:nth-of-type(26n + 3):before, .mp_header > div > .ch_name:nth-of-type(26n + 3):before
+  {background-color: $chart-color-03;}
+  .excel .chart_label > span:nth-of-type(26n + 3), .chart_label > span:nth-of-type(26n + 3) > b
+  {color: $chart-color-03;}
 
-  .check_th tbody tr.top04 td:first-of-type:before,
-  .chart_label > span:nth-of-type(4):before,
-  .mp_header > div > .ch_name:nth-of-type(4):before
-  {background-color: $color-red-01;} // 4 #e41717 위험지역 감지
-  .excel .chart_label > span:nth-of-type(4),
-  .chart_label > span:nth-of-type(4) > b {color: $color-red-01;}
+  .chart_label > span:nth-of-type(26n + 4):before, .mp_header > div > .ch_name:nth-of-type(26n + 4):before
+  {background-color: $chart-color-04;}
+  .excel .chart_label > span:nth-of-type(26n + 4), .chart_label > span:nth-of-type(26n + 4) > b
+  {color: $chart-color-04;}
 
-  .check_th tbody tr.top05 td:first-of-type:before,
-  .chart_label > span:nth-of-type(5):before,
-  .mp_header > div > .ch_name:nth-of-type(5):before
-  {background-color: $color-purple-02;} // 5 #9753dc
-  .excel .chart_label > span:nth-of-type(5),
-  .chart_label > span:nth-of-type(5) > b {color: $color-purple-02;}
+  .chart_label > span:nth-of-type(26n + 5):before, .mp_header > div > .ch_name:nth-of-type(26n + 5):before
+  {background-color: $chart-color-05;}
+  .excel .chart_label > span:nth-of-type(26n + 5), .chart_label > span:nth-of-type(26n + 5) > b
+  {color: $chart-color-05;}
 
-  .check_th tbody tr.top06 td:first-of-type:before,
-  .chart_label > span:nth-of-type(6):before,
-  .mp_header > div > .ch_name:nth-of-type(6):before
-  {background-color: $color-blue-02;} // 6 #29a1f7
-  .excel .chart_label > span:nth-of-type(6),
-  .chart_label > span:nth-of-type(6) > b {color: $color-blue-02;}
+  .chart_label > span:nth-of-type(26n + 6):before, .mp_header > div > .ch_name:nth-of-type(26n + 6):before
+  {background-color: $chart-color-06;}
+  .excel .chart_label > span:nth-of-type(26n + 6), .chart_label > span:nth-of-type(26n + 6) > b
+  {color: $chart-color-06;}
 
-  .check_th tbody tr.top07 td:first-of-type:before,
-  .chart_label > span:nth-of-type(7):before,
-  .mp_header > div > .ch_name:nth-of-type(7):before
-  {background-color: $color-green-02;} // 7 #56c96e
-  .excel .chart_label > span:nth-of-type(7),
-  .chart_label > span:nth-of-type(7) > b {color: $color-green-02;}
+  .chart_label > span:nth-of-type(26n + 7):before, .mp_header > div > .ch_name:nth-of-type(26n + 7):before
+  {background-color: $chart-color-07;}
+  .excel .chart_label > span:nth-of-type(26n + 7), .chart_label > span:nth-of-type(26n + 7) > b
+  {color: $chart-color-07;}
 
-  .check_th tbody tr.top08 td:first-of-type:before,
-  .chart_label > span:nth-of-type(8):before,
-  .mp_header > div > .ch_name:nth-of-type(8):before
-  {background-color: $color-yellow-02;} // 8 #ff7a39
-  .excel .chart_label > span:nth-of-type(8),
-  .chart_label > span:nth-of-type(8) > b {color: $color-yellow-02;}
+  .chart_label > span:nth-of-type(26n + 8):before, .mp_header > div > .ch_name:nth-of-type(26n + 8):before
+  {background-color: $chart-color-08;}
+  .excel .chart_label > span:nth-of-type(26n + 8), .chart_label > span:nth-of-type(26n + 8) > b
+  {color: $chart-color-08;}
 
-  .check_th tbody tr.top09 td:first-of-type:before,
-  .chart_label > span:nth-of-type(9):before,
-  .mp_header > div > .ch_name:nth-of-type(9):before
-  {background-color: $color-blue-03;} // 9 #de4ec1
-  .chart_label > span:nth-of-type(9) > b {color: $color-blue-03;}
+  .chart_label > span:nth-of-type(26n + 9):before, .mp_header > div > .ch_name:nth-of-type(26n + 9):before
+  {background-color: $chart-color-09;}
+  .excel .chart_label > span:nth-of-type(26n + 9), .chart_label > span:nth-of-type(26n + 9) > b
+  {color: $chart-color-09;}
 
-  .check_th tbody tr.top10 td:first-of-type:before,
-  .chart_label > span:nth-of-type(10):before,
-  .mp_header > div > .ch_name:nth-of-type(10):before
-  {background-color: $color-purple-03;} // 10  #7894c2
-  .excel .chart_label > span:nth-of-type(10),
-  .chart_label > span:nth-of-type(10) > b {color: $color-purple-03;}
+  .chart_label > span:nth-of-type(26n + 10):before, .mp_header > div > .ch_name:nth-of-type(26n + 10):before
+  {background-color: $chart-color-10;}
+  .excel .chart_label > span:nth-of-type(26n + 10), .chart_label > span:nth-of-type(26n + 10) > b
+  {color: $chart-color-10;}
 
-  .check_th tbody tr.top01 td:first-of-type:before,
-  .chart_label > span:nth-of-type(11):before,
-  .mp_header > div > .ch_name:nth-of-type(11):before
-  {background-color: $color-blue-05;}
-  .excel .chart_label > span:nth-of-type(11),
-  .chart_label > span:nth-of-type(11) > b {color: $color-blue-05;}
+  .chart_label > span:nth-of-type(26n + 11):before, .mp_header > div > .ch_name:nth-of-type(26n + 11):before
+  {background-color: $chart-color-11;}
+  .excel .chart_label > span:nth-of-type(26n + 11), .chart_label > span:nth-of-type(26n + 11) > b
+  {color: $chart-color-11;}
 
-  .check_th tbody tr.top02 td:first-of-type:before,
-  .chart_label > span:nth-of-type(12):before,
-  .mp_header > div > .ch_name:nth-of-type(12):before
-  {background-color: $color-yellow-03;}
-  .excel .chart_label > span:nth-of-type(12),
-  .chart_label > span:nth-of-type(12) > b {color: $color-yellow-03;}
+  .chart_label > span:nth-of-type(26n + 12):before, .mp_header > div > .ch_name:nth-of-type(26n + 12):before
+  {background-color: $chart-color-12;}
+  .excel .chart_label > span:nth-of-type(26n + 12), .chart_label > span:nth-of-type(26n + 12) > b
+  {color: $chart-color-12;}
 
-  .check_th tbody tr.top03 td:first-of-type:before,
-  .chart_label > span:nth-of-type(13):before,
-  .mp_header > div > .ch_name:nth-of-type(13):before
-  {background-color: $color-orange-03;}
-  .excel .chart_label > span:nth-of-type(13),
-  .chart_label > span:nth-of-type(13) > b {color: $color-orange-03;}
+  .chart_label > span:nth-of-type(26n + 13):before, .mp_header > div > .ch_name:nth-of-type(26n + 13):before
+  {background-color: $chart-color-13;}
+  .excel .chart_label > span:nth-of-type(26n + 13), .chart_label > span:nth-of-type(26n + 13) > b
+  {color: $chart-color-13;}
 
-  .check_th tbody tr.top04 td:first-of-type:before,
-  .chart_label > span:nth-of-type(14):before,
-  .mp_header > div > .ch_name:nth-of-type(14):before
-  {background-color: $color-green-04;}
-  .excel .chart_label > span:nth-of-type(14),
-  .chart_label > span:nth-of-type(14) > b {color: $color-green-04;}
+  .chart_label > span:nth-of-type(26n + 14):before, .mp_header > div > .ch_name:nth-of-type(26n + 14):before
+  {background-color: $chart-color-14;}
+  .excel .chart_label > span:nth-of-type(26n + 14), .chart_label > span:nth-of-type(26n + 14) > b
+  {color: $chart-color-14;}
 
-  .check_th tbody tr.top05 td:first-of-type:before,
-  .chart_label > span:nth-of-type(15):before,
-  .mp_header > div > .ch_name:nth-of-type(15):before
-  {background-color: $color-yellow-04;}
-  .excel .chart_label > span:nth-of-type(15),
-  .chart_label > span:nth-of-type(15) > b {color: $color-yellow-04;}
+  .chart_label > span:nth-of-type(26n + 15):before, .mp_header > div > .ch_name:nth-of-type(26n + 15):before
+  {background-color: $chart-color-15;}
+  .excel .chart_label > span:nth-of-type(26n + 15), .chart_label > span:nth-of-type(26n + 15) > b
+  {color: $chart-color-15;}
 
-  .check_th tbody tr.top06 td:first-of-type:before,
-  .chart_label > span:nth-of-type(16):before,
-  .mp_header > div > .ch_name:nth-of-type(16):before
-  {background-color: $color-gray-12;}
-  .excel .chart_label > span:nth-of-type(16),
-  .chart_label > span:nth-of-type(16) > b {color: $color-gray-12;}
+  .chart_label > span:nth-of-type(26n + 16):before, .mp_header > div > .ch_name:nth-of-type(26n + 16):before
+  {background-color: $chart-color-16;}
+  .excel .chart_label > span:nth-of-type(26n + 16), .chart_label > span:nth-of-type(26n + 16) > b
+  {color: $chart-color-16;}
 
-  .check_th tbody tr.top07 td:first-of-type:before,
-  .chart_label > span:nth-of-type(17):before,
-  .mp_header > div > .ch_name:nth-of-type(17):before
-  {background-color: $color-red-03;}
-  .excel .chart_label > span:nth-of-type(17),
-  .chart_label > span:nth-of-type(17) > b {color: $color-red-03;}
+  .chart_label > span:nth-of-type(26n + 17):before, .mp_header > div > .ch_name:nth-of-type(26n + 17):before
+  {background-color: $chart-color-17;}
+  .excel .chart_label > span:nth-of-type(26n + 17), .chart_label > span:nth-of-type(26n + 17) > b
+  {color: $chart-color-17;}
 
-  .check_th tbody tr.top08 td:first-of-type:before,
-  .chart_label > span:nth-of-type(18):before,
-  .mp_header > div > .ch_name:nth-of-type(18):before
-  {background-color: $color-red-04;}
-  .excel .chart_label > span:nth-of-type(18),
-  .chart_label > span:nth-of-type(18) > b {color: $color-red-04;}
+  .chart_label > span:nth-of-type(26n + 18):before, .mp_header > div > .ch_name:nth-of-type(26n + 18):before
+  {background-color: $chart-color-18;}
+  .excel .chart_label > span:nth-of-type(26n + 18), .chart_label > span:nth-of-type(26n + 18) > b
+  {color: $chart-color-18;}
 
-  .check_th tbody tr.top09 td:first-of-type:before,
-  .chart_label > span:nth-of-type(19):before,
-  .mp_header > div > .ch_name:nth-of-type(19):before
-  {background-color: $color-purple-04;}
-  .excel .chart_label > span:nth-of-type(19),
-  .chart_label > span:nth-of-type(19) > b {color: $color-purple-04;}
+  .chart_label > span:nth-of-type(26n + 19):before, .mp_header > div > .ch_name:nth-of-type(26n + 19):before
+  {background-color: $chart-color-19;}
+  .excel .chart_label > span:nth-of-type(26n + 19), .chart_label > span:nth-of-type(26n + 19) > b
+  {color: $chart-color-19;}
 
-  .check_th tbody tr.top10 td:first-of-type:before,
-  .chart_label > span:nth-of-type(20):before,
-  .mp_header > div > .ch_name:nth-of-type(20):before
-  {background-color: $color-gray-06;}
-  .excel .chart_label > span:nth-of-type(20),
-  .chart_label > span:nth-of-type(20) > b {color: $color-gray-06;}
+  .chart_label > span:nth-of-type(26n + 20):before, .mp_header > div > .ch_name:nth-of-type(26n + 20):before
+  {background-color: $chart-color-20;}
+  .excel .chart_label > span:nth-of-type(26n + 20), .chart_label > span:nth-of-type(26n + 20) > b
+  {color: $chart-color-20;}
+
+  .chart_label > span:nth-of-type(26n + 21):before, .mp_header > div > .ch_name:nth-of-type(26n + 21):before
+  {background-color: $chart-color-21;}
+  .excel .chart_label > span:nth-of-type(26n + 21), .chart_label > span:nth-of-type(26n + 21) > b
+  {color: $chart-color-21;}
+
+  .chart_label > span:nth-of-type(26n + 22):before, .mp_header > div > .ch_name:nth-of-type(26n + 22):before
+  {background-color: $chart-color-22;}
+  .excel .chart_label > span:nth-of-type(26n + 20), .chart_label > span:nth-of-type(26n + 22) > b
+  {color: $chart-color-22;}
+
+  .chart_label > span:nth-of-type(26n + 23):before, .mp_header > div > .ch_name:nth-of-type(26n + 23):before
+  {background-color: $chart-color-23;}
+  .excel .chart_label > span:nth-of-type(26n + 23), .chart_label > span:nth-of-type(26n + 23) > b
+  {color: $chart-color-23;}
+
+  .chart_label > span:nth-of-type(26n + 24):before, .mp_header > div > .ch_name:nth-of-type(26n + 24):before
+  {background-color: $chart-color-24;}
+  .excel .chart_label > span:nth-of-type(26n + 24), .chart_label > span:nth-of-type(26n + 24) > b
+  {color: $chart-color-24;}
+
+  .chart_label > span:nth-of-type(26n + 25):before, .mp_header > div > .ch_name:nth-of-type(26n + 25):before
+  {background-color: $chart-color-25;}
+  .excel .chart_label > span:nth-of-type(26n + 25), .chart_label > span:nth-of-type(26n + 25) > b
+  {color: $chart-color-25;}
+
+  .chart_label > span:nth-of-type(26n + 26):before, .mp_header > div > .ch_name:nth-of-type(26n + 26):before
+  {background-color: $chart-color-26;}
+  .excel .chart_label > span:nth-of-type(26n + 26), .chart_label > span:nth-of-type(26n + 26) > b
+  {color: $chart-color-26;}
+
 
 }
 //////...... 차트 상태 표시 끝
-
-// 1  $color-green-01;
-// 2  $color-purple-01;
-// 3  $color-yellow-01;
-// 4  $color-red-01;
-// 5  $color-purple-02;
-// 6  $color-blue-02;
-// 7  $color-green-02;
-// 8  $color-yellow-02;
-// 9  $color-blue-03;
-// 10 $color-purple-03;
 
 /////...... 차트 색상 정의 Start
 .ct-series {
@@ -521,63 +543,159 @@ div[contenteditable] {}
 
   &-a {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-green-01 !important; stroke: $color-green-01 !important;}
-    .ct-line, .ct-point {stroke: $color-green-01 !important;}
-  } // 1 #01d65a // rgba(0,212,88,1) 작업자상태, 차트01
+    {fill: $chart-color-01 !important; stroke: $chart-color-01 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-01 !important;}
+  }
 
   &-b {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-purple-01 !important; stroke: $color-purple-01 !important;}
-    .ct-line, .ct-point {stroke: $color-purple-01 !important;}
-  }  // 2 #cc3dd3; // rgba(204,61,211,1) 크레인상태, 차트02
+    {fill: $chart-color-02 !important; stroke: $chart-color-02 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-02 !important;}
+  }
 
   &-c {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-yellow-01 !important; stroke: $color-yellow-01 !important;}
-    .ct-line, .ct-point {stroke: $color-yellow-01 !important;}
-  } // 3 #ffce53; // rgba(255,206,83,1) 유해가스상태, 주위, 차트03
+    {fill: $chart-color-03 !important; stroke: $chart-color-03 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-03 !important;}
+  }
 
   &-d {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-red-01 !important; stroke: $color-red-01 !important;}
-    .ct-line, .ct-point {stroke: $color-red-01 !important;}
-  } // 4 #e41717; // rgba(254,77,59,1) 감지, 차트04
+    {fill: $chart-color-04 !important; stroke: $chart-color-04 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-04 !important;}
+  }
 
   &-e {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-purple-02 !important; stroke: $color-purple-02 !important;}
-    .ct-line, .ct-point {stroke: $color-purple-02 !important;}
-  } // 5 #9753dc; // rgba(151,83,220,1) 차트05
+    {fill: $chart-color-05 !important; stroke: $chart-color-05 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-05 !important;}
+  }
 
   &-f {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-blue-02 !important; stroke: $color-blue-02 !important;}
-    .ct-line, .ct-point {stroke: $color-blue-02 !important;}
-  } // 6 #259dcf;   // rgba(37,157,207,1) 차트06
+    {fill: $chart-color-06 !important; stroke: $chart-color-06 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-06 !important;}
+  }
 
   &-g {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-green-02 !important; stroke: $color-green-02 !important;}
-    .ct-line, .ct-point {stroke: $color-green-02 !important;}
-  }  // 7 #56c96e;  // rgba(86,201,110,1) 차트07
+    {fill: $chart-color-07 !important; stroke: $chart-color-07 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-07 !important;}
+  }
 
   &-h {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-yellow-02 !important; stroke: $color-yellow-02 !important;}
-    .ct-line, .ct-point {stroke: $color-yellow-02 !important;}
-  } // 8 #ef8116; // rgba(239,129,22,1) 차트08
+    {fill: $chart-color-08 !important; stroke: $chart-color-08 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-08 !important;}
+  }
 
   &-i {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-blue-03 !important; stroke: $color-blue-03 !important;}
-    .ct-line, .ct-point {stroke: $color-blue-03 !important;}
-  } // 9 #259dcf;   // rgba(37,157,207,1) 차트09
+    {fill: $chart-color-09 !important; stroke: $chart-color-09 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-09 !important;}
+  }
 
   &-j {
     .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
-    {fill: $color-purple-03 !important; stroke: $color-purple-03 !important;}
-    .ct-line, .ct-point {stroke: $color-purple-03 !important;}
-  } // 10 #7894c2; // rgba(120,148,194,1) 차트10
+    {fill: $chart-color-10 !important; stroke: $chart-color-10 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-10 !important;}
+  }
+
+  &-k {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-11 !important; stroke: $chart-color-11 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-11 !important;}
+  }
+
+  &-l {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-12 !important; stroke: $chart-color-12 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-12 !important;}
+  }
+
+  &-m {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-13 !important; stroke: $chart-color-13 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-13 !important;}
+  }
+
+  &-n {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-14 !important; stroke: $chart-color-14 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-14 !important;}
+  }
+
+  &-o {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-15 !important; stroke: $chart-color-15 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-15 !important;}
+  }
+
+  &-p {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-16 !important; stroke: $chart-color-16 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-16 !important;}
+  }
+
+  &-q {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-17 !important; stroke: $chart-color-17 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-17 !important;}
+  }
+
+  &-r {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-18 !important; stroke: $chart-color-18 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-18 !important;}
+  }
+
+  &-s {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-19 !important; stroke: $chart-color-19 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-19 !important;}
+  }
+
+  &-t {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-20 !important; stroke: $chart-color-20 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-20 !important;}
+  }
+
+  &-u {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-21 !important; stroke: $chart-color-21 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-21 !important;}
+  }
+
+  &-v {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-22 !important; stroke: $chart-color-22 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-22 !important;}
+  }
+
+  &-w {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-23 !important; stroke: $chart-color-23 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-23 !important;}
+  }
+
+  &-x {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-24 !important; stroke: $chart-color-24 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-24 !important;}
+  }
+
+  &-y {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-25 !important; stroke: $chart-color-25 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-25 !important;}
+  }
+
+  &-z {
+    .ct-area, .ct-slice-pie, .ct-bar, .ct-slice-donut
+    {fill: $chart-color-26 !important; stroke: $chart-color-26 !important;}
+    .ct-line, .ct-point {stroke: $chart-color-26 !important;}
+  }
 
 }
 /////...... 차트 색상 정의 End
@@ -1031,8 +1149,31 @@ div[contenteditable] {}
 
   &-line {
     polyline {fill: transparent !important; stroke-width:1px; stroke: $color-caution;}
-    marker {overflow: visible;} image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");}
+    marker {overflow: visible;}
+    image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");}
+
+    &.scale-20 image {width:20px; height:20px;}
+    /*
+    <circle fill="none" cx="10" cy="11" r="8"/>
+    <circle fill="none" cx="10" cy="11" r="11"/>
+    <circle fill="none" cx="10" cy="11" r="16"/>
+    */
+    &.scale-30 image {width:30px; height:30px;}
+    /*
+    <circle fill="none" cx="15" cy="15" r="15"/>
+    <circle fill="none" cx="15" cy="15" r="20"/>
+    <circle fill="none" cx="15" cy="15" r="25"/>
+    */
+    &.scale-40 image {width:40px; height:40px;}
+    /*
+    <circle fill="none" cx="20" cy="20" r="20"/>
+    <circle fill="none" cx="20" cy="20" r="25"/>
+    <circle fill="none" cx="20" cy="20" r="30"/>
+    */
+
+
     polyline.object {stroke: $color-caution;}
+
 
     // 마크 반경표시
     marker circle {
@@ -1085,6 +1226,21 @@ div[contenteditable] {}
 /////..... 감시화면 옵션 버튼 셋 Start
 $cbs-w:200px;
 $cbs-h:60px;
+
+@mixin cbs-before {
+  @include flex-midddle; @include mhwidth($cbs-h - 10px);
+  font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);
+} // @include cbs-before;
+@mixin cbs-after  {
+  letter-spacing: 0; line-height: 0.9rem; padding:0 10px;
+  text-align: left; font-size:0.9rem; font-weight: bold;
+} // @include cbs-after;
+
+@mixin cbs-label  {
+  @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
+  position: relative; height:100%; opacity: 0.7;
+} // @include cbs-label;
+
 @mixin cbs-checkbtn {
 
   width:100%; height:$cbs-h; padding:10px;
@@ -1094,16 +1250,9 @@ $cbs-h:60px;
     cursor:pointer; padding:0; margin:0;
   }
   label {
-    @include flexbase; @include flex-align-items-center; @include flex-justify-content-start;
-    position: relative; height:100%; opacity: 0.7;
-    &:before {
-      @include flex-midddle; @include mhwidth($cbs-h - 10px);
-      font-size:2.4rem; @include text-shadow(0, 4px, 8px, #000,1);
-    }
-    &:after {
-      letter-spacing: 0; line-height: 0.9rem; padding:0 10px;
-      text-align: left; font-size:0.9rem; font-weight: bold;
-    }
+    @include cbs-label;
+    &:before {@include cbs-before;}
+    &:after {@include cbs-after;}
   }
 
   input:hover + label {color:$color-ho; opacity: 1;}
@@ -1143,6 +1292,22 @@ $cbs-h:60px;
 
   & > div {
     @include cbs-checkbtn; position: relative;
+
+    &.tracking_scale {
+      @include cbs-label; cursor:pointer;
+
+      &:hover {
+        &, & * {color:$color-ho; opacity: 1;}
+      }
+
+      &:before {content:"\e950"; @include cbs-before;}
+      &:after {@include cbs-after;}
+      &.scale {
+        &-20:after {content:"SCALE Ⅹ 1";}
+        &-30:after {content:"SCALE Ⅹ 1.5";}
+        &-40:after {content:"SCALE Ⅹ 2";}
+      }
+    }
 
     &.ignore_check {
 

@@ -39,4 +39,13 @@ public class FenceSvcImpl implements FenceSvc {
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
     }
+
+    @Override
+    public ModelAndView findListFenceForStatistics(Map<String, String> parameters) {
+        List<FenceBean> fenceList = fenceDao.findListFenceForStatistics(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("fenceList", fenceList);
+        return modelAndView;
+    }
 }

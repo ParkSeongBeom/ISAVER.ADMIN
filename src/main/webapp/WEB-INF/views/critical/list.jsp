@@ -58,7 +58,9 @@
                         <select id="eventSelectBox">
                             <option value=""><spring:message code="critical.selectbox.selectEvent"/></option>
                             <c:forEach var="event" items="${eventList}">
-                                <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
+                                <c:if test="${event.delYn=='N'}">
+                                    <option value="${event.eventId}">${event.eventName}(${event.eventId})</option>
+                                </c:if>
                             </c:forEach>
                         </select>
                         <button class="btn" onclick="javascript:search();"><spring:message code="common.button.search"/></button>

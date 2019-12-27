@@ -31,6 +31,18 @@
             <!-- 목록 상단 버튼 영역 -->
             <div class="set-btn type-01">
                 <button class="ico-plus" onclick="detailRender();"></button>
+                <div class="set-option">
+                    <select id="autoRefresh" onchange="javascript:autoSearch();">
+                        <option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>
+                        <option value="10">10<spring:message code="common.column.second"/></option>
+                        <option value="30">30<spring:message code="common.column.second"/></option>
+                        <option value="60">1<spring:message code="common.column.minute"/></option>
+                        <option value="300">5<spring:message code="common.column.minute"/></option>
+                        <option value="600">10<spring:message code="common.column.minute"/></option>
+                        <option value="1800">30<spring:message code="common.column.minute"/></option>
+                        <option value="3600">1<spring:message code="common.column.hour"/></option>
+                    </select>
+                </div>
             </div>
             <!--
             목록 영역
@@ -59,18 +71,23 @@
                     <div class="set-itembox option-popup">
                         <h4>OPTION</h4>
                         <div class="set-item">
-                            <h4><spring:message code="statistics.column.autoRefresh"/></h4>
+                            <%--<h4><spring:message code="statistics.column.autoRefresh"/></h4>--%>
+                            <%--<div>--%>
+                                <%--<select id="autoRefresh" onchange="javascript:autoSearch();">--%>
+                                    <%--<option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>--%>
+                                    <%--<option value="10">10<spring:message code="common.column.second"/></option>--%>
+                                    <%--<option value="30">30<spring:message code="common.column.second"/></option>--%>
+                                    <%--<option value="60">1<spring:message code="common.column.minute"/></option>--%>
+                                    <%--<option value="300">5<spring:message code="common.column.minute"/></option>--%>
+                                    <%--<option value="600">10<spring:message code="common.column.minute"/></option>--%>
+                                    <%--<option value="1800">30<spring:message code="common.column.minute"/></option>--%>
+                                    <%--<option value="3600">1<spring:message code="common.column.hour"/></option>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
+                            <h4><spring:message code="statistics.column.fenceAutoComplete"/></h4>
                             <div>
-                                <select id="autoRefresh" onchange="javascript:autoSearch();">
-                                    <option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>
-                                    <option value="10">10<spring:message code="common.column.second"/></option>
-                                    <option value="30">30<spring:message code="common.column.second"/></option>
-                                    <option value="60">1<spring:message code="common.column.minute"/></option>
-                                    <option value="300">5<spring:message code="common.column.minute"/></option>
-                                    <option value="600">10<spring:message code="common.column.minute"/></option>
-                                    <option value="1800">30<spring:message code="common.column.minute"/></option>
-                                    <option value="3600">1<spring:message code="common.column.hour"/></option>
-                                </select>
+                                <spring:message code="common.selectbox.notSelect" var="notSelectText"/>
+                                <isaver:areaSelectBox htmlTagId="autoCompleteAreaId" allModel="true" allText="${notSelectText}" templateCode="TMP005"/>
                             </div>
                         </div>
                     </div>
@@ -203,6 +220,7 @@
         ,'saveUrl':'${rootPath}/eventStatistics/save.json'
         ,'removeUrl':'${rootPath}/eventStatistics/remove.json'
         ,'heatMapUrl':'${rootPath}/notification/heatMap.json'
+        ,'fenceListUrl':'${rootPath}/fence/statistics.json'
     };
 
     var messageConfig = {
@@ -228,7 +246,9 @@
         ,'pie' : 'ico-chartc'
         ,'table' : 'ico-chartt'
     };
-    var statisticsList;
+    var loadingBarFlag = false;
+    var statisticsList = {};
+    var searchToggleId = "";
     var autoRefInterval = null;
     var customMapMediator;
 
@@ -266,6 +286,13 @@
         $('input[name=endDatetimeStr]').val(serverDatetime.format("yyyy-MM-dd"));
         $('#startDatetimeHourSelect').val(serverDatetime.format("HH")).prop("selected",true);
         getList();
+
+        $("#autoCompleteAreaId").on("change",function(){
+            let areaId = $(this).val();
+            if(areaId!=null && areaId!=""){
+                callAjax('fenceList',{areaId:areaId});
+            }
+        });
     });
 
     function getParam(){
@@ -325,7 +352,30 @@
         if(autoRefTime!=null && autoRefTime!=''){
             let refDelay = Number(autoRefTime)*1000;
             autoRefInterval = setInterval(function() {
-                search();
+                let obj = Object.keys(statisticsList);
+                let searchType = "chart";
+                if(searchToggleId==null){
+                    searchToggleId = obj[0];
+                }else{
+                    let index = obj.indexOf(searchToggleId)+1;
+                    if(index>=obj.length){
+                        searchType = "heatmap";
+                        searchToggleId = null;
+                    }else{
+                        searchToggleId = obj[index];
+                    }
+                }
+
+                if(searchType=="chart"){
+                    detailRender(searchToggleId);
+                    closeHeatMapPopup();
+                    search();
+                }else{
+                    openHeatMapPopup();
+                    let searchDt = new Date();
+                    searchDt.setHours(searchDt.getHours()-1);
+                    searchHeatMap(searchDt);
+                }
             }, refDelay);
         }
     }
@@ -336,7 +386,9 @@
      */
     function search(){
         $(".box-chart").empty().removeClass("on");
-        $(".loding_bar").addClass("on");
+        if(loadingBarFlag){
+            $(".loding_bar").addClass("on");
+        }
         callAjax('search',getParam());
     }
 
@@ -372,7 +424,7 @@
                     }else{
                         $("#statisticsList > li").removeClass("on");
                         $(this).addClass("on");
-                        detailRender(evt.data.statisticsId);
+                        detailRender(evt.data.statisticsId, true);
                     }
                 }).append(
                     $("<div/>").append(
@@ -392,10 +444,11 @@
         }
     }
 
-    function detailRender(statisticsId){
+    function detailRender(statisticsId, showFlag){
         $(".box-detail div[name='yAxis']").remove();
 
         if(statisticsId==null || statisticsList[statisticsId]==null){
+            $("#statisticsList > li").removeClass("on");
             // addMode
             $(".ico-copy").hide();
             $("#statisticsId").val("");
@@ -432,12 +485,18 @@
             $("select[name='interval']").val(xAxis['interval']).prop("selected", true);
 
             let yAxis = jsonData['yAxis'];
-            for(var index in yAxis){
-                addYaxis(yAxis[index]);
+            if(yAxis!=null){
+                for(var index in yAxis){
+                    addYaxis(yAxis[index]);
+                }
+            }else{
+                addYaxis(null, true);
             }
         }
 
-        $(".box-detail").addClass("on");
+        if(showFlag){
+            $(".box-detail").addClass("on");
+        }
     }
 
     function addYaxis(data, focusFlag){
@@ -530,14 +589,14 @@
             let datetimeText;
             switch (_interval){
                 case 'day':
-                    datetimeText = date.format("MM-dd HH") + "<spring:message code="common.column.hour"/>";
+                    datetimeText = date.format("MM-dd HH");
                     break;
                 case 'week':
                 case 'month':
-                    datetimeText = date.format("MM-dd") + "<spring:message code="common.column.day"/>";
+                    datetimeText = date.format("MM-dd");
                     break;
                 case 'year':
-                    datetimeText = date.format("yyyy-MM") + "<spring:message code="common.column.month"/>";
+                    datetimeText = date.format("yyyy-MM");
                     break;
             }
             return datetimeText;
@@ -548,6 +607,7 @@
         );
 
         var _seriesList = [];
+        var _max = 0;
         var _sumSeriesList = [];
         var _labels = [];
         for(var index in dataList){
@@ -557,9 +617,23 @@
             var chart = chartList[index];
             var series = [];
             var sumValue = 0;
-            for(var i in chart['dataList']){
-                series.push({meta:getDateStr(paramBean['interval'], new Date(chart['dataList'][i]['_id'])),label:index,value:chart['dataList'][i]['value']});
-                sumValue += Number(chart['dataList'][i]['value']);
+
+            for(var i in dataList){
+                let flag = false;
+                for(var k in chart['dataList']){
+                    if(_max<chart['dataList'][k]['value']){
+                        _max = chart['dataList'][k]['value'];
+                    }
+                    if(getDateStr(paramBean['interval'], new Date(dataList[i]))==getDateStr(paramBean['interval'], new Date(chart['dataList'][k]['_id']))){
+                        series.push({meta:chart['label'],label:getDateStr(paramBean['interval'], new Date(chart['dataList'][k]['_id'])),value:chart['dataList'][k]['value']});
+                        sumValue += Number(chart['dataList'][k]['value']);
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag){
+                    series.push({meta:chart['label'],label:getDateStr(paramBean['interval'], new Date(dataList[i])),value:0});
+                }
             }
             _seriesList.push(series);
             _sumSeriesList.push(sumValue);
@@ -584,16 +658,16 @@
                     series: _seriesList
                 }, {
                     low: 0,
+                    high:_max+(_max/20),
                     showArea: true,
                     showLabel: true,
                     fullWidth: false,
                     axisY: {
-                        onlyInteger: true,
-                        offset: 20
+                        onlyInteger: true
                     },
-                    lineSmooth: Chartist.Interpolation.cardinal({
-                        fillHoles: true
-                    }),
+//                    lineSmooth: Chartist.Interpolation.cardinal({
+//                        fillHoles: true
+//                    }),
                     plugins: [
                         Chartist.plugins.tooltip()
                     ]
@@ -609,14 +683,11 @@
                     labels: _labels,
                     series: _seriesList
                 }, {
-                    height: 400,
+                    low: 0,
+                    high:_max+(_max/20),
                     seriesBarDistance: 10,
-                    axisX: {
-                        offset: 60
-                    },
                     axisY: {
                         onlyInteger: true,
-                        offset: 40,
                         scaleMinSpace: 15
                     },
                     plugins: [
@@ -669,9 +740,9 @@
                     chartTag.find(".excel").append(childTag);
                 }
                 for(var index in _seriesList){
-                    for(var i in _seriesList[index]){
+                   for(var i in _seriesList[index]){
                         let series = _seriesList[index][i];
-                        chartTag.find("span[label='"+series['meta']+"']:eq("+index+")").text(commaNum(series['value']))
+                        chartTag.find("span[label='"+series['label']+"']:eq("+index+")").text(commaNum(series['value']))
                     }
                 }
                 $(".box-chart").append(chartTag);
@@ -697,6 +768,33 @@
             case "list":
                 listRender(data['statisticsList']);
                 break;
+            case "fenceList":
+                let fenceList = data['fenceList'];
+                if(fenceList.length>0){
+                    $(".box-detail div[name='yAxis']").remove();
+                    for(var i in fenceList){
+                        addYaxis({
+                            aggregation:"count"
+                            ,field:"eventId"
+                            ,label:"거수자 감지("+fenceList[i]['fenceName']+")"
+                            ,condition:[
+                                {
+                                    key:"eventId"
+                                    ,type:"$eq"
+                                    ,value:"EVT314"
+                                },
+                                {
+                                    key:"fenceId"
+                                    ,type:"$eq"
+                                    ,value:fenceList[i]['fenceId']
+                                }
+                            ]
+                        });
+                    }
+                }else{
+                    alert("해당 구역에 펜스가 없습니다.")
+                }
+                break;
             case "search":
                 $(".loding_bar").removeClass("on");
                 if(data['paramBean']!=null && data['chartList']!=null && data['dateList']!=null){
@@ -715,7 +813,9 @@
                 var notificationList = data['notifications'];
                 customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
                 try{
-                    $("#heatmapLoading").addClass("on");
+                    if(loadingBarFlag){
+                        $("#heatmapLoading").addClass("on");
+                    }
                     customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
                     customMapMediator.init(data['paramBean']['areaId'],{
                         'custom' : {
@@ -842,7 +942,7 @@
         return true;
     }
 
-    function searchHeatMap(){
+    function searchHeatMap(startDatetime){
         if(validate()){
             let areaId = $("select[name='areaId']").val();
             if(areaId==null || areaId==''){
@@ -851,7 +951,9 @@
             }
 
             let startDatetimeStr = $("input[name='startDatetimeStr']").val();
-            if(startDatetimeStr!=null && startDatetimeStr!=''){
+            if(startDatetime!=null){
+                startDatetimeStr = startDatetime.format("yyyy-MM-dd HH:00:00");
+            }else if(startDatetimeStr!=null && startDatetimeStr!=''){
                 startDatetimeStr += " " + $("#startDatetimeHourSelect").val() + ":00:00";
             }
 

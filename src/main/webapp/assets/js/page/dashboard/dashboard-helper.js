@@ -394,7 +394,27 @@ var DashboardHelper = (
          */
         this.setGuardOption = function(actionType, areaId, _this){
             if(_guardList[areaId]!=null){
-                _guardList[areaId][_MEDIATOR_TYPE[1]].setGuardOption(actionType, $(_this).is(":checked"));
+                let value = null;
+                switch (actionType){
+                    case "trackingScale":
+                        value = "scale-20";
+                        if($(_this).hasClass("scale-20")){
+                            $(_this).removeClass("scale-20 scale-30 scale-40");
+                            $(_this).addClass("scale-30");
+                            value = "scale-30";
+                        }else if($(_this).hasClass("scale-30")){
+                            $(_this).removeClass("scale-20 scale-30 scale-40");
+                            $(_this).addClass("scale-40");
+                            value = "scale-40";
+                        }else if($(_this).hasClass("scale-40")){
+                            $(_this).removeClass("scale-20 scale-30 scale-40");
+                            $(_this).addClass("scale-20");
+                        }
+                        break;
+                    default :
+                        value = $(_this).is(":checked");
+                }
+                _guardList[areaId][_MEDIATOR_TYPE[1]].setGuardOption(actionType, value);
             }
         };
 

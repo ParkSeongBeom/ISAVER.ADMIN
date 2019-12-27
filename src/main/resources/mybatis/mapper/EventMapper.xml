@@ -21,6 +21,7 @@
           , ACT03.action_id as actionId
           , CODE01.code_name as actionCode
           , ACT03.action_desc as actionDesc
+          , A.del_yn as delYn
     FROM isaver.event A
     INNER JOIN
     (

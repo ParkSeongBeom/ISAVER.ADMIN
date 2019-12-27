@@ -42,4 +42,17 @@ public class FenceCtrl {
         ModelAndView modelAndView = fenceSvc.findListFence(parameters);
         return modelAndView;
     }
+
+    /**
+     * 펜스 목록을 가져온다. (이벤트 통계용)
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/statistics")
+    public ModelAndView findListFenceForStatistics(@RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = fenceSvc.findListFenceForStatistics(parameters);
+        return modelAndView;
+    }
 }

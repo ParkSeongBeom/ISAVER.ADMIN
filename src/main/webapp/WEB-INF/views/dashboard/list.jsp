@@ -367,8 +367,9 @@
                                     </button>
 
                                     <div class="check_btn_set">
+                                        <div class="tracking_scale" name="trackingScale" onClick="javascript:dashboardHelper.setGuardOption('trackingScale','${childArea.areaId}',this);"></div>
                                         <div class="ignore_check">
-                                            <input type="checkbox" name="ignoreCkb" onClick="javascript:dashboardHelper.setGuardOption('ignoreHide','${childArea.areaId}',this);">
+                                            <input type="checkbox" name="ignoreCkb" checked="checked" onClick="javascript:dashboardHelper.setGuardOption('ignoreHide','${childArea.areaId}',this);">
                                             <label></label>
                                         </div>
                                         <div class="range_check">
@@ -831,13 +832,13 @@
             ,"markerList" : [
                 {
                     "actionType":"add"
-                    ,"objectType":"heatmap"
+                    ,"objectType":"human"
                     ,"id":"1235"
                     ,"location":[{"lat": "1","lng": "1"}]
                 },
                 {
                     "actionType":"add"
-                    ,"objectType":"heatmap"
+                    ,"objectType":"human"
                     ,"id":"1234"
                     ,"location":[{"lat": "-1","lng": "-1"}]
                 }

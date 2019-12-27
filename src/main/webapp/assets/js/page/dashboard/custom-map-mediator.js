@@ -92,6 +92,7 @@ var CustomMapMediator = (
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
                 , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
                 , 'ignoreHide': false // 무시영역 숨김 처리
+                , 'trackingScale' : 'scale-20' // 트래킹 크기
                 , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
                 , 'childAnimateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부(하위장치포함)
             }
@@ -111,6 +112,23 @@ var CustomMapMediator = (
             ,"DEV019" : "g-ico ico-qguard"
             ,"DEV020" : "g-ico ico-m8"
             ,"DEV003" : "g-ico ico-server"
+        };
+        var _trackingScale = {
+            'scale-20' : [
+                {cx : 10,cy : 11,r : 8}
+                ,{cx : 10,cy : 11,r : 11}
+                ,{cx : 10,cy : 11,r : 16}
+            ],
+            'scale-30' : [
+                {cx : 15,cy : 15,r : 15}
+                ,{cx : 15,cy : 15,r : 20}
+                ,{cx : 15,cy : 15,r : 25}
+            ],
+            'scale-40' : [
+                {cx : 20,cy : 20,r : 20}
+                ,{cx : 20,cy : 20,r : 25}
+                ,{cx : 20,cy : 20,r : 30}
+            ]
         };
         // 라이다 메인장치 코드
         var _mainDeviceCode = ['DEV013','DEV020'];
@@ -225,6 +243,16 @@ var CustomMapMediator = (
             if(ignoreHideFlag != null && ignoreHideFlag.length > 0){
                 _options['custom']['ignoreHide'] = ignoreHideFlag == "true";
                 _element.find("input[name='ignoreCkb']").prop("checked",_options['custom']['ignoreHide']);
+            }else{
+                _options['custom']['ignoreHide'] = _element.find("input[name='ignoreCkb']").is(":checked");
+            }
+
+            var trackingScale = $.cookie(_areaId+"trackingScale");
+            if(trackingScale != null && trackingScale.length > 0){
+                _options['custom']['trackingScale'] = trackingScale;
+                _element.find("div[name='trackingScale']").addClass(trackingScale);
+            }else{
+                _element.find("div[name='trackingScale']").addClass(_options['custom']['trackingScale']);
             }
 
             var moveFenceHideFlag = $.cookie(_areaId+"moveFenceHideFlag");
@@ -445,6 +473,7 @@ var CustomMapMediator = (
          * lidarHide : 라이다반경표시 on/off
          * objectView : 전체보기/사람만보기
          * ignoreHide : 무시영역표시 on/off
+         * trackingScale : 트래킹 아이콘 크기
          * pointsHide : 트래킹 잔상 보기/숨기기
          * moveFenceHideFlag : 이벤트 발생시 펜스로이동/이동안함
          * @author psb
@@ -478,6 +507,11 @@ var CustomMapMediator = (
                     $.cookie(_areaId+'ignoreHideFlag',flag);
                     _self.setIgnoreHide();
                     break;
+                case "trackingScale" :
+                    _options['custom']['trackingScale'] = flag;
+                    $.cookie(_areaId+'trackingScale',flag);
+                    _self.setTrackingScale(flag);
+                    break;
                 case "moveFenceHide" :
                     _options['custom']['moveFenceHide'] = flag;
                     $.cookie(_areaId+'moveFenceHideFlag',flag);
@@ -501,9 +535,12 @@ var CustomMapMediator = (
                         let defs = _canvasSvg.defs();
                         for(let i in _OBJECT_TYPE){
                             let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],10,18,6,6,"0");
-                            _canvasSvg.circle(marker,10,11,8,{fill:"none"});
-                            _canvasSvg.circle(marker,10,11,11,{fill:"none"});
-                            _canvasSvg.circle(marker,10,11,16,{fill:"none"});
+                            if(_trackingScale[_options['custom']['trackingScale']]!=null){
+                                for(var k in _trackingScale[_options['custom']['trackingScale']]){
+                                    let config = _trackingScale[_options['custom']['trackingScale']][k];
+                                    _canvasSvg.circle(marker,config['cx'],config['cy'],config['r'],{fill:"none"});
+                                }
+                            }
                             _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
                         }
 
@@ -511,7 +548,7 @@ var CustomMapMediator = (
                         _canvasSvg.circle(marker,10,11,6,{fill:"red","fill-opacity":0.02,style:"animation:none"});
                     }
                 });
-                _mapCanvas.find("svg").addClass("g-fence g-line");
+                _mapCanvas.find("svg").addClass("g-fence g-line "+_options['custom']['trackingScale']);
             }
         };
 
@@ -1013,9 +1050,9 @@ var CustomMapMediator = (
                             }
 
                             if(data['fenceType']==_FENCE_TYPE[1] && _options[_MARKER_TYPE[4]]['ignoreHide']){
-                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['element'].hide();
-                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['circleElement'].hide();
-                                _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['polylineElement'].hide();
+                                if(_marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['polylineElement']!=null){ _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['element'].hide(); }
+                                if(_marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['circleElement']!=null){ _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['circleElement'].hide(); }
+                                if(_marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['textElement']!=null){ _marker[_MARKER_TYPE[1]][data['deviceId']][data['id']]['polylineElement'].hide(); }
                             }
                         },10);
                         console.debug("[CustomMapMediator][addMarker] fence complete - [" + messageType + "][" + data['id'] + "]");
@@ -1534,14 +1571,14 @@ var CustomMapMediator = (
                     if(data==null) {
                         return _marker[messageType];
                     }else if(data['deviceId']!=null && data['fenceId']!=null){
-                        if(_marker[messageType][data['deviceId']][data['fenceId']]!=null){
+                        if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['fenceId']]!=null){
                             return _marker[messageType][data['deviceId']][data['fenceId']];
                         }
                     }
                     break;
                 case _MARKER_TYPE[2] : // Object
                     if(data['deviceId']!=null && data['objectId']!=null){
-                        if(_marker[messageType][data['deviceId']][data['objectId']]!=null){
+                        if(_marker[messageType][data['deviceId']]!=null && _marker[messageType][data['deviceId']][data['objectId']]!=null){
                             return _marker[messageType][data['deviceId']][data['objectId']];
                         }
                     }
@@ -1578,6 +1615,20 @@ var CustomMapMediator = (
          */
         var _ajaxCall = function(actionType, data){
             sendAjaxPostRequest(_urlConfig[actionType+'Url'],data,_successHandler,_failureHandler,actionType);
+        };
+
+        this.setTrackingScale = function(scaleValue){
+            _mapCanvas.find("svg").attr("class","g-fence g-line "+scaleValue);
+
+            if(_trackingScale[scaleValue]!=null){
+                for(let i in _OBJECT_TYPE){
+                    _mapCanvas.find("#"+_OBJECT_TYPE[i]+" circle:eq(0)").attr(_trackingScale[scaleValue][0]);
+                    _mapCanvas.find("#"+_OBJECT_TYPE[i]+" circle:eq(1)").attr(_trackingScale[scaleValue][1]);
+                    _mapCanvas.find("#"+_OBJECT_TYPE[i]+" circle:eq(2)").attr(_trackingScale[scaleValue][2]);
+                }
+            }else{
+                console.warn("trackingScale is not found - "+scaleValue);
+            }
         };
 
         this.setIgnoreHide = function(flag){
