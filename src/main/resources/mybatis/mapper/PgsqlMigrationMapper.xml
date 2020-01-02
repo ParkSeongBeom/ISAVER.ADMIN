@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.PgsqlMigrationDao" >
+
+    <!--
+        Postgresql Migration
+        @author psb
+    -->
+    <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_1'">
+            alter table isaver.fence add column fill character varying(20), add column stroke character varying(20);
+        </if>
+
+        <if test="version == '1.7.5_0'">
+            INSERT INTO ISAVER.MENU (MENU_ID, PARENT_MENU_ID, MENU_NAME, MENU_PATH, MENU_DEPTH, SORT_ORDER, USE_YN, MENU_FLAG, INSERT_USER_ID, INSERT_DATETIME) VALUES ('B00070','B00000','시스템로그관리','/systemLog/list.html',2,6,'Y','M','admin',NOW());
+            INSERT INTO ISAVER.ROLE_MENU (ROLE_ID, MENU_ID, INSERT_USER_ID, INSERT_DATETIME) VALUES ('ROL000', 'B00070', 'admin', NOW());
+
+            ---------------------------------------------
+            -- 시스템 로그
+            ---------------------------------------------
+            CREATE TABLE isaver.system_log(
+            system_log_id character varying(32) NOT NULL,
+            file_name character varying(200) NOT NULL,
+            log_datetime timestamp without time zone,
+            CONSTRAINT system_log_pkey PRIMARY KEY (system_log_id)
+            );
+            ALTER TABLE isaver.system_log
+            OWNER TO isaveruser;
+
+            update isaver.menu set menu_path='/code/list.html' where menu_id='B00020';
+            DELETE FROM isaver.role_menu where menu_id in ('B00021','B00022');
+            DELETE FROM isaver.menu where menu_id in ('B00021','B00022');
+
+            ---------------------------------------------
+            -- 이벤트 통계 조회
+            ---------------------------------------------
+            CREATE TABLE isaver.statistics(
+            statistics_id character varying(32) NOT NULL,
+            statistics_name character varying(50) NOT NULL,
+            chart_type character varying(20) NOT NULL,
+            json_data text,
+            insert_user_id character varying(20) NOT NULL,
+            insert_datetime timestamp without time zone NOT NULL,
+            update_user_id character varying(20),
+            update_datetime timestamp without time zone,
+            CONSTRAINT statistics_pkey PRIMARY KEY (statistics_id)
+            );
+            ALTER TABLE isaver.statistics
+            OWNER TO isaveruser;
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV021','DEV','센서 움직임 감지기','','Y',20,'admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT319','D','센서 움직임 감지','','N','STS001','admin',NOW());
+        </if>
+
+        <if test="version == '1.7.4_4'">
+            ---------------------------------------------
+            -- 외부연동용 이벤트 전송 로그
+            ---------------------------------------------
+            CREATE TABLE external.noti_send_log
+            (
+            notification_id character varying(32) NOT NULL,
+            send_code character varying(20) NOT NULL,
+            send_url text,
+            send_datetime timestamp without time zone NOT NULL,
+            CONSTRAINT noti_send_log_pkey PRIMARY KEY (notification_id, send_code)
+            );
+            ALTER TABLE external.noti_send_log
+            OWNER TO isaveruser;
+
+            alter table isaver.fence add column config text;
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV019','DEV','Robotics Server','','Y',18,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV020','DEV','PUCK','','Y',19,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('CA1012','CA1','Velodyne','','Y',12,'admin',NOW());
+
+            CREATE INDEX fki_event_log_event_log_id
+            ON isaver.event_log(event_log_id);
+
+            CREATE INDEX pki_event_log_info_event_log_id
+            ON isaver.event_log_info(event_log_id);
+        </if>
+
+        <if test="version == '1.7.4_3'">
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT800','D','Memory','','N','STS002','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT801','D','Cpu','','N','STS002','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT802','D','Network','','N','STS002','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT803','D','Storyge','','N','STS002','admin',NOW());
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('TMP009','TMP','자원 모니터링','','Y',8,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV800','DEV','Host','','Y',18,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV801','DEV','Container','','Y',19,'admin',NOW());
+
+            alter table isaver.area add column skew_x double precision, add column skew_y double precision, add column angle_class character varying(20);
+
+            INSERT INTO ISAVER.TEMPLATE_SETTING (SETTING_ID, DESCRIPTION, VALUE) VALUES ('safeGuardObjectTypeHuman','오브젝트 타입 Custom - 휴먼 ','human');
+            INSERT INTO ISAVER.TEMPLATE_SETTING (SETTING_ID, DESCRIPTION, VALUE) VALUES ('safeGuardObjectTypeUnknown','오브젝트 타입 Custom - 오브젝트','unknown');
+
+            alter table isaver.fence add column z_min double precision DEFAULT 0;
+        </if>
+
+        <if test="version == '1.7.4_2'">
+            alter table isaver.device add column version character varying(50);
+
+            DELETE FROM isaver.role_menu where menu_id in ('L00020','L00021');
+            DELETE FROM isaver.menu where menu_id in ('L00020','L00021');
+
+            UPDATE isaver.menu set menu_name='파일관리', menu_path='/file/list.html' where menu_id='L00010';
+            UPDATE isaver.menu set menu_name='파일관리상세', menu_path='/file/detail.html' where menu_id='L00011';
+
+            UPDATE isaver.file_setting set file_type = 'FTA003' where file_type='video';
+            UPDATE isaver.file set file_type='FTA001' where file_type='alarm';
+            UPDATE isaver.file set file_type='FTA002' where file_type='map';
+            UPDATE isaver.file set file_type='FTA003' where file_type='video';
+
+            INSERT INTO ISAVER.GROUP_CODE(GROUP_CODE_ID,GROUP_NAME,INSERT_USER_ID, INSERT_DATETIME) VALUES('FTA','파일타입','admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('FTA001','FTA','Alarm','','Y',0,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('FTA002','FTA','Map','','Y',1,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('FTA003','FTA','Video','','Y',2,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('FTA004','FTA','Icon','','Y',3,'admin',NOW());
+
+            alter table isaver.file_setting alter column file_type type character(6);
+            alter table isaver.file alter column file_type type character(6) drop default;
+            alter table isaver.template_setting alter column value type character varying(50);
+            alter table isaver.device add column config text;
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV016','DEV','SecurCOMM Server','','Y',15,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV017','DEV','V-Alert','','Y',16,'admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT021','D','진동 감지','','N','STS001','admin',NOW());
+
+            alter table isaver.area add column rotate double precision;
+
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT022','D','TAMPER','','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT023','D','LOW_BATTERY','','N','STS001','admin',NOW());
+
+            alter table isaver.critical_detect add column use_yn character(1) NOT NULL DEFAULT 'Y'::character;
+            alter table isaver.critical_target add column use_yn character(1) NOT NULL DEFAULT 'Y'::character;
+
+            ---------------------------------------------
+            -- 임계치 감지장치 시간정보
+            ---------------------------------------------
+            CREATE TABLE isaver.critical_detect_config (
+            critical_detect_config_id character varying(32) NOT NULL,
+            critical_detect_id character varying(32) NOT NULL,
+            start_datetime timestamp without time zone NOT NULL,
+            end_datetime timestamp without time zone NOT NULL,
+            use_yn character(1) NOT NULL DEFAULT 'Y'::character,
+            CONSTRAINT critical_detect_config_pkey PRIMARY KEY (critical_detect_config_id),
+            CONSTRAINT critical_detect_config_critical_detect_id_fk FOREIGN KEY (critical_detect_id)
+            REFERENCES isaver.critical_detect (critical_detect_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE NO ACTION
+            );
+            ALTER TABLE isaver.critical_detect_config
+            OWNER TO isaveruser;
+
+            alter table isaver.notification add column tracking_json text;
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV018','DEV','원격 I/O 제어기','','Y',17,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('CA1011','CA1','솔내시스템','','Y',11,'admin',NOW());
+
+            alter table isaver.critical_detect_config drop column start_datetime, drop column end_datetime;
+            alter table isaver.critical_detect_config add column start_datetime character varying(8) NOT NULL, add column end_datetime character varying(8) NOT NULL;
+
+            ALTER TABLE isaver.critical_detect_config
+            DROP CONSTRAINT critical_detect_config_critical_detect_id_fk
+            , ADD CONSTRAINT critical_detect_config_critical_detect_id_fk FOREIGN KEY (critical_detect_id)
+            REFERENCES isaver.critical_detect (critical_detect_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE CASCADE;
+
+            ALTER TABLE isaver.critical_target
+            DROP CONSTRAINT critical_target_critical_detect_id_fk
+            , ADD CONSTRAINT critical_target_critical_detect_id_fk FOREIGN KEY (critical_detect_id)
+            REFERENCES isaver.critical_detect (critical_detect_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE CASCADE;
+
+            ALTER TABLE isaver.critical_detect
+            DROP CONSTRAINT critical_detect_critical_id_fk
+            , ADD CONSTRAINT critical_detect_critical_id_fk FOREIGN KEY (critical_id)
+            REFERENCES isaver.critical (critical_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE CASCADE;
+        </if>
+
+        <if test="version == '1.7.4_1'">
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('TMP008','TMP','화장실재실','','Y',7,'admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT017','D','화장실 재실 상태감지','화장실 재실 내 비어있음, 정상, 쓰러짐에 대한 감지','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT018','D','화장실 재실 쓰러짐감지','','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT019','D','화장실 재실 경과시간 초과','','N','STS001','admin',NOW());
+
+            INSERT INTO isaver.critical(critical_id,event_id,critical_level,critical_value) VALUES (replace(uuid_in(MD5(random()::text)::cstring)::text,'-',''),'EVT019','LEV003',null);
+
+            alter table isaver.device add column etc_config character varying(50);
+
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT316','D','Object 감지','위험지역내 Object 탐지','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT317','D','Object 감지 해제','위험지역내 Object 벗어남 탐지','N','STS001','admin',NOW());
+
+            alter table isaver.critical_detect alter column fence_id type character varying(50);
+            alter table isaver.notification alter column fence_id type character varying(50);
+            alter table isaver.fence alter column fence_id type character varying(50), alter column fence_name type character varying(50);
+
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT020','D','이상징후 감지','위험지역내 이상징후 탐지','N','STS001','admin',NOW());
+
+            alter table isaver.device drop column etc_config;
+            alter table isaver.hlds_info add column enable_area text;
+        </if>
+
+        <if test="version == '1.7.4'">
+            alter table isaver.process drop column proc_name, drop column redis_key, drop column tms_device_regist_url, drop column tms_sync_req_edit_url, drop column tms_event_add_url, drop column tms_device_status_url, drop column tms_ws_url, drop column log_level, drop column retry_count, drop column additional, drop column retry_duration, drop column status_notify_duration, drop column tms_sync_req_find_url, drop column device_code;
+
+            -- 임계치 테이블 백업
+            CREATE TABLE isaver.critical_info_temp
+            (
+            event_id character varying(32) NOT NULL,
+            critical_level character(6) NOT NULL,
+            start_value double precision,
+            end_value double precision,
+            alarm_id character varying(32)
+            );
+            ALTER TABLE isaver.critical_info_temp
+            OWNER TO isaveruser;
+
+            INSERT INTO isaver.critical_info_temp SELECT * FROM isaver.critical_info;
+
+            -- 임계치/알람 테이블 제거
+            DROP TABLE isaver.critical_info;
+            DROP TABLE isaver.alarm_info;
+            DROP TABLE isaver.alarm;
+            DROP TABLE isaver.critical;
+
+            -- 임계치 테이블 신규 생성
+
+            ---------------------------------------------
+            -- 임계치
+            ---------------------------------------------
+            CREATE TABLE isaver.critical (
+            critical_id character varying(32) NOT NULL,
+            event_id character(6) NOT NULL,
+            critical_level character(6) NOT NULL,
+            critical_value double precision,
+            dashboard_file_id character varying(32),
+            CONSTRAINT critical_pkey PRIMARY KEY (critical_id)
+            );
+            ALTER TABLE isaver.critical
+            OWNER TO isaveruser;
+
+            ---------------------------------------------
+            -- 임계치 감지장치 정보
+            ---------------------------------------------
+            CREATE TABLE isaver.critical_detect (
+            critical_detect_id character varying(32) NOT NULL,
+            critical_id character(32) NOT NULL,
+            detect_device_id character(6) NOT NULL,
+            CONSTRAINT critical_detect_critical_id_fk FOREIGN KEY (critical_id)
+            REFERENCES isaver.critical (critical_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE NO ACTION,
+            CONSTRAINT critical_detect_pkey PRIMARY KEY (critical_detect_id)
+            );
+            ALTER TABLE isaver.critical_detect
+            OWNER TO isaveruser;
+
+            ---------------------------------------------
+            -- 임계치 대상장치 정보
+            ---------------------------------------------
+            CREATE TABLE isaver.critical_target (
+            critical_detect_id character varying(32) NOT NULL,
+            target_device_id character(6) NOT NULL,
+            alarm_type character varying(20),
+            alarm_message text,
+            CONSTRAINT critical_target_critical_detect_id_fk FOREIGN KEY (critical_detect_id)
+            REFERENCES isaver.critical_detect (critical_detect_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE NO ACTION,
+            CONSTRAINT critical_target_pkey PRIMARY KEY (critical_detect_id,target_device_id)
+            );
+            ALTER TABLE isaver.critical_target
+            OWNER TO isaveruser;
+
+            -- 임계치 데이터 Migration
+            INSERT INTO isaver.critical(critical_id,event_id,critical_level,critical_value,dashboard_file_id)
+            SELECT 	replace(uuid_in(MD5(random()::text)::cstring)::text,'-','')
+            ,event_id
+            ,critical_level
+            ,case when start_value=end_value then end_value else null end
+            ,null
+            FROM 	isaver.critical_info_temp;
+
+            DROP TABLE isaver.critical_info_temp;
+
+            DELETE FROM isaver.role_menu where menu_id in ('J00011','J00020','J00021');
+            DELETE FROM isaver.menu where menu_id in ('J00011','J00020','J00021');
+
+            alter table isaver.fence add column fence_type character varying(20) NOT NULL DEFAULT 'normal'::character varying;
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV907','DEV','습도 감지기','','Y',907,'admin',NOW());
+            UPDATE isaver.code SET code_name = '온도 감지기' WHERE code_id = 'DEV901';
+
+            alter table isaver.device add column main_flag character(1) NOT NULL DEFAULT 'N'::bpchar;
+
+            alter table isaver.critical_detect add column fence_id character varying(20);
+
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV015','DEV','Quanergy Server','','Y',14,'admin',NOW());
+
+            ---------------------------------------------
+            -- 파일 환경설정
+            ---------------------------------------------
+            CREATE TABLE isaver.file_setting(
+            file_type character varying(20),
+            limit_keep_type character varying(20),
+            limit_keep_time integer,
+            CONSTRAINT file_setting_pkey PRIMARY KEY (file_type)
+            );
+            ALTER TABLE isaver.file_setting
+            OWNER TO isaveruser;
+
+            INSERT INTO ISAVER.FILE_SETTING (FILE_TYPE, LIMIT_KEEP_TYPE, LIMIT_KEEP_TIME) VALUES ('video',null,3);
+
+            INSERT INTO ISAVER.MENU (MENU_ID, PARENT_MENU_ID, MENU_NAME, MENU_PATH, MENU_DEPTH, SORT_ORDER, USE_YN, MENU_FLAG, INSERT_USER_ID, INSERT_DATETIME) VALUES ('L00030','L00000','환경설정','/fileSetting/detail.html',2,2,'Y','M','admin',NOW());
+
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT999','D','장치 연동 실패','장치 연동 실패','Y','STS001','admin',NOW());
+
+            CREATE TABLE isaver.hlds_info(
+            device_id character varying(6) NOT NULL,
+            height real NOT NULL,
+            angle_x real NOT NULL,
+            angle_y real NOT NULL,
+            angle_z real NOT NULL,
+            shift_x real NOT NULL,
+            shift_y real NOT NULL,
+            zoom real NOT NULL,
+            count_left_x real NOT NULL,
+            count_right_x real NOT NULL,
+            count_top_y real NOT NULL,
+            count_bottom_y real NOT NULL,
+            bg_interval integer NOT NULL,
+            noise integer NOT NULL,
+            direction integer NOT NULL,
+            fps integer NOT NULL,
+            pixel integer NOT NULL,
+            x1 integer NOT NULL,
+            y1 integer NOT NULL,
+            x2 integer NOT NULL,
+            y2 integer NOT NULL,
+            x3 integer NOT NULL,
+            y3 integer NOT NULL,
+            x4 integer NOT NULL,
+            y4 integer NOT NULL,
+            exitup integer NOT NULL,
+            exitdown integer NOT NULL,
+            exitleft integer NOT NULL,
+            exitright integer NOT NULL,
+            entryup integer NOT NULL,
+            entrydown integer NOT NULL,
+            entryleft integer NOT NULL,
+            entryright integer NOT NULL,
+            CONSTRAINT hlds_info_pkey PRIMARY KEY (device_id)
+            );
+            ALTER TABLE isaver.hlds_info
+            OWNER TO isaveruser;
+
+            ---------------------------------------------
+            -- 버전정보
+            ---------------------------------------------
+            CREATE TABLE isaver.version(
+            version character varying(20) NOT NULL,
+            insert_datetime timestamp without time zone NOT NULL,
+            update_datetime timestamp without time zone
+            );
+            ALTER TABLE isaver.version
+            OWNER TO isaveruser;
+        </if>
+    </update>
+</mapper>

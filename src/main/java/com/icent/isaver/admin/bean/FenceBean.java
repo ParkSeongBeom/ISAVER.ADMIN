@@ -31,6 +31,10 @@ public class FenceBean {
     private Double zMin;
     /* 설정정보 */
     private String config;
+    /* 설정정보 */
+    private String fill;
+    /* 설정정보 */
+    private String stroke;
 
     /* 펜스명*/
     private String fenceName;
@@ -123,5 +127,21 @@ public class FenceBean {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    public String getFill() {
+        return fill;
+    }
+
+    public void setFill(String fill) {
+        this.fill = fill;
+    }
+
+    public String getStroke() {
+        return stroke;
+    }
+
+    public void setStroke(String stroke) {
+        this.stroke = stroke;
     }
 }

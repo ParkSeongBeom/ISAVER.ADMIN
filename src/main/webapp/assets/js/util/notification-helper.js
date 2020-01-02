@@ -442,7 +442,10 @@ var NotificationHelper = (
                 event.stopPropagation();
             });
 
-            if(notification['fenceId']==null || !cs.isRecording(notification['fenceId'])) {
+            if(notification['fenceId']==null ||
+                (notification.hasOwnProperty('fenceDeviceList') && notification['fenceDeviceList'].length==0) ||
+                (notification.hasOwnProperty('cameraCnt') && notification['cameraCnt']==0) ||
+                !cs.isRecording(notification['fenceId'])) {
                 notificationTag.find(".video_btn").remove();
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();

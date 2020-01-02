@@ -10,6 +10,8 @@
         <result property="deviceId" column="deviceId"/>
         <result property="fenceName" column="fenceName"/>
         <result property="zMin" column="zMin"/>
+        <result property="fill" column="fill"/>
+        <result property="stroke" column="stroke"/>
         <result property="config" column="config"/>
         <collection property="location" ofType="FenceLocationBean">
             <result property="lat" column="lat"/>
@@ -30,6 +32,8 @@
                 , A.fence_name as fenceName
                 , A.z_min as zMin
                 , A.config as config
+                , A.fill as fill
+                , A.stroke as stroke
                 , b.lat as lat
                 , b.lng as lng
         FROM    isaver.fence A
@@ -105,6 +109,8 @@
             , fence_name
             , z_min
             , config
+            , fill
+            , stroke
         ) VALUES
         <foreach collection="list" item="item" separator="," close=";">
             (
@@ -123,6 +129,18 @@
                     ,#{item.config}
                 </if>
                 <if test="item.config == null">
+                    ,null
+                </if>
+                <if test="item.fill != null and item.fill != ''">
+                    ,#{item.fill}
+                </if>
+                <if test="item.fill == null">
+                    ,null
+                </if>
+                <if test="item.stroke != null and item.stroke != ''">
+                    ,#{item.stroke}
+                </if>
+                <if test="item.stroke == null">
                     ,null
                 </if>
             )

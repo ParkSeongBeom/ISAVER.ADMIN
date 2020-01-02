@@ -23,6 +23,34 @@
 <script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/webrtcstreamer.js?version=${version}"></script>
 <script src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
+<%-- Mini Colors --%>
+<link href="${rootPath}/assets/library/minicolors/jquery.minicolors.css?version=${version}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${rootPath}/assets/library/minicolors/jquery.minicolors.js?version=${version}"></script>
+
+<style>
+    .minicolors-panel {
+        position: fixed;
+        border: 0;
+        width:170px;
+    }
+    .minicolors-theme-bootstrap .minicolors-swatch {
+        top: 6px;
+        left: 5px;
+    }
+    .minicolors-slider, .minicolors-opacity-slider{
+        top: 0;
+        left: 150px;
+    }
+    .minicolors .minicolors-grid{
+        left:0;
+        top:0;
+        margin:0;
+    }
+    .minicolors{
+        width:100%;
+    }
+</style>
+
 <div class="sub_title_area">
     <h3 class="1depth_title"><spring:message code="common.title.resource"/></h3>
     <div class="navigation">

@@ -427,7 +427,8 @@ var CustomMapPopup = (
                                                     type: 'text',
                                                     name: 'fenceName',
                                                     value: data['fenceName'],
-                                                    maxlength: "50"
+                                                    maxlength: "50",
+                                                    title:"FenceName"
                                                 }).change({
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
@@ -442,7 +443,8 @@ var CustomMapPopup = (
                                                     type: 'text',
                                                     name: 'zMin',
                                                     value: (data['zMin']?data['zMin']:0),
-                                                    maxLength:"10"
+                                                    maxLength:"10",
+                                                    title:"Z-Min"
                                                 }).on("keypress",function(){
                                                     isNumberWithPoint(this);
                                                 }).change({
@@ -476,10 +478,58 @@ var CustomMapPopup = (
                                                     })
                                             )
                                         ).append(
+                                            $("<div/>").append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'fill',
+                                                    value: data['fill'],
+                                                    class: 'changeColor',
+                                                    title:"Fill Color"
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fill:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                })
+                                            ).append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'stroke',
+                                                    value: data['stroke'],
+                                                    class: 'changeColor',
+                                                    title:"Stroke Color"
+                                                }).on("keypress",function(){
+                                                    isNumberWithPoint(this);
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, stroke:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                })
+                                            )
+                                        ).append(
                                             $("<div/>", {class: "camera_list"}).append(cameraSelectTag)
                                         )
                                     );
                                     targetTag.append(fenceElement);
+
+                                    fenceElement.find(".changeColor").each(function(){
+                                        $(this).minicolors({
+                                            control: 'hue',
+                                            defaultValue: $(this).attr('data-defaultValue') || '',
+                                            format: 'hex',
+                                            keywords: '',
+                                            letterCase: 'lowercase',
+                                            position: 'position-top-left',
+                                            theme: 'bootstrap'
+                                        })
+                                    });
                                     _ajaxCall("fenceDeviceList", {areaId: _areaId, uuid: data['uuid']});
                                     break;
                                 case 'remove' :

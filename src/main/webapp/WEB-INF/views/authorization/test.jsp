@@ -28,6 +28,17 @@
 <body class="login_mode">
     <header></header>
     <article>
+        <section>
+            <h2>DB Update</h2>
+            <div>
+                <div class="set">
+                    <div class="button_set">
+                        <button class="level-start" onclick="javascript:dbMigration();"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="Safe-Eye">
             <h2>Safe-Eye</h2>
             <div>
@@ -346,6 +357,7 @@
     var urlConfig = {
         'eventUrl':'${rootPath}/test/event.json'
         ,'guardUrl':'${rootPath}/test/guard.json'
+        ,'dbMigrationUrl':'${rootPath}/database/pgsqlMigration.json'
     };
 
     var _intervalInfo = {
@@ -528,8 +540,31 @@
             ,'eventFlag' : 'D'
             ,'value': $("input[name='customValue']").val()
         };
-
         ajaxCall('custom', {eventData:JSON.stringify(data)});
+    }
+
+    function dbMigration(){
+        sendAjaxPostRequest(
+            urlConfig['dbMigrationUrl']
+            ,null
+            ,function(data, dataType){
+                var logTag = $("<div/>");
+                let resultList = data['result'];
+                for(var i in resultList){
+                    let result = resultList[i];
+                    logTag.append(
+                        $("<div/>").text("=======================")
+                    ).append(
+                        $("<div/>").text(result['version']+" ["+result['code']+"]")
+                    ).append(
+                        $("<div/>").text(result['message'])
+                    ).append(
+                        $("<div/>").text("=======================")
+                    )
+                }
+                addLog(logTag);
+            },failureHandler
+        );
     }
 
     function ajaxCall(actionType,data){

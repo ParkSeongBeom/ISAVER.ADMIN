@@ -69,6 +69,8 @@ public class NotificationBean extends ISaverCommonBean {
     private Integer notiCnt;
     /* 전송갯수 */
     private Integer sendCnt;
+    /* 카메라건수 */
+    private Integer cameraCnt;
     /* 이벤트 발생일시 String */
     private String eventDatetimeStr;
     /* 확인일시 String */
@@ -308,5 +310,13 @@ public class NotificationBean extends ISaverCommonBean {
 
     public void setSendCnt(Integer sendCnt) {
         this.sendCnt = sendCnt;
+    }
+
+    public Integer getCameraCnt() {
+        return cameraCnt;
+    }
+
+    public void setCameraCnt(Integer cameraCnt) {
+        this.cameraCnt = cameraCnt;
     }
 }

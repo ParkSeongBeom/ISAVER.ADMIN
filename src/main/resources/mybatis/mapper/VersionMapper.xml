@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icent.isaver.admin.dao.VersionDao" >
+
+    <!--
+        버전 정보를 가져온다.
+        @author psb
+    -->
+    <select id="findByVersion" resultType="VersionBean" parameterType="map" >
+        select  version
+                ,insert_datetime as insertDatetime
+                ,update_datetime as updateDatetime
+        from    isaver.version
+    </select>
+
+    <!--
+        버전 정보를 저장한다
+        @author psb
+    -->
+    <update id="saveVersion" parameterType="map" >
+        update  isaver.version
+        set     version = #{version}
+              , update_datetime = NOW()
+    </update>
+</mapper>
