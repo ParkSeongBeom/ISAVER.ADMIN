@@ -2930,101 +2930,101 @@ button.btn ~ button.btn {
 * .excel .chart_label > span:nth-of-type(26n + 2), * .chart_label > span:nth-of-type(26n + 2) > b {
   color: #f15151; }
 * .chart_label > span:nth-of-type(26n + 3):before, * .mp_header > div > .ch_name:nth-of-type(26n + 3):before {
-  background-color: #9e9e9e; }
+  background-color: #757575; }
 * .excel .chart_label > span:nth-of-type(26n + 3), * .chart_label > span:nth-of-type(26n + 3) > b {
-  color: #9e9e9e; }
+  color: #757575; }
 * .chart_label > span:nth-of-type(26n + 4):before, * .mp_header > div > .ch_name:nth-of-type(26n + 4):before {
-  background-color: #616161; }
+  background-color: #ffab40; }
 * .excel .chart_label > span:nth-of-type(26n + 4), * .chart_label > span:nth-of-type(26n + 4) > b {
-  color: #616161; }
+  color: #ffab40; }
 * .chart_label > span:nth-of-type(26n + 5):before, * .mp_header > div > .ch_name:nth-of-type(26n + 5):before {
-  background-color: #ff9801; }
-* .excel .chart_label > span:nth-of-type(26n + 5), * .chart_label > span:nth-of-type(26n + 5) > b {
-  color: #ff9801; }
-* .chart_label > span:nth-of-type(26n + 6):before, * .mp_header > div > .ch_name:nth-of-type(26n + 6):before {
   background-color: #4cb050; }
-* .excel .chart_label > span:nth-of-type(26n + 6), * .chart_label > span:nth-of-type(26n + 6) > b {
+* .excel .chart_label > span:nth-of-type(26n + 5), * .chart_label > span:nth-of-type(26n + 5) > b {
   color: #4cb050; }
-* .chart_label > span:nth-of-type(26n + 7):before, * .mp_header > div > .ch_name:nth-of-type(26n + 7):before {
-  background-color: #8cc34b; }
-* .excel .chart_label > span:nth-of-type(26n + 7), * .chart_label > span:nth-of-type(26n + 7) > b {
-  color: #8cc34b; }
-* .chart_label > span:nth-of-type(26n + 8):before, * .mp_header > div > .ch_name:nth-of-type(26n + 8):before {
-  background-color: #cddc39; }
-* .excel .chart_label > span:nth-of-type(26n + 8), * .chart_label > span:nth-of-type(26n + 8) > b {
-  color: #cddc39; }
-* .chart_label > span:nth-of-type(26n + 9):before, * .mp_header > div > .ch_name:nth-of-type(26n + 9):before {
+* .chart_label > span:nth-of-type(26n + 6):before, * .mp_header > div > .ch_name:nth-of-type(26n + 6):before {
   background-color: #03a9f5; }
-* .excel .chart_label > span:nth-of-type(26n + 9), * .chart_label > span:nth-of-type(26n + 9) > b {
+* .excel .chart_label > span:nth-of-type(26n + 6), * .chart_label > span:nth-of-type(26n + 6) > b {
   color: #03a9f5; }
-* .chart_label > span:nth-of-type(26n + 10):before, * .mp_header > div > .ch_name:nth-of-type(26n + 10):before {
-  background-color: #00bcd5; }
-* .excel .chart_label > span:nth-of-type(26n + 10), * .chart_label > span:nth-of-type(26n + 10) > b {
-  color: #00bcd5; }
-* .chart_label > span:nth-of-type(26n + 11):before, * .mp_header > div > .ch_name:nth-of-type(26n + 11):before {
-  background-color: #009788; }
-* .excel .chart_label > span:nth-of-type(26n + 11), * .chart_label > span:nth-of-type(26n + 11) > b {
-  color: #009788; }
-* .chart_label > span:nth-of-type(26n + 12):before, * .mp_header > div > .ch_name:nth-of-type(26n + 12):before {
+* .chart_label > span:nth-of-type(26n + 7):before, * .mp_header > div > .ch_name:nth-of-type(26n + 7):before {
   background-color: #3f51b5; }
-* .excel .chart_label > span:nth-of-type(26n + 12), * .chart_label > span:nth-of-type(26n + 12) > b {
+* .excel .chart_label > span:nth-of-type(26n + 7), * .chart_label > span:nth-of-type(26n + 7) > b {
   color: #3f51b5; }
+* .chart_label > span:nth-of-type(26n + 8):before, * .mp_header > div > .ch_name:nth-of-type(26n + 8):before {
+  background-color: #f54337; }
+* .excel .chart_label > span:nth-of-type(26n + 8), * .chart_label > span:nth-of-type(26n + 8) > b {
+  color: #f54337; }
+* .chart_label > span:nth-of-type(26n + 9):before, * .mp_header > div > .ch_name:nth-of-type(26n + 9):before {
+  background-color: #c6ff00; }
+* .excel .chart_label > span:nth-of-type(26n + 9), * .chart_label > span:nth-of-type(26n + 9) > b {
+  color: #c6ff00; }
+* .chart_label > span:nth-of-type(26n + 10):before, * .mp_header > div > .ch_name:nth-of-type(26n + 10):before {
+  background-color: #616161; }
+* .excel .chart_label > span:nth-of-type(26n + 10), * .chart_label > span:nth-of-type(26n + 10) > b {
+  color: #616161; }
+* .chart_label > span:nth-of-type(26n + 11):before, * .mp_header > div > .ch_name:nth-of-type(26n + 11):before {
+  background-color: #ff8a64; }
+* .excel .chart_label > span:nth-of-type(26n + 11), * .chart_label > span:nth-of-type(26n + 11) > b {
+  color: #ff8a64; }
+* .chart_label > span:nth-of-type(26n + 12):before, * .mp_header > div > .ch_name:nth-of-type(26n + 12):before {
+  background-color: #4baf4f; }
+* .excel .chart_label > span:nth-of-type(26n + 12), * .chart_label > span:nth-of-type(26n + 12) > b {
+  color: #4baf4f; }
 * .chart_label > span:nth-of-type(26n + 13):before, * .mp_header > div > .ch_name:nth-of-type(26n + 13):before {
-  background-color: #673bb7; }
+  background-color: #03a9f4; }
 * .excel .chart_label > span:nth-of-type(26n + 13), * .chart_label > span:nth-of-type(26n + 13) > b {
-  color: #673bb7; }
+  color: #03a9f4; }
 * .chart_label > span:nth-of-type(26n + 14):before, * .mp_header > div > .ch_name:nth-of-type(26n + 14):before {
-  background-color: #9c27af; }
+  background-color: #3949ab; }
 * .excel .chart_label > span:nth-of-type(26n + 14), * .chart_label > span:nth-of-type(26n + 14) > b {
-  color: #9c27af; }
+  color: #3949ab; }
 * .chart_label > span:nth-of-type(26n + 15):before, * .mp_header > div > .ch_name:nth-of-type(26n + 15):before {
   background-color: #f54337; }
 * .excel .chart_label > span:nth-of-type(26n + 15), * .chart_label > span:nth-of-type(26n + 15) > b {
   color: #f54337; }
 * .chart_label > span:nth-of-type(26n + 16):before, * .mp_header > div > .ch_name:nth-of-type(26n + 16):before {
-  background-color: #ea1e63; }
+  background-color: #974c2e; }
 * .excel .chart_label > span:nth-of-type(26n + 16), * .chart_label > span:nth-of-type(26n + 16) > b {
-  color: #ea1e63; }
+  color: #974c2e; }
 * .chart_label > span:nth-of-type(26n + 17):before, * .mp_header > div > .ch_name:nth-of-type(26n + 17):before {
-  background-color: #795547; }
+  background-color: #8b0000; }
 * .excel .chart_label > span:nth-of-type(26n + 17), * .chart_label > span:nth-of-type(26n + 17) > b {
-  color: #795547; }
+  color: #8b0000; }
 * .chart_label > span:nth-of-type(26n + 18):before, * .mp_header > div > .ch_name:nth-of-type(26n + 18):before {
-  background-color: #921717; }
+  background-color: #383737; }
 * .excel .chart_label > span:nth-of-type(26n + 18), * .chart_label > span:nth-of-type(26n + 18) > b {
-  color: #921717; }
+  color: #383737; }
 * .chart_label > span:nth-of-type(26n + 19):before, * .mp_header > div > .ch_name:nth-of-type(26n + 19):before {
-  background-color: #424243; }
+  background-color: #974c2e; }
 * .excel .chart_label > span:nth-of-type(26n + 19), * .chart_label > span:nth-of-type(26n + 19) > b {
-  color: #424243; }
+  color: #974c2e; }
 * .chart_label > span:nth-of-type(26n + 20):before, * .mp_header > div > .ch_name:nth-of-type(26n + 20):before {
-  background-color: #bf360c; }
+  background-color: #33691e; }
 * .excel .chart_label > span:nth-of-type(26n + 20), * .chart_label > span:nth-of-type(26n + 20) > b {
-  color: #bf360c; }
+  color: #33691e; }
 * .chart_label > span:nth-of-type(26n + 21):before, * .mp_header > div > .ch_name:nth-of-type(26n + 21):before {
-  background-color: #ef6c00; }
+  background-color: #27777f; }
 * .excel .chart_label > span:nth-of-type(26n + 21), * .chart_label > span:nth-of-type(26n + 21) > b {
-  color: #ef6c00; }
+  color: #27777f; }
 * .chart_label > span:nth-of-type(26n + 22):before, * .mp_header > div > .ch_name:nth-of-type(26n + 22):before {
-  background-color: #4baf4f; }
+  background-color: #313fa0; }
 * .excel .chart_label > span:nth-of-type(26n + 20), * .chart_label > span:nth-of-type(26n + 22) > b {
-  color: #4baf4f; }
+  color: #313fa0; }
 * .chart_label > span:nth-of-type(26n + 23):before, * .mp_header > div > .ch_name:nth-of-type(26n + 23):before {
-  background-color: #689f39; }
+  background-color: #ff4083; }
 * .excel .chart_label > span:nth-of-type(26n + 23), * .chart_label > span:nth-of-type(26n + 23) > b {
-  color: #689f39; }
+  color: #ff4083; }
 * .chart_label > span:nth-of-type(26n + 24):before, * .mp_header > div > .ch_name:nth-of-type(26n + 24):before {
-  background-color: #e53935; }
+  background-color: #64dc18; }
 * .excel .chart_label > span:nth-of-type(26n + 24), * .chart_label > span:nth-of-type(26n + 24) > b {
-  color: #e53935; }
+  color: #64dc18; }
 * .chart_label > span:nth-of-type(26n + 25):before, * .mp_header > div > .ch_name:nth-of-type(26n + 25):before {
-  background-color: #890e4f; }
+  background-color: #1f6f9d; }
 * .excel .chart_label > span:nth-of-type(26n + 25), * .chart_label > span:nth-of-type(26n + 25) > b {
-  color: #890e4f; }
+  color: #1f6f9d; }
 * .chart_label > span:nth-of-type(26n + 26):before, * .mp_header > div > .ch_name:nth-of-type(26n + 26):before {
-  background-color: #4a3f3f; }
+  background-color: #a900fd; }
 * .excel .chart_label > span:nth-of-type(26n + 26), * .chart_label > span:nth-of-type(26n + 26) > b {
-  color: #4a3f3f; }
+  color: #a900fd; }
 
 .ct-series {
   /*
@@ -3056,125 +3056,125 @@ button.btn ~ button.btn {
   .ct-series-b .ct-line, .ct-series-b .ct-point {
     stroke: #f15151 !important; }
   .ct-series-c .ct-area, .ct-series-c .ct-slice-pie, .ct-series-c .ct-bar, .ct-series-c .ct-slice-donut {
-    fill: #9e9e9e !important;
-    stroke: #9e9e9e !important; }
+    fill: #757575 !important;
+    stroke: #757575 !important; }
   .ct-series-c .ct-line, .ct-series-c .ct-point {
-    stroke: #9e9e9e !important; }
+    stroke: #757575 !important; }
   .ct-series-d .ct-area, .ct-series-d .ct-slice-pie, .ct-series-d .ct-bar, .ct-series-d .ct-slice-donut {
-    fill: #616161 !important;
-    stroke: #616161 !important; }
+    fill: #ffab40 !important;
+    stroke: #ffab40 !important; }
   .ct-series-d .ct-line, .ct-series-d .ct-point {
-    stroke: #616161 !important; }
+    stroke: #ffab40 !important; }
   .ct-series-e .ct-area, .ct-series-e .ct-slice-pie, .ct-series-e .ct-bar, .ct-series-e .ct-slice-donut {
-    fill: #ff9801 !important;
-    stroke: #ff9801 !important; }
-  .ct-series-e .ct-line, .ct-series-e .ct-point {
-    stroke: #ff9801 !important; }
-  .ct-series-f .ct-area, .ct-series-f .ct-slice-pie, .ct-series-f .ct-bar, .ct-series-f .ct-slice-donut {
     fill: #4cb050 !important;
     stroke: #4cb050 !important; }
-  .ct-series-f .ct-line, .ct-series-f .ct-point {
+  .ct-series-e .ct-line, .ct-series-e .ct-point {
     stroke: #4cb050 !important; }
-  .ct-series-g .ct-area, .ct-series-g .ct-slice-pie, .ct-series-g .ct-bar, .ct-series-g .ct-slice-donut {
-    fill: #8cc34b !important;
-    stroke: #8cc34b !important; }
-  .ct-series-g .ct-line, .ct-series-g .ct-point {
-    stroke: #8cc34b !important; }
-  .ct-series-h .ct-area, .ct-series-h .ct-slice-pie, .ct-series-h .ct-bar, .ct-series-h .ct-slice-donut {
-    fill: #cddc39 !important;
-    stroke: #cddc39 !important; }
-  .ct-series-h .ct-line, .ct-series-h .ct-point {
-    stroke: #cddc39 !important; }
-  .ct-series-i .ct-area, .ct-series-i .ct-slice-pie, .ct-series-i .ct-bar, .ct-series-i .ct-slice-donut {
+  .ct-series-f .ct-area, .ct-series-f .ct-slice-pie, .ct-series-f .ct-bar, .ct-series-f .ct-slice-donut {
     fill: #03a9f5 !important;
     stroke: #03a9f5 !important; }
-  .ct-series-i .ct-line, .ct-series-i .ct-point {
+  .ct-series-f .ct-line, .ct-series-f .ct-point {
     stroke: #03a9f5 !important; }
-  .ct-series-j .ct-area, .ct-series-j .ct-slice-pie, .ct-series-j .ct-bar, .ct-series-j .ct-slice-donut {
-    fill: #00bcd5 !important;
-    stroke: #00bcd5 !important; }
-  .ct-series-j .ct-line, .ct-series-j .ct-point {
-    stroke: #00bcd5 !important; }
-  .ct-series-k .ct-area, .ct-series-k .ct-slice-pie, .ct-series-k .ct-bar, .ct-series-k .ct-slice-donut {
-    fill: #009788 !important;
-    stroke: #009788 !important; }
-  .ct-series-k .ct-line, .ct-series-k .ct-point {
-    stroke: #009788 !important; }
-  .ct-series-l .ct-area, .ct-series-l .ct-slice-pie, .ct-series-l .ct-bar, .ct-series-l .ct-slice-donut {
+  .ct-series-g .ct-area, .ct-series-g .ct-slice-pie, .ct-series-g .ct-bar, .ct-series-g .ct-slice-donut {
     fill: #3f51b5 !important;
     stroke: #3f51b5 !important; }
-  .ct-series-l .ct-line, .ct-series-l .ct-point {
+  .ct-series-g .ct-line, .ct-series-g .ct-point {
     stroke: #3f51b5 !important; }
+  .ct-series-h .ct-area, .ct-series-h .ct-slice-pie, .ct-series-h .ct-bar, .ct-series-h .ct-slice-donut {
+    fill: #f54337 !important;
+    stroke: #f54337 !important; }
+  .ct-series-h .ct-line, .ct-series-h .ct-point {
+    stroke: #f54337 !important; }
+  .ct-series-i .ct-area, .ct-series-i .ct-slice-pie, .ct-series-i .ct-bar, .ct-series-i .ct-slice-donut {
+    fill: #c6ff00 !important;
+    stroke: #c6ff00 !important; }
+  .ct-series-i .ct-line, .ct-series-i .ct-point {
+    stroke: #c6ff00 !important; }
+  .ct-series-j .ct-area, .ct-series-j .ct-slice-pie, .ct-series-j .ct-bar, .ct-series-j .ct-slice-donut {
+    fill: #616161 !important;
+    stroke: #616161 !important; }
+  .ct-series-j .ct-line, .ct-series-j .ct-point {
+    stroke: #616161 !important; }
+  .ct-series-k .ct-area, .ct-series-k .ct-slice-pie, .ct-series-k .ct-bar, .ct-series-k .ct-slice-donut {
+    fill: #ff8a64 !important;
+    stroke: #ff8a64 !important; }
+  .ct-series-k .ct-line, .ct-series-k .ct-point {
+    stroke: #ff8a64 !important; }
+  .ct-series-l .ct-area, .ct-series-l .ct-slice-pie, .ct-series-l .ct-bar, .ct-series-l .ct-slice-donut {
+    fill: #4baf4f !important;
+    stroke: #4baf4f !important; }
+  .ct-series-l .ct-line, .ct-series-l .ct-point {
+    stroke: #4baf4f !important; }
   .ct-series-m .ct-area, .ct-series-m .ct-slice-pie, .ct-series-m .ct-bar, .ct-series-m .ct-slice-donut {
-    fill: #673bb7 !important;
-    stroke: #673bb7 !important; }
+    fill: #03a9f4 !important;
+    stroke: #03a9f4 !important; }
   .ct-series-m .ct-line, .ct-series-m .ct-point {
-    stroke: #673bb7 !important; }
+    stroke: #03a9f4 !important; }
   .ct-series-n .ct-area, .ct-series-n .ct-slice-pie, .ct-series-n .ct-bar, .ct-series-n .ct-slice-donut {
-    fill: #9c27af !important;
-    stroke: #9c27af !important; }
+    fill: #3949ab !important;
+    stroke: #3949ab !important; }
   .ct-series-n .ct-line, .ct-series-n .ct-point {
-    stroke: #9c27af !important; }
+    stroke: #3949ab !important; }
   .ct-series-o .ct-area, .ct-series-o .ct-slice-pie, .ct-series-o .ct-bar, .ct-series-o .ct-slice-donut {
     fill: #f54337 !important;
     stroke: #f54337 !important; }
   .ct-series-o .ct-line, .ct-series-o .ct-point {
     stroke: #f54337 !important; }
   .ct-series-p .ct-area, .ct-series-p .ct-slice-pie, .ct-series-p .ct-bar, .ct-series-p .ct-slice-donut {
-    fill: #ea1e63 !important;
-    stroke: #ea1e63 !important; }
+    fill: #974c2e !important;
+    stroke: #974c2e !important; }
   .ct-series-p .ct-line, .ct-series-p .ct-point {
-    stroke: #ea1e63 !important; }
+    stroke: #974c2e !important; }
   .ct-series-q .ct-area, .ct-series-q .ct-slice-pie, .ct-series-q .ct-bar, .ct-series-q .ct-slice-donut {
-    fill: #795547 !important;
-    stroke: #795547 !important; }
+    fill: #8b0000 !important;
+    stroke: #8b0000 !important; }
   .ct-series-q .ct-line, .ct-series-q .ct-point {
-    stroke: #795547 !important; }
+    stroke: #8b0000 !important; }
   .ct-series-r .ct-area, .ct-series-r .ct-slice-pie, .ct-series-r .ct-bar, .ct-series-r .ct-slice-donut {
-    fill: #921717 !important;
-    stroke: #921717 !important; }
+    fill: #383737 !important;
+    stroke: #383737 !important; }
   .ct-series-r .ct-line, .ct-series-r .ct-point {
-    stroke: #921717 !important; }
+    stroke: #383737 !important; }
   .ct-series-s .ct-area, .ct-series-s .ct-slice-pie, .ct-series-s .ct-bar, .ct-series-s .ct-slice-donut {
-    fill: #424243 !important;
-    stroke: #424243 !important; }
+    fill: #974c2e !important;
+    stroke: #974c2e !important; }
   .ct-series-s .ct-line, .ct-series-s .ct-point {
-    stroke: #424243 !important; }
+    stroke: #974c2e !important; }
   .ct-series-t .ct-area, .ct-series-t .ct-slice-pie, .ct-series-t .ct-bar, .ct-series-t .ct-slice-donut {
-    fill: #bf360c !important;
-    stroke: #bf360c !important; }
+    fill: #33691e !important;
+    stroke: #33691e !important; }
   .ct-series-t .ct-line, .ct-series-t .ct-point {
-    stroke: #bf360c !important; }
+    stroke: #33691e !important; }
   .ct-series-u .ct-area, .ct-series-u .ct-slice-pie, .ct-series-u .ct-bar, .ct-series-u .ct-slice-donut {
-    fill: #ef6c00 !important;
-    stroke: #ef6c00 !important; }
+    fill: #27777f !important;
+    stroke: #27777f !important; }
   .ct-series-u .ct-line, .ct-series-u .ct-point {
-    stroke: #ef6c00 !important; }
+    stroke: #27777f !important; }
   .ct-series-v .ct-area, .ct-series-v .ct-slice-pie, .ct-series-v .ct-bar, .ct-series-v .ct-slice-donut {
-    fill: #4baf4f !important;
-    stroke: #4baf4f !important; }
+    fill: #313fa0 !important;
+    stroke: #313fa0 !important; }
   .ct-series-v .ct-line, .ct-series-v .ct-point {
-    stroke: #4baf4f !important; }
+    stroke: #313fa0 !important; }
   .ct-series-w .ct-area, .ct-series-w .ct-slice-pie, .ct-series-w .ct-bar, .ct-series-w .ct-slice-donut {
-    fill: #689f39 !important;
-    stroke: #689f39 !important; }
+    fill: #ff4083 !important;
+    stroke: #ff4083 !important; }
   .ct-series-w .ct-line, .ct-series-w .ct-point {
-    stroke: #689f39 !important; }
+    stroke: #ff4083 !important; }
   .ct-series-x .ct-area, .ct-series-x .ct-slice-pie, .ct-series-x .ct-bar, .ct-series-x .ct-slice-donut {
-    fill: #e53935 !important;
-    stroke: #e53935 !important; }
+    fill: #64dc18 !important;
+    stroke: #64dc18 !important; }
   .ct-series-x .ct-line, .ct-series-x .ct-point {
-    stroke: #e53935 !important; }
+    stroke: #64dc18 !important; }
   .ct-series-y .ct-area, .ct-series-y .ct-slice-pie, .ct-series-y .ct-bar, .ct-series-y .ct-slice-donut {
-    fill: #890e4f !important;
-    stroke: #890e4f !important; }
+    fill: #1f6f9d !important;
+    stroke: #1f6f9d !important; }
   .ct-series-y .ct-line, .ct-series-y .ct-point {
-    stroke: #890e4f !important; }
+    stroke: #1f6f9d !important; }
   .ct-series-z .ct-area, .ct-series-z .ct-slice-pie, .ct-series-z .ct-bar, .ct-series-z .ct-slice-donut {
-    fill: #4a3f3f !important;
-    stroke: #4a3f3f !important; }
+    fill: #a900fd !important;
+    stroke: #a900fd !important; }
   .ct-series-z .ct-line, .ct-series-z .ct-point {
-    stroke: #4a3f3f !important; }
+    stroke: #a900fd !important; }
 
 .ct-chart-line {
   overflow: hidden;
@@ -3199,9 +3199,8 @@ button.btn ~ button.btn {
     opacity: 0.4 !important; }
 
 .ct-label {
-  font-size: 0.85rem !important;
-  color: #757575 !important;
-  fill: #757575 !important; }
+  color: #3c3c3c !important;
+  fill: #3c3c3c !important; }
   .ct-label.ct-vertical.ct-start {
     width: auto !important; }
   .ct-label.ct-horizontal.ct-end {
@@ -3217,6 +3216,10 @@ button.btn ~ button.btn {
     justify-content: center !important;
     text-align: center !important;
     text-anchor: start; }
+
+.pie .ct-label {
+  font-size: 1rem !important;
+  font-weight: bold; }
 
 .ct-label01 {
   stroke: rgba(255, 255, 255, 0.8) !important;
@@ -4617,7 +4620,7 @@ button.btn ~ button.btn {
         -webkit-animation-fill-mode: forwards;
         -webkit-animation-duration: 0.8s;
         animation-duration: 0.8s;
-        stroke-width: 1px; }
+        stroke-width: 2px; }
 @-webkit-keyframes notice-opacity {
   0% {
     opacity: 0.5; }
@@ -4637,20 +4640,20 @@ button.btn ~ button.btn {
   100% {
     opacity: 0.5; } }
       .g-fence polygon.level-caution, .g-fence path.level-caution {
-        fill: rgba(210, 160, 30, 0.2);
-        stroke: #d2a01e; }
+        fill: rgba(210, 160, 30, 0.8) !important;
+        stroke: #d2a01e !important; }
       .g-fence polygon.level-warning, .g-fence path.level-warning {
-        fill: rgba(240, 100, 0, 0.2);
-        stroke: #f06400; }
+        fill: rgba(240, 100, 0, 0.8) !important;
+        stroke: #f06400 !important; }
       .g-fence polygon.level-danger, .g-fence path.level-danger {
-        fill: rgba(195, 2, 2, 0.2);
-        stroke: #c30202; }
+        fill: rgba(195, 2, 2, 0.8) !important;
+        stroke: #c30202 !important; }
       .g-fence polygon.level-die, .g-fence path.level-die {
-        fill: rgba(0, 0, 0, 0.2);
-        stroke: #000; }
+        fill: rgba(0, 0, 0, 0.8) !important;
+        stroke: #000 !important; }
       .g-fence polygon.level-ignore, .g-fence path.level-ignore {
-        fill: rgba(117, 117, 117, 0.2);
-        stroke: #757575; }
+        fill: rgba(117, 117, 117, 0.8) !important;
+        stroke: #757575 !important; }
   .g-line {
     /*
     <circle fill="none" cx="10" cy="11" r="8"/>

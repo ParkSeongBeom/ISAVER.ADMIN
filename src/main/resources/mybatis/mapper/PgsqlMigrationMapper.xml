@@ -7,6 +7,12 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_2'">
+            alter table isaver.fence add column custom_json text;
+            update isaver.fence set custom_json = '{"polygon":{"fill":"' || fill || '","stroke":"' || stroke || '"}}' where fill is not null and stroke is not null;
+            alter table isaver.fence drop column fill, drop column stroke;
+        </if>
+
         <if test="version == '1.7.5_1'">
             alter table isaver.fence add column fill character varying(20), add column stroke character varying(20);
         </if>

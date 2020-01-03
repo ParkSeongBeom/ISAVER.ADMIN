@@ -312,28 +312,31 @@ function rgbToHex( rgbType ){
     var r = toHex( rgb[ 0 ] );
     var g = toHex( rgb[ 1 ] );
     var b = toHex( rgb[ 2 ] );
+    return "#" + r + g + b;
+}
 
-    var hexType = "#" + r + g + b;
-
-    return hexType;
+function isHex(h) {
+    var regex = /^#[0-9a-f]{3,6}$/i;
+    return regex.test(h);
 }
 
 function hexToRgb( hexType, opacity ){
-    var hex = hexType.replace( "#", "" );
-    var value = hex.match( /[a-f\d]/gi );
+    var rgbType = null;
+    try{
+        var hex = hexType.replace( "#", "" );
+        var value = hex.match( /[a-f\d]/gi );
 
+        // 헥사값이 세자리일 경우, 여섯자리로.
+        if ( value.length == 3 ) hex = value[0] + value[0] + value[1] + value[1] + value[2] + value[2];
+        value = hex.match( /[a-f\d]{2}/gi );
 
-    // 헥사값이 세자리일 경우, 여섯자리로.
-    if ( value.length == 3 ) hex = value[0] + value[0] + value[1] + value[1] + value[2] + value[2];
+        var r = parseInt( value[0], 16 );
+        var g = parseInt( value[1], 16 );
+        var b = parseInt( value[2], 16 );
 
-
-    value = hex.match( /[a-f\d]{2}/gi );
-
-    var r = parseInt( value[0], 16 );
-    var g = parseInt( value[1], 16 );
-    var b = parseInt( value[2], 16 );
-
-    var rgbType = "rgb(" + r + ", " + g + ", " + b + (opacity?","+opacity:"")+ ")";
-
+        rgbType = "rgb(" + r + ", " + g + ", " + b + (opacity?","+opacity:"")+ ")";
+    }catch(e){
+        return rgbType;
+    }
     return rgbType;
 }

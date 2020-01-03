@@ -10,8 +10,7 @@
         <result property="deviceId" column="deviceId"/>
         <result property="fenceName" column="fenceName"/>
         <result property="zMin" column="zMin"/>
-        <result property="fill" column="fill"/>
-        <result property="stroke" column="stroke"/>
+        <result property="customJson" column="customJson"/>
         <result property="config" column="config"/>
         <collection property="location" ofType="FenceLocationBean">
             <result property="lat" column="lat"/>
@@ -32,8 +31,7 @@
                 , A.fence_name as fenceName
                 , A.z_min as zMin
                 , A.config as config
-                , A.fill as fill
-                , A.stroke as stroke
+                , A.custom_json as customJson
                 , b.lat as lat
                 , b.lng as lng
         FROM    isaver.fence A
@@ -109,8 +107,7 @@
             , fence_name
             , z_min
             , config
-            , fill
-            , stroke
+            , custom_json
         ) VALUES
         <foreach collection="list" item="item" separator="," close=";">
             (
@@ -131,16 +128,10 @@
                 <if test="item.config == null">
                     ,null
                 </if>
-                <if test="item.fill != null and item.fill != ''">
-                    ,#{item.fill}
+                <if test="item.customJson != null and item.customJson != ''">
+                    ,#{item.customJson}
                 </if>
-                <if test="item.fill == null">
-                    ,null
-                </if>
-                <if test="item.stroke != null and item.stroke != ''">
-                    ,#{item.stroke}
-                </if>
-                <if test="item.stroke == null">
+                <if test="item.customJson == null">
                     ,null
                 </if>
             )

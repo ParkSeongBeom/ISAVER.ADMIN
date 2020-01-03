@@ -151,8 +151,17 @@ var CustomMapPopup = (
                         try{
                             JSON.parse(fenceMap['config']);
                         }catch(e){
-                            alert("[CustomMapPopup] save json parse error");
-                            console.error("[CustomMapPopup] save json parse error string - " + fenceMap['config']);
+                            alert("[CustomMapPopup] save config json parse error");
+                            console.error("[CustomMapPopup] save config json parse error string - " + fenceMap['config']);
+                            return false;
+                        }
+                    }
+                    if(fenceMap['custom']!=null && fenceMap['custom']!=''){
+                        try{
+                            fenceMap['customJson'] = JSON.stringify(fenceMap['custom']);
+                        }catch(e){
+                            alert("[CustomMapPopup] save customJson parse error");
+                            console.error("[CustomMapPopup] save customJson parse error string - " + fenceMap['config']);
                             return false;
                         }
                     }
@@ -364,7 +373,7 @@ var CustomMapPopup = (
                                                             deviceId: data['deviceId'],
                                                             fenceId: data['fenceId']
                                                         }, function (evt) {
-                                                            let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, config:$(this).val()};
+                                                            let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, config:$(this).val()};
                                                             if(!_customMapMediator.computePolyPoints(paramData)){
                                                                 _customMapMediator.saveFence(paramData);
                                                             }
@@ -421,6 +430,86 @@ var CustomMapPopup = (
                                             )
                                         )
                                     ).append(
+                                        $("<div/>").append(
+                                            $("<input/>", {
+                                                type: 'text',
+                                                name: 'polygonFill',
+                                                value: data['custom']['polygon']['fill'],
+                                                maxlength: "7",
+                                                class: 'changeColor',
+                                                title:"Fence Polygon Fill Color"
+                                            }).change({
+                                                deviceId: data['deviceId'],
+                                                fenceId: data['fenceId']
+                                            }, function (evt) {
+                                                let fill = $(this).val();
+                                                if(isHex(fill)!=null){
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{fill:fill}}};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                }
+                                            })
+                                        ).append(
+                                            $("<input/>", {
+                                                type: 'text',
+                                                name: 'polygonStroke',
+                                                value: data['custom']['polygon']['stroke'],
+                                                maxlength: "7",
+                                                class: 'changeColor',
+                                                title:"Fence Polygon Stroke Color"
+                                            }).change({
+                                                deviceId: data['deviceId'],
+                                                fenceId: data['fenceId']
+                                            }, function (evt) {
+                                                let stroke = $(this).val();
+                                                if(isHex(stroke)!=null){
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{stroke:stroke}}};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                }
+                                            })
+                                        )
+                                    ).append(
+                                        $("<div/>").append(
+                                            $("<input/>", {
+                                                type: 'text',
+                                                name: 'textFill',
+                                                value: data['custom']['text']['fill'],
+                                                maxlength: "7",
+                                                class: 'changeColor',
+                                                title:"FenceName Text Color"
+                                            }).change({
+                                                deviceId: data['deviceId'],
+                                                fenceId: data['fenceId']
+                                            }, function (evt) {
+                                                let fill = $(this).val();
+                                                if(isHex(fill)!=null){
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{text:{fill:fill}}};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                }
+                                            })
+                                        ).append(
+                                            $("<input/>", {
+                                                type: 'text',
+                                                name: 'textFontSize',
+                                                value: data['custom']['text']['style']['font-size'],
+                                                class: 'minicolor-item',
+                                                title:"FenceName Text Font Size"
+                                            }).change({
+                                                deviceId: data['deviceId'],
+                                                fenceId: data['fenceId']
+                                            }, function (evt) {
+                                                let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{text:{style:{'font-size':$(this).val()}}}};
+                                                if(!_customMapMediator.computePolyPoints(paramData)){
+                                                    _customMapMediator.saveFence(paramData);
+                                                }
+                                            })
+                                        )
+                                    ).append(
                                         $("<div/>").addClass("set-item").append(
                                             $("<div/>").append(
                                                 $("<input/>", {
@@ -433,7 +522,7 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceName:$(this).val()};
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, fenceName:$(this).val()};
                                                     if(!_customMapMediator.computePolyPoints(paramData)){
                                                         _customMapMediator.saveFence(paramData);
                                                     }
@@ -451,7 +540,7 @@ var CustomMapPopup = (
                                                     deviceId: data['deviceId'],
                                                     fenceId: data['fenceId']
                                                 }, function (evt) {
-                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, zMin:$(this).val()};
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, zMin:$(this).val()};
                                                     if(!_customMapMediator.computePolyPoints(paramData)){
                                                         _customMapMediator.saveFence(paramData);
                                                     }
@@ -471,47 +560,11 @@ var CustomMapPopup = (
                                                         deviceId: data['deviceId'],
                                                         fenceId: data['fenceId']
                                                     }, function (evt) {
-                                                        let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fenceType:$(this).val()};
+                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, fenceType:$(this).val()};
                                                         if(!_customMapMediator.computePolyPoints(paramData)){
                                                             _customMapMediator.saveFence(paramData);
                                                         }
                                                     })
-                                            )
-                                        ).append(
-                                            $("<div/>").append(
-                                                $("<input/>", {
-                                                    type: 'text',
-                                                    name: 'fill',
-                                                    value: data['fill'],
-                                                    class: 'changeColor',
-                                                    title:"Fill Color"
-                                                }).change({
-                                                    deviceId: data['deviceId'],
-                                                    fenceId: data['fenceId']
-                                                }, function (evt) {
-                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, fill:$(this).val()};
-                                                    if(!_customMapMediator.computePolyPoints(paramData)){
-                                                        _customMapMediator.saveFence(paramData);
-                                                    }
-                                                })
-                                            ).append(
-                                                $("<input/>", {
-                                                    type: 'text',
-                                                    name: 'stroke',
-                                                    value: data['stroke'],
-                                                    class: 'changeColor',
-                                                    title:"Stroke Color"
-                                                }).on("keypress",function(){
-                                                    isNumberWithPoint(this);
-                                                }).change({
-                                                    deviceId: data['deviceId'],
-                                                    fenceId: data['fenceId']
-                                                }, function (evt) {
-                                                    let paramData = {deviceId:evt.data.deviceId, fenceId:evt.data.fenceId, stroke:$(this).val()};
-                                                    if(!_customMapMediator.computePolyPoints(paramData)){
-                                                        _customMapMediator.saveFence(paramData);
-                                                    }
-                                                })
                                             )
                                         ).append(
                                             $("<div/>", {class: "camera_list"}).append(cameraSelectTag)
@@ -524,9 +577,9 @@ var CustomMapPopup = (
                                             control: 'hue',
                                             defaultValue: $(this).attr('data-defaultValue') || '',
                                             format: 'hex',
-                                            keywords: '',
                                             letterCase: 'lowercase',
-                                            position: 'position-top-left',
+                                            position: 'bottom right',
+                                            swatches: ['#f6b900','#a900fd','#03a9f5','#3f51b5','#f54337','#c6ff00','#8b0000'],
                                             theme: 'bootstrap'
                                         })
                                     });

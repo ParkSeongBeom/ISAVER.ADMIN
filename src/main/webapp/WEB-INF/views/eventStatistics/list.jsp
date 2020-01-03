@@ -30,7 +30,7 @@
         <section class="box-list">
             <!-- 목록 상단 버튼 영역 -->
             <div class="set-btn type-01">
-                <button class="ico-plus" onclick="detailRender();"></button>
+                <button class="ico-plus" onclick="detailRender(null,true);"></button>
                 <div class="set-option">
                     <select id="autoRefresh" onchange="javascript:autoSearch();">
                         <option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>
@@ -71,19 +71,6 @@
                     <div class="set-itembox option-popup">
                         <h4>OPTION</h4>
                         <div class="set-item">
-                            <%--<h4><spring:message code="statistics.column.autoRefresh"/></h4>--%>
-                            <%--<div>--%>
-                                <%--<select id="autoRefresh" onchange="javascript:autoSearch();">--%>
-                                    <%--<option value="" selected="selected"><spring:message code="common.column.selectNo"/></option>--%>
-                                    <%--<option value="10">10<spring:message code="common.column.second"/></option>--%>
-                                    <%--<option value="30">30<spring:message code="common.column.second"/></option>--%>
-                                    <%--<option value="60">1<spring:message code="common.column.minute"/></option>--%>
-                                    <%--<option value="300">5<spring:message code="common.column.minute"/></option>--%>
-                                    <%--<option value="600">10<spring:message code="common.column.minute"/></option>--%>
-                                    <%--<option value="1800">30<spring:message code="common.column.minute"/></option>--%>
-                                    <%--<option value="3600">1<spring:message code="common.column.hour"/></option>--%>
-                                <%--</select>--%>
-                            <%--</div>--%>
                             <h4><spring:message code="statistics.column.fenceAutoComplete"/></h4>
                             <div>
                                 <spring:message code="common.selectbox.notSelect" var="notSelectText"/>
@@ -704,8 +691,8 @@
                 new Chartist.Pie('.canvas-chart', {
                     series: _sumSeriesList
                 }, {
-                    labelInterpolationFnc: function(value) {
-                        return Math.round(value / _sumSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%';
+                    labelInterpolationFnc: function(value, index) {
+                        return $(".chart_label.header span:eq("+index+")").attr("label") + " (" + Math.round(value / _sumSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%)';
                     },
                     plugins: [
                         Chartist.plugins.tooltip()
@@ -818,12 +805,13 @@
                     }
                     customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
                     customMapMediator.init(data['paramBean']['areaId'],{
+                        'element' : {
+                            'lastPositionUseFlag' : true
+                            ,'lastPositionSaveFlag' : true
+                        },
                         'custom' : {
-                            'draggable' : false
-                            ,'fenceView' : true
+                            'fenceView' : true
                             ,'openLinkFlag' : false
-                            ,'moveFenceHide' : false
-                            ,'moveReturn' : false
                             ,'onLoad' : function(){
                                 if(notificationList!=null) {
                                     for(var i in notificationList){

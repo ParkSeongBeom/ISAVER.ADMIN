@@ -1898,7 +1898,8 @@ ul.u_defalut {
         flexbox: 1;
         -webkit-box-flex: 1;
         -ms-flex: 1;
-        padding: 0 10px; }
+        padding: 0 10px;
+        word-break: break-all; }
       .critical-ui li > div > button {
         display: none;
         z-index: 1;
@@ -5150,6 +5151,10 @@ a.fc-more {
         margin: 0; }
       .set-item select ~ select, .set-item select ~ input, .set-item input ~ select, .set-item input ~ input {
         border-left-color: transparent !important; }
+        .set-item select ~ select:active, .set-item select ~ input:active, .set-item input ~ select:active, .set-item input ~ input:active {
+          border-left-color: #ff8400 !important; }
+        .set-item select ~ select:focus, .set-item select ~ input:focus, .set-item input ~ select:focus, .set-item input ~ input:focus {
+          border-left-color: #109dcb !important; }
     .set-item:before {
       content: "";
       position: absolute;

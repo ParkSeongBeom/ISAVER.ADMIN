@@ -32,9 +32,7 @@ public class FenceBean {
     /* 설정정보 */
     private String config;
     /* 설정정보 */
-    private String fill;
-    /* 설정정보 */
-    private String stroke;
+    private String customJson;
 
     /* 펜스명*/
     private String fenceName;
@@ -129,19 +127,11 @@ public class FenceBean {
         this.config = config;
     }
 
-    public String getFill() {
-        return fill;
+    public String getCustomJson() {
+        return customJson;
     }
 
-    public void setFill(String fill) {
-        this.fill = fill;
-    }
-
-    public String getStroke() {
-        return stroke;
-    }
-
-    public void setStroke(String stroke) {
-        this.stroke = stroke;
+    public void setCustomJson(String customJson) {
+        this.customJson = customJson;
     }
 }
