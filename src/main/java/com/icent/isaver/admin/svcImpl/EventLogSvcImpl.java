@@ -90,6 +90,21 @@ public class EventLogSvcImpl implements EventLogSvc {
     }
 
     @Override
+    public ModelAndView findByEventLog(Map<String, String> parameters) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
+            Document eventLog = collection.find(
+                    eq("eventLogId", parameters.get("eventLogId"))
+            ).sort(Sorts.descending("eventDatetime")).first();
+            modelAndView.addObject("eventLog", eventLog);
+        } catch (Exception e) {
+            throw new IsaverException("");
+        }
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView findListEventLogChart(Map<String, String> parameters) {
         ModelAndView modelAndView = new ModelAndView();
 

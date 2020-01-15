@@ -37,6 +37,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Value("${mqtt.server.domain}")
     private String mqttAddress = null;
 
+    @Value("${mqtt.server.userName}")
+    private String mqttUser = null;
+
+    @Value("${mqtt.server.password}")
+    private String mqttPassword = null;
+
     @Value("${socketMode}")
     private String socketMode = null;
 
@@ -138,6 +144,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             try{
                 InetAddress address = InetAddress.getByName(hostIp);
                 modelAndView.addObject("socketIp", address.getHostAddress());
+                modelAndView.addObject("socketUser", mqttUser);
+                modelAndView.addObject("socketPw", mqttPassword);
                 modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
             }catch(Exception e){
                 e.printStackTrace();

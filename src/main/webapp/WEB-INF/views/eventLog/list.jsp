@@ -80,7 +80,7 @@
                 <c:choose>
                     <c:when test="${eventLogs != null and fn:length(eventLogs) > 0}">
                         <c:forEach var="eventLog" items="${eventLogs}">
-                            <tr event_log_id="${eventLog.eventLogId}">
+                            <tr onclick="javascript:getDetail('${eventLog.eventLogId}');">
                                 <td>${eventLog.areaName}</td>
                                 <td>${eventLog.deviceName}</td>
                                 <td>${eventLog.eventName}</td>
@@ -103,6 +103,23 @@
     </article>
 </section>
 
+<section class="popup-layer">
+    <div class="popupbase admin_popup eventdetail_popup">
+        <div>
+            <div>
+                <header>
+                    <h2><spring:message code="eventlog.title.eventDetail"/></h2>
+                    <button onclick="closeDetailPopup();"></button>
+                </header>
+                <article>
+                    <textarea class="textboard" readOnly="readonly" style="resize:none; height: 100%;" id="detailText"></textarea>
+                </article>
+            </div>
+        </div>
+        <div class="bg ipop_close" onclick="closeDetailPopup();"></div>
+    </div>
+</section>
+
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
@@ -110,10 +127,12 @@
 
     var messageConfig = {
         'earlyDatetime':'<spring:message code="eventlog.message.earlyDatetime"/>'
+        ,'detailFailure':'<spring:message code="eventlog.message.detailFailure"/>'
     };
 
     var urlConfig = {
         'listUrl':'${rootPath}/eventLog/list.html'
+        ,'detailUrl':'${rootPath}/eventLog/detail.json'
         ,'excelUrl':'${rootPath}/eventLog/excel.html'
     };
 
@@ -164,6 +183,52 @@
             form.attr('action',urlConfig['listUrl']);
             form.submit();
         }
+    }
+
+    /*
+     open 이벤트 상세 popup
+     @author psb
+     */
+    function getDetail(eventLogId){
+        callAjax('detail',{'eventLogId':eventLogId});
+    }
+
+    /*
+     close 이벤트 상세 popup
+     @author psb
+     */
+    function closeDetailPopup(){
+        $("#detailText").empty();
+        $(".eventdetail_popup").fadeOut();
+    }
+
+    /*
+     ajax call
+     @author psb
+     */
+    function callAjax(actionType, data){
+        sendAjaxPostRequest(urlConfig[actionType + 'Url'],data,eventLogSuccessHandler,eventLogErrorHandler,actionType);
+    }
+
+    /*
+     ajax success handler
+     @author psb
+     */
+    function eventLogSuccessHandler(data, dataType, actionType){
+        switch(actionType){
+            case 'detail':
+                $("#detailText").text(JSON.stringify(data['eventLog'],undefined,2));
+                $(".eventdetail_popup").fadeIn();
+                break;
+        }
+    }
+
+    /*
+     ajax error handler
+     @author psb
+     */
+    function eventLogErrorHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
+        alertMessage(actionType + 'Failure');
     }
 
     /*

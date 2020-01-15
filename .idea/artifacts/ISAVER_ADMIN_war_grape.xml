@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="ISAVER.ADMIN:war_grape">
-    <output-path>$PROJECT_DIR$/../../../02.업무/1.개발/9.grapesoft/설치패키지/docker/PACKAGES/INSTALL/container/isaver_web/webapps</output-path>
-    <root id="archive" name="ISAVER.ADMIN.war">
-      <element id="artifact" artifact-name="ISAVER.ADMIN:war_exploded" />
-    </root>
-  </artifact>
-</component>

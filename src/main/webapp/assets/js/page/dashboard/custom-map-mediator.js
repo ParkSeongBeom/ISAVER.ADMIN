@@ -1869,7 +1869,6 @@ var CustomMapMediator = (
                         fence['deviceId'] = data['paramBean']['deviceId'];
                         let optionCopy = $.extend(true,{},_options[_MARKER_TYPE[1]]['custom']);
                         fence['custom'] = $.extend(true,optionCopy,JSON.parse(fence['customJson']));
-                        console.log(fence['custom']);
                         _self.addMarker(_MARKER_TYPE[1], fence);
                     }
                     break;

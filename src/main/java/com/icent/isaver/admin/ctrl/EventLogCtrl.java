@@ -46,6 +46,20 @@ public class EventLogCtrl {
     }
 
     /**
+     * 이벤트 로그 상세를 가져온다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/detail")
+    public ModelAndView findByEventLog(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = eventLogSvc.findByEventLog(parameters);
+        return modelAndView;
+    }
+
+    /**
      * 이벤트 로그 목록을 가져온다. (blinker)
      *
      * @author psb

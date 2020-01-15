@@ -59,7 +59,7 @@
         serverDatetime.setTime(${serverDatetime});
         var datetimeGap = new Date().getTime() - serverDatetime.getTime();
         var _eventDatetime = new Date();
-        var webSocketHelper = '${isMqtt}'=="true" ? new StompHelper('${socketIp}') : new WebSocketHelper('${socketIp}');
+        var webSocketHelper = '${isMqtt}'=="true" ? new StompHelper('${socketIp}','${socketUser}','${socketPw}') : new WebSocketHelper('${socketIp}');
         var notificationHelper = new NotificationHelper(rootPath);
         var dashboardFlag = false;
 

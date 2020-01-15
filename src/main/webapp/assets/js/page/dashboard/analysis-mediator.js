@@ -74,7 +74,6 @@ var AnalysisMediator = (
             for(var key in _statusCss){
                 _element.find("div[name='statusIco']").removeClass(_statusCss[key]);
             }
-            console.log(data,status,_element.find("div[name='statusIco']"), _statusCss[status]);
             if(status!=null){
                 _element.find("div[name='statusIco']").addClass(_statusCss[status]);
             }

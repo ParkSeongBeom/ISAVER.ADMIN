@@ -816,7 +816,7 @@
         notificationHelper.setCallBackEventHandler(dashboardHelper.appendEventHandler);
 
         /* 이벤트 callback (websocket 리스너) */
-        addRefreshTimeCallBack(refreshInoutSetting);
+        addRefreshTimeCallBack(refreshDashboard);
         initInoutConfigAreaDynatree();
         initChartList();
     });
@@ -963,7 +963,7 @@
         callAjax('inoutConfigAreaTree', {delYn:'N'});
     }
 
-    function refreshInoutSetting(_serverDatetime){
+    function refreshDashboard(_serverDatetime){
         $.each($(".watch_area div[templateCode='TMP003']"),function(){
             if(_serverDatetime.getTime() > $(this).attr("endDatetime")){
                 dashboardHelper.getBlinker($(this).attr("areaId"));
@@ -971,8 +971,8 @@
         });
 
         if(renderDatetime.format("yyyyMMdd")!=_serverDatetime.format("yyyyMMdd")){
-            $.each($(".watch_area li[deviceId]"),function(){
-                $(this).find("span[evtValue]").text("-");
+            $.each($(".watch_area div[templateCode='TMP004'] div[deviceId]"),function(){
+                $(this).find("p[evtValue]").text("-");
                 if($(this).hasClass("on")){
                     findListChart($(this).attr("areaId"), $(this).attr("deviceId"));
                 }

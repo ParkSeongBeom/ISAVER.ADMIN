@@ -48,9 +48,6 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Value("${cnf.server.majorVersion}")
     private String majorVersion = null;
 
-    @Value("${createComp}")
-    private String createComp = null;
-
     @Inject
     private UsersDao usersDao;
 
@@ -68,7 +65,6 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());
         modelAndView.addObject("majorVersion", majorVersion);
-        modelAndView.addObject("createComp", createComp);
         return modelAndView;
     }
 
@@ -92,7 +88,8 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
                     AdminHelper.setAdminInfo(request, usersBean);
                     addLogAuthAdminUser(request, usersBean.getUserId(), AdminResource.ADMIN_LOG_TYPE[0]);
                 }else{
-                    throw new IsaverException("");
+                    license.setStatus(-100);
+                    license.setMessage("Failed to login, Please check your ID and Password.");
                 }
             }
             modelAndView.addObject("license",license);

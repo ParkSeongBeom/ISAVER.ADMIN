@@ -6,20 +6,17 @@
  * @type {Function}
  */
 var StompHelper = (
-    function(webSocketIp){
+    function(socketIp,socketUser,socketPw){
         let topicList = {};
         let ws = null;
-        let WEBSOCKET_IP = null;
+        let SOCKET_IP = null;
         let CONNECT_STATUS = ["connect","disconnect"];
         let SEND_MESSAGE_RETRY = {
             'cnt' : 10
             , 'delay' : 1000
         };
         let RECONNECT_DELAY = 3000;
-        let CONNECT_HEADERS = {
-            login: 'icent',
-            passcode: 'dkdltpsxm'
-        };
+        let CONNECT_HEADERS;
         let SOKCET_CONNECTED = false;
         let STOMP_PORT = 15674;
         let _self = this;
@@ -33,9 +30,17 @@ var StompHelper = (
          * initialize
          * @author psb
          */
-        var initialize = function(_webSocketIp){
-            WEBSOCKET_IP = _webSocketIp;
-            ws = Stomp.client("ws://"+WEBSOCKET_IP+":"+STOMP_PORT+"/ws");
+        var initialize = function(_socketIp,_socketUser,_socketPw){
+            if(_socketIp==null || _socketUser==null || _socketPw==null){
+                console.error("[StompHelper] initialize failure - Insufficient parameters (ip:"+_socketIp+", user:"+_socketUser+", passcode:"+_socketPw);
+                return false;
+            }
+            SOCKET_IP = _socketIp;
+            CONNECT_HEADERS = {
+                login: _socketUser,
+                passcode: _socketPw
+            };
+            ws = Stomp.client("ws://"+SOCKET_IP+":"+STOMP_PORT+"/ws");
             ws.reconnect_delay = RECONNECT_DELAY;
             ws.connect(CONNECT_HEADERS, function() {
                 console.log('[StompHelper] Stomp WebSocket Connect');
@@ -183,6 +188,6 @@ var StompHelper = (
             return resultFlag;
         };
 
-        initialize(webSocketIp);
+        initialize(socketIp,socketUser,socketPw);
     }
 );

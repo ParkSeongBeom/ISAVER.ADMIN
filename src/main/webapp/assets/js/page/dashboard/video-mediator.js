@@ -181,7 +181,7 @@ var VideoMediator = (
                             }
                         }
                     }else{
-                        console.warn("[VideoMediator][setAnimate] not found video device - deviceId : " + fenceDevice['deviceId'] + ", deviceId : " + data['fenceId']);
+                        console.debug("[VideoMediator][setAnimate] not found video device - deviceId : " + fenceDevice['deviceId'] + ", deviceId : " + data['fenceId']);
                     }
                 }
             }

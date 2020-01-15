@@ -19,7 +19,7 @@
     <link href="${rootPath}/assets/css/dashboard.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/admin.css?version=${version}" rel="stylesheet" type="text/css" />
     <!--[endif] -->
-    <title>i-Saver Login</title>
+    <title>iSaver Login</title>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/common/jquery.cookie.js"></script>
     <script type="text/javascript" src="${rootPath}/assets/js/util/md5.min.js"></script>
@@ -32,7 +32,7 @@
         <!-- hearder Start 공통부분 -->
         <section class="login_area">
             <article>
-                <h1 <c:if test="${createComp=='grape'}">style="background-image:url('${rootPath}/assets/images/logo/grape_w.png');"</c:if>>${majorVersion}</h1>
+                <h1>${majorVersion}</h1>
                 <!-- 로그인 입력 폼 Start -->
                 <!-- 다국어 지원 추가 -->
                 <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>
@@ -186,6 +186,9 @@
                     break;
                 case -1: // 기한만료
                     alertMessage('expireLicense');
+                    break;
+                case -100: // 아이디 패스워드 확인
+                    alertMessage('loginFailure');
                     break;
                 default : // 기타 오류
                     alertMessage('emptyLicense');

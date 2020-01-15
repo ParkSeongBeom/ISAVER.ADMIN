@@ -32,6 +32,15 @@ public interface EventLogSvc {
     ModelAndView findListEventLog(Map<String, String> parameters);
 
     /**
+     * 이벤트 로그 상세를 가져온다.
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findByEventLog(Map<String, String> parameters);
+
+    /**
      * 이벤트 로그 차트를 가져온다.
      *
      * @author psb
