@@ -16,7 +16,7 @@ var CustomMapMediator = (
         };
         var _MARKER_TYPE = ['device','fence','object','camera','custom'];
         var _OBJECT_TYPE = ['unknown','unknown-LEV001','unknown-LEV002','unknown-LEV003','human','human-LEV001','human-LEV002','human-LEV003'];
-        var _FENCE_TYPE = ['normal','ignore'];
+        var _FENCE_TYPE = ['normal','ignore','section'];
         var _marker = {
             'fence' : {}
             ,'object' : {}
@@ -1492,7 +1492,9 @@ var CustomMapMediator = (
                             if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
                                 fenceMarker['notification'][criticalLevel].push(data['objectId']);
                             }
-                            _self.moveFence('fenceMarker',fenceMarker);
+                            if(data['moveFenceHide']!=true){
+                                _self.moveFence('fenceMarker',fenceMarker);
+                            }
                             break;
                         case "remove" :
                             if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){

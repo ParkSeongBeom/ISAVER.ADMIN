@@ -334,6 +334,7 @@ var DashboardHelper = (
                 case "addNotification": // 알림이벤트 등록
                     if(Array.isArray(data['notification'])){
                         for(let index in data['notification']){
+                            data['notification'][index]['moveFenceHide'] = true;
                             _self.appendEventHandler(messageType, data['notification'][index]);
                         }
                     }else{

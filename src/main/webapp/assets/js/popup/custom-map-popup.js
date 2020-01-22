@@ -562,15 +562,20 @@ var CustomMapPopup = (
                                                         value: 'ignore',
                                                         selected: data['fenceType'] == 'ignore'
                                                     }).text("ignore")
+                                                ).append(
+                                                    $("<option/>", {
+                                                        value: 'section',
+                                                        selected: data['fenceType'] == 'section'
+                                                    }).text("section")
                                                 ).change({
-                                                        deviceId: data['deviceId'],
-                                                        fenceId: data['fenceId']
-                                                    }, function (evt) {
-                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, fenceType:$(this).val()};
-                                                        if(!_customMapMediator.computePolyPoints(paramData)){
-                                                            _customMapMediator.saveFence(paramData);
-                                                        }
-                                                    })
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, fenceType:$(this).val()};
+                                                    if(!_customMapMediator.computePolyPoints(paramData)){
+                                                        _customMapMediator.saveFence(paramData);
+                                                    }
+                                                })
                                             )
                                         ).append(
                                             $("<div/>", {class: "camera_list"}).append(cameraSelectTag)
@@ -585,7 +590,7 @@ var CustomMapPopup = (
                                             format: 'hex',
                                             letterCase: 'lowercase',
                                             position: 'bottom right',
-                                            swatches: ['#f6b900','#a900fd','#03a9f5','#3f51b5','#f54337','#c6ff00','#8b0000'],
+                                            swatches: ['rgb(246,185,0,0.2)','rgb(169,0,253,0.2)','rgb(3,169,245,0.2)','rgb(63,81,181,0.2)','rgb(245,67,55,0.2)','rgb(198,255,0,0.2)','rgb(139,0,0,0.2)','rgb(0,255,13,0.2)'],
                                             theme: 'bootstrap',
                                             opacity: $(this).attr("data-opacity")
                                         })

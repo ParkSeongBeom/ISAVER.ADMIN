@@ -347,7 +347,7 @@ function hexToRgb( hexType, opacity ){
         var g = parseInt( value[1], 16 );
         var b = parseInt( value[2], 16 );
 
-        rgbType = "rgb(" + r + ", " + g + ", " + b + (opacity?","+opacity:"")+ ")";
+        rgbType = "rgb(" + r + "," + g + "," + b + (opacity?","+opacity:"")+ ")";
     }catch(e){
         return rgbType;
     }
