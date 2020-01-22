@@ -434,17 +434,19 @@ var CustomMapPopup = (
                                             $("<input/>", {
                                                 type: 'text',
                                                 name: 'polygonFill',
-                                                value: data['custom']['polygon']['fill'],
+                                                value: rgbToHex(data['custom']['polygon']['fill']),
                                                 maxlength: "7",
                                                 class: 'changeColor',
-                                                title:"Fence Polygon Fill Color"
+                                                title: "Fence Polygon Fill Color",
+                                                'data-opacity': rgbToOpacity(data['custom']['polygon']['fill'])
                                             }).change({
                                                 deviceId: data['deviceId'],
                                                 fenceId: data['fenceId']
                                             }, function (evt) {
                                                 let fill = $(this).val();
+                                                let opacity = $(this).attr("data-opacity");
                                                 if(isHex(fill)!=null){
-                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{fill:fill}}};
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{fill:hexToRgb(fill,opacity)}}};
                                                     if(!_customMapMediator.computePolyPoints(paramData)){
                                                         _customMapMediator.saveFence(paramData);
                                                     }
@@ -454,17 +456,19 @@ var CustomMapPopup = (
                                             $("<input/>", {
                                                 type: 'text',
                                                 name: 'polygonStroke',
-                                                value: data['custom']['polygon']['stroke'],
+                                                value: rgbToHex(data['custom']['polygon']['stroke']),
                                                 maxlength: "7",
                                                 class: 'changeColor',
-                                                title:"Fence Polygon Stroke Color"
+                                                title:"Fence Polygon Stroke Color",
+                                                'data-opacity': rgbToOpacity(data['custom']['polygon']['stroke'])
                                             }).change({
                                                 deviceId: data['deviceId'],
                                                 fenceId: data['fenceId']
                                             }, function (evt) {
                                                 let stroke = $(this).val();
+                                                let opacity = $(this).attr("data-opacity");
                                                 if(isHex(stroke)!=null){
-                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{stroke:stroke}}};
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{polygon:{stroke:hexToRgb(stroke,opacity)}}};
                                                     if(!_customMapMediator.computePolyPoints(paramData)){
                                                         _customMapMediator.saveFence(paramData);
                                                     }
@@ -476,17 +480,19 @@ var CustomMapPopup = (
                                             $("<input/>", {
                                                 type: 'text',
                                                 name: 'textFill',
-                                                value: data['custom']['text']['fill'],
+                                                value: rgbToHex(data['custom']['text']['fill']),
                                                 maxlength: "7",
                                                 class: 'changeColor',
-                                                title:"FenceName Text Color"
+                                                title:"FenceName Text Color",
+                                                'data-opacity': rgbToOpacity(data['custom']['text']['fill'])
                                             }).change({
                                                 deviceId: data['deviceId'],
                                                 fenceId: data['fenceId']
                                             }, function (evt) {
                                                 let fill = $(this).val();
+                                                let opacity = $(this).attr("data-opacity");
                                                 if(isHex(fill)!=null){
-                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{text:{fill:fill}}};
+                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{text:{fill:hexToRgb(fill,opacity)}}};
                                                     if(!_customMapMediator.computePolyPoints(paramData)){
                                                         _customMapMediator.saveFence(paramData);
                                                     }
@@ -580,7 +586,8 @@ var CustomMapPopup = (
                                             letterCase: 'lowercase',
                                             position: 'bottom right',
                                             swatches: ['#f6b900','#a900fd','#03a9f5','#3f51b5','#f54337','#c6ff00','#8b0000'],
-                                            theme: 'bootstrap'
+                                            theme: 'bootstrap',
+                                            opacity: $(this).attr("data-opacity")
                                         })
                                     });
                                     _ajaxCall("fenceDeviceList", {areaId: _areaId, uuid: data['uuid']});

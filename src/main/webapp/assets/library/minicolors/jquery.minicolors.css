@@ -89,7 +89,7 @@ ul.minicolors-swatches {
 }
 
 .minicolors-with-opacity .minicolors-panel {
-  width: 194px;
+  width: 190px;
 }
 
 .minicolors .minicolors-grid {
@@ -164,12 +164,12 @@ ul.minicolors-swatches {
 }
 
 .minicolors-opacity-slider {
-  left: 173px; /* LTR */
+  left: 170px; /* LTR */
   background-position: -40px 0;
   display: none;
 }
 [dir=rtl] .minicolors-opacity-slider {
-  right: 173px;
+  right: 170px;
 }
 
 .minicolors-with-opacity .minicolors-opacity-slider {

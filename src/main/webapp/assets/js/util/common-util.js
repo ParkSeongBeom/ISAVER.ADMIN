@@ -315,6 +315,19 @@ function rgbToHex( rgbType ){
     return "#" + r + g + b;
 }
 
+function rgbToOpacity( rgbType ){
+    // 컬러값과 쉼표만 남기고 삭제.
+    var rgb = rgbType.replace( /[^%,.\d]/g, "" );
+
+    // 쉼표(,)를 기준으로 분리해서, 배열에 담기.
+    rgb = rgb.split( "," );
+    if(rgb.length <= 3){
+        return 1;
+    }else{
+        return rgb[3];
+    }
+}
+
 function isHex(h) {
     var regex = /^#[0-9a-f]{3,6}$/i;
     return regex.test(h);

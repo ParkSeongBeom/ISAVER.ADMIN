@@ -62,15 +62,14 @@ var CustomMapMediator = (
                 'custom' :{
                     'text' : {
                         'text-anchor': "middle"
-                        , 'fill': "#ffffff"
+                        , 'fill': "rgb(255, 255, 255)"
                         , 'style': {
                             "font-size":"16px"
                         }
                     },
                     'polygon' : {
-                        'fill': "#f6b900"
-                        , 'stroke': "#f6b900"
-                        , 'opacity': 0.2
+                        'fill': "rgb(246, 185, 0,0.2)"
+                        , 'stroke': "rgb(246, 185, 0)"
                     }
                 }
                 , 'animateFlag' : true // 이벤트 발생시 펜스 애니메이션 사용 여부
@@ -553,8 +552,7 @@ var CustomMapMediator = (
                             _canvasSvg.image(marker,null,null,null,null,_defsMarkerRef[_OBJECT_TYPE[i]]);
                         }
 
-                        let marker = _canvasSvg.marker(defs,'heatmap',10,18,6,6,"0");
-                        _canvasSvg.circle(marker,10,11,6,{fill:"red","fill-opacity":0.02,style:"animation:none"});
+                        _canvasSvg.circle(_canvasSvg.marker(defs,'heatmap',10,18,6,6,"0"),10,11,6,{fill:"rgb(255, 0, 0,0.02)",style:"animation:none"});
                     }
                 });
                 _mapCanvas.find("svg").addClass("g-fence g-line "+_options[_MARKER_TYPE[4]]['trackingScale']);
@@ -1038,8 +1036,8 @@ var CustomMapMediator = (
                             }
 
                             _marker[messageType][data['deviceId']][data['id']]['element'].css({
-                                fill:hexToRgb(_marker[messageType][data['deviceId']][data['id']]['data']['custom']['polygon']['fill'],_marker[messageType][data['deviceId']][data['id']]['data']['custom']['polygon']['opacity'])
-                                ,stroke:hexToRgb(_marker[messageType][data['deviceId']][data['id']]['data']['custom']['polygon']['stroke'])
+                                fill:_marker[messageType][data['deviceId']][data['id']]['data']['custom']['polygon']['fill']
+                                ,stroke:_marker[messageType][data['deviceId']][data['id']]['data']['custom']['polygon']['stroke']
                             });
 
                             if(data['fenceType']==_FENCE_TYPE[1]){
@@ -1869,6 +1867,18 @@ var CustomMapMediator = (
                         fence['deviceId'] = data['paramBean']['deviceId'];
                         let optionCopy = $.extend(true,{},_options[_MARKER_TYPE[1]]['custom']);
                         fence['custom'] = $.extend(true,optionCopy,JSON.parse(fence['customJson']));
+                        if(fence['custom']['text']!=null && fence['custom']['text']['fill']!=null && isHex(fence['custom']['text']['fill'])){
+                            fence['custom']['text']['fill'] = hexToRgb(fence['custom']['text']['fill']);
+                        }
+
+                        if(fence['custom']['polygon']!=null){
+                            if(fence['custom']['polygon']['fill']!=null && isHex(fence['custom']['polygon']['fill'])){
+                                fence['custom']['polygon']['fill'] = hexToRgb(fence['custom']['polygon']['fill'],0.2);
+                            }
+                            if(fence['custom']['polygon']['stroke']!=null && isHex(fence['custom']['polygon']['stroke'])){
+                                fence['custom']['polygon']['stroke'] = hexToRgb(fence['custom']['polygon']['stroke']);
+                            }
+                        }
                         _self.addMarker(_MARKER_TYPE[1], fence);
                     }
                     break;
