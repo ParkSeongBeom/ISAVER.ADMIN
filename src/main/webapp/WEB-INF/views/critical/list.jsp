@@ -198,7 +198,7 @@
     };
 
     var urlConfig = {
-        'listUrl':'${rootPath}/critical/list.html'
+        'listUrl':'${rootPath}/critical/list.json'
         ,'saveUrl':'${rootPath}/critical/save.json'
     };
 
