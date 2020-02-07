@@ -706,9 +706,9 @@ var NotificationHelper = (
                 case "cancel" :
                     var levelTag = $("section[criticalLevelCnt] span["+notificationData['criticalLevel']+"]");
                     var levelCtn = Number(levelTag.text())-1;
-                    levelTag.text(levelCtn);
+                    levelTag.text(levelCtn<0?0:levelCtn);
 
-                    if(levelCtn==0){
+                    if(levelCtn<=0){
                         modifyElementClass($(".notice-btn"),"level-"+criticalCss[notificationData['criticalLevel']],'remove');
                     }
 

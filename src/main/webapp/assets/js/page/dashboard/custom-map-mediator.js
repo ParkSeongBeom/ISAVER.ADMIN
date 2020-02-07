@@ -1151,7 +1151,7 @@ var CustomMapMediator = (
                             if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['textElement'].remove(); }
                             const svgText = _canvasSvg.text(lastPoint['lat']+7, lastPoint['lng'], lastSpeed+_options[_MARKER_TYPE[2]]['speedFormat'], {
                                 'text-anchor': "start"
-                                , 'fill': "rgb(255, 0, 0)"
+                                , 'fill': "rgb(0,0,255)"
                                 , 'style': "font-size:8px"
                             });
                             _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);

@@ -503,7 +503,6 @@ var DashboardHelper = (
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
                 case 'blinkerList':
-                    console.log(data);
                     blinkerRender(data['eventLog']);
                     break;
                 case 'deviceList':

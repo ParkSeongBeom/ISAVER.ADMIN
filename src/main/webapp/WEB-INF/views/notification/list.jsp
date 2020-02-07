@@ -508,6 +508,7 @@
                 ,'object' :{
                     'pointsHideFlag' : false
                     ,'pointShiftCnt' : null
+                    ,'speedFlag' : true
                 }
             });
             callAjax('videoList',{'notificationId':data['notificationId'],'videoType':'event'});

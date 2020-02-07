@@ -174,6 +174,14 @@
                                 <select id="endDatetimeHourSelect" name="endDatetimeHour"></select>
                             </span>
                         </p>
+                        <p class="itype_04">
+                            <span><spring:message code="statistics.column.speed" /></span>
+                            <span class="plable04">
+                                <input type="number" name="startSpeed" />
+                                <em>~</em>
+                                <input type="number" name="endSpeed" />
+                            </span>
+                        </p>
                     </div>
                     <div class="search_btn">
                         <button onclick="searchHeatMap(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
@@ -797,7 +805,8 @@
                 getList();
                 break;
             case "heatMap":
-                var notificationList = data['notifications'];
+                let notificationList = data['notifications'];
+                let paramBean = data['paramBean'];
                 customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
                 try{
                     if(loadingBarFlag){
@@ -816,15 +825,30 @@
                                 if(notificationList!=null) {
                                     for(var i in notificationList){
                                         let noti = notificationList[i];
-                                        var trackingJson = JSON.parse(noti['trackingJson']);
-                                        var marker = {
-                                            'areaId' : noti['areaId']
-                                            ,'deviceId' : noti['deviceId']
-                                            ,'objectType' : 'heatmap'
-                                            ,'id' : noti['objectId']
-                                            ,'location' : trackingJson
-                                        };
-                                        customMapMediator.saveMarker('object', marker);
+                                        let trackingJson = JSON.parse(noti['trackingJson']);
+                                        let removeArr = [];
+                                        for(let k in trackingJson){
+                                            if(trackingJson[k]['speed']!=null){
+                                                if(paramBean['startSpeed']!="" && Number(trackingJson[k]['speed'])<Number(paramBean['startSpeed'])){
+                                                    removeArr.push(k);
+                                                }else if(paramBean['endSpeed']!="" && Number(trackingJson[k]['speed'])>Number(paramBean['endSpeed'])){
+                                                    removeArr.push(k);
+                                                }
+                                            }
+                                        }
+                                        while(removeArr.length){
+                                            trackingJson.splice(removeArr.pop(), 1);
+                                        }
+                                        if(trackingJson.length>0){
+                                            var marker = {
+                                                'areaId' : noti['areaId']
+                                                ,'deviceId' : noti['deviceId']
+                                                ,'objectType' : 'heatmap'
+                                                ,'id' : noti['objectId']
+                                                ,'location' : trackingJson
+                                            };
+                                            customMapMediator.saveMarker('object', marker);
+                                        }
                                     }
                                     $("#heatmapLoading").removeClass("on");
                                 }
@@ -954,6 +978,8 @@
                 'areaId' : areaId
                 ,'startDatetimeStr' : startDatetimeStr
                 ,'endDatetimeStr' : endDatetimeStr
+                ,'startSpeed' : $("input[name='startSpeed']").val()
+                ,'endSpeed' : $("input[name='endSpeed']").val()
             };
             callAjax('heatMap',param);
         }
