@@ -15,7 +15,11 @@ var CustomMapMediator = (
             ,fenceListUrl : "/fence/list.json"
         };
         var _MARKER_TYPE = ['device','fence','object','camera','custom'];
-        var _OBJECT_TYPE = ['unknown','unknown-LEV001','unknown-LEV002','unknown-LEV003','human','human-LEV001','human-LEV002','human-LEV003'];
+        var _OBJECT_TYPE = [
+            'unknown','unknown-LEV001','unknown-LEV002','unknown-LEV003'
+            ,'human','human-LEV001','human-LEV002','human-LEV003'
+            ,'vehicle','vehicle-LEV001','vehicle-LEV002','vehicle-LEV003'
+        ];
         var _FENCE_TYPE = ['normal','ignore','section'];
         var _marker = {
             'fence' : {}
@@ -26,6 +30,7 @@ var CustomMapMediator = (
         var _OBJECT_TYPE_CUSTOM = {
             'human' : 'human'
             ,'unknown' : 'unknown'
+            ,'vehicle' : 'vehicle'
             ,'heatmap' : 'heatmap'
         };
         var _defsMarkerRef = {
@@ -37,6 +42,10 @@ var CustomMapMediator = (
             ,'human-LEV001' : '/assets/images/ico/sico_81_cau.svg'
             ,'human-LEV002' : '/assets/images/ico/sico_81_war.svg'
             ,'human-LEV003' : '/assets/images/ico/sico_81_dan.svg'
+            ,'vehicle' : '/assets/images/ico/sico_141.svg'
+            ,'vehicle-LEV001' : '/assets/images/ico/sico_141_cau.svg'
+            ,'vehicle-LEV002' : '/assets/images/ico/sico_141_war.svg'
+            ,'vehicle-LEV003' : '/assets/images/ico/sico_141_dan.svg'
         };
         var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
         let _mouseDownInterval = 0;
@@ -77,7 +86,9 @@ var CustomMapMediator = (
             ,'object' : {
                 'pointsHideFlag' : false // 트래킹 이동경로 숨김여부
                 ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수 null일경우 무제한
-                , 'animateFlag' : true // 이벤트 발생시 오브젝트 애니메이션 사용 여부
+                ,'speedFlag' : false // 트래킹 이동속도 표시여부
+                ,'speedFormat' : " km/h" // 트래킹 이동속도 포맷
+                ,'animateFlag' : true // 이벤트 발생시 오브젝트 애니메이션 사용 여부
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
@@ -1071,6 +1082,8 @@ var CustomMapMediator = (
                         }
 
                         let element;
+                        let lastSpeed = null;
+                        let lastPoint = null;
 
                         if(_marker[messageType][data['deviceId']][data['id']]!=null){
                             let points = [];
@@ -1079,6 +1092,8 @@ var CustomMapMediator = (
                                 let left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location'][index]['lat'],2))*_ratio);
                                 let top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location'][index]['lng'],2))*_ratio);
 
+                                lastSpeed = toRound(data['location'][index]['speed'],1);
+                                lastPoint = {lat:left,lng:top};
                                 if(_options[_MARKER_TYPE[2]]['pointsHideFlag']){
                                     points.push(left+","+top);
                                     _marker[messageType][data['deviceId']][data['id']]['points'] = points;
@@ -1112,6 +1127,8 @@ var CustomMapMediator = (
 
                                 points.push(left+","+top);
                                 polylinePoints.push([left,top]);
+                                lastSpeed = toRound(data['location'][index]['speed'],1);
+                                lastPoint = {lat:left,lng:top};
                                 if(_options[_MARKER_TYPE[2]]['pointsHideFlag']){
                                     break;
                                 }else{
@@ -1125,8 +1142,24 @@ var CustomMapMediator = (
                             element.addClass(_targetClass[messageType]);
                             _marker[messageType][data['deviceId']][data['id']] = {
                                 'element' : element
+                                ,'textElement' : null
                                 ,'points' : points
                             };
+                        }
+
+                        if(_options[_MARKER_TYPE[2]]['speedFlag'] && lastSpeed!=null && lastPoint!=null){
+                            if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['textElement'].remove(); }
+                            const svgText = _canvasSvg.text(lastPoint['lat']+7, lastPoint['lng'], lastSpeed+_options[_MARKER_TYPE[2]]['speedFormat'], {
+                                'text-anchor': "start"
+                                , 'fill': "rgb(255, 0, 0)"
+                                , 'style': "font-size:8px"
+                            });
+                            _marker[messageType][data['deviceId']][data['id']]['textElement'] = $(svgText);
+                            if(_OBJECT_TYPE_CUSTOM[data['objectType']]!='human'){
+                                $(svgText).addClass('object');
+                            }
+                            _mapCanvas.find("svg").append(svgText);
+                            //$(svgText).prependTo(_mapCanvas.find("svg"));
                         }
 
                         if(data['objectType']=='heatmap'){
@@ -1134,9 +1167,14 @@ var CustomMapMediator = (
                         }
 
                         if(_OBJECT_TYPE_CUSTOM[data['objectType']]=='unknown'){
+                            element.removeClass("vehicle");
                             element.addClass("object");
+                        }else if(_OBJECT_TYPE_CUSTOM[data['objectType']]=='vehicle'){
+                            element.removeClass("object");
+                            element.addClass("vehicle");
                         }else{
                             element.removeClass("object");
+                            element.removeClass("vehicle");
                         }
                         console.debug("[CustomMapMediator][addMarker] object complete - [" + messageType + "][" + data['id'] + "]");
                         break;
@@ -1364,7 +1402,8 @@ var CustomMapMediator = (
                                 }
                             }
                         }
-                        _marker[messageType][data['deviceId']][data['id']]['element'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['element']!=null) _marker[messageType][data['deviceId']][data['id']]['element'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
                         delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] object complete - [" + messageType + "][" + data['id'] + "]");
                     }
@@ -1550,6 +1589,8 @@ var CustomMapMediator = (
                     var customObjectType = null;
                     if(objectMarker['element'].hasClass("object")){
                         customObjectType = _OBJECT_TYPE_CUSTOM['unknown'];
+                    }else if(objectMarker['element'].hasClass("vehicle")){
+                        customObjectType = _OBJECT_TYPE_CUSTOM['vehicle'];
                     }else{
                         customObjectType = _OBJECT_TYPE_CUSTOM['human'];
                     }
@@ -1794,6 +1835,9 @@ var CustomMapMediator = (
                                         case "safeGuardObjectTypeUnknown" :
                                             _OBJECT_TYPE_CUSTOM['unknown'] = templateSetting[settingId];
                                             break;
+                                        case "safeGuardObjectTypeVehicle" :
+                                            _OBJECT_TYPE_CUSTOM['vehicle'] = templateSetting[settingId];
+                                            break;
                                         case "moveFenceScale" :
                                             _options[_MARKER_TYPE[4]]['moveFenceScale'] = Number(templateSetting[settingId]);
                                             break;
@@ -1808,6 +1852,10 @@ var CustomMapMediator = (
                                         case "safeGuardMapIcon-unknown-LEV001" :
                                         case "safeGuardMapIcon-unknown-LEV002" :
                                         case "safeGuardMapIcon-unknown-LEV003" :
+                                        case "safeGuardMapIcon-vehicle" :
+                                        case "safeGuardMapIcon-vehicle-LEV001" :
+                                        case "safeGuardMapIcon-vehicle-LEV002" :
+                                        case "safeGuardMapIcon-vehicle-LEV003" :
                                             var objectType = settingId.split("safeGuardMapIcon-")[1];
                                             for(var index in iconFileList){
                                                 let iconFile = iconFileList[index];

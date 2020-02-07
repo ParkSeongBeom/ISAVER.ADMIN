@@ -75,6 +75,7 @@
   &-ginseng-x:before  {content:"\e99c" !important;} // 인삼
 
   &-sprout:before     {content:"\e99d" !important;} // 새싹
+  &-car:before        {content:"\e99e" !important;} // 자동차
 
 }
 
@@ -882,7 +883,9 @@ $n10:26n+10;  $n20:26n+20;
     }
   } // GPS 구동 시 사용. 현재 버전에서는 사용하지 않음.
 
-  &.onlyhuman .object {display:none;}
+  &.onlyhuman {
+    .object, .vehicle {display:none;}
+  }
 
   & > * {position: absolute !important;}
   .map_bg {
@@ -1155,7 +1158,7 @@ $n10:26n+10;  $n20:26n+20;
     image {width:20px; height:20px;  background: url("../images/ico/sico_81.svg");}
 
     &.scale-20 image {width:20px; height:20px;}
-    /*
+    /*sico_39
     <circle fill="none" cx="10" cy="11" r="8"/>
     <circle fill="none" cx="10" cy="11" r="11"/>
     <circle fill="none" cx="10" cy="11" r="16"/>
@@ -1206,8 +1209,9 @@ $n10:26n+10;  $n20:26n+20;
         stroke-opacity: 0.4;
       }
     }
-    #human circle{stroke:#109dcb;}
-    #unknown circle{stroke:#ffffff;}
+    #human   circle {stroke:#efd914;} // 사람
+    #vehicle circle {stroke:#99d622;} // 차량
+    #unknown circle {stroke:#ffffff;} // 오브젝트
 
     g {overflow: visible; width:20px; height:20px; position: relative; }
     polyline.level {

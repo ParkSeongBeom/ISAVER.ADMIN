@@ -290,6 +290,8 @@
   content: "\e99c" !important; }
 .ico-sprout:before {
   content: "\e99d" !important; }
+.ico-car:before {
+  content: "\e99e" !important; }
 
 .cursor_cros {
   cursor: crosshair !important; }
@@ -3752,7 +3754,7 @@ button.btn ~ button.btn {
     color: #fff !important; }
   .map_images .gm-style > div > div:first-of-type > div:last-of-type > div > div img {
     opacity: 0; }
-  .map_images.onlyhuman .object {
+  .map_images.onlyhuman .object, .map_images.onlyhuman .vehicle {
     display: none; }
   .map_images > * {
     position: absolute !important; }
@@ -4655,7 +4657,7 @@ button.btn ~ button.btn {
         fill: rgba(117, 117, 117, 0.8) !important;
         stroke: #757575 !important; }
   .g-line {
-    /*
+    /*sico_39
     <circle fill="none" cx="10" cy="11" r="8"/>
     <circle fill="none" cx="10" cy="11" r="11"/>
     <circle fill="none" cx="10" cy="11" r="16"/>
@@ -4713,7 +4715,9 @@ button.btn ~ button.btn {
         stroke-width: 4px;
         stroke-opacity: 0.4; }
     .g-line #human circle {
-      stroke: #109dcb; }
+      stroke: #efd914; }
+    .g-line #vehicle circle {
+      stroke: #99d622; }
     .g-line #unknown circle {
       stroke: #ffffff; }
     .g-line g {

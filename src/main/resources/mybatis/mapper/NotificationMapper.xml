@@ -172,7 +172,7 @@
         ON	    A.fence_id = f.fence_id
         AND     A.device_id = f.device_id
         WHERE   A.cancel_user_id is null
-        ORDER BY A.event_datetime
+        ORDER BY A.event_datetime DESC
     </select>
 
     <!--

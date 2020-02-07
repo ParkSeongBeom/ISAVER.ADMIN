@@ -255,7 +255,11 @@ var DashboardHelper = (
                                 'element' : {
                                     'lastPositionUseFlag' : true
                                     ,'lastPositionSaveFlag' : true
-                                }, 'custom' : {
+                                },
+                                'object' : {
+                                    'speedFlag' : true
+                                }
+                                , 'custom' : {
                                     'websocketSend':false
                                     ,'fenceView':true
                                     ,'openLinkFlag':false
@@ -499,6 +503,7 @@ var DashboardHelper = (
         var _successHandler = function(data, dataType, actionType){
             switch(actionType){
                 case 'blinkerList':
+                    console.log(data);
                     blinkerRender(data['eventLog']);
                     break;
                 case 'deviceList':

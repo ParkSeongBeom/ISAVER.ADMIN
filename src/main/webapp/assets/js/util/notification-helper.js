@@ -254,7 +254,7 @@ var NotificationHelper = (
                     _fenceList = data['fenceList'];
                     break;
                 case 'notificationList':
-                    addNotificationList(data['notifications'], data['notiCountList']);
+                    addNotificationList(data['notifications'].reverse(), data['notiCountList']);
                     break;
                 case 'confirmNotification':
                 case 'cancelNotification':

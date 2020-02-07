@@ -7,6 +7,13 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_3'">
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT320','D','차량 감지','위험지역내 차량 탐지','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT321','D','차량 감지 해제','위험지역내 차량 벗어남 탐지','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.TEMPLATE_SETTING (SETTING_ID, DESCRIPTION, VALUE) VALUES ('safeGuardObjectTypeVehicle','오브젝트 타입 Custom - 차량','vehicle');
+            CREATE INDEX idx_notification_event_datetime_desc ON isaver.notification (event_datetime DESC);
+        </if>
+
         <if test="version == '1.7.5_2'">
             alter table isaver.fence add column custom_json text;
             update isaver.fence set custom_json = '{"polygon":{"fill":"' || fill || '","stroke":"' || stroke || '"}}' where fill is not null and stroke is not null;

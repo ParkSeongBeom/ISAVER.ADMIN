@@ -224,7 +224,7 @@ var ResourceHelper = (
         this.openPtzControlPopup = function(deviceId){
             var data = _deviceList[deviceId]['data'];
             if(!ptzControlPopup && !ptzControlPopup instanceof PtzControlPopup){
-                console.error("[ResourceHelper][openPtzControlPopup] customMapPopup is null or typeerror");
+                console.error("[ResourceHelper][openPtzControlPopup] ptzControlPopup is null or typeerror");
                 return false;
             }
             ptzControlPopup.openPopup(data);

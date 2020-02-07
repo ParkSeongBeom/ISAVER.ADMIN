@@ -269,6 +269,24 @@
                                                 </div>
                                             </c:if>
                                         </c:when>
+                                        <c:otherwise>
+                                            <div class="s_rbox ">
+                                                <!-- 스크롤 영역 시작 -->
+                                                <ul data-duplicated='true' data-direction='up'>
+                                                    <li class="inout current_view">
+                                                        <h3>${childArea.areaName}</h3>
+                                                        <div sumAreaId="${childArea.areaId}" templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
+                                                            <p gap>0</p>
+                                                            <div>
+                                                                <p in>0</p>
+                                                                <p out>0</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <!-- 스크롤 영역 끝 -->
+                                            </div>
+                                        </c:otherwise>
                                     </c:choose>
                                     <div class="device_box">
                                         <div class="device_set">
@@ -589,7 +607,7 @@
             <div>
                 <header>
                     <h2><spring:message code="dashboard.title.inoutSetting"/></h2>
-                    <button class="save_btn" onclick="javascript:saveInoutConfiguration();"><spring:message code="common.button.save"/></button>
+                    <button class="save_btn" onclick="javascript:saveInoutConfiguration();"></button>
                     <button class="close_btn" onclick="javascript:closeInoutConfigListPopup();"></button>
                 </header>
                 <article>
@@ -653,10 +671,6 @@
                         </ul>
                     </section>
                 </article>
-
-                <footer>
-                    <button class="btn" onclick="javascript:saveInoutConfiguration();"><spring:message code="common.button.save"/></button>
-                </footer>
             </div>
         </div>
         <div class="bg" onclick="javascript:closeInoutConfigListPopup();"></div>
@@ -833,14 +847,20 @@
                 {
                     "actionType":"add"
                     ,"objectType":"human"
-                    ,"id":"1235"
-                    ,"location":[{"lat": "1","lng": "1"}]
+                    ,"id":"1111"
+                    ,"location":[{"lat": "3","lng": "3"},{"lat": "4","lng": "4"},{"lat": "4","lng": "5"}]
                 },
                 {
                     "actionType":"add"
-                    ,"objectType":"human"
-                    ,"id":"1234"
-                    ,"location":[{"lat": "-1","lng": "-1"}]
+                    ,"objectType":"unknown"
+                    ,"id":"1112"
+                    ,"location":[{"lat": "-4","lng": "-4"},{"lat": "-5","lng": "-5"},{"lat": "-5","lng": "-6"}]
+                },
+                {
+                    "actionType":"add"
+                    ,"objectType":"vehicle"
+                    ,"id":"1113"
+                    ,"location":[{"lat": "6","lng": "6"},{"lat": "7","lng": "7"},{"lat": "7","lng": "8"}]
                 }
             ]
         });
