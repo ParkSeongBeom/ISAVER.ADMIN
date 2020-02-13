@@ -84,11 +84,12 @@ var CustomMapMediator = (
                 , 'animateFlag' : true // 이벤트 발생시 펜스 애니메이션 사용 여부
             }
             ,'object' : {
-                'pointsHideFlag' : false // 트래킹 이동경로 숨김여부
+                'pointsHide' : false // 트래킹 이동경로 숨김여부
                 ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수 null일경우 무제한
                 ,'speedFlag' : false // 트래킹 이동속도 표시여부
                 ,'speedFormat' : " km/h" // 트래킹 이동속도 포맷
                 ,'animateFlag' : true // 이벤트 발생시 오브젝트 애니메이션 사용 여부
+                ,'humanOnly' : false // 사람만보기
             }
             ,'custom' : {
                 'draggable': false // 드래그 기능
@@ -104,13 +105,13 @@ var CustomMapMediator = (
                 , 'changeConfig': null // 회전 / X축,Y축 기울기 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
-                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 기능 (true:사용안함, false:사용)
+                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 숨김 기능
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnTimeout':null // 펜스로 이동 후 해당 펜스의 메인장치로 복귀
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
-                , 'lidarHideFlag': false // 라이다 반경표시 (true:사용안함, false:사용)
-                , 'ignoreHide': false // 무시영역 숨김 처리
+                , 'lidarHide': false // 라이다 반경표시
+                , 'ignoreHide': true // 무시영역 숨김 처리
                 , 'trackingScale' : 'scale-20' // 트래킹 크기
                 , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
                 , 'childAnimateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부(하위장치포함)
@@ -153,9 +154,6 @@ var CustomMapMediator = (
         var _mainDeviceCode = ['DEV013','DEV020'];
         // Map에 표출되는 장치코드
         var _customDeviceCode = ['DEV002','DEV006','DEV007','DEV008','DEV013','DEV016','DEV017','DEV020','DEV003'];
-        // true :사람만보기
-        // false:전체보기
-        var _objectViewFlag=false;
 
         // 비율 1m : 10px
         var _ratio=10;
@@ -238,46 +236,16 @@ var CustomMapMediator = (
         this.init = function(areaId,options){
             _areaId = areaId;
 
-            var objectViewFlag = $.cookie(_areaId+"objectViewFlag");
-            if(objectViewFlag != null && objectViewFlag.length > 0){
-                _objectViewFlag = objectViewFlag == "true";
-                _element.find("input[name='humanCkb']").prop("checked",_objectViewFlag);
-                if(_objectViewFlag){
-                    _mapCanvas.addClass("onlyhuman");
+            let cookies = $.cookie(_areaId);
+            if(cookies!=null) {
+                cookies = JSON.parse(cookies);
+                for(var index in cookies){
+                    if(_options[_MARKER_TYPE[2]].hasOwnProperty(index)){
+                        _options[_MARKER_TYPE[2]][index] = cookies[index];
+                    }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(index)){
+                        _options[_MARKER_TYPE[4]][index] = cookies[index];
+                    }
                 }
-            }
-            var pointsHideFlag = $.cookie(_areaId+"pointsHideFlag");
-            if(pointsHideFlag != null && pointsHideFlag.length > 0){
-                _options[_MARKER_TYPE[2]]['pointsHideFlag'] = pointsHideFlag == "true";
-                _element.find("input[name='pointsCkb']").prop("checked",_options[_MARKER_TYPE[2]]['pointsHideFlag']);
-            }
-
-            var lidarHideFlag = $.cookie(_areaId+"lidarHideFlag");
-            if(lidarHideFlag != null && lidarHideFlag.length > 0){
-                _options[_MARKER_TYPE[4]]['lidarHideFlag'] = lidarHideFlag == "true";
-                _element.find("input[name='lidarCkb']").prop("checked",_options[_MARKER_TYPE[4]]['lidarHideFlag']);
-            }
-
-            var ignoreHideFlag = $.cookie(_areaId+"ignoreHideFlag");
-            if(ignoreHideFlag != null && ignoreHideFlag.length > 0){
-                _options[_MARKER_TYPE[4]]['ignoreHide'] = ignoreHideFlag == "true";
-                _element.find("input[name='ignoreCkb']").prop("checked",_options[_MARKER_TYPE[4]]['ignoreHide']);
-            }else{
-                _options[_MARKER_TYPE[4]]['ignoreHide'] = _element.find("input[name='ignoreCkb']").is(":checked");
-            }
-
-            var trackingScale = $.cookie(_areaId+"trackingScale");
-            if(trackingScale != null && trackingScale.length > 0){
-                _options[_MARKER_TYPE[4]]['trackingScale'] = trackingScale;
-                _element.find("div[name='trackingScale']").addClass(trackingScale);
-            }else{
-                _element.find("div[name='trackingScale']").addClass(_options[_MARKER_TYPE[4]]['trackingScale']);
-            }
-
-            var moveFenceHideFlag = $.cookie(_areaId+"moveFenceHideFlag");
-            if(moveFenceHideFlag != null && moveFenceHideFlag.length > 0){
-                _options[_MARKER_TYPE[4]]['moveFenceHide'] = moveFenceHideFlag == "true";
-                _element.find("input[name='moveFenceCkb']").prop("checked",_options[_MARKER_TYPE[4]]['moveFenceHide']);
             }
 
             for(var i in options){
@@ -286,6 +254,15 @@ var CustomMapMediator = (
                         _options[i][index] = options[i][index];
                     }
                 }
+            }
+            _element.find("input[name='humanCkb']").prop("checked",_options[_MARKER_TYPE[2]]['humanOnly']);
+            _element.find("input[name='pointsCkb']").prop("checked",_options[_MARKER_TYPE[2]]['pointsHide']);
+            _element.find("input[name='lidarCkb']").prop("checked",_options[_MARKER_TYPE[4]]['lidarHide']);
+            _element.find("input[name='ignoreCkb']").prop("checked",_options[_MARKER_TYPE[4]]['ignoreHide']);
+            _element.find("div[name='trackingScale']").addClass(_options[_MARKER_TYPE[4]]['trackingScale']);
+            _element.find("input[name='moveFenceCkb']").prop("checked",_options[_MARKER_TYPE[4]]['moveFenceHide']);
+            if(_options[_MARKER_TYPE[2]]['humanOnly']){
+                _mapCanvas.addClass("onlyhuman");
             }
 
             if(_options['element']['lastPositionUseFlag']){
@@ -397,31 +374,59 @@ var CustomMapMediator = (
         };
 
         var loadPosition = function(){
-            var top = $.cookie(_areaId+"MapCanvasTop");
-            if(top != null && top.length > 0){ _top = top; }
-            var left = $.cookie(_areaId+"MapCanvasLeft");
-            if(left != null && left.length > 0){ _left = left; }
-            var originX = $.cookie(_areaId+"MapCanvasOriginX");
-            if(!isNaN(originX)){ _originX = eval(originX); }
-            var originY = $.cookie(_areaId+"MapCanvasOriginY");
-            if(!isNaN(originY)){ _originY = eval(originY); }
-            var translateX = $.cookie(_areaId+"MapCanvasTranslateX");
-            if(!isNaN(translateX)){ _translateX = eval(translateX); }
-            var translateY = $.cookie(_areaId+"MapCanvasTranslateY");
-            if(!isNaN(translateY)){ _translateY = eval(translateY); }
-            var scale = $.cookie(_areaId+"MapCanvasScale");
-            if(!isNaN(scale)){ _scale = eval(scale); }
+            let cookies = $.cookie(_areaId);
+            if(cookies!=null) {
+                for(var index in cookies){
+                    if(index=='mapCanvas'){
+                        let mapCanvas = cookies[index];
+                        for (var k in mapCanvas){
+                            switch (k){
+                                case "top":
+                                    _top = mapCanvas[k];
+                                    break;
+                                case "left":
+                                    _left = mapCanvas[k];
+                                    break;
+                                case "originX":
+                                    _originX = eval(mapCanvas[k]);
+                                    break;
+                                case "originY":
+                                    _originY = eval(mapCanvas[k]);
+                                    break;
+                                case "translateX":
+                                    _translateX = eval(mapCanvas[k]);
+                                    break;
+                                case "translateY":
+                                    _translateY = eval(mapCanvas[k]);
+                                    break;
+                                case "scale":
+                                    _scale = eval(mapCanvas[k]);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
         };
 
         var savePosition = function(){
             if(_options['element']['lastPositionSaveFlag']){
-                $.cookie(_areaId + "MapCanvasTop",_mapCanvas.css("top"));
-                $.cookie(_areaId + "MapCanvasLeft",_mapCanvas.css("left"));
-                $.cookie(_areaId + "MapCanvasOriginX",_originX.toFixed(10));
-                $.cookie(_areaId + "MapCanvasOriginY",_originY.toFixed(10));
-                $.cookie(_areaId + "MapCanvasTranslateX",_translateX.toFixed(1));
-                $.cookie(_areaId + "MapCanvasTranslateY",_translateY.toFixed(1));
-                $.cookie(_areaId + "MapCanvasScale", _scale.toFixed(2));
+                let cookies = $.cookie(_areaId);
+                if(cookies!=null) {
+                    cookies = JSON.parse(cookies);
+                }else{
+                    cookies = {};
+                }
+                cookies['mapCanvas'] = {
+                    'top' : _mapCanvas.css("top")
+                    ,'left' : _mapCanvas.css("left")
+                    ,'originX' : _originX.toFixed(10)
+                    ,'originY' : _originY.toFixed(10)
+                    ,'translateX' : _translateX.toFixed(1)
+                    ,'translateY' : _translateY.toFixed(1)
+                    ,'scale' : _scale.toFixed(2)
+                };
+                $.cookie(_areaId,JSON.stringify(cookies));
             }
         };
 
@@ -490,50 +495,47 @@ var CustomMapMediator = (
         /**
          * set guard option
          * lidarHide : 라이다반경표시 on/off
-         * objectView : 전체보기/사람만보기
+         * humanOnly : 전체보기/사람만보기
          * ignoreHide : 무시영역표시 on/off
          * trackingScale : 트래킹 아이콘 크기
          * pointsHide : 트래킹 잔상 보기/숨기기
-         * moveFenceHideFlag : 이벤트 발생시 펜스로이동/이동안함
+         * moveFenceHide : 이벤트 발생시 펜스로이동/이동안함
          * @author psb
          */
         this.setGuardOption = function(actionType, flag){
+            let cookies = $.cookie(_areaId);
+            if(cookies!=null){
+                cookies = JSON.parse(cookies);
+                cookies[actionType] = flag;
+
+                if(_options[_MARKER_TYPE[2]].hasOwnProperty(actionType)){
+                    _options[_MARKER_TYPE[2]][actionType] = flag;
+                }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(actionType)){
+                    _options[_MARKER_TYPE[4]][actionType] = flag;
+                }
+                $.cookie(_areaId,JSON.stringify(cookies));
+            }
+
             switch (actionType){
-                case "objectView" :
-                    _objectViewFlag = flag;
-                    $.cookie(_areaId+'objectViewFlag',flag);
-                    if(_objectViewFlag){
+                case "humanOnly" :
+                    if(_options[_MARKER_TYPE[2]]['humanOnly']){
                         _mapCanvas.addClass("onlyhuman");
                     }else{
                         _mapCanvas.removeClass("onlyhuman");
                     }
                     break;
                 case "lidarHide" :
-                    _options[_MARKER_TYPE[4]]['lidarHideFlag'] = flag;
-                    if(flag){
+                    if(_options[_MARKER_TYPE[4]]['lidarHide']){
                         _mapCanvas.find(".ico-m8").removeClass("lidar");
                     }else{
                         _mapCanvas.find(".ico-m8").addClass("lidar");
                     }
-                    $.cookie(_areaId+'lidarHideFlag',flag);
-                    break;
-                case "pointsHide" :
-                    _options[_MARKER_TYPE[2]]['pointsHideFlag'] = flag;
-                    $.cookie(_areaId+'pointsHideFlag',flag);
                     break;
                 case "ignoreHide" :
-                    _options[_MARKER_TYPE[4]]['ignoreHide'] = flag;
-                    $.cookie(_areaId+'ignoreHideFlag',flag);
                     _self.setIgnoreHide();
                     break;
                 case "trackingScale" :
-                    _options[_MARKER_TYPE[4]]['trackingScale'] = flag;
-                    $.cookie(_areaId+'trackingScale',flag);
                     _self.setTrackingScale(flag);
-                    break;
-                case "moveFenceHide" :
-                    _options[_MARKER_TYPE[4]]['moveFenceHide'] = flag;
-                    $.cookie(_areaId+'moveFenceHideFlag',flag);
                     break;
             }
         };
@@ -814,7 +816,7 @@ var CustomMapMediator = (
                     targetElement.append( $("<span/>").text(data["targetName"]) );
                 }
 
-                if(!_options[_MARKER_TYPE[4]]['lidarHideFlag'] && _mainDeviceCode.indexOf(data['deviceCode'])>-1){
+                if(!_options[_MARKER_TYPE[4]]['lidarHide'] && _mainDeviceCode.indexOf(data['deviceCode'])>-1){
                     targetElement.addClass("lidar");
                 }
                 targetElement.append( $("<div/>") );
@@ -971,16 +973,14 @@ var CustomMapMediator = (
                                 });
                             }
 
-                            if(!_options[_MARKER_TYPE[4]]['moveFenceHide']){
-                                _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
-                                    setTransform2d(_options[_MARKER_TYPE[4]]['moveFenceScale'],false);
-                                    _mapCanvas.animate({
-                                        'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
-                                        ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
-                                    },300);
-                                    moveReturn(evt.data.deviceId);
-                                });
-                            }
+                            _marker[messageType][data['deviceId']][data['id']]['element'].dblclick({deviceId:data['deviceId']}, function(evt){
+                                setTransform2d(_options[_MARKER_TYPE[4]]['moveFenceScale'],false);
+                                _mapCanvas.animate({
+                                    'top': parseInt(_mapCanvas.css('top'))-($(this).offset().top-_mapCanvas.parent().offset().top)+(_mapCanvas.parent().height()-$(this)[0].getBoundingClientRect().height)/2
+                                    ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
+                                },300);
+                                moveReturn(evt.data.deviceId);
+                            });
 
                             if(_options[_MARKER_TYPE[4]]['changeFence']!=null && typeof _options[_MARKER_TYPE[4]]['changeFence'] == "function"){
                                 _options[_MARKER_TYPE[4]]['changeFence']('add',_marker[messageType][data['deviceId']][data['id']]['data']);
@@ -1094,7 +1094,7 @@ var CustomMapMediator = (
 
                                 lastSpeed = toRound(data['location'][index]['speed'],1);
                                 lastPoint = {lat:left,lng:top};
-                                if(_options[_MARKER_TYPE[2]]['pointsHideFlag']){
+                                if(_options[_MARKER_TYPE[2]]['pointsHide']){
                                     points.push(left+","+top);
                                     _marker[messageType][data['deviceId']][data['id']]['points'] = points;
                                     break;
@@ -1129,7 +1129,7 @@ var CustomMapMediator = (
                                 polylinePoints.push([left,top]);
                                 lastSpeed = toRound(data['location'][index]['speed'],1);
                                 lastPoint = {lat:left,lng:top};
-                                if(_options[_MARKER_TYPE[2]]['pointsHideFlag']){
+                                if(_options[_MARKER_TYPE[2]]['pointsHide']){
                                     break;
                                 }else{
                                     if(_options[_MARKER_TYPE[2]]['pointShiftCnt']!=null && points.length > _options[_MARKER_TYPE[2]]['pointShiftCnt']){

@@ -226,19 +226,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <c:choose>
-                                        <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
-                                            <c:set var="childBlinker" value="0"/>
-                                            <c:forEach var="area" items="${childArea.areas}">
-                                                <c:if test="${area.templateCode=='TMP003'}">
-                                                    <c:set var="childBlinker" value="1"/>
-                                                </c:if>
-                                            </c:forEach>
-                                            <c:if test="${childBlinker==1}">
-                                                <div class="s_rbox ">
-                                                <!-- 스크롤 영역 시작 -->
-                                                <ul data-duplicated='true' data-direction='up'>
-                                            </c:if>
+                                    <div class="s_rbox ">
+                                        <!-- 스크롤 영역 시작 -->
+                                        <ul data-duplicated='true' data-direction='up'>
                                             <li class="inout current_view">
                                                 <h3>${childArea.areaName}</h3>
                                                 <div sumAreaId="${childArea.areaId}" templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
@@ -249,45 +239,33 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <c:forEach var="area" items="${childArea.areas}">
-                                                <c:if test="${area.templateCode=='TMP003'}">
-                                                    <li class="inout">
-                                                        <h3>${area.areaName}</h3>
-                                                        <div sumAreaId="${childArea.areaId}" templateCode="${area.templateCode}" areaId="${area.areaId}">
-                                                            <p gap>0</p>
-                                                            <div>
-                                                                <p in>0</p>
-                                                                <p out>0</p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </c:if>
-                                            </c:forEach>
-                                            <c:if test="${childBlinker==1}">
-                                                </ul>
-                                                <!-- 스크롤 영역 끝 -->
-                                                </div>
-                                            </c:if>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="s_rbox ">
-                                                <!-- 스크롤 영역 시작 -->
-                                                <ul data-duplicated='true' data-direction='up'>
-                                                    <li class="inout current_view">
-                                                        <h3>${childArea.areaName}</h3>
-                                                        <div sumAreaId="${childArea.areaId}" templateCode="${childArea.templateCode}" areaId="${childArea.areaId}">
-                                                            <p gap>0</p>
-                                                            <div>
-                                                                <p in>0</p>
-                                                                <p out>0</p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <!-- 스크롤 영역 끝 -->
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
+                                            <c:choose>
+                                                <c:when test="${childArea.areas != null and fn:length(childArea.areas) > 0}">
+                                                    <c:set var="childBlinker" value="0"/>
+                                                    <c:forEach var="area" items="${childArea.areas}">
+                                                        <c:if test="${area.templateCode=='TMP003'}">
+                                                            <c:set var="childBlinker" value="1"/>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <c:forEach var="area" items="${childArea.areas}">
+                                                        <c:if test="${area.templateCode=='TMP003'}">
+                                                            <li class="inout">
+                                                                <h3>${area.areaName}</h3>
+                                                                <div sumAreaId="${childArea.areaId}" templateCode="${area.templateCode}" areaId="${area.areaId}">
+                                                                    <p gap>0</p>
+                                                                    <div>
+                                                                        <p in>0</p>
+                                                                        <p out>0</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>
+                                        </ul>
+                                        <!-- 스크롤 영역 끝 -->
+                                    </div>
                                     <div class="device_box">
                                         <div class="device_set">
                                             <c:forEach var="device" items="${childArea.devices}">
@@ -387,7 +365,7 @@
                                     <div class="check_btn_set">
                                         <div class="tracking_scale" name="trackingScale" onClick="javascript:dashboardHelper.setGuardOption('trackingScale','${childArea.areaId}',this);"></div>
                                         <div class="ignore_check">
-                                            <input type="checkbox" name="ignoreCkb" checked="checked" onClick="javascript:dashboardHelper.setGuardOption('ignoreHide','${childArea.areaId}',this);">
+                                            <input type="checkbox" name="ignoreCkb" onClick="javascript:dashboardHelper.setGuardOption('ignoreHide','${childArea.areaId}',this);">
                                             <label></label>
                                         </div>
                                         <div class="range_check">
@@ -395,7 +373,7 @@
                                             <label></label>
                                         </div>
                                         <div class="human_check">
-                                            <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setGuardOption('objectView','${childArea.areaId}',this);">
+                                            <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setGuardOption('humanOnly','${childArea.areaId}',this);">
                                             <label></label>
                                         </div>
                                         <div class="object_check">

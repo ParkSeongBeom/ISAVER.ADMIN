@@ -261,12 +261,12 @@ var NotificationHelper = (
                     if(data['paramBean']['remainCnt']==0){
                         _self.setLoading('noti', false);
                         layerShowHide('notificationCancel','hide');
-                        _alertMessage(actionType+'Success');
+                        //_alertMessage(actionType+'Success');
                     }
                     break;
                 case 'allCancelNotification':
                     _self.setLoading('noti', false);
-                    _alertMessage(actionType+'Success');
+                    //_alertMessage(actionType+'Success');
                     break;
                 case 'notificationDetail':
                     notificationDetailRender(data);

@@ -855,7 +855,7 @@
                             }
                         }
                         ,'object' :{
-                            'pointsHideFlag' : false
+                            'pointsHide' : false
                             ,'pointShiftCnt' : null
                         }
                     });

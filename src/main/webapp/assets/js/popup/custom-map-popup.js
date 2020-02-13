@@ -223,7 +223,7 @@ var CustomMapPopup = (
                         , 'resizable': true
                         , 'fenceView': true
                         , 'openLinkFlag': false
-                        , 'lidarHideFlag' : true
+                        , 'lidarHide' : true
                         , 'ignoreHide' : false
                         , 'moveFenceHide' : false
                         , 'moveReturn' : false
