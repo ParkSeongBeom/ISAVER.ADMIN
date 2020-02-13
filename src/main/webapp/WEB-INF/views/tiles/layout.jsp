@@ -172,7 +172,7 @@
             notificationHelper.setWebsocket(webSocketHelper);
             aliveSend("${aliveCheckDelay}");
 
-            alarmPlayer = document.getElementsByTagName("audio")[0];
+            alarmPlayer = new Audio();
             alarmPlayer.addEventListener('timeupdate', function (){
                 if (segmentEnd && alarmPlayer.currentTime >= segmentEnd) {
                     alarmPlayer.pause();
@@ -648,11 +648,8 @@
                 sourceUrl = alarmDefaultSource;
             }
 
-            $("#alarmSource").attr("src",sourceUrl);
-
-            if(alarmPlayer!=null){
-                alarmPlayer.load();
-            }
+            alarmPlayer.src = sourceUrl;
+            alarmPlayer.load();
         }
 
         /**
@@ -686,7 +683,7 @@
 
         function menuBarToggle(){
             $("#menu").toggleClass("hide");
-            $(".mscrBtn").toggleClass("on")
+            $(".mscrBtn").toggleClass("on");
             $(".sub_title_area").toggleClass("hide");
         }
 
@@ -926,10 +923,6 @@
                 </div>
             </section>
         </main>
-
-        <audio controls style="display: none">
-            <source id="alarmSource" type="audio/mpeg">
-        </audio>
     </div>
 </body>
 </html>

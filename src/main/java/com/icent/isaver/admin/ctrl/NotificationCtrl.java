@@ -51,7 +51,7 @@ public class NotificationCtrl {
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/list")
     public ModelAndView findListNotification(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "notificationList", parameters);
-        parameters = AdminHelper.checkSearchDate(parameters,3);
+        parameters = AdminHelper.checkSearchDate(parameters,1);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
         ModelAndView modelAndView = notificationSvc.findListNotification(parameters);

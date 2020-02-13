@@ -208,7 +208,7 @@ public class NotificationSvcImpl implements NotificationSvc {
 
     @Override
     public ModelAndView findListNotificationForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
-        List<NotificationBean> notifications = notificationDao.findListNotification(parameters);
+        List<NotificationBean> notifications = notificationDao.findListNotificationExcel(parameters);
 
         String[] heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};
         String[] columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","confirmUserName","confirmDatetimeStr","cancelUserName","cancelDatetimeStr","cancelDesc"};

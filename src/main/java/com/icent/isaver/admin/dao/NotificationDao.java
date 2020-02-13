@@ -50,6 +50,14 @@ public interface NotificationDao {
      * @author psb
      * @return
      */
+    List<NotificationBean> findListNotificationExcel(Map<String, String> parameters);
+
+    /**
+     *
+     * @param parameters
+     * @author psb
+     * @return
+     */
     List<NotificationBean> findListNotificationForHeatMap(Map<String, String> parameters);
 
     /**

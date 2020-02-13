@@ -11,7 +11,7 @@
                 , A.event_log_id as eventLogId
                 , A.object_id as objectId
                 , A.fence_id as fenceId
-                , (SELECT fence_name FROM isaver.fence f WHERE A.fence_id = f.fence_id AND A.device_id = f.device_id) as fenceName
+                , f.fence_name as fenceName
                 , A.status as status
                 , A.area_id as areaId
                 , AREA.area_name as areaName
@@ -26,11 +26,9 @@
                 , A.confirm_user_id as confirmUserId
                 , (select user_name from isaver.users where user_id=A.confirm_user_id) as confirmUserName
                 , A.confirm_datetime as confirmDatetime
-                , to_char(A.confirm_datetime,'yyyy-MM-dd HH24:MI:ss') as confirmDatetimeStr
                 , A.cancel_user_id as cancelUserId
                 , (select user_name from isaver.users where user_id=A.cancel_user_id) as cancelUserName
                 , A.cancel_datetime as cancelDatetime
-                , to_char(A.cancel_datetime,'yyyy-MM-dd HH24:MI:ss') as cancelDatetimeStr
                 , A.cancel_desc as cancelDesc
                 , A.insert_user_id as insertUserId
                 , (select user_name from isaver.users where user_id=A.insert_user_id) as insertUserName
@@ -51,6 +49,9 @@
         ON      A.device_id = DEVICE.device_id
         INNER JOIN isaver.event EVENT
         ON      A.event_id = EVENT.event_id
+        LEFT OUTER JOIN isaver.fence f
+        ON      A.fence_id = f.fence_id
+        AND 	A.device_id = f.device_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="areaId != null and areaId != ''">
                 AND     AREA.area_id = #{areaId}
@@ -92,13 +93,7 @@
         INNER JOIN isaver.code COD
         ON      A.critical_level = COD.code_id
         AND     COD.group_code_id = 'LEV'
-        INNER JOIN (
-            SELECT  DEV.device_id, DEV.device_code, CODE.code_name
-            FROM    isaver.device DEV
-            INNER JOIN  isaver.code CODE
-            ON      DEV.device_code = CODE.code_id
-            AND     CODE.group_code_id = 'DEV'
-        ) AS DEVICE
+        INNER JOIN isaver.device AS DEVICE
         ON      A.device_id = DEVICE.device_id
         INNER JOIN isaver.event EVENT
         ON      A.event_id = EVENT.event_id
@@ -279,5 +274,60 @@
         <if test="endDatetimeStr != null and endDatetimeStr != ''">
             AND     event_datetime <![CDATA[ <= ]]> #{endDatetimeStr}::timestamp
         </if>
+    </select>
+
+    <!--
+        알림센터 이력 목록을 가져온다. Excel 저장용
+        @author psb
+    -->
+    <select id="findListNotificationExcel" resultType="NotificationBean" parameterType="map" >
+        SELECT  to_char(A.event_datetime,'yyyy-MM-dd HH24:MI:ss') as eventDatetimeStr
+                , AREA.area_name as areaName
+                , DEVICE.device_name as deviceName
+                , f.fence_name as fenceName
+                , EVENT.event_name as eventName
+                , COD.code_name as criticalLevelName
+                , (select user_name from isaver.users where user_id=A.confirm_user_id) as confirmUserName
+                , to_char(A.confirm_datetime,'yyyy-MM-dd HH24:MI:ss') as confirmDatetimeStr
+                , (select user_name from isaver.users where user_id=A.cancel_user_id) as cancelUserName
+                , to_char(A.cancel_datetime,'yyyy-MM-dd HH24:MI:ss') as cancelDatetimeStr
+                , A.cancel_desc as cancelDesc
+        FROM    isaver.notification as A
+        INNER JOIN isaver.area AREA
+        ON      A.area_id = AREA.area_id
+        INNER JOIN isaver.code COD
+        ON      A.critical_level = COD.code_id
+        AND     COD.group_code_id = 'LEV'
+        INNER JOIN isaver.device AS DEVICE
+        ON      A.device_id = DEVICE.device_id
+        INNER JOIN isaver.event EVENT
+        ON      A.event_id = EVENT.event_id
+        LEFT OUTER JOIN isaver.fence f
+        ON      A.fence_id = f.fence_id
+        AND 	A.device_id = f.device_id
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="areaId != null and areaId != ''">
+                AND     AREA.area_id = #{areaId}
+            </if>
+            <if test="deviceCode != null and deviceCode != ''">
+                AND     DEVICE.device_code  = #{deviceCode}
+            </if>
+            <if test="eventId != null and eventId != ''">
+                AND     A.event_id  = #{eventId}
+            </if>
+            <if test="fenceId != null and fenceId != ''">
+                AND     A.fence_id  = #{fenceId}
+            </if>
+            <if test="criticalLevel != null and criticalLevel != ''">
+                AND     A.critical_level  = #{criticalLevel}
+            </if>
+            <if test="startDatetimeStr != null and startDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ >= ]]> (#{startDatetimeStr} || ' ' || #{startDatetimeHour} ||':00:00')::timestamp
+            </if>
+            <if test="endDatetimeStr != null and endDatetimeStr != ''">
+                AND     A.event_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+        </trim>
+        order by A.event_datetime DESC
     </select>
 </mapper>
