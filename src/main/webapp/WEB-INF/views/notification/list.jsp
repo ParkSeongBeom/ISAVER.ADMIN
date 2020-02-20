@@ -23,6 +23,7 @@
 <section class="container sub_area">
     <form id="eventLogForm" method="POST">
         <input type="hidden" name="pageNumber"/>
+        <input type="hidden" name="type"/>
 
         <article class="search_area">
             <div class="search_contents">
@@ -80,7 +81,10 @@
             <h4></h4>
             <div class="table_btn_set">
                 <p><span><spring:message code="common.message.total"/><em>${paramBean.totalCount}</em><spring:message code="common.message.number01"/></span></p>
-                <button class="btn btype01 bstyle03" onclick="excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/> </button>
+                <button class="btn btype01 bstyle03" onclick="excelFileDownloadFunc(); return false;"><spring:message code="common.button.excelDownload"/></button>
+                <c:if test="${mainTarget.targetId=='nowon'}">
+                    <button class="btn btype01 bstyle03" onclick="excelFileDownloadFunc('speed'); return false;">Speed <spring:message code="common.button.excelDownload"/></button>
+                </c:if>
             </div>
         </div>
 
@@ -360,7 +364,8 @@
     }
 
     /* Excel File Download*/
-    function excelFileDownloadFunc() {
+    function excelFileDownloadFunc(type) {
+        form.find("input[name='type']").val(type);
         form.attr('action',urlConfig['excelUrl']);
         form.submit();
     }

@@ -1,8 +1,5 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.bean.*;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
@@ -12,6 +9,7 @@ import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.resource.ResultState;
 import com.icent.isaver.admin.svc.TestSvc;
 import com.icent.isaver.admin.util.AlarmRequestUtil;
+import com.icent.isaver.admin.util.MqttUtil;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +78,9 @@ public class TestSvcImpl implements TestSvc {
     @Inject
     private EventDao eventDao;
 
+    @Inject
+    private MqttUtil mqttUtil;
+
     @Override
     public ModelAndView testList(HttpServletRequest request, Map<String, String> parameters) {
         List<AreaBean> areaList = areaDao.findListAreaForTest();
@@ -98,8 +99,14 @@ public class TestSvcImpl implements TestSvc {
     @Override
     public ModelAndView eventSend(HttpServletRequest request, Map<String, String> parameters) {
         ResultBean result = new ResultBean();
+
         try {
-            result = AlarmRequestUtil.sendRequestFuncJson(new StringEntity(parameters.get("eventData")), "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl);
+            if(mqttUtil.getIsMqtt()){
+                mqttUtil.publish("addEvent",parameters.get("eventData"),0);
+                result.setCode(200);
+            }else {
+                result = AlarmRequestUtil.sendRequestFuncJson(new StringEntity(parameters.get("eventData")), "http://" + ipAddress + ":" + port + "/" + projectName + eventAddUrl);
+            }
         } catch (Exception e) {
             throw new IsaverException(ResultState.ERROR_SEND_REQUEST,e.getMessage());
         }

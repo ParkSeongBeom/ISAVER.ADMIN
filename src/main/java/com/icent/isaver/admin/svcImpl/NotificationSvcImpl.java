@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.bean.EventBean;
 import com.icent.isaver.admin.bean.FenceBean;
 import com.icent.isaver.admin.bean.NotificationBean;
@@ -210,13 +212,41 @@ public class NotificationSvcImpl implements NotificationSvc {
     public ModelAndView findListNotificationForExcel(HttpServletRequest request, HttpServletResponse response, Map<String, String> parameters) {
         List<NotificationBean> notifications = notificationDao.findListNotificationExcel(parameters);
 
-        String[] heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};
-        String[] columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","confirmUserName","confirmDatetimeStr","cancelUserName","cancelDatetimeStr","cancelDesc"};
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String fileName = null;
+        String[] heads = null;
+        String[] columns = null;
+        if(StringUtils.notNullCheck(parameters.get("type")) && parameters.get("type").equals("speed")){
+            for (Iterator<NotificationBean> iter = notifications.iterator(); iter.hasNext(); ) {
+                NotificationBean noti = iter.next();
+                if(StringUtils.notNullCheck(noti.getTrackingJson())){
+                    List<Map<String,String>> mapList = new Gson().fromJson(noti.getTrackingJson(), new TypeToken<List<Map<String,String>>>(){}.getType());
+                    double maxSpeed = 0;
+                    for(Map<String,String> obj : mapList){
+                        if(StringUtils.notNullCheck(obj.get("speed")) && Double.parseDouble(obj.get("speed"))>maxSpeed){
+                            maxSpeed = Double.parseDouble(obj.get("speed"));
+                        }
+                    }
+                    if(maxSpeed>0){
+                        noti.setTrackingJson(String.valueOf(Math.round(maxSpeed*100)/100.0));
+                    }else{
+                        iter.remove();
+                    }
+                }else{
+                    iter.remove();
+                }
+            }
+            heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","speed"};
+            columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","trackingJson"};
+            fileName = "isaver_notification_history_for_speed_" + sdf.format(new Date());
+        }else{
+            heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};
+            columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","confirmUserName","confirmDatetimeStr","cancelUserName","cancelDatetimeStr","cancelDesc"};
+            fileName = "isaver_notification_history_" + sdf.format(new Date());
+        }
 
         ModelAndView modelAndView = new ModelAndView();
-        POIExcelUtil.downloadExcel(modelAndView, "isaver_notification_history_" + sdf.format(new Date()), notifications, columns, heads, "NotificationHistory");
+        POIExcelUtil.downloadExcel(modelAndView, fileName, notifications, columns, heads, "NotificationHistory");
         return modelAndView;
     }
 

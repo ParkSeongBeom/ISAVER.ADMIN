@@ -292,6 +292,7 @@
                 , (select user_name from isaver.users where user_id=A.cancel_user_id) as cancelUserName
                 , to_char(A.cancel_datetime,'yyyy-MM-dd HH24:MI:ss') as cancelDatetimeStr
                 , A.cancel_desc as cancelDesc
+                , A.tracking_json as trackingJson
         FROM    isaver.notification as A
         INNER JOIN isaver.area AREA
         ON      A.area_id = AREA.area_id
@@ -326,6 +327,9 @@
             </if>
             <if test="endDatetimeStr != null and endDatetimeStr != ''">
                 AND     A.event_datetime <![CDATA[ <= ]]> (#{endDatetimeStr} || ' ' || #{endDatetimeHour} ||':59:59')::timestamp
+            </if>
+            <if test="type != null and type != ''">
+                AND     A.tracking_json is not null
             </if>
         </trim>
         order by A.event_datetime DESC

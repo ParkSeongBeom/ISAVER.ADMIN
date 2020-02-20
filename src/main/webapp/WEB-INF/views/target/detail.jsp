@@ -38,6 +38,7 @@
                                     <option value="taekwon" ${target.targetId=="taekwon"?'selected':''}>태권도원</option>
                                     <option value="nonsan" ${target.targetId=="nonsan"?'selected':''}>논산교도소</option>
                                     <option value="pnit" ${target.targetId=="pnit"?'selected':''}>PNIT</option>
+                                    <option value="nowon" ${target.targetId=="nowon"?'selected':''}>노원구청</option>
                                 </select>
                             </td>
                             <th class="point"><spring:message code="target.column.targetName"/></th>

@@ -169,8 +169,7 @@ var NotificationHelper = (
                     updateNotificationList(resultData['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
-                    cancelNotificationList(resultData['cancelList']);
-                    callBackEvent(resultData['messageType'], {'eventLog':resultData['eventLog'],'notification':resultData['notification'],'cancel':resultData['cancelList']});
+                    cancelNotificationList(resultData['notification']);
                     break;
                 case "licenseStatus": // 라이센스 상태
                     var license = resultData['license'];
@@ -659,18 +658,35 @@ var NotificationHelper = (
         /**
          * 감지해제 notification List
          * @author psb
-         * @param notifications
+         * @param notification
          */
-        var cancelNotificationList = function(cancelList){
-            if(cancelList!=null){
-                for(var index in cancelList){
-                    var cancel = cancelList[index];
-                    if(_notificationList[cancel['notificationId']]!=null && _notificationList[cancel['notificationId']]['element']!=null){
-                        _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['updateDatetime'];
-                        _notificationList[cancel['notificationId']]['element'].find(".video_btn").show();
+        var cancelNotificationList = function(notification){
+            let cancelList = [];
+            for(var index in _notificationList){
+                if(_notificationList[index]['data']['status']=='D'
+                    && _notificationList[index]['data']['deviceId']==notification['deviceId']
+                    && _notificationList[index]['data']['fenceId']==notification['fenceId']
+                    && _notificationList[index]['data']['objectId']==notification['objectId']){
+                    if(_notificationList[index]['element']!=null){
+                        _notificationList[index]['data']['status'] = notification['status'];
+                        _notificationList[index]['data']['updateDatetime'] = notification['eventDatetime'];
+                        _notificationList[index]['element'].find(".video_btn").show();
                     }
+                    cancelList.push(_notificationList[index]['data']);
                 }
             }
+            if(cancelList.length>0){
+                callBackEvent('cancelDetection', {'notification':notification,'cancel':cancelList});
+            }
+            //if(cancelList!=null){
+            //    for(var index in cancelList){
+            //        var cancel = cancelList[index];
+            //        if(_notificationList[cancel['notificationId']]!=null && _notificationList[cancel['notificationId']]['element']!=null){
+            //            _notificationList[cancel['notificationId']]['data']['updateDatetime'] = cancel['updateDatetime'];
+            //            _notificationList[cancel['notificationId']]['element'].find(".video_btn").show();
+            //        }
+            //    }
+            //}
         };
 
         /**

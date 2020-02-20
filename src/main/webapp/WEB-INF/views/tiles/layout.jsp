@@ -180,7 +180,7 @@
             }, false);
             setAlarmAudio();
 
-            $.cookie.defaults = {path:'/'};
+            $.cookie.defaults = {path:'/',SameSite:'None'};
             if($.cookie("notificationShowFlag")=='Y'){
                 layerShowHide('list');
             }
