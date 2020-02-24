@@ -87,7 +87,9 @@ var CustomMapMediator = (
                 'pointsHide' : false // 트래킹 이동경로 숨김여부
                 ,'pointShiftCnt' : 80 // 트래킹 잔상 갯수 null일경우 무제한
                 ,'speedFlag' : false // 트래킹 이동속도 표시여부
+                ,'locationZFlag' : false // Z값 표시여부
                 ,'speedFormat' : " km/h" // 트래킹 이동속도 포맷
+                ,'locationZFormat' : " m" // Z값 표시 포맷
                 ,'animateFlag' : true // 이벤트 발생시 오브젝트 애니메이션 사용 여부
                 ,'humanOnly' : false // 사람만보기
             }
@@ -1083,6 +1085,7 @@ var CustomMapMediator = (
 
                         let element;
                         let lastSpeed = null;
+                        let lastLocationZ = null;
                         let lastPoint = null;
 
                         if(_marker[messageType][data['deviceId']][data['id']]!=null){
@@ -1092,7 +1095,12 @@ var CustomMapMediator = (
                                 let left = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['x'])+(Number(toRound(data['location'][index]['lat'],2))*_ratio);
                                 let top = Number(_marker[_MARKER_TYPE[4]][data['deviceId']]['data']['translate']['y'])+(Number(toRound(data['location'][index]['lng'],2))*_ratio);
 
-                                lastSpeed = toRound(data['location'][index]['speed'],1);
+                                if(data['location'][index]['speed']!=null){
+                                    lastSpeed = toRound(data['location'][index]['speed'],1);
+                                }
+                                if(data['location'][index]['z']!=null){
+                                    lastLocationZ = toRound(data['location'][index]['z'],1);
+                                }
                                 lastPoint = {lat:left,lng:top};
                                 if(_options[_MARKER_TYPE[2]]['pointsHide']){
                                     points.push(left+","+top);
@@ -1127,7 +1135,13 @@ var CustomMapMediator = (
 
                                 points.push(left+","+top);
                                 polylinePoints.push([left,top]);
-                                lastSpeed = toRound(data['location'][index]['speed'],1);
+
+                                if(data['location'][index]['speed']!=null){
+                                    lastSpeed = toRound(data['location'][index]['speed'],1);
+                                }
+                                if(data['location'][index]['z']!=null){
+                                    lastLocationZ = toRound(data['location'][index]['z'],1);
+                                }
                                 lastPoint = {lat:left,lng:top};
                                 if(_options[_MARKER_TYPE[2]]['pointsHide']){
                                     break;
@@ -1149,7 +1163,7 @@ var CustomMapMediator = (
 
                         if(_options[_MARKER_TYPE[2]]['speedFlag'] && lastSpeed!=null && lastPoint!=null){
                             if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['textElement'].remove(); }
-                            const svgText = _canvasSvg.text(lastPoint['lat']+7, lastPoint['lng'], lastSpeed+_options[_MARKER_TYPE[2]]['speedFormat'], {
+                            const svgText = _canvasSvg.text(lastPoint['lat']+8, lastPoint['lng'], lastSpeed+_options[_MARKER_TYPE[2]]['speedFormat'], {
                                 'text-anchor': "start"
                                 , 'fill': "rgb(0,0,255)"
                                 , 'style': "font-size:8px"
@@ -1160,6 +1174,20 @@ var CustomMapMediator = (
                             }
                             _mapCanvas.find("svg").append(svgText);
                             //$(svgText).prependTo(_mapCanvas.find("svg"));
+                        }
+
+                        if(_options[_MARKER_TYPE[2]]['locationZFlag'] && lastLocationZ!=null && lastPoint!=null){
+                            if(_marker[messageType][data['deviceId']][data['id']]['locationZElement']!=null){ _marker[messageType][data['deviceId']][data['id']]['locationZElement'].remove(); }
+                            const svgText = _canvasSvg.text(lastPoint['lat']+8, lastPoint['lng']-8, lastLocationZ+_options[_MARKER_TYPE[2]]['locationZFormat'], {
+                                'text-anchor': "start"
+                                , 'fill': "rgb(0,255,0)"
+                                , 'style': "font-size:8px"
+                            });
+                            _marker[messageType][data['deviceId']][data['id']]['locationZElement'] = $(svgText);
+                            if(_OBJECT_TYPE_CUSTOM[data['objectType']]!='human'){
+                                $(svgText).addClass('object');
+                            }
+                            _mapCanvas.find("svg").append(svgText);
                         }
 
                         if(data['objectType']=='heatmap'){
@@ -1404,6 +1432,7 @@ var CustomMapMediator = (
                         }
                         if(_marker[messageType][data['deviceId']][data['id']]['element']!=null) _marker[messageType][data['deviceId']][data['id']]['element'].remove();
                         if(_marker[messageType][data['deviceId']][data['id']]['textElement']!=null) _marker[messageType][data['deviceId']][data['id']]['textElement'].remove();
+                        if(_marker[messageType][data['deviceId']][data['id']]['locationZElement']!=null) _marker[messageType][data['deviceId']][data['id']]['locationZElement'].remove();
                         delete _marker[messageType][data['deviceId']][data['id']];
                         console.debug("[CustomMapMediator][removeMarker] object complete - [" + messageType + "][" + data['id'] + "]");
                     }

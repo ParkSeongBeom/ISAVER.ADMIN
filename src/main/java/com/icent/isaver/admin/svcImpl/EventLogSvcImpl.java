@@ -7,10 +7,15 @@ import com.icent.isaver.admin.dao.InoutConfigurationDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
+import com.icent.isaver.admin.util.CommonUtil;
 import com.meous.common.util.POIExcelUtil;
 import com.meous.common.util.StringUtils;
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.*;
+import com.mongodb.Block;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
@@ -278,27 +283,42 @@ public class EventLogSvcImpl implements EventLogSvc {
                     query.put("deviceId", new BasicDBObject("$in",deviceList));
                 }
             }
+            BasicDBObject eventDatetimeWhere = new BasicDBObject();
+            boolean eventDatetimeFlag = false;
             if(StringUtils.notNullCheck(parameters.get("startDatetimeStr")) && StringUtils.notNullCheck(parameters.get("startDatetimeHour"))){
-                query.put("eventDatetime", new BasicDBObject("$gte",sdf.parse(parameters.get("startDatetimeStr") + " " + parameters.get("startDatetimeHour") + ":00:00")));
+                eventDatetimeWhere.put("$gte",sdf.parse(parameters.get("startDatetimeStr") + " " + parameters.get("startDatetimeHour") + ":00:00"));
+                eventDatetimeFlag = true;
             }
             if(StringUtils.notNullCheck(parameters.get("endDatetimeStr")) && StringUtils.notNullCheck(parameters.get("endDatetimeHour"))){
-                query.put("eventDatetime", new BasicDBObject("$lte",sdf.parse(parameters.get("endDatetimeStr") + " " + parameters.get("endDatetimeHour") + ":59:59")));
+                eventDatetimeWhere.put("$lte",sdf.parse(parameters.get("endDatetimeStr") + " " + parameters.get("endDatetimeHour") + ":59:59"));
+                eventDatetimeFlag = true;
+            }
+            if(eventDatetimeFlag){
+                query.put("eventDatetime", eventDatetimeWhere);
             }
 
             FindIterable<Document> resultList = collection.find(query).sort(Sorts.descending("eventDatetime"));
 
             List<EventLogExcelBean> eventLogList = new ArrayList<>();
-            for(Document doc : resultList) {
-                eventLogList.add(new EventLogExcelBean(
+            resultList.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document doc) {
+                    String locationZ = "";
+                    if(doc.get("location")!=null){
+                        locationZ = doc.get("location",Map.class).get("z").toString();
+                    }
+                    eventLogList.add(new EventLogExcelBean(
                         doc.getString("areaName"),
                         doc.getString("deviceName"),
                         doc.getString("eventName"),
+                        locationZ,
                         sdf.format(doc.getDate("eventDatetime"))
-                ));
-            }
-            String[] heads = new String[]{"Area Name","Device Name","Event Name","Event Datetime"};
-            String[] columns = new String[]{"areaName","deviceName","eventName","eventDatetime"};
+                    ));
+                }
+            });
 
+            String[] heads = new String[]{"Area Name","Device Name","Event Name","Location Z","Event Datetime"};
+            String[] columns = new String[]{"areaName","deviceName","eventName","locationZ","eventDatetime"};
             POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), eventLogList, columns, heads, "EventHistory");
         } catch (Exception e) {
             throw new IsaverException("");
@@ -313,15 +333,17 @@ public class EventLogSvcImpl implements EventLogSvc {
         private String deviceName;
         /* 이벤트 ID*/
         private String eventName;
+        /* 이벤트 ID*/
+        private String locationZ;
         /* 이벤트 발생 일시 */
         private String eventDatetime;
 
-        EventLogExcelBean(String areaName, String deviceName, String eventName, String eventDatetime){
+        EventLogExcelBean(String areaName, String deviceName, String eventName, String locationZ, String eventDatetime){
             this.areaName=areaName;
             this.deviceName=deviceName;
             this.eventName=eventName;
+            this.locationZ=locationZ;
             this.eventDatetime=eventDatetime;
         }
     }
-
 }

@@ -37,7 +37,7 @@ public class EventLogCtrl {
     @RequestMapping(method={RequestMethod.POST,RequestMethod.GET}, value="/list")
     public ModelAndView findListEventLog(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
         parameters = AdminHelper.checkReloadList(request, response, "eventLogList", parameters);
-        parameters = AdminHelper.checkSearchDate(parameters,3);
+        parameters = AdminHelper.checkSearchDate(parameters,0);
         AdminHelper.setPageParam(parameters, defaultPageSize);
 
         ModelAndView modelAndView = eventLogSvc.findListEventLog(parameters);

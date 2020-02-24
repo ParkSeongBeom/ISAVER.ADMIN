@@ -56,17 +56,24 @@ public class MqttUtil implements MqttCallbackExtended {
         Thread thread = new Thread() {
             public void run() {
                 boolean initFlag = false;
-                while (!Client.isConnected()) {
-                    try {
-                        if (initFlag) {
-                            logger.info("[MQTT] Connecting retry to broker : {}",_broker);
-                            Client.reconnect();
-                        }else{
-                            logger.info("[MQTT] Connecting to broker : {}",_broker);
-                            Client.connect(connOpts);
+                while (true) {
+                    if(!Client.isConnected()){
+                        try {
+                            if (initFlag) {
+                                logger.info("[MQTT] Connecting retry to broker : {}",_broker);
+                                Client.reconnect();
+                            }else{
+                                logger.info("[MQTT] Connecting to broker : {}",_broker);
+                                Client.connect(connOpts);
+                            }
+                        } catch (MqttException e) {
+                            if(e.getReasonCode()!=32110){
+                                logger.error(e.getMessage());
+                            }
+                        } catch (Exception e) {
+                            logger.error(e.getMessage());
                         }
-                    } catch (Exception e) {
-                        logger.error(e.getMessage());
+                        initFlag = true;
                     }
 
                     try {
@@ -74,7 +81,6 @@ public class MqttUtil implements MqttCallbackExtended {
                     } catch (InterruptedException e) {
                         logger.error(e.getMessage());
                     }
-                    initFlag = true;
                 }
             }
         };

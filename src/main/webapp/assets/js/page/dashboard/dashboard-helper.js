@@ -258,6 +258,7 @@ var DashboardHelper = (
                                 },
                                 'object' : {
                                     'speedFlag' : true
+                                    ,'locationZFlag' : true
                                 }
                                 , 'custom' : {
                                     'websocketSend':false

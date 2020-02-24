@@ -826,19 +826,19 @@
                     "actionType":"add"
                     ,"objectType":"human"
                     ,"id":"1111"
-                    ,"location":[{"lat": "3","lng": "3"},{"lat": "4","lng": "4"},{"lat": "4","lng": "5"}]
+                    ,"location":[{"lat": "3","lng": "3","speed": "2.5","z": "2.2"},{"lat": "4","lng": "4","speed": "3","z": "3"},{"lat": "4","lng": "5","speed": "4","z": "4"}]
                 },
                 {
                     "actionType":"add"
                     ,"objectType":"unknown"
                     ,"id":"1112"
-                    ,"location":[{"lat": "-4","lng": "-4"},{"lat": "-5","lng": "-5"},{"lat": "-5","lng": "-6"}]
+                    ,"location":[{"lat": "-4","lng": "-4","speed": "4","z": "4"},{"lat": "-5","lng": "-5","speed": "5","z": "5"},{"lat": "-5","lng": "-6","speed": "6","z": "6"}]
                 },
                 {
                     "actionType":"add"
                     ,"objectType":"vehicle"
                     ,"id":"1113"
-                    ,"location":[{"lat": "6","lng": "6"},{"lat": "7","lng": "7"},{"lat": "7","lng": "8"}]
+                    ,"location":[{"lat": "6","lng": "6","speed": "7","z": "7"},{"lat": "7","lng": "7","speed": "8","z": "8"},{"lat": "7","lng": "8","speed": "9","z": "9"}]
                 }
             ]
         });
