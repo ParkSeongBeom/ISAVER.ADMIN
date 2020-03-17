@@ -85,7 +85,7 @@ public class TestSvcImpl implements TestSvc {
     public ModelAndView testList(HttpServletRequest request, Map<String, String> parameters) {
         List<AreaBean> areaList = areaDao.findListAreaForTest();
         List<DeviceBean> deviceList = deviceDao.findListDeviceForTest();
-        List<FenceBean> fenceList = fenceDao.findListFenceForTest();
+        List<FenceBean> fenceList = fenceDao.findListFenceForAll();
         List<EventBean> eventList = eventDao.findListEvent(null);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -143,7 +143,7 @@ public class TestSvcImpl implements TestSvc {
                 p.waitFor();
                 logger.info(sb.toString());
             }catch(Exception e){
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }finally {
                 p.destroy();
             }

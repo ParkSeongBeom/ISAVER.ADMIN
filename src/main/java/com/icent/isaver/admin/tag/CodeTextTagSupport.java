@@ -5,6 +5,8 @@ import com.icent.isaver.admin.dao.CodeDao;
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.meous.common.util.StringUtils;
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Map;
  * Time: 오후 10:12
  */
 public class CodeTextTagSupport extends ParamTag {
+    static Logger logger = LoggerFactory.getLogger(CodeTextTagSupport.class);
 
     private static final long serialVersionUID = 3977336077673211703L;
 
@@ -59,9 +62,7 @@ public class CodeTextTagSupport extends ParamTag {
         try {
             pageContext.getOut().write(sb.toString());
         } catch (IOException e) {
-
-        } finally {
-
+            logger.error(e.getMessage());
         }
 
         return EVAL_PAGE;

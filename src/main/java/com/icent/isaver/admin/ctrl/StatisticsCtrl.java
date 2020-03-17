@@ -1,11 +1,9 @@
 package com.icent.isaver.admin.ctrl;
 
 import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.StatisticsSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.meous.common.util.MapUtils;
-import com.meous.common.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,12 +43,8 @@ public class StatisticsCtrl {
      */
     @RequestMapping(method={RequestMethod.POST, RequestMethod.GET},value="/list")
     public ModelAndView findListStatistics(@RequestParam Map<String, String> parameters) {
-        ModelAndView modelAndView = new ModelAndView();
-        if(StringUtils.notNullCheck(parameters.get("mode")) && parameters.get("mode").equals(AdminResource.SEARCH_MODE)){
-            modelAndView = statisticsSvc.findListStatistics(parameters);
-        }else{
-            modelAndView.setViewName("eventStatistics");
-        }
+        ModelAndView modelAndView = statisticsSvc.findListStatistics(parameters);
+        modelAndView.setViewName("eventStatistics");
         return modelAndView;
     }
 

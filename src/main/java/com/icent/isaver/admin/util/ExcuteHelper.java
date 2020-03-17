@@ -3,18 +3,14 @@ package com.icent.isaver.admin.util;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
-import ch.ethz.ssh2.StreamGobbler;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by psb on 15. 04. 08..
  */
 public class ExcuteHelper {
+    private static Logger logger = LoggerFactory.getLogger(ExcuteHelper.class);
 
     /**
      * 핑테스트
@@ -32,7 +28,7 @@ public class ExcuteHelper {
             int returnVal = proc.waitFor();
             reachable = (returnVal==0);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             if (proc!=null) proc.destroy();
         }
@@ -58,7 +54,7 @@ public class ExcuteHelper {
                 resultFlag = true;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }finally {
 			/* Close the connection */
             if (conn!=null) conn.close();
@@ -90,7 +86,7 @@ public class ExcuteHelper {
 //                line = br.readLine();
 //            }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return null;
         }finally {
 			/* Close this session */

@@ -17,6 +17,7 @@ public class MqttUtil implements MqttCallbackExtended {
     private static MqttConnectOptions connOpts;
     private static String _broker;
     private Boolean isMqtt;
+    private Boolean isConnect = false;
 
     public Boolean getIsMqtt() {
         return isMqtt;
@@ -57,7 +58,7 @@ public class MqttUtil implements MqttCallbackExtended {
             public void run() {
                 boolean initFlag = false;
                 while (true) {
-                    if(!Client.isConnected()){
+                    if(!Client.isConnected() && !isConnect){
                         try {
                             if (initFlag) {
                                 logger.info("[MQTT] Connecting retry to broker : {}",_broker);
@@ -92,9 +93,10 @@ public class MqttUtil implements MqttCallbackExtended {
         try {
             Client.disconnect();
             Client.close();
+            isConnect = false;
         } catch (MqttException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -104,12 +106,9 @@ public class MqttUtil implements MqttCallbackExtended {
 
         try {
             Client.publish(topic, message);
-        } catch (MqttPersistenceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (MqttException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -118,7 +117,7 @@ public class MqttUtil implements MqttCallbackExtended {
             Client.subscribe(topic,qos);
         } catch (MqttException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -128,6 +127,7 @@ public class MqttUtil implements MqttCallbackExtended {
 
     @Override
     public void connectionLost(Throwable cause) {
+        isConnect = false;
         logger.info("[MQTT] Lost Connection cause : {}", cause.getMessage());
     }
 
@@ -136,12 +136,13 @@ public class MqttUtil implements MqttCallbackExtended {
         try {
             logger.info("[MQTT] {} Message with {} delivered.", iMqttDeliveryToken.getTopics(), iMqttDeliveryToken.getMessage());
         } catch (MqttException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
     @Override
     public void connectComplete(boolean reconnect, String serverURI) {
+        isConnect = true;
         logger.info("[MQTT] Connected : {}",serverURI);
     }
 }

@@ -216,8 +216,12 @@ function numValidate(value) {
 }
 
 function commaNum(num) {
-    var len, point, str;
+    var len, point, str, decimal;
     num = num + "";
+    if(num.split(".").length>1){
+        decimal = num.split(".")[1];
+        num = num.split(".")[0];
+    }
     point = num.length % 3;
     len = num.length;
 
@@ -227,7 +231,7 @@ function commaNum(num) {
         str += num.substring(point, point + 3);
         point += 3;
     }
-    return str;
+    return str+(decimal?"."+decimal:"");
 }
 
 function isPassive() {
@@ -238,7 +242,9 @@ function isPassive() {
                 supportsPassiveOption = true;
             }
         }));
-    } catch(e) {}
+    } catch(e) {
+        console.error(e);
+    }
     return supportsPassiveOption;
 }
 

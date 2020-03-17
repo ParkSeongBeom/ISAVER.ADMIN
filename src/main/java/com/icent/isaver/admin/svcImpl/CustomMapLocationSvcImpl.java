@@ -129,7 +129,7 @@ public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

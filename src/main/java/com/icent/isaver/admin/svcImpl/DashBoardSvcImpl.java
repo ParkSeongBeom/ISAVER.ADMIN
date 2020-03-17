@@ -13,17 +13,20 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import java.net.InetAddress;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.gte;
+import static com.mongodb.client.model.Filters.*;
 
 /**
  * 대쉬보드 Service Implements
@@ -41,6 +44,8 @@ import static com.mongodb.client.model.Filters.gte;
  */
 @Service
 public class DashBoardSvcImpl implements DashBoardSvc {
+
+    static Logger logger = LoggerFactory.getLogger(DashBoardSvcImpl.class);
 
     @Value("${cnf.fileAddress}")
     private String fileAddress = null;
@@ -97,7 +102,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
                     }
                 }
             }catch(Exception e){
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 throw new IsaverException("");
             }
             area.setDevices(deviceList);
@@ -117,7 +122,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return modelAndView;
     }

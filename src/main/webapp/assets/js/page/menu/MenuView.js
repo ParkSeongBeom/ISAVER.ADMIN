@@ -69,7 +69,7 @@ function MenuView(model) {
                 }
                 switchMenuDetailObj[key](this);
             } catch (e) {
-//                console.error("[Error][MenuView.setDetail] " + e);
+                console.error("[Error][MenuView.setDetail] " + e);
             }
 
         }, obj);

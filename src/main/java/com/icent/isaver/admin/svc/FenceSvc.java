@@ -28,6 +28,4 @@ public interface FenceSvc {
      * @return
      */
     ModelAndView findListFence(Map<String, String> parameters);
-
-    ModelAndView findListFenceForStatistics(Map<String, String> parameters);
 }

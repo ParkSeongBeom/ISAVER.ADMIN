@@ -12,7 +12,7 @@ public interface FenceDao {
 
     List<FenceBean> findListFenceForNotification();
 
-    List<FenceBean> findListFenceForTest();
+    List<FenceBean> findListFenceForAll();
 
     void addFence(List<FenceBean> parameterList);
 

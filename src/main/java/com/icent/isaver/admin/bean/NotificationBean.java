@@ -79,6 +79,16 @@ public class NotificationBean extends ISaverCommonBean {
     private String cancelDatetimeStr;
     /* 임계치레벨명 */
     private String criticalLevelName;
+    /* 높이값 */
+    private String locationZ;
+    /* 스피드 */
+    private String locationSpeed;
+    /* 사이즈X */
+    private String locationSizeX;
+    /* 사이즈Y */
+    private String locationSizeY;
+    /* 사이즈Z */
+    private String locationSizeZ;
 
     public String getNotificationId() {
         return notificationId;
@@ -318,5 +328,45 @@ public class NotificationBean extends ISaverCommonBean {
 
     public void setCameraCnt(Integer cameraCnt) {
         this.cameraCnt = cameraCnt;
+    }
+
+    public String getLocationZ() {
+        return locationZ;
+    }
+
+    public void setLocationZ(String locationZ) {
+        this.locationZ = locationZ;
+    }
+
+    public String getLocationSpeed() {
+        return locationSpeed;
+    }
+
+    public void setLocationSpeed(String locationSpeed) {
+        this.locationSpeed = locationSpeed;
+    }
+
+    public String getLocationSizeX() {
+        return locationSizeX;
+    }
+
+    public void setLocationSizeX(String locationSizeX) {
+        this.locationSizeX = locationSizeX;
+    }
+
+    public String getLocationSizeY() {
+        return locationSizeY;
+    }
+
+    public void setLocationSizeY(String locationSizeY) {
+        this.locationSizeY = locationSizeY;
+    }
+
+    public String getLocationSizeZ() {
+        return locationSizeZ;
+    }
+
+    public void setLocationSizeZ(String locationSizeZ) {
+        this.locationSizeZ = locationSizeZ;
     }
 }

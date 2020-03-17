@@ -7,6 +7,8 @@ import com.icent.isaver.admin.dao.VideoHistoryDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.meous.common.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +34,8 @@ import java.util.Map;
  */
 @Service
 public class VideoHistorySvcImpl implements VideoHistorySvc {
+
+    private static Logger logger = LoggerFactory.getLogger(VideoHistorySvcImpl.class);
 
     @Value("${cnf.fileAddress}")
     private String fileAddress = null;
@@ -63,7 +67,7 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("videoUrl", "http://" + address.getHostAddress() + videoAttachedUploadPath);
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
@@ -78,7 +82,7 @@ public class VideoHistorySvcImpl implements VideoHistorySvc {
             InetAddress address = InetAddress.getByName(fileAddress);
             modelAndView.addObject("videoUrl", "http://" + address.getHostAddress() + videoAttachedUploadPath);
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;

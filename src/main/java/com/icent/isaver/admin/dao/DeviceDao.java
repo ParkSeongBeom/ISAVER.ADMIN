@@ -3,7 +3,6 @@ package com.icent.isaver.admin.dao;
 
 import com.icent.isaver.admin.bean.DeviceBean;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

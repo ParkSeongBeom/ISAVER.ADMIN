@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.util;
 
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -15,6 +17,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 public class SSLSocketFactoryEx extends SSLSocketFactory {
+	static Logger logger = LoggerFactory.getLogger(SSLSocketFactoryEx.class);
 	SSLContext sslContext = SSLContext.getInstance("TLS");
 
 	public SSLSocketFactoryEx(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException,
@@ -57,6 +60,7 @@ public class SSLSocketFactoryEx extends SSLSocketFactory {
 			field.setAccessible(true);
 			field.set(socket.getInetAddress(), host);
 		} catch (Exception ignored) {
+			logger.error(ignored.getMessage());
 		}
 	}
 }

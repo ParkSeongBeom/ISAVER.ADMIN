@@ -7,6 +7,8 @@ import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.meous.common.util.StringUtils;
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -26,6 +28,7 @@ import java.io.IOException;
  * </pre>
  */
 public class RoleCheckTagSupport extends ParamTag {
+    static Logger logger = LoggerFactory.getLogger(RoleCheckTagSupport.class);
 
     private static final long serialVersionUID = -2283578630333735163L;
 
@@ -74,9 +77,7 @@ public class RoleCheckTagSupport extends ParamTag {
         try {
             pageContext.getOut().write(sb.toString());
         } catch (IOException e) {
-
-        } finally {
-
+            logger.error(e.getMessage());
         }
 
         return EVAL_PAGE;

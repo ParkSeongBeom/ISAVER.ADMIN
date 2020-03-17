@@ -56,10 +56,10 @@
           AND     A.del_yn = #{delYn}
         </if>
         <if test="eventId != null and eventId != ''">
-          AND     A.event_id like '%${eventId}%'
+          AND     A.event_id like concat('%',#{eventId},'%')
         </if>
         <if test="eventName != null and eventName != ''">
-          AND     A.event_name like '%${eventName}%'
+          AND     A.event_name like concat('%',#{eventName},'%')
         </if>
         <if test="eventFlag != null and eventFlag != ''">
           AND     A.event_flag = #{eventFlag}
@@ -99,10 +99,10 @@
               AND     A.del_yn = #{delYn}
           </if>
           <if test="eventId != null and eventId != ''">
-              AND     A.event_id like '%${eventId}%'
+              AND     A.event_id like concat('%',#{eventId},'%')
           </if>
           <if test="eventName != null and eventName != ''">
-              AND     A.event_name like '%${eventName}%'
+              AND     A.event_name like concat('%',#{eventName},'%')
           </if>
           <if test="eventFlag != null and eventFlag != ''">
               AND     A.event_flag = #{eventFlag}

@@ -69,13 +69,6 @@ public interface NotificationDao {
 
     /**
      *
-     * @param parameters
-     * @return
-     */
-    List<NotificationBean> findListNotificationForArea(Map<String, String> parameters);
-
-    /**
-     *
      * @author psb
      * @return
      */

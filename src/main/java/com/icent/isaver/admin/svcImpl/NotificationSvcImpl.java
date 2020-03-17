@@ -220,24 +220,68 @@ public class NotificationSvcImpl implements NotificationSvc {
             for (Iterator<NotificationBean> iter = notifications.iterator(); iter.hasNext(); ) {
                 NotificationBean noti = iter.next();
                 if(StringUtils.notNullCheck(noti.getTrackingJson())){
-                    List<Map<String,String>> mapList = new Gson().fromJson(noti.getTrackingJson(), new TypeToken<List<Map<String,String>>>(){}.getType());
+                    List<Map> mapList = new Gson().fromJson(noti.getTrackingJson(), new TypeToken<List<Map>>(){}.getType());
                     double maxSpeed = 0;
-                    for(Map<String,String> obj : mapList){
-                        if(StringUtils.notNullCheck(obj.get("speed")) && Double.parseDouble(obj.get("speed"))>maxSpeed){
-                            maxSpeed = Double.parseDouble(obj.get("speed"));
+                    boolean initSpeed = false;
+                    double maxZ = 0;
+                    boolean initZ = false;
+                    double maxSizeX = 0;
+                    double maxSizeY = 0;
+                    double maxSizeZ = 0;
+                    long maxSize = 0;
+                    boolean initSize = false;
+                    boolean removeFlag = true;
+                    for(Map obj : mapList){
+                        if(obj.get("speed")!=null){
+                            double thisSpeed = Double.parseDouble(obj.get("speed").toString());
+                            if(!initSpeed || thisSpeed>maxSpeed){
+                                maxSpeed = thisSpeed;
+                                initSpeed = true;
+                                removeFlag = false;
+                            }
+                        }
+                        if(obj.get("z")!=null){
+                            double thisZ = Double.parseDouble(obj.get("z").toString());
+                            if(!initZ || thisZ>maxZ){
+                                maxZ = thisZ;
+                                initZ = true;
+                                removeFlag = false;
+                            }
+                        }
+                        if(obj.get("size")!=null){
+                            Map sizeObj = (Map) obj.get("size");
+                            if(sizeObj.get("x")!=null && sizeObj.get("y")!=null && sizeObj.get("z")!=null){
+                                double thisSizeX = Double.parseDouble(sizeObj.get("x").toString());
+                                double thisSizeY = Double.parseDouble(sizeObj.get("y").toString());
+                                double thisSizeZ = Double.parseDouble(sizeObj.get("z").toString());
+                                long thisSize = Math.round(thisSizeX*100) * Math.round(thisSizeY*100) * Math.round(thisSizeZ*100);
+                                if(!initSize || thisSize>maxSize){
+                                    maxSizeX = thisSizeX;
+                                    maxSizeY = thisSizeY;
+                                    maxSizeZ = thisSizeZ;
+                                    maxSize = thisSize;
+                                    initSize = true;
+                                    removeFlag = false;
+                                }
+                            }
                         }
                     }
-                    if(maxSpeed>0){
-                        noti.setTrackingJson(String.valueOf(Math.round(maxSpeed*100)/100.0));
-                    }else{
+
+                    if(removeFlag){
                         iter.remove();
+                    }else{
+                        noti.setLocationSpeed(String.valueOf(Math.round(maxSpeed * 100) / 100.0));
+                        noti.setLocationZ(String.valueOf(Math.round(maxZ * 100) / 100.0));
+                        noti.setLocationSizeX(String.valueOf(Math.round(maxSizeX * 100) / 100.0));
+                        noti.setLocationSizeY(String.valueOf(Math.round(maxSizeY * 100) / 100.0));
+                        noti.setLocationSizeZ(String.valueOf(Math.round(maxSizeZ * 100) / 100.0));
                     }
                 }else{
                     iter.remove();
                 }
             }
-            heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","speed"};
-            columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","trackingJson"};
+            heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Location Z","Speed","Size X","Size Y","Size Z"};
+            columns = new String[]{"eventDatetimeStr","areaName","deviceName","fenceName","eventName","criticalLevelName","locationZ","locationSpeed","locationSizeX","locationSizeY","locationSizeZ"};
             fileName = "isaver_notification_history_for_speed_" + sdf.format(new Date());
         }else{
             heads = new String[]{"Event Datetime","Area Name","Device Name","Fence Name","Event Name","Critical Level","Confirm User Name","Confirm Datetime","Clear User Name","Clear Datetime","Clear Description"};

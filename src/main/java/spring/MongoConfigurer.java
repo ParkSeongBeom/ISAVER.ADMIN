@@ -34,7 +34,7 @@ public class MongoConfigurer {
                         .threadsAllowedToBlockForConnectionMultiplier(4)
                         .connectTimeout(3000)
                         .maxWaitTime(10000)
-                        .socketTimeout(5000)
+                        .socketTimeout(60000)
                         .socketKeepAlive(true)
                         .build()
         );

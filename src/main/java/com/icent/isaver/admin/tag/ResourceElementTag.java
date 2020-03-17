@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.tag;
 
 import com.icent.isaver.admin.resource.AdminResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -29,6 +31,7 @@ import java.util.Map;
  * </pre>
  */
 public class ResourceElementTag extends TagSupport {
+    private static Logger logger = LoggerFactory.getLogger(ResourceElementTag.class);
 
     /**
      * 대상 리소스 명
@@ -83,17 +86,16 @@ public class ResourceElementTag extends TagSupport {
             try {
                 resource = AdminResource.class.getField(this.resourceName);
             } catch (NoSuchFieldException e) {
-
+                logger.error(e.getMessage());
             }
         }
 
         Map<String, String> resourceMap = null;
         if(resource != null){
-
             try {
                 resourceMap = convertFieldToMap(resource);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
 

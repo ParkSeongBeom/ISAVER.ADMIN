@@ -1,6 +1,8 @@
 package com.icent.isaver.admin.common.util;
 
 import com.meous.common.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
@@ -18,6 +20,7 @@ import java.util.*;
  * Created by icent on 2017. 2. 1..
  */
 public class ResourceFinder {
+    static Logger logger = LoggerFactory.getLogger(ResourceFinder.class);
     private static final String DEFAULT_CLASS_PATTERN = "**/*.class";
     private static final String DEFAULT_RESOURCE_PATTERN = "**/*";
 
@@ -153,7 +156,7 @@ public class ResourceFinder {
         try {
             resources = resourcePatternResolver.getResources(packageSearchPath);
         } catch (IOException var6) {
-            var6.printStackTrace();
+            logger.error(var6.getMessage());
         }
 
         return resources;

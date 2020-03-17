@@ -6,6 +6,8 @@ import com.icent.isaver.admin.svcImpl.MenuSvcImpl;
 import com.icent.isaver.admin.util.AppContextUtil;
 import com.meous.common.util.StringUtils;
 import org.apache.taglibs.standard.tag.el.core.ParamTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -24,6 +26,7 @@ import java.io.IOException;
  * </pre>
  */
 public class MenuTagSupport extends ParamTag {
+    static Logger logger = LoggerFactory.getLogger(MenuTagSupport.class);
 
     private static final long serialVersionUID = -8275235968021249758L;
 
@@ -56,9 +59,7 @@ public class MenuTagSupport extends ParamTag {
         try {
             pageContext.getOut().write(sb.toString());
         } catch (IOException e) {
-
-        } finally {
-
+            logger.error(e.getMessage());
         }
 
         return EVAL_PAGE;

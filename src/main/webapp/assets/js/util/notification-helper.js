@@ -544,7 +544,9 @@ var NotificationHelper = (
                     setTimeout(function() {
                         $(".notice-btn").addClass("on");
                     }, 10);
-                } catch(e) {}
+                } catch(e) {
+                    console.error(e);
+                }
 
                 /* 싸이렌 */
                 playSegment();

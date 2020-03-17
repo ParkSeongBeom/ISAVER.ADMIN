@@ -15,6 +15,25 @@
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
+<style>
+    .securityReportPop .set-chart {
+        height:100%;
+    }
+    .securityReportPop .set-chart .canvas-chart {
+        min-width: auto;
+        padding-right: 0;
+        padding-left: 0;
+        padding-bottom: 10px;
+    }
+    .securityReportPop .set-chart > .chart_label > * {
+        padding: 0 10px 15px 0;
+    }
+    .securityReportPop .chart_label.header{
+        overflow: auto;
+        height: 175px;
+    }
+</style>
+
 <div class="sub_title_area">
     <h3 class="1depth_title"><spring:message code="common.title.eventStatistics"/></h3>
     <div class="navigation">
@@ -56,6 +75,7 @@
             <!-- 목록 상단 버튼 영역 -->
             <div class="set-btn type-01">
                 <button class="ico-tracker" style="width: 100%;" onclick="openHeatMapPopup();">HeatMap</button>
+                <button class="ico-tracker" style="width: 100%;" onclick="openSecurityReportPopup();">Security Report</button>
             </div>
         </section>
 
@@ -146,9 +166,15 @@
     <div id="excelEventStatisticsList" style="display:none;"></div>
 </section>
 
+<select name="fenceList" style="display:none;">
+    <c:forEach var="fence" items="${fenceList}">
+        <option style="display:none;" areaId="${fence.areaId}" value="${fence.fenceId}">${fence.fenceName}</option>
+    </c:forEach>
+</select>
+
 <section class="popup-layer">
-    <!-- 트래킹이력 팝업 -->
-    <div class="popupbase map_pop">
+    <!-- 히트맵 팝업 -->
+    <div class="popupbase map_pop heatMapPop">
         <div>
             <div>
                 <header>
@@ -175,6 +201,14 @@
                             </span>
                         </p>
                         <p class="itype_04">
+                            <span><spring:message code="statistics.column.fenceName" /></span>
+                            <span>
+                                <select name="fenceId">
+                                    <option value=""><spring:message code="common.selectbox.select"/></option>
+                                </select>
+                            </span>
+                        </p>
+                        <p class="itype_04">
                             <span><spring:message code="statistics.column.speed" /></span>
                             <span class="plable04">
                                 <input type="number" name="startSpeed" />
@@ -192,8 +226,8 @@
                     <article class="map_sett_box">
                         <section class="map">
                             <div>
-                                <div id="mapElement" class="map_images"></div>
-                                <div id="heatmapLoading" class="loding_bar"></div>
+                                <div name="mapElement" class="map_images"></div>
+                                <div class="loding_bar"></div>
                             </div>
                         </section>
                     </article>
@@ -202,11 +236,151 @@
         </div>
         <div class="bg option_pop_close" onclick="closeHeatMapPopup();"></div>
     </div>
+
+    <!-- 보안리포트 팝업 -->
+    <div class="popupbase map_pop securityReportPop">
+        <div>
+            <div>
+                <header>
+                    <h2>Security Report</h2>
+                    <button onclick="closeSecurityReportPopup();"></button>
+                </header>
+
+                <article class="search_area" style="height:auto;">
+                    <div class="search_contents">
+                        <spring:message code="common.selectbox.select" var="allSelectText"/>
+                        <!-- 일반 input 폼 공통 -->
+                        <p class="itype_01">
+                            <span><spring:message code="statistics.column.area" /></span>
+                            <span><isaver:areaSelectBox htmlTagName="areaId" allModel="true" allText="${allSelectText}"/></span>
+                        </p>
+                        <p class="itype_04">
+                            <span><spring:message code="statistics.column.datetime" /></span>
+                            <span><input type="text" name="securityDatetime" /></span>
+                        </p>
+                    </div>
+                    <div class="search_btn">
+                        <button onclick="searchSecurityReport(); return false;" class="btn bstyle01 btype01"><spring:message code="common.button.search"/></button>
+                    </div>
+                </article>
+
+                <div style="height:100%">
+                    <div id="securityLeft" style="background-color: white; color: #3c3c3c; width: 45%; height:100%; float:left;">
+                        <section style="border-style: solid; border-width: 1px;border-color: #040404; width:100%; height: 100%">
+                            <div id="securityLeft1" class="securityChart1" style="width:100%; height:50%">
+                                <section class="box-chart" style="width:100%; height:100%"></section>
+                            </div>
+                            <div id="securityLeft2" class="securityChart2" style="width:100%; height:50%">
+                                <section class="box-chart" style="width:100%; height:100%"></section>
+                            </div>
+                        </section>
+                    </div>
+                    <div style="float:right; width: 55%; height:100%;" class="trackinghistory-box">
+                        <article class="map_sett_box">
+                            <section class="map">
+                                <div>
+                                    <div name="mapElement" class="map_images"></div>
+                                </div>
+                            </section>
+                        </article>
+                    </div>
+                    <div class="loding_bar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="bg option_pop_close" onclick="closeSecurityReportPopup();"></div>
+    </div>
 </section>
+
+
+<script src="${rootPath}/assets/library/jspdf/html2canvas.min.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/jspdf/jspdf.debug.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/jspdf/canvg.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/jspdf/rgbcolor.js?version=${version}" type="text/javascript" ></script>
 
 <script type="text/javascript">
     var targetMenuId = String('${menuId}');
     var subMenuId = String('${subMenuId}');
+
+    function encodeBase64ImageTagviaCanvas (url) {
+        return new Promise((resolve, reject) => {
+            let image = new Image();
+            image.onload = () => {
+                let canvas = document.createElement('canvas');
+                // or 'width' if you want a special/scaled size
+                canvas.width = image.naturalWidth;
+                // or 'height' if you want a special/scaled size
+                canvas.height = image.naturalHeight;
+                canvas.getContext('2d').drawImage(image, 0, 0);
+
+                let uri = canvas.toDataURL('image/png');
+                resolve(uri);
+            };
+            image.src = url;
+        })
+    }
+
+    function savePdf(){
+
+        const pdf = new jsPDF('p','pt','a4')
+        const chartistChart = document.getElementById('securityLeft')
+        const previewPane = document.createElement('preview-pane')
+
+// addHTML is marked as deprecated, see links below for further information
+        pdf.addHTML(chartistChart, function() {
+            // Get the output pdf data URI
+            const outputString = pdf.output('datauristring')
+            // Changes the src to new data URI
+            previewPane.attr('src', outputString)
+        });
+
+//        var myCanvas = document.createElement('canvas');
+//        var context = myCanvas.getContext('2d');
+//        var data = (new XMLSerializer()).serializeToString($('#securityLeft').find('svg').get(0));
+//        canvg(myCanvas, data);
+//        var svgBlob = new Blob([data], {
+//            type: 'image/svg+xml;charset=utf-8'
+//        });
+//
+//        var url = myCanvas.toDataURL(svgBlob);//DOMURL.createObjectURL(svgBlob);
+//
+//        var img = new Image();
+//        img.onload = function() {
+//            context.canvas.width = $('#securityLeft').find('svg').width();
+//            context.canvas.height = $('#securityLeft').find('svg').height();
+//            context.drawImage(img, 0, 0);
+//            // freeing up the memory as image is drawn to canvas
+//            //DOMURL.revokeObjectURL(url);
+//
+//            var dataUrl = myCanvas.toDataURL('image/jpeg');
+//            pdf.addImage(dataUrl, 'JPEG', 20, 365, 560, 350); // 365 is top
+//
+//            setTimeout(function() {
+//                pdf.save('HTML-To-PDF-Dvlpby-Bhavdip.pdf');
+//            }, 2000);
+//        };
+//        img.src = url;
+//
+//        var svg = $('#securityLeft > svg').get(0);
+//// you should set the format dynamically, write [width, height] instead of 'a4'
+//        var pdf = new jsPDF('p', 'pt', 'a4');
+//        svgElementToPdf(svg, pdf, {
+//            scale: 72/96, // this is the ratio of px to pt units
+//            removeInvalid: true // this removes elements that could not be translated to pdf from the source svg
+//        });
+//        pdf.save('sample-file.pdf');
+//        pdf.output('datauri');
+
+//        html2canvas(document.querySelector("#securityLeft")).then(canvas => {
+//            var pdf = new jsPDF('l', 'mm', 'a4');
+////            var pdf = new jsPDF('portrait', 'pt', 'a4', true);
+//
+//            // 캔버스를 이미지로 변환
+//            var imgData = canvas.toDataURL('image/png');
+//            pdf.addImage(imgData, 'PNG', 0, 0, 1920, 1080);
+//            pdf.save('sample-file.pdf');
+//        });
+    }
 
     var urlConfig = {
         'listUrl':'${rootPath}/eventStatistics/list.json'
@@ -215,7 +389,6 @@
         ,'saveUrl':'${rootPath}/eventStatistics/save.json'
         ,'removeUrl':'${rootPath}/eventStatistics/remove.json'
         ,'heatMapUrl':'${rootPath}/notification/heatMap.json'
-        ,'fenceListUrl':'${rootPath}/fence/statistics.json'
     };
 
     var messageConfig = {
@@ -241,7 +414,11 @@
         ,'pie' : 'ico-chartc'
         ,'table' : 'ico-chartt'
     };
-    var loadingBarFlag = false;
+    var autoCompleteEvt = {
+        "EVT314":"거수자 감지"
+        ,"EVT316":"Object 감지"
+        ,"EVT320":"챠량 감지"
+    };
     var statisticsList = {};
     var searchToggleId = "";
     var autoRefInterval = null;
@@ -272,6 +449,7 @@
         calendarHelper.load($('#endDatetime'));
         calendarHelper.load($('input[name=startDatetimeStr]'));
         calendarHelper.load($('input[name=endDatetimeStr]'));
+        calendarHelper.load($('input[name=securityDatetime]'));
         setHourDataToSelect($('#startDtHour'),"00");
         setHourDataToSelect($('#endDtHour'),"23");
         setHourDataToSelect($('#startDatetimeHourSelect'),"00");
@@ -285,8 +463,46 @@
         $("#autoCompleteAreaId").on("change",function(){
             let areaId = $(this).val();
             if(areaId!=null && areaId!=""){
+                $(".box-detail div[name='yAxis']").remove();
+                $.each($("select[name='fenceList'] option[areaId='"+areaId+"']"),function(){
+                    var index = 0;
+                    for(var eventId in autoCompleteEvt){
+                        addYaxis({
+                            aggregation:"count"
+                            ,field:"eventId"
+                            ,label:autoCompleteEvt[eventId]+"("+$(this).text()+")"
+                            ,index : index
+                            ,condition:[
+                                {
+                                    key:"eventId"
+                                    ,type:"$eq"
+                                    ,value:eventId
+                                },
+                                {
+                                    key:"fenceId"
+                                    ,type:"$eq"
+                                    ,value:$(this).val()
+                                }
+                            ]
+                        });
+                        index++;
+                    }
+                });
                 callAjax('fenceList',{areaId:areaId});
             }
+        });
+
+        $(".heatMapPop select[name='areaId']").on("change",function() {
+            var fenceTag = $(".heatMapPop select[name='fenceId']");
+            $(fenceTag).val("");
+            $(fenceTag).find("option").not("option[value='']").remove();
+
+            $.each($("select[name='fenceList'] option[areaId='"+$(this).val()+"']"),function(){
+                $(fenceTag).append(
+                    $("<option/>",{value:$(this).val()}).text($(this).text())
+                );
+            });
+            $(fenceTag).find("option:eq(0)").prop("selected",true);
         });
     });
 
@@ -380,11 +596,114 @@
      @author psb
      */
     function search(){
-        $(".box-chart").empty().removeClass("on");
-        if(loadingBarFlag){
-            $(".loding_bar").addClass("on");
-        }
+        $(".eventStatistics").find(".box-chart").empty().removeClass("on");
+        $(".loding_bar").addClass("on");
         callAjax('search',getParam());
+    }
+
+    function validate(){
+        var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
+        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
+
+        if(start>end){
+            alertMessage("earlyDatetime");
+            return false;
+        }
+        return true;
+    }
+
+    function searchSecurityReport(){
+        let target = $(".securityReportPop");
+        target.find(".box-chart").empty().removeClass("on");
+        let areaId = target.find("select[name='areaId']").val();
+        if(areaId==null || areaId==''){
+            alertMessage("emptyArea");
+            return false;
+        }
+        let startDatetimeStr = target.find("input[name='securityDatetime']").val();
+        if(startDatetimeStr==null || startDatetimeStr==''){
+            startDatetimeStr = new Date().format("yyyy-MM-dd")
+        }
+        let startDatetime = startDatetimeStr + " 00:00:00";
+        let endDatetime = startDatetimeStr + " 23:59:59";
+        var jsonData = {
+            "xAxis" : {
+                'interval' : 'day'
+                ,'startDatetime' : startDatetime
+                ,'endDatetime' : endDatetime
+            },
+            "yAxis" : []
+        };
+        $.each($("select[name='fenceList'] option[areaId='"+areaId+"']"),function(){
+            var index = 0;
+            for(var eventId in autoCompleteEvt){
+                jsonData['yAxis'].push(
+                    {
+                        aggregation:"count"
+                        ,field:"eventId"
+                        ,label:autoCompleteEvt[eventId]+"("+$(this).text()+")"
+                        ,index : index
+                        ,condition:[
+                            {
+                                key:"eventId"
+                                ,type:"$eq"
+                                ,value:eventId
+                            },
+                            {
+                                key:"fenceId"
+                                ,type:"$eq"
+                                ,value:$(this).val()
+                            }
+                        ]
+                    }
+                );
+                index++;
+            }
+        });
+        callAjax('search',{searchType:"securityReportPop", 'jsonData' : JSON.stringify(jsonData)});
+        callAjax('heatMap',{
+            'areaId' : areaId
+            ,'startDatetimeStr' : startDatetime
+            ,'endDatetimeStr' : endDatetime
+            ,'popupName' : 'securityReportPop'
+            ,'fenceId' : null
+            ,'startSpeed' : null
+            ,'endSpeed' : null
+        });
+    }
+
+    function searchHeatMap(startDatetime){
+        if(validate()){
+            let target = $(".heatMapPop");
+            let areaId = target.find("select[name='areaId']").val();
+            if(areaId==null || areaId==''){
+                alertMessage("emptyArea");
+                return false;
+            }
+
+            let startDatetimeStr = target.find("input[name='startDatetimeStr']").val();
+            if(startDatetime!=null){
+                startDatetimeStr = startDatetime.format("yyyy-MM-dd HH:00:00");
+            }else if(startDatetimeStr!=null && startDatetimeStr!=''){
+                startDatetimeStr += " " + target.find("#startDatetimeHourSelect").val() + ":00:00";
+            }
+
+            let endDatetimeStr = target.find("input[name='endDatetimeStr']").val();
+            if(endDatetimeStr!=null && endDatetimeStr!=''){
+                endDatetimeStr += " " + target.find("#endDatetimeHourSelect").val() + ":59:59";
+            }
+
+            let param = {
+                'areaId' : areaId
+                ,'startDatetimeStr' : startDatetimeStr
+                ,'endDatetimeStr' : endDatetimeStr
+                ,'popupName' : 'heatMapPop'
+                ,'fenceId' : target.find("select[name='fenceId'] option:selected").val()
+                ,'startSpeed' : target.find("input[name='startSpeed']").val()
+                ,'endSpeed' : target.find("input[name='endSpeed']").val()
+            };
+            callAjax('heatMap',param);
+        }
     }
 
     function addStatistics(){
@@ -410,7 +729,6 @@
         for(var index in data){
             let statistics = data[index];
             statisticsList[statistics['statisticsId']] = statistics;
-
             $("#statisticsList").append(
                 $("<li/>").click({'statisticsId':statistics['statisticsId']},function(evt){
                     if($(this).hasClass("on")){
@@ -427,7 +745,13 @@
                     ).append(
                         $("<i/>").addClass(chartClass[statistics['chartType']])
                     ).append(
-                        $("<button/>").click({'statisticsId':statistics['statisticsId'],title:"<spring:message code='statistics.placeholder.remove'/>"},function(evt){
+                        $("<button/>",{class:"ico-play",title:"<spring:message code='statistics.placeholder.play'/>"}).click({'statisticsId':statistics['statisticsId']},function(evt){
+                            detailRender(evt.data.statisticsId);
+                            search();
+                            evt.stopPropagation();
+                        })
+                    ).append(
+                        $("<button/>",{title:"<spring:message code='statistics.placeholder.remove'/>"}).click({'statisticsId':statistics['statisticsId']},function(evt){
                             if(confirm(messageConfig['removeConfirmMessage'])){
                                 callAjax('remove',{'statisticsId':evt.data.statisticsId});
                             }
@@ -579,16 +903,16 @@
      chart Render
      @author psb
      */
-    function chartRender(paramBean, chartList, dataList){
+    function chartRender(paramBean, chartList, dataList, headerHide){
         function getDateStr(_interval, date){
             let datetimeText;
             switch (_interval){
                 case 'day':
-                    datetimeText = date.format("MM-dd HH");
+                    datetimeText = date.format("MM/dd HH");
                     break;
                 case 'week':
                 case 'month':
-                    datetimeText = date.format("MM-dd");
+                    datetimeText = date.format("MM/dd");
                     break;
                 case 'year':
                     datetimeText = date.format("yyyy-MM");
@@ -597,13 +921,18 @@
             return datetimeText;
         }
 
-        let chartTag = $("<div/>",{class:'set-chart'}).append(
-            $("<div/>",{class:'chart_label header'})
-        );
+        let searchType = paramBean['searchType'];
+        let boxChart = $("."+searchType).find(".box-chart");
+        let chartTag = $("<div/>",{class:'set-chart'});
+        if(!headerHide){
+            chartTag.append(
+                $("<div/>",{class:'chart_label header'})
+            );
+        }
 
         var _seriesList = [];
         var _max = 0;
-        var _sumSeriesList = [];
+        var _aggregationSeriesList = [];
         var _labels = [];
         for(var index in dataList){
             _labels.push(getDateStr(paramBean['interval'], new Date(dataList[index])));
@@ -611,7 +940,7 @@
         for(var index in chartList){
             var chart = chartList[index];
             var series = [];
-            var sumValue = 0;
+            var aggregationValue = 0;
 
             for(var i in dataList){
                 let flag = false;
@@ -620,8 +949,26 @@
                         _max = chart['dataList'][k]['value'];
                     }
                     if(getDateStr(paramBean['interval'], new Date(dataList[i]))==getDateStr(paramBean['interval'], new Date(chart['dataList'][k]['_id']))){
-                        series.push({meta:chart['label'],label:getDateStr(paramBean['interval'], new Date(chart['dataList'][k]['_id'])),value:chart['dataList'][k]['value']});
-                        sumValue += Number(chart['dataList'][k]['value']);
+                        let value = toRound(Number(chart['dataList'][k]['value']),2);
+                        series.push({meta:chart['label'],label:getDateStr(paramBean['interval'], new Date(chart['dataList'][k]['_id'])),value:value});
+
+                        switch (chart['aggregation']){
+                            case "count" :
+                            case "avg" :
+                            case "sum" :
+                                aggregationValue += value;
+                                break;
+                            case "min" :
+                                if(aggregationValue>value){
+                                    aggregationValue = value;
+                                }
+                                break;
+                            case "max" :
+                                if(aggregationValue<value){
+                                    aggregationValue = value;
+                                }
+                                break;
+                        }
                         flag = true;
                         break;
                     }
@@ -630,11 +977,15 @@
                     series.push({meta:chart['label'],label:getDateStr(paramBean['interval'], new Date(dataList[i])),value:0});
                 }
             }
+
+            if(chart['aggregation']=='avg'){
+                aggregationValue = aggregationValue/dataList.length;
+            }
             _seriesList.push(series);
-            _sumSeriesList.push(sumValue);
+            _aggregationSeriesList.push(aggregationValue);
             chartTag.find(".header").append(
                 $("<span/>",{label:chart['label']}).append(
-                    $("<b/>").text(commaNum(sumValue))
+                    $("<b/>").text(commaNum(toRound(aggregationValue,2)) + " ("+chart['aggregation']+")")
                 ).append(
                     $("<i/>").text(chart['label'])
                 )
@@ -645,10 +996,10 @@
             case "line":
                 chartTag.addClass("chart-line");
                 chartTag.append(
-                    $("<div/>",{class:'canvas-chart line'})
+                    $("<div/>",{class:'canvas-chart line '+searchType})
                 );
-                $(".box-chart").append(chartTag);
-                new Chartist.Line('.canvas-chart', {
+                boxChart.append(chartTag);
+                new Chartist.Line('.canvas-chart.'+searchType, {
                     labels: _labels,
                     series: _seriesList
                 }, {
@@ -656,7 +1007,7 @@
                     high:_max+(_max/20),
                     showArea: true,
                     showLabel: true,
-                    fullWidth: false,
+                    fullWidth: true,
                     axisY: {
                         onlyInteger: true
                     },
@@ -671,10 +1022,10 @@
             case "bar":
                 chartTag.addClass("chart-bar");
                 chartTag.append(
-                    $("<div/>",{class:'canvas-chart bar'})
+                    $("<div/>",{class:'canvas-chart bar '+searchType})
                 );
-                $(".box-chart").append(chartTag);
-                new Chartist.Bar('.canvas-chart', {
+                boxChart.append(chartTag);
+                new Chartist.Bar('.canvas-chart.'+searchType, {
                     labels: _labels,
                     series: _seriesList
                 }, {
@@ -693,14 +1044,14 @@
             case "pie":
                 chartTag.addClass("chart-pie");
                 chartTag.append(
-                    $("<div/>",{class:'canvas-chart pie'})
+                    $("<div/>",{class:'canvas-chart pie '+searchType})
                 );
-                $(".box-chart").append(chartTag);
-                new Chartist.Pie('.canvas-chart', {
-                    series: _sumSeriesList
+                boxChart.append(chartTag);
+                new Chartist.Pie('.canvas-chart.'+searchType, {
+                    series: _aggregationSeriesList
                 }, {
                     labelInterpolationFnc: function(value, index) {
-                        return $(".chart_label.header span:eq("+index+")").attr("label") + " (" + Math.round(value / _sumSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%)';
+                        return $(".chart_label.header span:eq("+index+")").attr("label") + " (" + Math.round(value / _aggregationSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%)';
                     },
                     plugins: [
                         Chartist.plugins.tooltip()
@@ -740,10 +1091,10 @@
                         chartTag.find("span[label='"+series['label']+"']:eq("+index+")").text(commaNum(series['value']))
                     }
                 }
-                $(".box-chart").append(chartTag);
+                boxChart.append(chartTag);
                 break;
         }
-        $(".box-chart").addClass("on");
+        boxChart.addClass("on");
     }
     
     /*
@@ -763,37 +1114,20 @@
             case "list":
                 listRender(data['statisticsList']);
                 break;
-            case "fenceList":
-                let fenceList = data['fenceList'];
-                if(fenceList.length>0){
-                    $(".box-detail div[name='yAxis']").remove();
-                    for(var i in fenceList){
-                        addYaxis({
-                            aggregation:"count"
-                            ,field:"eventId"
-                            ,label:"거수자 감지("+fenceList[i]['fenceName']+")"
-                            ,condition:[
-                                {
-                                    key:"eventId"
-                                    ,type:"$eq"
-                                    ,value:"EVT314"
-                                },
-                                {
-                                    key:"fenceId"
-                                    ,type:"$eq"
-                                    ,value:fenceList[i]['fenceId']
-                                }
-                            ]
-                        });
-                    }
-                }else{
-                    alert("해당 구역에 펜스가 없습니다.")
-                }
-                break;
             case "search":
                 $(".loding_bar").removeClass("on");
                 if(data['paramBean']!=null && data['chartList']!=null && data['dateList']!=null){
-                    chartRender(data['paramBean'], data['chartList'], data['dateList']);
+                    if(data['paramBean']['searchType']!=null){
+                        data['paramBean']['searchType'] = 'securityChart1';
+                        data['paramBean']['chartType'] = 'line';
+                        chartRender(data['paramBean'], data['chartList'], data['dateList']);
+                        data['paramBean']['searchType'] = 'securityChart2';
+                        data['paramBean']['chartType'] = 'pie';
+                        chartRender(data['paramBean'], data['chartList'], data['dateList'], true);
+                    }else{
+                        data['paramBean']['searchType'] = 'eventStatistics';
+                        chartRender(data['paramBean'], data['chartList'], data['dateList']);
+                    }
                 }else{
                     alertMessage(actionType+['Failure']);
                 }
@@ -809,10 +1143,8 @@
                 let paramBean = data['paramBean'];
                 customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
                 try{
-                    if(loadingBarFlag){
-                        $("#heatmapLoading").addClass("on");
-                    }
-                    customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
+                    $("."+paramBean['popupName']).find(".loding_bar").addClass("on");
+                    customMapMediator.setElement($("."+paramBean['popupName']), $("."+paramBean['popupName']).find("div[name='mapElement']"));
                     customMapMediator.init(data['paramBean']['areaId'],{
                         'element' : {
                             'lastPositionUseFlag' : true
@@ -850,7 +1182,7 @@
                                             customMapMediator.saveMarker('object', marker);
                                         }
                                     }
-                                    $("#heatmapLoading").removeClass("on");
+                                    $(".loding_bar").removeClass("on");
                                 }
                             }
                         }
@@ -860,7 +1192,7 @@
                         }
                     });
                 }catch(e){
-                    $("#heatmapLoading").removeClass("on");
+                    $(".loding_bar").removeClass("on");
                     console.error("[openHeatMapPopup] custom map mediator init error - "+ e.message);
                 }
                 break;
@@ -873,6 +1205,7 @@
      */
     function failureHandler(XMLHttpRequest, textStatus, errorThrown, actionType){
         alertMessage(actionType+['Failure']);
+        $(".loding_bar").removeClass("on");
     }
 
     /*
@@ -943,54 +1276,12 @@
         link.click();
     }
 
-    function validate(){
-        var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
-        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
-
-        if(start>end){
-            alertMessage("earlyDatetime");
-            return false;
-        }
-        return true;
-    }
-
-    function searchHeatMap(startDatetime){
-        if(validate()){
-            let areaId = $("select[name='areaId']").val();
-            if(areaId==null || areaId==''){
-                alertMessage("emptyArea");
-                return false;
-            }
-
-            let startDatetimeStr = $("input[name='startDatetimeStr']").val();
-            if(startDatetime!=null){
-                startDatetimeStr = startDatetime.format("yyyy-MM-dd HH:00:00");
-            }else if(startDatetimeStr!=null && startDatetimeStr!=''){
-                startDatetimeStr += " " + $("#startDatetimeHourSelect").val() + ":00:00";
-            }
-
-            let endDatetimeStr = $("input[name='endDatetimeStr']").val();
-            if(endDatetimeStr!=null && endDatetimeStr!=''){
-                endDatetimeStr += " " + $("#endDatetimeHourSelect").val() + ":59:59";
-            }
-
-            let param = {
-                'areaId' : areaId
-                ,'startDatetimeStr' : startDatetimeStr
-                ,'endDatetimeStr' : endDatetimeStr
-                ,'startSpeed' : $("input[name='startSpeed']").val()
-                ,'endSpeed' : $("input[name='endSpeed']").val()
-            };
-            callAjax('heatMap',param);
-        }
-    }
-
     /*
      open 히트맵 popup
      @author psb
      */
-    function openHeatMapPopup(_this){
-        $(".map_pop").fadeIn();
+    function openHeatMapPopup(){
+        $(".heatMapPop").fadeIn();
     }
 
     /*
@@ -998,6 +1289,22 @@
      @author psb
      */
     function closeHeatMapPopup(){
-        $(".map_pop").fadeOut();
+        $(".heatMapPop").fadeOut();
+    }
+
+    /*
+     open 보안리포트 popup
+     @author psb
+     */
+    function openSecurityReportPopup(){
+        $(".securityReportPop").fadeIn();
+    }
+
+    /*
+     close 보안리포트 popup
+     @author psb
+     */
+    function closeSecurityReportPopup(){
+        $(".securityReportPop").fadeOut();
     }
 </script>

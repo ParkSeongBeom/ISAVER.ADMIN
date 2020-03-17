@@ -15,6 +15,8 @@ import com.meous.common.spring.TransactionUtil;
 import com.meous.common.util.StringUtils;
 import com.meous.digest.resource.DigestAlgorithm;
 import com.meous.digest.util.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -44,6 +46,7 @@ import java.util.Map;
  */
 @Service
 public class AuthorizationSvcImpl implements AuthorizationSvc {
+    static Logger logger = LoggerFactory.getLogger(AuthorizationSvcImpl.class);
 
     @Value("${cnf.server.majorVersion}")
     private String majorVersion = null;
@@ -130,6 +133,7 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
             addLogAuthAdminUser(request, null, AdminResource.ADMIN_LOG_TYPE[1]);
             AdminHelper.removeAdminInfo(request);
         }catch(Exception e){
+            logger.error(e.getMessage());
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());

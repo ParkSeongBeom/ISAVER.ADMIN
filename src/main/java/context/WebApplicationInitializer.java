@@ -2,6 +2,8 @@ package context;
 
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.ext.spring.LogbackConfigurer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -17,6 +19,7 @@ import java.util.HashSet;
  * Created by icent on 2017. 2. 1..
  */
 public class WebApplicationInitializer implements org.springframework.web.WebApplicationInitializer {
+    private static Logger logger = LoggerFactory.getLogger(WebApplicationInitializer.class);
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -28,7 +31,7 @@ public class WebApplicationInitializer implements org.springframework.web.WebApp
         try {
             registerLogbackFunc();
         } catch (FileNotFoundException | JoranException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         registerDispatcherServlet(servletContext);

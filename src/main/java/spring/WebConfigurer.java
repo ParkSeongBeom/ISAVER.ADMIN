@@ -37,7 +37,6 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.xml.MarshallingView;
 
 import javax.inject.Inject;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 

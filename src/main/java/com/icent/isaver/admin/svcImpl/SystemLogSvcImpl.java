@@ -1,17 +1,10 @@
 package com.icent.isaver.admin.svcImpl;
 
-import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.bean.SystemLogBean;
-import com.icent.isaver.admin.bean.VideoHistoryBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.dao.DeviceDao;
 import com.icent.isaver.admin.dao.SystemLogDao;
-import com.icent.isaver.admin.dao.VideoHistoryDao;
-import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.SystemLogSvc;
-import com.icent.isaver.admin.svc.VideoHistorySvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.CommonUtil;
 import com.icent.isaver.admin.util.ExcuteHelper;
 import com.icent.isaver.admin.util.FileUtil;
 import com.meous.common.util.StringUtils;
@@ -23,8 +16,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

@@ -11,6 +11,13 @@
 <spring:message code="common.selectbox.notSelect" var="allSelectText"/>
 <script type="text/javascript" src="${rootPath}/assets/js/util/page-navigater.js"></script>
 
+<style>
+    .cycleOn{
+        color: #b42d6e !important;
+        font-weight: bold !important;
+    }
+</style>
+
 <div class="sub_title_area">
     <h3 class="1depth_title"><spring:message code="common.title.critical"/></h3>
     <div class="navigation">
@@ -108,7 +115,7 @@
                                 <label class="ico-check"></label>
                             </div>
                             <input type="hidden" name="fenceId" <c:if test="${detect.fenceId!=null}">value="${detect.fenceId}"</c:if>/>
-                            <p clickOn="true">${detect.deviceName}<c:if test="${detect.fenceName!=null}">-${detect.fenceName}</c:if>(${detect.deviceId})</p>
+                            <p clickOn="true" name="detectDeviceName">${detect.deviceName}<c:if test="${detect.fenceName!=null}">-${detect.fenceName}</c:if>(${detect.deviceId})</p>
                             <button class="ico-zoom"></button>
                             <!-- 상세보기 시작 -->
                             <div class="zoom-box">
@@ -247,7 +254,8 @@
                         alertMessage('criticalExist');
                         throw "validateError";
                     }else if(criticalList[i]['criticalValue']==criticalParam['criticalValue']){
-                        existCriticalValue['flag'] = true;
+                        // 윤대호K 요청으로 스케줄별로 다른 임계치 적용되게 변경
+//                        existCriticalValue['flag'] = true;
                         existCriticalValue['index'].push(i);
                     }
                 }
@@ -466,6 +474,14 @@
         }else{
             detectTag = parentElement.find("li[detectDeviceId='"+detect['detectDeviceId']+"']");
         }
+        // 감지시간 설정 시 구분 가능하게 처리
+        detectTag.find("input[name='detectConfigUseYn']").change(function(evt){
+            if(detectTag.find("input[name='detectConfigUseYn']").is(":checked")){
+                detectTag.find("p[name='detectDeviceName']").addClass("cycleOn");
+            }else{
+                detectTag.find("p[name='detectDeviceName']").removeClass("cycleOn");
+            }
+        });
 
         if(detectTag==null || detectTag.length==0){
             console.log("[detectRender] detect device li tag null", detect);
@@ -493,7 +509,7 @@
             console.log("[detectConfigRender] detect config tag null");
             return false;
         }
-        detectConfigTag.find("input[name='detectConfigUseYn']").prop("checked",detectConfig['useYn']=='Y');
+        detectConfigTag.find("input[name='detectConfigUseYn']").prop("checked",detectConfig['useYn']=='Y').trigger("change");
         var startDatetime = detectConfig['startDatetime'].split(":");
         if(startDatetime.length==3){
             detectConfigTag.find("input[name='startHour']").val(startDatetime[0]);

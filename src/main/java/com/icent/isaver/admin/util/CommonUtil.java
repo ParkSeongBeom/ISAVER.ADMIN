@@ -77,8 +77,8 @@ public class CommonUtil {
             HttpEntity ent = response.getEntity();
             try {
                 return new BufferedReader(new InputStreamReader(ent.getContent()));
-            } catch (IllegalStateException e) {
-            } catch (IOException e) {
+            } catch (IllegalStateException | IOException e) {
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -88,10 +88,8 @@ public class CommonUtil {
         String hostname = "";
 
         try {
-
             InetAddress addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
-
         } catch (UnknownHostException e) {
             logger.warn(e.getMessage());
         }
@@ -102,10 +100,8 @@ public class CommonUtil {
         String hostIp = "";
 
         try {
-
             InetAddress iAddress = InetAddress.getLocalHost();
             hostIp = iAddress.getHostAddress();
-
         } catch (UnknownHostException e) {
             logger.warn(e.getMessage());
         }
@@ -234,7 +230,7 @@ public class CommonUtil {
                     is.close();
                 }
             } catch (Exception var20) {
-                ;
+                logger.error(var20.getMessage());
             }
         }
     }

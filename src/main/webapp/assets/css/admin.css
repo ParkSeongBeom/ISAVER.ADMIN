@@ -5268,7 +5268,7 @@ a.fc-more {
     .set-chart .canvas-chart {
       position: relative;
       width: 100%;
-      min-width: 60vw;
+      /*min-width: 60vw;*/
       height: 100%;
       padding-bottom: 30px; }
       .set-chart .canvas-chart svg {

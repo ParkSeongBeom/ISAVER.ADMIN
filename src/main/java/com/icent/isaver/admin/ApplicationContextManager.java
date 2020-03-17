@@ -1,5 +1,7 @@
 package com.icent.isaver.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,6 +14,8 @@ import java.util.Locale;
  * Created by icent on 2017. 2. 1..
  */
 public class ApplicationContextManager implements ApplicationContextAware {
+    static Logger logger = LoggerFactory.getLogger(ApplicationContextManager.class);
+
     private static final ApplicationContextManager instance = new ApplicationContextManager();
     private ApplicationContext applicationContext = null;
     private ResourceBundleMessageSource messageSource = null;
@@ -45,7 +49,7 @@ public class ApplicationContextManager implements ApplicationContextAware {
         try {
             returnMessage = this.messageSource.getMessage(key, (Object[])null, Locale.getDefault());
         } catch (NoSuchMessageException var4) {
-            var4.printStackTrace();
+            logger.error(var4.getMessage());
         }
 
         return returnMessage;

@@ -194,24 +194,6 @@
     </select>
 
     <!--
-        대시보드용 알림센터 목록을 가져온다.
-        @author psb
-    -->
-    <select id="findListNotificationForArea" parameterType="map" resultType="NotificationBean" >
-        SELECT	a.code_id as criticalLevel
-                ,count(b.*) as notiCnt
-                ,max(b.event_datetime) as eventDatetime
-        FROM	isaver.code a
-        LEFT OUTER JOIN isaver.notification b
-        ON	    a.code_id = b.critical_level
-        AND     b.area_id = #{areaId}
-        AND	    b.status = 'D'
-        WHERE	a.use_yn = 'Y'
-        AND	    a.group_code_id = 'LEV'
-        GROUP BY a.code_id
-    </select>
-
-    <!--
         알림센터를 저장한다. (해제, 확인)
         @author psb
     -->
@@ -273,6 +255,9 @@
         </if>
         <if test="endDatetimeStr != null and endDatetimeStr != ''">
             AND     event_datetime <![CDATA[ <= ]]> #{endDatetimeStr}::timestamp
+        </if>
+        <if test="fenceId != null and fenceId != ''">
+            AND     fence_id = #{fenceId}
         </if>
     </select>
 

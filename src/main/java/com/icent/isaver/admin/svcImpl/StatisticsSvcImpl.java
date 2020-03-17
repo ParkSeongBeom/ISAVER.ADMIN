@@ -3,10 +3,11 @@ package com.icent.isaver.admin.svcImpl;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.icent.isaver.admin.bean.StatisticsBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.EventStatisticsDao;
+import com.icent.isaver.admin.dao.FenceDao;
 import com.icent.isaver.admin.dao.StatisticsDao;
+import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.StatisticsSvc;
 import com.icent.isaver.admin.util.AdminHelper;
 import com.meous.common.spring.TransactionUtil;
@@ -61,13 +62,19 @@ public class StatisticsSvcImpl implements StatisticsSvc {
     private StatisticsDao statisticsDao;
 
     @Inject
+    private FenceDao fenceDao;
+
+    @Inject
     private MongoDatabase mongoDatabase;
 
     @Override
     public ModelAndView findListStatistics(Map<String, String> parameters) {
-        List<StatisticsBean> statisticsList = statisticsDao.findListStatistics();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("statisticsList",statisticsList);
+        if(StringUtils.notNullCheck(parameters.get("mode")) && parameters.get("mode").equals(AdminResource.SEARCH_MODE)){
+            modelAndView.addObject("statisticsList",statisticsDao.findListStatistics());
+        }else{
+            modelAndView.addObject("fenceList",fenceDao.findListFenceForAll());
+        }
         return modelAndView;
     }
 
@@ -123,16 +130,16 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                         bsonField = Accumulators.sum("value", 1);
                         break;
                     case "avg" :
-                        bsonField = Accumulators.avg("value", "$" + field);
+                        bsonField = Accumulators.avg("value", new BasicDBObject("$toDouble", "$" + field));
                         break;
                     case "sum" :
-                        bsonField = Accumulators.sum("value", "$" + field);
+                        bsonField = Accumulators.sum("value", new BasicDBObject("$toDouble", "$" + field));
                         break;
                     case "min" :
-                        bsonField = Accumulators.min("value", "$" + field);
+                        bsonField = Accumulators.min("value", new BasicDBObject("$toDouble", "$" + field));
                         break;
                     case "max" :
-                        bsonField = Accumulators.max("value", "$" + field);
+                        bsonField = Accumulators.max("value", new BasicDBObject("$toDouble", "$" + field));
                         break;
                 }
 
@@ -148,10 +155,10 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 AggregateIterable<Document> aggregate = collection.aggregate(
                         Arrays.asList(
                                 Aggregates.match(match),
-                                Aggregates.project(
-                                        Document.parse("{ 'value' : 1 , 'eventDt' : { $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' } } }")
+                                Aggregates.group(
+                                        Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}")
+                                        , bsonField
                                 ),
-                                Aggregates.group("$eventDt", bsonField),
                                 Aggregates.sort(Sorts.ascending("_id"))
                         )
                 ).allowDiskUse(true);
@@ -159,6 +166,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 Map resultMap = new HashMap<>();
                 resultMap.put("label",label);
                 resultMap.put("dataList",aggregate.into(new ArrayList<>()));
+                resultMap.put("aggregation",aggregation);
                 resultList.put(index, resultMap);
             }
             modelAndView.addObject("dateList", chartDateList);

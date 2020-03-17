@@ -23,7 +23,7 @@
         ON      a.user_id = c.user_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="userName != null and userName != ''">
-                AND     c.user_name like '%${userName}%'
+                AND     c.user_name like concat('%',#{userName},'%')
             </if>
             <!--<if test="loginFlag != null and loginFlag != ''">-->
                 <!--AND     a.login_flag = #{loginFlag}-->
@@ -47,7 +47,7 @@
         ON      a.user_id = c.user_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="userName != null and userName != ''">
-                AND     c.user_name like '%${userName}%'
+                AND     c.user_name like concat('%',#{userName},'%')
             </if>
             <!--<if test="loginFlag != null and loginFlag != ''">-->
                 <!--AND     a.login_flag = #{loginFlag}-->
@@ -104,7 +104,7 @@
         ON      a.user_id = c.user_id
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="userName != null and userName != ''">
-                AND     c.user_name like '%${userName}%'
+                AND     c.user_name like concat('%',#{userName},'%')
             </if>
             AND     a.login_flag = '1'
         </trim>

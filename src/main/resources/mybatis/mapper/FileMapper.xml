@@ -32,10 +32,10 @@
                 AND   A.title ilike '%${title}%'
             </if>
             <if test="description != null and description != ''">
-                AND   A.description ilike '%${description}%'
+                AND   A.description ilike concat('%',#{description},'%')
             </if>
             <if test="fileName != null and fileName != ''">
-                AND   A.logical_file_name ilike '%${fileName}%'
+                AND   A.logical_file_name ilike concat('%',#{fileName},'%')
             </if>
             <if test="fileType != null and fileType != ''">
                 AND   A.file_type = #{fileType}
@@ -59,13 +59,13 @@
         FROM    isaver.file A
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="title != null and title != ''">
-                AND   A.title ilike '%${title}%'
+                AND   A.title ilike concat('%',#{title},'%')
             </if>
             <if test="description != null and description != ''">
-                AND   A.description ilike '%${description}%'
+                AND   A.description ilike concat('%',#{description},'%')
             </if>
             <if test="fileName != null and fileName != ''">
-                AND   A.logical_file_name ilike '%${fileName}%'
+                AND   A.logical_file_name ilike concat('%',#{fileName},'%')
             </if>
             <if test="fileType != null and fileType != ''">
                 AND   A.file_type = #{fileType}

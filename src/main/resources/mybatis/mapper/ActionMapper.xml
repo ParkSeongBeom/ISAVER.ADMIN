@@ -36,7 +36,7 @@
       AND A.action_id NOT IN (SELECT action_id from isaver.event_action)
     </if>
     <if test="actionDesc != null and actionDesc != ''">
-      AND     A.action_desc like '%${actionDesc}%'
+      AND     A.action_desc like concat('%',#{actionDesc},'%')
     </if>
     order by A.action_id ASC
     <if test="pageIndex != null">

@@ -7,7 +7,6 @@ import com.icent.isaver.admin.dao.InoutConfigurationDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
 import com.icent.isaver.admin.util.AdminHelper;
-import com.icent.isaver.admin.util.CommonUtil;
 import com.meous.common.util.POIExcelUtil;
 import com.meous.common.util.StringUtils;
 import com.mongodb.BasicDBObject;
@@ -141,10 +140,7 @@ public class EventLogSvcImpl implements EventLogSvc {
                                             lte("eventDatetime", chartDateList.get(chartDateList.size() - 1))
                                     )
                             ),
-                            Aggregates.project(
-                                    Document.parse("{ 'value' : 1 , 'eventDt' : { $dateToString : { format:'"+format+"',date : '$eventDatetime', timezone: 'Asia/Seoul' } } }")
-                            ),
-                            Aggregates.group("$eventDt", Accumulators.max("value", "$value"))
+                            Aggregates.group(Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}"), Accumulators.max("value", new BasicDBObject("$toDouble", "$value")))
                     )
             );
             modelAndView.addObject("chartDateList", chartDateList);
@@ -212,7 +208,7 @@ public class EventLogSvcImpl implements EventLogSvc {
                                                         lte("eventDatetime", inoutConfig.getEndDatetime())
                                                 )
                                         ),
-                                        Aggregates.group("$areaId", Accumulators.sum("inCount", "$inCount"), Accumulators.sum("outCount", "$outCount"))
+                                        Aggregates.group("$areaId", Accumulators.sum("inCount", new BasicDBObject("$toInt", "$inCount")), Accumulators.sum("outCount", new BasicDBObject("$toInt", "$outCount")))
                                 )
                         ).first();
 
@@ -303,22 +299,17 @@ public class EventLogSvcImpl implements EventLogSvc {
             resultList.forEach(new Block<Document>() {
                 @Override
                 public void apply(final Document doc) {
-                    String locationZ = "";
-                    if(doc.get("location")!=null){
-                        locationZ = doc.get("location",Map.class).get("z").toString();
-                    }
                     eventLogList.add(new EventLogExcelBean(
                         doc.getString("areaName"),
                         doc.getString("deviceName"),
                         doc.getString("eventName"),
-                        locationZ,
                         sdf.format(doc.getDate("eventDatetime"))
                     ));
                 }
             });
 
-            String[] heads = new String[]{"Area Name","Device Name","Event Name","Location Z","Event Datetime"};
-            String[] columns = new String[]{"areaName","deviceName","eventName","locationZ","eventDatetime"};
+            String[] heads = new String[]{"Area Name","Device Name","Event Name","Event Datetime"};
+            String[] columns = new String[]{"areaName","deviceName","eventName","eventDatetime"};
             POIExcelUtil.downloadExcel(modelAndView, "isaver_event_history_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), eventLogList, columns, heads, "EventHistory");
         } catch (Exception e) {
             throw new IsaverException("");
@@ -333,16 +324,13 @@ public class EventLogSvcImpl implements EventLogSvc {
         private String deviceName;
         /* 이벤트 ID*/
         private String eventName;
-        /* 이벤트 ID*/
-        private String locationZ;
         /* 이벤트 발생 일시 */
         private String eventDatetime;
 
-        EventLogExcelBean(String areaName, String deviceName, String eventName, String locationZ, String eventDatetime){
+        EventLogExcelBean(String areaName, String deviceName, String eventName, String eventDatetime){
             this.areaName=areaName;
             this.deviceName=deviceName;
             this.eventName=eventName;
-            this.locationZ=locationZ;
             this.eventDatetime=eventDatetime;
         }
     }

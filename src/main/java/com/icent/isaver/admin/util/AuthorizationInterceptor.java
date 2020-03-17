@@ -5,10 +5,11 @@ import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.bean.UsersBean;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.meous.common.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.util.UrlPathHelper;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,8 @@ import java.util.Date;
  * </pre>
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
+
+    private static Logger logger = LoggerFactory.getLogger(AuthorizationInterceptor.class);
 
     @Value("${cnf.hostIp}")
     private String hostIp = null;
@@ -148,7 +151,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
                 modelAndView.addObject("socketPw", mqttPassword);
                 modelAndView.addObject("isMqtt", mqttUtil.getIsMqtt());
             }catch(Exception e){
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         super.postHandle(request, response, handler, modelAndView);

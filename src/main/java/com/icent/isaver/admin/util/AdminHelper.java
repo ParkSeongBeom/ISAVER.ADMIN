@@ -9,6 +9,8 @@ import com.meous.common.util.CookieUtils;
 import com.meous.common.util.StringUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +38,7 @@ import java.util.*;
  * </pre>
  */
 public class AdminHelper {
+    private static Logger logger = LoggerFactory.getLogger(AdminHelper.class);
 
     /**
      * 클라이언트에서 넘어온 파라미터(map)에서 페이징 인자를 셋팅한다.</br>
@@ -129,12 +132,8 @@ public class AdminHelper {
             ConvertUtils.register(dateConverter, Date.class);
 
             bean = BeanUtils.convertMapToBean(parameters, clazz);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            logger.error(e.getMessage());
         }
 
         return bean;
@@ -208,7 +207,9 @@ public class AdminHelper {
         try{
             UsersBean usersBean = getAdminInfo(request);
             adminId = usersBean.getUserId();
-        }catch(Exception e){}
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
         return adminId;
     }
 
@@ -224,7 +225,9 @@ public class AdminHelper {
         try{
             UsersBean usersBean = getAdminInfo(request);
             adminName = usersBean.getUserName();
-        }catch(Exception e){}
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
         return adminName;
     }
 
@@ -307,6 +310,7 @@ public class AdminHelper {
         try {
             cal.setTime(sdf.parse(startDatetimeStr));
         } catch (Exception e) {
+            logger.error(e.getMessage());
         }
         int count = 0;
         try {
@@ -445,6 +449,7 @@ public class AdminHelper {
             cal.set( Calendar.SECOND, 0 );
             cal.set( Calendar.MILLISECOND, 0 );
         } catch (Exception e) {
+            logger.error(e.getMessage());
         }
 
         List<Date> dateLists = new LinkedList<>();
@@ -525,6 +530,7 @@ public class AdminHelper {
                     break;
             }
         } catch (Exception e) {
+            logger.error(e.getMessage());
         }
         return dateLists;
     }

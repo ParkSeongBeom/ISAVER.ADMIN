@@ -203,15 +203,20 @@ public class FileSvcImpl implements FileSvc {
         }
 
         if(StringUtils.notNullCheck(parameters.get("physicalFileName"))){
-            File file = new File(fileUploadPath+parameters.get("physicalFileName"));
+            String fileName = parameters.get("physicalFileName");
+            fileName = fileName.replaceAll("/","");
+            fileName = fileName.replaceAll("\\","");
+            fileName = fileName.replaceAll(".","");
+            fileName = fileName.replaceAll("&","");
+            File file = new File(fileUploadPath+fileName);
             if(file.exists()){
                 if(file.delete()){
-                    logger.info("[FileRemove] success - {}",parameters.get("physicalFileName"));
+                    logger.info("[FileRemove] success - {}",fileName);
                 }else{
-                    logger.info("[FileRemove] failure - {}",parameters.get("physicalFileName"));
+                    logger.info("[FileRemove] failure - {}",fileName);
                 }
             }else{
-                logger.info("[FileRemove] file not found - {}",parameters.get("physicalFileName"));
+                logger.info("[FileRemove] file not found - {}",fileName);
             }
         }
         deviceSync();

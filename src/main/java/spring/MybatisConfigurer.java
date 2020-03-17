@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -18,6 +20,8 @@ import javax.sql.DataSource;
         ,sqlSessionFactoryRef = "isaverSqlSessionFactory"
 )
 public class MybatisConfigurer {
+
+    private static Logger logger = LoggerFactory.getLogger(MybatisConfigurer.class);
 
     @Resource(name = "isaverDataSource")
     private DataSource isaverDataSource;
@@ -37,7 +41,7 @@ public class MybatisConfigurer {
             sqlSessionFactory = sqlSessionFactoryBean.getObject();
         } catch (Exception e) {
             sqlSessionFactory = null;
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return sqlSessionFactory;
     }

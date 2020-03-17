@@ -58,7 +58,9 @@ var StompHelper = (
                             }
                         }
                     }
-                }catch(e){}
+                }catch(e){
+                    console.error(e);
+                }
             }, function(e){
                 console.log('[StompHelper] Stomp WebSocket DisConnect');
                 SOKCET_CONNECTED = false;

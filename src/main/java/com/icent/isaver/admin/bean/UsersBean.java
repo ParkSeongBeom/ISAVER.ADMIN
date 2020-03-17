@@ -1,7 +1,5 @@
 package com.icent.isaver.admin.bean;
 
-import java.util.Date;
-
 /**
  * 사용자 Bean
  *

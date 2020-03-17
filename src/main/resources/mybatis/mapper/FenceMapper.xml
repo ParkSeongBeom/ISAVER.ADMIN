@@ -47,23 +47,6 @@
     </select>
 
     <!--
-        펜스 목록을 가져온다. (이벤트통계용)
-        @author psb
-    -->
-    <select id="findListFenceForStatistics" resultType="FenceBean">
-        SELECT  A.fence_id as fenceId
-                , A.fence_name as fenceName
-                , A.device_id as deviceId
-                , B.device_name as deviceName
-        FROM    isaver.fence A
-        INNER JOIN isaver.device B
-        ON	    A.device_id = B.device_id
-        AND	    B.area_id = #{areaId}
-        WHERE	fence_type = 'normal'
-        ORDER BY deviceId, fenceName
-    </select>
-
-    <!--
         펜스 목록을 가져온다. (알림이력용)
         @author psb
     -->
@@ -83,15 +66,19 @@
         펜스 목록을 가져온다. (test)
         @author psb
     -->
-    <select id="findListFenceForTest" resultMap="fenceResultMap">
-        SELECT  uuid as uuid
-                , fence_id as fenceId
-                , fence_type as fenceType
-                , device_id as deviceId
-                , fence_name as fenceName
-                , z_min as zMin
-                , config as config
-        FROM    isaver.fence
+    <select id="findListFenceForAll" resultType="FenceBean">
+        SELECT  a.uuid as uuid
+                , a.fence_id as fenceId
+                , a.fence_type as fenceType
+                , a.device_id as deviceId
+                , b.area_id as areaId
+                , a.fence_name as fenceName
+                , a.z_min as zMin
+                , a.config as config
+        FROM    isaver.fence a
+        INNER JOIN isaver.device b
+        ON	    a.device_id = b.device_id
+        WHERE	a.fence_type = 'normal'
     </select>
 
     <!--
@@ -125,13 +112,13 @@
                 <if test="item.config != null and item.config != ''">
                     ,#{item.config}
                 </if>
-                <if test="item.config == null">
+                <if test="item.config == null or item.config == ''">
                     ,null
                 </if>
                 <if test="item.customJson != null and item.customJson != ''">
                     ,#{item.customJson}
                 </if>
-                <if test="item.customJson == null">
+                <if test="item.customJson == null or item.customJson == ''">
                     ,null
                 </if>
             )

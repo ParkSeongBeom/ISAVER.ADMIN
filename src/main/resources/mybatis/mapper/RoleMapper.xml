@@ -16,10 +16,10 @@
       FROM            isaver.role a
       <trim prefix="WHERE" prefixOverrides="AND">
           <if test="roleId != null and roleId != ''">
-              AND     upper(a.role_id) like upper('%${roleId}%')
+              AND     upper(a.role_id) like upper(concat('%',#{roleId},'%'))
           </if>
           <if test="roleName != null and roleName != ''">
-              AND     a.role_name like '%${roleName}%'
+              AND     a.role_name like concat('%',#{roleName},'%')
           </if>
       </trim>
       ORDER BY        a.insert_datetime desc, a.role_id
@@ -37,10 +37,10 @@
       FROM    isaver.role
       <trim prefix="WHERE" prefixOverrides="AND">
           <if test="roleId != null and roleId != ''">
-              AND     upper(role_id) like upper('%${roleId}%')
+              AND     upper(role_id) like upper(concat('%',#{roleId},'%'))
           </if>
           <if test="roleName != null and roleName != ''">
-              AND     role_name like '%${roleName}%'
+              AND     role_name like concat('%',#{roleName},'%')
           </if>
       </trim>
     </select>
