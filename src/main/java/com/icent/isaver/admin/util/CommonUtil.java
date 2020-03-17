@@ -44,7 +44,7 @@ import java.security.cert.X509Certificate;
  */
 public class CommonUtil {
 
-    static Logger logger = LoggerFactory.getLogger(CommonUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
     public static HttpClient defaultHttpClientSSL(int timeout) {
         try {

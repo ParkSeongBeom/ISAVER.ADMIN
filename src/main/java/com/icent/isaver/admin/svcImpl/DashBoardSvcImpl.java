@@ -44,8 +44,7 @@ import static com.mongodb.client.model.Filters.*;
  */
 @Service
 public class DashBoardSvcImpl implements DashBoardSvc {
-
-    static Logger logger = LoggerFactory.getLogger(DashBoardSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(DashBoardSvcImpl.class);
 
     @Value("${cnf.fileAddress}")
     private String fileAddress = null;

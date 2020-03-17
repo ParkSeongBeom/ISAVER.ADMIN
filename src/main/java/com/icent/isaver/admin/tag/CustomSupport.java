@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
  * </pre>
  */
 public class CustomSupport extends ParamTag {
-    static Logger logger = LoggerFactory.getLogger(CustomSupport.class);
+    private static Logger logger = LoggerFactory.getLogger(CustomSupport.class);
 
     private static final long serialVersionUID = 2029143573644447215L;
 

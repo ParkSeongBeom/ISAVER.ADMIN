@@ -14,8 +14,7 @@ import java.util.Locale;
  * Created by icent on 2017. 2. 1..
  */
 public class ApplicationContextManager implements ApplicationContextAware {
-    static Logger logger = LoggerFactory.getLogger(ApplicationContextManager.class);
-
+    private static Logger logger = LoggerFactory.getLogger(ApplicationContextManager.class);
     private static final ApplicationContextManager instance = new ApplicationContextManager();
     private ApplicationContext applicationContext = null;
     private ResourceBundleMessageSource messageSource = null;

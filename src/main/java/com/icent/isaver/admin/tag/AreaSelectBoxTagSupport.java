@@ -29,7 +29,7 @@ import java.util.Map;
  * </pre>
  */
 public class AreaSelectBoxTagSupport extends ParamTag {
-    static Logger logger = LoggerFactory.getLogger(AreaSelectBoxTagSupport.class);
+    private static Logger logger = LoggerFactory.getLogger(AreaSelectBoxTagSupport.class);
 
     private static final long serialVersionUID = 2029143573644447215L;
 

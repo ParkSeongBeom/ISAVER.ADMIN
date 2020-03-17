@@ -60,8 +60,7 @@ import static com.mongodb.client.model.Filters.*;
  */
 @Service
 public class DeviceSvcImpl implements DeviceSvc {
-
-    static Logger logger = LoggerFactory.getLogger(DeviceSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(DeviceSvcImpl.class);
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;

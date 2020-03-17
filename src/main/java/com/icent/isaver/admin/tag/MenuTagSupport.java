@@ -26,7 +26,7 @@ import java.io.IOException;
  * </pre>
  */
 public class MenuTagSupport extends ParamTag {
-    static Logger logger = LoggerFactory.getLogger(MenuTagSupport.class);
+    private static Logger logger = LoggerFactory.getLogger(MenuTagSupport.class);
 
     private static final long serialVersionUID = -8275235968021249758L;
 

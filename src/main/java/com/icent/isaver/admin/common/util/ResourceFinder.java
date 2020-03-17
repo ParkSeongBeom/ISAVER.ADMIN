@@ -20,7 +20,7 @@ import java.util.*;
  * Created by icent on 2017. 2. 1..
  */
 public class ResourceFinder {
-    static Logger logger = LoggerFactory.getLogger(ResourceFinder.class);
+    private static Logger logger = LoggerFactory.getLogger(ResourceFinder.class);
     private static final String DEFAULT_CLASS_PATTERN = "**/*.class";
     private static final String DEFAULT_RESOURCE_PATTERN = "**/*";
 

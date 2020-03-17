@@ -51,7 +51,7 @@ import java.util.Map;
  */
 @Service
 public class FileSvcImpl implements FileSvc {
-    static Logger logger = LoggerFactory.getLogger(FileSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(FileSvcImpl.class);
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;

@@ -19,7 +19,7 @@ import java.util.Map;
  * Time: 오후 10:12
  */
 public class CodeTextTagSupport extends ParamTag {
-    static Logger logger = LoggerFactory.getLogger(CodeTextTagSupport.class);
+    private static Logger logger = LoggerFactory.getLogger(CodeTextTagSupport.class);
 
     private static final long serialVersionUID = 3977336077673211703L;
 

@@ -37,7 +37,7 @@ import java.util.Map;
  */
 @Service
 public class DatabaseSvcImpl implements DatabaseSvc {
-    static Logger logger = LoggerFactory.getLogger(DatabaseSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(DatabaseSvcImpl.class);
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;

@@ -40,7 +40,7 @@ import java.util.*;
  * </pre>
  */
 public class HaspLicenseUtil {
-    static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(HaspLicenseUtil.class);
 
     private long feature = 1;
     private boolean authorLicenseFlag = true;

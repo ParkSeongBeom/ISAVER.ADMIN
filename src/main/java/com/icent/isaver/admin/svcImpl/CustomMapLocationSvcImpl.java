@@ -47,8 +47,7 @@ import java.util.Map;
  */
 @Service
 public class CustomMapLocationSvcImpl implements CustomMapLocationSvc {
-
-    static Logger logger = LoggerFactory.getLogger(CustomMapLocationSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(CustomMapLocationSvcImpl.class);
 
     @Resource(name="isaverTxManager")
     private DataSourceTransactionManager transactionManager;

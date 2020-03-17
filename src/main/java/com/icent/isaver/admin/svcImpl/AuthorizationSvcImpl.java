@@ -46,7 +46,7 @@ import java.util.Map;
  */
 @Service
 public class AuthorizationSvcImpl implements AuthorizationSvc {
-    static Logger logger = LoggerFactory.getLogger(AuthorizationSvcImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthorizationSvcImpl.class);
 
     @Value("${cnf.server.majorVersion}")
     private String majorVersion = null;

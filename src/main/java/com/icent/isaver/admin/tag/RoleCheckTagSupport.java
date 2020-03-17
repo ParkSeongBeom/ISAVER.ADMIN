@@ -28,7 +28,7 @@ import java.io.IOException;
  * </pre>
  */
 public class RoleCheckTagSupport extends ParamTag {
-    static Logger logger = LoggerFactory.getLogger(RoleCheckTagSupport.class);
+    private static Logger logger = LoggerFactory.getLogger(RoleCheckTagSupport.class);
 
     private static final long serialVersionUID = -2283578630333735163L;
 
