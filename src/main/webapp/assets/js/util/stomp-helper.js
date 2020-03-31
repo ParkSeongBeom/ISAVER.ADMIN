@@ -50,7 +50,7 @@ var StompHelper = (
                 }
             }, function(e){
                 try{
-                    if(e.headers.subscription!=null){
+                    if(e.headers!=null && e.headers.subscription!=null){
                         for(var index in topicList){
                             if(e.headers.subscription==index){
                                 setConnectStatus(index,false);

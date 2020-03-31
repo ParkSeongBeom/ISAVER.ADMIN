@@ -79,6 +79,18 @@ var CustomMapMediator = (
                     'polygon' : {
                         'fill': "rgb(246, 185, 0,0.2)"
                         , 'stroke': "rgb(246, 185, 0)"
+                    },
+                    'LEV001' : {
+                        'fill': "rgb(210, 160, 30, 0.8)"
+                        , 'stroke': "rgb(210,160,30)"
+                    },
+                    'LEV002' : {
+                        'fill': "rgb(240, 100, 0, 0.8)"
+                        , 'stroke': "rgb(240,100,0)"
+                    },
+                    'LEV003' : {
+                        'fill': "rgba(195, 2, 2, 0.8)"
+                        , 'stroke': "rgb(195,2,2)"
                     }
                 }
                 , 'animateFlag' : true // 이벤트 발생시 펜스 애니메이션 사용 여부
@@ -1383,8 +1395,6 @@ var CustomMapMediator = (
 
             switch (messageType){
                 case _MARKER_TYPE[1] : // fence
-                    _self.addMarker(messageType, data);
-                    break;
                 case _MARKER_TYPE[2] : // Object
                     _self.addMarker(messageType, data);
                     break;
@@ -1576,11 +1586,22 @@ var CustomMapMediator = (
                         detectCnt += fenceMarker['notification'][index].length;
                         if(fenceMarker['notification'][index].length > 0){
                             fenceMarker['element'].addClass("level-"+criticalCss[index]);
+                            fenceMarker['element'].attr('style',
+                                "fill:"+_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['custom'][criticalLevel]['fill'] + " !important; " +
+                                "stroke:"+_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['custom'][criticalLevel]['stroke'] + " !important;"
+                            );
                             if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].addClass("level-"+criticalCss[index]);}
                         }else{
                             fenceMarker['element'].removeClass("level-"+criticalCss[index]);
                             if(fenceMarker['copyBoxElement']!=null){fenceMarker['copyBoxElement'].removeClass("level-"+criticalCss[index]);}
                         }
+                    }
+
+                    if(detectCnt==0){
+                        fenceMarker['element'].css({
+                            fill:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['custom']['polygon']['fill']
+                            ,stroke:_marker[_MARKER_TYPE[1]][data['deviceId']][data['fenceId']]['data']['custom']['polygon']['stroke']
+                        });
                     }
 
                     if(fenceMarker['copyBoxElement']!=null){

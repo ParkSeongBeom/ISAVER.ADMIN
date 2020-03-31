@@ -74,7 +74,8 @@ public class XSSInterceptor extends HandlerInterceptorAdapter {
 
 			for(int i=0, s=values.length; i<s; i++) {
 				values[i] = cleanXSS(values[i]);
-				values[i] = isSqlInjectionSafe(values[i]);
+				// 속도 문제로 주석처리
+//				values[i] = isSqlInjectionSafe(values[i]);
 			}
 			request.setAttribute(key, values);
 		}

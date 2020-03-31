@@ -122,6 +122,13 @@
                             <option value="table">Data Table</option>
                         </select>
                     </div>
+                    <h4>Collection</h4>
+                    <div>
+                        <select class="select-chart" id="collectionName">
+                            <option value="eventLog">Event Log</option>
+                            <option value="tracking">Tracking</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="set-itembox" id="xAxis">
@@ -265,12 +272,12 @@
                 </article>
 
                 <div style="height:100%">
-                    <div id="securityLeft" style="background-color: white; color: #3c3c3c; width: 45%; height:100%; float:left;">
+                    <div style="background-color: white; color: #3c3c3c; width: 45%; height:100%; float:left;">
                         <section style="border-style: solid; border-width: 1px;border-color: #040404; width:100%; height: 100%">
-                            <div id="securityLeft1" class="securityChart1" style="width:100%; height:50%">
+                            <div class="securityChart1" style="width:100%; height:50%">
                                 <section class="box-chart" style="width:100%; height:100%"></section>
                             </div>
-                            <div id="securityLeft2" class="securityChart2" style="width:100%; height:50%">
+                            <div class="securityChart2" style="width:100%; height:50%">
                                 <section class="box-chart" style="width:100%; height:100%"></section>
                             </div>
                         </section>
@@ -292,8 +299,9 @@
     </div>
 </section>
 
-
+<script src="${rootPath}/assets/library/d3/d3.min.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/jspdf/html2canvas.min.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/jspdf/html2canvas.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/jspdf/jspdf.debug.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/jspdf/canvg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/jspdf/rgbcolor.js?version=${version}" type="text/javascript" ></script>
@@ -320,46 +328,70 @@
         })
     }
 
+    function test11(){
+        var svgString = new XMLSerializer().serializeToString($('.box-chart').find('svg').get(0));
+        var myCanvas = document.createElement('canvas');
+        var context = myCanvas.getContext('2d');
+        var DOMURL = self.URL || self.webkitURL || self;
+        var img = new Image();
+        var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        var url = DOMURL.createObjectURL(svg);
+//        var url = myCanvas.toDataURL(svg);
+        img.onload = function() {
+            console.log("??");
+            context.drawImage(img, 0, 0);
+            var pdf = new jsPDF('l', 'mm', 'a4');
+
+            // 캔버스를 이미지로 변환
+            var png = myCanvas.toDataURL("image/png");
+            pdf.addImage(png, 'PNG', 0, 0, 1920, 1080);
+            pdf.save('sample-file.pdf');
+
+//            document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+//            DOMURL.revokeObjectURL(png);
+        };
+        img.src = url;
+    }
+
     function savePdf(){
-
         const pdf = new jsPDF('p','pt','a4')
-        const chartistChart = document.getElementById('securityLeft')
-        const previewPane = document.createElement('preview-pane')
+//        const chartistChart = document.getElementById('securityLeft')
+//        const previewPane = document.createElement('preview-pane')
+//
+//// addHTML is marked as deprecated, see links below for further information
+//        pdf.addHTML(chartistChart, function() {
+//            // Get the output pdf data URI
+//            const outputString = pdf.output('datauristring')
+//            // Changes the src to new data URI
+//            previewPane.attr('src', outputString)
+//        });
 
-// addHTML is marked as deprecated, see links below for further information
-        pdf.addHTML(chartistChart, function() {
-            // Get the output pdf data URI
-            const outputString = pdf.output('datauristring')
-            // Changes the src to new data URI
-            previewPane.attr('src', outputString)
+        var myCanvas = document.createElement('canvas');
+        var context = myCanvas.getContext('2d');
+        var data = (new XMLSerializer()).serializeToString($('.box-chart').find('svg').get(0));
+        var DOMURL = self.URL || self.webkitURL || self;
+//        canvg(myCanvas, data);
+        var svgBlob = new Blob([data], {
+            type: 'image/svg+xml;charset=utf-8'
         });
 
-//        var myCanvas = document.createElement('canvas');
-//        var context = myCanvas.getContext('2d');
-//        var data = (new XMLSerializer()).serializeToString($('#securityLeft').find('svg').get(0));
-//        canvg(myCanvas, data);
-//        var svgBlob = new Blob([data], {
-//            type: 'image/svg+xml;charset=utf-8'
-//        });
-//
-//        var url = myCanvas.toDataURL(svgBlob);//DOMURL.createObjectURL(svgBlob);
-//
-//        var img = new Image();
-//        img.onload = function() {
-//            context.canvas.width = $('#securityLeft').find('svg').width();
-//            context.canvas.height = $('#securityLeft').find('svg').height();
-//            context.drawImage(img, 0, 0);
-//            // freeing up the memory as image is drawn to canvas
-//            //DOMURL.revokeObjectURL(url);
-//
-//            var dataUrl = myCanvas.toDataURL('image/jpeg');
-//            pdf.addImage(dataUrl, 'JPEG', 20, 365, 560, 350); // 365 is top
-//
-//            setTimeout(function() {
-//                pdf.save('HTML-To-PDF-Dvlpby-Bhavdip.pdf');
-//            }, 2000);
-//        };
-//        img.src = url;
+        var url = myCanvas.toDataURL(svgBlob);
+        DOMURL.createObjectURL(svgBlob);
+        var img = new Image();
+        img.onload = function() {
+            context.canvas.width = $('.box-chart').find('svg').width();
+            context.canvas.height = $('.box-chart').find('svg').height();
+            context.drawImage(img, 0, 0);
+            DOMURL.revokeObjectURL(url);
+
+            var dataUrl = myCanvas.toDataURL('image/jpeg');
+            pdf.addImage(dataUrl, 'JPEG', 20, 365, 560, 350); // 365 is top
+
+            setTimeout(function() {
+                pdf.save('HTML-To-PDF-Dvlpby-Bhavdip.pdf');
+            }, 2000);
+        };
+        img.src = url;
 //
 //        var svg = $('#securityLeft > svg').get(0);
 //// you should set the format dynamically, write [width, height] instead of 'a4'
@@ -506,6 +538,18 @@
         });
     });
 
+    function validate() {
+        if ($("#startDatetime").val() == null || $("#startDatetime").val().trim() == '') {
+            alertMessage('emptyStartDatetime');
+            return false;
+        }
+        if ($("#endDatetime").val() == null || $("#endDatetime").val().trim() == '') {
+            alertMessage('emptyEndDatetime');
+            return false;
+        }
+        return true;
+    }
+
     function getParam(){
         var jsonData = {
             "xAxis" : {
@@ -526,12 +570,14 @@
                 ,'condition' : []
             };
             $.each($(this).find("div[name='condition']"),function(){
-                let condition = {
-                    'key' : $(this).find("input[name='key']").val()
-                    ,'value' : $(this).find("input[name='value']").val()
-                    ,'type' : $(this).find("select[name='type'] option:selected").val()
-                };
-                yAxis['condition'].push(condition);
+                if($(this).find("input[name='key']").val().trim()!='' && $(this).find("input[name='value']").val().trim()!=''){
+                    let condition = {
+                        'key' : $(this).find("input[name='key']").val()
+                        ,'value' : $(this).find("input[name='value']").val()
+                        ,'type' : $(this).find("select[name='type'] option:selected").val()
+                    };
+                    yAxis['condition'].push(condition);
+                }
             });
             jsonData['yAxis'].push(yAxis);
             index++;
@@ -541,6 +587,7 @@
             'statisticsId' : $("#statisticsId").val()
             ,'statisticsName' : $("#statisticsName").val()
             ,'chartType' : $("#chartType option:selected").val()
+            ,'collectionName' : $("#collectionName option:selected").val()
             ,'jsonData' : JSON.stringify(jsonData)
         };
     }
@@ -596,12 +643,14 @@
      @author psb
      */
     function search(){
-        $(".eventStatistics").find(".box-chart").empty().removeClass("on");
-        $(".loding_bar").addClass("on");
-        callAjax('search',getParam());
+        if(validate()){
+            $(".eventStatistics").find(".box-chart").empty().removeClass("on");
+            $(".loding_bar").addClass("on");
+            callAjax('search',getParam());
+        }
     }
 
-    function validate(){
+    function heatMapValidate(){
         var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
         var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
 
@@ -673,7 +722,7 @@
     }
 
     function searchHeatMap(startDatetime){
-        if(validate()){
+        if(heatMapValidate()){
             let target = $(".heatMapPop");
             let areaId = target.find("select[name='areaId']").val();
             if(areaId==null || areaId==''){
@@ -707,12 +756,16 @@
     }
 
     function addStatistics(){
-        callAjax('add',getParam());
+        if(validate()){
+            callAjax('add',getParam());
+        }
     }
 
     function saveStatistics(){
         if($("#statisticsId").val()!=null && $("#statisticsId").val()!=''){
-            callAjax('save',getParam());
+            if(validate()){
+                callAjax('save',getParam());
+            }
         }else{
             addStatistics();
         }
@@ -773,6 +826,7 @@
             $("#statisticsId").val("");
             $("#statisticsName").val("");
             $("#chartType").val("").prop("selected", true);
+            $("#collectionName option:eq(0)").prop("selected", true);
             $("#xAxis").find("select[name='interval']:eq(0)").prop("selected", true);
             $("#startDatetime").val("");
             $("#startDtHour").val("00").prop("selected", true);
@@ -786,6 +840,7 @@
             $("#statisticsId").val(statistics['statisticsId']);
             $("#statisticsName").val(statistics['statisticsName']);
             $("#chartType").val(statistics['chartType']).prop("selected", true);
+            $("#collectionName").val(statistics['collectionName']).prop("selected", true);
 
             var jsonData = statistics['jsonData'];
             try{

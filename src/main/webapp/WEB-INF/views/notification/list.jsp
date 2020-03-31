@@ -161,17 +161,15 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <c:if test="${notification.trackingJson!=null && notification.trackingJson!='[]'}">
-                                        <button class="eventdetail_btn"
-                                                data-notification-id="${notification.notificationId}"
-                                                data-critical-level="${notification.criticalLevel}"
-                                                data-area-id="${notification.areaId}"
-                                                data-device-id="${notification.deviceId}"
-                                                data-object-id="${notification.objectId}"
-                                                data-fence-id="${notification.fenceId}"
-                                                onclick="openTrackingHistoryPopup(this);"></button>
-                                        <textarea disabled="disabled" style="display:none;">${notification.trackingJson}</textarea>
-                                    </c:if>
+                                    <button class="eventdetail_btn"
+                                            data-notification-id="${notification.notificationId}"
+                                            data-critical-level="${notification.criticalLevel}"
+                                            data-area-id="${notification.areaId}"
+                                            data-device-id="${notification.deviceId}"
+                                            data-object-id="${notification.objectId}"
+                                            data-fence-id="${notification.fenceId}"
+                                            onclick="openTrackingHistoryPopup(this);"></button>
+                                    <textarea disabled="disabled" style="display:none;">${notification.trackingJson}</textarea>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -277,6 +275,7 @@
 
     var messageConfig = {
         'earlyDatetime':'<spring:message code="notification.message.earlyDatetime"/>'
+        ,'emptyTrackingHistory':'<spring:message code="notification.message.emptyTrackingHistory"/>'
     };
 
     var urlConfig = {
@@ -284,6 +283,7 @@
         ,'excelUrl':'${rootPath}/notification/excel.html'
         ,'videoListUrl':'${rootPath}/videoHistory/notiList.json'
         ,'notiSendLogUrl':'${rootPath}/notiSendLog/list.json'
+        ,'trackingHistoryUrl':'${rootPath}/trackingHistory/detail.json'
     };
 
     var searchConfig = {
@@ -460,6 +460,15 @@
                 }
                 $(".eventSendLogPopup").fadeIn();
                 break;
+            case 'trackingHistory':
+                var marker = data['tracking'];
+                if(marker!=null){
+                    marker['id'] = marker['objectId'];
+                    setTrackingHistoryPopup(marker);
+                }else{
+                    alertMessage("emptyTrackingHistory");
+                }
+                break;
         }
     }
 
@@ -472,21 +481,33 @@
     }
 
     /*
-     open 이동경로 이력 popup
+     Postgresql open 이동경로 이력 popup
      @author psb
      */
     function openTrackingHistoryPopup(_this){
+        var marker = $(_this).data();
+        marker['objectType'] = 'human';
+        marker['id'] = marker['objectId'];
+        var trackingJson = $(_this).next().text();
+        if(trackingJson!=null && trackingJson!="" && trackingJson!="[]") {
+            marker['location'] = JSON.parse(trackingJson);
+            setTrackingHistoryPopup(marker);
+        }else{
+            callAjax('trackingHistory',{'notificationId':marker['notificationId']});
+        }
+    }
+
+    /*
+     이동경로 이력
+     @author psb
+     */
+    function setTrackingHistoryPopup(marker){
         $(".map_pop").fadeIn();
-
-        var data = $(_this).data();
-        data['objectType'] = 'human';
-        var trackingJson = JSON.parse($(_this).next().text());
-
         customMapMediator = new CustomMapMediator(String('${rootPath}'),String('${version}'));
         try{
             customMapMediator.setElement($(".map_pop"), $(".map_pop").find("#mapElement"));
 //            customMapMediator.setMessageConfig(_messageConfig);
-            customMapMediator.init(data['areaId'],{
+            customMapMediator.init(marker['areaId'],{
                 'custom' : {
                     'draggable' : false
                     ,'fenceView' : true
@@ -494,20 +515,10 @@
                     ,'moveFenceHide' : false
                     ,'moveReturn' : false
                     ,'onLoad' : function(){
-                        if(trackingJson!=null) {
-                            var marker = {
-                                'areaId' : data['areaId']
-                                ,'deviceId' : data['deviceId']
-                                ,'objectType' : 'human'
-                                ,'id' : data['objectId']
-                                ,'location' : trackingJson
-                            };
-                            customMapMediator.saveMarker('object', marker);
-
-                            setTimeout(function(){
-                                customMapMediator.setAnimate('add',data['criticalLevel'],data);
-                            },500);
-                        }
+                        customMapMediator.addMarker('object', marker);
+                        setTimeout(function(){
+                            customMapMediator.setAnimate('add',marker['criticalLevel'],marker);
+                        },500);
                     }
                 }
                 ,'object' :{
@@ -516,7 +527,7 @@
                     ,'speedFlag' : true
                 }
             });
-            callAjax('videoList',{'notificationId':data['notificationId'],'videoType':'event'});
+            callAjax('videoList',{'notificationId':marker['notificationId'],'videoType':'event'});
         }catch(e){
             console.error("[openTrackingHistoryPopup] custom map mediator init error - "+ e.message);
         }

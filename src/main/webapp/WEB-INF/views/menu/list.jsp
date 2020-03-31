@@ -31,7 +31,7 @@
     </article>
     <!-- 트리 영역 End -->
 
-    <form id="menuForm" method="POST" class="form_type01">
+    <form id="menuForm" method="POST">
         <input type="hidden" name="parentMenuId" />
 
         <article class="table_area tr_table">

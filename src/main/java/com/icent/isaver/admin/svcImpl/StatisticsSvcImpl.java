@@ -99,7 +99,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
             eventDatetimeWhere.put("$lte",endDatetime);
 
             List<Date> chartDateList = AdminHelper.findListDateTimeForType(startDatetime, endDatetime, dateType);
-            MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
+            MongoCollection<Document> collection = mongoDatabase.getCollection(parameters.get("collectionName"));
 
             String format = "%Y-%m-%d %H:%M:%S";
             switch (dateType){
@@ -154,6 +154,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 // query
                 AggregateIterable<Document> aggregate = collection.aggregate(
                         Arrays.asList(
+                                Aggregates.unwind("$"+field.split("\\.")[0]),
                                 Aggregates.match(match),
                                 Aggregates.group(
                                         Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}")
@@ -166,7 +167,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 Map resultMap = new HashMap<>();
                 resultMap.put("label",label);
                 resultMap.put("dataList",aggregate.into(new ArrayList<>()));
-                resultMap.put("aggregation",aggregation);
+                resultMap.put("aggregation", aggregation);
                 resultList.put(index, resultMap);
             }
             modelAndView.addObject("dateList", chartDateList);

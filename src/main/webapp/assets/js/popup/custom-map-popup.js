@@ -516,6 +516,76 @@ var CustomMapPopup = (
                                             })
                                         )
                                     ).append(
+                                        $("<div/>",{class:'set-minicolors'}).append(
+                                            $("<div/>").append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'LEV001',
+                                                    value: rgbToHex(data['custom']['LEV001']['fill']),
+                                                    maxlength: "7",
+                                                    class: 'changeColor',
+                                                    title: "Critical Caution Fill Color",
+                                                    'data-opacity': rgbToOpacity(data['custom']['LEV001']['fill'])
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let fill = $(this).val();
+                                                    let opacity = $(this).attr("data-opacity");
+                                                    if(isHex(fill)!=null){
+                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{LEV001:{fill:hexToRgb(fill,opacity)}}};
+                                                        if(!_customMapMediator.computePolyPoints(paramData)){
+                                                            _customMapMediator.saveFence(paramData);
+                                                        }
+                                                    }
+                                                })
+                                            ).append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'LEV002',
+                                                    value: rgbToHex(data['custom']['LEV002']['fill']),
+                                                    maxlength: "7",
+                                                    class: 'changeColor',
+                                                    title:"Critical Warning Fill Color",
+                                                    'data-opacity': rgbToOpacity(data['custom']['LEV002']['fill'])
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let fill = $(this).val();
+                                                    let opacity = $(this).attr("data-opacity");
+                                                    if(isHex(fill)!=null){
+                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{LEV002:{fill:hexToRgb(fill,opacity)}}};
+                                                        if(!_customMapMediator.computePolyPoints(paramData)){
+                                                            _customMapMediator.saveFence(paramData);
+                                                        }
+                                                    }
+                                                })
+                                            ).append(
+                                                $("<input/>", {
+                                                    type: 'text',
+                                                    name: 'LEV003',
+                                                    value: rgbToHex(data['custom']['LEV003']['fill']),
+                                                    maxlength: "7",
+                                                    class: 'changeColor',
+                                                    title:"Critical Danger Fill Color",
+                                                    'data-opacity': rgbToOpacity(data['custom']['LEV003']['fill'])
+                                                }).change({
+                                                    deviceId: data['deviceId'],
+                                                    fenceId: data['fenceId']
+                                                }, function (evt) {
+                                                    let fill = $(this).val();
+                                                    let opacity = $(this).attr("data-opacity");
+                                                    if(isHex(fill)!=null){
+                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, custom:{LEV003:{fill:hexToRgb(fill,opacity)}}};
+                                                        if(!_customMapMediator.computePolyPoints(paramData)){
+                                                            _customMapMediator.saveFence(paramData);
+                                                        }
+                                                    }
+                                                })
+                                            )
+                                        )
+                                    ).append(
                                         $("<div/>").addClass("set-item").append(
                                             $("<div/>").append(
                                                 $("<input/>", {

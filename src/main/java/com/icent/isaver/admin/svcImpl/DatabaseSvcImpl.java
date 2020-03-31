@@ -58,6 +58,7 @@ public class DatabaseSvcImpl implements DatabaseSvc {
             ,"1.7.5_1"
             ,"1.7.5_2"
             ,"1.7.5_3"
+            ,"1.7.5_4"
     };
 
     @Override

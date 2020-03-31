@@ -51,7 +51,9 @@ public class RoleCheckTagSupport extends ParamTag {
         UsersBean usersBean = null;
         try{
             usersBean = (UsersBean) pageContext.getSession().getAttribute(AdminResource.AUTHORIZATION_ADMIN);
-        }catch(Exception e){}
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
 
         Boolean pagePermissionFlag = false;
         if (usersBean != null && StringUtils.notNullCheck(menuId) && StringUtils.notNullCheck(usersBean.getUserId())) {

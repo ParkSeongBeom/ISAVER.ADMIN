@@ -18,7 +18,7 @@
 <script src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
 
 <%-- Medea Server를 통한 RTSP Stream --%>
-<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/request.min.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/request.min.js?version=${version}"u></script>
 <script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/adapter.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/library/webrtc-streamer/webrtcstreamer.js?version=${version}"></script>
 <script src="${rootPath}/assets/js/page/dashboard/video-mediator.js?version=${version}" type="text/javascript" charset="UTF-8"></script>
@@ -86,7 +86,7 @@
 
         <!-- 구역 상세 Start-->
         <div detail class="area_table">
-            <form id="areaForm" method="POST" onsubmit="return false;" class="form_type01">
+            <form id="areaForm" method="POST" onsubmit="return false;">
                 <input type="hidden" name="allTemplate"/>
                 <div class="table_contents">
                     <!-- 입력 테이블 Start -->
@@ -163,7 +163,7 @@
 
         <!-- 장치 상세 Start-->
         <div detail class="device_table">
-            <form id="deviceForm" method="POST" onsubmit="return false;" class="form_type01">
+            <form id="deviceForm" method="POST" onsubmit="return false;">
                 <div class="table_contents">
                     <!-- 입력 테이블 Start -->
                     <table class="t_defalut t_type02 devicelist_col">

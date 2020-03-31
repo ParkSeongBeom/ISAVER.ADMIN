@@ -56,7 +56,7 @@
 
         <!-- 그룹코드 상세 Start-->
         <div detail class="area_table groupCode_table">
-            <form id="groupCodeForm" method="POST" onsubmit="return false;" class="form_type01">
+            <form id="groupCodeForm" method="POST" onsubmit="return false;">
                 <div class="table_contents">
                     <!-- 입력 테이블 Start -->
                     <table class="t_defalut t_type02 groupcodedetail_col">
@@ -64,7 +64,7 @@
                             <col>  <!-- 01 -->
                             <col>  <!-- 02 -->
                             <col>  <!-- 03 -->
-                            <col>    <!-- 04 -->
+                            <col>  <!-- 04 -->
                         </colgroup>
                         <tbody>
                             <tr>
@@ -105,7 +105,7 @@
 
         <!-- 코드 상세 Start-->
         <div detail class="area_table code_table">
-            <form id="codeForm" method="POST" onsubmit="return false;" class="form_type01">
+            <form id="codeForm" method="POST" onsubmit="return false;">
                 <div class="table_contents">
                     <!-- 입력 테이블 Start -->
                     <table class="t_defalut t_type02 codedetail_col">

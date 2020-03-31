@@ -7,6 +7,10 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_4'">
+            alter table isaver.statistics add column collection_name character varying(50) NOT NULL DEFAULT 'eventLog'::character varying;
+        </if>
+
         <if test="version == '1.7.5_3'">
             INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT320','D','차량 감지','위험지역내 차량 탐지','N','STS001','admin',NOW());
             INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT321','D','차량 감지 해제','위험지역내 차량 벗어남 탐지','N','STS001','admin',NOW());

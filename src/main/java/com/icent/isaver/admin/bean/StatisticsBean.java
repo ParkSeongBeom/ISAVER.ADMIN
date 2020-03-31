@@ -23,6 +23,8 @@ public class StatisticsBean extends ISaverCommonBean {
     private String statisticsName;
     /* 차트타입*/
     private String chartType;
+    /* collection명*/
+    private String collectionName;
     /* 조회조건*/
     private String jsonData;
 
@@ -60,5 +62,13 @@ public class StatisticsBean extends ISaverCommonBean {
 
     public void setJsonData(String jsonData) {
         this.jsonData = jsonData;
+    }
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 }
