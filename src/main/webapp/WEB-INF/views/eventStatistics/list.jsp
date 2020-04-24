@@ -1487,7 +1487,7 @@
                     series: _aggregationSeriesList
                 }, {
                     labelInterpolationFnc: function(value, index) {
-                        return $(".chart_label.header span:eq("+index+")").attr("label") + " (" + Math.round(value / _aggregationSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%)';
+                        return $(".chart_label.header span:eq("+index+")").attr("meta") + " (" + Math.round(value / _aggregationSeriesList.reduce(function(a, b) { return a + b }) * 100) + '%)';
                     },
                     plugins: [
                         Chartist.plugins.tooltip()
