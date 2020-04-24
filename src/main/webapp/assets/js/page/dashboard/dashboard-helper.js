@@ -6,7 +6,7 @@
  */
 var DashboardHelper = (
     function(rootPath, version){
-        const _MEDIATOR_TYPE = ['video','map'];
+        const _MEDIATOR_TYPE = ['video','map','school'];
         const _defaultTemplateCode = "TMP001";
         const _self = this;
 
@@ -16,6 +16,35 @@ var DashboardHelper = (
         let _messageConfig;
         let _fileUploadPath;
         let _templateSetting;
+        let _schoolPopup = {
+            'initFlag' : false
+            ,'areaId' : null
+            ,'speedMeter' : {
+                'fn' : null
+                ,'uuid' : {
+                    'vehicleSpeedAverage' : null
+                    ,'vehicleSpeedMax' : null
+                }
+            }
+            ,'multiBar' : {
+                'fn' : null
+                ,'uuid' : {
+                    'crossing' : null
+                    ,'vehicleTraffic' : null
+                    ,'trespassers' : null
+                    ,'speedingVehicleTraffic' : null
+                }
+            }
+            ,'multiLine' : {
+                'fn' : null
+                ,'uuid' : {
+                    'crossing' : null
+                    ,'vehicleTraffic' : null
+                    ,'trespassers' : null
+                    ,'speedingVehicleTraffic' : null
+                }
+            }
+        };
         let _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
             ,deviceListUrl : "/device/list.json"
@@ -54,6 +83,25 @@ var DashboardHelper = (
             _templateSetting = templateSetting;
         };
 
+        var setSchoolPopup = function(){
+            _schoolPopup['speedMeter']['fn'] = new SpeedMeter();
+            _schoolPopup['speedMeter']['uuid']['vehicleSpeedMax'] = _schoolPopup['speedMeter']['fn'].setElement($('#schoolPopupMaxEl'));
+            _schoolPopup['speedMeter']['uuid']['vehicleSpeedAverage'] = _schoolPopup['speedMeter']['fn'].setElement($('#schoolPopupAvgEl'));
+
+            _schoolPopup['multiBar']['fn'] = new MultiBar();
+            _schoolPopup['multiBar']['uuid']['crossing'] = _schoolPopup['multiBar']['fn'].setElement($("section[name='crossing']"));
+            _schoolPopup['multiBar']['uuid']['vehicleTraffic'] = _schoolPopup['multiBar']['fn'].setElement($("section[name='vehicleTraffic']"));
+            _schoolPopup['multiBar']['uuid']['trespassers'] = _schoolPopup['multiBar']['fn'].setElement($("section[name='trespassers']"));
+            _schoolPopup['multiBar']['uuid']['speedingVehicleTraffic'] = _schoolPopup['multiBar']['fn'].setElement($("section[name='speedingVehicleTraffic']"));
+
+            _schoolPopup['multiLine']['fn'] = new MultiLine();
+            _schoolPopup['multiLine']['uuid']['crossing'] = _schoolPopup['multiLine']['fn'].setElement($("section[name='crossing']"));
+            _schoolPopup['multiLine']['uuid']['vehicleTraffic'] = _schoolPopup['multiLine']['fn'].setElement($("section[name='vehicleTraffic']"));
+            _schoolPopup['multiLine']['uuid']['trespassers'] = _schoolPopup['multiLine']['fn'].setElement($("section[name='trespassers']"));
+            _schoolPopup['multiLine']['uuid']['speedingVehicleTraffic'] = _schoolPopup['multiLine']['fn'].setElement($("section[name='speedingVehicleTraffic']"));
+            _schoolPopup['initFlag'] = true;
+        };
+
         /**
          * set websocket
          * @author psb
@@ -63,8 +111,15 @@ var DashboardHelper = (
             for(let index in param){
                 switch (param[index]) {
                     case "map":
-                        if($("div[templateCode='TMP005']").length>0){
+                        if($("div[templateCode='TMP005'], div[templateCode='TMP012']").length>0){
                             _webSocketHelper.addWebSocketList(param[index], mapMessageEventHandler);
+                        }
+
+                        if($("div[templateCode='TMP012']").length>0){
+                            $(".sub_title_area").after(
+                                $("<h2/>").text(_messageConfig['schoolZoneTitle'])
+                            );
+                            modifyElementClass($("body"),'school-mode','add');
                         }
                         break;
                     case "toiletRoom":
@@ -130,7 +185,7 @@ var DashboardHelper = (
 
             switch (resultData['messageType']) {
                 case "object":
-                    var _mapMediator = _self.getGuard('map', resultData['areaId']);
+                    var _mapMediator = _self.getGuard(_MEDIATOR_TYPE[1], resultData['areaId']);
                     if(resultData['areaId']!=null && _mapMediator!=null){
                         if(resultData['markerList']!=null && resultData['markerList'] instanceof Array){
                             for(var index in resultData['markerList']){
@@ -234,7 +289,7 @@ var DashboardHelper = (
                         _guardList[areaId][_MEDIATOR_TYPE[1]] = _templateSetting['safeGuardMapView']=='online'?new MapMediator(_rootPath, _version):new CustomMapMediator(_rootPath);
                         _guardList[areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
 
-                        let deviceList = [];
+                        var deviceList = [];
                         $.each($(this).find("div[deviceId]"),function(){
                             deviceList.push($(this).data());
                         });
@@ -261,8 +316,7 @@ var DashboardHelper = (
                                     ,'locationZFlag' : true
                                 }
                                 , 'custom' : {
-                                    'websocketSend':false
-                                    ,'fenceView':true
+                                    'fenceView':true
                                     ,'openLinkFlag':false
                                     ,'click':function(data){
                                         if(data['deviceCode']=='area'){
@@ -309,11 +363,94 @@ var DashboardHelper = (
                         _analysisList[areaId].setElement($(this));
                         _analysisList[areaId].init(areaId);
                         break;
+                    case "TMP012" :
+                        _guardList[areaId] = {};
+                        _guardList[areaId][_MEDIATOR_TYPE[1]] = new CustomMapMediator(_rootPath);
+                        _guardList[areaId]['deviceIds'] = $(this).find("div[deviceId]").map(function(){return $(this).attr("deviceId")}).get();
+
+                        // Map Mediator
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].setElement($(this), $(this).find("div[name='map-canvas']"), $(this).find("div[name='copyboxElement']"));
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].setMessageConfig(_messageConfig);
+                        _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
+                            'element' : {
+                                'lastPositionUseFlag' : true
+                                ,'lastPositionSaveFlag' : true
+                            },
+                            'object' : {
+                                'speedFlag' : true
+                                ,'locationZFlag' : true
+                            }
+                            , 'custom' : {
+                                'fenceView':true
+                                ,'openLinkFlag':false
+                            }
+                        });
+
+                        // School Mediator
+                        _guardList[areaId][_MEDIATOR_TYPE[2]] = new SchoolMediator(_rootPath);
+                        _guardList[areaId][_MEDIATOR_TYPE[2]].setElement($(this));
+                        _guardList[areaId][_MEDIATOR_TYPE[2]].init(areaId);
+                        _guardList[areaId][_MEDIATOR_TYPE[2]].bindSchoolPopupHandler(schoolPopupHandler);
+                        break;
                 }
             });
 
             if(blinkerAreaIds!=""){
                 _self.getBlinker(blinkerAreaIds);
+            }
+        };
+
+        var schoolPopupHandler = function(areaId, type, info){
+            if(_schoolPopup['areaId']!=null && _schoolPopup['areaId'] == areaId){
+                switch (type){
+                    case "crossing" : // 횡단보도
+                    case "vehicleTraffic" : // 차량 통행량
+                    case "trespassers" : // 무단 횡단자
+                    case "speedingVehicleTraffic" : // 과속차량 통행량
+                        $(".layer-sub section[name='"+type+"'] p[name='now']").text(info['data']['todayValue']);
+                        $(".layer-sub section[name='"+type+"'] p[name='pre']").text(info['data']['preValue']);
+
+                        if(_schoolPopup['multiBar']!=null && _schoolPopup['multiBar'].hasOwnProperty('fn')){
+                            _schoolPopup['multiBar']['fn'].setValue(_schoolPopup['multiBar']['uuid'][type], info['chartData']);
+                        }
+                        if(_schoolPopup['multiLine']!=null && _schoolPopup['multiLine'].hasOwnProperty('fn')){
+                            let data = [];
+                            for(var fenceId in info['fenceList']){
+                                let fenceData = {
+                                    'id' : fenceId
+                                    ,'name' : info['fenceList'][fenceId]
+                                    ,'values' : []
+                                };
+                                for(var index in info['chartData']){
+                                    fenceData['values'].push({
+                                        'date' : index
+                                        ,'cnt' : info['chartData'][index]['today'][fenceId]?info['chartData'][index]['today'][fenceId]:0
+                                    })
+                                }
+                                data.push(fenceData);
+                            }
+                            _schoolPopup['multiLine']['fn'].setValue(_schoolPopup['multiLine']['uuid'][type], data);
+                        }
+                        break;
+                    case "vehicleSpeedAverage" : // 차량 평균속도
+                    case "vehicleSpeedMax" : // 차량 최고속도
+                        if(_schoolPopup['speedMeter']!=null && _schoolPopup['speedMeter'].hasOwnProperty('fn')){
+                            _schoolPopup['speedMeter']['fn'].setValue(_schoolPopup['speedMeter']['uuid'][type], info['data']['todayValue']);
+                        }
+                        break;
+                }
+            }
+        };
+
+        this.startZoomControl = function(areaId, actionType){
+            if(areaId!=null && _guardList[areaId]!=null && _guardList[areaId][_MEDIATOR_TYPE[1]]!=null){
+                _guardList[areaId][_MEDIATOR_TYPE[1]].startZoomControl(actionType, true);
+            }
+        };
+
+        this.stopZoomControl = function(areaId){
+            if(areaId!=null && _guardList[areaId]!=null && _guardList[areaId][_MEDIATOR_TYPE[1]]!=null){
+                _guardList[areaId][_MEDIATOR_TYPE[1]].stopZoomControl();
             }
         };
 
@@ -329,6 +466,22 @@ var DashboardHelper = (
                     toiletRoomMediator.updateImageMode(message['imageMode'],true);
                 }
             }
+        };
+
+        this.openSchoolPopup = function(areaId){
+            if(!_schoolPopup['initFlag']){
+                setSchoolPopup();
+            }
+            if(_guardList[areaId][_MEDIATOR_TYPE[2]]!=null){
+                _schoolPopup['areaId'] = areaId;
+                _guardList[areaId][_MEDIATOR_TYPE[2]].getPopupData();
+            }
+            $('.layer-sub').addClass('on');
+        };
+
+        this.closeSchoolPopup = function(){
+            _schoolPopup['areaId'] = null;
+            $('.layer-sub').removeClass('on');
         };
 
         /**
@@ -350,6 +503,9 @@ var DashboardHelper = (
                             if(_guardList[data['areaId']][_MEDIATOR_TYPE[1]]!=null){
                                 _guardList[data['areaId']][_MEDIATOR_TYPE[1]].setAnimate("add",data['criticalLevel'],data);
                             }
+                            if(_guardList[data['areaId']][_MEDIATOR_TYPE[2]]!=null){
+                                _guardList[data['areaId']][_MEDIATOR_TYPE[2]].setAnimate(data);
+                            }
                         }
                         notificationUpdate(messageType, data);
                         notificationMarqueeUpdate(data['areaId'], data);
@@ -370,8 +526,12 @@ var DashboardHelper = (
                 case "cancelDetection": // 감지 해제
                     if(data['notification']['areaId']!=null && _guardList[data['notification']['areaId']]!=null){
                         for(let index in data['cancel']){
-                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
-                            _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
+                            if(_guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]]!=null){
+                                _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[0]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
+                            }
+                            if(_guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]]!=null){
+                                _guardList[data['notification']['areaId']][_MEDIATOR_TYPE[1]].setAnimate("remove",data['cancel'][index]['criticalLevel'],data['notification']);
+                            }
                         }
                     }
                     break;
@@ -630,7 +790,7 @@ var DashboardHelper = (
                     const outCount = inout['outCount']!=null?inout['outCount']:0;
                     inoutTag.find("p[in]").text(inCount);
                     inoutTag.find("p[out]").text(outCount);
-                    inoutTag.find("p[gap]").text(inCount-outCount);
+                    inoutTag.find("p[gap]").text(inCount-outCount+(inoutTag.find("p[gap]").attr("resetCal")!=null?Number(inoutTag.find("p[gap]").attr("resetCal")):0));
                     inoutTag.attr("startDatetime",inout['startDatetime']);
                     inoutTag.attr("endDatetime",inout['endDatetime']);
                 }
@@ -650,8 +810,12 @@ var DashboardHelper = (
 
             _self.setDeviceStatusList(data['deviceStatusList']);
             for(let index in _guardList){
-                _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
-                _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
+                if(_guardList[index][_MEDIATOR_TYPE[0]]!=null){
+                    _guardList[index][_MEDIATOR_TYPE[0]].setDeviceStatusList(data['deviceStatusList']);
+                }
+                if(_guardList[index][_MEDIATOR_TYPE[1]]!=null){
+                    _guardList[index][_MEDIATOR_TYPE[1]].setDeviceStatusList(data['deviceStatusList']);
+                }
             }
         };
 
@@ -681,6 +845,8 @@ var DashboardHelper = (
                     if(data['eventLog']['areaId']!=null && _analysisList[data['eventLog']['areaId']]!=null){
                         _analysisList[data['eventLog']['areaId']].setAnimate(data['eventLog']);
                     }
+                    break;
+                case "TMP012": // school zone
                     break;
             }
         };
@@ -831,7 +997,7 @@ var DashboardHelper = (
                     const outTag = element.find("[out]");
                     inTag.text(inCount + Number(inTag.text()));
                     outTag.text(outCount + Number(outTag.text()));
-                    element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text()));
+                    element.find("[gap]").text(Number(element.find("[in]").text())-Number(element.find("[out]").text())+(element.find("p[gap]").attr("resetCal")!=null?Number(element.find("p[gap]").attr("resetCal")):0));
                 }else{
                     console.warn("[DashboardHelper][blinkerUpdate] in/out Count is empty - inCount : "+inCount+", outCount : "+outCount);
                 }
@@ -881,6 +1047,19 @@ var DashboardHelper = (
             blinkerSumUpdate();
         };
 
+        this.resetGap = function(parent,allFlag){
+            if(allFlag){
+                parent.find("p[gap], p[in], p[out]").text(0);
+                parent.find("p[gap]").attr("resetCal",0);
+            }else{
+                parent.find("p[gap]").each(function(){
+                    var resetCal = $(this).attr("resetCal")!=null?Number($(this).attr("resetCal")):0;
+                    resetCal-=$(this).text();
+                    $(this).attr("resetCal",resetCal).text(0);
+                });
+            }
+        };
+
         var blinkerSumUpdate = function(){
             var sumValue = {};
             $.each($("div[templateCode='TMP003']"), function(){
@@ -897,7 +1076,7 @@ var DashboardHelper = (
                 var sumTag = $("div[valueType][sumAreaId='"+index+"']");
                 sumTag.find("p[in]").text(sumValue[index]['in']);
                 sumTag.find("p[out]").text(sumValue[index]['out']);
-                sumTag.find("p[gap]").text(sumValue[index]['in']-sumValue[index]['out']);
+                sumTag.find("p[gap]").text(sumValue[index]['in']-sumValue[index]['out']+(sumTag.find("p[gap]").attr("resetCal")!=null?Number(sumTag.find("p[gap]").attr("resetCal")):0));
             }
         };
 

@@ -23,6 +23,8 @@ public class StatisticsBean extends ISaverCommonBean {
     private String statisticsName;
     /* 차트타입*/
     private String chartType;
+    /* template*/
+    private String template;
     /* collection명*/
     private String collectionName;
     /* 조회조건*/
@@ -70,5 +72,13 @@ public class StatisticsBean extends ISaverCommonBean {
 
     public void setCollectionName(String collectionName) {
         this.collectionName = collectionName;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
     }
 }

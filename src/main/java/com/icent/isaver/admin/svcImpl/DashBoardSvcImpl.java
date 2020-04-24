@@ -5,6 +5,7 @@ import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.AreaDao;
 import com.icent.isaver.admin.dao.DeviceDao;
+import com.icent.isaver.admin.dao.FileDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.DashBoardSvc;
 import com.icent.isaver.admin.svc.TemplateSettingSvc;
@@ -59,6 +60,9 @@ public class DashBoardSvcImpl implements DashBoardSvc {
     private DeviceDao deviceDao;
 
     @Inject
+    private FileDao fileDao;
+
+    @Inject
     private TemplateSettingSvc templateSettingSvc;
 
     @Inject
@@ -75,34 +79,36 @@ public class DashBoardSvcImpl implements DashBoardSvc {
             deviceParam.put("delYn", CommonResource.NO);
             List<DeviceBean> deviceList = deviceDao.findListDevice(deviceParam);
 
-            try{
-                MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
-                Calendar cal = Calendar.getInstance();
-                cal.set( Calendar.HOUR_OF_DAY, 0 );
-                cal.set( Calendar.MINUTE, 0 );
-                cal.set( Calendar.SECOND, 0 );
-                cal.set( Calendar.MILLISECOND, 0 );
+            if(area.getTemplateCode().equals("TMP004")){
+                try{
+                    MongoCollection<Document> collection = mongoDatabase.getCollection("eventLog");
+                    Calendar cal = Calendar.getInstance();
+                    cal.set( Calendar.HOUR_OF_DAY, 0 );
+                    cal.set( Calendar.MINUTE, 0 );
+                    cal.set( Calendar.SECOND, 0 );
+                    cal.set(Calendar.MILLISECOND, 0 );
 
-                for(DeviceBean device : deviceList){
-                    Document eventLog = collection.find(
-                            and(
-                                    eq("deviceId", device.getDeviceId()),
-                                    gte("eventDatetime", cal.getTime())
-                            )
-                    ).sort(Sorts.descending("eventDatetime")).first();
+                    for(DeviceBean device : deviceList){
+                        Document eventLog = collection.find(
+                                and(
+                                        eq("deviceId", device.getDeviceId()),
+                                        gte("eventDatetime", cal.getTime())
+                                )
+                        ).sort(Sorts.descending("eventDatetime")).first();
 
-                    if(eventLog!=null){
-                        if(eventLog.get("value")!=null){
-                            device.setEvtValue(eventLog.get("value").toString());
-                        }
-                        if(eventLog.get("format")!=null){
-                            device.setFormat(eventLog.get("format").toString());
+                        if(eventLog!=null){
+                            if(eventLog.get("value")!=null){
+                                device.setEvtValue(eventLog.get("value").toString());
+                            }
+                            if(eventLog.get("format")!=null){
+                                device.setFormat(eventLog.get("format").toString());
+                            }
                         }
                     }
+                }catch(Exception e){
+                    logger.error(e.getMessage());
+                    throw new IsaverException("");
                 }
-            }catch(Exception e){
-                logger.error(e.getMessage());
-                throw new IsaverException("");
             }
             area.setDevices(deviceList);
             area.setAreas(areaDao.findListAreaForDashboard(deviceParam));
@@ -116,6 +122,7 @@ public class DashBoardSvcImpl implements DashBoardSvc {
         modelAndView.addObject("deviceCodeCss", AdminResource.DEVICE_CODE_CSS);
         modelAndView.addObject("paramBean",parameters);
         modelAndView.addObject("templateSetting",templateSettingSvc.findListTemplateSetting());
+        modelAndView.addObject("logoFile",fileDao.findByFileByLogo());
 
         try{
             InetAddress address = InetAddress.getByName(fileAddress);

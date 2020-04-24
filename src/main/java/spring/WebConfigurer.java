@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icent.isaver.admin.common.PropertyManager;
 import com.icent.isaver.admin.common.XMLMarshaller;
 import com.icent.isaver.admin.common.resource.CommonResource;
+import com.icent.isaver.admin.svc.DatabaseSvc;
 import com.icent.isaver.admin.util.*;
 import com.meous.common.util.POIExcelView;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -38,7 +40,9 @@ import org.springframework.web.servlet.view.xml.MarshallingView;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebMvc
@@ -298,14 +302,33 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         StringBuilder loggerBuiler = new StringBuilder();
         loggerBuiler.append("\n==============================");
         loggerBuiler.append("\n= iSaver Admin");
-        loggerBuiler.append("\n= Version : ").append(propertyManager.getProperty("cnf.server.minorVersion"));
-        loggerBuiler.append("\n= DeployMode : ").append(propertyManager.getProperty("deployMode"));
-        loggerBuiler.append("\n= SocketMode : ").append(propertyManager.getProperty("socketMode"));
+        loggerBuiler.append("\n= Version : " + propertyManager.getProperty("cnf.server.minorVersion"));
+        loggerBuiler.append("\n= DeployMode : " + propertyManager.getProperty("deployMode"));
+        loggerBuiler.append("\n= SocketMode : " + propertyManager.getProperty("socketMode"));
         loggerBuiler.append("\n==============================");
         version = loggerBuiler.toString();
         loggerBuiler.setLength(0);
-
         logger.info(version);
         return version;
+    }
+
+    @Inject
+    private DatabaseSvc databaseSvc;
+
+    @Bean
+    public String dbMigration() {
+        Map<String, String> parameters = new HashMap<>();
+        ModelAndView modelAndView = databaseSvc.postgresqlMigration(parameters);
+        List<Map> resultList = (List<Map>) modelAndView.getModel().get("result");
+        StringBuilder loggerBuiler = new StringBuilder();
+        loggerBuiler.append("\n==============================");
+        loggerBuiler.append("\n= Start Database Migration");
+        for (Map result : resultList) {
+            loggerBuiler.append("\n= " + result.get("version") + "[" + result.get("code") + "] - " + result.get("message"));
+        }
+        loggerBuiler.append("\n==============================");
+        logger.info(loggerBuiler.toString());
+        loggerBuiler.setLength(0);
+        return null;
     }
 }

@@ -25,6 +25,8 @@ public class FenceBean {
     private String fenceId;
     /* 펜스타입*/
     private String fenceType;
+    /* 펜스 상세 타입*/
+    private String fenceSubType;
     /* 장치 ID*/
     private String deviceId;
     /* 펜스 높이*/
@@ -42,6 +44,8 @@ public class FenceBean {
      */
     /* 구역 ID*/
     private String areaId;
+    /* 구역 ID*/
+    private String areaName;
     /* 장치명*/
     private String deviceName;
 
@@ -133,5 +137,21 @@ public class FenceBean {
 
     public void setCustomJson(String customJson) {
         this.customJson = customJson;
+    }
+
+    public String getFenceSubType() {
+        return fenceSubType;
+    }
+
+    public void setFenceSubType(String fenceSubType) {
+        this.fenceSubType = fenceSubType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 }

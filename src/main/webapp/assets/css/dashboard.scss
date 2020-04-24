@@ -1,5 +1,4 @@
-﻿@charset "utf-8";
-@import "filters";
+﻿@charset "utf-8";  @import "filters";  @import "schoolfilters";
 
 /////..... 데시보드 입력폼 스타일 시작
 body.dashboard_mode {
@@ -7,8 +6,9 @@ body.dashboard_mode {
 
   .sub_title_area {
     @include flex-option(1, 0, $headerHeight); @include mmheight($headerHeight);
+    padding: 0 0 0 ($admin-margin) / 2;
     //background-color: rgba($color-dark-01, 0.05);
-    &.hide{margin-top: -75px;}
+    &.hide {margin-top: -75px;}
   }
 
 }
@@ -170,6 +170,8 @@ body.dashboard_mode {
   h:25% - .area16
 
   */
+
+
   // 넓이
   &.area01 { & > div {width:100%; &:before {display: none;} } }
   &.area02, &.area04 { & > div {width:50%;} }
@@ -183,7 +185,6 @@ body.dashboard_mode {
   &.area04, &.area06, &.area08 { & > div {min-height:50%; max-height:50%; height:50%;} }
   &.area09 { & > div {height:calc(100% / 3);} }
   &.area12, &.area16, &.area00 { & > div {min-height:25%; height:calc(100% / 3);} }
-
 
   &.area01 {
     .blinker_set {
@@ -207,7 +208,6 @@ body.dashboard_mode {
 
     }
   }
-
   .s_rbox .inout.current_view{
     padding:0 15px;
     h3 {display: block; font-size: 1.5rem; letter-spacing: -0.1rem; color:#ffffff !important;
@@ -222,7 +222,6 @@ body.dashboard_mode {
       }
     }
   }
-
 
   &.area01,&.area04 { .entrance_ico:after {padding:8%;} }
   &.area02 {
@@ -259,7 +258,6 @@ body.dashboard_mode {
     }
 
   }
-
 
   &.area06, &.area09 {
     .treffic_set {@include scale(0.5);}
@@ -322,6 +320,7 @@ body.dashboard_mode {
   &.area08 { .guard_set .s_rbox ul li {min-height:100px; max-height:100px;} }
 
 }
+
 /*
 .watch_area.area04 div:nth-of-type(2):before,.watch_area.area04 div:nth-of-type(4):before{background:none;}
 .watch_area.area06 div:nth-of-type(3):before,.watch_area.area06 div:nth-of-type(6):before{background:none;}
@@ -947,11 +946,10 @@ $ds-sw:50px; // 스크린설정 가로 넓이
 
 /////..... marquee 시작
 .copybox_area, .m_marqueebox {
-  overflow: hidden; position: absolute; left:0; z-index: 1;
+  overflow: hidden; position: absolute; z-index: 1;
   em {letter-spacing: 0;}
   &, & * {color:$color-white-01;}
 }
-
 .m_marqueebox, .copybox {
   display: none;
   &:after {content:""; position: absolute; z-index: -1; top:0; left:0; width:100%; height:100%; opacity: 0.6;}
@@ -977,9 +975,8 @@ $ds-sw:50px; // 스크린설정 가로 넓이
   }
 }
 
-
 .m_marqueebox {
-  bottom:0; width:100%; height:24px; line-height:1.1rem; display: none !important;
+  left:0; bottom:0; width:100%; height:24px; line-height:1.1rem; display: none !important;
   &:before, p {@include flex-midddle; height:100%; }
   &:before {content:"\e946"; position: absolute; z-index: 1; left:0; width:40px; font-size:1.2rem;}
   p {

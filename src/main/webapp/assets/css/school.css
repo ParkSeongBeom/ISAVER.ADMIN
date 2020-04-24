@@ -1,0 +1,1476 @@
+@charset "UTF-8";
+/*
+ @at-root {.class { } } 존속받지 않고 root에 위치
+ */
+/*
+일반, 주의, 경고, 위험 색상단계 정의
+일반 :
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
+*/
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+*/
+/*50px 버튼*/
+/* 40px 버튼 */
+@-webkit-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-moz-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-o-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+/*
+
+// 1.8 대시보드
+::-webkit-scrollbar {width:12px; height:12px;}
+::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
+
+::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-gray-09; }
+} // ex) @include webkit_scroll_dashboard;
+
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4);}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4);}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4);}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4);}
+
+  background-color: $color-bas; color:$color-white-02;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,#000,1); background-color: $color-gray-09;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include dashboard-bg;  백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c !important; @include border01(1px,$color-gray-01,1 ); background-color: #fff;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include admin-bg;  백그라운드 공통
+*/
+[data-title]:after {
+  content: attr(data-title);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  bottom: -40px;
+  height: 35px;
+  padding: 16px 5px 5px 5px;
+  background-image: url("../images/bg/tooltipbg.svg"), url("../images/bg/tooltipboxbg.svg");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 10px, 25px;
+  background-position: calc(100% - 14px) 0, 0 10px;
+  box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8); }
+[data-title]:hover:after {
+  visibility: visible;
+  opacity: 1;
+  bottom: -30px; }
+
+[data-name]:before {
+  content: attr(data-name);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0;
+  line-height: normal;
+  font-size: .9rem;
+  text-shadow: 0 1px 2px transparent;
+  -webkit-text-shadow: 0 1px 2px transparent;
+  -moz-text-shadow: 0 1px 2px transparent; }
+
+[data-content]:after {
+  content: attr(data-content);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0; }
+
+/*
+ @at-root {.class { } } 존속받지 않고 root에 위치
+ */
+/*
+일반, 주의, 경고, 위험 색상단계 정의
+일반 :
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
+*/
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+*/
+/*50px 버튼*/
+/* 40px 버튼 */
+@-webkit-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-moz-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-o-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+/*
+
+// 1.8 대시보드
+::-webkit-scrollbar {width:12px; height:12px;}
+::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
+
+::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-gray-09; }
+} // ex) @include webkit_scroll_dashboard;
+
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4);}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4);}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4);}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4);}
+
+  background-color: $color-bas; color:$color-white-02;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,#000,1); background-color: $color-gray-09;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include dashboard-bg;  백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c !important; @include border01(1px,$color-gray-01,1 ); background-color: #fff;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include admin-bg;  백그라운드 공통
+*/
+[data-title]:after {
+  content: attr(data-title);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  bottom: -40px;
+  height: 35px;
+  padding: 16px 5px 5px 5px;
+  background-image: url("../images/bg/tooltipbg.svg"), url("../images/bg/tooltipboxbg.svg");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 10px, 25px;
+  background-position: calc(100% - 14px) 0, 0 10px;
+  box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8); }
+[data-title]:hover:after {
+  visibility: visible;
+  opacity: 1;
+  bottom: -30px; }
+
+[data-name]:before {
+  content: attr(data-name);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0;
+  line-height: normal;
+  font-size: .9rem;
+  text-shadow: 0 1px 2px transparent;
+  -webkit-text-shadow: 0 1px 2px transparent;
+  -moz-text-shadow: 0 1px 2px transparent; }
+
+[data-content]:after {
+  content: attr(data-content);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0; }
+
+.school-mode main > article > *:not(.popup-layer) {
+  width: 100%; }
+.school-mode main > article > h2 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  flex: 1 0 60px;
+  -webkit-flex: 1 0 60px;
+  flexbox: 1 0 60px;
+  -webkit-box-flex: 0;
+  -ms-flex: 1 0 60px;
+  background-color: #262626; }
+  .school-mode main > article > h2, .school-mode main > article > h2 > h2 {
+    font-size: 1.8rem;
+    letter-spacing: -0.15rem; }
+.school-mode aside.db_area {
+  position: absolute;
+  right: 0;
+  height: 100vh; }
+  .school-mode aside.db_area.on {
+    right: 24px; }
+.school-mode .notice-area {
+  z-index: 601 !important;
+  background-color: #535353; }
+.school-mode .sboard {
+  overflow: hidden;
+  z-index: 5;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  /*max-height:50vh;  */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  -webkit-box-orient: column;
+  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-align: start;
+  -webkit-box-align: start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -moz-box-pack: flex-start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: flex-start;
+  justify-content: flex-start; }
+  .school-mode .sboard > div {
+    overflow: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -moz-box-pack: flex-start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    -webkit-flex: 1;
+    flexbox: 1;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    margin-top: 3px;
+    padding: 0 0 7px 0;
+    background-color: rgba(52, 52, 65, 0.8); }
+    .school-mode .sboard > div:first-of-type {
+      margin: 0; }
+    .school-mode .sboard > div > * {
+      position: relative;
+      width: 100%; }
+    .school-mode .sboard > div > h3 {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: end;
+      -webkit-box-align: end;
+      -moz-box-align: flex-end;
+      -webkit-align-items: flex-end;
+      -ms-flex-align: flex-end;
+      align-items: flex-end;
+      height: 30px !important;
+      min-height: 30px !important;
+      max-height: 30px !important;
+      font-size: 1rem;
+      padding: 0 10px; }
+    .school-mode .sboard > div > section {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      overflow: hidden;
+      height: 100%; }
+      .school-mode .sboard > div > section > div {
+        overflow: hidden;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        -webkit-box-orient: column;
+        -webkit-box-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 1; }
+        .school-mode .sboard > div > section > div, .school-mode .sboard > div > section > div > * {
+          position: relative; }
+        .school-mode .sboard > div > section > div:after {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          box-align: center;
+          -webkit-box-align: center;
+          -moz-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -moz-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          position: relative;
+          width: 70px;
+          height: 28px;
+          font-size: 1rem;
+          color: #fff !important;
+          -moz-border-radius: 500px;
+          -webkit-border-radius: 500px;
+          border-radius: 500px;
+          -khtml-border-radius: 500px; }
+        .school-mode .sboard > div > section > div.now, .school-mode .sboard > div > section > div.now * {
+          color: #74a0f0; }
+        .school-mode .sboard > div > section > div.now:after {
+          content: "현재";
+          background-color: #3e7beb; }
+        .school-mode .sboard > div > section > div.pre, .school-mode .sboard > div > section > div.pre * {
+          color: #a6a7b2; }
+        .school-mode .sboard > div > section > div.pre:after {
+          content: "전일";
+          background-color: #a6a7b2; }
+        .school-mode .sboard > div > section > div p {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          -webkit-box-pack: center;
+          -moz-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          box-align: end;
+          -webkit-box-align: end;
+          -moz-box-align: flex-end;
+          -webkit-align-items: flex-end;
+          -ms-flex-align: flex-end;
+          align-items: flex-end;
+          position: relative;
+          font-size: 2.8rem;
+          font-weight: bold;
+          letter-spacing: -0.1rem; }
+          .school-mode .sboard > div > section > div p:after {
+            content: "명";
+            position: relative;
+            font-size: 1rem;
+            color: #a6a7b2;
+            transform: translate3d(0, -6px, 0);
+            ms-transform: translate3d(0, -6px, 0);
+            -ms-transform: translate3d(0, -6px, 0);
+            -moz-transform: translate3d(0, -6px, 0);
+            -webkit-transform: translate3d(0, -6px, 0);
+            -o-transform: translate3d(0, -6px, 0); }
+        .school-mode .sboard > div > section > div.car > p:after {
+          content: "대" !important; }
+  .school-mode .sboard.left {
+    left: 0; }
+  .school-mode .sboard.right {
+    right: 0; }
+.school-mode .guard_set .s_lbox > div {
+  position: absolute !important; }
+.school-mode .guard_set .s_lbox .check_btn_menu, .school-mode .guard_set .s_lbox .check_btn_set {
+  width: 180px !important;
+  min-width: 180px !important;
+  max-width: 180px !important;
+  left: 25%;
+  margin: 0 0 0 3px; }
+.school-mode .guard_set .s_lbox .check_btn_set {
+  position: absolute !important;
+  bottom: -100%; }
+  .school-mode .guard_set .s_lbox .check_btn_set > div {
+    padding: 0;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important; }
+.school-mode .guard_set .s_lbox .check_btn_menu {
+  height: 50px;
+  padding: 0;
+  bottom: 0; }
+  .school-mode .guard_set .s_lbox .check_btn_menu.on + .check_btn_set {
+    bottom: 50px; }
+.school-mode .guard_set .s_lbox .view_size, .school-mode .guard_set .s_lbox .check_btn_menu, .school-mode .guard_set .s_lbox .check_btn_set {
+  background-color: rgba(0, 0, 0, 0.4); }
+.school-mode .guard_set .s_lbox .view_size, .school-mode .guard_set .s_lbox .copybox_area {
+  right: 25%; }
+.school-mode .guard_set .s_lbox .view_size {
+  -webkit-box-orient: column;
+  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0 3px 0 0; }
+  .school-mode .guard_set .s_lbox .view_size > div button {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important; }
+    .school-mode .guard_set .s_lbox .view_size > div button:before {
+      font-size: 2rem; }
+.school-mode .copybox_area, .school-mode .device_box {
+  position: absolute !important; }
+.school-mode .copybox_area {
+  right: 25%;
+  width: 160px !important;
+  min-width: 160px !important;
+  max-width: 160px !important;
+  z-index: 10;
+  margin: 0 3px 0 0; }
+  .school-mode .copybox_area > div {
+    width: 100%;
+    margin: 3px;
+    margin-bottom: 0; }
+.school-mode .device_box {
+  z-index: 10;
+  background-color: #535353; }
+.school-mode .watch_area, .school-mode .layer-sub {
+  transition: all 700ms cubic-bezier(0.19, 1, 0.22, 1);
+  -moz-transition: all 700ms cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: all 700ms cubic-bezier(0.19, 1, 0.22, 1);
+  -o-transition: all 700ms cubic-bezier(0.19, 1, 0.22, 1);
+  -ms-transition: all 700ms cubic-bezier(0.19, 1, 0.22, 1); }
+.school-mode .watch_area {
+  overflow: hidden;
+  background-color: #262626; }
+  .school-mode .watch_area > h2 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+    flex: 1 0 60px;
+    -webkit-flex: 1 0 60px;
+    flexbox: 1 0 60px;
+    -webkit-box-flex: 0;
+    -ms-flex: 1 0 60px;
+    background-color: #262626; }
+    .school-mode .watch_area > h2, .school-mode .watch_area > h2 > h2 {
+      font-size: 1.8rem;
+      letter-spacing: -0.15rem; }
+  .school-mode .watch_area > div {
+    padding: 0 10px; }
+    .school-mode .watch_area > div:before, .school-mode .watch_area > div:after {
+      display: none; }
+    .school-mode .watch_area > div > header {
+      height: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
+      flex: 1 0 40px;
+      -webkit-flex: 1 0 40px;
+      flexbox: 1 0 40px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 40px;
+      padding: 0;
+      margin: 8px 0;
+      background-color: transparent !important; }
+      .school-mode .watch_area > div > header:before, .school-mode .watch_area > div > header:after {
+        display: none; }
+      .school-mode .watch_area > div > header, .school-mode .watch_area > div > header button {
+        height: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important; }
+      .school-mode .watch_area > div > header button {
+        margin: 0 !important; }
+      .school-mode .watch_area > div > header h3 {
+        font-size: 1.4rem !important; }
+  .school-mode .watch_area.area01 > div, .school-mode .watch_area.area02 > div {
+    width: 100%; }
+  .school-mode .watch_area.area04 > div {
+    width: 50%;
+    padding: 0 3px; }
+  .school-mode .watch_area.area01 > div {
+    height: 100%; }
+  .school-mode .watch_area.area02 > div, .school-mode .watch_area.area04 > div {
+    height: 50% !important;
+    min-height: 50% !important;
+    max-height: 50% !important; }
+  .school-mode .watch_area.area02 .chart-box.o-pie {
+    transform: scale(1.5);
+    ms-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    -o-transform: scale(1.5); }
+  .school-mode .watch_area.area04 > div > header, .school-mode .watch_area.area04 > div > header > h3 {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .school-mode .watch_area.area04 > div > header > h3 {
+    font-size: 1.1rem !important; }
+  .school-mode .watch_area.area04 .now:after, .school-mode .watch_area.area04 .now > p:after, .school-mode .watch_area.area04 .pre:after, .school-mode .watch_area.area04 .pre > p:after {
+    font-size: .9rem; }
+  .school-mode .watch_area.area04 .now:after, .school-mode .watch_area.area04 .pre:after {
+    width: 60px;
+    height: 24px; }
+  .school-mode .watch_area.area04 .now > p, .school-mode .watch_area.area04 .pre > p {
+    font-size: 1.8rem;
+    margin: 0 0 10px 0; }
+  .school-mode .watch_area.area04 .chart-box.o-pie {
+    transform: scale(1.2);
+    ms-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2); }
+
+.layer-sub {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  -webkit-box-orient: column;
+  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: absolute;
+  z-index: 90;
+  transform: translate3d(0, 100%, 0);
+  ms-transform: translate3d(0, 100%, 0);
+  -ms-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  -webkit-transform: translate3d(0, 100%, 0);
+  -o-transform: translate3d(0, 100%, 0);
+  width: 100%;
+  top: 40px;
+  bottom: 0;
+  background-color: rgba(38, 38, 38, 0.9); }
+  .layer-sub.on {
+    transform: translate3d(0, 0, 0);
+    ms-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0); }
+  .layer-sub > * {
+    position: relative;
+    width: 100%; }
+  .layer-sub > header {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+    flex: 1 0 60px;
+    -webkit-flex: 1 0 60px;
+    flexbox: 1 0 60px;
+    -webkit-box-flex: 0;
+    -ms-flex: 1 0 60px;
+    background-color: #262626;
+    height: 70px !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
+    flex: 1 0 70px;
+    -webkit-flex: 1 0 70px;
+    flexbox: 1 0 70px;
+    -webkit-box-flex: 0;
+    -ms-flex: 1 0 70px;
+    background-color: transparent !important; }
+    .layer-sub > header, .layer-sub > header > h2 {
+      font-size: 1.8rem;
+      letter-spacing: -0.15rem; }
+    .layer-sub > header h2 {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center; }
+    .layer-sub > header button {
+      z-index: 1;
+      font-size: 1rem;
+      position: relative;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      min-width: 50px;
+      height: 50px !important;
+      min-height: 50px !important;
+      max-height: 50px !important; }
+      .layer-sub > header button, .layer-sub > header button:before, .layer-sub > header button:after {
+        color: #f5f5f5;
+        transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -moz-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
+        -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
+      .layer-sub > header button:after {
+        background-color: #2c2c2c; }
+        .layer-sub > header button:after:before {
+          content: "";
+          position: relative;
+          z-index: -1;
+          font-size: 1.5rem !important;
+          font-weight: normal; }
+      .layer-sub > header button:hover:after {
+        background-color: #32a0be !important;
+        opacity: 1 !important; }
+      .layer-sub > header button:active:after {
+        background-color: #00af9b !important;
+        opacity: 1 !important; }
+      .layer-sub > header button.on:after {
+        background-color: #b42d6e !important;
+        opacity: 1 !important; }
+      .layer-sub > header button > * {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        min-width: 80px;
+        height: 100%;
+        padding: 0 10px 0 0;
+        color: #fff !important;
+        background-color: transparent !important; }
+      .layer-sub > header button:after, .layer-sub > header button:before {
+        content: "";
+        top: 0;
+        left: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center; }
+      .layer-sub > header button:before {
+        position: relative;
+        font-size: 1.5rem !important;
+        font-weight: normal; }
+      .layer-sub > header button:after {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100%; }
+      .layer-sub > header button:before {
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important; }
+      .layer-sub > header button:before {
+        content: "\e91a"; }
+      .layer-sub > header button.save_btn:before {
+        content: "\e98e";
+        /* @include mmwidth( $btn-type03 * 2);*/ }
+      .layer-sub > header button.save_btn:after {
+        background-color: #ef8116; }
+      .layer-sub > header button.close_btn:before {
+        content: "\e91a"; }
+  .layer-sub > section, .layer-sub .sboard-sub {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    height: 100%;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%; }
+    .layer-sub > section *, .layer-sub .sboard-sub * {
+      position: relative; }
+    .layer-sub > section > *, .layer-sub .sboard-sub > * {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      -webkit-box-orient: column;
+      -webkit-box-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      flex: 2;
+      -webkit-flex: 2;
+      flexbox: 2;
+      -webkit-box-flex: 2;
+      -ms-flex: 2;
+      height: 100%; }
+      .layer-sub > section > *:nth-of-type(2), .layer-sub .sboard-sub > *:nth-of-type(2) {
+        flex: 1;
+        -webkit-flex: 1;
+        flexbox: 1;
+        -webkit-box-flex: 1;
+        -ms-flex: 1; }
+        .layer-sub > section > *:nth-of-type(2) .chart-box:before, .layer-sub > section > *:nth-of-type(2) .chart-box:after, .layer-sub .sboard-sub > *:nth-of-type(2) .chart-box:before, .layer-sub .sboard-sub > *:nth-of-type(2) .chart-box:after {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          box-align: center;
+          -webkit-box-align: center;
+          -moz-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -moz-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          opacity: 0.7; }
+        .layer-sub > section > *:nth-of-type(2) .chart-box:before, .layer-sub .sboard-sub > *:nth-of-type(2) .chart-box:before {
+          top: 15%;
+          font-size: 1.5rem; }
+        .layer-sub > section > *:nth-of-type(2) .chart-box:after, .layer-sub .sboard-sub > *:nth-of-type(2) .chart-box:after {
+          top: 50%;
+          margin-top: 70px;
+          font-weight: bold;
+          font-size: 2rem; }
+        .layer-sub > section > *:nth-of-type(2) .chart-box:after, .layer-sub .sboard-sub > *:nth-of-type(2) .chart-box:after {
+          content: "Km/h"; }
+      .layer-sub > section > * > *, .layer-sub .sboard-sub > * > * {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        -webkit-box-orient: column;
+        -webkit-box-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        height: 50%;
+        padding: 0 10px 10px 10px; }
+        .layer-sub > section > * > * > *, .layer-sub .sboard-sub > * > * > * {
+          width: 100%;
+          height: 100%;
+          flex: 0 1 100%;
+          -webkit-flex: 0 1 100%;
+          flexbox: 0 1 100%;
+          -webkit-box-flex: 1;
+          -ms-flex: 0 1 100%; }
+        .layer-sub > section > * > * > h3, .layer-sub .sboard-sub > * > * > h3 {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box;
+          box-align: center;
+          -webkit-box-align: center;
+          -moz-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -moz-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          flex: 1 0 40px;
+          -webkit-flex: 1 0 40px;
+          flexbox: 1 0 40px;
+          -webkit-box-flex: 0;
+          -ms-flex: 1 0 40px;
+          height: 40px !important;
+          min-height: 40px !important;
+          max-height: 40px !important;
+          font-size: 1.4rem !important;
+          padding: 0 10px;
+          background-color: #535353; }
+        .layer-sub > section > * > * > section, .layer-sub > section > * > * > section > *, .layer-sub .sboard-sub > * > * > section, .layer-sub .sboard-sub > * > * > section > * {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          display: flexbox;
+          display: box; }
+        .layer-sub > section > * > * > section > *, .layer-sub .sboard-sub > * > * > section > * {
+          -webkit-box-orient: column;
+          -webkit-box-direction: column;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column; }
+
+.board-number {
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  flex: 1 0 200px;
+  -webkit-flex: 1 0 200px;
+  flexbox: 1 0 200px;
+  -webkit-box-flex: 0;
+  -ms-flex: 1 0 200px;
+  padding: 3px 3px 0 0; }
+  .board-number > div {
+    overflow: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    background-color: #343441; }
+    .board-number > div, .board-number > div > * {
+      position: relative; }
+    .board-number > div:after {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      position: relative;
+      width: 70px;
+      height: 28px;
+      font-size: 1rem;
+      color: #fff !important;
+      -moz-border-radius: 500px;
+      -webkit-border-radius: 500px;
+      border-radius: 500px;
+      -khtml-border-radius: 500px; }
+    .board-number > div.now, .board-number > div.now * {
+      color: #74a0f0; }
+    .board-number > div.now:after {
+      content: "현재";
+      background-color: #3e7beb; }
+    .board-number > div.pre, .board-number > div.pre * {
+      color: #a6a7b2; }
+    .board-number > div.pre:after {
+      content: "전일";
+      background-color: #a6a7b2; }
+    .board-number > div p {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      box-align: end;
+      -webkit-box-align: end;
+      -moz-box-align: flex-end;
+      -webkit-align-items: flex-end;
+      -ms-flex-align: flex-end;
+      align-items: flex-end;
+      position: relative;
+      font-size: 2.8rem;
+      font-weight: bold;
+      letter-spacing: -0.1rem; }
+      .board-number > div p:after {
+        content: "명";
+        position: relative;
+        font-size: 1rem;
+        color: #a6a7b2;
+        transform: translate3d(0, -6px, 0);
+        ms-transform: translate3d(0, -6px, 0);
+        -ms-transform: translate3d(0, -6px, 0);
+        -moz-transform: translate3d(0, -6px, 0);
+        -webkit-transform: translate3d(0, -6px, 0);
+        -o-transform: translate3d(0, -6px, 0); }
+    .board-number > div.car > p:after {
+      content: "대" !important; }
+    .board-number > div:after {
+      order: 1; }
+    .board-number > div p {
+      order: 2;
+      width: 180px; }
+      .board-number > div p:before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        width: 100%;
+        height: 80px;
+        border-style: solid;
+        border-width: 1px; }
+      .board-number > div p.pre:before {
+        border-color: #a6a7b2; }
+      .board-number > div p.now:before {
+        border-color: #74a0f0; }
+.board-chart {
+  flex: 0 1 100%;
+  -webkit-flex: 0 1 100%;
+  flexbox: 0 1 100%;
+  -webkit-box-flex: 1;
+  -ms-flex: 0 1 100%; }
+  .board-chart > * {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    -webkit-box-orient: column;
+    -webkit-box-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%;
+    padding: 3px 0 0 0; }
+    .board-chart > * > * {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      width: 100%;
+      background-color: #343441; }
+      .board-chart > * > *:first-of-type {
+        height: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        flex: 1 0 40px;
+        -webkit-flex: 1 0 40px;
+        flexbox: 1 0 40px;
+        -webkit-box-flex: 0;
+        -ms-flex: 1 0 40px;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -moz-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0 10px; }
+        .board-chart > * > *:first-of-type h4 {
+          white-space: nowrap; }
+      .board-chart > * > *:nth-of-type(2) {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
+        padding: 10px 0 0 0; }
+
+.chart-box {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .chart-box, .chart-box > div {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+  .chart-box > p {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: absolute !important;
+    z-index: 1;
+    top: 50%;
+    margin-top: -35%;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    font-size: 1.5rem; }
+  .chart-box.o-pie .sector_one, .chart-box.o-pie .sector_two, .chart-box.o-pie .sector_three, .chart-box.o-pie .sector_four {
+    display: none; }
+  .chart-box.o-pie path {
+    /*&.sector_one {fill:#EE462C;} &.sector_two {fill:#f48803} &.sector_three {fill:#c0ba22} &.sector_four {fill:#32965d}*/ }
+    .chart-box.o-pie path.backarc {
+      fill: #fff9e1; }
+  .chart-box.o-pie.average path.reference {
+    fill: #2cffca; }
+  .chart-box.o-pie.max path.reference {
+    fill: #f44132; }
+  .chart-box.o-pie .neddle {
+    fill: #85868a;
+    /*stroke:black; stroke-width:0.01em;*/ }
+  .chart-box.o-pie .gauge-texto {
+    fill: #ff8373;
+    display: none; }
+    .chart-box.o-pie .gauge-texto.center-value {
+      display: inline-block !important; }
+  .chart-box.o-pie .center-value, .chart-box.o-pie .gauge-texto, .chart-box.o-pie .subtitle {
+    font-size: 1em; }
+  .chart-box.o-line svg, .chart-box.o-line g {
+    font-size: 1rem !important; }
+  .chart-box.o-line .small-copy {
+    font-size: 1rem !important; }
+  .chart-box svg {
+    position: absolute !important;
+    width: 100%;
+    height: 100%; }
+    .chart-box svg path {
+      width: 100%; }
+      .chart-box svg path.path-color {
+        stroke-width: 2px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill-opacity: .1; }
+        .chart-box svg path.path-color.line_contents_0 {
+          stroke: #795547;
+          fill: #795547; }
+        .chart-box svg path.path-color.line_contents_1 {
+          stroke: #ff8a64;
+          fill: #ff8a64; }
+        .chart-box svg path.path-color.line_contents_2 {
+          stroke: #27777f;
+          fill: #27777f; }
+        .chart-box svg path.path-color.line_contents_3 {
+          stroke: #f15151;
+          fill: #f15151; }
+        .chart-box svg path.path-color.line_contents_4 {
+          stroke: #4baf4f;
+          fill: #4baf4f; }
+        .chart-box svg path.path-color.line_contents_5 {
+          stroke: #313fa0;
+          fill: #313fa0; }
+        .chart-box svg path.path-color.line_contents_6 {
+          stroke: #757575;
+          fill: #757575; }
+        .chart-box svg path.path-color.line_contents_7 {
+          stroke: #03a9f4;
+          fill: #03a9f4; }
+        .chart-box svg path.path-color.line_contents_8 {
+          stroke: #ff4083;
+          fill: #ff4083; }
+        .chart-box svg path.path-color.line_contents_9 {
+          stroke: #ffab40;
+          fill: #ffab40; }
+        .chart-box svg path.path-color.line_contents_10 {
+          stroke: #3949ab;
+          fill: #3949ab; }
+        .chart-box svg path.path-color.line_contents_11 {
+          stroke: #64dc18;
+          fill: #64dc18; }
+        .chart-box svg path.path-color.line_contents_12 {
+          stroke: #4cb050;
+          fill: #4cb050; }
+        .chart-box svg path.path-color.line_contents_13 {
+          stroke: #f54337;
+          fill: #f54337; }
+        .chart-box svg path.path-color.line_contents_14 {
+          stroke: #1f6f9d;
+          fill: #1f6f9d; }
+        .chart-box svg path.path-color.line_contents_15 {
+          stroke: #03a9f5;
+          fill: #03a9f5; }
+        .chart-box svg path.path-color.line_contents_16 {
+          stroke: #974c2e;
+          fill: #974c2e; }
+        .chart-box svg path.path-color.line_contents_17 {
+          stroke: #a900fd;
+          fill: #a900fd; }
+        .chart-box svg path.path-color.line_contents_18 {
+          stroke: #3f51b5;
+          fill: #3f51b5; }
+        .chart-box svg path.path-color.line_contents_19 {
+          stroke: #8b0000;
+          fill: #8b0000; }
+
+/*# sourceMappingURL=school.css.map */

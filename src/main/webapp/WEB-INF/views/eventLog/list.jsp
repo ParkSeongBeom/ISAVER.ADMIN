@@ -33,6 +33,15 @@
                     <span><spring:message code="eventlog.column.deviceCode" /></span>
                     <isaver:codeSelectBox groupCodeId="DEV" codeId="${paramBean.deviceCode}" htmlTagName="deviceCode" allModel="true" allText="${allSelectText}"/>
                 </p>
+                <p class="itype_01">
+                    <span><spring:message code="eventlog.column.eventName" /></span>
+                    <select name="eventId">
+                        <option value=""><spring:message code="common.selectbox.select"/></option>
+                        <c:forEach var="event" items="${eventList}">
+                            <option value="${event.eventId}" <c:if test="${paramBean.eventId==event.eventId}">selected="selected"</c:if>>${event.eventName}</option>
+                        </c:forEach>
+                    </select>
+                </p>
                 <p class="itype_04">
                     <span><spring:message code="eventlog.column.eventDatetime" /></span>
                     <span class="plable04">

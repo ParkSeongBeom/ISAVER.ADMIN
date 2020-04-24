@@ -108,6 +108,24 @@ public class NotificationSvcImpl implements NotificationSvc {
     }
 
     @Override
+    public ModelAndView findListNotificationForSchool(Map<String, String> parameters) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        parameters.put("startDatetime",sdf.format(cal.getTime()));
+        List<NotificationBean> todayList = notificationDao.findListNotificationForSchool(parameters);
+
+        cal.add(Calendar.DATE,-1);
+        parameters.put("startDatetime",sdf.format(cal.getTime()));
+        List<NotificationBean> preList = notificationDao.findListNotificationForSchool(parameters);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("todayList", todayList);
+        modelAndView.addObject("preList", preList);
+        modelAndView.addObject("paramBean",parameters);
+        return modelAndView;
+    }
+
+    @Override
     public ModelAndView saveNotification(Map<String, String> parameters) {
         String[] paramData = parameters.get("paramData").split(CommonResource.COMMA_STRING);
 

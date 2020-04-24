@@ -80,6 +80,20 @@ public class NotificationCtrl {
         return modelAndView;
     }
 
+    /**
+     * 알림센터 목록을 가져온다. (스쿨존)
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST, RequestMethod.GET}, value="/school")
+    public ModelAndView findListNotificationForSchool(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, String> parameters){
+        ModelAndView modelAndView = notificationSvc.findListNotificationForSchool(parameters);
+        return modelAndView;
+    }
+
     private final static String[] saveNotificationParam = new String[]{"paramData","actionType"};
 
     /**

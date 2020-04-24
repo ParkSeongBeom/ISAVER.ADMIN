@@ -248,6 +248,7 @@ public class AdminResource {
             put("map","FTA002"); // Map파일
             put("video","FTA003"); // Video파일
             put("icon","FTA004"); // Icon파일
+            put("logo","FTA005"); // Logo파일
         }
     };
 

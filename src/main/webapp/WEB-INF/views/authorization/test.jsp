@@ -253,7 +253,7 @@
                         <select area eventType="guardIn">
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
-                                <c:if test="${area.templateCode == 'TMP005'}">
+                                <c:if test="${area.templateCode == 'TMP005' or area.templateCode == 'TMP012'}">
                                     <option value="${area.areaId}">${area.areaName}</option>
                                 </c:if>
                             </c:forEach>
@@ -284,7 +284,7 @@
                         <select area eventType="guardOut">
                             <option value="">감시구역선택</option>
                             <c:forEach items="${areaList}" var="area">
-                                <c:if test="${area.templateCode == 'TMP005'}">
+                                <c:if test="${area.templateCode == 'TMP005' or area.templateCode == 'TMP012'}">
                                     <option value="${area.areaId}">${area.areaName}</option>
                                 </c:if>
                             </c:forEach>

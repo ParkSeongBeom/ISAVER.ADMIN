@@ -49,6 +49,7 @@ var CustomMapMediator = (
         };
         var _angleCss = ['deg10','deg15','deg20','deg25','deg30','deg35','deg40','deg45','deg50'];
         let _mouseDownInterval = 0;
+        let _enableCookies = false;
         var _options = {
             'element' : {
                 'draggable': true // 드래그 기능
@@ -250,14 +251,16 @@ var CustomMapMediator = (
         this.init = function(areaId,options){
             _areaId = areaId;
 
-            let cookies = $.cookie(_areaId);
-            if(cookies!=null) {
-                cookies = JSON.parse(cookies);
-                for(var index in cookies){
-                    if(_options[_MARKER_TYPE[2]].hasOwnProperty(index)){
-                        _options[_MARKER_TYPE[2]][index] = cookies[index];
-                    }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(index)){
-                        _options[_MARKER_TYPE[4]][index] = cookies[index];
+            if(_enableCookies){
+                let cookies = $.cookie(_areaId);
+                if(cookies!=null) {
+                    cookies = JSON.parse(cookies);
+                    for(var index in cookies){
+                        if(_options[_MARKER_TYPE[2]].hasOwnProperty(index)){
+                            _options[_MARKER_TYPE[2]][index] = cookies[index];
+                        }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(index)){
+                            _options[_MARKER_TYPE[4]][index] = cookies[index];
+                        }
                     }
                 }
             }
@@ -313,6 +316,8 @@ var CustomMapMediator = (
                         // Fix for zoom
                         ui.position.top = evt.pageY - (canvasOffset.top / _scale) - pointerY;
                         ui.position.left = evt.pageX - (canvasOffset.left / _scale) - pointerX;
+                    }
+                    ,stop : function(){
                         savePosition();
                     }
                 });
@@ -388,34 +393,36 @@ var CustomMapMediator = (
         };
 
         var loadPosition = function(){
-            let cookies = $.cookie(_areaId);
-            if(cookies!=null) {
-                for(var index in cookies){
-                    if(index=='mapCanvas'){
-                        let mapCanvas = cookies[index];
-                        for (var k in mapCanvas){
-                            switch (k){
-                                case "top":
-                                    _top = mapCanvas[k];
-                                    break;
-                                case "left":
-                                    _left = mapCanvas[k];
-                                    break;
-                                case "originX":
-                                    _originX = eval(mapCanvas[k]);
-                                    break;
-                                case "originY":
-                                    _originY = eval(mapCanvas[k]);
-                                    break;
-                                case "translateX":
-                                    _translateX = eval(mapCanvas[k]);
-                                    break;
-                                case "translateY":
-                                    _translateY = eval(mapCanvas[k]);
-                                    break;
-                                case "scale":
-                                    _scale = eval(mapCanvas[k]);
-                                    break;
+            if(_enableCookies){
+                let cookies = $.cookie(_areaId);
+                if(cookies!=null) {
+                    for(var index in cookies){
+                        if(index=='mapCanvas'){
+                            let mapCanvas = cookies[index];
+                            for (var k in mapCanvas){
+                                switch (k){
+                                    case "top":
+                                        _top = mapCanvas[k];
+                                        break;
+                                    case "left":
+                                        _left = mapCanvas[k];
+                                        break;
+                                    case "originX":
+                                        _originX = eval(mapCanvas[k]);
+                                        break;
+                                    case "originY":
+                                        _originY = eval(mapCanvas[k]);
+                                        break;
+                                    case "translateX":
+                                        _translateX = eval(mapCanvas[k]);
+                                        break;
+                                    case "translateY":
+                                        _translateY = eval(mapCanvas[k]);
+                                        break;
+                                    case "scale":
+                                        _scale = eval(mapCanvas[k]);
+                                        break;
+                                }
                             }
                         }
                     }
@@ -424,7 +431,7 @@ var CustomMapMediator = (
         };
 
         var savePosition = function(){
-            if(_options['element']['lastPositionSaveFlag']){
+            if(_enableCookies && _options['element']['lastPositionSaveFlag']){
                 let cookies = $.cookie(_areaId);
                 if(cookies!=null) {
                     cookies = JSON.parse(cookies);
@@ -517,17 +524,20 @@ var CustomMapMediator = (
          * @author psb
          */
         this.setGuardOption = function(actionType, flag){
-            let cookies = $.cookie(_areaId);
-            if(cookies!=null){
-                cookies = JSON.parse(cookies);
-                cookies[actionType] = flag;
+            if(_options[_MARKER_TYPE[2]].hasOwnProperty(actionType)){
+                _options[_MARKER_TYPE[2]][actionType] = flag;
+            }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(actionType)){
+                _options[_MARKER_TYPE[4]][actionType] = flag;
+            }
+            console.log(_options[_MARKER_TYPE[4]]);
 
-                if(_options[_MARKER_TYPE[2]].hasOwnProperty(actionType)){
-                    _options[_MARKER_TYPE[2]][actionType] = flag;
-                }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(actionType)){
-                    _options[_MARKER_TYPE[4]][actionType] = flag;
+            if(_enableCookies){
+                let cookies = $.cookie(_areaId);
+                if(cookies!=null){
+                    cookies = JSON.parse(cookies);
+                    cookies[actionType] = flag;
+                    $.cookie(_areaId,JSON.stringify(cookies));
                 }
-                $.cookie(_areaId,JSON.stringify(cookies));
             }
 
             switch (actionType){
@@ -569,7 +579,7 @@ var CustomMapMediator = (
                         _canvasSvg = svg;
                         let defs = _canvasSvg.defs();
                         for(let i in _OBJECT_TYPE){
-                            let marker = _canvasSvg.marker(defs,_OBJECT_TYPE[i],10,18,6,6,"0");
+                            let marker = _canvasSvg.marker(defs,_areaId+_OBJECT_TYPE[i],10,18,6,6,"0");
                             if(_trackingScale[_options[_MARKER_TYPE[4]]['trackingScale']]!=null){
                                 for(var k in _trackingScale[_options[_MARKER_TYPE[4]]['trackingScale']]){
                                     let config = _trackingScale[_options[_MARKER_TYPE[4]]['trackingScale']][k];
@@ -948,6 +958,7 @@ var CustomMapMediator = (
                                     ,'uuid' : data['uuid']
                                     ,'deviceId' : data['deviceId']
                                     ,'fenceType' : data['fenceType']
+                                    ,'fenceSubType' : data['fenceSubType']
                                     ,'zMin' : (data['zMin']?data['zMin']:0)
                                     ,'config' : (data['config']?data['config']:null)
                                     ,'fenceId' : data['id']
@@ -1129,13 +1140,13 @@ var CustomMapMediator = (
                             element = _marker[messageType][data['deviceId']][data['id']]['element'];
 
                             if(element.hasClass("level-"+criticalCss['LEV003'])){
-                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV003)");
+                                element.attr("marker-end","url(#"+_areaId+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV003)");
                             }else if(element.hasClass("level-"+criticalCss['LEV002'])){
-                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV002)");
+                                element.attr("marker-end","url(#"+_areaId+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV002)");
                             }else if(element.hasClass("level-"+criticalCss['LEV001'])){
-                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV001)");
+                                element.attr("marker-end","url(#"+_areaId+_OBJECT_TYPE_CUSTOM[data['objectType']]+"-LEV001)");
                             }else{
-                                element.attr("marker-end","url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")");
+                                element.attr("marker-end","url(#"+_areaId+_OBJECT_TYPE_CUSTOM[data['objectType']]+")");
                             }
                             element.attr("points",points.join(" "));
                         }else{
@@ -1163,7 +1174,7 @@ var CustomMapMediator = (
                                     }
                                 }
                             }
-                            const polyline = _canvasSvg.polyline(polylinePoints,{'objectId':data['id'],'marker-end':"url(#"+_OBJECT_TYPE_CUSTOM[data['objectType']]+")"});
+                            const polyline = _canvasSvg.polyline(polylinePoints,{'objectId':data['id'],'marker-end':"url(#"+_areaId+_OBJECT_TYPE_CUSTOM[data['objectType']]+")"});
                             element = $(polyline);
                             element.addClass(_targetClass[messageType]);
                             _marker[messageType][data['deviceId']][data['id']] = {
@@ -1646,13 +1657,13 @@ var CustomMapMediator = (
                     }
 
                     if(objectMarker['element'].hasClass("level-"+criticalCss['LEV003'])){
-                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV003)");
+                        objectMarker['element'].attr("marker-end","url(#"+_areaId+customObjectType+"-LEV003)");
                     }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV002'])){
-                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV002)");
+                        objectMarker['element'].attr("marker-end","url(#"+_areaId+customObjectType+"-LEV002)");
                     }else if(objectMarker['element'].hasClass("level-"+criticalCss['LEV001'])){
-                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+"-LEV001)");
+                        objectMarker['element'].attr("marker-end","url(#"+_areaId+customObjectType+"-LEV001)");
                     }else{
-                        objectMarker['element'].attr("marker-end","url(#"+customObjectType+")");
+                        objectMarker['element'].attr("marker-end","url(#"+_areaId+customObjectType+")");
                     }
                 }else{
                     console.debug("[CustomMapMediator][setAnimate] not found object marker - objectId : " + data['objectId']);

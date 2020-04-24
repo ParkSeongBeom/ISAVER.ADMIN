@@ -456,6 +456,15 @@
             background-color: #ef8116; }
           .popupbase > div > div > header button.close_btn:before {
             content: "\e91a"; }
+          .popupbase > div > div > header button:before {
+            content: "\e91a"; }
+          .popupbase > div > div > header button.save_btn:before {
+            content: "\e98e";
+            /* @include mmwidth( $btn-type03 * 2);*/ }
+          .popupbase > div > div > header button.save_btn:after {
+            background-color: #ef8116; }
+          .popupbase > div > div > header button.close_btn:before {
+            content: "\e91a"; }
         .popupbase > div > div > header:before {
           display: none !important; }
       .popupbase > div > div > article {
@@ -1122,8 +1131,8 @@
   display: none;
   position: fixed;
   z-index: 13;
-  top: 30px;
-  right: 135px;
+  top: 70px;
+  right: 24px;
   width: 240px; }
   .toast_popup.on {
     display: block; }
@@ -2491,14 +2500,20 @@
             -webkit-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
             -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
             -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
-          .map_sett_box .controls > div .direction_set button:after, .map_sett_box .controls > div .direction_set button:before {
+          .map_sett_box .controls > div .direction_set button:after:before, .map_sett_box .controls > div .direction_set button:before:before {
+            content: "";
+            position: relative;
+            z-index: -1;
+            font-size: 1.5rem !important;
+            font-weight: normal; }
+          .map_sett_box .controls > div .direction_set button:before {
             background-color: transparent; }
-            .map_sett_box .controls > div .direction_set button:after:before, .map_sett_box .controls > div .direction_set button:before:before {
-              content: "";
-              position: relative;
-              z-index: -1;
-              font-size: 1.5rem !important;
-              font-weight: normal; }
+          .map_sett_box .controls > div .direction_set button:nth-of-type(3n + 1):after {
+            background-color: rgba(0, 0, 0, 0.1); }
+          .map_sett_box .controls > div .direction_set button:nth-of-type(2n):after {
+            background-color: rgba(0, 0, 0, 0.15); }
+          .map_sett_box .controls > div .direction_set button:nth-of-type(3n):after {
+            background-color: rgba(0, 0, 0, 0.2); }
           .map_sett_box .controls > div .direction_set button:hover:after {
             background-color: rgba(0, 0, 0, 0.4) !important; }
           .map_sett_box .controls > div .direction_set button:active:after {

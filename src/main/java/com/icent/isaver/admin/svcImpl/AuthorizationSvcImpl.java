@@ -5,6 +5,7 @@ import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.bean.LoginHistoryBean;
 import com.icent.isaver.admin.bean.UsersBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
+import com.icent.isaver.admin.dao.FileDao;
 import com.icent.isaver.admin.dao.LoginHistoryDao;
 import com.icent.isaver.admin.dao.UsersDao;
 import com.icent.isaver.admin.resource.AdminResource;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
 import java.util.Map;
 
 /**
@@ -51,8 +53,17 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
     @Value("${cnf.server.majorVersion}")
     private String majorVersion = null;
 
+    @Value("${cnf.fileAddress}")
+    private String fileAddress = null;
+
+    @Value("${cnf.fileAttachedUploadPath}")
+    private String fileAttachedUploadPath = null;
+
     @Inject
     private UsersDao usersDao;
+
+    @Inject
+    private FileDao fileDao;
 
     @Inject
     private LoginHistoryDao loginHistoryDao;
@@ -68,6 +79,13 @@ public class AuthorizationSvcImpl implements AuthorizationSvc {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("license", haspLicenseUtil.login());
         modelAndView.addObject("majorVersion", majorVersion);
+        try{
+            InetAddress address = InetAddress.getByName(fileAddress);
+            modelAndView.addObject("fileUploadPath", "http://" + address.getHostAddress() + fileAttachedUploadPath);
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
+        modelAndView.addObject("logoFile",fileDao.findByFileByLogo());
         return modelAndView;
     }
 

@@ -44,7 +44,7 @@ var ResourceHelper = (
         var eventHandlerBind = function(){
             $("select[name='templateCode']").on("change",function(){
                 // 템플릿이 guard이고 수정모드에서만 Map설정 팝업 버튼 활성화
-                if(($(this).val()=='TMP005'||$(this).val()=='TMP010') && $("input[name='areaId']").val()!=""){
+                if(($(this).val()=='TMP005'||$(this).val()=='TMP010'||$(this).val()=='TMP012') && $("input[name='areaId']").val()!=""){
                     $(".map_sett_btn").show();
                 }else{
                     $(".map_sett_btn").hide();

@@ -7,10 +7,16 @@
 <c:set value="100000" var="menuId"/>
 <c:set value="100000" var="subMenuId"/>
 
+<link href="${rootPath}/assets/css/school.css?version=${version}" rel="stylesheet" type="text/css" />
+<link href="${rootPath}/assets/library/d3/pointer.css?version=${version}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/dashboard-helper.js?version=${version}"></script>
 <script src="${rootPath}/assets/library/tree/jquery.dynatree.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svg.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/svg/jquery.svgdom.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/d3/d3.min.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/d3/SpeedMeter.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/d3/MultiBar.js?version=${version}" type="text/javascript" ></script>
+<script src="${rootPath}/assets/library/d3/MultiLine.js?version=${version}" type="text/javascript" ></script>
 
 <div class="sub_title_area">
     <h3>
@@ -39,6 +45,11 @@
         <label></label>
         <span><spring:message code="dashboard.column.notificationShowOnly"/></span>
     </div>
+
+    <!-- CI, LOGO 삽입레이어 -->
+    <c:if test="${logoFile!=null}">
+        <div class="ci-box" style="background-image: url(${fileUploadPath}${logoFile.physicalFileName})"></div>
+    </c:if>
 
     <%--<div class="expl">--%>
         <%--<c:forEach var="critical" items="${criticalList}">--%>
@@ -87,7 +98,7 @@
             TMP004 : Detector
             TMP005 : Safe-Guard
             TMP008 : 화장실재실
-            TMP010 : Smart Farm
+            TMP012 : School Zone
             -->
             <c:forEach var="childArea" items="${childAreas}">
                 <c:if test="${childArea.templateCode=='TMP001'}">
@@ -96,7 +107,7 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -139,7 +150,7 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -175,9 +186,11 @@
                     <div class="type-list">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <button class="refl_btn" onclick="dashboardHelper.resetGap($(this).parent().parent(),true);" title="All Reset"></button>
+                            <button class="refl_btn" onclick="dashboardHelper.resetGap($(this).parent().parent(),false);" title="Gap Reset"></button>
                             <button class="ioset" title="진출입 설정" onclick="javascript:openInoutConfigListPopup('${childArea.areaId}'); return false;"></button>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -292,7 +305,7 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -345,7 +358,7 @@
                             <h3>${childArea.areaName}</h3>
                             <button class="refl_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','safeGuard'); return false;" title="<spring:message code='resource.title.serverSync'/>"></button>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -386,6 +399,15 @@
                                         </div>
                                     </div>
                                     <div name="map-canvas" class="map_images"></div>
+                                    <!-- s : 화면 사이즈 플러스 마이너스 메뉴 -->
+                                    <div class="view_size on" title="Zoom">
+                                        <div class="view_plus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomIn');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                        <div class="view_minus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomOut');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                    </div>
                                     <div name="copyboxElement" class="copybox_area"></div>
                                 </div>
                                 <div class="s_rbox">
@@ -428,7 +450,7 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -484,13 +506,13 @@
                     </div>
                 </c:if>
 
-                <c:if test="${childArea.templateCode=='TMP010'}">
+                <c:if test="${childArea.templateCode=='TMP011'}">
                     <!-- Farm -->
                     <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -503,6 +525,15 @@
                             <section class="guard_set">
                                 <div class="s_lbox">
                                     <div name="map-canvas" class="map_images"></div>
+                                    <!-- s : 화면 사이즈 플러스 마이너스 메뉴 -->
+                                    <div class="view_size on" title="Zoom">
+                                        <div class="view_plus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomIn');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                        <div class="view_minus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomOut');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="s_rbox">
                                     <ul ptzPlayers></ul>
@@ -544,7 +575,7 @@
                         <header>
                             <h3>${childArea.areaName}</h3>
                             <!-- 구역 하나로 확장 area -->
-                            <button class="one-screen" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
                             <c:if test="${childArea.childAreaIds!=null}">
                                 <!-- 구역에 구역이 존재할 때 area -->
                                 <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
@@ -574,10 +605,349 @@
                         </article>
                     </div>
                 </c:if>
+
+                <c:if test="${childArea.templateCode=='TMP012'}">
+                    <!-- Safe-Guard -->
+                    <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
+                        <header>
+                            <h3>${childArea.areaName}</h3>
+                            <button class="refl_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','safeGuard'); return false;" title="<spring:message code='resource.title.serverSync'/>"></button>
+                            <!-- 구역 하나로 확장 area -->
+                            <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
+                            <button class="ico-zoom" onclick="javascript:dashboardHelper.openSchoolPopup('${childArea.areaId}'); return false;" title="<spring:message code='dashboard.title.detail'/>"></button>
+                            <c:if test="${childArea.childAreaIds!=null}">
+                                <!-- 구역에 구역이 존재할 때 area -->
+                                <button class="area" childAreaIds="${childArea.childAreaIds}" onclick="javascript:moveDashboard('${childArea.areaId}'); return false;" title="AREA VIEW"></button>
+                            </c:if>
+                            <c:if test="${childArea.devices!=null and fn:length(childArea.devices) > 0}">
+                                <button class="device_view" title="Device Status" onClick="javascript:openDeviceList(this);"></button>
+                            </c:if>
+                        </header>
+                        <article>
+                            <section class="guard_set">
+                                <div class="s_lbox">
+                                    <!-- s : 좌측 감시 보드 -->
+                                    <div class="sboard left">
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.crossing'/></h3>
+                                            <section name="crossing">
+                                                <div class="now"><p name="now">0</p></div>
+                                                <div class="pre"><p name="pre">0</p></div>
+                                            </section>
+                                        </div>
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.vehicleTraffic'/></h3>
+                                            <section name="vehicleTraffic">
+                                                <div class="now car"><p name="now">0</p></div>
+                                                <div class="pre car"><p name="pre">0</p></div>
+                                            </section>
+                                        </div>
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.vehicleSpeedAverage'/> km/h</h3>
+                                            <section name="vehicleSpeedAverage">
+                                                <div class="chart-box o-pie average" name="avg"></div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                    <!-- s : 우측 감시 보드 -->
+                                    <div class="sboard right">
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.trespassers'/></h3>
+                                            <section name="trespassers">
+                                                <div class="now"><p name="now">0</p></div>
+                                                <div class="pre"><p name="pre">0</p></div>
+                                            </section>
+                                        </div>
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.speedingVehicleTraffic'/></h3>
+                                            <section name="speedingVehicleTraffic">
+                                                <div class="now car"><p name="now">0</p></div>
+                                                <div class="pre car"><p name="pre">0</p></div>
+                                            </section>
+                                        </div>
+                                        <div>
+                                            <h3><spring:message code='dashboard.title.vehicleSpeedMax'/> km/h</h3>
+                                            <section name="vehicleSpeedMax">
+                                                <div class="chart-box o-pie max" name="max"></div>
+                                            </section>
+                                        </div>
+                                    </div>
+
+                                    <!-- s : VIEW OPTION 버튼 -->
+                                    <button class="check_btn_menu" title="VIEW OPTION" onclick="javascript:$(this).toggleClass('on');">
+                                        <input type="checkbox" name="">
+                                        <label></label>
+                                    </button>
+
+                                    <!-- s : VIEW OPTION 메뉴 -->
+                                    <div class="check_btn_set">
+                                        <div class="tracking_scale" name="trackingScale" onClick="javascript:dashboardHelper.setGuardOption('trackingScale','${childArea.areaId}',this);"></div>
+                                        <div class="ignore_check">
+                                            <input type="checkbox" name="ignoreCkb" onClick="javascript:dashboardHelper.setGuardOption('ignoreHide','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
+                                        <div class="range_check">
+                                            <input type="checkbox" name="lidarCkb" onClick="javascript:dashboardHelper.setGuardOption('lidarHide','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
+                                        <div class="human_check">
+                                            <input type="checkbox" name="humanCkb" onClick="javascript:dashboardHelper.setGuardOption('humanOnly','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
+                                        <div class="object_check">
+                                            <input type="checkbox" name="pointsCkb" onClick="javascript:dashboardHelper.setGuardOption('pointsHide','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
+                                        <div class="fence_check">
+                                            <input type="checkbox" name="moveFenceCkb" onClick="javascript:dashboardHelper.setGuardOption('moveFenceHide','${childArea.areaId}',this);">
+                                            <label></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- s : 화면 사이즈 플러스 마이너스 메뉴 -->
+                                    <div class="view_size on" title="Zoom">
+                                        <div class="view_plus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomIn');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                        <div class="view_minus">
+                                            <button href="#" onclick="dashboardHelper.startZoomControl('${childArea.areaId}','zoomOut');" onmouseup="dashboardHelper.stopZoomControl('${childArea.areaId}');" onmouseout="dashboardHelper.stopZoomControl('${childArea.areaId}');"></button>
+                                        </div>
+                                    </div>
+
+                                    <div name="copyboxElement" class="copybox_area"></div>
+
+                                    <div class="device_box">
+                                        <div class="device_set">
+                                            <c:forEach var="device" items="${childArea.devices}">
+                                                <div deviceId="${device.deviceId}" class='${deviceCodeCss[device.deviceCode]}<c:if test="${device.deviceStat=='N'}"> level-die</c:if>'
+                                                     data-device-id="${device.deviceId}"
+                                                     data-device-code="${device.deviceCode}"
+                                                     data-ip-address="${device.ipAddress}"
+                                                     data-port="${device.port}"
+                                                     data-device-user-id="${device.deviceUserId}"
+                                                     data-device-password="${device.devicePassword}"
+                                                     data-sub-url="${device.subUrl}"
+                                                     data-link-url="${device.linkUrl}"
+                                                     data-stream-server-url="${device.streamServerUrl}"
+                                                     data-device-stat="${device.deviceStat}"
+                                                     data-device-name="${device.deviceName}"
+                                                        >
+                                                    <p>${device.deviceName}</p>
+                                                    <p></p>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+
+                                    <!-- s : MAP 영역 -->
+                                    <div name="map-canvas" class="map_images map_move"></div>
+                                </div>
+                            </section>
+                            <div class="m_marqueebox">
+                                <!-- <span>에 내용 삽입 -->
+                                <p messageBox></p>
+                            </div>
+                        </article>
+                    </div>
+                </c:if>
             </c:forEach>
         </c:when>
     </c:choose>
 </section>
+
+<!-- s : 상세 팝업 레이어 -->
+<article class="layer-sub">
+    <header>
+        <h2 name="areaName"></h2>
+        <button onclick="dashboardHelper.closeSchoolPopup(); return false;"></button>
+    </header>
+    <section class="sboard-sub">
+        <!-- s : left -->
+        <div>
+            <div>
+                <!-- s : 타이틀 -->
+                <h3><spring:message code='dashboard.title.crossing'/></h3>
+                <!-- s : 컨텐츠 박스 -->
+                <section name="crossing">
+                    <!-- s : 수치 영역 -->
+                    <div class="board-number">
+                        <!-- s : 전일 -->
+                        <div class="pre">
+                            <p name="pre">0</p>
+                        </div>
+                        <!-- s : 현재 -->
+                        <div class="now">
+                            <p name="now">0</p>
+                        </div>
+                    </div>
+                    <!-- s : 차트 영역 -->
+                    <div class="board-chart">
+                        <!-- s : bar chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.comparePrevDay'/></h4>
+                                <div class="expl-sub">
+                                    <span><spring:message code='dashboard.title.prevDay'/></span>
+                                    <span><spring:message code='dashboard.title.now'/></span>
+                                </div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-bar" name="barChart"></div>
+                        </div>
+                        <!-- s : Line chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.compareFence'/></h4>
+                                <div class="expl-sub zone" name="fenceTitle"></div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-line" name="lineChart"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div>
+                <!-- s : 타이틀 -->
+                <h3><spring:message code='dashboard.title.vehicleTraffic'/></h3>
+                <!-- s : 컨텐츠 박스 -->
+                <section name="vehicleTraffic">
+                    <!-- s : 수치 영역 -->
+                    <div class="board-number">
+                        <!-- s : 전일 -->
+                        <div class="pre">
+                            <p name="pre">0</p>
+                        </div>
+                        <!-- s : 현재 -->
+                        <div class="now">
+                            <p name="now">0</p>
+                        </div>
+                    </div>
+                    <!-- s : 차트 영역 -->
+                    <div class="board-chart">
+                        <!-- s : bar chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.comparePrevDay'/></h4>
+                                <div class="expl-sub">
+                                    <span><spring:message code='dashboard.title.prevDay'/></span>
+                                    <span><spring:message code='dashboard.title.now'/></span>
+                                </div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-bar" name="barChart"></div>
+                        </div>
+                        <!-- s : Line chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.compareFence'/></h4>
+                                <div class="expl-sub zone" name="fenceTitle"></div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-line" name="lineChart"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!-- s : center -->
+        <div>
+            <div class="chart-box o-pie max" id="schoolPopupMaxEl">
+                <p><spring:message code='dashboard.title.vehicleSpeedMax'/></p>
+            </div>
+            <div class="chart-box o-pie average" id="schoolPopupAvgEl">
+                <p><spring:message code='dashboard.title.vehicleSpeedAverage'/></p>
+            </div>
+        </div>
+        <!-- s : right -->
+        <div>
+            <div>
+                <!-- s : 타이틀 -->
+                <h3><spring:message code='dashboard.title.trespassers'/></h3>
+                <!-- s : 컨텐츠 박스 -->
+                <section name="trespassers">
+                    <!-- s : 수치 영역 -->
+                    <div class="board-number">
+                        <!-- s : 전일 -->
+                        <div class="pre">
+                            <p name="pre">0</p>
+                        </div>
+                        <!-- s : 현재 -->
+                        <div class="now">
+                            <p name="now">0</p>
+                        </div>
+                    </div>
+                    <!-- s : 차트 영역 -->
+                    <div class="board-chart">
+                        <!-- s : bar chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.comparePrevDay'/></h4>
+                                <div class="expl-sub">
+                                    <span><spring:message code='dashboard.title.prevDay'/></span>
+                                    <span><spring:message code='dashboard.title.now'/></span>
+                                </div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-bar" name="barChart"></div>
+                        </div>
+                        <!-- s : Line chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.compareFence'/></h4>
+                                <div class="expl-sub zone" name="fenceTitle"></div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-line" name="lineChart"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <!-- s : 타이틀 -->
+                <h3><spring:message code='dashboard.title.speedingVehicleTraffic'/></h3>
+                <!-- s : 컨텐츠 박스 -->
+                <section name="speedingVehicleTraffic">
+                    <!-- s : 수치 영역 -->
+                    <div class="board-number">
+                        <!-- s : 전일 -->
+                        <div class="pre">
+                            <p name="pre">0</p>
+                        </div>
+                        <!-- s : 현재 -->
+                        <div class="now">
+                            <p name="now">0</p>
+                        </div>
+                    </div>
+                    <!-- s : 차트 영역 -->
+                    <div class="board-chart">
+                        <!-- s : bar chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.comparePrevDay'/></h4>
+                                <div class="expl-sub">
+                                    <span><spring:message code='dashboard.title.prevDay'/></span>
+                                    <span><spring:message code='dashboard.title.now'/></span>
+                                </div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-bar" name="barChart"></div>
+                        </div>
+                        <!-- s : Line chart -->
+                        <div>
+                            <div>
+                                <h4><spring:message code='dashboard.title.compareFence'/></h4>
+                                <div class="expl-sub zone" name="fenceTitle"></div>
+                            </div>
+                            <!-- s : 차트 박스 -->
+                            <div class="chart-box o-line" name="lineChart"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</article>
 
 <section class="popup-layer">
     <div class="popupbase iocount_popup">
@@ -724,6 +1094,7 @@
 </c:if>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/map-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/custom-map-mediator.js?version=${version}"></script>
+<script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/school-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/toilet-room-mediator.js?version=${version}"></script>
 <script type="text/javascript" src="${rootPath}/assets/js/page/dashboard/analysis-mediator.js?version=${version}"></script>
 
@@ -767,6 +1138,7 @@
 
     var messageConfig = {
         inoutListFailure  :'<spring:message code="dashboard.message.inoutFailure"/>'
+        , schoolZoneTitle : '<spring:message code="dashboard.title.schoolZone"/>'
         , inoutConfigListFailure  :'<spring:message code="dashboard.message.inoutConfigListFailure"/>'
         , inoutConfigDuplication : '<spring:message code="dashboard.message.inoutConfigDuplication"/>'
         , inoutConfigEmptyArea : '<spring:message code="dashboard.message.inoutConfigEmptyArea"/>'
@@ -787,6 +1159,13 @@
 //        for(var key in criticalCss){
 //            modifyElementClass($(".treffic_set div[criticalLevel='"+key+"']"),"ts-"+criticalCss[key],'add');
 //        }
+        modifyElementClass($("html"),'admin_mode','remove');
+        modifyElementClass($("body"),'admin_mode','remove');
+        modifyElementClass($("html"),'dashboard_mode','add');
+        modifyElementClass($("body"),'dashboard_mode','add');
+        modifyElementClass($("body"),'dark_mode','add');
+        dashboardFlag = true;
+
 
         // 조회주기 체크 제어
         $(".iotime_set .checkbox_set > input[type='checkbox']").click(function(){

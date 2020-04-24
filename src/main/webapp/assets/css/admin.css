@@ -9,6 +9,209 @@
 경고 : 주황  $color-orange-01  level-warning
 위험 : 빨강  $color-red-01     level-danger
 */
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+*/
+/*50px 버튼*/
+/* 40px 버튼 */
+@-webkit-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-moz-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@-o-keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+@keyframes radar {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  50% {
+    opacity: 1;
+    width: 10px;
+    height: 10px; }
+  100% {
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    border-width: 1px; } }
+/*
+
+// 1.8 대시보드
+::-webkit-scrollbar {width:12px; height:12px;}
+::-webkit-scrollbar-thumb {background-clip: content-box; border-width:1px; border-style:solid;}
+
+::-webkit-scrollbar-thumb:hover  {background-color: $color-ho !important;}
+::-webkit-scrollbar-thumb:active {background-color: $color-ac !important;}
+
+@mixin webkit_scroll_dashboard {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-gray-09;}
+  ::-webkit-scrollbar-thumb {background-color: $color-bas; border-color:$color-gray-09; }
+} // ex) @include webkit_scroll_dashboard;
+
+@mixin webkit_scroll_admin {
+  ::-webkit-scrollbar, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {background-color: $color-white-01;}
+  ::-webkit-scrollbar-thumb {background-color: $color-gray-03; border-color:$color-white-01; }
+} // ex) @include webkit_scroll_admin
+
+@mixin dashboard-bg {
+  ::-webkit-input-placeholder     {color:rgba($color-white-01, 0.4);}
+  ::-moz-placeholder              {color:rgba($color-white-01, 0.4);}
+  :-ms-input-placeholder          {color:rgba($color-white-01, 0.4);}
+  :-moz-placeholder               {color:rgba($color-white-01, 0.4);}
+
+  background-color: $color-bas; color:$color-white-02;
+  input, textarea, select, div[contenteditable] {
+    color:$color-white-01 !important; @include border01(1px,#000,1); background-color: $color-gray-09;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_w.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include dashboard-bg;  백그라운드 공통
+@mixin admin-bg {
+  ::-webkit-input-placeholder     {color:rgba(0, 0, 0, 0.4);}
+  ::-moz-placeholder              {color:rgba(0, 0, 0, 0.4);}
+  :-ms-input-placeholder          {color:rgba(0, 0, 0, 0.4);}
+  :-moz-placeholder               {color:rgba(0, 0, 0, 0.4);}
+
+  background-color: $color-adm; color:#3c3c3c;
+  input, textarea, select, div[contenteditable] {
+    color:#3c3c3c !important; @include border01(1px,$color-gray-01,1 ); background-color: #fff;
+  }
+  select,input[type="date"] {background-image: url(../images/ico/select_allow_b.svg) !important;}
+  @include webkit_scroll_dashboard;
+} //ex) @include admin-bg;  백그라운드 공통
+*/
+[data-title]:after {
+  content: attr(data-title);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  bottom: -40px;
+  height: 35px;
+  padding: 16px 5px 5px 5px;
+  background-image: url("../images/bg/tooltipbg.svg"), url("../images/bg/tooltipboxbg.svg");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 10px, 25px;
+  background-position: calc(100% - 14px) 0, 0 10px;
+  box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0px 12px 15px -7px rgba(0, 0, 0, 0.8); }
+[data-title]:hover:after {
+  visibility: visible;
+  opacity: 1;
+  bottom: -30px; }
+
+[data-name]:before {
+  content: attr(data-name);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0;
+  line-height: normal;
+  font-size: .9rem;
+  text-shadow: 0 1px 2px transparent;
+  -webkit-text-shadow: 0 1px 2px transparent;
+  -moz-text-shadow: 0 1px 2px transparent; }
+
+[data-content]:after {
+  content: attr(data-content);
+  visibility: visible;
+  position: relative;
+  letter-spacing: 0; }
+
+/*
+ @at-root {.class { } } 존속받지 않고 root에 위치
+ */
+/*
+일반, 주의, 경고, 위험 색상단계 정의
+일반 :
+주의 : 회색  $color-gray-03    level-caution
+경고 : 주황  $color-orange-01  level-warning
+위험 : 빨강  $color-red-01     level-danger
+*/
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+*/
 /*50px 버튼*/
 /* 40px 버튼 */
 @-webkit-keyframes radar {
@@ -207,7 +410,7 @@ body.admin_mode {
     min-height: 70px !important;
     max-height: 70px !important;
     margin: 0;
-    padding: 0 30px; }
+    padding: 0 0 0 30px; }
     body.admin_mode .sub_title_area .navigation {
       display: inline-block;
       margin: 0 0 0 30px;
@@ -3063,13 +3266,14 @@ ul.u_defalut {
       content: "\e927"; }
 
 .tree_table {
+  overflow: hidden !important;
   position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
   bottom: 0;
   width: 400px !important;
-  height: auto; }
+  height: 100%; }
   .tree_table:before {
     content: "";
     position: absolute;
@@ -3244,6 +3448,7 @@ ul.u_defalut {
     .tree_table .tree_box .dynatree-lastsib > ul > li:before {
       display: none !important; }
   .tree_table .table_contents {
+    overflow: hidden;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -3257,11 +3462,17 @@ ul.u_defalut {
     -ms-flex-direction: column;
     flex-direction: column;
     height: 100%;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%;
     padding: 0 !important; }
     .tree_table .table_contents > * {
       width: 100%; }
     .tree_table .table_contents .tree_tab_set {
       overflow: auto;
+      position: relative;
       height: 100%; }
       .tree_table .table_contents .tree_tab_set > * {
         padding: 15px 30px; }
@@ -4021,7 +4232,7 @@ a.fc-more {
   height: 40px !important;
   min-height: 40px !important;
   max-height: 40px !important;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
   font-weight: bold;
   font-size: 1.6rem; }
 .flex-area-w h5, .flex-area-h h5 {
@@ -4126,23 +4337,27 @@ a.fc-more {
         height: 100%; }
     .flex-area-w > * > * {
       width: 100%; }
-  .flex-area-w .box-list, .flex-area-w .box-detail {
-    flex: 1 0 20%;
-    -webkit-flex: 1 0 20%;
-    flexbox: 1 0 20%;
+  .flex-area-w .box-list:before, .flex-area-w .box-detail:before {
+    content: "";
+    position: absolute;
+    background-color: rgba(76, 76, 76, 0.15);
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 1px;
+    height: 100%; }
+  .flex-area-w .box-list {
+    width: 20% !important;
+    min-width: 20% !important;
+    max-width: 20% !important; }
+  .flex-area-w .box-detail {
+    flex: 1 0 450px;
+    -webkit-flex: 1 0 450px;
+    flexbox: 1 0 450px;
     -webkit-box-flex: 0;
-    -ms-flex: 1 0 20%; }
-    .flex-area-w .box-list:before, .flex-area-w .box-detail:before {
-      content: "";
-      position: absolute;
-      background-color: rgba(76, 76, 76, 0.15);
-      z-index: 1;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: auto;
-      width: 1px;
-      height: 100%; }
+    -ms-flex: 1 0 450px; }
   .flex-area-w .box-chart {
     display: -webkit-box;
     display: -moz-box;
@@ -4204,7 +4419,222 @@ a.fc-more {
         display: block;
         text-align: center;
         padding: 0 0 30px 0; }
-  .flex-area-w.eventStatistics .box-detail, .flex-area-w.eventStatistics .box-chart {
+  .flex-area-w .box-ctbox {
+    position: relative;
+    width: 100%;
+    flex: 0 1 100%;
+    -webkit-flex: 0 1 100%;
+    flexbox: 0 1 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 0 1 100%; }
+    .flex-area-w .box-ctbox > * {
+      position: relative;
+      width: 100%;
+      padding-right: 30px;
+      padding-left: 30px; }
+    .flex-area-w .box-ctbox > header {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      margin: 25px 0 15px 0;
+      flex: 1 0 60px;
+      -webkit-flex: 1 0 60px;
+      flexbox: 1 0 60px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 60px;
+      height: 60px !important;
+      min-height: 60px !important;
+      max-height: 60px !important; }
+      .flex-area-w .box-ctbox > header > h4 {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
+        font-size: 1.4rem; }
+      .flex-area-w .box-ctbox > header > button {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: end;
+        -moz-box-pack: flex-end;
+        -webkit-justify-content: flex-end;
+        -ms-flex-pack: flex-end;
+        justify-content: flex-end;
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+        height: 40px; }
+        .flex-area-w .box-ctbox > header > button:before {
+          font-size: 1.5rem; }
+        .flex-area-w .box-ctbox > header > button:after {
+          padding: 0 0 0 10px; }
+        .flex-area-w .box-ctbox > header > button.ico-excel:after {
+          content: "EXCEL 저장"; }
+        .flex-area-w .box-ctbox > header > button.ico-pdf:after {
+          content: "PDF 저장"; }
+        .flex-area-w .box-ctbox > header > button:hover:before, .flex-area-w .box-ctbox > header > button:hover:after {
+          color: #32a0be; }
+    .flex-area-w .box-ctbox > article {
+      overflow: overlay; }
+    .flex-area-w .box-ctbox .chart-table > header, .flex-area-w .box-ctbox .chart-canvas > header {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      flex: 1 0 60px;
+      -webkit-flex: 1 0 60px;
+      flexbox: 1 0 60px;
+      -webkit-box-flex: 0;
+      -ms-flex: 1 0 60px;
+      height: 60px !important;
+      min-height: 60px !important;
+      max-height: 60px !important; }
+      .flex-area-w .box-ctbox .chart-table > header > h4, .flex-area-w .box-ctbox .chart-canvas > header > h4 {
+        flex: 0 1 100%;
+        -webkit-flex: 0 1 100%;
+        flexbox: 0 1 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 0 1 100%;
+        font-size: 1.2rem; }
+      .flex-area-w .box-ctbox .chart-table > header > button, .flex-area-w .box-ctbox .chart-canvas > header > button {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: end;
+        -moz-box-pack: flex-end;
+        -webkit-justify-content: flex-end;
+        -ms-flex-pack: flex-end;
+        justify-content: flex-end;
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+        height: 40px; }
+        .flex-area-w .box-ctbox .chart-table > header > button:before, .flex-area-w .box-ctbox .chart-canvas > header > button:before {
+          font-size: 1.5rem; }
+        .flex-area-w .box-ctbox .chart-table > header > button:after, .flex-area-w .box-ctbox .chart-canvas > header > button:after {
+          padding: 0 0 0 10px; }
+        .flex-area-w .box-ctbox .chart-table > header > button.ico-excel:after, .flex-area-w .box-ctbox .chart-canvas > header > button.ico-excel:after {
+          content: "EXCEL 저장"; }
+        .flex-area-w .box-ctbox .chart-table > header > button.ico-pdf:after, .flex-area-w .box-ctbox .chart-canvas > header > button.ico-pdf:after {
+          content: "PDF 저장"; }
+        .flex-area-w .box-ctbox .chart-table > header > button:hover:before, .flex-area-w .box-ctbox .chart-table > header > button:hover:after, .flex-area-w .box-ctbox .chart-canvas > header > button:hover:before, .flex-area-w .box-ctbox .chart-canvas > header > button:hover:after {
+          color: #32a0be; }
+      .flex-area-w .box-ctbox .chart-table > header > input, .flex-area-w .box-ctbox .chart-canvas > header > input {
+        min-width: 35%;
+        margin: 0 0 0 10px; }
+    .flex-area-w .box-ctbox .chart-table .d_defalut .d_thead {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      width: auto; }
+      .flex-area-w .box-ctbox .chart-table .d_defalut .d_thead > * {
+        max-width: 140px; }
+    .flex-area-w .box-ctbox .chart-table .d_defalut .d_tbody {
+      overflow-x: overlay; }
+    .flex-area-w .box-ctbox .chart-table .d_defalut > div > div > * {
+      overflow: hidden;
+      display: inline-block;
+      padding-top: 7px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: normal;
+      min-width: 40px;
+      height: 35px !important;
+      min-height: 35px !important;
+      max-height: 35px !important;
+      font-size: 0.85rem; }
+    .flex-area-w .box-ctbox .chart-canvas {
+      background-color: #fff;
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(169, 169, 169, 0.5);
+      margin: 0 0 15px 0; }
+      .flex-area-w .box-ctbox .chart-canvas > * {
+        position: relative;
+        width: 100%;
+        overflow: hidden; }
+      .flex-area-w .box-ctbox .chart-canvas .expl-sub {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: end;
+        -moz-box-pack: flex-end;
+        -webkit-justify-content: flex-end;
+        -ms-flex-pack: flex-end;
+        justify-content: flex-end;
+        position: relative;
+        width: 100%;
+        height: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        padding: 0 10px; }
+        .flex-area-w .box-ctbox .chart-canvas .expl-sub + * {
+          height: 400px !important;
+          min-height: 400px !important;
+          max-height: 400px !important; }
+          .flex-area-w .box-ctbox .chart-canvas .expl-sub + * > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 15px; }
+  .flex-area-w.eventStatistics .box-detail, .flex-area-w.eventStatistics .box-chart, .flex-area-w.eventStatistics .box-ctbox {
     width: 0;
     flex: 0 0 0;
     -webkit-flex: 0 0 0;
@@ -4212,20 +4642,22 @@ a.fc-more {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 0; }
   .flex-area-w.eventStatistics .box-detail.on {
-    width: 400px;
-    flex: 1 0 400px;
-    -webkit-flex: 1 0 400px;
-    flexbox: 1 0 400px;
+    width: 450px !important;
+    min-width: 450px !important;
+    max-width: 450px !important;
+    flex: 1 0 450px;
+    -webkit-flex: 1 0 450px;
+    flexbox: 1 0 450px;
     -webkit-box-flex: 0;
-    -ms-flex: 1 0 400px; }
-  .flex-area-w.eventStatistics .box-chart.on {
+    -ms-flex: 1 0 450px; }
+  .flex-area-w.eventStatistics .box-ctbox.on, .flex-area-w.eventStatistics .box-chart.on {
     width: 100%;
     flex: 0 1 100%;
     -webkit-flex: 0 1 100%;
     flexbox: 0 1 100%;
     -webkit-box-flex: 1;
     -ms-flex: 0 1 100%; }
-    .flex-area-w.eventStatistics .box-chart.on + .box-ment, .flex-area-w.eventStatistics .box-chart.on ~ .box-ment {
+    .flex-area-w.eventStatistics .box-ctbox.on + .box-ment, .flex-area-w.eventStatistics .box-ctbox.on ~ .box-ment, .flex-area-w.eventStatistics .box-chart.on + .box-ment, .flex-area-w.eventStatistics .box-chart.on ~ .box-ment {
       width: 0;
       flex: 0 0 0;
       -webkit-flex: 0 0 0;
@@ -4936,12 +5368,12 @@ a.fc-more {
         min-height: 40px !important;
         max-height: 40px !important; }
       .set-itembox > button.ico-open:before {
-        transform: rotate(180deg);
-        ms-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -webkit-transform: rotate(180deg);
-        -o-transform: rotate(180deg); }
+        transform: rotate(0deg);
+        ms-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg); }
       .set-itembox > button.ico-open:after {
         opacity: 0.4; }
       .set-itembox > button.ico-open ~ div {
@@ -4953,12 +5385,12 @@ a.fc-more {
         -o-transform: scaleY(0);
         height: 0; }
       .set-itembox > button.ico-open.on:before {
-        transform: rotate(0deg);
-        ms-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        -o-transform: rotate(0deg); }
+        transform: rotate(180deg);
+        ms-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -o-transform: rotate(180deg); }
       .set-itembox > button.ico-open.on ~ div {
         transform: scaleY(1);
         ms-transform: scaleY(1);
@@ -5012,8 +5444,7 @@ a.fc-more {
     -o-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
     -ms-transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1); }
     .set-item button:not(.ui-datepicker-trigger) {
-      z-index: 1;
-      font-size: 1rem;
+      /*@include btn-itype01b; @include mhwidth($btn-type01);  &:before {font-size:1.1rem !important;}*/
       position: relative;
       display: -webkit-box;
       display: -moz-box;
@@ -5034,15 +5465,46 @@ a.fc-more {
       -ms-flex-pack: center;
       justify-content: center;
       min-width: 40px;
-      height: 40px !important;
-      min-height: 40px !important;
-      max-height: 40px !important;
       width: 40px !important;
       min-width: 40px !important;
       max-width: 40px !important;
       height: 40px !important;
       min-height: 40px !important;
-      max-height: 40px !important; }
+      max-height: 40px !important;
+      z-index: 1; }
+      .set-item button:not(.ui-datepicker-trigger):before, .set-item button:not(.ui-datepicker-trigger):after {
+        content: "";
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 26px !important;
+        min-width: 26px !important;
+        max-width: 26px !important;
+        height: 26px !important;
+        min-height: 26px !important;
+        max-height: 26px !important;
+        font-size: 0.8rem; }
+      .set-item button:not(.ui-datepicker-trigger):before {
+        position: relative;
+        font-weight: normal; }
+      .set-item button:not(.ui-datepicker-trigger):after {
+        position: absolute;
+        z-index: -1; }
       .set-item button:not(.ui-datepicker-trigger), .set-item button:not(.ui-datepicker-trigger):before, .set-item button:not(.ui-datepicker-trigger):after {
         color: #f5f5f5;
         transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -5067,70 +5529,15 @@ a.fc-more {
       .set-item button:not(.ui-datepicker-trigger).on:after {
         background-color: #b42d6e !important;
         opacity: 1 !important; }
-      .set-item button:not(.ui-datepicker-trigger) > * {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        box-align: center;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        min-width: 80px;
-        height: 100%;
-        padding: 0 10px 0 0;
-        color: #fff !important;
-        background-color: transparent !important; }
-      .set-item button:not(.ui-datepicker-trigger):after, .set-item button:not(.ui-datepicker-trigger):before {
-        content: "";
-        top: 0;
-        left: 0;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        display: flexbox;
-        display: box;
-        box-align: center;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center; }
-      .set-item button:not(.ui-datepicker-trigger):before {
-        position: relative;
-        font-size: 1.5rem !important;
-        font-weight: normal; }
-      .set-item button:not(.ui-datepicker-trigger):after {
-        position: absolute;
-        z-index: -1;
-        width: 100%;
-        height: 100%; }
-      .set-item button:not(.ui-datepicker-trigger):before {
-        width: 40px !important;
-        min-width: 40px !important;
-        max-width: 40px !important;
-        height: 40px !important;
-        min-height: 40px !important;
-        max-height: 40px !important; }
-      .set-item button:not(.ui-datepicker-trigger):before {
-        font-size: 1.1rem !important; }
+      .set-item button:not(.ui-datepicker-trigger), .set-item button:not(.ui-datepicker-trigger):after {
+        -moz-border-radius: 500px;
+        -webkit-border-radius: 500px;
+        border-radius: 500px;
+        -khtml-border-radius: 500px; }
+      .set-item button:not(.ui-datepicker-trigger).ico-plus:after {
+        background-color: #be1e1e; }
+      .set-item button:not(.ui-datepicker-trigger).ico-close:after {
+        background-color: #259dcf; }
     .set-item input.datepicker {
       flex: 2;
       -webkit-flex: 2;
@@ -5155,11 +5562,11 @@ a.fc-more {
       .set-item select ~ button, .set-item input ~ button {
         margin: 0; }
       .set-item select ~ select, .set-item select ~ input, .set-item input ~ select, .set-item input ~ input {
-        border-left-color: transparent !important; }
+        border-left-color: transparent; }
         .set-item select ~ select:active, .set-item select ~ input:active, .set-item input ~ select:active, .set-item input ~ input:active {
           border-left-color: #ff8400 !important; }
         .set-item select ~ select:focus, .set-item select ~ input:focus, .set-item input ~ select:focus, .set-item input ~ input:focus {
-          border-left-color: #109dcb !important; }
+          border-left-color: #31a1a2 !important; }
     .set-item:before {
       content: "";
       position: absolute;
@@ -5217,11 +5624,94 @@ a.fc-more {
       -moz-box-align: flex-start;
       -webkit-align-items: flex-start;
       -ms-flex-align: flex-start;
-      align-items: flex-start; }
-      .set-item > div button:not(.ui-datepicker-trigger):after {
-        opacity: 0.5; }
+      align-items: flex-start;
+      /*button:not(.ui-datepicker-trigger):after {opacity: 0.5;}*/ }
+      .set-item > div.type01 {
+        -webkit-box-orient: column;
+        -webkit-box-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: start;
+        -moz-box-pack: flex-start;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: flex-start;
+        justify-content: flex-start;
+        box-align: start;
+        -webkit-box-align: start;
+        -moz-box-align: flex-start;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: flex-start;
+        align-items: flex-start;
+        background-color: #fff;
+        border-style: solid;
+        border-width: 1px;
+        border-color: darkgray; }
     .set-item .dpk_select_type > .ui-datepicker {
       width: 100%; }
+  .set-column {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    width: 100%;
+    padding: 10px 0 0 0; }
+    .set-column > * {
+      flex: 0 1 100%;
+      -webkit-flex: 0 1 100%;
+      flexbox: 0 1 100%;
+      -webkit-box-flex: 1;
+      -ms-flex: 0 1 100%;
+      padding: 0 10px 0 0; }
+      .set-column > *:nth-child(1) {
+        min-width: 90px;
+        padding-left: 10px; }
+      .set-column > *:nth-child(2) {
+        min-width: 135px; }
+      .set-column > *:nth-child(3) {
+        /*padding-right:10px;*/ }
+      .set-column > * > * {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        display: flexbox;
+        display: box;
+        box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 100%;
+        min-height: 40px;
+        margin-bottom: 10px; }
+      .set-column > * .csl_style07 {
+        padding: 0 !important; }
+    .set-column .csl_style07 > * {
+      margin-bottom: 0 !important; }
+    .set-column > p {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      display: flexbox;
+      display: box;
+      box-align: center;
+      -webkit-box-align: center;
+      -moz-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      font-size: 0.9rem;
+      opacity: 0.7; }
+      .set-column > p:nth-child(1) {
+        padding-left: 10px; }
   .set-area {
     overflow: auto;
     position: relative;
@@ -5268,7 +5758,7 @@ a.fc-more {
     .set-chart .canvas-chart {
       position: relative;
       width: 100%;
-      /*min-width: 60vw;*/
+      min-width: 60vw;
       height: 100%;
       padding-bottom: 30px; }
       .set-chart .canvas-chart svg {
@@ -5510,7 +6000,7 @@ a.fc-more {
       z-index: 1;
       top: 0;
       right: 0;
-      width: 340px;
+      width: 400px;
       background-color: #b42d6e;
       box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
       -webkit-box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.8);
@@ -5544,6 +6034,32 @@ a.fc-more {
         display: box; }
       .set-option .set-itembox * {
         color: #fff; }
+
+.selectbox-type01 select, .selectbox-type01 input {
+  border-left-color: #a9a9a9 !important; }
+.selectbox-type01 > * {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: flexbox;
+  display: box;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .selectbox-type01 > * select:nth-of-type(1), .selectbox-type01 > * input:nth-of-type(1) {
+    order: 1; }
+  .selectbox-type01 > * select:nth-of-type(2), .selectbox-type01 > * input:nth-of-type(2) {
+    order: 3; }
+  .selectbox-type01 > *:before {
+    content: "~";
+    order: 2; }
+.selectbox-type01.bnone > *:before {
+  display: none; }
 
 .excel {
   /*

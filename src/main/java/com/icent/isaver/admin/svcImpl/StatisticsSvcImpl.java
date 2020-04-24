@@ -4,9 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.icent.isaver.admin.common.resource.IsaverException;
-import com.icent.isaver.admin.dao.EventStatisticsDao;
-import com.icent.isaver.admin.dao.FenceDao;
-import com.icent.isaver.admin.dao.StatisticsDao;
+import com.icent.isaver.admin.dao.*;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.StatisticsSvc;
 import com.icent.isaver.admin.util.AdminHelper;
@@ -21,6 +19,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.BsonField;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -65,6 +64,12 @@ public class StatisticsSvcImpl implements StatisticsSvc {
     private FenceDao fenceDao;
 
     @Inject
+    private AreaDao areaDao;
+
+    @Inject
+    private EventDao eventDao;
+
+    @Inject
     private MongoDatabase mongoDatabase;
 
     @Override
@@ -74,6 +79,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
             modelAndView.addObject("statisticsList",statisticsDao.findListStatistics());
         }else{
             modelAndView.addObject("fenceList",fenceDao.findListFenceForAll());
+            modelAndView.addObject("eventList",eventDao.findListEvent(null));
         }
         return modelAndView;
     }
@@ -115,60 +121,170 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                     break;
             }
 
-            // y축
-            JsonArray yAxisArr = (JsonArray) jsonObj.get("yAxis");
-            for(int i=0;i<yAxisArr.size();i++){
-                JsonObject yAxis = (JsonObject) yAxisArr.get(i);
-                // group by
-                String aggregation = yAxis.get("aggregation").getAsString();
-                String field = yAxis.get("field").getAsString();
-                String label = yAxis.get("label").getAsString();
-                String index = yAxis.get("index").getAsString();
+            // 사용자정의
+            if(parameters.get("template").equals("custom")){
+                // y축
+                JsonArray yAxisArr = (JsonArray) jsonObj.get("yAxis");
+                for(int i=0;i<yAxisArr.size();i++){
+                    JsonObject yAxis = (JsonObject) yAxisArr.get(i);
+                    // group by
+                    String aggregation = yAxis.get("aggregation").getAsString();
+                    String field = yAxis.get("field").getAsString();
+                    String label = yAxis.get("label").getAsString();
+                    String index = yAxis.get("index").getAsString();
+                    BsonField bsonField = null;
+                    switch (aggregation){
+                        case "count" :
+                            bsonField = Accumulators.sum("value", 1);
+                            break;
+                        case "avg" :
+                            bsonField = Accumulators.avg("value", new BasicDBObject("$toDouble", "$" + field));
+                            break;
+                        case "sum" :
+                            bsonField = Accumulators.sum("value", new BasicDBObject("$toDouble", "$" + field));
+                            break;
+                        case "min" :
+                            bsonField = Accumulators.min("value", new BasicDBObject("$toDouble", "$" + field));
+                            break;
+                        case "max" :
+                            bsonField = Accumulators.max("value", new BasicDBObject("$toDouble", "$" + field));
+                            break;
+                    }
+
+                    // where
+                    JsonArray conditionList = (JsonArray) yAxis.get("condition");
+                    BasicDBObject match = new BasicDBObject();
+                    for(int k=0;k<conditionList.size();k++){
+                        JsonObject condition = (JsonObject) conditionList.get(k);
+                        match.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),condition.get("value").getAsString()));
+                    }
+                    match.put("eventDatetime", eventDatetimeWhere);
+                    // query
+                    AggregateIterable<Document> aggregate = collection.aggregate(
+                            Arrays.asList(
+                                    Aggregates.match(match),
+                                    Aggregates.group(
+                                            Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}")
+                                            , bsonField
+                                    ),
+                                    Aggregates.sort(Sorts.ascending("_id"))
+                            )
+                    ).allowDiskUse(true);
+
+                    Map resultMap = new HashMap<>();
+                    resultMap.put("label",label);
+                    resultMap.put("dataList",aggregate.into(new ArrayList<>()));
+                    resultMap.put("aggregation", aggregation);
+                    resultList.put(index, resultMap);
+                }
+            }else{ // template
+                BasicDBObject commonMatch = new BasicDBObject();
+                JsonArray conditions = (JsonArray) jsonObj.get("condition");
+                for(int k=0;k<conditions.size();k++){
+                    JsonObject condition = (JsonObject) conditions.get(k);
+                    commonMatch.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),convertJsonArrayToList(condition.get("value").getAsJsonArray())));
+                }
+
+                JsonArray customConditions = (JsonArray) jsonObj.get("customCondition");
+                BasicDBObject customMatch = new BasicDBObject();
+                for(int k=0;k<customConditions.size();k++){
+                    JsonObject condition = (JsonObject) customConditions.get(k);
+                    String key = condition.get("key").getAsString();
+                    switch (condition.get("type").getAsString()){
+                        case "include" :
+                            BasicDBObject includeMatch = new BasicDBObject();
+                            includeMatch.put("$gte",condition.get("start").getAsString());
+                            includeMatch.put("$lte",condition.get("end").getAsString());
+                            customMatch.put("$elemMatch",new BasicDBObject(key,includeMatch));
+                            break;
+                        case "exclude" :
+                            BasicDBObject exceptMatch = new BasicDBObject();
+                            exceptMatch.put("$gte",condition.get("start").getAsString());
+                            exceptMatch.put("$lte",condition.get("end").getAsString());
+                            customMatch.put("$not",new BasicDBObject("$elemMatch",new BasicDBObject(key,exceptMatch)));
+                            break;
+                    }
+                }
+                if(customMatch.size()>0){
+                    commonMatch.put("location",customMatch);
+                }
+                commonMatch.put("eventDatetime", eventDatetimeWhere);
+
+                JsonObject group = jsonObj.get("group").getAsJsonObject();
+                String aggregation = group.get("aggregation").getAsString();
+                String field = group.get("field").getAsString();
                 BsonField bsonField = null;
                 switch (aggregation){
                     case "count" :
                         bsonField = Accumulators.sum("value", 1);
                         break;
                     case "avg" :
-                        bsonField = Accumulators.avg("value", new BasicDBObject("$toDouble", "$" + field));
+                        bsonField = Accumulators.avg("value", field);
                         break;
                     case "sum" :
-                        bsonField = Accumulators.sum("value", new BasicDBObject("$toDouble", "$" + field));
+                        bsonField = Accumulators.sum("value", field);
                         break;
                     case "min" :
-                        bsonField = Accumulators.min("value", new BasicDBObject("$toDouble", "$" + field));
+                        bsonField = Accumulators.min("value", field);
                         break;
                     case "max" :
-                        bsonField = Accumulators.max("value", new BasicDBObject("$toDouble", "$" + field));
+                        bsonField = Accumulators.max("value", field);
                         break;
                 }
 
-                // where
-                JsonArray conditionList = (JsonArray) yAxis.get("condition");
-                BasicDBObject match = new BasicDBObject();
-                for(int k=0;k<conditionList.size();k++){
-                    JsonObject condition = (JsonObject) conditionList.get(k);
-                    match.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),condition.get("value").getAsString()));
-                }
-                match.put("eventDatetime", eventDatetimeWhere);
-                // query
-                AggregateIterable<Document> aggregate = collection.aggregate(
-                        Arrays.asList(
-                                Aggregates.unwind("$"+field.split("\\.")[0]),
-                                Aggregates.match(match),
-                                Aggregates.group(
-                                        Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}")
-                                        , bsonField
-                                ),
-                                Aggregates.sort(Sorts.ascending("_id"))
-                        )
-                ).allowDiskUse(true);
+                JsonArray customLabels = group.get("customLabel").getAsJsonArray();
 
-                Map resultMap = new HashMap<>();
-                resultMap.put("label",label);
-                resultMap.put("dataList",aggregate.into(new ArrayList<>()));
-                resultMap.put("aggregation", aggregation);
-                resultList.put(index, resultMap);
+                String groupDocStr;
+                if(customLabels.size()>0){
+                    bsonField = Accumulators.sum("value", 1);
+                    groupDocStr = "{\n" +
+                            "       $concat: [\n" +
+                            "          { $cond: [{$lt: [ {'$"+aggregation+"':\"$location.speed\"},\"10\"]}, \"~10km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"10\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"20\"]}]},\"~20km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"20\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"30\"]}]},\"~30km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"30\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"40\"]}]},\"~40km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"40\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"50\"]}]},\"~50km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"50\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"60\"]}]},\"~60km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"60\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"70\"]}]},\"~70km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"70\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"80\"]}]},\"~80km/h\", \"\"] },\n" +
+                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"80\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"90\"]}]},\"~90km/h\", \"\"] },\n" +
+                            "          { $cond: [{$gt: [ {'$"+aggregation+"':\"$location.speed\"},\"90\"]},\"~100km/h\", \"\"] }\n" +
+                            "       ]\n" +
+                            "    }";
+                    List<String> labelList = new LinkedList<>();
+                    for(int i=0;i<customLabels.size();i++){
+                        labelList.add(customLabels.get(i).getAsString());
+                    }
+                    modelAndView.addObject("labelList", labelList);
+                }else{
+                    groupDocStr = "{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}";
+                }
+
+                JsonArray rows = jsonObj.get("rows").getAsJsonArray();
+                for(int i=0;i<rows.size();i++){
+                    JsonObject row = (JsonObject) rows.get(i);
+                    BasicDBObject match = (BasicDBObject) commonMatch.clone();
+                    String fenceId = row.get("fenceId").getAsString();
+                    match.put("fenceId", fenceId);
+
+                    List<Bson> arrayList = new ArrayList<>();
+                    arrayList.add(Aggregates.match(match));
+                    arrayList.add(Aggregates.group(
+                            Document.parse(groupDocStr)
+                            , bsonField
+                    ));
+                    arrayList.add(Aggregates.sort(Sorts.ascending("_id")));
+
+                    // query
+                    AggregateIterable<Document> aggregate = collection.aggregate(arrayList).allowDiskUse(true);
+                    Map resultMap = new HashMap<>();
+                    resultMap.put("fenceId",fenceId);
+                    resultMap.put("areaName",row.get("areaName").getAsString());
+                    resultMap.put("fenceName",row.get("fenceName").getAsString());
+                    resultMap.put("dataList",aggregate.into(new ArrayList<>()));
+                    resultMap.put("aggregation", aggregation);
+                    resultList.put(String.valueOf(i), resultMap);
+                }
             }
             modelAndView.addObject("dateList", chartDateList);
             modelAndView.addObject("chartList", resultList);
@@ -177,6 +293,14 @@ public class StatisticsSvcImpl implements StatisticsSvc {
         }
         modelAndView.addObject("paramBean",parameters);
         return modelAndView;
+    }
+
+    private List<String> convertJsonArrayToList(JsonArray jsonArray) {
+        List<String> list = new ArrayList<String>();
+        for (int i=0; i<jsonArray.size(); i++) {
+            list.add( jsonArray.get(i).getAsString() );
+        }
+        return list;
     }
 
     @Override

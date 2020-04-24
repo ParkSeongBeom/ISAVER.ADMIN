@@ -48,6 +48,15 @@ public interface NotificationSvc {
     ModelAndView findListNotificationForDashboard(Map<String, String> parameters);
 
     /**
+     * 알림센터 목록을 가져온다. (스쿨존)
+     *
+     * @author psb
+     * @param parameters
+     * @return
+     */
+    ModelAndView findListNotificationForSchool(Map<String, String> parameters);
+
+    /**
      * 알림센터를 저장한다. (해제, 확인)
      *
      * @author psb

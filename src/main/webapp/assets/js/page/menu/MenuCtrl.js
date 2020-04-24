@@ -293,7 +293,6 @@ function MenuEvent(model) {
      */
     MenuEvent.menuTreeSuccessHandler = function (data, dataType, actionType) {
         var menuTreeModel = MenuEvent._model.processMenuTreeData(data['menuTreeList']);
-        console.log(menuTreeModel);
         menuView.setMenuTree(menuTreeModel);
     };
 

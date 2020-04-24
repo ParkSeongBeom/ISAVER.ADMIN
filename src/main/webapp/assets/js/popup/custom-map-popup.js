@@ -603,7 +603,9 @@ var CustomMapPopup = (
                                                         _customMapMediator.saveFence(paramData);
                                                     }
                                                 })
-                                            ).append(
+                                            )
+                                        ).append(
+                                            $("<div/>").append(
                                                 $("<input/>", {
                                                     type: 'text',
                                                     name: 'zMin',
@@ -646,6 +648,31 @@ var CustomMapPopup = (
                                                         _customMapMediator.saveFence(paramData);
                                                     }
                                                 })
+                                            ).append(
+                                                $("<select/>", {name: 'fenceSubType'}).append(
+                                                    $("<option/>", {
+                                                        value: '',
+                                                        selected: (data['fenceSubType']==null || data['fenceSubType'] == '')
+                                                    }).text("Not Used")
+                                                ).append(
+                                                    $("<option/>", {
+                                                        value: 'crosswalk',
+                                                        selected: data['fenceSubType'] == 'crosswalk'
+                                                    }).text("Crosswalk")
+                                                ).append(
+                                                    $("<option/>", {
+                                                        value: 'driveway',
+                                                        selected: data['fenceSubType'] == 'driveway'
+                                                    }).text("Driveway")
+                                                ).change({
+                                                        deviceId: data['deviceId'],
+                                                        fenceId: data['fenceId']
+                                                    }, function (evt) {
+                                                        let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, fenceSubType:$(this).val()};
+                                                        if(!_customMapMediator.computePolyPoints(paramData)){
+                                                            _customMapMediator.saveFence(paramData);
+                                                        }
+                                                    })
                                             )
                                         ).append(
                                             $("<div/>", {class: "camera_list"}).append(cameraSelectTag)
@@ -815,6 +842,7 @@ var CustomMapPopup = (
                     ,"uuid":uuid
                     ,"id":fenceId
                     ,"fenceType":_addFenceInfo['fenceMarker']!=null?_addFenceInfo['fenceMarker']['data']['fenceType']:'normal'
+                    ,"fenceSubType":_addFenceInfo['fenceMarker']!=null?_addFenceInfo['fenceMarker']['data']['fenceSubType']:null
                     ,"location":_customMapMediator.convertFenceLocationOrigin(deviceId,uniqArrayList(_addFenceInfo['points']))
                 });
                 _self.resetAddFenceInfo(true);

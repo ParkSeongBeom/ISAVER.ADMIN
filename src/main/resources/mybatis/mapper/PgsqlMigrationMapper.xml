@@ -7,6 +7,13 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_5'">
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('TMP012','TMP','스마트시티-스쿨존','','Y',9,'admin',NOW());
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('FTA005','FTA','Logo','','Y',4,'admin',NOW());
+            alter table isaver.fence add column fence_sub_type character varying(50);
+            alter table isaver.statistics add column template character varying(20) NOT NULL DEFAULT 'custom'::character varying;
+        </if>
+
         <if test="version == '1.7.5_4'">
             alter table isaver.statistics add column collection_name character varying(50) NOT NULL DEFAULT 'eventLog'::character varying;
         </if>

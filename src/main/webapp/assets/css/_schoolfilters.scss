@@ -1,0 +1,56 @@
+@charset "utf-8";  @import "filters";
+
+$color-schoolbg:#262626;
+$color-sboard:#343441;
+
+$color-school-blue01:#74a0f0;
+$color-school-blue02:#3e7beb;
+$color-school-blue03:#297ca7;
+
+$color-school-orange01:#ff6565;
+
+$color-school-green01:#08b558;
+$color-school-green02:#87c756;
+
+$color-school-yellow01:#fdba41;
+
+$color-school-pink01:#f392a4;
+
+$color-school-gray:#a6a7b2;
+
+$school-h2-height:60px;
+$school-h2-height-h:calc(50% - (60px / 2));
+$school-sboard-w:25%;
+$school-sboard-m:3px;
+
+@mixin number-board {
+  overflow: hidden; @include flexbase; @include flex-column; @include flex-align-items-center;
+  @include flex-justify-content-center; @include flex-width;
+
+  &, & > * {position: relative;}
+
+  &:after {
+    @include flex-midddle; position: relative; width:70px; height:28px;
+    font-size:1rem; color:$color-white-01 !important; @include border-radius(500px);
+  }
+
+  &.now { &, & * {color:$color-school-blue01; } &:after {content:"현재"; background-color:$color-school-blue02;}}
+  &.pre { &, & * {color:$color-school-gray; }   &:after {content:"전일"; background-color:$color-school-gray;}}
+
+  p {
+    @include flexbase; @include flex-justify-content-center; @include flex-align-items-end;
+    position: relative; font-size:2.8rem; font-weight:bold; letter-spacing: -0.1rem;
+
+    &:after {
+      content:"명"; position: relative; font-size:1rem; color:$color-school-gray;
+      @include translate3d(0, -6px, 0);
+    }
+  }
+
+  &.car > p:after {content:"대" !important;}
+}
+
+@mixin root-title {
+  @include mmheight($school-h2-height); @include flex-option(1, 0, $school-h2-height); background-color:$color-schoolbg;
+  &, & > h2 {font-size:1.8rem; letter-spacing: -0.15rem; }
+} // @include root-title;  - 데시보드 감시화면 상단 타이틀

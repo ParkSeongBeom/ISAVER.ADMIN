@@ -32,7 +32,12 @@
         <!-- hearder Start 공통부분 -->
         <section class="login_area">
             <article>
-                <h1>${majorVersion}</h1>
+                <c:if test="${logoFile!=null}">
+                    <h1 <c:if test="${logoFile!=null}">style="background-image: url(${fileUploadPath}${logoFile.physicalFileName});"</c:if>></h1>
+                </c:if>
+                <c:if test="${logoFile==null}">
+                    <h1>${majorVersion}</h1>
+                </c:if>
                 <!-- 로그인 입력 폼 Start -->
                 <!-- 다국어 지원 추가 -->
                 <%--<select class="language" onchange="javascript:window.location.href='?lang='+$(this).val();">--%>

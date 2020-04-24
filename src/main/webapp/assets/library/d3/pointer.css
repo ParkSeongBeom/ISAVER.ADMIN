@@ -1,0 +1,36 @@
+.lapi-gauge{
+  background-color:#323232;
+}
+.neddle{
+  fill:#85868a;
+  /*stroke:black;
+  stroke-width:0.01em;*/
+}
+  .gauge-texto{
+    fill:white;
+    font-size:0.25em;
+  }
+.subtitle{
+  font-size:0.35em;
+}
+.center-value{
+  font-size:0.65em;
+}
+path.reference{
+  fill:#e08f32;
+}
+path.backarc{
+  fill:#515152;
+}
+path.sector_one{
+  fill:#EE462C;
+}
+path.sector_two{
+  fill:#f48803
+}
+path.sector_three{
+  fill:#c0ba22
+}
+path.sector_four{
+  fill:#32965d
+}

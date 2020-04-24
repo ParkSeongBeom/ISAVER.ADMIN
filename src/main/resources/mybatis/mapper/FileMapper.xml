@@ -80,6 +80,26 @@
         파일 상세를 가져온다.
         @author psb
     -->
+    <select id="findByFileByLogo" resultType="FileBean" >
+        SELECT  file_id as fileId
+                , title as title
+                , description as description
+                , logical_file_name as logicalFileName
+                , physical_file_name as physicalFileName
+                , file_type as fileType
+                , file_size as fileSize
+                , file_path as filePath
+        FROM    isaver.file
+        WHERE   file_type = 'FTA005'
+        AND     use_yn = 'Y'
+        ORDER BY insert_datetime desc
+        LIMIT 1
+    </select>
+
+    <!--
+        파일 상세를 가져온다.
+        @author psb
+    -->
     <select id="findByFile" resultType="FileBean" parameterType="map" >
         SELECT  A.file_id as fileId
                 , A.title as title

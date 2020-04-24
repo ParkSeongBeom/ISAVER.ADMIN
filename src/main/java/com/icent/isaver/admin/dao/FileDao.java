@@ -39,6 +39,13 @@ public interface FileDao {
 
     /**
      *
+     * @author psb
+     * @return
+     */
+    FileBean findByFileByLogo();
+
+    /**
+     *
      * @param parameters
      * @author psb
      * @return

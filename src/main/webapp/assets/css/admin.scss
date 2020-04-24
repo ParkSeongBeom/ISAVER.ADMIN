@@ -1,8 +1,4 @@
-@charset "utf-8";
-@import "filters";
-
-$tree-table-width:400px;
-$admin-boxline:rgba($color-dark-01,0.15);
+@charset "utf-8";  @import "filters";  @import "schoolfilters";
 
 body.admin_mode {
   @include webkit_scroll_admin; @include webkit_scroll; @include admin-bg;
@@ -10,7 +6,7 @@ body.admin_mode {
   button p {color: $color-dark-01;}
 
   .sub_title_area {
-    @include mmheight(70px); margin:0; padding: 0 $admin-margin;
+    @include mmheight(70px); margin:0; padding: 0 0 0 $admin-margin;
     .navigation {
       display: inline-block; margin:0 0 0 30px; padding: 10px 0 0 0;
       span {pointer-events: none;}
@@ -955,8 +951,8 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
 /////..... 트리 테이블 시작
 .tree_table  {
 
-  position: absolute; z-index: 1; top:0; left:0; bottom:0;
-  width:$tree-table-width !important; height:auto;
+  overflow: hidden !important; position: absolute; z-index: 1; top:0; left:0; bottom:0;
+  width:$tree-table-width !important; height:100%;
 
   //@include box-shadow01(1px, 2px, 4px, 0px, #000, 0.02);
   //@include border01(1px,$color-bline,.4 );
@@ -1058,10 +1054,11 @@ $critical_w01 : 350px;  $critical_w02 : 200px;  $critical_w03 : 150px;
   }
 
   .table_contents {
-    @include flexbase; @include flex-column; height:100%; padding:0 !important;
+    overflow: hidden; @include flexbase; @include flex-column; height:100%;
+    @include flex-option(0, 1, 100%); padding:0 !important;
     & > * {width:100%;}
     .tree_tab_set {
-      overflow: auto; height:100%;
+      overflow: auto; position: relative; height:100%;
       & > * {padding:($admin-margin / 2) $admin-margin;}
     }
   }
@@ -1352,7 +1349,6 @@ a.fc-more {position: relative; z-index: 2;}
   $title-h:50px;
   &-w,&-h {
     h4 {@include h4;} h5 {@include h5;}
-
   }
   &-w {
     @include flex-display;
@@ -1378,15 +1374,12 @@ a.fc-more {position: relative; z-index: 2;}
     .box {
 
       &-list, &-detail {
-        @include flex-option(1, 0, $tree-area-width);
         &:before {@include bbl(1,0,0,0,auto,1px,100%,$admin-boxline);}
       }
 
-      &-list {
-        & > * {}
-      } // 목록
+      &-list   {@include mmwidth($tree-area-width);} // 목록
 
-      &-detail {} // 상세
+      &-detail {@include flex-option(1, 0, $box-detail-w);} // 상세
 
       &-chart {
         @include flex-midddle; width:100%; @include flex-option(0, 1, 100%);
@@ -1403,17 +1396,98 @@ a.fc-more {position: relative; z-index: 2;}
           }
         }
       }
+
+      &-ctbox {
+        position: relative; width:100%; @include flex-option(0, 1, 100%);
+        & > * {position: relative; width:100%;  @include flex-padding;}
+
+        & > header {
+          @include flexbase; @include flex-align-items-center; margin:($admin-margin - 5px) 0 ($admin-margin / 2) 0;
+          @include flex-option(1, 0, $areaHeaderHeight); @include mmheight($areaHeaderHeight);
+          & > h4 {@include flex-option(0, 1, 100%); font-size: 1.4rem; }
+          & > button {
+            @include flexbase; @include flex-align-items-center; @include flex-justify-content-end;
+            @include mmwidth(120px); height:40px;
+
+            &:before {font-size:1.5rem;} &:after {padding:0 0 0 10px}
+
+            &.ico-excel:after {content:"EXCEL 저장";}
+            &.ico-pdf:after {content:"PDF 저장";}
+
+            &:hover { &:before, &:after {color:$color-ho;} }
+          }
+        }
+
+        & > article {overflow: overlay;}
+
+        .chart {
+          &-table, &-canvas {
+
+            & > header  {
+              @include flexbase; @include flex-align-items-center;
+              @include flex-option(1, 0, $areaHeaderHeight); @include mmheight($areaHeaderHeight);
+
+              & > h4 {@include flex-option(0, 1, 100%); font-size: 1.2rem; }
+
+              & > button {
+                @include flexbase; @include flex-align-items-center; @include flex-justify-content-end;
+                @include mmwidth(120px); height:40px;
+
+                &:before {font-size:1.5rem;} &:after {padding:0 0 0 10px}
+
+                &.ico-excel:after {content:"EXCEL 저장";}
+                &.ico-pdf:after {content:"PDF 저장";}
+
+                &:hover { &:before, &:after {color:$color-ho;} }
+              }
+
+              & > input { min-width:35%; margin:0 0 0 10px;}
+            }
+          }
+
+          &-table  {
+            .d_defalut {
+              $d_defalut-span-w:40px;
+              $d_defalut-span-h:35px;
+              .d_thead {
+                @include flexbase; width:auto;
+                & > * {max-width:140px;}
+              }
+              .d_tbody {overflow-x: overlay;}
+              & > div > div > * {
+                overflow: hidden; display: inline-block;
+                padding-top: 7px; text-align: center; text-overflow: ellipsis; white-space: nowrap; word-wrap: normal;
+                min-width: $d_defalut-span-w; @include mmheight($d_defalut-span-h); font-size:0.85rem;
+              }
+            }
+          }
+
+          &-canvas {
+            background-color: $color-white-01; @include border01(1px,$color-gray-01,0.5 ); margin: 0 0 15px 0;
+            & > * { position: relative; width:100%; overflow: hidden;}
+
+            .expl-sub {
+              @include flexbase; @include flex-align-items-center;  @include flex-justify-content-end;
+              position: relative; width:100%;  @include mmheight($headerHeight); padding:0 10px;
+
+              & + * {
+                @include mmheight(400px);
+                & > * {position: absolute; top:0; left:0; width:100%; height:100%; padding:15px;}
+              }
+            }
+          }
+        }
+      }
     }
 
     &.eventStatistics {
       .box {
-        &-detail, &-chart {width:0; @include flex-option(0, 0, 0);}
-        &-detail.on {width:$tree-table-width; @include flex-option(1, 0, $tree-table-width);}
-        &-chart.on {
+        &-detail, &-chart, &-ctbox {width:0; @include flex-option(0, 0, 0);}
+        &-detail.on {@include mmwidth($box-detail-w); @include flex-option(1, 0, $box-detail-w);}
+        &-ctbox.on, &-chart.on {
           width:100%; @include flex-option(0, 1, 100%);
           & + .box-ment, & ~ .box-ment {width:0; @include flex-option(0, 0, 0);}
         }
-
       }
     }
 
@@ -1598,11 +1672,11 @@ a.fc-more {position: relative; z-index: 2;}
 
       &.ico-open {
 
-        &:before {@include rotate(180deg);}
+        &:before {@include rotate(0deg);}
         &:after {opacity: 0.4;}
         & ~ div {@include scaleY(0); height:0;}
         &.on {
-          &:before {@include rotate(0deg);}
+          &:before {@include rotate(180deg);}
           & ~ div {@include scaleY(1); height:auto;}
         }
       }
@@ -1630,13 +1704,19 @@ a.fc-more {position: relative; z-index: 2;}
   </div>
   */
   &-item {
-    $itemh:30px;
+
     @include flexbase; @include flex-row-wrap; @include flex-align-items-start;
     overflow: hidden; position: relative; @include flex-width-one(1); padding:0 0 10px 0; @include flex-padding;
     @include transition(200ms);
 
     button:not(.ui-datepicker-trigger) {
-      @include btn-itype01b; @include mhwidth($btn-type01);  &:before {font-size:1.1rem !important;}
+      /*@include btn-itype01b; @include mhwidth($btn-type01);  &:before {font-size:1.1rem !important;}*/
+      @include btn-itype00c;
+
+      &.ico {
+        &-plus:after {background-color: $color-red-01;}
+        &-close:after {background-color: $color-blue-02; }
+      }
     }
 
     input.datepicker {
@@ -1647,9 +1727,9 @@ a.fc-more {position: relative; z-index: 2;}
       @include flex-option(0, 1, 100%); width:100%; max-width:none; min-width:auto;
       & ~ button {margin:0;}
       & ~ select, & ~ input {
-        border-left-color:transparent !important;
+        border-left-color:transparent ;
         &:active {border-left-color:$color-orange-01 !important;}
-        &:focus  {border-left-color:$color-blue-01 !important;}
+        &:focus  {border-left-color:$color-blue-05 !important;}
       }
     }
 
@@ -1664,11 +1744,45 @@ a.fc-more {position: relative; z-index: 2;}
 
     & > div {
       @include flexbase; @include flex-align-items-start;
-      button:not(.ui-datepicker-trigger):after {opacity: 0.5;}
+      /*button:not(.ui-datepicker-trigger):after {opacity: 0.5;}*/
+
+      &.type01  {
+        @include flex-column; @include flex-justify-content-start; @include flex-align-items-start;
+        background-color: $color-white-01; @include border01(1px ,$color-gray-01,1 );
+      }
     }
 
     .dpk_select_type > .ui-datepicker {width:100%;}
 
+  }
+
+  &-column {
+
+    @mixin column-child {@include flexbase; @include flex-align-items-center;} // @include column-child;
+
+    @include flexbase; width:100%; padding:10px 0 0 0;
+
+    & > * {
+      @include flex-option(0, 1, 100%); padding:0 10px 0 0;
+      &:nth-child(1) {  min-width:90px;  padding-left:10px;}
+      &:nth-child(2) {  min-width:135px; }
+      &:nth-child(3) {  /*padding-right:10px;*/}
+
+      & > * {
+        @include column-child; width:100%; min-height:40px; margin-bottom:10px;
+      }
+
+      .csl_style07 {padding:0 !important;}
+    }
+
+    .csl_style07 {
+      & > * {margin-bottom:0 !important;}
+    }
+
+    & > p {
+      @include column-child; font-size:0.9rem; opacity: 0.7;
+      &:nth-child(1) {padding-left:10px;}
+    }
   }
 
   &-area {
@@ -1744,7 +1858,7 @@ a.fc-more {position: relative; z-index: 2;}
     & > select {height:100%;}
     .set-itembox {
       display: none; position: absolute; z-index: 1; top:0; right:0;
-      width:($tree-table-width - ($admin-margin * 2)); background-color: $color-on;
+      width:($box-detail-w - 50px); background-color: $color-on;
       @include box-shadow01(0px, 10px, 10px, -10px, #000, .8); @include laypopup-stlye;
 
       &.on {@include flexbase;}
@@ -1752,6 +1866,22 @@ a.fc-more {position: relative; z-index: 2;}
     }
   }
 }
+
+.selectbox-type01 {
+  select,input {border-left-color:$color-gray-01 !important;}
+  & > * {
+    @include flexbase; @include flex-align-items-center;
+    select,input {
+      &:nth-of-type(1) {order:1;}
+      &:nth-of-type(2) {order:3;}
+    }
+    &:before {content:"~"; order:2;}
+  }
+  &.bnone {
+    & > *:before {display: none;}
+
+  }
+} // 이벤트 통계 추가 옵션 항목 UI
 
 ////// excel UI Start
 .excel {

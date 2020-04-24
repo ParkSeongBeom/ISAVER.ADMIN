@@ -1,0 +1,325 @@
+﻿@charset "utf-8"; @import "filters"; @import "schoolfilters";
+
+.school-mode {
+
+  main > article {
+    & > *:not(.popup-layer) {width:100%;}
+
+    & > h2 {@include flex-midddle; @include root-title;}
+  }
+
+  // 알림센터
+  aside.db_area {
+    position: absolute; right:0; height:100vh;
+    &.on {right:$notice-area;}
+  }
+  //알림센터 열기 버튼
+  .notice-area {z-index: (600 + 1) !important; background-color: $color-bas; }
+
+  .sboard {
+    overflow: hidden; z-index: 5; top:0; width:$school-sboard-w; height:100%; /*max-height:50vh;  */
+    @include flexbase; @include flex-column; @include flex-align-items-start; @include flex-justify-content-start;
+
+    & > div {
+      overflow: hidden; @include flexbase; @include flex-column; @include flex-justify-content-start;
+      position: relative; width:100%; height:100%; @include flex-width-one(1);
+      margin-top:$school-sboard-m; padding:0 0 7px 0; background-color:rgba($color-sboard, 0.8);
+      &:first-of-type {margin:0;}
+
+      & > * {position: relative; width:100%;}
+
+      & > h3 {
+        @include flexbase; @include flex-align-items-end; @include mmheight($headerHeight - 10px);
+        font-size:1rem; padding:0 10px;
+      }
+
+      & > section {
+        @include flexbase; @include flex-align-items-center; overflow: hidden; height:100%;
+
+        & > div {@include number-board}
+      }
+    }
+    //상황판 좌측
+    &.left { left:0; }
+    //상황판 우측
+    &.right { right:0; }
+  }
+
+  .guard_set .s_lbox {
+    // 좌 우측 감시 보드
+
+    & > div {position: absolute !important; }
+
+    // 옵션 보기 버튼
+    .check_btn_menu, .check_btn_set {
+      @include mmwidth(180px); left:($school-sboard-w); margin:0 0 0 $school-sboard-m;
+    }
+    // 옵션 팝업
+    .check_btn_set {position: absolute !important; bottom:-100%; & > div {padding:0; @include mmheight(50px); } }
+    .check_btn_menu {
+      height:50px; padding:0; bottom:0;
+      &.on + .check_btn_set {bottom:50px;}
+    }
+
+    .view_size, .check_btn_menu, .check_btn_set {background-color: rgba(0, 0, 0, 0.4);}
+
+    //화면 줌 아웃
+    .view_size, .copybox_area {right:$school-sboard-w;}
+    .view_size {
+      @include flex-column; margin:0 $school-sboard-m 0 0 ;
+      & > div button {@include mhwidth(50px); &:before {font-size:2rem;} }
+    }
+  }
+
+  .copybox_area, .device_box {position: absolute !important;}
+  // 이벤트 알림 팝업
+  .copybox_area {
+    right:$school-sboard-w; @include mmwidth($bmtwidth); z-index: 10; margin:0 3px 0 0;
+    & > div {width: 100%; margin: 3px; margin-bottom: 0;}
+  }
+  //디바이스 상태보기 팝업
+  .device_box {z-index:10; background-color: $color-bas;}
+
+  .watch_area, .layer-sub {@include transition(700ms);}
+
+  .watch_area {
+    overflow: hidden; background-color:$color-schoolbg;
+
+    & > h2 {@include flex-midddle; @include root-title;}
+    & > div {
+      padding:0 10px; &:before, &:after {display: none;}
+
+      & > header {
+        @include mmheight($headerHeight); @include flex-option(1, 0, ($headerHeight)); padding:0; margin:8px 0;
+        background-color: transparent !important;
+
+        &:before, &:after {display: none;}
+
+        &, button {@include mmheight($headerHeight); }
+        button {margin:0 !important; }
+        h3 {font-size:1.4rem !important;}
+      }
+    }
+
+    // 넓이
+    &.area01,&.area02 { & > div {width:100%;} }
+    &.area04 { & > div {width:50%; padding:0 3px;} }
+
+    //높이
+    &.area01 { & > div {height:100%;} }
+    &.area02, &.area04 { & > div { @include mmheight(50%); } }
+
+    //크기
+    &.area02 {
+      .chart-box.o-pie { @include scale(1.5);}
+    }
+    &.area04 {
+      & > div > header {
+        &, & > h3 { margin-top:0; margin-bottom:0; }
+        & > h3 {font-size:1.1rem !important;}
+
+      }
+      .now, .pre {
+        &:after, & > p:after {font-size:.9rem;}
+        &:after {width:60px; height:24px; }
+        & > p {font-size:1.8rem; margin: 0 0 10px 0; }
+      }
+      .chart-box.o-pie { @include scale(1.2);}
+    }
+
+  }
+
+}
+
+// 상세 정보 레이어 팝업
+.layer-sub {
+
+  @include flexbase;  @include flex-column;
+  position: absolute; z-index: 90; @include translate3d(0, 100%, 0);
+  width:100%; top:$headerHeight; bottom:0;  background-color: rgba($color-schoolbg,0.9);
+
+
+  @mixin layer-sub {
+    animation-name:         layer-sub;
+    -webkit-animation-name: layer-sub;
+    @include duration-8;
+    animation-fill-mode: forwards;
+
+    @-webkit-keyframes layer-sub {
+      0%   {   }
+
+      100% {  }
+    }
+
+  } // @include layer-sub;
+
+  &.on {@include translate3d(0, 0, 0);}
+
+  & > * { position:relative; width:100%; }
+
+  & > header {
+    @include flexbase; @include flex-align-items-center; @include flex-justify-content-between; padding: 0 10px;
+    @include root-title; @include mmheight($school-h2-height + 10px); @include flex-option(1, 0, $school-h2-height + 10px);
+    background-color: transparent !important;
+
+    h2 {@include flexbase; @include flex-align-items-center; }
+    button {@include popup-rootbutton;}
+  }
+  & > section, .sboard-sub {
+    @include flexbase; height:100%; @include flex-option(0, 1, 100%);
+    & * {position: relative; }
+    & > * {
+      @include flexbase; @include flex-column; @include flex-width-one(2); height:100%;
+
+      &:nth-of-type(2) {
+        @include flex-width-one(1);
+
+        .chart-box {
+          &:before, &:after {@include flex-midddle; position: absolute; left:0; width:100%; height:50px; opacity: 0.7;}
+          &:before {top:15%; font-size:1.5rem; }
+          &:after {top:50%; margin-top:70px; font-weight: bold; font-size:2rem; }
+          &:after {content:"Km/h";}
+          //&.max:before {content:"차량 최고속도";}
+          //&.average:before {content:"차량 평균속도";}
+        }
+
+      } //차트영역
+
+      & > * {
+        @include flexbase; @include flex-column; height:50%; padding: 0 10px 10px 10px;
+
+        & > * {width:100%; height:100%; @include flex-option(0, 1, 100%); }
+
+        & > h3 {
+          @include flex-midddle; @include flex-option(1, 0, $headerHeight); @include mmheight($headerHeight);
+          font-size: 1.4rem !important; padding: 0 10px; background-color: $color-bas;
+        }
+        & > section {
+          &, & > * {@include flexbase;}
+          & > * {@include flex-column;}
+        }
+      }
+    }
+  }
+}
+
+.board {
+  &-number {
+    @include mmwidth(200px); @include flex-option(1, 0, 200px);
+    padding:3px 3px 0 0;
+    & > div {
+      @include number-board;  background-color: $color-sboard;
+
+      &:after {order:1;}
+      p {
+        order:2; width:180px;
+        &:before {
+          content:""; position: absolute; top:-14px; width:100%; height:80px;@include borderwidth(1px);
+        }
+
+        &.pre:before {border-color:$color-school-gray;}
+        &.now:before {border-color:$color-school-blue01;}
+      }
+    }
+  }
+  &-chart {
+    @include flex-option(0, 1, 100%);
+    & > * {
+      @include flexbase; @include flex-column;
+      width:100%; @include flex-option(0, 1, 100%); padding:3px 0 0 0;
+      & > * {
+        @include flexbase;  width:100%; background-color: $color-sboard;
+        &:first-of-type  {
+          @include mmheight($headerHeight); @include flex-option(1, 0, $headerHeight); @include flex-align-items-center;
+          @include flex-justify-content-between; padding:0 10px;
+
+          h4 {white-space:nowrap;}
+        }
+        &:nth-of-type(2) {@include flex-option(0, 1, 100%); padding:10px 0 0 0;}
+      }
+    }
+  }
+}
+/////..... e :  상세보기 팝업
+
+.chart-box {
+  @include flex-midddle;
+
+  &, & > div {position: relative; width:100%; height: 100%;}
+
+  & > p {
+    @include flex-midddle; position: absolute !important;  z-index: 1; top:50%; margin-top:-35%;
+    @include mmheight(50px); font-size:1.5rem;
+  }
+
+  &.o-pie {
+
+    .sector_one, .sector_two, .sector_three, .sector_four {display: none;}
+
+    path {
+      &.backarc {fill: #fff9e1;}
+      /*&.sector_one {fill:#EE462C;} &.sector_two {fill:#f48803} &.sector_three {fill:#c0ba22} &.sector_four {fill:#32965d}*/
+    }
+    &.average { path.reference {fill:#2cffca;} }
+    &.max { path.reference {fill:#f44132;} }
+
+    .lapi-gauge{}
+    .neddle{ fill:#85868a; /*stroke:black; stroke-width:0.01em;*/}
+    .gauge-texto {
+      fill:#ff8373; display: none;
+      &.center-value {display: inline-block !important;}
+    }
+    .center-value, .gauge-texto, .subtitle { font-size:1em;}
+  }
+
+  &.o-line {
+
+    svg, g {
+
+      font-size: 1rem !important;
+    }
+
+  .small-copy {font-size:1rem !important}
+  }
+
+  &.o-bar {}
+
+  svg {
+    position: absolute !important; width:100%; height:100%;
+    path {
+      width:100%;
+
+      &.path-color {
+        stroke-width: 2px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill-opacity: .1;
+
+        &.line_contents_0  { stroke:$chart-color-01; fill: $chart-color-01; }
+        &.line_contents_1  { stroke:$chart-color-11; fill: $chart-color-11; }
+        &.line_contents_2  { stroke:$chart-color-21; fill: $chart-color-21; }
+        &.line_contents_3  { stroke:$chart-color-02; fill: $chart-color-02; }
+        &.line_contents_4  { stroke:$chart-color-12; fill: $chart-color-12; }
+        &.line_contents_5  { stroke:$chart-color-22; fill: $chart-color-22; }
+        &.line_contents_6  { stroke:$chart-color-03; fill: $chart-color-03; }
+        &.line_contents_7  { stroke:$chart-color-13; fill: $chart-color-13; }
+        &.line_contents_8  { stroke:$chart-color-23; fill: $chart-color-23; }
+        &.line_contents_9  { stroke:$chart-color-04; fill: $chart-color-04; }
+        &.line_contents_10 { stroke:$chart-color-14; fill: $chart-color-14; }
+        &.line_contents_11 { stroke:$chart-color-24; fill: $chart-color-24; }
+        &.line_contents_12 { stroke:$chart-color-05; fill: $chart-color-05; }
+        &.line_contents_13 { stroke:$chart-color-15; fill: $chart-color-15; }
+        &.line_contents_14 { stroke:$chart-color-25; fill: $chart-color-25; }
+        &.line_contents_15 { stroke:$chart-color-06; fill: $chart-color-06; }
+        &.line_contents_16 { stroke:$chart-color-16; fill: $chart-color-16; }
+        &.line_contents_17 { stroke:$chart-color-26; fill: $chart-color-26; }
+        &.line_contents_18 { stroke:$chart-color-07; fill: $chart-color-07; }
+        &.line_contents_19 { stroke:$chart-color-17; fill: $chart-color-17; }
+      }
+    }
+  }
+
+}
+
+
+

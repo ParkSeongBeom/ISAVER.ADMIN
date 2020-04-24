@@ -170,6 +170,29 @@
         ORDER BY A.event_datetime DESC
     </select>
 
+
+    <!--
+        알림센터 목록을 가져온다. (스쿨존)
+        @author psb
+    -->
+    <select id="findListNotificationForSchool" resultType="NotificationBean" parameterType="map" >
+        SELECT  A.notification_id as notificationId
+                , A.fence_id as fenceId
+                , A.device_id as deviceId
+                , A.event_id as eventId
+                , A.event_datetime as eventDatetime
+                , A.critical_level as criticalLevel
+                , A.value as value
+        FROM    isaver.notification A
+        INNER JOIN isaver.fence F
+        ON	    A.fence_id = F.fence_id
+        AND	    F.fence_sub_type is not null
+        WHERE   A.area_id = #{areaId}
+        <if test="startDatetime != null and startDatetime != ''">
+            AND     A.event_datetime between (#{startDatetime}||' 00:00:00')::timestamp and (#{startDatetime}||' 23:59:59')::timestamp
+        </if>
+    </select>
+
     <!--
         알림센터 목록을 가져온다. (카운트용)
         @author psb

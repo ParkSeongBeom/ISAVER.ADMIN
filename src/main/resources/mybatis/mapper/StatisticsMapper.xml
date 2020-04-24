@@ -9,6 +9,7 @@
     <select id="findListStatistics" resultType="StatisticsBean">
         SELECT  statistics_id as statisticsId
                 , statistics_name as statisticsName
+                , template as template
                 , collection_name as collectionName
                 , chart_type as chartType
                 , json_data as jsonData
@@ -28,6 +29,7 @@
         INSERT INTO isaver.statistics (
             statistics_id
             , statistics_name
+            , template
             , collection_name
             , chart_type
             , json_data
@@ -36,6 +38,7 @@
         ) VALUES (
             #{statisticsId}
             , #{statisticsName}
+            , #{template}
             , #{collectionName}
             , #{chartType}
             , #{jsonData}
@@ -52,6 +55,7 @@
         UPDATE  isaver.statistics
         SET     statistics_name = #{statisticsName},
                 collection_name = #{collectionName},
+                template = #{template},
                 chart_type = #{chartType},
                 json_data = #{jsonData},
                 update_user_id = #{updateUserId},

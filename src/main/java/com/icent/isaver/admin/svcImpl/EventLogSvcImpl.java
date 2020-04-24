@@ -1,8 +1,10 @@
 package com.icent.isaver.admin.svcImpl;
 
 import com.icent.isaver.admin.bean.InoutConfigurationBean;
+import com.icent.isaver.admin.common.resource.CommonResource;
 import com.icent.isaver.admin.common.resource.IsaverException;
 import com.icent.isaver.admin.dao.DeviceDao;
+import com.icent.isaver.admin.dao.EventDao;
 import com.icent.isaver.admin.dao.InoutConfigurationDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.icent.isaver.admin.svc.EventLogSvc;
@@ -40,6 +42,9 @@ public class EventLogSvcImpl implements EventLogSvc {
     private DeviceDao deviceDao;
 
     @Inject
+    private EventDao eventDao;
+
+    @Inject
     private InoutConfigurationDao inoutConfigurationDao;
 
     @Inject
@@ -61,6 +66,9 @@ public class EventLogSvcImpl implements EventLogSvc {
                 if(deviceList!=null){
                     query.put("deviceId", new BasicDBObject("$in",deviceList));
                 }
+            }
+            if(StringUtils.notNullCheck(parameters.get("eventId"))){
+                query.put("eventId", parameters.get("eventId"));
             }
 
             BasicDBObject eventDatetimeWhere = new BasicDBObject();
@@ -85,6 +93,7 @@ public class EventLogSvcImpl implements EventLogSvc {
 
             AdminHelper.setPageTotalCount(parameters, totalCount);
 
+            modelAndView.addObject("eventList", eventDao.findListEvent(new HashMap<String, String>(){{put("delYn", CommonResource.NO);}}));
             modelAndView.addObject("eventLogs", resultList.into(new ArrayList<>()));
             modelAndView.addObject("paramBean",parameters);
         } catch (Exception e) {

@@ -887,11 +887,20 @@ div[contenteditable]:empty:before {
 .sico_151:before {
   content: "\e996"; }
 
+.sico_159:before {
+  content: "\e99e"; }
+
 .sico_152:before {
   content: "\e997"; }
 
+.sico_160:before {
+  content: "\e99f"; }
+
 .sico_153:before {
   content: "\e998"; }
+
+.sico_161:before {
+  content: "\e9a0"; }
 
 .sico_154:before {
   content: "\e999"; }

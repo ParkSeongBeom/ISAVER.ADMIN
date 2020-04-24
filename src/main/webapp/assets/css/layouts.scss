@@ -1,5 +1,4 @@
-@charset "utf-8";
-@import "filters";
+@charset "utf-8"; @import "filters"; @import "schoolfilters";
 
 body.adaptive_landscape {}
 body.adaptive_mobile    {}
@@ -87,9 +86,10 @@ body {
 
   // button  Start
   .notice-area{
-    @include flexbase; @include flex-option(1, 0, 24px); @include mmwidth(24px); height: 100%;
-    &:before{@include bbl(9,0,auto,0,0,1px,100%,$color-bline);}
-    .notice-btn{
+
+    z-index:601; @include flexbase; @include flex-option(1, 0, $notice-area); @include mmwidth($notice-area); height: 100%;
+    &:before{@include bbl(9,0,auto,0,0,1px,100%,$color-bline);} background-color: $color-bas;
+    .notice-btn {
       width:100%; height:100%;
       @include noticelevel-style01; @include noticelevel-motion-01; @include noticelevel-ani03;
     }
@@ -275,8 +275,8 @@ body {
     & > section, .common-popup-layer {order:1;}
     & > menu {order:2}
     & > article {order:3; @include flex-option(0, 1, 100%); width:100%; overflow: hidden;@include flex-column; }
-    & > aside   {order:5; }
-    & > .notice-area {order:4; overflow: hidden;}
+    & > aside   {order:4; }
+    & > .notice-area {order:5; overflow: hidden;}
 
     .popup-layer {} // 특정 화면 기능 수행 팝업
     .common-popup-layer {} // 모든 화면 공통 팝업
@@ -408,7 +408,6 @@ aside.db_area {
       border:1px solid #f5f5f5; border-left: none; border-right: none; margin:10px 0;
     }
   }
-
 
   // 알림센터
   .db_list_box {
@@ -856,6 +855,25 @@ menu {
 
 //////......   menu End
 
+/////...... S : ci-bax
+.ci-box {
+  padding-right: 0; //@include translate3d(15px, 0, 0);
+  @include flex-midddle; position: relative; height: 100%; margin: 0 0 0 10px;
+  background-repeat: no-repeat; background-size: 75%; background-position: 50%;
+  border-style:solid; border-width:0 0 0 1px;
+
+  .dashboard_mode & {
+    width: 180px; border-color:rgba($color-bline,1);
+    background-image: url("../images/logo/cec-w.png"); // background-color: rgba(0, 0, 0, 0.2);
+  }
+  .admin_mode & {
+    width:200px; border-color:rgba($color-bline,0.05); margin: 0 0 0 auto;
+    background-image: url("../images/logo/cec-b.png"); // background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+/////...... E : ci-bax
+
 
 /////...... sub_title_area 정의 시작
 .sub_title_area {
@@ -889,7 +907,7 @@ menu {
 
   &.hide{position:fixed;top:-41px; background-color: none;}
 }
-
+.expl-sub.zone span {}
 .expl {
   margin: 0 0 0 25px; padding-left: 15px; border-left: 1px solid #a9a9a9;
   span {
@@ -914,6 +932,51 @@ menu {
     & + * {margin:0 5px 0 0;}
   }
 
+  &-sub {
+    @include flex-justify-content-end; @include mmheight(40px);
+    &, & > * {@include flexbase; @include flex-align-items-center;}
+    span {
+      position: relative; height:100%; padding: 0 0 0 15px; font-size: 0.8rem;
+      &:before {
+        content:""; display: inline-block; position: relative; @include mhwidth(12px); margin:3px 5px 0 0;
+      }
+      &:nth-of-type(1):before {background-color:$color-school-orange01;}
+      &:nth-of-type(2):before {background-color:$color-school-green01;}
+    }
+    &.zone {
+      padding: 0 0 0 40px;
+      span {
+        /*
+        &:nth-of-type(1):before {background-color:$color-school-yellow01;}
+        &:nth-of-type(2):before {background-color:$color-school-green02; }
+        &:nth-of-type(3):before {background-color:$color-school-blue03;  }
+        &:nth-of-type(4):before {background-color:$color-school-pink01;  }
+        */
+
+        &.line_contents_0:before  {background-color:$chart-color-01;}
+        &.line_contents_1:before  {background-color:$chart-color-11;}
+        &.line_contents_2:before  {background-color:$chart-color-21;}
+        &.line_contents_3:before  {background-color:$chart-color-02;}
+        &.line_contents_4:before  {background-color:$chart-color-12;}
+        &.line_contents_5:before  {background-color:$chart-color-22;}
+        &.line_contents_6:before  {background-color:$chart-color-03;}
+        &.line_contents_7:before  {background-color:$chart-color-13;}
+        &.line_contents_8:before  {background-color:$chart-color-23;}
+        &.line_contents_9:before  {background-color:$chart-color-04;}
+        &.line_contents_10:before {background-color:$chart-color-14;}
+        &.line_contents_11:before {background-color:$chart-color-24;}
+        &.line_contents_12:before {background-color:$chart-color-05;}
+        &.line_contents_13:before {background-color:$chart-color-15;}
+        &.line_contents_14:before {background-color:$chart-color-25;}
+        &.line_contents_15:before {background-color:$chart-color-06;}
+        &.line_contents_16:before {background-color:$chart-color-16;}
+        &.line_contents_17:before {background-color:$chart-color-26;}
+        &.line_contents_18:before {background-color:$chart-color-07;}
+        &.line_contents_19:before {background-color:$chart-color-17;}
+      }
+      & + * {margin:0 5px 0 0;}
+    }
+  }
 }
 /////...... sub_title_area 정의 끝
 
@@ -954,7 +1017,6 @@ menu {
     font-size: 1.2rem; font-weight:bold; padding:0 0 0 180px;
     @include flexbase; @include flex-row-wrap; @include flex-align-items-center;
   }
-
 
   article {
     position: relative; z-index: 3; width: 500px; padding:20px 30px 40px 30px;
@@ -1058,6 +1120,41 @@ menu {
 }
 /////..... 임계치 적용 표시 End
 
+.copybox_area {
+
+  @include flex-justify-content-start; @include flex-align-items-center;
+  order:2; overflow: hidden; z-index: 20; left:auto; right:0; top:0; /*background-color: rgba(0,0,0,0.5);*/
+  @include mmwidth($bmtwidth); height:auto; padding: 0 0 10px 0;
+  //@include perspective01(600px, 50%, 50%);
+
+  &:hover {
+    overflow: overlay;
+    //& > div {@include rotate-y(0deg);}
+  }
+
+  &, & > div {@include flexbase; @include flex-column; }
+
+  & > div, .copybox {
+    display:none;
+    @include flex-justify-content-center; @include flex-align-items-start;
+    @include transition(200ms);  // @include rotate-y(-20deg);
+    order: 2; width:calc(100% - 20px); min-height:auto; padding: 10px; margin:10px; margin-bottom:0;
+    @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
+
+    &.level-danger {order:1 !important;}
+    &.level-caution, &.level-warning, &.level-danger{display:block;}
+
+    //&:before {@include bbl(auto,0,0,0,100%,1px,#000); }
+    &:after  {background-color: $color-not; opacity: 0.95;}
+
+    & > * {width:100%; }
+
+    span {order:2; font-size:3.1rem; left:-5px; &:before {font-size:2.8rem;}}
+    em {order:1; top:0; font-size:1.2rem; &:before {display: none;} }
+    p { &:first-of-type {order:3; font-size:1rem;} &:last-of-type  {order:4; font-size:0.9rem;} }
+  }
+}
+
 // 국립태권도 박물관 데시보드 - 적용 시 <body> 에 ".taekwon_mode" 클래스 삽입 시 적용.
 body.taekwon_mode {
   h1 {background-image: url(../images/logo/taekwon/taekwon_w.svg) !important; background-size:70%;}
@@ -1102,42 +1199,6 @@ body.taekwon_mode {
   height:100%;
   .perspective {
     position: absolute; z-index:20; height:100%; top:0; right:0;
-  }
-  .copybox_area {
-    $bmtwidth:160px;
-
-    @include flex-justify-content-start; @include flex-align-items-center;
-    order:2; overflow: hidden; z-index: 20; left:auto; right:0; top:0; /*background-color: rgba(0,0,0,0.5);*/
-    min-width:$bmtwidth; max-width:$bmtwidth; width:$bmtwidth; height:auto; padding: 0 0 10px 0;
-
-    //@include perspective01(600px, 50%, 50%);
-
-    &:hover {
-      overflow: overlay;
-      //& > div {@include rotate-y(0deg);}
-    }
-
-    &, & > div {@include flexbase; @include flex-column; }
-
-    & > div, .copybox {
-      display:none;
-      @include flex-justify-content-center; @include flex-align-items-start;
-      @include transition(200ms);  // @include rotate-y(-20deg);
-      order: 2; width:calc(100% - 20px); min-height:auto; padding: 10px; margin:10px; margin-bottom:0;
-      @include box-shadow01(0px, 10px, 15px, -15px, #000, 1);
-
-      &.level-danger {order:1 !important;}
-      &.level-caution, &.level-warning, &.level-danger{display:block;}
-
-      //&:before {@include bbl(auto,0,0,0,100%,1px,#000); }
-      &:after  {background-color: $color-not; opacity: 0.95;}
-
-      & > * {width:100%; }
-
-      span {order:2; font-size:3.1rem; left:-5px; &:before {font-size:2.8rem;}}
-      em {order:1; top:0; font-size:1.2rem; &:before {display: none;} }
-      p { &:first-of-type {order:3; font-size:1rem;} &:last-of-type  {order:4; font-size:0.9rem;} }
-    }
   }
 }
 

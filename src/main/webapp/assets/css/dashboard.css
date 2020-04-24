@@ -189,7 +189,8 @@ body.dashboard_mode {
     -ms-flex: 1 0 40px;
     height: 40px !important;
     min-height: 40px !important;
-    max-height: 40px !important; }
+    max-height: 40px !important;
+    padding: 0 0 0 15px; }
     body.dashboard_mode .sub_title_area.hide {
       margin-top: -75px; }
 
@@ -2939,7 +2940,6 @@ body.dashboard_mode {
 .copybox_area, .m_marqueebox {
   overflow: hidden;
   position: absolute;
-  left: 0;
   z-index: 1; }
   .copybox_area em, .m_marqueebox em {
     letter-spacing: 0; }
@@ -2990,6 +2990,7 @@ body.dashboard_mode {
       font-size: 3rem; }
 
 .m_marqueebox {
+  left: 0;
   bottom: 0;
   width: 100%;
   height: 24px;

@@ -153,16 +153,6 @@
                     $(this).attr("title",text);
                 }
             });
-
-            if(subMenuId == "100000"){
-                modifyElementClass($("html"),'admin_mode','remove');
-                modifyElementClass($("body"),'admin_mode','remove');
-                modifyElementClass($("html"),'dashboard_mode','add');
-                modifyElementClass($("body"),'dashboard_mode','add');
-                modifyElementClass($("body"),'dark_mode','add');
-                dashboardFlag = true;
-            }
-
             printTime();
 
             notificationHelper.setMessageConfig(layoutMessageConfig);

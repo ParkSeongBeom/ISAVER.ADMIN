@@ -6,6 +6,7 @@
         <id property="uuid" column="uuid"/>
         <result property="fenceId" column="fenceId"/>
         <result property="fenceType" column="fenceType"/>
+        <result property="fenceSubType" column="fenceSubType"/>
         <result property="areaId" column="areaId"/>
         <result property="deviceId" column="deviceId"/>
         <result property="fenceName" column="fenceName"/>
@@ -26,6 +27,7 @@
         SELECT  A.uuid as uuid
                 , A.fence_id as fenceId
                 , A.fence_type as fenceType
+                , A.fence_sub_type as fenceSubType
                 , A.device_id as deviceId
                 , C.area_id as areaId
                 , A.fence_name as fenceName
@@ -42,6 +44,12 @@
         <where>
             <if test="deviceId != null and deviceId != ''">
                 AND     a.device_id = #{deviceId}
+            </if>
+            <if test="areaId != null and areaId != ''">
+                AND     c.area_id = #{areaId}
+            </if>
+            <if test="fenceType != null and fenceType != ''">
+                AND     a.fence_type = #{fenceType}
             </if>
         </where>
     </select>
@@ -70,14 +78,18 @@
         SELECT  a.uuid as uuid
                 , a.fence_id as fenceId
                 , a.fence_type as fenceType
+                , A.fence_sub_type as fenceSubType
                 , a.device_id as deviceId
                 , b.area_id as areaId
+                , c.area_name as areaName
                 , a.fence_name as fenceName
                 , a.z_min as zMin
                 , a.config as config
         FROM    isaver.fence a
         INNER JOIN isaver.device b
         ON	    a.device_id = b.device_id
+        INNER JOIN isaver.area c
+        ON	    b.area_id = c.area_id
         WHERE	a.fence_type = 'normal'
     </select>
 
@@ -90,6 +102,7 @@
             uuid
             , fence_id
             , fence_type
+            , fence_sub_type
             , device_id
             , fence_name
             , z_min
@@ -101,6 +114,7 @@
                 #{item.uuid}
                 ,#{item.fenceId}
                 ,#{item.fenceType}
+                ,#{item.fenceSubType}
                 ,#{item.deviceId}
                 ,#{item.fenceName}
                 <if test="item.zMin != null">

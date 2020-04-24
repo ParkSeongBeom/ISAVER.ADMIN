@@ -9,6 +9,30 @@
 경고 : 주황  $color-orange-01  level-warning
 위험 : 빨강  $color-red-01     level-danger
 */
+/*차트 color a~z 26 가지 */
+/*
+1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
+1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
+1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
+1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
+1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
+1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
+1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
+1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
+1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
+
+
+10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
+1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
+1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
+1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
+1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
+1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
+1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
+1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
+1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
+
+*/
 /*50px 버튼*/
 /* 40px 버튼 */
 @-webkit-keyframes radar {
@@ -292,6 +316,10 @@
   content: "\e99d" !important; }
 .ico-car:before {
   content: "\e99e" !important; }
+.ico-pdf:before {
+  content: "\e99f" !important; }
+.ico-excel:before {
+  content: "\e9a0" !important; }
 
 .cursor_cros {
   cursor: crosshair !important; }
@@ -667,7 +695,7 @@ input.datepicker + button + .in-timepicker {
   position: relative;
   width: auto;
   float: left;
-  height: 40px; }
+  min-height: 40px; }
   .csl_style01 > *:not(span) {
     width: 100%;
     height: 100%; }
@@ -712,7 +740,13 @@ input.datepicker + button + .in-timepicker {
     -moz-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    justify-content: center; }
+    justify-content: center;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important; }
     .csl_style01 > label:before {
       content: "\e901";
       font-size: 1.2rem;
@@ -1242,6 +1276,132 @@ input.datepicker + button + .in-timepicker {
   .csl_style06 > input:checked + label:after, .csl_style06 > input.on + label:after, .csl_style06 > input label:after, .csl_style06.on:checked + label:after, .csl_style06.on.on + label:after, .csl_style06.on label:after {
     content: "사용";
     text-decoration: none; }
+
+.csl_style07 {
+ /*
+<div class="checkbox_set csl-check">
+    <input type="checkbox"  name="" />
+    <label></label>
+    <span>텍스트 삽입</span>
+</div>
+*/
+  position: relative;
+  width: auto;
+  float: left;
+  min-height: 40px;
+  min-height: 40px;
+  padding: 0 0 0 10px; }
+  .csl_style07 > *:not(span) {
+    width: 100%;
+    height: 100%; }
+  .csl_style07, .csl_style07 > label {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    display: flexbox;
+    display: box;
+    box-align: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .csl_style07:after, .csl_style07:before, .csl_style07 > label:after, .csl_style07 > label:before {
+      content: ""; }
+  .csl_style07 > input {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    margin: 0;
+    height: 100%;
+    cursor: pointer; }
+  .csl_style07 > span {
+    margin: 0 10px; }
+    .csl_style07 > span + input {
+      left: auto !important;
+      right: 0;
+      margin: 0; }
+  .csl_style07.disabled {
+    opacity: 0.6;
+    pointer-events: none; }
+  .csl_style07 > input, .csl_style07 > label {
+    width: 40px; }
+  .csl_style07 > label {
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important; }
+    .csl_style07 > label:before {
+      content: "\e901";
+      font-size: 1.2rem;
+      opacity: 0.3;
+      z-index: 1; }
+    .csl_style07 > label:after {
+      opacity: 0.8;
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      -moz-border-radius: 500px;
+      -webkit-border-radius: 500px;
+      border-radius: 500px;
+      -khtml-border-radius: 500px;
+      background-color: rgba(0, 0, 0, 0.5); }
+  .csl_style07 > input:checked + label:before, .csl_style07 > input.on + label:before {
+    text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    -webkit-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    -moz-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    font-size: 1.6rem;
+    font-weight: bold;
+    opacity: 1; }
+  .csl_style07 > input:checked + label:after, .csl_style07 > input.on + label:after {
+    opacity: 1;
+    width: 29px;
+    height: 29px;
+    background-color: rgba(0, 0, 0, 0.7); }
+  .csl_style07 > input, .csl_style07 > label {
+    width: 25px; }
+  .csl_style07 > label {
+    width: 25px !important;
+    min-width: 25px !important;
+    max-width: 25px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important; }
+    .csl_style07 > label:before {
+      color: #535353; }
+    .csl_style07 > label:after {
+      -moz-border-radius: 0;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+      -khtml-border-radius: 0;
+      background-color: white;
+      border-style: solid;
+      border-width: 1px;
+      border-color: #535353; }
+  .csl_style07 > input:checked + label:before, .csl_style07 > input.on + label:before {
+    text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    -webkit-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    -moz-text-shadow: 1px 3px 4px rgba(0, 0, 0, 0.4);
+    font-size: 1.6rem;
+    font-weight: bold;
+    opacity: 1;
+    color: #fff; }
+  .csl_style07 > input:checked + label:after, .csl_style07 > input.on + label:after {
+    opacity: 1;
+    width: 29px;
+    height: 29px;
+    background-color: rgba(0, 0, 0, 0.7); }
 
 a.btn {
   display: -webkit-box;
@@ -2866,31 +3026,6 @@ button.btn ~ button.btn {
       font-size: 1.5rem; }
 
 /*차트 color a~z 26 가지 */
-/*
-1- 브라운01    2-래드02      3- 그레이      4. 오렌지01   5. 오렌지02   5. 연두01      6. 연두02     7. 연두03     8. 블루01     9. 블루02
-1-1 #795547   1-1 #f15151   1-1 #9e9e9e   1-1 #fe5722   1-1 #ff9801   1-1 #4cb050   1-1 #8cc34b   1-1 #cddc39   1-1 #03a9f5   1-1 #00bcd5
-1-2 #a1897f   1-2 #d04d4d   1-2 #cdcdcd   1-2 #ff8a64   1-2 #ffb74d   1-2 #81c786   1-2 #aed582   1-2 #dee676   1-2 #4fc2f8   1-2 #00acc2
-1-3 #795547   1-3 #ba0c0c   1-3 #757575   1-3 #fe5722   1-3 #fc8d00   1-3 #4cb050   1-3 #7db343   1-3 #cddc39   1-3 #03a9f4   1-3 #0097a8
-1-4 #5c3f37   1-4 #921717   1-4 #616161   1-4 #e64a19   1-4 #ef6c00   1-4 #4baf4f   1-4 #689f39   1-4 #b0b42c   1-4 #0288d1   1-4 #016064
-1-5 #3f2723   1-5 #8b0000   1-5 #424243   1-5 #bf360c   1-5 #e65100   1-5 #398e3c   1-5 #76ff02   1-5 #817717   1-5 #00838f   1-5 #00e6ff
-1-6 #974c2e   1-6 #975858   1-6 #383737   1-6 #974c2e   1-6 #ffab40   1-6 #1c5e20   1-6 #33691e   1-6 #c6ff00   1-6 #02569c   1-6 #27777f
-1-7 #794f3f   1-7 #734040   1-7 #4a3f3f   1-7 #794f3f   1-7 #ff9301   1-7 #00e676   1-7 #64dc18   1-7 #aeea00   1-7 #3fc4fe   1-7 #547e82
-1-8 #604940   1-8 #8d1c1c   1-8 #635e5e   1-8 #604940   1-8 #ff6d00   1-8 #00c953   1-8 #4f812f   1-8 #71892c   1-8 #0091e9   1-8 #38585b
-
-
-10. 블루03    11. 블루04     12. 보라01     13. 보라02   14. 보라02     15. 핑크01    16. 핑크02
-1-1 #009788   1-1 #009788   1-1 #3f51b5   1-1 #673bb7   1-1 #9c27af   1-1 #f54337   1-1 #ea1e63
-1-2 #4dd0e1   1-2 #4297c8   1-2 #7986cc   1-2 #9675cc   1-2 #ba68c8   1-2 #e77473   1-2 #f1628e
-1-3 #4db7ad   1-3 #3daae8   1-3 #3949ab   1-3 #5d35b0   1-3 #8e24aa   1-3 #f54337   1-3 #da1a60
-1-4 #00796a   1-4 #1f6f9d   1-4 #313fa0   1-4 #4527a1   1-4 #4a148c   1-4 #e53935   1-4 #890e4f
-1-5 #45978d   1-5 #53798f   1-5 #1a237e   1-5 #512da7   1-5 #e040fa   1-5 #b71b1c   1-5 #ff4083
-1-6 #437771   1-6 #67a1c2   1-6 #526efe   1-6 #fe9085   1-6 #a900fd   1-6 #ff5253   1-6 #c51163
-1-7 #28615a   1-7 #1d6e9c   1-7 #304fff   1-7 #7c4dff   1-7 #8a4b96   1-7 #d60000   1-7 #884865
-1-8 #31ab9c   1-8 #178ed2   1-8 #586091   1-8 #775db0   1-8 #6d4375   1-8 #a42a22   1-8 #831044
-
-
-
-*/
 * .ch_name, * .mh_name {
   position: relative;
   margin: 0 20px 0 0;

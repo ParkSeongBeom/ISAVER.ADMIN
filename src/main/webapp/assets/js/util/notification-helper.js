@@ -449,11 +449,12 @@ var NotificationHelper = (
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();
             }
-            var eventAppend = null;
+            var eventAppend = "";
             if(notification['fenceName']!=null){
-                eventAppend = '('+notification['fenceName']+')';
-            }else if(notification['value']!=null){
-                eventAppend = '('+notification['value']+')';
+                eventAppend += '('+notification['fenceName']+')';
+            }
+            if(notification['value']!=null){
+                eventAppend += '('+notification['value']+')';
             }
 
             notificationTag.addClass("level-"+criticalCss[notification['criticalLevel']]);
