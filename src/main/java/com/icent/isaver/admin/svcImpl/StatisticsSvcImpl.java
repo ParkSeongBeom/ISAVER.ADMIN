@@ -182,7 +182,11 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 JsonArray conditions = (JsonArray) jsonObj.get("condition");
                 for(int k=0;k<conditions.size();k++){
                     JsonObject condition = (JsonObject) conditions.get(k);
-                    commonMatch.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),convertJsonArrayToList(condition.get("value").getAsJsonArray())));
+                    if(condition.get("value").isJsonArray()){
+                        commonMatch.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),convertJsonArrayToList(condition.get("value").getAsJsonArray())));
+                    }else{
+                        commonMatch.put(condition.get("key").getAsString(), new BasicDBObject(condition.get("type").getAsString(),condition.get("value").getAsString()));
+                    }
                 }
 
                 JsonArray customConditions = (JsonArray) jsonObj.get("customCondition");

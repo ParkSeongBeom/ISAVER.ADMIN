@@ -9,6 +9,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link href="${rootPath}/assets/css/reset.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/layouts.css?version=${version}" rel="stylesheet" type="text/css" />
     <link href="${rootPath}/assets/css/elements.css?version=${version}" rel="stylesheet" type="text/css" />

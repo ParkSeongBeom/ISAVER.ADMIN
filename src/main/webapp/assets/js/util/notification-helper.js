@@ -506,7 +506,6 @@ var NotificationHelper = (
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
             }
-
             if(notification['fenceId']!=null && (notification['fenceName']==null || notification['fenceName']=='')){
                 var fence = getFence(notification['fenceId']);
                 if(fence!=null){
@@ -541,13 +540,7 @@ var NotificationHelper = (
             if(newFlag){
                 /* 애니메이션 */
                 $(".notice-btn").removeClass("on");
-                try {
-                    setTimeout(function() {
-                        $(".notice-btn").addClass("on");
-                    }, 10);
-                } catch(e) {
-                    console.error(e);
-                }
+                $(".notice-btn").addClass("on");
 
                 /* 싸이렌 */
                 playSegment();
@@ -831,63 +824,61 @@ var NotificationHelper = (
          */
         var selectBoxChangeHandler = function(type){
             _self.setLoading('noti', true);
-            setTimeout(function(){
-                try{
-                    var limitCnt = 0;
-                    var moreBtnViewFlag = false;
+            try{
+                var limitCnt = 0;
+                var moreBtnViewFlag = false;
 
-                    switch (type){
-                        case "reset":
-                            _notiPageObj['pageIndex'] = 1;
-                            limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex'];
-                            _notiPageObj['elementArr'] = [];
-                            for(var index in _notificationList){
-                                var notification = _notificationList[index];
-                                if(notification['element']!=null){
-                                    notification['element'].remove();
-                                }
-                                notification['element'] = null;
-                                _notiPageObj['elementArr'].push(notification);
+                switch (type){
+                    case "reset":
+                        _notiPageObj['pageIndex'] = 1;
+                        limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex'];
+                        _notiPageObj['elementArr'] = [];
+                        for(var index in _notificationList){
+                            var notification = _notificationList[index];
+                            if(notification['element']!=null){
+                                notification['element'].remove();
                             }
-                            if(_notiPageObj['elementArr'].length>0){
-                                _notiPageObj['elementIndex'] = _notiPageObj['elementArr'].length-1;
-                            }
-                            break;
-                        case "more":
-                            _notiPageObj['pageIndex']++;
-                            limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex']-_element.find(">li:visible").length;
-                            break;
-                    }
+                            notification['element'] = null;
+                            _notiPageObj['elementArr'].push(notification);
+                        }
+                        if(_notiPageObj['elementArr'].length>0){
+                            _notiPageObj['elementIndex'] = _notiPageObj['elementArr'].length-1;
+                        }
+                        break;
+                    case "more":
+                        _notiPageObj['pageIndex']++;
+                        limitCnt = _notiPageObj['viewMaxCnt']*_notiPageObj['pageIndex']-_element.find(">li:visible").length;
+                        break;
+                }
 
-                    if(_notiPageObj['elementIndex']>=0 && _notiPageObj['elementArr'].length>0){
-                        for(var i=_notiPageObj['elementIndex']; i>=0; i--){
-                            var notification = _notiPageObj['elementArr'][i];
-                            if(limitCnt>=0){
-                                if(checkNotificationData(notification['data'])){
-                                    if(limitCnt==0){
-                                        moreBtnViewFlag = true;
-                                        _notiPageObj['elementIndex'] = i;
-                                    }else{
-                                        notification['element'] = notificationViewRender(notification['data'],false);
-                                    }
-                                    limitCnt--;
+                if(_notiPageObj['elementIndex']>=0 && _notiPageObj['elementArr'].length>0){
+                    for(var i=_notiPageObj['elementIndex']; i>=0; i--){
+                        var notification = _notiPageObj['elementArr'][i];
+                        if(limitCnt>=0){
+                            if(checkNotificationData(notification['data'])){
+                                if(limitCnt==0){
+                                    moreBtnViewFlag = true;
+                                    _notiPageObj['elementIndex'] = i;
+                                }else{
+                                    notification['element'] = notificationViewRender(notification['data'],false);
                                 }
-                            }else{
-                                break;
+                                limitCnt--;
                             }
+                        }else{
+                            break;
                         }
                     }
-
-                    if(moreBtnViewFlag){
-                        $("#notiMoreBtn").show();
-                    }else{
-                        $("#notiMoreBtn").hide();
-                    }
-                }catch(e){
-                    console.error("[selectBoxChangeHandler] error - " + e );
                 }
-                _self.setLoading('noti', false);
-            },10);
+
+                if(moreBtnViewFlag){
+                    $("#notiMoreBtn").show();
+                }else{
+                    $("#notiMoreBtn").hide();
+                }
+            }catch(e){
+                console.error("[selectBoxChangeHandler] error - " + e );
+            }
+            _self.setLoading('noti', false);
         };
 
         var checkNotificationData = function(notification){

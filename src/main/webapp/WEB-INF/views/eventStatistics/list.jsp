@@ -18,8 +18,7 @@
 <script src="${rootPath}/assets/library/d3/d3.min.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/d3/MultiLine.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/jspdf/jspdf.debug.js?version=${version}" type="text/javascript" ></script>
-<%--<script src="${rootPath}/assets/library/jspdf/bluebird.min.js?version=${version}" type="text/javascript" ></script>--%>
-<%--<script src="${rootPath}/assets/library/jspdf/html2canvas.min.js?version=${version}" type="text/javascript" ></script>--%>
+<script src="${rootPath}/assets/library/jspdf/html2canvas.min.js?version=${version}" type="text/javascript" ></script>
 <script src="${rootPath}/assets/library/d3/d3-save-svg.js?version=${version}" type="text/javascript" ></script>
 
 <style>
@@ -865,8 +864,8 @@
                 case "speedingVehicleTraffic":
                     jsonData['condition'].push({
                         'key' : 'criticalLevel'
-                        ,'value' : '$eq'
-                        ,'type' : 'LEV003'
+                        ,'type' : '$eq'
+                        ,'value' : 'LEV003'
                     });
                     break;
                 case "vehicleSpeed":
