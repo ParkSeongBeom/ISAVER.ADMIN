@@ -835,7 +835,7 @@ var CustomMapPopup = (
                 }
 
                 if(_addFenceInfo['fenceMarker']!=null){
-                    _customMapMediator.computePolyPoints({deviceId:deviceId, fenceId:fenceId});
+                    _customMapMediator.computePolyPoints({deviceId:deviceId, id:fenceId});
                 }
                 _customMapMediator.addMarker('fence',{
                     "deviceId":deviceId

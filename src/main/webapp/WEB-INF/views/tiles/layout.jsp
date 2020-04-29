@@ -159,6 +159,10 @@
             notificationHelper.setMessageConfig(layoutMessageConfig);
             notificationHelper.setElement($("#notificationList"));
             notificationHelper.createEventListener();
+            <c:if test="${mainTarget.targetId=='nowon'}">
+                notificationHelper.setOptions({'getListFlag':false, 'renderFlag':false});
+                $(".notice-area").hide();
+            </c:if>
             notificationHelper.getNotificationList();
             notificationHelper.setWebsocket(webSocketHelper);
             aliveSend("${aliveCheckDelay}");

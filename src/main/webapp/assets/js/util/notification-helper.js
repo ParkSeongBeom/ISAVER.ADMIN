@@ -28,6 +28,8 @@ var NotificationHelper = (
         let _options ={
             toastPopup : false
             ,thisAreaShowOnlyFlag : false
+            ,getListFlag : true
+            ,renderFlag : true
             ,sendCancelCnt : 20
         };
         let _webSocketHelper;
@@ -139,12 +141,7 @@ var NotificationHelper = (
 
             switch (resultData['messageType']) {
                 case "addNotification": // 알림센터 이벤트 등록
-                    if(resultData['dashboardAlarmFileUrl']!=null){
-                        setAlarmAudio(resultData['dashboardAlarmFileUrl']);
-                    }else{
-                        setAlarmAudio();
-                    }
-                    addNotification(resultData['notification'], true);
+                    addNotification(resultData['notification'], true, resultData['dashboardAlarmFileUrl']);
                     break;
                 case "allCancelNotification": // 알림센터 이벤트 전체 해제
                     var criticalLevelCheck = false;
@@ -253,7 +250,7 @@ var NotificationHelper = (
                     _fenceList = data['fenceList'];
                     break;
                 case 'notificationList':
-                    addNotificationList(data['notifications'].reverse(), data['notiCountList']);
+                    addNotificationList(data['notifications'], data['notiCountList']);
                     break;
                 case 'confirmNotification':
                 case 'cancelNotification':
@@ -313,7 +310,9 @@ var NotificationHelper = (
          */
         this.getNotificationList = function(){
             _ajaxCall('fenceList');
-            _ajaxCall('notificationList');
+            if(_options['getListFlag']){
+                _ajaxCall('notificationList');
+            }
         };
 
         /**
@@ -434,7 +433,7 @@ var NotificationHelper = (
             notificationTag.find(".video_btn").click({notificationId:notification['notificationId']},function(evt){
                 var _noti = _self.getNotification('data',evt.data.notificationId);
                 if(_noti!=null && _noti['updateDatetime']!=null){
-                    cs.openVideo(_noti['notificationId'],_noti['fenceId'],new Date(_noti['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(_noti['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
+                    cs.openVideo(_noti['notificationId'],_noti['fenceName'],new Date(_noti['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(_noti['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"));
                 }else{
                     alert("Detect cancel event does not exist.");
                 }
@@ -444,7 +443,7 @@ var NotificationHelper = (
             if(notification['fenceId']==null ||
                 (notification.hasOwnProperty('fenceDeviceList') && notification['fenceDeviceList'].length==0) ||
                 (notification.hasOwnProperty('cameraCnt') && notification['cameraCnt']==0) ||
-                !cs.isRecording(notification['fenceId'])) {
+                !cs.isRecording(notification['fenceName'])) {
                 notificationTag.find(".video_btn").remove();
             }else if(notification['updateDatetime']==null){
                 notificationTag.find(".video_btn").hide();
@@ -501,7 +500,12 @@ var NotificationHelper = (
          * @param newFlag
          * @param viewFlag
          */
-        var addNotification = function(notification, newFlag){
+        var addNotification = function(notification, newFlag, dashboardAlarmFileUrl){
+            if(!_options['renderFlag']){
+                callBackEvent('addNotification', notification);
+                return false;
+            }
+
             if(_self.getNotification('element',notification['notificationId'])!=null){
                 console.warn("[NotificationHelper][addNotification] exist notification - "+notification['notificationId']);
                 return false;
@@ -543,6 +547,7 @@ var NotificationHelper = (
                 $(".notice-btn").addClass("on");
 
                 /* 싸이렌 */
+                setAlarmAudio(dashboardAlarmFileUrl);
                 playSegment();
 
                 if(_options['toastPopup']) {

@@ -313,12 +313,18 @@ function MenuView(model) {
                     $("<input/>", {'type':"checkbox",'checked':true})
                 ).append(
                     $("<button/>", {'href':"#"}).text(_area['areaName'])
+                ).append(
+                    $("<ul/>")
                 );
 
                 if(_area['childAreaIds']!=null){
-                    _childMenuLiTag.append($("<ul/>"));
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+_area['areaId']+"');");
                 }else{
+                    if(_area['parentAreaId']==null){
+                        _childMenuLiTag.find("ul").addClass("list-none");
+                    }else{
+                        _childMenuLiTag.find("ul").remove();
+                    }
                     _childMenuLiTag.find("button").attr("onclick", "javascript:moveDashboard('"+(_area['parentAreaId']?_area['parentAreaId']:'')+"','"+_area['areaId']+"');");
                 }
 

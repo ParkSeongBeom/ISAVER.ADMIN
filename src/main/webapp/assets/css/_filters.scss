@@ -295,7 +295,7 @@ $display-inline-block:inline-block;
 @mixin flex-justify-content-center  {-webkit-box-pack:center;  -moz-box-pack:center;     -webkit-justify-content:center;        -ms-flex-pack:center;     justify-content:center;       }
 // ex) @include flex-justify-content-center;
 @mixin flex-justify-content-start   {-webkit-box-pack:start;   -moz-box-pack:flex-start; -webkit-justify-content:flex-start;    -ms-flex-pack:flex-start; justify-content:flex-start;   }
-// ex) @include flex-justify-content-start;
+// ex) @include flex-justify-content-streebase2tart;
 @mixin flex-justify-content-end     {-webkit-box-pack:end;     -moz-box-pack:flex-end;   -webkit-justify-content:flex-end;      -ms-flex-pack:flex-end;   justify-content:flex-end;     }
 // ex) @include flex-justify-content-end;
 @mixin flex-justify-content-between {-webkit-box-pack:justify; -moz-box-pack:justify;    -webkit-justify-content:space-between; -ms-flex-pack:justify;    justify-content:space-between;}
@@ -2014,7 +2014,7 @@ $plus_icon_wh:30px; $mt_btn_h:50px; $mt_btn_w:40px; $bar_w:20px; $bar_h:16px;
     &:checked + div, &:checked + button {
       & ~ ul {
         & > li {display: block; height:auto;}
-        &:after {content:"\e92c" !important;}
+        &:after {content:"\e92c";}
       }
     }
   }

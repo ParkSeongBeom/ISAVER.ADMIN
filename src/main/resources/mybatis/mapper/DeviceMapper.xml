@@ -598,6 +598,7 @@
         <result property="deviceId" column="deviceId"/>
         <result property="deviceName" column="deviceName"/>
         <result property="fenceId" column="fenceId"/>
+        <result property="fenceName" column="fenceName"/>
     </resultMap>
 
     <!--
@@ -608,6 +609,7 @@
         select  a.device_id as deviceId
                 ,a.device_name as deviceName
                 ,c.fence_id as fenceId
+                ,c.fence_name as fenceName
         FROM    isaver.device a
         INNER JOIN isaver.fence_device b
         ON      b.device_id = a.device_id

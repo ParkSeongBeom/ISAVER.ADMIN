@@ -11,9 +11,9 @@ function fnCSController(){
 		}
 	};
 
-	objCSController.openVideo = function(notificationId,fenceId,eventDatetime,cancelDatetime,videoFileName){
+	objCSController.openVideo = function(notificationId,fenceName,eventDatetime,cancelDatetime,videoFileName){
 		if(this.isCS){
-			vmsBindObj.openVideo(notificationId,fenceId,eventDatetime,cancelDatetime,videoFileName);
+			vmsBindObj.openVideo(notificationId,fenceName,eventDatetime,cancelDatetime,videoFileName);
 		}
 	};
 
@@ -23,9 +23,9 @@ function fnCSController(){
 		}
 	};
 
-	objCSController.isRecording = function(fenceId){
+	objCSController.isRecording = function(fenceName){
 		if(this.isCS){
-			return vmsBindObj.isRecording(fenceId);
+			return vmsBindObj.isRecording(fenceName);
 		}
 		return false;
 	};

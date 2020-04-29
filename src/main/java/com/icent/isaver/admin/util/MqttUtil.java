@@ -72,7 +72,7 @@ public class MqttUtil implements MqttCallbackExtended {
                                 logger.error(e.getMessage());
                             }
                         } catch (Exception e) {
-                            logger.error(e.getMessage());
+                            logger.error("[MQTT] Connecting error : {}",e.getMessage());
                         }
                         initFlag = true;
                     }

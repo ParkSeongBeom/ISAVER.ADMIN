@@ -165,8 +165,8 @@
         videoFileName = videoUrl+videoFileName;
         try{
             var videoHistory = videoHistoryList[index];
-            if(videoHistory!=null && videoHistory['fenceId']!=null && cs.isRecording(videoHistory['fenceId']) && videoHistory['eventDatetime']!=null && videoHistory['updateDatetime']!=null){
-                cs.openVideo(videoHistory['notificationId'],videoHistory['fenceId'],new Date(videoHistory['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(videoHistory['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"),videoFileName);
+            if(videoHistory!=null && videoHistory['fenceName']!=null && cs.isRecording(videoHistory['fenceName']) && videoHistory['eventDatetime']!=null && videoHistory['updateDatetime']!=null){
+                cs.openVideo(videoHistory['notificationId'],videoHistory['fenceName'],new Date(videoHistory['eventDatetime']).format("yyyy-MM-dd HH:mm:ss"),new Date(videoHistory['updateDatetime']).format("yyyy-MM-dd HH:mm:ss"),videoFileName);
             }else{
                 $("#videoSource").attr("src",videoFileName);
                 $("#videoElement")[0].load();

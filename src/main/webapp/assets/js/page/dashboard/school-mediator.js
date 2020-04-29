@@ -82,7 +82,6 @@ var SchoolMediator = (
                 }
             }
         };
-        let _initFlag=false;
         var _self = this;
 
         /**
@@ -253,9 +252,7 @@ var SchoolMediator = (
          * @author psb
          */
         this.setAnimate = function(data){
-            if(_initFlag){
-                update(data,true);
-            }
+            update(data,true);
         };
 
         this.bindSchoolPopupHandler = function(handler){
@@ -311,7 +308,6 @@ var SchoolMediator = (
                         update(preList[index], false);
                     }
                     render();
-                    _initFlag = true;
                     break;
             }
         };

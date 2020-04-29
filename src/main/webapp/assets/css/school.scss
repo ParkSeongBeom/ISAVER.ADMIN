@@ -138,7 +138,6 @@
   position: absolute; z-index: 90; @include translate3d(0, 100%, 0);
   width:100%; top:$headerHeight; bottom:0;  background-color: rgba($color-schoolbg,0.9);
 
-
   @mixin layer-sub {
     animation-name:         layer-sub;
     -webkit-animation-name: layer-sub;
@@ -169,10 +168,11 @@
     @include flexbase; height:100%; @include flex-option(0, 1, 100%);
     & * {position: relative; }
     & > * {
-      @include flexbase; @include flex-column; @include flex-width-one(2); height:100%;
+      @include flexbase; @include flex-column; /* @include flex-width-one(2.2);*/
+      @include mmwidth(42%); height:100%;
 
       &:nth-of-type(2) {
-        @include flex-width-one(1);
+        @include mmwidth(16%);
 
         .chart-box {
           &:before, &:after {@include flex-midddle; position: absolute; left:0; width:100%; height:50px; opacity: 0.7;}
@@ -223,17 +223,43 @@
     }
   }
   &-chart {
-    @include flex-option(0, 1, 100%);
+    overflow: hidden; @include flex-option(0, 1, 100%);
     & > * {
-      @include flexbase; @include flex-column;
+      @include flexbase; @include flex-column; position: relative;
       width:100%; @include flex-option(0, 1, 100%); padding:3px 0 0 0;
       & > * {
         @include flexbase;  width:100%; background-color: $color-sboard;
         &:first-of-type  {
           @include mmheight($headerHeight); @include flex-option(1, 0, $headerHeight); @include flex-align-items-center;
-          @include flex-justify-content-between; padding:0 10px;
+          @include flex-justify-content-between;  z-index: 1;
 
-          h4 {white-space:nowrap;}
+          $expl-sub-padding:20px;
+
+          h4 {
+            overflow: hidden; display:-webkit-box; @include mmwidth(40%); padding:0 40px 0 $expl-sub-padding;
+            word-wrap: break-word; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            }
+
+          .expl-sub {
+            @include mmwidth(60%); padding: 0 $expl-sub-padding 0 0;
+
+            & > * {
+              @include flex-justify-content-end;
+              &:before {order:2 !important; margin: 2px 0 0 6px !important;}
+            }
+            &.zone {
+              overflow: overlay; @include flex-row-wrap; @include flex-align-content-start;
+              position: absolute; top:0; right:0; @include transition(200ms); background-color: rgba(0,0,0,0.0);
+              &:hover {
+                @include mmheight(200px); background-color: rgba(0,0,0,0.7);
+              }
+
+              & > span {
+                min-width:50%;  height:auto; min-height:$headerHeight; text-align: end;
+                // @include mmwidth(50%);  @include mmheight($headerHeight); @include text-overflow-ellipsis;
+              }
+            }
+          }
         }
         &:nth-of-type(2) {@include flex-option(0, 1, 100%); padding:10px 0 0 0;}
       }

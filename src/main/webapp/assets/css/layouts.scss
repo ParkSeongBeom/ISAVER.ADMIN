@@ -154,11 +154,10 @@ body {
     li:before {left:-10px;}
 
     input[type="checkbox"] {
-
       &:checked ~ div, &:checked ~ button {
         & ~ ul {
           & > li {display: block !important; height:auto;}
-          &:after {content:"\e92c" !important;}
+          &:after {content:"\e92c";}
         }
       }
     }
@@ -169,7 +168,12 @@ body {
   .tree-vertical-circle, .tree-vertical-square {@include tree-type-vertical; & > li ul li {display: none; height:0;}}
 
   .tree-vertical-circle { & > li ul { &:after {@include plus-icon-circle;} } } // 원형버튼 - 구역 디바이스 관리 트리
-  .tree-vertical-square { & > li ul { &:after {@include plus-icon-square;} } } // 사각버튼 - 대시보드 메뉴 트리
+  .tree-vertical-square {
+    & > li ul {
+      &:after {@include plus-icon-square;}
+      &.list-none:after {content:"ㆍ" !important;}
+    }
+  } // 사각버튼 - 대시보드 메뉴 트리
 
   //가로형 트리
   @mixin tree-type-horizontal {
@@ -938,13 +942,13 @@ menu {
     span {
       position: relative; height:100%; padding: 0 0 0 15px; font-size: 0.8rem;
       &:before {
-        content:""; display: inline-block; position: relative; @include mhwidth(12px); margin:3px 5px 0 0;
+        content:""; display: inline-block; position: relative; @include mhwidth(12px); margin:2px 6px 0 0;
       }
       &:nth-of-type(1):before {background-color:$color-school-orange01;}
       &:nth-of-type(2):before {background-color:$color-school-green01;}
     }
     &.zone {
-      padding: 0 0 0 40px;
+
       span {
         /*
         &:nth-of-type(1):before {background-color:$color-school-yellow01;}

@@ -120,12 +120,12 @@ var CustomMapMediator = (
                 , 'changeConfig': null // 회전 / X축,Y축 기울기 eventHandler
                 , 'click': null // click eventHandler
                 , 'openLinkFlag': true // 클릭시 LinkUrl 사용 여부
-                , 'moveFenceHide': false // 이벤트 발생시 펜스로 이동 숨김 기능
+                , 'moveFenceHide': true // 이벤트 발생시 펜스로 이동 숨김 기능
                 , 'moveFenceScale': 3.0 // 이벤트 발생시 펜스 Zoom Size
                 , 'moveReturn': true // 펜스로 이동 후 해당 펜스의 메인장치로 복귀 기능
                 , 'moveReturnTimeout':null // 펜스로 이동 후 해당 펜스의 메인장치로 복귀
                 , 'moveReturnDelay': 3000 // 메인장치로 복귀 딜레이
-                , 'lidarHide': false // 라이다 반경표시
+                , 'lidarHide': false // 라이다 반경표시 숨김 처리
                 , 'ignoreHide': true // 무시영역 숨김 처리
                 , 'trackingScale' : 'scale-20' // 트래킹 크기
                 , 'animateFlag' : false // 이벤트 발생시 장치 애니메이션 사용 여부
@@ -529,7 +529,6 @@ var CustomMapMediator = (
             }else if(_options[_MARKER_TYPE[4]].hasOwnProperty(actionType)){
                 _options[_MARKER_TYPE[4]][actionType] = flag;
             }
-            console.log(_options[_MARKER_TYPE[4]]);
 
             if(_enableCookies){
                 let cookies = $.cookie(_areaId);
@@ -925,6 +924,7 @@ var CustomMapMediator = (
                             _marker[messageType][data['deviceId']][data['id']]['element'].attr("points",points.join(" "));
                             fenceName = data['fenceName']!=null?data['fenceName']:_marker[messageType][data['deviceId']][data['id']]['data']['fenceName'];
                             $.extend(true,_marker[messageType][data['deviceId']][data['id']]['data'],data);
+                            _marker[messageType][data['deviceId']][data['id']]['data']['location'] = data['location'];
                         }else{
                             fenceName = data['fenceName']?data['fenceName']:data['id'];
                             const svgPolygon = _canvasSvg.polygon(points, {fenceId:data['id']});
