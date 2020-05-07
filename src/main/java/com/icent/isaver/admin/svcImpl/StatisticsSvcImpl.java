@@ -217,51 +217,60 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                 JsonObject group = jsonObj.get("group").getAsJsonObject();
                 String aggregation = group.get("aggregation").getAsString();
                 String field = group.get("field").getAsString();
-                BsonField bsonField = null;
-                switch (aggregation){
-                    case "count" :
-                        bsonField = Accumulators.sum("value", 1);
-                        break;
-                    case "avg" :
-                        bsonField = Accumulators.avg("value", field);
-                        break;
-                    case "sum" :
-                        bsonField = Accumulators.sum("value", field);
-                        break;
-                    case "min" :
-                        bsonField = Accumulators.min("value", field);
-                        break;
-                    case "max" :
-                        bsonField = Accumulators.max("value", field);
-                        break;
-                }
-
-                JsonArray customLabels = group.get("customLabel").getAsJsonArray();
-
-                String groupDocStr;
-                if(customLabels.size()>0){
-                    bsonField = Accumulators.sum("value", 1);
-                    groupDocStr = "{\n" +
-                            "       $concat: [\n" +
-                            "          { $cond: [{$lt: [ {'$"+aggregation+"':\"$location.speed\"},\"10\"]}, \"~10km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"10\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"20\"]}]},\"~20km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"20\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"30\"]}]},\"~30km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"30\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"40\"]}]},\"~40km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"40\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"50\"]}]},\"~50km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"50\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"60\"]}]},\"~60km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"60\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"70\"]}]},\"~70km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"70\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"80\"]}]},\"~80km/h\", \"\"] },\n" +
-                            "          { $cond: [{$and:[ {$gt:[{'$"+aggregation+"':\"$location.speed\"},\"80\"]}, {$lt: [{'$"+aggregation+"':\"$location.speed\"}, \"90\"]}]},\"~90km/h\", \"\"] },\n" +
-                            "          { $cond: [{$gt: [ {'$"+aggregation+"':\"$location.speed\"},\"90\"]},\"~100km/h\", \"\"] }\n" +
-                            "       ]\n" +
-                            "    }";
-                    List<String> labelList = new LinkedList<>();
-                    for(int i=0;i<customLabels.size();i++){
-                        labelList.add(customLabels.get(i).getAsString());
-                    }
-                    modelAndView.addObject("labelList", labelList);
+                List<Bson> groupList = new ArrayList<>();
+                if(aggregation.equals("count")){
+                    groupList.add(Aggregates.group(
+                        Document.parse("{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}")
+                        , Accumulators.sum("value", 1)
+                    ));
                 }else{
-                    groupDocStr = "{ $dateToString : { format:'" + format + "',date : '$eventDatetime', timezone: 'Asia/Seoul' }}";
+                    groupList.add(Aggregates.group(
+                        Document.parse("{eventDatetime:\"$eventDatetime\",aggValue:{'$"+aggregation+"':'"+field+"'}}")
+                    ));
+
+                    JsonArray customLabels = group.get("customLabel").getAsJsonArray();
+                    if(customLabels.size()>0){
+                        String aggStr = "{$toDouble:\"$_id.aggValue\"}";
+                        groupList.add(Aggregates.group(
+                            Document.parse("{\n" +
+                                    "       $concat: [\n" +
+                                    "          { $cond: [{$lt: [ "+aggStr+",10]}, '~10km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",10]}, {$lt: ["+aggStr+", 20]}]},'~20km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",20]}, {$lt: ["+aggStr+", 30]}]},'~30km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",30]}, {$lt: ["+aggStr+", 40]}]},'~40km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",40]}, {$lt: ["+aggStr+", 50]}]},'~50km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",50]}, {$lt: ["+aggStr+", 60]}]},'~60km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",60]}, {$lt: ["+aggStr+", 70]}]},'~70km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",70]}, {$lt: ["+aggStr+", 80]}]},'~80km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",80]}, {$lt: ["+aggStr+", 90]}]},'~90km/h', ''] },\n" +
+                                    "          { $cond: [{$gt: [ "+aggStr+",90]},'~100km/h', ''] }\n" +
+                                    "       ]\n" +
+                                    "    }")
+                            , Accumulators.sum("value", 1)
+                        ));
+                        List<String> labelList = new LinkedList<>();
+                        for(int i=0;i<customLabels.size();i++){
+                            labelList.add(customLabels.get(i).getAsString());
+                        }
+                        modelAndView.addObject("labelList", labelList);
+                    }else{
+                        BsonField bsonField = null;
+                        switch (aggregation){
+                            case "avg" :
+                                bsonField = Accumulators.avg("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                break;
+                            case "min" :
+                                bsonField = Accumulators.min("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                break;
+                            case "max" :
+                                bsonField = Accumulators.max("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                break;
+                        }
+                        groupList.add(Aggregates.group(
+                            Document.parse("{ $dateToString : { format:'" + format + "',date : '$_id.eventDatetime', timezone: 'Asia/Seoul' }}")
+                            , bsonField
+                        ));
+                    }
                 }
 
                 JsonArray rows = jsonObj.get("rows").getAsJsonArray();
@@ -273,10 +282,9 @@ public class StatisticsSvcImpl implements StatisticsSvc {
 
                     List<Bson> arrayList = new ArrayList<>();
                     arrayList.add(Aggregates.match(match));
-                    arrayList.add(Aggregates.group(
-                            Document.parse(groupDocStr)
-                            , bsonField
-                    ));
+                    for(Bson aggGroup : groupList){
+                        arrayList.add(aggGroup);
+                    }
                     arrayList.add(Aggregates.sort(Sorts.ascending("_id")));
 
                     // query

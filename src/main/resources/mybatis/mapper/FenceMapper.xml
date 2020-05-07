@@ -10,7 +10,6 @@
         <result property="areaId" column="areaId"/>
         <result property="deviceId" column="deviceId"/>
         <result property="fenceName" column="fenceName"/>
-        <result property="zMin" column="zMin"/>
         <result property="customJson" column="customJson"/>
         <result property="config" column="config"/>
         <collection property="location" ofType="FenceLocationBean">
@@ -31,7 +30,6 @@
                 , A.device_id as deviceId
                 , C.area_id as areaId
                 , A.fence_name as fenceName
-                , A.z_min as zMin
                 , A.config as config
                 , A.custom_json as customJson
                 , b.lat as lat
@@ -83,7 +81,6 @@
                 , b.area_id as areaId
                 , c.area_name as areaName
                 , a.fence_name as fenceName
-                , a.z_min as zMin
                 , a.config as config
         FROM    isaver.fence a
         INNER JOIN isaver.device b
@@ -105,7 +102,6 @@
             , fence_sub_type
             , device_id
             , fence_name
-            , z_min
             , config
             , custom_json
         ) VALUES
@@ -117,12 +113,6 @@
                 ,#{item.fenceSubType}
                 ,#{item.deviceId}
                 ,#{item.fenceName}
-                <if test="item.zMin != null">
-                    ,${item.zMin}
-                </if>
-                <if test="item.zMin == null">
-                    ,0
-                </if>
                 <if test="item.config != null and item.config != ''">
                     ,#{item.config}
                 </if>

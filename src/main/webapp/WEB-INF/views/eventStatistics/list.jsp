@@ -355,7 +355,7 @@
             </header>
             <article>
                 <div class="chart-canvas">
-                    <div class="expl-sub zone pdfSaveTitleElement" name="fenceTitle"></div>
+                    <div class="expl-sub zone pdfSaveFenceElement" name="fenceTitle"></div>
                     <div>
                         <!-- 차트 삽입 레이어 -->
                         <div class="o-line chart-box" name="lineChart"></div>
@@ -736,9 +736,11 @@
             alertMessage('emptyStatisticsName');
             return false;
         }
-        if ($("#chartType").val() == null || $("#chartType").val().trim() == '') {
-            alertMessage('emptyChartType');
-            return false;
+        if($("#template").val()=='custom'){
+            if ($("#chartType").val() == null || $("#chartType").val().trim() == '') {
+                alertMessage('emptyChartType');
+                return false;
+            }
         }
 
         switch (type){
@@ -869,7 +871,6 @@
                     });
                     break;
                 case "vehicleSpeed":
-                    let countingMethod = $("#countingMethod option:selected").val();
                     jsonData['group']['customLabel'].push("~10km/h");
                     jsonData['group']['customLabel'].push("~20km/h");
                     jsonData['group']['customLabel'].push("~30km/h");
@@ -880,7 +881,7 @@
                     jsonData['group']['customLabel'].push("~80km/h");
                     jsonData['group']['customLabel'].push("~90km/h");
                     jsonData['group']['customLabel'].push("~100km/h");
-                    jsonData['group']['aggregation'] = countingMethod;
+                    jsonData['group']['aggregation'] = $("#countingMethod option:selected").val();
                     break;
                 case "vehicleSpeedTime":
                     jsonData['group']['aggregation'] = $("#countingMethod option:selected").val();
@@ -1925,11 +1926,16 @@
         if(chart!=null){
             const doc = new jsPDF('l','mm','a4');
             var drawList = [];
-            drawList.push({'element':$(".pdfSaveTitleElement")[0],'nextPositionMargin':5,'type':'html'});
-            drawList.push({'element':chart['node'],'nextPositionMargin':5,'type':'svg'});
+            // 타이틀
+            drawList.push({'element':$(".pdfSaveTitleElement")[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
+            // 펜스목록
+            drawList.push({'element':$(".pdfSaveFenceElement")[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
+            // 차트
+            drawList.push({'element':chart['node'],'nextPositionMargin':5,'nextAddPage':true,'type':'svg'});
+            // 테이블
             $(".pdfSaveElement").each(function(){
                 if($(this).css("display")!="none"){
-                    drawList.push({'element':$(this)[0],'nextPositionMargin':5,'type':'html'});
+                    drawList.push({'element':$(this)[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
                 }
             });
             addPdf(doc, 0, drawList);
@@ -1938,6 +1944,11 @@
 
     function addPdf(doc, leftPosition, drawList){
         function recursive(_doc, _leftPosition){
+            let nextAddPage = drawList[0]['nextAddPage'];
+            if(nextAddPage){
+                _doc.addPage();
+                _leftPosition = 0;
+            }
             drawList.shift();
             if(drawList.length>0){
                 addPdf(_doc, _leftPosition, drawList);

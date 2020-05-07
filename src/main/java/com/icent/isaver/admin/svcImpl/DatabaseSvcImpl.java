@@ -51,6 +51,7 @@ public class DatabaseSvcImpl implements DatabaseSvc {
     String[] migrationHistory = new String[]{
             "1.7.4","1.7.4_1","1.7.4_2","1.7.4_3","1.7.4_4"
             ,"1.7.5_0","1.7.5_1","1.7.5_2","1.7.5_3","1.7.5_4","1.7.5_5"
+            ,"1.7.5_6"
     };
 
     @Override

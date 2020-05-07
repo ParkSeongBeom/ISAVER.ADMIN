@@ -959,11 +959,10 @@ var CustomMapMediator = (
                                     ,'deviceId' : data['deviceId']
                                     ,'fenceType' : data['fenceType']
                                     ,'fenceSubType' : data['fenceSubType']
-                                    ,'zMin' : (data['zMin']?data['zMin']:0)
                                     ,'config' : (data['config']?data['config']:null)
                                     ,'fenceId' : data['id']
                                     ,'fenceName' : fenceName
-                                    ,'custom' : data['custom']?data['custom']:_options['fence']['custom']
+                                    ,'custom' : data['custom']?data['custom']:$.extend(true,{},_options['fence']['custom'])
                                     ,'transX' : null
                                     ,'transY' : null
                                 }

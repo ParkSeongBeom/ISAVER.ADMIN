@@ -277,6 +277,7 @@ var CustomMapPopup = (
                                     ).append(
                                         $("<button/>", {id: "addSection", class: "ico-plus btn-add"}).click({deviceId: target['targetId']}, function (evt) {
                                             _self.addFence(null, evt.data.deviceId);
+                                            event.stopPropagation();
                                         })
                                     );
                                 }
@@ -606,24 +607,6 @@ var CustomMapPopup = (
                                             )
                                         ).append(
                                             $("<div/>").append(
-                                                $("<input/>", {
-                                                    type: 'text',
-                                                    name: 'zMin',
-                                                    value: (data['zMin']?data['zMin']:0),
-                                                    maxLength:"10",
-                                                    title:"Z-Min"
-                                                }).on("keypress",function(){
-                                                    isNumberWithPoint(this);
-                                                }).change({
-                                                    deviceId: data['deviceId'],
-                                                    fenceId: data['fenceId']
-                                                }, function (evt) {
-                                                    let paramData = {deviceId:evt.data.deviceId, id:evt.data.fenceId, zMin:$(this).val()};
-                                                    if(!_customMapMediator.computePolyPoints(paramData)){
-                                                        _customMapMediator.saveFence(paramData);
-                                                    }
-                                                })
-                                            ).append(
                                                 $("<select/>", {name: 'fenceType'}).append(
                                                     $("<option/>", {
                                                         value: 'normal',
