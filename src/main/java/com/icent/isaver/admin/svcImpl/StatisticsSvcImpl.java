@@ -225,7 +225,7 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                     ));
                 }else{
                     groupList.add(Aggregates.group(
-                        Document.parse("{eventDatetime:\"$eventDatetime\",aggValue:{'$"+aggregation+"':'"+field+"'}}")
+                        Document.parse("{eventDatetime:'$eventDatetime',aggValue:{'$"+aggregation+"':'"+field+"'}}")
                     ));
 
                     JsonArray customLabels = group.get("customLabel").getAsJsonArray();

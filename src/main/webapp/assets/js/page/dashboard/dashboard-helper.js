@@ -48,6 +48,7 @@ var DashboardHelper = (
         let _urlConfig = {
             blinkerListUrl : "/eventLog/blinkerList.json"
             ,deviceListUrl : "/device/list.json"
+            ,saveViewOptionUrl : "/area/saveViewOption.json"
         };
         let _options ={
             marquee : false
@@ -309,7 +310,6 @@ var DashboardHelper = (
                             _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                                 'element' : {
                                     'lastPositionUseFlag' : true
-                                    ,'lastPositionSaveFlag' : true
                                 },
                                 'object' : {
                                     'speedFlag' : true
@@ -343,7 +343,6 @@ var DashboardHelper = (
                         _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                             'element' : {
                                 'lastPositionUseFlag' : true
-                                ,'lastPositionSaveFlag' : true
                             }, 'custom' : {
                                 'openLinkFlag':false
                                 ,'childAnimateFlag':true
@@ -374,7 +373,6 @@ var DashboardHelper = (
                         _guardList[areaId][_MEDIATOR_TYPE[1]].init(areaId,{
                             'element' : {
                                 'lastPositionUseFlag' : true
-                                ,'lastPositionSaveFlag' : true
                             },
                             'object' : {
                                 'speedFlag' : true
@@ -451,6 +449,15 @@ var DashboardHelper = (
         this.stopZoomControl = function(areaId){
             if(areaId!=null && _guardList[areaId]!=null && _guardList[areaId][_MEDIATOR_TYPE[1]]!=null){
                 _guardList[areaId][_MEDIATOR_TYPE[1]].stopZoomControl();
+            }
+        };
+
+        this.saveViewOption = function(areaId){
+            if(areaId!=null && _guardList[areaId]!=null && _guardList[areaId][_MEDIATOR_TYPE[1]]!=null){
+                _ajaxCall('saveViewOption',{
+                    'areaId' : areaId
+                    ,'viewOption' : JSON.stringify(_guardList[areaId][_MEDIATOR_TYPE[1]].getViewOption())
+                });
             }
         };
 
@@ -720,6 +727,9 @@ var DashboardHelper = (
                         $("#controlDeviceList").append(deviceElement);
                     }
                     openDetailPopup();
+                    break;
+                case 'saveViewOption':
+                    console.log("option save complete.");
                     break;
             }
         };

@@ -7,6 +7,26 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_8'">
+            ---------------------------------------------
+            -- 구역별 알람 차단
+            ---------------------------------------------
+            CREATE TABLE isaver.critical_block(
+            critical_block_id character varying(32) NOT NULL,
+            area_id character(6) NOT NULL,
+            CONSTRAINT critical_block_pkey PRIMARY KEY (critical_block_id),
+            CONSTRAINT critical_block_area_id_fk FOREIGN KEY (area_id)
+            REFERENCES isaver.area (area_id) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE NO ACTION
+            );
+            ALTER TABLE isaver.critical_block
+            OWNER TO isaveruser;
+        </if>
+
+        <if test="version == '1.7.5_7'">
+            alter table isaver.area add column view_option text;
+        </if>
+
         <if test="version == '1.7.5_6'">
             alter table isaver.fence drop column z_min;
             alter table isaver.statistics alter column template type character varying(50);

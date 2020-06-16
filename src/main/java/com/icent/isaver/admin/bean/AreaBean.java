@@ -43,6 +43,8 @@ public class AreaBean extends ISaverCommonBean {
     private String fileId;
     /* 각도에따른 클래스 */
     private String angleClass;
+    /* 화면 설정 */
+    private String viewOption;
 
     /* ETC */
     private List<DeviceBean> devices;
@@ -215,5 +217,13 @@ public class AreaBean extends ISaverCommonBean {
 
     public void setAngleClass(String angleClass) {
         this.angleClass = angleClass;
+    }
+
+    public String getViewOption() {
+        return viewOption;
+    }
+
+    public void setViewOption(String viewOption) {
+        this.viewOption = viewOption;
     }
 }

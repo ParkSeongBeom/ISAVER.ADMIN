@@ -356,6 +356,7 @@
                     <div templateCode="${childArea.templateCode}" class="type-list bmt" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <button class="sett_btn" onclick="dashboardHelper.saveViewOption('${childArea.areaId}');" title="View Option Save"></button>
                             <button class="refl_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','safeGuard'); return false;" title="<spring:message code='resource.title.serverSync'/>"></button>
                             <!-- 구역 하나로 확장 area -->
                             <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>
@@ -611,6 +612,7 @@
                     <div templateCode="${childArea.templateCode}" areaId="${childArea.areaId}" areaDesc="${childArea.areaDesc}">
                         <header>
                             <h3>${childArea.areaName}</h3>
+                            <button class="sett_btn" onclick="dashboardHelper.saveViewOption('${childArea.areaId}');" title="View Option Save"></button>
                             <button class="refl_btn" onclick="javascript:openAuthorizePopup(this,'${childArea.areaId}','safeGuard'); return false;" title="<spring:message code='resource.title.serverSync'/>"></button>
                             <!-- 구역 하나로 확장 area -->
                             <button class="screen_view" onclick="javascript:moveDashboard('${area.areaId}','${childArea.areaId}'); return false;" title="ONE SCREEN"></button>

@@ -3,6 +3,7 @@ package com.icent.isaver.admin.util;
 import Aladdin.HaspStatus;
 import com.icent.isaver.admin.bean.License;
 import com.icent.isaver.admin.bean.UsersBean;
+import com.icent.isaver.admin.dao.CriticalBlockDao;
 import com.icent.isaver.admin.resource.AdminResource;
 import com.meous.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -51,6 +52,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
     @Inject
     private MqttUtil mqttUtil;
+
+    @Inject
+    private CriticalBlockDao criticalBlockDao;
 
     @Inject
     private IsaverCriticalUtil isaverCriticalUtil;
@@ -143,6 +147,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             modelAndView.addObject("mainTarget", isaverTargetUtil.getTarget());
             modelAndView.addObject("criticalList", isaverCriticalUtil.getCritical());
             modelAndView.addObject("criticalLevelCss", AdminResource.CRITICAL_LEVEL_CSS);
+            modelAndView.addObject("criticalBlockList", criticalBlockDao.findListCriticalBlock(null));
 
             try{
                 InetAddress address = InetAddress.getByName(hostIp);

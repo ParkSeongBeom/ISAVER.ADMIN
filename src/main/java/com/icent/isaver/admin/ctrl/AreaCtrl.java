@@ -88,6 +88,21 @@ public class AreaCtrl {
         return modelAndView;
     }
 
+    /**
+     *  구역을 수정 한다.
+     *
+     * @author psb
+     * @param request
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(method={RequestMethod.POST}, value="/saveViewOption")
+    public ModelAndView saveAreaViewOption(HttpServletRequest request, @RequestParam Map<String, String> parameters) {
+        parameters.put("updateUserId",AdminHelper.getAdminIdFromSession(request));
+        ModelAndView modelAndView =areaSvc.saveAreaViewOption(request, parameters);
+        return modelAndView;
+    }
+
     private final static String[] removeAreaParam = new String[]{"areaId"};
 
     /**

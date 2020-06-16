@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -74,6 +75,8 @@
             ,'licenseUrl':'${rootPath}/license/list.json'
             ,'resourceDeviceUrl':'${rootPath}/device/resourceList.json'
             ,'resourceChartUrl' : "${rootPath}/eventLog/resourceChart.json"
+            ,'addCriticalBlockUrl' : "${rootPath}/criticalBlock/add.json"
+            ,'removeCriticalBlockUrl' : "${rootPath}/criticalBlock/remove.json"
         };
 
         var commonMessageConfig = {
@@ -521,6 +524,10 @@
                     resourceChart['chartist'].data.labels = _eventDateList;
                     resourceChart['chartist'].update();
                     break;
+                case 'addCriticalBlock':
+                case 'removeCriticalBlock':
+                    console.log(actionType+" - success");
+                    break;
             }
         }
 
@@ -676,6 +683,14 @@
             }
         }
 
+        function criticalBlock(_this){
+            if($(_this).is(":checked")){
+                layoutAjaxCall('addCriticalBlock');
+            }else{
+                layoutAjaxCall('removeCriticalBlock');
+            }
+        }
+
         function menuBarToggle(){
             $("#menu").toggleClass("hide");
             $(".mscrBtn").toggleClass("on");
@@ -757,6 +772,12 @@
                     <h2>
                         <span><spring:message code="dashboard.title.alarmCenter"/></span>
                     </h2>
+
+                    <div class="checkbox_set csl_style01">
+                        <input type="checkbox" name="criticalBlock" onclick="criticalBlock(this);" <c:if test="${criticalBlockList!=null and fn:length(criticalBlockList)>0}">checked</c:if>/>
+                        <label></label>
+                        <span><spring:message code="dashboard.column.criticalBlock"/></span>
+                    </div>
 
                     <!-- 임계치별 알림 카운트 -->
                     <section criticalLevelCnt class="issue_board">

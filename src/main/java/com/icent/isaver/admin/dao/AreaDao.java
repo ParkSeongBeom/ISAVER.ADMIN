@@ -127,4 +127,10 @@ public interface AreaDao {
      * @return
      */
     void saveAreaByCustomMapLocation(Map<String, String> parameters);
+
+    /**
+     *
+     * @return
+     */
+    void saveAreaByViewOption(Map<String, String> parameters);
 }

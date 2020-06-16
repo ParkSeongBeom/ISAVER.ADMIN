@@ -215,9 +215,7 @@ var CustomMapPopup = (
                 _customMapMediator.setElement(_element, _element.find("#mapElement"));
                 _customMapMediator.setMessageConfig(_messageConfig);
                 _customMapMediator.init(areaId,{
-                    'element' : {
-                        'lastPositionSaveFlag' : true
-                    }, 'custom' : {
+                    'custom' : {
                         'draggable': true
                         , 'rotatable': true
                         , 'resizable': true

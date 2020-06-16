@@ -1,5 +1,7 @@
 package com.icent.isaver.admin.svcImpl;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.icent.isaver.admin.bean.AreaBean;
 import com.icent.isaver.admin.bean.DeviceBean;
 import com.icent.isaver.admin.common.resource.IsaverException;
@@ -155,6 +157,19 @@ public class AreaSvcImpl implements AreaSvc {
             }
         }
         return modelAndView;
+    }
+
+    @Override
+    public ModelAndView saveAreaViewOption(HttpServletRequest request, Map<String, String> parameters) {
+        TransactionStatus transactionStatus = TransactionUtil.getMybatisTransactionStatus(transactionManager);
+        try {
+            areaDao.saveAreaByViewOption(parameters);
+            transactionManager.commit(transactionStatus);
+        }catch(DataAccessException e){
+            transactionManager.rollback(transactionStatus);
+            throw new IsaverException("");
+        }
+        return new ModelAndView();
     }
 
     @Override

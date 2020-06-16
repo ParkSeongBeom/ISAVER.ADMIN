@@ -53,8 +53,8 @@ function removeExcuteArray(reqUrl,method,data,actionType){
  * @param errorCallback
  * @param actionType
  */
-function sendAjaxPostRequest(reqUrl,data,successCallback,errorCallback,actionType){
-    ajaxRequest(reqUrl,'POST',data,successCallback,errorCallback,actionType);
+function sendAjaxPostRequest(reqUrl,data,successCallback,errorCallback,actionType,resolve,reject){
+    ajaxRequest(reqUrl,'POST',data,successCallback,errorCallback,actionType,resolve,reject);
 }
 
 /**
@@ -67,8 +67,8 @@ function sendAjaxPostRequest(reqUrl,data,successCallback,errorCallback,actionTyp
  * @param errorCallback
  * @param actionType
  */
-function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType){
-    ajaxRequest(reqUrl,'GET',data,successCallback,errorCallback,actionType);
+function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType,resolve,reject){
+    ajaxRequest(reqUrl,'GET',data,successCallback,errorCallback,actionType,resolve,reject);
 }
 
 /**
@@ -82,7 +82,7 @@ function sendAjaxGetRequest(reqUrl,data,successCallback,errorCallback,actionType
  * @param errorCallback
  * @param actionType
  */
-function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType){
+function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType,resolve,reject){
     if(reqUrl == null){
         return;
     }
@@ -113,10 +113,16 @@ function ajaxRequest(reqUrl,method,data,successCallback,errorCallback,actionType
         success : function(resultData, dataType){
             removeExcuteArray(reqUrl,method,data,actionType);
             successCallback(resultData, dataType, actionType);
+            //if(resolve!=null && typeof resolve == 'function'){
+            //    resolve();
+            //}
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
             removeExcuteArray(reqUrl,method,data,actionType);
             errorCallback(XMLHttpRequest, textStatus, errorThrown, actionType);
+            //if(reject!=null && typeof reject == 'function'){
+            //    reject();
+            //}
         }
     });
 }

@@ -100,6 +100,7 @@
                 , skew_x as skewX
                 , skew_y as skewY
                 , angle_class as angleClass
+                , view_option as viewOption
                 , template_code as templateCode
                 , insert_user_id as insertUserId
                 , insert_datetime as insertDatetime
@@ -464,5 +465,15 @@
             </if>
         </trim>
         where area_id = #{areaId,jdbcType=CHAR}
+    </update>
+
+    <!--
+      구역 view options을 수정한다.
+      @author psb
+    -->
+    <update id="saveAreaByViewOption" parameterType="map" >
+        update isaver.area
+        SET   view_option = #{viewOption}
+        where area_id = #{areaId}
     </update>
 </mapper>

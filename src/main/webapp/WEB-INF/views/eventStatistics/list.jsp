@@ -240,7 +240,7 @@
                                 <!-- s : 부피 -->
                                 <div class="set-column addOption" name="size.x">
                                     <div>
-                                        <p><spring:message code="statistics.column.volume"/> Width(X)</p>
+                                        <p name="title"><spring:message code="statistics.column.volume"/> Width(X)</p>
                                     </div>
                                     <div class="selectbox-type01">
                                         <select name="type">
@@ -258,7 +258,7 @@
                                 </div>
                                 <div class="set-column addOption" name="size.y">
                                     <div>
-                                        <p><spring:message code="statistics.column.volume"/> Height(Y)</p>
+                                        <p name="title"><spring:message code="statistics.column.volume"/> Height(Y)</p>
                                     </div>
                                     <div class="selectbox-type01">
                                         <select name="type">
@@ -276,7 +276,7 @@
                                 </div>
                                 <div class="set-column addOption" name="size.z">
                                     <div>
-                                        <p><spring:message code="statistics.column.volume"/> Depth(Z)</p>
+                                        <p name="title"><spring:message code="statistics.column.volume"/> Depth(Z)</p>
                                     </div>
                                     <div class="selectbox-type01">
                                         <select name="type">
@@ -295,7 +295,7 @@
                                 <!-- s : 높이 -->
                                 <div class="set-column addOption" name="z">
                                     <div>
-                                        <p><spring:message code="statistics.column.height"/></p>
+                                        <p name="title"><spring:message code="statistics.column.height"/></p>
                                     </div>
                                     <div class="selectbox-type01">
                                         <select name="type">
@@ -315,7 +315,7 @@
                                 <!-- s : 속도 -->
                                 <div class="set-column addOption" name="speed">
                                     <div>
-                                        <p><spring:message code="statistics.column.speed"/></p>
+                                        <p name="title"><spring:message code="statistics.column.speed"/></p>
                                     </div>
                                     <div class="selectbox-type01">
                                         <select name="type">
@@ -353,6 +353,7 @@
                 <button class="ico-excel" data-html2canvas-ignore="true" onclick="schoolExcelDownload();"></button>
                 <button class="ico-pdf" data-html2canvas-ignore="true" onclick="schoolPdfDownload();"></button>
             </header>
+            <div class="pdfSaveConditionTitleElement" style="padding-bottom: 15px;"></div>
             <article>
                 <div class="chart-canvas">
                     <div class="expl-sub zone pdfSaveFenceElement" name="fenceTitle"></div>
@@ -788,7 +789,7 @@
             startDatetime = $("#startDatetime").val() + " " + $("#startDtHour option:selected").val()+":00:00";
         }
         if($("#endDatetime").val()!=''){
-            endDatetime = $("#endDatetime").val() + " " + $("#endDtHour option:selected").val()+":00:00";
+            endDatetime = $("#endDatetime").val() + " " + $("#endDtHour option:selected").val()+":59:59";
         }
 
         if($("#template option:selected").val()=='custom'){
@@ -968,7 +969,7 @@
 
     function heatMapValidate(){
         var start = new Date($("input[name='startDatetimeStr']").val() + " " + $("#startDatetimeHourSelect").val() + ":00:00");
-        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":00:00");
+        var end = new Date($("input[name='endDatetimeStr']").val() + " " + $("#endDatetimeHourSelect").val() + ":59:59");
 
         if(start>end){
             alertMessage("earlyDatetime");
@@ -1539,7 +1540,20 @@
      */
     function schoolChartRender(paramBean, chartList, dateList){
         let detailElement = $(".box-ctbox");
-        detailElement.find("[name='templateName']").text($("#template option[value='"+paramBean['template']+"']").text());
+
+        // 결과 타이틀 정의
+        var jsonData = JSON.parse(paramBean['jsonData']);
+        let titleText = $("#template option[value='"+paramBean['template']+"']").text();
+        titleText+="<span style='color:red; font-weight:bold; padding-left:10px;'>";
+        titleText+="<spring:message code='statistics.column.datetime' /> : " + jsonData['xAxis']['startDatetime'] + " ~ " + jsonData['xAxis']['endDatetime'];
+        titleText+="</span>";
+        console.log(jsonData['group']['aggregation']);
+        if(jsonData['group']['aggregation']!=null && jsonData['group']['aggregation']!="" && jsonData['group']['aggregation']!="count"){
+            titleText+="<span style='color:red; font-weight:bold; padding-left:10px;'>";
+            titleText+="<spring:message code='statistics.column.countingMethod' /> : " + $("#countingMethod option[value='"+jsonData['group']['aggregation']+"'").text();
+            titleText+="</span>";
+        }
+        detailElement.find("[name='templateName']").html(titleText);
         // 테이블 초기화
         detailElement.find(".chart-table").find("div[name='gubn'], div[name='fenceName']").empty();
         detailElement.find(".chart-table").find(".d_tbody").empty();
@@ -1660,6 +1674,26 @@
             mostTimeTbEl.hide();
             distTbEl.hide();
         }
+
+        // pdf 저장을 위한 엘리먼트
+        var optionsText = "<span style='font-weight:bold;'>- <spring:message code='statistics.title.options' /> : </span>";
+        let showFlag=false;
+        optionsText+="<span style='color:blue; font-weight:bold; padding-left:5px;'>";
+        $.each($(".addOption"),function(e){
+            if($(this).find("select[name='type'] option:selected").val()!=""){
+                if(showFlag){optionsText+=" / ";}
+                optionsText+=$(this).find("p[name='title']").text()+" " + $(this).find("select[name='type'] option:selected").text();
+                optionsText+="("+Number($(this).find("input[name='start']").val())+"~"+Number($(this).find("input[name='end']").val())+")";
+                showFlag = true;
+            }
+        });
+        optionsText+="</span>";
+        if(showFlag){
+            $(".pdfSaveConditionTitleElement").html(optionsText);
+            $(".pdfSaveConditionTitleElement").show();
+        }else{
+            $(".pdfSaveConditionTitleElement").hide();
+        }
     }
 
     /*
@@ -1717,7 +1751,6 @@
                     customMapMediator.init(data['paramBean']['areaId'],{
                         'element' : {
                             'lastPositionUseFlag' : true
-                            ,'lastPositionSaveFlag' : true
                         },
                         'custom' : {
                             'fenceView' : true
@@ -1928,6 +1961,10 @@
             var drawList = [];
             // 타이틀
             drawList.push({'element':$(".pdfSaveTitleElement")[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
+            // 추가옵션
+            if($(".pdfSaveConditionTitleElement").css("display")!='none'){
+                drawList.push({'element':$(".pdfSaveConditionTitleElement")[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
+            }
             // 펜스목록
             drawList.push({'element':$(".pdfSaveFenceElement")[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
             // 차트
@@ -1938,14 +1975,15 @@
                     drawList.push({'element':$(this)[0],'nextPositionMargin':5,'nextAddPage':false,'type':'html'});
                 }
             });
+            $(".pdfSaveConditionTitleElement").show();
             addPdf(doc, 0, drawList);
         }
     }
 
     function addPdf(doc, leftPosition, drawList){
         function recursive(_doc, _leftPosition){
-            let nextAddPage = drawList[0]['nextAddPage'];
-            if(nextAddPage){
+            // 뒤에 페이지 추가여부
+            if(drawList[0]['nextAddPage']){
                 _doc.addPage();
                 _leftPosition = 0;
             }
