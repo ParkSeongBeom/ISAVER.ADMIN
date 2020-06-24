@@ -7,6 +7,15 @@
         @author psb
     -->
     <update id="migration" parameterType="map">
+        <if test="version == '1.7.5_10'">
+            INSERT INTO ISAVER.CODE(CODE_ID, GROUP_CODE_ID, CODE_NAME, CODE_DESC, USE_YN, SORT_ORDER, INSERT_USER_ID, INSERT_DATETIME) VALUES ('DEV022','DEV','VMS','','Y',21,'admin',NOW());
+        </if>
+
+        <if test="version == '1.7.5_9'">
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT322','D','PTZ 감지','','N','STS001','admin',NOW());
+            INSERT INTO ISAVER.EVENT (EVENT_ID, EVENT_FLAG, EVENT_NAME, EVENT_DESC, DEL_YN, STATISTICS_CODE, INSERT_USER_ID, INSERT_DATETIME) VALUES ('EVT323','D','PTZ 감지 해제','','N','STS001','admin',NOW());
+        </if>
+
         <if test="version == '1.7.5_8'">
             ---------------------------------------------
             -- 구역별 알람 차단

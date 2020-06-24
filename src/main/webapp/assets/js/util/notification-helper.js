@@ -141,7 +141,9 @@ var NotificationHelper = (
 
             switch (resultData['messageType']) {
                 case "addNotification": // 알림센터 이벤트 등록
-                    addNotification(resultData['notification'], true, resultData['dashboardAlarmFileUrl']);
+                    if(resultData['notification']['eventId']!='EVT322' && resultData['notification']['eventId']!='EVT323'){ // 카메라 전용 이벤트일경우 무시
+                        addNotification(resultData['notification'], true, resultData['dashboardAlarmFileUrl']);
+                    }
                     break;
                 case "allCancelNotification": // 알림센터 이벤트 전체 해제
                     var criticalLevelCheck = false;
@@ -166,7 +168,9 @@ var NotificationHelper = (
                     updateNotificationList(resultData['notification']);
                     break;
                 case "cancelDetection": // 감지 해제
-                    cancelNotificationList(resultData['notification']);
+                    if(resultData['notification']['eventId']!='EVT322' && resultData['notification']['eventId']!='EVT323'){ // 카메라 전용 이벤트일경우 무시
+                        cancelNotificationList(resultData['notification']);
+                    }
                     break;
                 case "licenseStatus": // 라이센스 상태
                     var license = resultData['license'];

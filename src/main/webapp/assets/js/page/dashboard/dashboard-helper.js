@@ -314,6 +314,9 @@ var DashboardHelper = (
                                 'object' : {
                                     'speedFlag' : true
                                     ,'locationZFlag' : true
+                                },
+                                'fence' : {
+                                    'cameraFenceUseFlag' : false
                                 }
                                 , 'custom' : {
                                     'fenceView':true

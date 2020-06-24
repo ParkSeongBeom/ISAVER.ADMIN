@@ -1547,7 +1547,6 @@
         titleText+="<span style='color:red; font-weight:bold; padding-left:10px;'>";
         titleText+="<spring:message code='statistics.column.datetime' /> : " + jsonData['xAxis']['startDatetime'] + " ~ " + jsonData['xAxis']['endDatetime'];
         titleText+="</span>";
-        console.log(jsonData['group']['aggregation']);
         if(jsonData['group']['aggregation']!=null && jsonData['group']['aggregation']!="" && jsonData['group']['aggregation']!="count"){
             titleText+="<span style='color:red; font-weight:bold; padding-left:10px;'>";
             titleText+="<spring:message code='statistics.column.countingMethod' /> : " + $("#countingMethod option[value='"+jsonData['group']['aggregation']+"'").text();

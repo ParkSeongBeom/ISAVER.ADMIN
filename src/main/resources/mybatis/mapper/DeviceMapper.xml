@@ -534,7 +534,7 @@
         FROM    isaver.device a
         LEFT OUTER JOIN isaver.fence b
         ON	    a.device_id = b.device_id
-        AND     b.fence_type = 'normal'
+        AND     b.fence_type not in ('ignore','section')
         WHERE   a.del_yn='N'
         AND     a.device_type_code = #{deviceTypeCode}
         ORDER BY a.device_name, b.fence_name

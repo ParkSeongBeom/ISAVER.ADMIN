@@ -612,6 +612,11 @@ var CustomMapPopup = (
                                                     }).text("normal")
                                                 ).append(
                                                     $("<option/>", {
+                                                        value: 'camera',
+                                                        selected: data['fenceType'] == 'camera'
+                                                    }).text("camera")
+                                                ).append(
+                                                    $("<option/>", {
                                                         value: 'ignore',
                                                         selected: data['fenceType'] == 'ignore'
                                                     }).text("ignore")

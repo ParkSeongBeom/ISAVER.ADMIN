@@ -20,7 +20,7 @@ var CustomMapMediator = (
             ,'human','human-LEV001','human-LEV002','human-LEV003'
             ,'vehicle','vehicle-LEV001','vehicle-LEV002','vehicle-LEV003'
         ];
-        var _FENCE_TYPE = ['normal','ignore','section'];
+        var _FENCE_TYPE = ['normal','ignore','section','camera'];
         var _marker = {
             'fence' : {}
             ,'object' : {}
@@ -92,6 +92,7 @@ var CustomMapMediator = (
                         , 'stroke': "rgb(195,2,2)"
                     }
                 }
+                , 'cameraFenceUseFlag' : true // 카메라 전용 펜스 표출여부
                 , 'animateFlag' : true // 이벤트 발생시 펜스 애니메이션 사용 여부
             }
             ,'object' : {
@@ -719,7 +720,13 @@ var CustomMapMediator = (
                             ,'left': parseInt(_mapCanvas.css('left'))-($(this).offset().left-_mapCanvas.parent().offset().left)+(_mapCanvas.parent().width()-$(this)[0].getBoundingClientRect().width)/2
                         },300,savePosition);
                     });
-                    _ajaxCall('fenceList',{deviceId:targetData['targetId']});
+                    var fenceParam = {
+                        deviceId:targetData['targetId']
+                    };
+                    if(!_options['fence']['cameraFenceUseFlag']){
+                        fenceParam['ignoreCamera'] = 'Y';
+                    }
+                    _ajaxCall('fenceList',fenceParam);
                 }
             }
         };
@@ -1507,13 +1514,15 @@ var CustomMapMediator = (
                     }
                     switch (actionType){
                         case "add" :
-                            if(customMarker['notification'][criticalLevel].indexOf(customKey)<0){
+                            var customIndex = customMarker['notification'][criticalLevel].indexOf(customKey);
+                            if(fenceIndex<0){
                                 customMarker['notification'][criticalLevel].push(customKey);
                             }
                             break;
                         case "remove" :
-                            if(customMarker['notification'][criticalLevel].indexOf(customKey)>-1){
-                                customMarker['notification'][criticalLevel].splice(customMarker['notification'][criticalLevel].indexOf(customKey),1);
+                            var customIndex = customMarker['notification'][criticalLevel].indexOf(customKey);
+                            if(customIndex>-1){
+                                customMarker['notification'][criticalLevel].splice(customIndex,1);
                             }
                             break;
                     }
@@ -1541,7 +1550,8 @@ var CustomMapMediator = (
                     switch (actionType){
                         case "add" :
                             detectText = data['eventName'];
-                            if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])<0){
+                            var fenceIndex = fenceMarker['notification'][criticalLevel].indexOf(data['objectId']);
+                            if(fenceIndex<0){
                                 fenceMarker['notification'][criticalLevel].push(data['objectId']);
                             }
                             if(data['moveFenceHide']!=true){
@@ -1549,8 +1559,9 @@ var CustomMapMediator = (
                             }
                             break;
                         case "remove" :
-                            if(fenceMarker['notification'][criticalLevel].indexOf(data['objectId'])>-1){
-                                fenceMarker['notification'][criticalLevel].splice(fenceMarker['notification'][criticalLevel].indexOf(data['objectId']),1);
+                            var fenceIndex = fenceMarker['notification'][criticalLevel].indexOf(data['objectId']);
+                            if(fenceIndex>-1){
+                                fenceMarker['notification'][criticalLevel].splice(fenceIndex,1);
                             }
                             break;
                     }

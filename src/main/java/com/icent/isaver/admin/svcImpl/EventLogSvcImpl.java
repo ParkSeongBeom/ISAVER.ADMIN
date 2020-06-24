@@ -288,6 +288,10 @@ public class EventLogSvcImpl implements EventLogSvc {
                     query.put("deviceId", new BasicDBObject("$in",deviceList));
                 }
             }
+            if(StringUtils.notNullCheck(parameters.get("eventId"))){
+                query.put("eventId", parameters.get("eventId"));
+            }
+
             BasicDBObject eventDatetimeWhere = new BasicDBObject();
             boolean eventDatetimeFlag = false;
             if(StringUtils.notNullCheck(parameters.get("startDatetimeStr")) && StringUtils.notNullCheck(parameters.get("startDatetimeHour"))){
@@ -301,7 +305,6 @@ public class EventLogSvcImpl implements EventLogSvc {
             if(eventDatetimeFlag){
                 query.put("eventDatetime", eventDatetimeWhere);
             }
-
             FindIterable<Document> resultList = collection.find(query).sort(Sorts.descending("eventDatetime"));
 
             List<EventLogExcelBean> eventLogList = new ArrayList<>();

@@ -49,6 +49,9 @@
             <if test="fenceType != null and fenceType != ''">
                 AND     a.fence_type = #{fenceType}
             </if>
+            <if test="ignoreCamera != null and ignoreCamera != ''">
+                AND     a.fence_type <![CDATA[ <> ]]> 'camera'
+            </if>
         </where>
     </select>
 
@@ -64,7 +67,7 @@
         FROM    isaver.fence A
         INNER JOIN isaver.device B
         ON	A.device_id = B.device_id
-        WHERE	fence_type = 'normal'
+        WHERE	fence_type not in ('ignore','section')
         ORDER BY deviceId, fenceName
     </select>
 
@@ -87,7 +90,7 @@
         ON	    a.device_id = b.device_id
         INNER JOIN isaver.area c
         ON	    b.area_id = c.area_id
-        WHERE	a.fence_type = 'normal'
+        WHERE	a.fence_type not in ('ignore','section')
     </select>
 
     <!--

@@ -224,26 +224,43 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                         , Accumulators.sum("value", 1)
                     ));
                 }else{
+                    groupList.add(Aggregates.unwind(field.split("\\.")[0]));
                     groupList.add(Aggregates.group(
-                        Document.parse("{eventDatetime:'$eventDatetime',aggValue:{'$"+aggregation+"':'"+field+"'}}")
+                        Document.parse("{eventDt:'$eventDatetime',groupValue:{'$"+aggregation+"':{$toDouble:'"+field+"'}}}")
+                    ));
+
+                    BsonField groupBsonField = null;
+                    switch (aggregation){
+                        case "avg" :
+                            groupBsonField = Accumulators.avg("aggValue", "$_id.groupValue");
+                            break;
+                        case "min" :
+                            groupBsonField = Accumulators.min("aggValue", "$_id.groupValue");
+                            break;
+                        case "max" :
+                            groupBsonField = Accumulators.max("aggValue", "$_id.groupValue");
+                            break;
+                    }
+                    groupList.add(Aggregates.group(
+                        Document.parse("{eventDatetime:'$_id.eventDt'}")
+                        , groupBsonField
                     ));
 
                     JsonArray customLabels = group.get("customLabel").getAsJsonArray();
                     if(customLabels.size()>0){
-                        String aggStr = "{$toDouble:\"$_id.aggValue\"}";
                         groupList.add(Aggregates.group(
                             Document.parse("{\n" +
                                     "       $concat: [\n" +
-                                    "          { $cond: [{$lt: [ "+aggStr+",10]}, '~10km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",10]}, {$lt: ["+aggStr+", 20]}]},'~20km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",20]}, {$lt: ["+aggStr+", 30]}]},'~30km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",30]}, {$lt: ["+aggStr+", 40]}]},'~40km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",40]}, {$lt: ["+aggStr+", 50]}]},'~50km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",50]}, {$lt: ["+aggStr+", 60]}]},'~60km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",60]}, {$lt: ["+aggStr+", 70]}]},'~70km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",70]}, {$lt: ["+aggStr+", 80]}]},'~80km/h', ''] },\n" +
-                                    "          { $cond: [{$and:[ {$gt:["+aggStr+",80]}, {$lt: ["+aggStr+", 90]}]},'~90km/h', ''] },\n" +
-                                    "          { $cond: [{$gt: [ "+aggStr+",90]},'~100km/h', ''] }\n" +
+                                    "          { $cond: [{$lt: ['$aggValue',10]}, '~10km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',10]}, {$lt: ['$aggValue', 20]}]},'~20km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',20]}, {$lt: ['$aggValue', 30]}]},'~30km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',30]}, {$lt: ['$aggValue', 40]}]},'~40km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',40]}, {$lt: ['$aggValue', 50]}]},'~50km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',50]}, {$lt: ['$aggValue', 60]}]},'~60km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',60]}, {$lt: ['$aggValue', 70]}]},'~70km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',70]}, {$lt: ['$aggValue', 80]}]},'~80km/h', ''] },\n" +
+                                    "          { $cond: [{$and:[ {$gt:['$aggValue',80]}, {$lt: ['$aggValue', 90]}]},'~90km/h', ''] },\n" +
+                                    "          { $cond: [{$gt: [ '$aggValue',90]},'~100km/h', ''] }\n" +
                                     "       ]\n" +
                                     "    }")
                             , Accumulators.sum("value", 1)
@@ -257,13 +274,13 @@ public class StatisticsSvcImpl implements StatisticsSvc {
                         BsonField bsonField = null;
                         switch (aggregation){
                             case "avg" :
-                                bsonField = Accumulators.avg("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                bsonField = Accumulators.avg("value", "$aggValue");
                                 break;
                             case "min" :
-                                bsonField = Accumulators.min("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                bsonField = Accumulators.min("value", "$aggValue");
                                 break;
                             case "max" :
-                                bsonField = Accumulators.max("value", new BasicDBObject("$toDouble", "$_id.aggValue"));
+                                bsonField = Accumulators.max("value", "$aggValue");
                                 break;
                         }
                         groupList.add(Aggregates.group(
