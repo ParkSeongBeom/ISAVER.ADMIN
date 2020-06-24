@@ -953,8 +953,9 @@ var DashboardHelper = (
                     }
                     break;
                 case "removeNotification" :
-                    if(notification[data['criticalLevel']].indexOf(data['notificationId'])>-1){
-                        notification[data['criticalLevel']].splice(notification[data['criticalLevel']].indexOf(data['notificationId']),1);
+                    var notificationIndex = notification[data['criticalLevel']].indexOf(data['notificationId']);
+                    if(notificationIndex>-1){
+                        notification[data['criticalLevel']].splice(notificationIndex,1);
                     }
                     if(childDevice[data['deviceId']] != null){
                         if(childDevice[data['deviceId']]['notification'][data['criticalLevel']].indexOf(data['notificationId']) > -1){

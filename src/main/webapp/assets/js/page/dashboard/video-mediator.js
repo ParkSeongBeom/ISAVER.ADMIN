@@ -167,8 +167,9 @@ var VideoMediator = (
                                 }
                                 break;
                             case "remove" :
-                                if(video['notification'][criticalLevel].indexOf(data['objectId']) > -1){
-                                    video['notification'][criticalLevel].splice(video['notification'][criticalLevel].indexOf(data['objectId']),1);
+                                var videoIndex = video['notification'][criticalLevel].indexOf(data['objectId']);
+                                if(videoIndex > -1){
+                                    video['notification'][criticalLevel].splice(videoIndex,1);
                                 }
                                 break;
                         }
